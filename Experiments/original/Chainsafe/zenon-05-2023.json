@@ -1,1 +1,253 @@
-{"path": "./Audit_Reports_2024/Chainsafe/zenon-05-2023.pdf", "project_info": {"url": "N/A", "commit_hash": "15bbf40ef7cba95dba797133b0da5ab3792a6b9e", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Optimization, `uint256max` could be made constant", "description": "The variable `uint256max` can be declared as a constant to improve code efficiency.", "severity": "Low", "contract": "Bridge", "function": "N/A", "lineNumber": "43"}, {"id": 1, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Optimization, `networkClass` could be made constant", "description": "The variable `networkClass` can be declared as a constant to optimize gas usage and improve code efficiency.", "severity": "Optimization", "contract": "Bridge", "function": "N/A", "lineNumber": "44"}, {"id": 2, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Optimization `minNominatedGuardians` could be made constant", "description": "The variable `minNominatedGuardians` can be declared as a constant to improve code efficiency.", "severity": "Optimization", "contract": "Bridge", "function": "N/A", "lineNumber": "45"}, {"id": 3, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Duplicate Entries in Constructor Function", "description": "The constructor function may initialize the guardians list with duplicate entries.", "severity": "Note", "contract": "Bridge", "function": "constructor()", "lineNumber": "100"}, {"id": 4, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Initialization of `estimatedBlockTime` with Disallowed Value", "description": "The `constructor()` function initializes `estimatedBlockTime` with 0, which is less than the allowed value by the `setEstimatedBlockTime()` function.", "severity": "Medium", "contract": "Bridge", "function": "constructor()", "lineNumber": "104"}, {"id": 5, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Initialization of ConfirmationsToFinality with Disallowed Values", "description": "The constructor function can initialize confirmationsToFinality with 0 or 1 value, which is less than allowed by the setConfirmationsToFinality function.", "severity": "Medium", "contract": "Bridge", "function": "constructor()", "lineNumber": "105"}, {"id": 6, "category": {"1": ["CWE-664"], "2": ["CWE-400"]}, "title": "Optimization", "description": "The `redeem()` function reads `redeemsInfo[nonce]` value from storage multiple times.", "severity": "Optimization", "contract": "N/A", "function": "redeem()", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1173"]}, "title": "Low-Level Address.Call() Usage in redeem() Function", "description": "The redeem() function uses a low-level address.call() instead of an interface to do minting.", "severity": "Medium", "contract": "Bridge", "function": "redeem()", "lineNumber": "140"}, {"id": 8, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Low-Level `address.call()` Usage in Unwrap Function", "description": "The `unwrap()` function uses a low-level `address.call()` instead of an interface to do burning.", "severity": "Medium", "contract": "Bridge", "function": "unwrap()", "lineNumber": "163"}, {"id": 9, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Unbounded Nomination of Guardians", "description": "The nominateGuardians() function lacks an upper limit on the number of new guardians, potentially leading to unexpected behavior and excessive gas consumption.", "severity": "Medium", "contract": "Bridge", "function": "nominateGuardians()", "lineNumber": "289"}, {"id": 10, "category": {"1": ["CWE-682"]}, "title": "Optimization: Multiple Storage Reads", "description": "The `proposeAdministrator()` function reads `guardiansVotes[i]` value from storage multiple times, which can be optimized by using a local variable `newAdministrator` instead.", "severity": "Optimization", "contract": "Bridge", "function": "proposeAdministrator()", "lineNumber": "341"}, {"id": 11, "category": {"1": ["CWE-682"]}, "title": "Optimization: Unnecessary Storage Reads", "description": "The `proposeAdministrator()` function reads the administrator value from storage twice, which can be optimized by using a local variable.", "severity": "Low", "contract": "Bridge", "function": "proposeAdministrator()", "lineNumber": "341"}, {"id": 12, "category": {"1": ["CWE-435"]}, "title": "Emit Event for Easier Accounting", "description": "The set* functions could emit an event to facilitate easier accounting.", "severity": "Informational", "contract": "N/A", "function": "set*", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-682"]}, "title": "Optimization: Unnecessary Storage Reads", "description": "The `halt()` function reads the `actionsNonce` value from storage twice, resulting in unnecessary gas consumption and potential performance issues.", "severity": "Low", "contract": "Bridge", "function": "halt()", "lineNumber": "222"}, {"id": 14, "category": {"1": ["CWE-682"]}, "title": "Optimization", "description": "The `setTss()` function reads the `actionsNonce` value from storage twice.", "severity": "N/A", "contract": "Bridge", "function": "setTss()", "lineNumber": "266"}]}
+{
+    "path": "./Audit_Reports_2024/Chainsafe/zenon-05-2023.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "15bbf40ef7cba95dba797133b0da5ab3792a6b9e",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Optimization, `uint256max` could be made constant",
+            "description": "The variable `uint256max` can be declared as a constant to improve code efficiency.",
+            "severity": "Low",
+            "contract": "Bridge",
+            "function": "N/A",
+            "lineNumber": "43"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Optimization, `networkClass` could be made constant",
+            "description": "The variable `networkClass` can be declared as a constant to optimize gas usage and improve code efficiency.",
+            "severity": "Optimization",
+            "contract": "Bridge",
+            "function": "N/A",
+            "lineNumber": "44"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Optimization `minNominatedGuardians` could be made constant",
+            "description": "The variable `minNominatedGuardians` can be declared as a constant to improve code efficiency.",
+            "severity": "Optimization",
+            "contract": "Bridge",
+            "function": "N/A",
+            "lineNumber": "45"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Duplicate Entries in Constructor Function",
+            "description": "The constructor function may initialize the guardians list with duplicate entries.",
+            "severity": "Note",
+            "contract": "Bridge",
+            "function": "constructor()",
+            "lineNumber": "100"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Initialization of `estimatedBlockTime` with Disallowed Value",
+            "description": "The `constructor()` function initializes `estimatedBlockTime` with 0, which is less than the allowed value by the `setEstimatedBlockTime()` function.",
+            "severity": "Medium",
+            "contract": "Bridge",
+            "function": "constructor()",
+            "lineNumber": "104"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Initialization of ConfirmationsToFinality with Disallowed Values",
+            "description": "The constructor function can initialize confirmationsToFinality with 0 or 1 value, which is less than allowed by the setConfirmationsToFinality function.",
+            "severity": "Medium",
+            "contract": "Bridge",
+            "function": "constructor()",
+            "lineNumber": "105"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ]
+            },
+            "title": "Optimization",
+            "description": "The `redeem()` function reads `redeemsInfo[nonce]` value from storage multiple times.",
+            "severity": "Optimization",
+            "contract": "N/A",
+            "function": "redeem()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1173"
+                ]
+            },
+            "title": "Low-Level Address.Call() Usage in redeem() Function",
+            "description": "The redeem() function uses a low-level address.call() instead of an interface to do minting.",
+            "severity": "Medium",
+            "contract": "Bridge",
+            "function": "redeem()",
+            "lineNumber": "140"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Low-Level `address.call()` Usage in Unwrap Function",
+            "description": "The `unwrap()` function uses a low-level `address.call()` instead of an interface to do burning.",
+            "severity": "Medium",
+            "contract": "Bridge",
+            "function": "unwrap()",
+            "lineNumber": "163"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Unbounded Nomination of Guardians",
+            "description": "The nominateGuardians() function lacks an upper limit on the number of new guardians, potentially leading to unexpected behavior and excessive gas consumption.",
+            "severity": "Medium",
+            "contract": "Bridge",
+            "function": "nominateGuardians()",
+            "lineNumber": "289"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Optimization: Multiple Storage Reads",
+            "description": "The `proposeAdministrator()` function reads `guardiansVotes[i]` value from storage multiple times, which can be optimized by using a local variable `newAdministrator` instead.",
+            "severity": "Optimization",
+            "contract": "Bridge",
+            "function": "proposeAdministrator()",
+            "lineNumber": "341"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Optimization: Unnecessary Storage Reads",
+            "description": "The `proposeAdministrator()` function reads the administrator value from storage twice, which can be optimized by using a local variable.",
+            "severity": "Low",
+            "contract": "Bridge",
+            "function": "proposeAdministrator()",
+            "lineNumber": "341"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ]
+            },
+            "title": "Emit Event for Easier Accounting",
+            "description": "The set* functions could emit an event to facilitate easier accounting.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "set*",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Optimization: Unnecessary Storage Reads",
+            "description": "The `halt()` function reads the `actionsNonce` value from storage twice, resulting in unnecessary gas consumption and potential performance issues.",
+            "severity": "Low",
+            "contract": "Bridge",
+            "function": "halt()",
+            "lineNumber": "222"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Optimization",
+            "description": "The `setTss()` function reads the `actionsNonce` value from storage twice.",
+            "severity": "N/A",
+            "contract": "Bridge",
+            "function": "setTss()",
+            "lineNumber": "266"
+        }
+    ]
+}

@@ -1,1 +1,125 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Levana-v1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Potential Limit Order Mis-Triggering From Lagging Cranks", "description": "In `Levana` protocol, cranking works by iterating through all price updates and performing operations for each price update point. One specific operation involves the checking of limit orders with a limit price that is reached by the cranking price. If a limit order is triggered, a new position will be opened at the current price. However, since the position is opened at the current price, there is a possibility of opening a position at an undesirable or worse price than the limit price.", "severity": "High", "contract": "order.rs", "function": "limit_order_triggered_order()", "lineNumber": "6"}, {"id": 1, "category": {"1": ["CWE-435"], "2": ["CWE-436"], "3": ["CWE-115"]}, "title": "Revised Handling of SendFrom Message in liquidity_token", "description": "The handling of LiquidityTokenExecuteMsg::Send message can be expanded to cover another LiquidityTokenExecuteMsg::SendFrom message.", "severity": "Medium", "contract": "liquidity_token", "function": "market_execute_liquidity_token()", "lineNumber": "200-243"}, {"id": 2, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Disallowed Limit Order Placement at Stale State", "description": "The protocol becomes stale if a price update has been delayed for too long or any position reaches the point where liquidation margin cannot be guaranteed. In this state, limit order placement should be disallowed to ensure being well-funded.", "severity": "Low", "contract": "order.rs", "function": "limit_order_set_order", "lineNumber": "400-411"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Trust Issue of Admin Keys", "description": "In the `Levana` protocol, there is a privileged account, i.e., `owner`. This account plays a critical role in regulating the protocol-wide operations (e.g., configure parameters, assign other roles, as well as collect `DAO` fee). Our analysis shows that this privileged account needs to be scrutinized.", "severity": "Medium", "contract": "Multiple contracts", "function": "execute()", "lineNumber": "400"}, {"id": 4, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Redundant State/Code Removal", "description": "In the `Levana` implementation, the `liquidation_ prices()` function performs a sanity check on the limit price and includes unused code or unnecessary redundancies that can be safely removed.", "severity": "Low", "contract": "sanity.rs", "function": "liquidation_prices()", "lineNumber": "900-904"}, {"id": 5, "category": {"1": ["CWE-664"], "2": ["CWE-404"], "3": ["CWE-772"], "4": ["CWE-401"]}, "title": "Revisited Crank Fee Collection in Limit Order", "description": "In Levana, each crank operation may charge the associated crank fee for the crank to run. Positions that schedule cranks for later execution must reserve sufficient collateral to pay the fee. However, when the same limit order is cancelled before being triggered, the collected crank fee may not return.", "severity": "Informational", "contract": "Levana", "function": "limit_order_set_order()", "lineNumber": "900-910"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Levana-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/Levana-Protocol/levana-perps",
+        "commit_hash": "N/A",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Potential Limit Order Mis-Triggering From Lagging Cranks",
+            "description": "In `Levana` protocol, cranking works by iterating through all price updates and performing operations for each price update point. One specific operation involves the checking of limit orders with a limit price that is reached by the cranking price. If a limit order is triggered, a new position will be opened at the current price. However, since the position is opened at the current price, there is a possibility of opening a position at an undesirable or worse price than the limit price.",
+            "severity": "High",
+            "contract": "order.rs",
+            "function": "limit_order_triggered_order()",
+            "lineNumber": "6"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-115"
+                ]
+            },
+            "title": "Revised Handling of SendFrom Message in liquidity_token",
+            "description": "The handling of LiquidityTokenExecuteMsg::Send message can be expanded to cover another LiquidityTokenExecuteMsg::SendFrom message.",
+            "severity": "Medium",
+            "contract": "liquidity_token",
+            "function": "market_execute_liquidity_token()",
+            "lineNumber": "200-243"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Disallowed Limit Order Placement at Stale State",
+            "description": "The protocol becomes stale if a price update has been delayed for too long or any position reaches the point where liquidation margin cannot be guaranteed. In this state, limit order placement should be disallowed to ensure being well-funded.",
+            "severity": "Low",
+            "contract": "order.rs",
+            "function": "limit_order_set_order",
+            "lineNumber": "400-411"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "In the `Levana` protocol, there is a privileged account, i.e., `owner`. This account plays a critical role in regulating the protocol-wide operations (e.g., configure parameters, assign other roles, as well as collect `DAO` fee). Our analysis shows that this privileged account needs to be scrutinized.",
+            "severity": "Medium",
+            "contract": "Multiple contracts",
+            "function": "execute()",
+            "lineNumber": "400"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Redundant State/Code Removal",
+            "description": "In the `Levana` implementation, the `liquidation_ prices()` function performs a sanity check on the limit price and includes unused code or unnecessary redundancies that can be safely removed.",
+            "severity": "Low",
+            "contract": "sanity.rs",
+            "function": "liquidation_prices()",
+            "lineNumber": "900-904"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-401"
+                ]
+            },
+            "title": "Revisited Crank Fee Collection in Limit Order",
+            "description": "In Levana, each crank operation may charge the associated crank fee for the crank to run. Positions that schedule cranks for later execution must reserve sufficient collateral to pay the fee. However, when the same limit order is cancelled before being triggered, the collected crank fee may not return.",
+            "severity": "Informational",
+            "contract": "Levana",
+            "function": "limit_order_set_order()",
+            "lineNumber": "900-910"
+        }
+    ]
+}

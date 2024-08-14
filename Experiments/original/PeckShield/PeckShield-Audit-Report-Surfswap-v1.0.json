@@ -1,1 +1,283 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Surfswap-v1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Constructor Mismatch", "description": "The constructor of a contract does not match its intended behavior.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-282"], "3": ["CWE-708"]}, "title": "Ownership Takeover", "description": "The administration key concern can be alleviated by transferring the role to a community-governed DAO.", "severity": "Critical", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Redundant Fallback Function", "description": "The contract contains a redundant fallback function which can lead to potential issues.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Overflows & Underflows", "description": "Potential arithmetic overflows and underflows in SurfswapPair::swap() function due to unchecked multiplication operations.", "severity": "High", "contract": "SurfswapPair", "function": "swap()", "lineNumber": "273-277, 280-281"}, {"id": 4, "category": {"1": ["CWE-693"]}, "title": "Reentrancy", "description": "The _safeTransfer function can be vulnerable to reentrancy attacks due to its usage of external calls.", "severity": "High", "contract": "N/A", "function": "_safeTransfer", "lineNumber": "248, 249"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Money-Giving Bug", "description": "The addLiquidity function allows users to mint liquidity without providing the required amount of tokens, resulting in free tokens being given away.", "severity": "Critical", "contract": "SurfswapRouter", "function": "_addLiquidity()", "lineNumber": "45-52"}, {"id": 6, "category": {"1": ["CWE-664"], "2": ["CWE-400"]}, "title": "Blackhole", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "Unauthorized Self-Destruct", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "Revert DoS", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Unchecked External Call", "description": "The SurfswapPair contract has an unchecked external call in the swap function.", "severity": "High", "contract": "SurfswapPair", "function": "swap()", "lineNumber": "251-256"}, {"id": 10, "category": {"1": ["CWE-682"]}, "title": "Gasless Send", "description": "The function uses _safeTransfer to transfer tokens without considering gas costs, potentially leading to failed transactions.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "248-249"}, {"id": 11, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Send Instead Of Transfer", "description": "Using _safeTransfer instead of transfer can lead to potential issues if the recipient is a contract.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "248-249"}, {"id": 12, "category": {"1": ["CWE-682"]}, "title": "Costly Loop", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "(Unsafe) Use Of Untrusted Libraries", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-693"], "2": ["CWE-330"], "3": ["CWE-340"]}, "title": "(Unsafe) Use Of Predictable Variables", "description": "The use of predictable variables can introduce security vulnerabilities in smart contracts.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-691"], "2": ["CWE-841"]}, "title": "Transaction Ordering Dependence", "description": "This finding relates to weaknesses in data processing issues, potentially causing unintended behavior due to incorrect transaction ordering.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Surfswap-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/BeamSwap/surfswap-contracts/tree/13bf57cb3a9b29dc27b5061b18356279a7eaa084",
+        "commit_hash": "13bf57cb3a9b29dc27b5061b18356279a7eaa084",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Constructor Mismatch",
+            "description": "The constructor of a contract does not match its intended behavior.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-282"
+                ],
+                "3": [
+                    "CWE-708"
+                ]
+            },
+            "title": "Ownership Takeover",
+            "description": "The administration key concern can be alleviated by transferring the role to a community-governed DAO.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Redundant Fallback Function",
+            "description": "The contract contains a redundant fallback function which can lead to potential issues.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Overflows & Underflows",
+            "description": "Potential arithmetic overflows and underflows in SurfswapPair::swap() function due to unchecked multiplication operations.",
+            "severity": "High",
+            "contract": "SurfswapPair",
+            "function": "swap()",
+            "lineNumber": "273-277, 280-281"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "Reentrancy",
+            "description": "The _safeTransfer function can be vulnerable to reentrancy attacks due to its usage of external calls.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "_safeTransfer",
+            "lineNumber": "248, 249"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Money-Giving Bug",
+            "description": "The addLiquidity function allows users to mint liquidity without providing the required amount of tokens, resulting in free tokens being given away.",
+            "severity": "Critical",
+            "contract": "SurfswapRouter",
+            "function": "_addLiquidity()",
+            "lineNumber": "45-52"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ]
+            },
+            "title": "Blackhole",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Unauthorized Self-Destruct",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Revert DoS",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Unchecked External Call",
+            "description": "The SurfswapPair contract has an unchecked external call in the swap function.",
+            "severity": "High",
+            "contract": "SurfswapPair",
+            "function": "swap()",
+            "lineNumber": "251-256"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Gasless Send",
+            "description": "The function uses _safeTransfer to transfer tokens without considering gas costs, potentially leading to failed transactions.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "248-249"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Send Instead Of Transfer",
+            "description": "Using _safeTransfer instead of transfer can lead to potential issues if the recipient is a contract.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "248-249"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Costly Loop",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "(Unsafe) Use Of Untrusted Libraries",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-330"
+                ],
+                "3": [
+                    "CWE-340"
+                ]
+            },
+            "title": "(Unsafe) Use Of Predictable Variables",
+            "description": "The use of predictable variables can introduce security vulnerabilities in smart contracts.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "Transaction Ordering Dependence",
+            "description": "This finding relates to weaknesses in data processing issues, potentially causing unintended behavior due to incorrect transaction ordering.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

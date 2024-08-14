@@ -1,1 +1,159 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Feeder-v1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Revisited Share Calculation in FeedVault::deposit()", "description": "The current approach of calculating pool share tokens can be improved. The actual implementation using depositedBalance() may not properly reflect the deserved share.", "severity": "Undetermined", "contract": "FeedVault", "function": "deposit()", "lineNumber": "361, 367"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Possible Sandwich/MEV Attacks For Reduced Returns", "description": "The `harvest()` function in `TargetVaultPancake` is vulnerable to sandwich attacks, allowing malicious actors to claim majority of rewards, resulting in reduced returns for legitimate shareholders.", "severity": "Low", "contract": "TargetVaultPancake", "function": "_harvest()", "lineNumber": "185-212"}, {"id": 2, "category": {"1": ["CWE-435"], "2": ["CWE-436"], "3": ["CWE-437"]}, "title": "Accommodation Of Possible Non-Compliant ERC20 Tokens", "description": "The `approve()` routine may have idiosyncrasies from current widely-used token contracts due to non-compliance with the standardized ERC-20 specification, potentially leading to issues such as the `approve()/transferFrom()` race condition.", "severity": "Low", "contract": "Multiple Contracts", "function": "approve() and transfer()", "lineNumber": "194-195, 140-142"}, {"id": 3, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Proper Asset Rebalance For Disabled Target Vaults", "description": "In `Feeder`, the `FeedVault` contract's `toggleTargetVault()` function does not properly rebalance assets when a target vault is disabled, leading to potential loss of funds.", "severity": "Medium", "contract": "FeedVault", "function": "toggleTargetVault()", "lineNumber": "310-312"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "Improper withdraw() in TargetVaultDopple", "description": "In the `withdraw()` routine in the `TargetVaultDopple` contract, this routine allows for withdrawing from the target vault to the central feed vault. It needs to be clarified that the `withdraw()` expects the token amount argument, while the internal `doppleStaking.withdraw()` expects a share amount. The interface mismatch may result in an inappropriate amount of tokens being withdrawn.", "severity": "Medium", "contract": "TargetVaultDopple", "function": "withdraw()", "lineNumber": "150"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Incorrect Fee Collection in TargetVaultPancake::_collectFees()", "description": "The collected fee is denominated at the token for investment, not the reward token. The current implementation incorrectly uses the reward token for fee collection.", "severity": "Medium", "contract": "TargetVaultPancake", "function": "_collectFees()", "lineNumber": "148"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Trust Issue of Admin Keys", "description": "The privileged admin account has critical roles in governing and regulating system-wide operations, but it lacks a DAO-like governance structure, making it vulnerable to compromise and potential fund theft.", "severity": "Medium", "contract": "Multiple Contracts", "function": ["setTargetVault()", "toggleTargetVault()"], "lineNumber": "299-305, 307-310"}, {"id": 7, "category": {"1": ["CWE-664"], "2": ["CWE-404"], "3": ["CWE-772"], "4": ["CWE-401"]}, "title": "Improved Emergency Withdrawal in TargetVaultBunny", "description": "The emergencyWithdrawAll() routine in the TargetVaultBunny contract does not properly return funds back to the feed vault and needs to reset depositedBalance back to 0.", "severity": "Low", "contract": "TargetVaultBunny", "function": "emergencyWithdrawAll()", "lineNumber": "147-151"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Feeder-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/FeederFinance/vaults-contracts/tree/5db7d3",
+        "commit_hash": "5db7d3",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Revisited Share Calculation in FeedVault::deposit()",
+            "description": "The current approach of calculating pool share tokens can be improved. The actual implementation using depositedBalance() may not properly reflect the deserved share.",
+            "severity": "Undetermined",
+            "contract": "FeedVault",
+            "function": "deposit()",
+            "lineNumber": "361, 367"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Possible Sandwich/MEV Attacks For Reduced Returns",
+            "description": "The `harvest()` function in `TargetVaultPancake` is vulnerable to sandwich attacks, allowing malicious actors to claim majority of rewards, resulting in reduced returns for legitimate shareholders.",
+            "severity": "Low",
+            "contract": "TargetVaultPancake",
+            "function": "_harvest()",
+            "lineNumber": "185-212"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-437"
+                ]
+            },
+            "title": "Accommodation Of Possible Non-Compliant ERC20 Tokens",
+            "description": "The `approve()` routine may have idiosyncrasies from current widely-used token contracts due to non-compliance with the standardized ERC-20 specification, potentially leading to issues such as the `approve()/transferFrom()` race condition.",
+            "severity": "Low",
+            "contract": "Multiple Contracts",
+            "function": "approve() and transfer()",
+            "lineNumber": "194-195, 140-142"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Proper Asset Rebalance For Disabled Target Vaults",
+            "description": "In `Feeder`, the `FeedVault` contract's `toggleTargetVault()` function does not properly rebalance assets when a target vault is disabled, leading to potential loss of funds.",
+            "severity": "Medium",
+            "contract": "FeedVault",
+            "function": "toggleTargetVault()",
+            "lineNumber": "310-312"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improper withdraw() in TargetVaultDopple",
+            "description": "In the `withdraw()` routine in the `TargetVaultDopple` contract, this routine allows for withdrawing from the target vault to the central feed vault. It needs to be clarified that the `withdraw()` expects the token amount argument, while the internal `doppleStaking.withdraw()` expects a share amount. The interface mismatch may result in an inappropriate amount of tokens being withdrawn.",
+            "severity": "Medium",
+            "contract": "TargetVaultDopple",
+            "function": "withdraw()",
+            "lineNumber": "150"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect Fee Collection in TargetVaultPancake::_collectFees()",
+            "description": "The collected fee is denominated at the token for investment, not the reward token. The current implementation incorrectly uses the reward token for fee collection.",
+            "severity": "Medium",
+            "contract": "TargetVaultPancake",
+            "function": "_collectFees()",
+            "lineNumber": "148"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "The privileged admin account has critical roles in governing and regulating system-wide operations, but it lacks a DAO-like governance structure, making it vulnerable to compromise and potential fund theft.",
+            "severity": "Medium",
+            "contract": "Multiple Contracts",
+            "function": [
+                "setTargetVault()",
+                "toggleTargetVault()"
+            ],
+            "lineNumber": "299-305, 307-310"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-401"
+                ]
+            },
+            "title": "Improved Emergency Withdrawal in TargetVaultBunny",
+            "description": "The emergencyWithdrawAll() routine in the TargetVaultBunny contract does not properly return funds back to the feed vault and needs to reset depositedBalance back to 0.",
+            "severity": "Low",
+            "contract": "TargetVaultBunny",
+            "function": "emergencyWithdrawAll()",
+            "lineNumber": "147-151"
+        }
+    ]
+}

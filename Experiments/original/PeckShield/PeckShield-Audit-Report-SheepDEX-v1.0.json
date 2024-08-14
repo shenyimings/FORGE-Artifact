@@ -1,1 +1,158 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-SheepDEX-v1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"]}, "title": "Minting of unlimited number of sundae tokens?", "description": "The mint function allows minters to mint more tokens into circulation for specified accounts without any limit, potentially leading to an unlimited number of sundae tokens.", "severity": "Critical", "contract": "SPCToken", "function": "mint()", "lineNumber": "65-71"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Privileged functions in TokenReward contract allow for operator configuration", "description": "The privileged functions in the TokenReward contract grant extra power to the operator/minter, which may pose a counter-party risk to the contract users.", "severity": "Medium", "contract": "TokenReward", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Trust Issue of Admin Keys", "description": "In the SheepDEX protocol, there exist certain privileged accounts that play critical roles in governing and regulating the system-wide operations. The extra power to the operator/minter may also be a counter-party risk to the contract users.", "severity": "Medium", "contract": "Multiple contracts (SPCToken)", "function": "addMinter(), delMinter(), salvageToken()", "lineNumber": "48-58, 60-61"}, {"id": 3, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Unstake token with 0 liquidity", "description": "The salvageToken function allows unstaking tokens even when there is no liquidity.", "severity": "High", "contract": "SwapRouter", "function": "salvageToken(address _asset)", "lineNumber": "55"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "Incentive pool is not the token pool", "description": "The incentive pool and token pool are not correctly matched in the stakeToken function of PositionReward contract.", "severity": "Medium", "contract": "PositionReward", "function": "stakeToken()", "lineNumber": "274"}, {"id": 5, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Token already staked", "description": "The token is already staked when trying to stake it again.", "severity": "Medium", "contract": "PositionReward", "function": "_stakeToken()", "lineNumber": "268"}, {"id": 6, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Non-existent incentive", "description": "The createIncentive() and set() functions in the PositionReward contract do not check if an incentive already exists before creating a new one or updating an existing one.", "severity": "N/A", "contract": "PositionReward", "function": ["createIncentive()", "set()"], "lineNumber": ["88-99", "101-110"]}, {"id": 7, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "PositionReward::stakeToken: cannot stake token with 0 liquidity", "description": "The `_stakeToken` function in `PositionReward` contract does not check for zero liquidity before staking tokens.", "severity": "Low", "contract": "PositionReward", "function": "_stakeToken()", "lineNumber": "275"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-SheepDEX-v1.0.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Minting of unlimited number of sundae tokens?",
+            "description": "The mint function allows minters to mint more tokens into circulation for specified accounts without any limit, potentially leading to an unlimited number of sundae tokens.",
+            "severity": "Critical",
+            "contract": "SPCToken",
+            "function": "mint()",
+            "lineNumber": "65-71"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Privileged functions in TokenReward contract allow for operator configuration",
+            "description": "The privileged functions in the TokenReward contract grant extra power to the operator/minter, which may pose a counter-party risk to the contract users.",
+            "severity": "Medium",
+            "contract": "TokenReward",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "In the SheepDEX protocol, there exist certain privileged accounts that play critical roles in governing and regulating the system-wide operations. The extra power to the operator/minter may also be a counter-party risk to the contract users.",
+            "severity": "Medium",
+            "contract": "Multiple contracts (SPCToken)",
+            "function": "addMinter(), delMinter(), salvageToken()",
+            "lineNumber": "48-58, 60-61"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Unstake token with 0 liquidity",
+            "description": "The salvageToken function allows unstaking tokens even when there is no liquidity.",
+            "severity": "High",
+            "contract": "SwapRouter",
+            "function": "salvageToken(address _asset)",
+            "lineNumber": "55"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incentive pool is not the token pool",
+            "description": "The incentive pool and token pool are not correctly matched in the stakeToken function of PositionReward contract.",
+            "severity": "Medium",
+            "contract": "PositionReward",
+            "function": "stakeToken()",
+            "lineNumber": "274"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Token already staked",
+            "description": "The token is already staked when trying to stake it again.",
+            "severity": "Medium",
+            "contract": "PositionReward",
+            "function": "_stakeToken()",
+            "lineNumber": "268"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Non-existent incentive",
+            "description": "The createIncentive() and set() functions in the PositionReward contract do not check if an incentive already exists before creating a new one or updating an existing one.",
+            "severity": "N/A",
+            "contract": "PositionReward",
+            "function": [
+                "createIncentive()",
+                "set()"
+            ],
+            "lineNumber": [
+                "88-99",
+                "101-110"
+            ]
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "PositionReward::stakeToken: cannot stake token with 0 liquidity",
+            "description": "The `_stakeToken` function in `PositionReward` contract does not check for zero liquidity before staking tokens.",
+            "severity": "Low",
+            "contract": "PositionReward",
+            "function": "_stakeToken()",
+            "lineNumber": "275"
+        }
+    ]
+}

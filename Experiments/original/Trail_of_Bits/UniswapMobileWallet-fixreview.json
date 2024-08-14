@@ -1,1 +1,250 @@
-{"path": "./Audit_Reports_2024/Trail_of_Bits/UniswapMobileWallet-fixreview.pdf", "project_info": {"url": "https://github.com/nick-fields", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-923"], "3": ["CWE-300"]}, "title": "iOS client is susceptible to URI scheme hijacking", "description": "The Uniswap mobile app defines the `uniswap://` URI scheme for receiving messages from other apps on the device. URI schemes can be hijacked by another app if the malicious app registers the same scheme and is also installed on the device.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "32-37"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-923"], "3": ["CWE-300"]}, "title": "The iOS client does not disable custom keyboards", "description": "The Uniswap mobile app client does not disable custom keyboards, which can log and exfiltrate user data.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-693"], "2": ["CWE-330"], "3": ["CWE-331"]}, "title": "Encrypted iCloud backups use low-entropy keys", "description": "The iOS wallet application uses a six-digit numeric pin to derive an AES-GCM encryption key for iCloud backup, which has low entropy and can be easily brute-forced by an attacker.", "severity": "High", "contract": "N/A", "function": "EncryptionHelper.swift#L18-L28", "lineNumber": "L18-L28"}, {"id": 3, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Unencrypted iCloud Backups", "description": "Users are given the option to back up a copy of their mnemonic private key to iCloud without encryption, presenting a footgun to users.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-697"], "2": ["CWE-1254"]}, "title": "Remote timing side channel in WalletConnect library", "description": "The implementation of HMAC comparison in the WalletConnect library is vulnerable to a remote timing side channel attack, allowing a malicious bridge node to forge message requests and tamper with wallet responses.", "severity": "Medium", "contract": "WalletConnectSwift", "function": "N/A", "lineNumber": "L65"}, {"id": 5, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Use of libraries with known vulnerabilities", "description": "The codebase contains outdated dependencies affected by critical and high-severity vulnerabilities.", "severity": "Undetermined", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-703"]}, "title": "Sending funds to user-owned addresses can cause spurious warnings", "description": "Presenting the user with many warnings can lead to \u201calert fatigue\u201d and encourage the user to dismiss future warnings without consideration. Warnings should be presented only when there is a real risk that needs the user\u2019s attention.", "severity": "Informational", "contract": "N/A", "function": "token send modal", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1287"]}, "title": "WalletConnect v1 reuses cryptographic keys for multiple primitives", "description": "The WalletConnect v1 Specification requires clients to communicate using AES-CBC for encryption along with HMAC-SHA256 to authenticate the data, both computed using a single shared symmetric key, which is not best practice.", "severity": "Informational", "contract": "WalletConnect v1 Protocol Specification", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "Credentials checked into source control", "description": "Sensitive credentials, including a hard-coded mnemonic and an Alchemy API key, are checked into source control, posing a risk of unauthorized access to real-world assets if the repository is compromised.", "severity": "Critical", "contract": "N/A", "function": "N/A", "lineNumber": "hardhat.config.js#1-4, src/features/wallet/accounts/useTestAccount.ts"}, {"id": 9, "category": {"1": ["CWE-707"], "2": ["CWE-74"]}, "title": "NFTs with SVG images are rendered as HTML", "description": "The wallet renders NFTs with SVG images by embedding them in an HTML document without sanitization, allowing attackers to serve arbitrary HTML and cause the wallet to render it on a WebView.", "severity": "High", "contract": "Uniswap Mobile Wallet", "function": "getHTML()", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "Application does not exclude keychain items from iCloud and iTunes backups", "description": "The Uniswap mobile wallet does not prohibit its keychain items from being saved to an iTunes backup or uploaded to iCloud. Both Apple, Inc. and any attacker with access to a user\u2019s iTunes or iCloud backup will have access to that user\u2019s private data.", "severity": "High", "contract": "ios/RNEthersRS.swift", "function": "N/A", "lineNumber": "109"}, {"id": 11, "category": {"1": ["CWE-707"], "2": ["CWE-116"], "3": ["CWE-117"]}, "title": "ShakeBugs may leak mnemonic", "description": "The Uniswap mobile wallet uses ShakeBugs to help with reporting of issues in the app. When a user reports an issue, ShakeBugs can take a screenshot and send it along with the reported issue. If this happens in a screen that shows a mnemonic, the user\u2019s mnemonic would be logged to ShakeBugs.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Use of improperly pinned GitHub Actions in Testflight build", "description": "The GitHub Actions workflows for creating an iOS application build uses several third-party actions that are pinned to a tag or branch name instead of a full commit SHA, enabling repository owners to silently modify the actions.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "78-85, 87-110"}]}
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/UniswapMobileWallet-fixreview.pdf",
+    "project_info": {
+        "url": "https://github.com/Uniswap/mobile/tree/ccad95b2284f64d93f73fd776a64b8382cfea680",
+        "commit_hash": "ccad95b2284f64d93f73fd776a64b8382cfea680",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-923"
+                ],
+                "3": [
+                    "CWE-300"
+                ]
+            },
+            "title": "iOS client is susceptible to URI scheme hijacking",
+            "description": "The Uniswap mobile app defines the `uniswap://` URI scheme for receiving messages from other apps on the device. URI schemes can be hijacked by another app if the malicious app registers the same scheme and is also installed on the device.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "32-37"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-923"
+                ],
+                "3": [
+                    "CWE-300"
+                ]
+            },
+            "title": "The iOS client does not disable custom keyboards",
+            "description": "The Uniswap mobile app client does not disable custom keyboards, which can log and exfiltrate user data.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-330"
+                ],
+                "3": [
+                    "CWE-331"
+                ]
+            },
+            "title": "Encrypted iCloud backups use low-entropy keys",
+            "description": "The iOS wallet application uses a six-digit numeric pin to derive an AES-GCM encryption key for iCloud backup, which has low entropy and can be easily brute-forced by an attacker.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "EncryptionHelper.swift#L18-L28",
+            "lineNumber": "L18-L28"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Unencrypted iCloud Backups",
+            "description": "Users are given the option to back up a copy of their mnemonic private key to iCloud without encryption, presenting a footgun to users.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ],
+                "2": [
+                    "CWE-1254"
+                ]
+            },
+            "title": "Remote timing side channel in WalletConnect library",
+            "description": "The implementation of HMAC comparison in the WalletConnect library is vulnerable to a remote timing side channel attack, allowing a malicious bridge node to forge message requests and tamper with wallet responses.",
+            "severity": "Medium",
+            "contract": "WalletConnectSwift",
+            "function": "N/A",
+            "lineNumber": "L65"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Use of libraries with known vulnerabilities",
+            "description": "The codebase contains outdated dependencies affected by critical and high-severity vulnerabilities.",
+            "severity": "Undetermined",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Sending funds to user-owned addresses can cause spurious warnings",
+            "description": "Presenting the user with many warnings can lead to \u201calert fatigue\u201d and encourage the user to dismiss future warnings without consideration. Warnings should be presented only when there is a real risk that needs the user\u2019s attention.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "token send modal",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1287"
+                ]
+            },
+            "title": "WalletConnect v1 reuses cryptographic keys for multiple primitives",
+            "description": "The WalletConnect v1 Specification requires clients to communicate using AES-CBC for encryption along with HMAC-SHA256 to authenticate the data, both computed using a single shared symmetric key, which is not best practice.",
+            "severity": "Informational",
+            "contract": "WalletConnect v1 Protocol Specification",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Credentials checked into source control",
+            "description": "Sensitive credentials, including a hard-coded mnemonic and an Alchemy API key, are checked into source control, posing a risk of unauthorized access to real-world assets if the repository is compromised.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "hardhat.config.js#1-4, src/features/wallet/accounts/useTestAccount.ts"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-74"
+                ]
+            },
+            "title": "NFTs with SVG images are rendered as HTML",
+            "description": "The wallet renders NFTs with SVG images by embedding them in an HTML document without sanitization, allowing attackers to serve arbitrary HTML and cause the wallet to render it on a WebView.",
+            "severity": "High",
+            "contract": "Uniswap Mobile Wallet",
+            "function": "getHTML()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Application does not exclude keychain items from iCloud and iTunes backups",
+            "description": "The Uniswap mobile wallet does not prohibit its keychain items from being saved to an iTunes backup or uploaded to iCloud. Both Apple, Inc. and any attacker with access to a user\u2019s iTunes or iCloud backup will have access to that user\u2019s private data.",
+            "severity": "High",
+            "contract": "ios/RNEthersRS.swift",
+            "function": "N/A",
+            "lineNumber": "109"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-116"
+                ],
+                "3": [
+                    "CWE-117"
+                ]
+            },
+            "title": "ShakeBugs may leak mnemonic",
+            "description": "The Uniswap mobile wallet uses ShakeBugs to help with reporting of issues in the app. When a user reports an issue, ShakeBugs can take a screenshot and send it along with the reported issue. If this happens in a screen that shows a mnemonic, the user\u2019s mnemonic would be logged to ShakeBugs.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Use of improperly pinned GitHub Actions in Testflight build",
+            "description": "The GitHub Actions workflows for creating an iOS application build uses several third-party actions that are pinned to a tag or branch name instead of a full commit SHA, enabling repository owners to silently modify the actions.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "78-85, 87-110"
+        }
+    ]
+}

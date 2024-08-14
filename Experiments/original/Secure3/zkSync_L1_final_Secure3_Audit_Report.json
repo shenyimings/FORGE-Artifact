@@ -1,1 +1,204 @@
-{"path": "./Audit_Reports_2024/Secure3/zkSync_L1_final_Secure3_Audit_Report.pdf", "project_info": {"url": "https://github.com/miladpiri/zksync", "commit_hash": "8bc57b7273a61b04d9ca96b5d3443f5a8f0a150e", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-664"], "2": ["CWE-404"], "3": ["CWE-772"], "4": ["CWE-401"]}, "title": "Contract with payable function but lack of withdraw function", "description": "In contract `DiamondUpgradeInit` has payable function `forceDeployL2Contract`, but it lacks of withdraw function or logic, this may lead to ETH locked in the contract.", "severity": "Medium", "contract": "DiamondUpgradeInit", "function": "forceDeployL2Contract", "lineNumber": "10"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-287"], "3": ["CWE-295"], "4": ["CWE-297"]}, "title": "Potential Security Issue if revealing secret X", "description": "Revealing the X value can compromise the trapdoor and allow an adversary to forge a valid recursive proof.", "severity": "Informational", "contract": "Executor", "function": "N/A", "lineNumber": "334-343"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Should check whether the transfer is successful", "description": "The transfer function defined in the interface seems to have no return value type, which contradicts the IERC20 interface standard. The function doesn't check whether the transfer is successful.", "severity": "Medium", "contract": "L1ERC20Bridge", "function": "_depositFunds() and other functions using _token.transferFrom/_token.transfer", "lineNumber": "125, 248"}, {"id": 3, "category": {"1": ["CWE-664"], "2": ["CWE-404"], "3": ["CWE-772"], "4": ["CWE-401"]}, "title": "Useless mappings should be deleted", "description": "The special operator delete in Solidity is used to release space. To encourage active recycling of space, releasing space will return some gas.", "severity": "Informational", "contract": ["L1EthBridge", "L1ERC20Bridge"], "function": ["N/A", "N/A"], "lineNumber": ["142", "182"]}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-233"], "4": ["CWE-236"]}, "title": "Unused Input Parameter", "description": "The function `_blockMetaParameters` doesn't use the input parameter calldata `_block`. ", "severity": "Informational", "contract": "Executor", "function": "_blockMetaParameters()", "lineNumber": "398"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-229"], "4": ["CWE-232"]}, "title": "IL2Bridge function l1TokenAddress and l1Bridge implementation never defined", "description": "The `l1TokenAddress` and `l1Bridge` functions are undefined but their interfaces are defined.", "severity": "Informational", "contract": "IL2Bridge", "function": "l1TokenAddress, l1Bridge", "lineNumber": "21-25"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "msg.value should be restricted when depositing ERC20", "description": "When users deposit ERC20, they may attach many Ether coins due to operational errors, with no way to retrieve them, which will result in the loss of Ether coins.", "severity": "Low", "contract": "L1ERC20Bridge", "function": "deposit()", "lineNumber": "106"}, {"id": 7, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"], "4": ["CWE-638"], "5": ["CWE-424"], "6": ["CWE-425"]}, "title": "claimFailedDeposit logic may leads to double spend risk", "description": "The L1 bridge's claimFailedDeposit function does not check the asset status on L2 before claiming failed deposits, which can lead to a potential double spend attack.", "severity": "Medium", "contract": "L1EthBridge and L1ERC20Bridge", "function": "claimFailedDeposit()", "lineNumber": "115, 159"}]}
+{
+    "path": "./Audit_Reports_2024/Secure3/zkSync_L1_final_Secure3_Audit_Report.pdf",
+    "project_info": {
+        "url": "https://github.com/miladpiri/zksync",
+        "commit_hash": "8bc57b7273a61b04d9ca96b5d3443f5a8f0a150e",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-401"
+                ]
+            },
+            "title": "Contract with payable function but lack of withdraw function",
+            "description": "In contract `DiamondUpgradeInit` has payable function `forceDeployL2Contract`, but it lacks of withdraw function or logic, this may lead to ETH locked in the contract.",
+            "severity": "Medium",
+            "contract": "DiamondUpgradeInit",
+            "function": "forceDeployL2Contract",
+            "lineNumber": "10"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-287"
+                ],
+                "3": [
+                    "CWE-295"
+                ],
+                "4": [
+                    "CWE-297"
+                ]
+            },
+            "title": "Potential Security Issue if revealing secret X",
+            "description": "Revealing the X value can compromise the trapdoor and allow an adversary to forge a valid recursive proof.",
+            "severity": "Informational",
+            "contract": "Executor",
+            "function": "N/A",
+            "lineNumber": "334-343"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Should check whether the transfer is successful",
+            "description": "The transfer function defined in the interface seems to have no return value type, which contradicts the IERC20 interface standard. The function doesn't check whether the transfer is successful.",
+            "severity": "Medium",
+            "contract": "L1ERC20Bridge",
+            "function": "_depositFunds() and other functions using _token.transferFrom/_token.transfer",
+            "lineNumber": "125, 248"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-401"
+                ]
+            },
+            "title": "Useless mappings should be deleted",
+            "description": "The special operator delete in Solidity is used to release space. To encourage active recycling of space, releasing space will return some gas.",
+            "severity": "Informational",
+            "contract": [
+                "L1EthBridge",
+                "L1ERC20Bridge"
+            ],
+            "function": [
+                "N/A",
+                "N/A"
+            ],
+            "lineNumber": [
+                "142",
+                "182"
+            ]
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-233"
+                ],
+                "4": [
+                    "CWE-236"
+                ]
+            },
+            "title": "Unused Input Parameter",
+            "description": "The function `_blockMetaParameters` doesn't use the input parameter calldata `_block`. ",
+            "severity": "Informational",
+            "contract": "Executor",
+            "function": "_blockMetaParameters()",
+            "lineNumber": "398"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ],
+                "4": [
+                    "CWE-232"
+                ]
+            },
+            "title": "IL2Bridge function l1TokenAddress and l1Bridge implementation never defined",
+            "description": "The `l1TokenAddress` and `l1Bridge` functions are undefined but their interfaces are defined.",
+            "severity": "Informational",
+            "contract": "IL2Bridge",
+            "function": "l1TokenAddress, l1Bridge",
+            "lineNumber": "21-25"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "msg.value should be restricted when depositing ERC20",
+            "description": "When users deposit ERC20, they may attach many Ether coins due to operational errors, with no way to retrieve them, which will result in the loss of Ether coins.",
+            "severity": "Low",
+            "contract": "L1ERC20Bridge",
+            "function": "deposit()",
+            "lineNumber": "106"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ],
+                "4": [
+                    "CWE-638"
+                ],
+                "5": [
+                    "CWE-424"
+                ],
+                "6": [
+                    "CWE-425"
+                ]
+            },
+            "title": "claimFailedDeposit logic may leads to double spend risk",
+            "description": "The L1 bridge's claimFailedDeposit function does not check the asset status on L2 before claiming failed deposits, which can lead to a potential double spend attack.",
+            "severity": "Medium",
+            "contract": "L1EthBridge and L1ERC20Bridge",
+            "function": "claimFailedDeposit()",
+            "lineNumber": "115, 159"
+        }
+    ]
+}

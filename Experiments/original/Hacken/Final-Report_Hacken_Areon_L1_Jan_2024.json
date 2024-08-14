@@ -1,1 +1,82 @@
-{"path": "./Audit_Reports_2024/Hacken/Final-Report_Hacken_Areon_L1_Jan_2024.pdf", "project_info": {"url": "https://github.com/Areon-Network/AreonChain", "commit_hash": "acf467ae19bcc740a9a28b51795e", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "F-2023-0256 - Invalid IBC events handling", "description": "The IBC `RecvPacket` function executes a callback and commits state changes only if the acknowledgement is successful. However, if the acknowledgement is not successful it still emits all of the events, causing inconsistencies between the state and logs.", "severity": "Low", "contract": "N/A", "function": "OnRecvPacket", "lineNumber": "414"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-354"]}, "title": "F-2023-0259 - Malicious Vesting Periods", "description": "Vesting Periods are validated in the `ValidateBasic` function, allowing malicious periods to be created.", "severity": "Medium", "contract": "sdk/x/auth/vesting/types/msgs.go", "function": "ValidateBasic()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "F-2023-0297 - Possibility of duplicate transactions in mempool structure", "description": "The `mempool` uses two data structures to maintain information about pending transactions - a map and a list. A map contains an index of a transactions in a list. Both of those structures are meant to be in-sync. However, it is possible that they become out-of-sync which leads to a scenario where there are multiple copies of a single transaction in the `mempool`.", "severity": "Low", "contract": "N/A", "function": "resCbFirstTime()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-691"], "2": ["CWE-362"]}, "title": "F-2023-0306 - Data race and potential deadlock in PeerState serialization", "description": "Data race and potential deadlock in PeerState serialization due to missing MarshalJSON method implementation.", "severity": "Low", "contract": "N/A", "function": "ToJSON()", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Hacken/Final-Report_Hacken_Areon_L1_Jan_2024.pdf",
+    "project_info": {
+        "url": "https://github.com/Areon-Network/AreonChain",
+        "commit_hash": "acf467ae19bcc740a9a28b51795e",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "F-2023-0256 - Invalid IBC events handling",
+            "description": "The IBC `RecvPacket` function executes a callback and commits state changes only if the acknowledgement is successful. However, if the acknowledgement is not successful it still emits all of the events, causing inconsistencies between the state and logs.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "OnRecvPacket",
+            "lineNumber": "414"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-354"
+                ]
+            },
+            "title": "F-2023-0259 - Malicious Vesting Periods",
+            "description": "Vesting Periods are validated in the `ValidateBasic` function, allowing malicious periods to be created.",
+            "severity": "Medium",
+            "contract": "sdk/x/auth/vesting/types/msgs.go",
+            "function": "ValidateBasic()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "F-2023-0297 - Possibility of duplicate transactions in mempool structure",
+            "description": "The `mempool` uses two data structures to maintain information about pending transactions - a map and a list. A map contains an index of a transactions in a list. Both of those structures are meant to be in-sync. However, it is possible that they become out-of-sync which leads to a scenario where there are multiple copies of a single transaction in the `mempool`.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "resCbFirstTime()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-362"
+                ]
+            },
+            "title": "F-2023-0306 - Data race and potential deadlock in PeerState serialization",
+            "description": "Data race and potential deadlock in PeerState serialization due to missing MarshalJSON method implementation.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "ToJSON()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

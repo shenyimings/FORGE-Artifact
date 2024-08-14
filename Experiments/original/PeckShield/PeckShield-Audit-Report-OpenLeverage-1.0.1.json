@@ -1,1 +1,131 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-OpenLeverage-1.0.1.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Improper Funding Source In XOLE::_deposit_()", "description": "The `_depositFor()` function uses `_addr` as both the receiver of `xOLE` balance and the provider of assets, which can be abused to lock `xOLE` tokens from users without their notice.", "severity": "Low", "contract": "XOLE", "function": "_depositFor()", "lineNumber": "292"}, {"id": 1, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Improper TotalSupplyCheckPoints in XOLE", "description": "The current checkpoint implementation logic can be further improved as it simply adds a new checkpoint without maintaining the invariant of having at most a checkpoint for a particular block number.", "severity": "Medium", "contract": "XOLE", "function": "_updateTotalSupplyCheckPoints()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Oversized Rewards May Lock All Pool Stakes", "description": "The `rewardPerToken()` function may cause an overflow due to the multiplication of three `uint256` integers, potentially locking all pool stakes if the reward amount is oversized.", "severity": "Low", "contract": "FarmingPool", "function": "rewardPerToken()", "lineNumber": "76-81"}, {"id": 3, "category": {"1": ["CWE-707"], "2": ["CWE-228"], "3": ["CWE-237"], "4": ["CWE-238"]}, "title": "Accommodation of Non-ERC20-Compliant Tokens", "description": "Many token contracts may not strictly follow the ERC-20 specification or have additional functionalities beyond the specification, which can cause issues if not handled properly.", "severity": "Low", "contract": "Multiple Contracts", "function": "transfer()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Possible Insurance Reduction in Liquidation", "description": "The `OpenLeverage` protocol has reserved a portion of accrued fee as the insurance to cover potential loss in the liquidation process. However, a flashloan-assisted attack can steal current insurance funds.", "severity": "Low", "contract": "OpenLevV1", "function": "liquidate()", "lineNumber": "195-205"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Trust Issue of Admin Keys", "description": "In the OpenLeverage protocol, there is a privileged admin account that plays a critical role in governing and regulating the system-wide operations, but it needs to be scrutinized.", "severity": "Medium", "contract": "Multiple Contracts", "function": "setLPoolUnAllowed, setSuspend, setMarketSuspend, setOleWethDexData", "lineNumber": "387-399"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-OpenLeverage-1.0.1.pdf",
+    "project_info": {
+        "url": "https://github.com/OpenLeverageDev/openleverage-contracts/tree/024945b",
+        "commit_hash": "024945b",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Improper Funding Source In XOLE::_deposit_()",
+            "description": "The `_depositFor()` function uses `_addr` as both the receiver of `xOLE` balance and the provider of assets, which can be abused to lock `xOLE` tokens from users without their notice.",
+            "severity": "Low",
+            "contract": "XOLE",
+            "function": "_depositFor()",
+            "lineNumber": "292"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Improper TotalSupplyCheckPoints in XOLE",
+            "description": "The current checkpoint implementation logic can be further improved as it simply adds a new checkpoint without maintaining the invariant of having at most a checkpoint for a particular block number.",
+            "severity": "Medium",
+            "contract": "XOLE",
+            "function": "_updateTotalSupplyCheckPoints()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Oversized Rewards May Lock All Pool Stakes",
+            "description": "The `rewardPerToken()` function may cause an overflow due to the multiplication of three `uint256` integers, potentially locking all pool stakes if the reward amount is oversized.",
+            "severity": "Low",
+            "contract": "FarmingPool",
+            "function": "rewardPerToken()",
+            "lineNumber": "76-81"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-237"
+                ],
+                "4": [
+                    "CWE-238"
+                ]
+            },
+            "title": "Accommodation of Non-ERC20-Compliant Tokens",
+            "description": "Many token contracts may not strictly follow the ERC-20 specification or have additional functionalities beyond the specification, which can cause issues if not handled properly.",
+            "severity": "Low",
+            "contract": "Multiple Contracts",
+            "function": "transfer()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Possible Insurance Reduction in Liquidation",
+            "description": "The `OpenLeverage` protocol has reserved a portion of accrued fee as the insurance to cover potential loss in the liquidation process. However, a flashloan-assisted attack can steal current insurance funds.",
+            "severity": "Low",
+            "contract": "OpenLevV1",
+            "function": "liquidate()",
+            "lineNumber": "195-205"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "In the OpenLeverage protocol, there is a privileged admin account that plays a critical role in governing and regulating the system-wide operations, but it needs to be scrutinized.",
+            "severity": "Medium",
+            "contract": "Multiple Contracts",
+            "function": "setLPoolUnAllowed, setSuspend, setMarketSuspend, setOleWethDexData",
+            "lineNumber": "387-399"
+        }
+    ]
+}

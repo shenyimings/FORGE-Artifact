@@ -1,1 +1,261 @@
-{"path": "./Audit_Reports_2024/ConsenSys_Diligence/ConsenSys_Diligence-Modular_Interactive_Crowdsale.pdf", "project_info": {"url": "https://github.com/Modular-Network/ethereum-libraries/tree/master/CrowdsaleLib/IICOLib", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "CrowdsaleLib::mintToken() allows creation of new tokens after the crowd sale ended", "description": "Allows creation of new tokens after the crowd sale ended", "severity": "N/A", "contract": "CrowdsaleLib", "function": "mintToken()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Non-exhaustive test coverage", "description": "The test suite lacks complete coverage of the code base, with areas having little or no coverage.", "severity": "Major", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-229"]}, "title": "Unclear specifications around token sale stages", "description": "The crowd sale documentation defines three stages of the crowd sale: first stage, second stage and post sale. Time delimiters for these stages are listed below. However, it is unclear which state changing functions should be callable during which stages.", "severity": "N/A", "contract": "InteractiveCrowdsaleLib", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-710"], "2": ["CWE-1164"]}, "title": "Code is imported by copying and pasting", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"], "4": ["CWE-766"]}, "title": "Visibility of functions is not according to security best practices", "description": "Specifying the visibility of state variables and functions is an integral part of secure smart contract systems. Declarations should be assigned with the rule in mind that increasing visibility can create a bigger attack surface and can cause actual vulnerabilities that can be exploited by malicious users.", "severity": "N/A", "contract": "InteractiveCrowdsaleLib", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Inconsistent use of Safe Math functions", "description": "The contract system does not or inconsistently uses safe math library functions for arithmetic calculations. Numbers can overflow or underflow and this can lead to vulnerabilities and bugs in the contract system that could have serious consequences.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-710"], "2": ["CWE-1061"]}, "title": "Excess friction using the libraries", "description": "Friction should be minimized as it might prevent external collaborators from running, testing, reviewing, and submitting improvements to the code base.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-703"]}, "title": "Incomplete documentation and procedures", "description": "The audit report highlights the lack of complete documentation and procedures which can lead to misunderstandings and potential security risks.", "severity": "Minor", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-682"], "2": ["CWE-191"]}, "title": "InteractiveCrowdsaleLib - Integer underflow", "description": "An overflow/underflow happens when an arithmetic operation reaches the maximum or minimum size of a type.", "severity": "N/A", "contract": "InteractiveCrowdsaleLib", "function": "N/A", "lineNumber": "L392, L394, L405, L419"}, {"id": 9, "category": {"1": ["CWE-682"], "2": ["CWE-191"]}, "title": "Array256Lib - Integer underflow", "description": "The heapSort() function in Array256Lib is vulnerable to an integer underflow when supplied with a uint256[] that has zero or one elements only.", "severity": "N/A", "contract": "Array256Lib", "function": "heapSort()", "lineNumber": "L149-L160"}, {"id": 10, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-253"]}, "title": "Incorrect checks for contract owner ETH withdrawal", "description": "The contract does not correctly check if the owner can withdraw ETH during certain phases of the sale.", "severity": "High", "contract": "N/A", "function": "withdrawLeftoverWei", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-710"], "2": ["CWE-1164"], "3": ["CWE-561"]}, "title": "Extraneous constructor variables in InteractiveCrowdsaleTestContract", "description": "These values are not utilized anywhere in the implemented contract, and are a symptom of extra complexity introduced to appease the library based development approach.", "severity": "N/A", "contract": "InteractiveCrowdsaleLib", "function": "init()", "lineNumber": "L152-L154"}, {"id": 12, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "InteractiveCrowdsaleLib::setCanceled() always returns true", "description": "The function setCanceled() checks if a crowd sale should be canceled and updates self.isCanceled if the condition is true. The function always returns true which decreases readability and is not according to coding best practices.", "severity": "N/A", "contract": "InteractiveCrowdsaleLib", "function": "setCanceled()", "lineNumber": "564-574"}, {"id": 13, "category": {"1": ["CWE-682"]}, "title": "Incorrect use of CrowdsaleLib::crowdsaleEnded()", "description": "The `crowdsaleEnded()` function is part of the `CrowdsaleLib` library and indicates when the crowd sale has ended. However, the timing for when the sale ends and when the sale is finalized are not the same but in the library implementation it used interchangeably.", "severity": "N/A", "contract": "InteractiveCrowdsaleLib", "function": "crowdsaleEnded()", "lineNumber": "589-594"}]}
+{
+    "path": "./Audit_Reports_2024/ConsenSys_Diligence/ConsenSys_Diligence-Modular_Interactive_Crowdsale.pdf",
+    "project_info": {
+        "url": "https://github.com/Modular-Network/ethereum-libraries/tree/master/CrowdsaleLib/IICOLib",
+        "commit_hash": "N/A",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "CrowdsaleLib::mintToken() allows creation of new tokens after the crowd sale ended",
+            "description": "Allows creation of new tokens after the crowd sale ended",
+            "severity": "N/A",
+            "contract": "CrowdsaleLib",
+            "function": "mintToken()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Non-exhaustive test coverage",
+            "description": "The test suite lacks complete coverage of the code base, with areas having little or no coverage.",
+            "severity": "Major",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ]
+            },
+            "title": "Unclear specifications around token sale stages",
+            "description": "The crowd sale documentation defines three stages of the crowd sale: first stage, second stage and post sale. Time delimiters for these stages are listed below. However, it is unclear which state changing functions should be callable during which stages.",
+            "severity": "N/A",
+            "contract": "InteractiveCrowdsaleLib",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ]
+            },
+            "title": "Code is imported by copying and pasting",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ],
+                "4": [
+                    "CWE-766"
+                ]
+            },
+            "title": "Visibility of functions is not according to security best practices",
+            "description": "Specifying the visibility of state variables and functions is an integral part of secure smart contract systems. Declarations should be assigned with the rule in mind that increasing visibility can create a bigger attack surface and can cause actual vulnerabilities that can be exploited by malicious users.",
+            "severity": "N/A",
+            "contract": "InteractiveCrowdsaleLib",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Inconsistent use of Safe Math functions",
+            "description": "The contract system does not or inconsistently uses safe math library functions for arithmetic calculations. Numbers can overflow or underflow and this can lead to vulnerabilities and bugs in the contract system that could have serious consequences.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1061"
+                ]
+            },
+            "title": "Excess friction using the libraries",
+            "description": "Friction should be minimized as it might prevent external collaborators from running, testing, reviewing, and submitting improvements to the code base.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Incomplete documentation and procedures",
+            "description": "The audit report highlights the lack of complete documentation and procedures which can lead to misunderstandings and potential security risks.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-191"
+                ]
+            },
+            "title": "InteractiveCrowdsaleLib - Integer underflow",
+            "description": "An overflow/underflow happens when an arithmetic operation reaches the maximum or minimum size of a type.",
+            "severity": "N/A",
+            "contract": "InteractiveCrowdsaleLib",
+            "function": "N/A",
+            "lineNumber": "L392, L394, L405, L419"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-191"
+                ]
+            },
+            "title": "Array256Lib - Integer underflow",
+            "description": "The heapSort() function in Array256Lib is vulnerable to an integer underflow when supplied with a uint256[] that has zero or one elements only.",
+            "severity": "N/A",
+            "contract": "Array256Lib",
+            "function": "heapSort()",
+            "lineNumber": "L149-L160"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-253"
+                ]
+            },
+            "title": "Incorrect checks for contract owner ETH withdrawal",
+            "description": "The contract does not correctly check if the owner can withdraw ETH during certain phases of the sale.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "withdrawLeftoverWei",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ],
+                "3": [
+                    "CWE-561"
+                ]
+            },
+            "title": "Extraneous constructor variables in InteractiveCrowdsaleTestContract",
+            "description": "These values are not utilized anywhere in the implemented contract, and are a symptom of extra complexity introduced to appease the library based development approach.",
+            "severity": "N/A",
+            "contract": "InteractiveCrowdsaleLib",
+            "function": "init()",
+            "lineNumber": "L152-L154"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "InteractiveCrowdsaleLib::setCanceled() always returns true",
+            "description": "The function setCanceled() checks if a crowd sale should be canceled and updates self.isCanceled if the condition is true. The function always returns true which decreases readability and is not according to coding best practices.",
+            "severity": "N/A",
+            "contract": "InteractiveCrowdsaleLib",
+            "function": "setCanceled()",
+            "lineNumber": "564-574"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect use of CrowdsaleLib::crowdsaleEnded()",
+            "description": "The `crowdsaleEnded()` function is part of the `CrowdsaleLib` library and indicates when the crowd sale has ended. However, the timing for when the sale ends and when the sale is finalized are not the same but in the library implementation it used interchangeably.",
+            "severity": "N/A",
+            "contract": "InteractiveCrowdsaleLib",
+            "function": "crowdsaleEnded()",
+            "lineNumber": "589-594"
+        }
+    ]
+}

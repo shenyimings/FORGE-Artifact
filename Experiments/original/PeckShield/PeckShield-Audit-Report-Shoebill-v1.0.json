@@ -1,1 +1,139 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Shoebill-v1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Improved Reward-Claiming Logic in StakedTokenIncentivesController", "description": "The `_claimRewards()` function in `StakedTokenIncentivesController` updates the remaining rewards recorded in an internal `usersUnclaimedRewards` variable and emits the `RewardsClaimed` event regardless of whether the rewards are successfully claimed or not.", "severity": "Low", "contract": "StakedTokenIncentivesController", "function": "_claimRewards()", "lineNumber": "238, 208-214"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-241"]}, "title": "Enhanced Asset Validation in LenderVaults", "description": "The `LenderVaults` contract has a number of exported functions that can be improved to validate the input asset. In particular, if we examine the `deposit()` function, which accepts the asset as the first argument and passes directly into the internal helper `_depositToYieldPool()`. However, this argument is not validated to ensure it is the same as `externalAssetToken`.", "severity": "Low", "contract": "LenderVaults", "function": "deposit()", "lineNumber": "78-81"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Incorrect Yield Accounting in KokoaKSDVault And KlayswapUsdtUsdcVault", "description": "The current yield attribution logic is flawed and should be corrected. The `yieldAmount` is always deducted if there is a non-zero `incentiveAmount`, regardless of whether the yield asset is equal to the intended `incentive` token.", "severity": "Low", "contract": "KokoaKSDVault, KlayswapUsdtUsdcVault", "function": "_transferYield()", "lineNumber": "61, 71-73"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Trust Issue of Admin Keys", "description": "In the Shoebill protocol, there is a privileged `owner` account that plays a critical role in governing and regulating the system- wide operations. Our analysis shows that the privileged account needs to be scrutinized.", "severity": "Medium", "contract": "Multiple Contracts", "function": "registerVault(_vaultAddress) and batchInitReserve(InitReserveInput[] calldata input)", "lineNumber": "47-51"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Potential Misuse of Borrow Allowance in LenderVault", "description": "The `LenderVaults` contract's `borrow()` function allows users to borrow on behalf of other approving innocent users, which can be misused by malicious actors.", "severity": "High", "contract": "LenderVault", "function": "borrow()", "lineNumber": "105-111"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Potential Front-Running/MEV With Reduced Return", "description": "The Shoebill protocol's yield model is vulnerable to front-running attacks due to lack of slippage control, resulting in reduced returns for lenders.", "severity": "Medium", "contract": "Multiple Contracts", "function": "_processYield()", "lineNumber": "37-43"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "Unsafe Listing of KlayswapUsdtUsdc LPs", "description": "The `KlayswapUsdtUsdcVault` shows potential incompatibility with `AaveV2`-based protocols and `Fair Uniswap`s LP Token Pricing model, which can be manipulated to drain pool funds.", "severity": "High", "contract": "KlayswapUsdtUsdcVault", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Shoebill-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/ShoebillFinance/shoebill-contract/tree/2dbcd9f",
+        "commit_hash": "2dbcd9f",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improved Reward-Claiming Logic in StakedTokenIncentivesController",
+            "description": "The `_claimRewards()` function in `StakedTokenIncentivesController` updates the remaining rewards recorded in an internal `usersUnclaimedRewards` variable and emits the `RewardsClaimed` event regardless of whether the rewards are successfully claimed or not.",
+            "severity": "Low",
+            "contract": "StakedTokenIncentivesController",
+            "function": "_claimRewards()",
+            "lineNumber": "238, 208-214"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-241"
+                ]
+            },
+            "title": "Enhanced Asset Validation in LenderVaults",
+            "description": "The `LenderVaults` contract has a number of exported functions that can be improved to validate the input asset. In particular, if we examine the `deposit()` function, which accepts the asset as the first argument and passes directly into the internal helper `_depositToYieldPool()`. However, this argument is not validated to ensure it is the same as `externalAssetToken`.",
+            "severity": "Low",
+            "contract": "LenderVaults",
+            "function": "deposit()",
+            "lineNumber": "78-81"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect Yield Accounting in KokoaKSDVault And KlayswapUsdtUsdcVault",
+            "description": "The current yield attribution logic is flawed and should be corrected. The `yieldAmount` is always deducted if there is a non-zero `incentiveAmount`, regardless of whether the yield asset is equal to the intended `incentive` token.",
+            "severity": "Low",
+            "contract": "KokoaKSDVault, KlayswapUsdtUsdcVault",
+            "function": "_transferYield()",
+            "lineNumber": "61, 71-73"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "In the Shoebill protocol, there is a privileged `owner` account that plays a critical role in governing and regulating the system- wide operations. Our analysis shows that the privileged account needs to be scrutinized.",
+            "severity": "Medium",
+            "contract": "Multiple Contracts",
+            "function": "registerVault(_vaultAddress) and batchInitReserve(InitReserveInput[] calldata input)",
+            "lineNumber": "47-51"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Potential Misuse of Borrow Allowance in LenderVault",
+            "description": "The `LenderVaults` contract's `borrow()` function allows users to borrow on behalf of other approving innocent users, which can be misused by malicious actors.",
+            "severity": "High",
+            "contract": "LenderVault",
+            "function": "borrow()",
+            "lineNumber": "105-111"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Potential Front-Running/MEV With Reduced Return",
+            "description": "The Shoebill protocol's yield model is vulnerable to front-running attacks due to lack of slippage control, resulting in reduced returns for lenders.",
+            "severity": "Medium",
+            "contract": "Multiple Contracts",
+            "function": "_processYield()",
+            "lineNumber": "37-43"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Unsafe Listing of KlayswapUsdtUsdc LPs",
+            "description": "The `KlayswapUsdtUsdcVault` shows potential incompatibility with `AaveV2`-based protocols and `Fair Uniswap`s LP Token Pricing model, which can be manipulated to drain pool funds.",
+            "severity": "High",
+            "contract": "KlayswapUsdtUsdcVault",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

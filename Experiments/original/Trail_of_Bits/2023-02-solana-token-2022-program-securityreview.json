@@ -1,1 +1,317 @@
-{"path": "./Audit_Reports_2024/Trail_of_Bits/2023-02-solana-token-2022-program-securityreview.pdf", "project_info": {"url": "https://github.com/RustSec/advisory-db.git", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"], "2": ["CWE-393"]}, "title": "Ok returned for malformed extension data", "description": "The `get_extension_types` function returns `Ok` instead of an error when the account type-length-value (TLV) data is malformed and the TLV record data is truncated.", "severity": "Informational", "contract": "token/program-2022", "function": "get_extension_types()", "lineNumber": "L127-L134"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-282"], "3": ["CWE-708"]}, "title": "Missing account ownership checks", "description": "Every account that the Token Program operates on should be owned by the Token Program, but several instructions lack account ownership checks.", "severity": "Undetermined", "contract": "Token Program", "function": "process_withdraw_withheld_tokens_from_accounts, process_reallocate, process_withdraw_withheld_tokens_from_mint", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-710"], "2": ["CWE-1357"], "3": ["CWE-1104"]}, "title": "Use of a vulnerable dependency", "description": "The issue poses an immediate risk due to the usage of outdated software package or library.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-703"]}, "title": "Large extension sizes can cause panics", "description": "The call to `try_from` in the `init_extension` function returns an error if the `length` of the given extension is larger than `u16::Max`, which causes the `unwrap` operation to panic.", "severity": "Informational", "contract": "token/program-2022", "function": "init_extension()", "lineNumber": "L493-L494"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "Unexpected function behavior", "description": "The `decode_instruction_data` function receives a byte slice representing the instruction data but does not clearly convey its intended behavior and lacks code comments explaining it.", "severity": "Informational", "contract": "token/program-2022/src/instruction.rs", "function": "decode_instruction_data", "lineNumber": "L1761-L1768"}, {"id": 5, "category": {"1": ["CWE-124"]}, "title": "Out of bounds access in the get_extension instruction", "description": "The `get_extension` function instantiates a type from a TLV record but does not check that the account's data length is large enough for the `value_end` index.", "severity": "Low", "contract": "token/program-2022/src/extension/mod.rs", "function": "get_extension", "lineNumber": "235-248"}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Iteration over empty data", "description": "The `get_extension_indices` function may iterate over empty data if the `init` parameter is false, potentially leading to undefined behavior.", "severity": "Informational", "contract": "token/program-2022", "function": "get_extension_indices", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Missing check in UpdateMint instruction could result in inoperable mints", "description": "If a mint\u2019s `auto_approve_new_accounts` property is `false`, the `ApproveAccount` instruction needs the mint\u2019s authority to sign transactions approving `Accounts` for the mint. However, issuing an `update_mint` instruction with the new authority set to `Pubkey::default` and the `auto_approve_new_accounts` property set to `false` would prevent `Accounts` from being approved.", "severity": "Low", "contract": "token/program-2022/src/extension/confidential_transfer/processor.rs", "function": "process_update_mint", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-682"]}, "title": "Incorrect test data description", "description": "N/A", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-435"], "2": ["CWE-436"]}, "title": "The Transfer and TransferWithFee instructions are identical", "description": "The implementations of the `Transfer` and `TransferWithFee` instructions are identical.", "severity": "Informational", "contract": "token/program-2022/extension/confidential_transfer/processor.rs", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Some instructions operate only on the lo bits of balances", "description": "Some instructions seem to update only the `lo` bits of balances, which can cause issues when dealing with values greater than `u16::Max`. This was observed in functions such as `process_destination_for_transfer` and `process_withdraw_withheld_tokens_from_mint`.", "severity": "Undetermined", "contract": "token/program-2022/extension/confidential_transfer/processor.rs", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "Instruction susceptible to front-running", "description": "The Solana team has not resolved this issue and accepts the associated risks.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "Error: Account not accepting deposits or transfers", "description": "The account does not allow deposits or transfers.", "severity": "Undetermined", "contract": "N/A", "function": "N/A", "lineNumber": "./src/error.rs:230"}, {"id": 13, "category": {"1": ["CWE-697"]}, "title": "Error: ElGamal public key mismatch", "description": "ElGamal public key mismatch error", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "233"}, {"id": 14, "category": {"1": ["CWE-682"]}, "title": "Error: Balance mismatch", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "./src/error.rs:236"}, {"id": 15, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Error: Mint has non-zero supply. Burn all tokens before closing the mint", "description": "Mint contract has remaining token supply and needs to burn them before closure.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "239"}, {"id": 16, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Fee parameters associated with zero-knowledge proofs do not match fee parameters in mint", "description": "The fee parameters related to zero-knowledge proofs are inconsistent with those specified in the mint.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "./src/error.rs:254"}, {"id": 17, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Deposit amount exceeds maximum limit", "description": "Error: Deposit amount exceeds maximum limit", "severity": "Undetermined", "contract": "N/A", "function": "N/A", "lineNumber": "./src/error.rs:275"}]}
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/2023-02-solana-token-2022-program-securityreview.pdf",
+    "project_info": {
+        "url": "https://github.com/RustSec/advisory-db.git",
+        "commit_hash": "N/A",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-393"
+                ]
+            },
+            "title": "Ok returned for malformed extension data",
+            "description": "The `get_extension_types` function returns `Ok` instead of an error when the account type-length-value (TLV) data is malformed and the TLV record data is truncated.",
+            "severity": "Informational",
+            "contract": "token/program-2022",
+            "function": "get_extension_types()",
+            "lineNumber": "L127-L134"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-282"
+                ],
+                "3": [
+                    "CWE-708"
+                ]
+            },
+            "title": "Missing account ownership checks",
+            "description": "Every account that the Token Program operates on should be owned by the Token Program, but several instructions lack account ownership checks.",
+            "severity": "Undetermined",
+            "contract": "Token Program",
+            "function": "process_withdraw_withheld_tokens_from_accounts, process_reallocate, process_withdraw_withheld_tokens_from_mint",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1357"
+                ],
+                "3": [
+                    "CWE-1104"
+                ]
+            },
+            "title": "Use of a vulnerable dependency",
+            "description": "The issue poses an immediate risk due to the usage of outdated software package or library.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Large extension sizes can cause panics",
+            "description": "The call to `try_from` in the `init_extension` function returns an error if the `length` of the given extension is larger than `u16::Max`, which causes the `unwrap` operation to panic.",
+            "severity": "Informational",
+            "contract": "token/program-2022",
+            "function": "init_extension()",
+            "lineNumber": "L493-L494"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Unexpected function behavior",
+            "description": "The `decode_instruction_data` function receives a byte slice representing the instruction data but does not clearly convey its intended behavior and lacks code comments explaining it.",
+            "severity": "Informational",
+            "contract": "token/program-2022/src/instruction.rs",
+            "function": "decode_instruction_data",
+            "lineNumber": "L1761-L1768"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-124"
+                ]
+            },
+            "title": "Out of bounds access in the get_extension instruction",
+            "description": "The `get_extension` function instantiates a type from a TLV record but does not check that the account's data length is large enough for the `value_end` index.",
+            "severity": "Low",
+            "contract": "token/program-2022/src/extension/mod.rs",
+            "function": "get_extension",
+            "lineNumber": "235-248"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Iteration over empty data",
+            "description": "The `get_extension_indices` function may iterate over empty data if the `init` parameter is false, potentially leading to undefined behavior.",
+            "severity": "Informational",
+            "contract": "token/program-2022",
+            "function": "get_extension_indices",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Missing check in UpdateMint instruction could result in inoperable mints",
+            "description": "If a mint\u2019s `auto_approve_new_accounts` property is `false`, the `ApproveAccount` instruction needs the mint\u2019s authority to sign transactions approving `Accounts` for the mint. However, issuing an `update_mint` instruction with the new authority set to `Pubkey::default` and the `auto_approve_new_accounts` property set to `false` would prevent `Accounts` from being approved.",
+            "severity": "Low",
+            "contract": "token/program-2022/src/extension/confidential_transfer/processor.rs",
+            "function": "process_update_mint",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect test data description",
+            "description": "N/A",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ]
+            },
+            "title": "The Transfer and TransferWithFee instructions are identical",
+            "description": "The implementations of the `Transfer` and `TransferWithFee` instructions are identical.",
+            "severity": "Informational",
+            "contract": "token/program-2022/extension/confidential_transfer/processor.rs",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Some instructions operate only on the lo bits of balances",
+            "description": "Some instructions seem to update only the `lo` bits of balances, which can cause issues when dealing with values greater than `u16::Max`. This was observed in functions such as `process_destination_for_transfer` and `process_withdraw_withheld_tokens_from_mint`.",
+            "severity": "Undetermined",
+            "contract": "token/program-2022/extension/confidential_transfer/processor.rs",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Instruction susceptible to front-running",
+            "description": "The Solana team has not resolved this issue and accepts the associated risks.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Error: Account not accepting deposits or transfers",
+            "description": "The account does not allow deposits or transfers.",
+            "severity": "Undetermined",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "./src/error.rs:230"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ]
+            },
+            "title": "Error: ElGamal public key mismatch",
+            "description": "ElGamal public key mismatch error",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "233"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Error: Balance mismatch",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "./src/error.rs:236"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Error: Mint has non-zero supply. Burn all tokens before closing the mint",
+            "description": "Mint contract has remaining token supply and needs to burn them before closure.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "239"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Fee parameters associated with zero-knowledge proofs do not match fee parameters in mint",
+            "description": "The fee parameters related to zero-knowledge proofs are inconsistent with those specified in the mint.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "./src/error.rs:254"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Deposit amount exceeds maximum limit",
+            "description": "Error: Deposit amount exceeds maximum limit",
+            "severity": "Undetermined",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "./src/error.rs:275"
+        }
+    ]
+}

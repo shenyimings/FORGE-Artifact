@@ -1,1 +1,212 @@
-{"path": "./Audit_Reports_2024/Chainsafe/gnosis-05-2023.pdf", "project_info": {"url": "N/A", "commit_hash": "63d522e40dfaacde5f00891ca45c86ad474e6184", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Optimization of FailedWithdrawalRecord Storage", "description": "The FailedWithdrawalRecord storage variable could check if the `amount` is zero instead of storing a `processed` value.", "severity": "Optimization", "contract": "SBCDepositContract", "function": "N/A", "lineNumber": "290"}, {"id": 1, "category": {"1": ["CWE-664"], "2": ["CWE-662"], "3": ["CWE-663"]}, "title": "Unnecessary NonReentrant Modifier", "description": "Omit using the NonReentrant modifier if the failedWithdrawalRecord update is moved to be done before the _processWithdrawal() call.", "severity": "Optimization", "contract": "SBCDepositContract", "function": "_processWithdrawal()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-691"], "2": ["CWE-1265"]}, "title": "Optimization of processFailedWithdrawalsFromPointer() function", "description": "The processFailedWithdrawalsFromPointer() function could omit using the NonReentrant modifier if the failedWithdrawalRecord update is moved to be done before the _processWithdrawal() call, and undoing the changes in case of fail.", "severity": "Optimization", "contract": "SBCDepositContract", "function": "processFailedWithdrawalsFromPointer()", "lineNumber": "348"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-229"], "4": ["CWE-230"]}, "title": "Undocumented `gasLimit` Parameter", "description": "The `gasLimit` parameter of the `_processWithdrawal()` function is not described.", "severity": "Low", "contract": "SBCDepositContract", "function": "_processWithdrawal()", "lineNumber": "266"}, {"id": 4, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-770"]}, "title": "Optimization of processFailedWithdrawal() Function", "description": "The processFailedWithdrawal() function reads FailedWithdrawalRecord values from storage multiple times, consider using a local variable instead.", "severity": "Optimization", "contract": "SBCDepositContract", "function": "processFailedWithdrawal()", "lineNumber": "317"}, {"id": 5, "category": {"1": ["CWE-697"], "2": ["CWE-1024"]}, "title": "Inconsistent Sender Variable Usage", "description": "The processFailedWithdrawal() function uses a `_msgSender()` helper while the deposits processing part of the contract uses `msg.sender`.", "severity": "Medium", "contract": "SBCDepositContract", "function": "processFailedWithdrawal()", "lineNumber": "320"}, {"id": 6, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Optimization of processFailedWithdrawalsFromPointer() Function", "description": "The processFailedWithdrawalsFromPointer() function reads failedWithdrawalsPointer value from storage multiple times, consider using a local variable instead.", "severity": "Optimization", "contract": "SBCDepositContract", "function": "processFailedWithdrawalsFromPointer()", "lineNumber": "355"}, {"id": 7, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Optimization of processFailedWithdrawalsFromPointer()", "description": "The processFailedWithdrawalsFromPointer() function reads FailedWithdrawalRecord values from storage multiple times, consider using a local variable instead.", "severity": "Optimization", "contract": "SBCDepositContract", "function": "processFailedWithdrawalsFromPointer()", "lineNumber": "358"}, {"id": 8, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Optimization of executeSystemWithdrawals() Function", "description": "The executeSystemWithdrawals() function reads `_addresses[i]` from calldata multiple times, it would be cheaper to store it in a local variable.", "severity": "Optimization", "contract": "SBCDepositContract", "function": "executeSystemWithdrawals()", "lineNumber": "406"}, {"id": 9, "category": {"1": ["CWE-682"]}, "title": "Optimization of executeSystemWithdrawals() Function", "description": "The executeSystemWithdrawals() function reads numberOfFailedWithdrawals value from storage multiple times, consider using a local variable instead.", "severity": "Optimization", "contract": "SBCDepositContract", "function": "executeSystemWithdrawals()", "lineNumber": "411"}, {"id": 10, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-229"], "4": ["CWE-230"]}, "title": "Undescribed `_token` Parameter in `unwrapTokens()` Function", "description": "The `_token` parameter of the `unwrapTokens()` function lacks description.", "severity": "Low", "contract": "SBCDepositContract", "function": "unwrapTokens()", "lineNumber": "425"}]}
+{
+    "path": "./Audit_Reports_2024/Chainsafe/gnosis-05-2023.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "63d522e40dfaacde5f00891ca45c86ad474e6184",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Optimization of FailedWithdrawalRecord Storage",
+            "description": "The FailedWithdrawalRecord storage variable could check if the `amount` is zero instead of storing a `processed` value.",
+            "severity": "Optimization",
+            "contract": "SBCDepositContract",
+            "function": "N/A",
+            "lineNumber": "290"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-662"
+                ],
+                "3": [
+                    "CWE-663"
+                ]
+            },
+            "title": "Unnecessary NonReentrant Modifier",
+            "description": "Omit using the NonReentrant modifier if the failedWithdrawalRecord update is moved to be done before the _processWithdrawal() call.",
+            "severity": "Optimization",
+            "contract": "SBCDepositContract",
+            "function": "_processWithdrawal()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "Optimization of processFailedWithdrawalsFromPointer() function",
+            "description": "The processFailedWithdrawalsFromPointer() function could omit using the NonReentrant modifier if the failedWithdrawalRecord update is moved to be done before the _processWithdrawal() call, and undoing the changes in case of fail.",
+            "severity": "Optimization",
+            "contract": "SBCDepositContract",
+            "function": "processFailedWithdrawalsFromPointer()",
+            "lineNumber": "348"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ],
+                "4": [
+                    "CWE-230"
+                ]
+            },
+            "title": "Undocumented `gasLimit` Parameter",
+            "description": "The `gasLimit` parameter of the `_processWithdrawal()` function is not described.",
+            "severity": "Low",
+            "contract": "SBCDepositContract",
+            "function": "_processWithdrawal()",
+            "lineNumber": "266"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "Optimization of processFailedWithdrawal() Function",
+            "description": "The processFailedWithdrawal() function reads FailedWithdrawalRecord values from storage multiple times, consider using a local variable instead.",
+            "severity": "Optimization",
+            "contract": "SBCDepositContract",
+            "function": "processFailedWithdrawal()",
+            "lineNumber": "317"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ],
+                "2": [
+                    "CWE-1024"
+                ]
+            },
+            "title": "Inconsistent Sender Variable Usage",
+            "description": "The processFailedWithdrawal() function uses a `_msgSender()` helper while the deposits processing part of the contract uses `msg.sender`.",
+            "severity": "Medium",
+            "contract": "SBCDepositContract",
+            "function": "processFailedWithdrawal()",
+            "lineNumber": "320"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Optimization of processFailedWithdrawalsFromPointer() Function",
+            "description": "The processFailedWithdrawalsFromPointer() function reads failedWithdrawalsPointer value from storage multiple times, consider using a local variable instead.",
+            "severity": "Optimization",
+            "contract": "SBCDepositContract",
+            "function": "processFailedWithdrawalsFromPointer()",
+            "lineNumber": "355"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Optimization of processFailedWithdrawalsFromPointer()",
+            "description": "The processFailedWithdrawalsFromPointer() function reads FailedWithdrawalRecord values from storage multiple times, consider using a local variable instead.",
+            "severity": "Optimization",
+            "contract": "SBCDepositContract",
+            "function": "processFailedWithdrawalsFromPointer()",
+            "lineNumber": "358"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Optimization of executeSystemWithdrawals() Function",
+            "description": "The executeSystemWithdrawals() function reads `_addresses[i]` from calldata multiple times, it would be cheaper to store it in a local variable.",
+            "severity": "Optimization",
+            "contract": "SBCDepositContract",
+            "function": "executeSystemWithdrawals()",
+            "lineNumber": "406"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Optimization of executeSystemWithdrawals() Function",
+            "description": "The executeSystemWithdrawals() function reads numberOfFailedWithdrawals value from storage multiple times, consider using a local variable instead.",
+            "severity": "Optimization",
+            "contract": "SBCDepositContract",
+            "function": "executeSystemWithdrawals()",
+            "lineNumber": "411"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ],
+                "4": [
+                    "CWE-230"
+                ]
+            },
+            "title": "Undescribed `_token` Parameter in `unwrapTokens()` Function",
+            "description": "The `_token` parameter of the `unwrapTokens()` function lacks description.",
+            "severity": "Low",
+            "contract": "SBCDepositContract",
+            "function": "unwrapTokens()",
+            "lineNumber": "425"
+        }
+    ]
+}

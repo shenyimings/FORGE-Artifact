@@ -1,1 +1,339 @@
-{"path": "./Audit_Reports_2024/Trail_of_Bits/2023-03-wormhole-securityreview.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"], "2": ["CWE-228"]}, "title": "Lack of doc comments", "description": "Publicly accessible functions within the governor and watcher code generally lack doc comments. Inadequately documented code can be misunderstood, which increases the likelihood of an improper bug fix or a mis-implemented feature.", "severity": "Informational", "contract": "N/A", "function": "ProcessMsg, GetLatestFinalizedBlockNumber", "lineNumber": "281-282"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Fields protected by mutex are not documented", "description": "The fields within `ChainGovernor` struct that are protected by the mutex are not properly documented, which can lead to race conditions or deadlocks if a developer incorrectly locks or does not lock the mutex.", "severity": "N/A", "contract": "ChainGovernor", "function": "N/A", "lineNumber": "L119\u2013L135"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"], "4": ["CWE-690"]}, "title": "Potential nil pointer dereference in reloadPendingTransfer", "description": "When DecodeTransferPayloadHdr returns an error, the payload that is also returned is used to construct the error message, but the returned payload can be nil, leading to a potential nil pointer dereference.", "severity": "N/A", "contract": "N/A", "function": "reloadPendingTransfer", "lineNumber": "962-965"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Unchecked type assertion in queryCoinGecko", "description": "The code that processes CoinGecko responses contains an unchecked type assertion, which could be exploited for denial of service (DoS) when CoinGecko returns invalid data.", "severity": "Low", "contract": "governor_prices.go", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Governor relies on a single external source of truth for asset prices", "description": "The governor relies on a single external source (CoinGecko) for asset prices, which could enable an attacker to transfer more than they would otherwise be allowed.", "severity": "Informational", "contract": "governor_prices.go", "function": "N/A", "lineNumber": "L144\u2013L153"}, {"id": 5, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-770"]}, "title": "Potential resource leak", "description": "The Solana watcher uses `defer` within an infinite loop, causing a waste of resources.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "244-271"}, {"id": 6, "category": {"1": ["CWE-435"], "2": ["CWE-436"], "3": ["CWE-115"]}, "title": "PolygonConnector does not properly use channels", "description": "The Polygon connector does not read from the `PollSubscription.quit` channel, nor does it write to the `PollSubscription.unsubDone` channel. A caller who calls `Unsubscribe` on the `PollSubscription` could hang.", "severity": "Undetermined", "contract": "N/A", "function": "N/A", "lineNumber": "node/pkg/watchers/evm/connectors/polygon.go"}, {"id": 7, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Receiver closes channel, contradicting Golang guidance", "description": "The Unsubscribe function of PollSubscription closes the err channel, contradicting official Golang guidance on avoiding calling close on a channel unless absolutely necessary.", "severity": "Medium", "contract": "PollSubscription", "function": "Unsubscribe()", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-710"], "2": ["CWE-1120"], "3": ["CWE-1121"]}, "title": "Watcher configuration is overly complex", "description": "The watcher configuration has high cyclomatic complexity and is prone to bugs due to its nested code structure.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "node/pkg/watchers/evm/watcher.go#L192\u2013L326"}, {"id": 9, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "evm.Watcher.Run's default behavior could hide bugs", "description": "The default behavior of evm.Watcher.Run may allow a bug to go unnoticed when handling a ChainID that is not for an evm chain, and it should fail instead of creating a watcher.", "severity": "Medium", "contract": "N/A", "function": "evm.Watcher.Run", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-691"], "2": ["CWE-362"]}, "title": "Race condition in TestBlockPoller", "description": "A race condition causes `TestBlockPoller` to fail sporadically with the error message.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "300"}, {"id": 11, "category": {"1": ["CWE-710"], "2": ["CWE-1164"], "3": ["CWE-1071"]}, "title": "Unconventional test structure", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "37"}, {"id": 12, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Vulnerable Go packages", "description": "The `govulncheck` reports known vulnerabilities in Wormhole's dependencies, including path traversal, denial of service, and panics in crypto/tls.", "severity": "Undetermined", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Wormhole node does not build with latest Go version", "description": "The Wormhole node does not build with the latest Go version (1.20.1) due to compatibility issues with quic-go, which may lead to Wormhole's ability to receive updates expiring.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Missing or wrong context", "description": "In several places where a `Context` is required, the Wormhole node creates a new background `Context` rather than using the passed-in `Context`. If the passed-in `Context` is canceled or times out, a `go` routine using the background `Context` will not detect this, and resources will be leaked.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "algorand/ watcher.go:172,196,205;cosmwasm/watcher.go:198,246;sui/watcher.go:315,378;wormchain/watcher.go:136"}, {"id": 15, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-770"], "4": ["CWE-789"]}, "title": "Use of defer in a loop", "description": "The use of defer cancel() within a loop can cause significant heap memory allocation and subsequent deallocation when the call returns, leading to potential performance issues.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 16, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-909"], "4": ["CWE-456"]}, "title": "Finalizer is allowed to be nil", "description": "The method pollBlocks allows BlockPollConnector to have a nil PollFinalizer, which may permit edge cases that could otherwise be avoided by requiring all BlockPollConnectors to use the DefaultFinalizer explicitly if a finalizer is not required.", "severity": "Medium", "contract": "BlockPollConnector", "function": "pollBlocks", "lineNumber": "24-34"}]}
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/2023-03-wormhole-securityreview.pdf",
+    "project_info": {
+        "url": "https://github.com/wormhole-foundation/wormhole/tree/3b8de17d02ca60e2cac3f4d86d3112c5f572ba96",
+        "commit_hash": "3b8de17d02ca60e2cac3f4d86d3112c5f572ba96",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ]
+            },
+            "title": "Lack of doc comments",
+            "description": "Publicly accessible functions within the governor and watcher code generally lack doc comments. Inadequately documented code can be misunderstood, which increases the likelihood of an improper bug fix or a mis-implemented feature.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "ProcessMsg, GetLatestFinalizedBlockNumber",
+            "lineNumber": "281-282"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Fields protected by mutex are not documented",
+            "description": "The fields within `ChainGovernor` struct that are protected by the mutex are not properly documented, which can lead to race conditions or deadlocks if a developer incorrectly locks or does not lock the mutex.",
+            "severity": "N/A",
+            "contract": "ChainGovernor",
+            "function": "N/A",
+            "lineNumber": "L119\u2013L135"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ],
+                "4": [
+                    "CWE-690"
+                ]
+            },
+            "title": "Potential nil pointer dereference in reloadPendingTransfer",
+            "description": "When DecodeTransferPayloadHdr returns an error, the payload that is also returned is used to construct the error message, but the returned payload can be nil, leading to a potential nil pointer dereference.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "reloadPendingTransfer",
+            "lineNumber": "962-965"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Unchecked type assertion in queryCoinGecko",
+            "description": "The code that processes CoinGecko responses contains an unchecked type assertion, which could be exploited for denial of service (DoS) when CoinGecko returns invalid data.",
+            "severity": "Low",
+            "contract": "governor_prices.go",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Governor relies on a single external source of truth for asset prices",
+            "description": "The governor relies on a single external source (CoinGecko) for asset prices, which could enable an attacker to transfer more than they would otherwise be allowed.",
+            "severity": "Informational",
+            "contract": "governor_prices.go",
+            "function": "N/A",
+            "lineNumber": "L144\u2013L153"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "Potential resource leak",
+            "description": "The Solana watcher uses `defer` within an infinite loop, causing a waste of resources.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "244-271"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-115"
+                ]
+            },
+            "title": "PolygonConnector does not properly use channels",
+            "description": "The Polygon connector does not read from the `PollSubscription.quit` channel, nor does it write to the `PollSubscription.unsubDone` channel. A caller who calls `Unsubscribe` on the `PollSubscription` could hang.",
+            "severity": "Undetermined",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "node/pkg/watchers/evm/connectors/polygon.go"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Receiver closes channel, contradicting Golang guidance",
+            "description": "The Unsubscribe function of PollSubscription closes the err channel, contradicting official Golang guidance on avoiding calling close on a channel unless absolutely necessary.",
+            "severity": "Medium",
+            "contract": "PollSubscription",
+            "function": "Unsubscribe()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1120"
+                ],
+                "3": [
+                    "CWE-1121"
+                ]
+            },
+            "title": "Watcher configuration is overly complex",
+            "description": "The watcher configuration has high cyclomatic complexity and is prone to bugs due to its nested code structure.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "node/pkg/watchers/evm/watcher.go#L192\u2013L326"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "evm.Watcher.Run's default behavior could hide bugs",
+            "description": "The default behavior of evm.Watcher.Run may allow a bug to go unnoticed when handling a ChainID that is not for an evm chain, and it should fail instead of creating a watcher.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "evm.Watcher.Run",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-362"
+                ]
+            },
+            "title": "Race condition in TestBlockPoller",
+            "description": "A race condition causes `TestBlockPoller` to fail sporadically with the error message.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "300"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ],
+                "3": [
+                    "CWE-1071"
+                ]
+            },
+            "title": "Unconventional test structure",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "37"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Vulnerable Go packages",
+            "description": "The `govulncheck` reports known vulnerabilities in Wormhole's dependencies, including path traversal, denial of service, and panics in crypto/tls.",
+            "severity": "Undetermined",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Wormhole node does not build with latest Go version",
+            "description": "The Wormhole node does not build with the latest Go version (1.20.1) due to compatibility issues with quic-go, which may lead to Wormhole's ability to receive updates expiring.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Missing or wrong context",
+            "description": "In several places where a `Context` is required, the Wormhole node creates a new background `Context` rather than using the passed-in `Context`. If the passed-in `Context` is canceled or times out, a `go` routine using the background `Context` will not detect this, and resources will be leaked.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "algorand/ watcher.go:172,196,205;cosmwasm/watcher.go:198,246;sui/watcher.go:315,378;wormchain/watcher.go:136"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ],
+                "4": [
+                    "CWE-789"
+                ]
+            },
+            "title": "Use of defer in a loop",
+            "description": "The use of defer cancel() within a loop can cause significant heap memory allocation and subsequent deallocation when the call returns, leading to potential performance issues.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "Finalizer is allowed to be nil",
+            "description": "The method pollBlocks allows BlockPollConnector to have a nil PollFinalizer, which may permit edge cases that could otherwise be avoided by requiring all BlockPollConnectors to use the DefaultFinalizer explicitly if a finalizer is not required.",
+            "severity": "Medium",
+            "contract": "BlockPollConnector",
+            "function": "pollBlocks",
+            "lineNumber": "24-34"
+        }
+    ]
+}

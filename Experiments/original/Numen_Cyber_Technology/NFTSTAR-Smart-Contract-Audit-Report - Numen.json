@@ -1,1 +1,191 @@
-{"path": "./Audit_Reports_2024/Numen_Cyber_Technology/NFTSTAR-Smart-Contract-Audit-Report - Numen.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Incorrect Setting of MaxAmount and MaxLimit", "description": "setMaxAmount should be smaller than TOTAL_SUPPLY and SetMaxLimit should be smaller than the max value, if the max value is bigger then this will potentially lead to mint amount exceeding TOTAL_SUPPLY by call preMint and pubMint in the first-time call.", "severity": "High", "contract": "CrowdSale.sol", "function": ["setMaxAmount", "setMaxLimit"], "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Improper Setting of Opening flag", "description": "The opening flag is not being set to false after calling setClosing with the parameter set to true, which will allow the whitelist users perform exchange of the token with the presale price after the presale stage.", "severity": "High", "contract": "CrowdSale.sol", "function": "setClosing(bool _closing)", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "Risks in the authority transfer mechanism", "description": "In the contract CrowdSale.sol, the role onlyOwner has authority over certain functions, which can be compromised if the owner's account is hacked or stolen, allowing a hacker to take advantage of this authority.", "severity": "High", "contract": "CrowdSale.sol", "function": "setPreSalePrice() and setPublicSalePrice()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "MgrantLEimitsN FunctionC is noYt comBparedE withR the Total Supply of the token", "description": "The total grant accounts' token amounts may exceed the total supply if not compared and checked, allowing for more tokens to be granted than available.", "severity": "High", "contract": "CrowdSale.sol", "function": "grantLimits(address[] memory _accounts, uint256[] memory _limits)", "lineNumber": "3895"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-233"], "4": ["CWE-236"]}, "title": "giftLimit variable declared but not used", "description": "The variable giftLimit is seemingly used to limit the max amount of gift, but it is not being declared in the contract code logic.", "severity": "Low", "contract": "CrowdSale.sol", "function": "gift(uint256 _amount, bytes calldata signature)", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-710"], "2": ["CWE-1068"]}, "title": "Multiple Compiler Versions Declared", "description": "Inconsistent solidity versions can potentially lead to less secured solidity code and less efficient gas optimization capabilities.", "severity": "Informational", "contract": "CrowdSale.sol, NFTERC721A.sol", "function": "N/A", "lineNumber": "391, 787"}, {"id": 6, "category": {"1": ["CWE-710"], "2": ["CWE-1061"], "3": ["CWE-766"]}, "title": "Improper Usage Of Public Functions", "description": "\u2018Public\u2019 functions that are not being called in the contract should be declared as External to save gas.", "severity": "Informational", "contract": ["CrowdSale.sol", "NFTERC721A.sol"], "function": ["freeMinted(address _account)", "allowance(address _account)", "soldBy(address _account)", "pause()", "unpause()", "current()", "contractURI()", "setContractURI(string memory _contractURI)", "setBaseTokenURI(string memory _baseTokenURI)"], "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-693"], "2": ["CWE-357"]}, "title": "Missing Emit Events", "description": "The function _pauseClaimablePeriod() affects the sensitive status of the contract and should emit events as notifications to users.", "severity": "Informational", "contract": "CrowdSale.sol", "function": "_pauseClaimablePeriod(), setMaxAmount(uint32), setMaxLimit(uint32)", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-710"], "2": ["CWE-1126"]}, "title": "Optimization of Variable Type", "description": "Constant state variables should be declared as constant to save gas.", "severity": "Informational", "contract": "CrowdSale.sol", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Numen_Cyber_Technology/NFTSTAR-Smart-Contract-Audit-Report - Numen.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Incorrect Setting of MaxAmount and MaxLimit",
+            "description": "setMaxAmount should be smaller than TOTAL_SUPPLY and SetMaxLimit should be smaller than the max value, if the max value is bigger then this will potentially lead to mint amount exceeding TOTAL_SUPPLY by call preMint and pubMint in the first-time call.",
+            "severity": "High",
+            "contract": "CrowdSale.sol",
+            "function": [
+                "setMaxAmount",
+                "setMaxLimit"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Improper Setting of Opening flag",
+            "description": "The opening flag is not being set to false after calling setClosing with the parameter set to true, which will allow the whitelist users perform exchange of the token with the presale price after the presale stage.",
+            "severity": "High",
+            "contract": "CrowdSale.sol",
+            "function": "setClosing(bool _closing)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Risks in the authority transfer mechanism",
+            "description": "In the contract CrowdSale.sol, the role onlyOwner has authority over certain functions, which can be compromised if the owner's account is hacked or stolen, allowing a hacker to take advantage of this authority.",
+            "severity": "High",
+            "contract": "CrowdSale.sol",
+            "function": "setPreSalePrice() and setPublicSalePrice()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "MgrantLEimitsN FunctionC is noYt comBparedE withR the Total Supply of the token",
+            "description": "The total grant accounts' token amounts may exceed the total supply if not compared and checked, allowing for more tokens to be granted than available.",
+            "severity": "High",
+            "contract": "CrowdSale.sol",
+            "function": "grantLimits(address[] memory _accounts, uint256[] memory _limits)",
+            "lineNumber": "3895"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-233"
+                ],
+                "4": [
+                    "CWE-236"
+                ]
+            },
+            "title": "giftLimit variable declared but not used",
+            "description": "The variable giftLimit is seemingly used to limit the max amount of gift, but it is not being declared in the contract code logic.",
+            "severity": "Low",
+            "contract": "CrowdSale.sol",
+            "function": "gift(uint256 _amount, bytes calldata signature)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1068"
+                ]
+            },
+            "title": "Multiple Compiler Versions Declared",
+            "description": "Inconsistent solidity versions can potentially lead to less secured solidity code and less efficient gas optimization capabilities.",
+            "severity": "Informational",
+            "contract": "CrowdSale.sol, NFTERC721A.sol",
+            "function": "N/A",
+            "lineNumber": "391, 787"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1061"
+                ],
+                "3": [
+                    "CWE-766"
+                ]
+            },
+            "title": "Improper Usage Of Public Functions",
+            "description": "\u2018Public\u2019 functions that are not being called in the contract should be declared as External to save gas.",
+            "severity": "Informational",
+            "contract": [
+                "CrowdSale.sol",
+                "NFTERC721A.sol"
+            ],
+            "function": [
+                "freeMinted(address _account)",
+                "allowance(address _account)",
+                "soldBy(address _account)",
+                "pause()",
+                "unpause()",
+                "current()",
+                "contractURI()",
+                "setContractURI(string memory _contractURI)",
+                "setBaseTokenURI(string memory _baseTokenURI)"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-357"
+                ]
+            },
+            "title": "Missing Emit Events",
+            "description": "The function _pauseClaimablePeriod() affects the sensitive status of the contract and should emit events as notifications to users.",
+            "severity": "Informational",
+            "contract": "CrowdSale.sol",
+            "function": "_pauseClaimablePeriod(), setMaxAmount(uint32), setMaxLimit(uint32)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1126"
+                ]
+            },
+            "title": "Optimization of Variable Type",
+            "description": "Constant state variables should be declared as constant to save gas.",
+            "severity": "Informational",
+            "contract": "CrowdSale.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

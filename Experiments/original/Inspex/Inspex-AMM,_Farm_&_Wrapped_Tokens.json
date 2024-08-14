@@ -1,1 +1,215 @@
-{"path": "./Audit_Reports_2024/Inspex/Inspex-AMM,_Farm_&_Wrapped_Tokens.pdf", "project_info": {"url": "https://github.com/foodcourtofficial/contracts", "commit_hash": "c43ad98c58c518bc9faa350246ce33a94983f638", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "Unrestricted Minting of Reward Token", "description": "Anyone can mint an unlimited amount of feeToken which could be used to stake for rewards as $COUPON tokens.", "severity": "Critical", "contract": "WSafeToken", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-710"]}, "title": "Token Manual Minting by Contract Owner", "description": "The contract owner can arbitrarily mint the affected tokens due to improper adherence to coding standards.", "severity": "Critical", "contract": "CouponToken", "function": "mint() and setAllowMinting()", "lineNumber": "16-19, 31-41, 48-52"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Improper Reward Calculation (Same Token)", "description": "The reward of the pool that has the same staking token as the reward token will be slightly lower than what it should be.", "severity": "High", "contract": "Cafeteria", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Design Flaw in withdrawFee100 Pool", "description": "The product owner can use destroyed tokens from the fee wallet to restake in available pools due to a design flaw.", "severity": "High", "contract": "Cafeteria", "function": "withdraw() and emergencyWithdraw()", "lineNumber": "228, N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "Centralized Control of State Variable", "description": "Critical state variables can be updated at any time by the controlling authorities without notifying users.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Improper Reward Calculation (_withUpdate)", "description": "The $COUPON reward miscalculation can lead to unfair $COUPON token distribution.", "severity": "Medium", "contract": "Cafeteria", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Unsafe Token Transfer", "description": "The `transfer()` and `transferFrom()` functions of `WSafeToken` are affected, suggesting replacement with `safeTransfer()` and `safeTransferFrom()` from OpenZeppelin's `SafeERC20` contract.", "severity": "High", "contract": "WSafeToken", "function": "wrap(uint256 amount)", "lineNumber": "80-81"}, {"id": 7, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-770"]}, "title": "Design Flaw in massUpdatePool() Function", "description": "The massUpdatePools() function will eventually be unusable due to excessive gas usage because it calls updatePool() for all added farms and cannot remove pools, only disable them.", "severity": "Low", "contract": "Cafeteria.sol", "function": "massUpdatePools()", "lineNumber": "164-169"}, {"id": 8, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Improper Condition Checking in emergencyWithdraw() Function", "description": "Users can withdraw staked tokens from withdrawFee100 pools, but all rewards will be revoked.", "severity": "Low", "contract": "Cafeteria.sol", "function": "emergencyWithdraw(uint256 _pid)", "lineNumber": "244-253"}, {"id": 9, "category": {"1": ["CWE-682"]}, "title": "Addition of Pool With Duplicated ibToken", "description": "Adding pools with duplicated ibToken can cause the reward calculation of those pools to be incorrect.", "severity": "Low", "contract": "Cafeteria", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-284"], "2": ["CWE-749"]}, "title": "Improper Function Visibility", "description": "Functions' visibility should be changed to `external` if they are not called from any internal function.", "severity": "Info", "contract": "Cafeteria.sol", "function": "add(uint256, IBEP20, uint16, bool, bool)", "lineNumber": "105-106"}, {"id": 11, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-233"]}, "title": "Inexplicit Solidity Compiler Version", "description": "The Solidity compiler version declared in the smart contracts was not explicit, which may potentially result in compatibility issues.", "severity": "Info", "contract": "CouponToken, RSafeToken, WSafeToken", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Inspex/Inspex-AMM,_Farm_&_Wrapped_Tokens.pdf",
+    "project_info": {
+        "url": "https://github.com/foodcourtofficial/contracts",
+        "commit_hash": "c43ad98c58c518bc9faa350246ce33a94983f638",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Unrestricted Minting of Reward Token",
+            "description": "Anyone can mint an unlimited amount of feeToken which could be used to stake for rewards as $COUPON tokens.",
+            "severity": "Critical",
+            "contract": "WSafeToken",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ]
+            },
+            "title": "Token Manual Minting by Contract Owner",
+            "description": "The contract owner can arbitrarily mint the affected tokens due to improper adherence to coding standards.",
+            "severity": "Critical",
+            "contract": "CouponToken",
+            "function": "mint() and setAllowMinting()",
+            "lineNumber": "16-19, 31-41, 48-52"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improper Reward Calculation (Same Token)",
+            "description": "The reward of the pool that has the same staking token as the reward token will be slightly lower than what it should be.",
+            "severity": "High",
+            "contract": "Cafeteria",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Design Flaw in withdrawFee100 Pool",
+            "description": "The product owner can use destroyed tokens from the fee wallet to restake in available pools due to a design flaw.",
+            "severity": "High",
+            "contract": "Cafeteria",
+            "function": "withdraw() and emergencyWithdraw()",
+            "lineNumber": "228, N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Centralized Control of State Variable",
+            "description": "Critical state variables can be updated at any time by the controlling authorities without notifying users.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improper Reward Calculation (_withUpdate)",
+            "description": "The $COUPON reward miscalculation can lead to unfair $COUPON token distribution.",
+            "severity": "Medium",
+            "contract": "Cafeteria",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Unsafe Token Transfer",
+            "description": "The `transfer()` and `transferFrom()` functions of `WSafeToken` are affected, suggesting replacement with `safeTransfer()` and `safeTransferFrom()` from OpenZeppelin's `SafeERC20` contract.",
+            "severity": "High",
+            "contract": "WSafeToken",
+            "function": "wrap(uint256 amount)",
+            "lineNumber": "80-81"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "Design Flaw in massUpdatePool() Function",
+            "description": "The massUpdatePools() function will eventually be unusable due to excessive gas usage because it calls updatePool() for all added farms and cannot remove pools, only disable them.",
+            "severity": "Low",
+            "contract": "Cafeteria.sol",
+            "function": "massUpdatePools()",
+            "lineNumber": "164-169"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Improper Condition Checking in emergencyWithdraw() Function",
+            "description": "Users can withdraw staked tokens from withdrawFee100 pools, but all rewards will be revoked.",
+            "severity": "Low",
+            "contract": "Cafeteria.sol",
+            "function": "emergencyWithdraw(uint256 _pid)",
+            "lineNumber": "244-253"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Addition of Pool With Duplicated ibToken",
+            "description": "Adding pools with duplicated ibToken can cause the reward calculation of those pools to be incorrect.",
+            "severity": "Low",
+            "contract": "Cafeteria",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-749"
+                ]
+            },
+            "title": "Improper Function Visibility",
+            "description": "Functions' visibility should be changed to `external` if they are not called from any internal function.",
+            "severity": "Info",
+            "contract": "Cafeteria.sol",
+            "function": "add(uint256, IBEP20, uint16, bool, bool)",
+            "lineNumber": "105-106"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-233"
+                ]
+            },
+            "title": "Inexplicit Solidity Compiler Version",
+            "description": "The Solidity compiler version declared in the smart contracts was not explicit, which may potentially result in compatibility issues.",
+            "severity": "Info",
+            "contract": "CouponToken, RSafeToken, WSafeToken",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

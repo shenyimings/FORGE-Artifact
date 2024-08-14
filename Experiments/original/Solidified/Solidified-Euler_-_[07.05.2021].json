@@ -1,1 +1,144 @@
-{"path": "./Audit_Reports_2024/Solidified/Solidified-Euler_-_[07.05.2021].pdf", "project_info": {"url": "https://github.com/euler-xyz/euler-contracts", "commit_hash": "86f81180d4257376f4d4f66fbcbb7c9df64e18c2", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-710"], "2": ["CWE-1065"]}, "title": "Unorthodox Architecture may lead to undetected security risks", "description": "The codebase uses a novel proxy-based module system with excessive use of assembly and unconventional code structure, making it harder to navigate and more fragile in terms of security.", "severity": "Warning", "contract": "BaseLogic", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-693"], "2": ["CWE-358"]}, "title": "Base.sol: Dangerous modifier", "description": "The `FREEMEM()` modifier aimed at saving gas can have dangerous side effects if used in the wrong circumstances.", "severity": "Minor", "contract": "Base.sol", "function": "N/A", "lineNumber": "71-74"}, {"id": 2, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "Permissionless protocols are at risk from non-standard or malicious tokens", "description": "The codebase cannot protect against all possible attacks by malicious tokens or copycat tokens that impersonate well-known tokens.", "severity": "Minor", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Reliance on gas cost for protection from malicious code in external call", "description": "The `callBalanceOf()` method relies on limiting the amount of gas forwarded to the underlying token to prevent malicious behavior of the token. However, the gas cost for operations has been changed in various recent network updates, rendering this code not future-proof.", "severity": "Minor", "contract": "BaseLogic.sol", "function": "callBalanceOf()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "CALLER() not future proof", "description": "The `CALLER()` method is declared in both modules/EToken.sol and modules/DToken.sol, which is not future-proof as it depends on the non-guaranteed assumption that calldata will work consistently across future Solidity versions.", "severity": "Minor", "contract": "modules/EToken.sol and modules/DToken.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Unsafe Math Operations", "description": "In the EToken contract deposit function, there is math that has been excluded for under/overflow protections through the use of the \u201cunchecked\u201d keyword.", "severity": "Minor", "contract": "EToken", "function": "deposit()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"], "2": ["CWE-1335"]}, "title": "Sub-account XOR functionality changes the security model of addresses", "description": "The way sub-accounts are created by XOR'ing the last byte of an address with an index changes the security property of addresses if there is ever a weakness in keccak256 that makes collisions more likely.", "severity": "Minor", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Mock of Highly Sophisticated Contracts", "description": "Simplified mocks may be incomplete or not catch edge cases that the full implementation would reject.", "severity": "Note", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Solidified/Solidified-Euler_-_[07.05.2021].pdf",
+    "project_info": {
+        "url": "https://github.com/euler-xyz/euler-contracts",
+        "commit_hash": "86f81180d4257376f4d4f66fbcbb7c9df64e18c2",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1065"
+                ]
+            },
+            "title": "Unorthodox Architecture may lead to undetected security risks",
+            "description": "The codebase uses a novel proxy-based module system with excessive use of assembly and unconventional code structure, making it harder to navigate and more fragile in terms of security.",
+            "severity": "Warning",
+            "contract": "BaseLogic",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-358"
+                ]
+            },
+            "title": "Base.sol: Dangerous modifier",
+            "description": "The `FREEMEM()` modifier aimed at saving gas can have dangerous side effects if used in the wrong circumstances.",
+            "severity": "Minor",
+            "contract": "Base.sol",
+            "function": "N/A",
+            "lineNumber": "71-74"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Permissionless protocols are at risk from non-standard or malicious tokens",
+            "description": "The codebase cannot protect against all possible attacks by malicious tokens or copycat tokens that impersonate well-known tokens.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Reliance on gas cost for protection from malicious code in external call",
+            "description": "The `callBalanceOf()` method relies on limiting the amount of gas forwarded to the underlying token to prevent malicious behavior of the token. However, the gas cost for operations has been changed in various recent network updates, rendering this code not future-proof.",
+            "severity": "Minor",
+            "contract": "BaseLogic.sol",
+            "function": "callBalanceOf()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "CALLER() not future proof",
+            "description": "The `CALLER()` method is declared in both modules/EToken.sol and modules/DToken.sol, which is not future-proof as it depends on the non-guaranteed assumption that calldata will work consistently across future Solidity versions.",
+            "severity": "Minor",
+            "contract": "modules/EToken.sol and modules/DToken.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Unsafe Math Operations",
+            "description": "In the EToken contract deposit function, there is math that has been excluded for under/overflow protections through the use of the \u201cunchecked\u201d keyword.",
+            "severity": "Minor",
+            "contract": "EToken",
+            "function": "deposit()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1335"
+                ]
+            },
+            "title": "Sub-account XOR functionality changes the security model of addresses",
+            "description": "The way sub-accounts are created by XOR'ing the last byte of an address with an index changes the security property of addresses if there is ever a weakness in keccak256 that makes collisions more likely.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Mock of Highly Sophisticated Contracts",
+            "description": "Simplified mocks may be incomplete or not catch edge cases that the full implementation would reject.",
+            "severity": "Note",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

@@ -1,1 +1,193 @@
-{"path": "./Audit_Reports_2024/Verichains_Lab/Verichains Public Audit Report - SingSing Smartcontracts - v1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"], "4": ["CWE-638"], "5": ["CWE-424"], "6": ["CWE-425"]}, "title": "PassBreeding.sol - Missing contract call blocking", "description": "The finding does not provide a detailed description.", "severity": "CRITICAL", "contract": "PassBreeding", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-693"], "2": ["CWE-330"], "3": ["CWE-334"]}, "title": "User can control randomness result in reveal function", "description": "The reveal function generates a random number used for creating a superpass, but users can delay calling the giveBirth function to control the random result since the blockHash is a zero-filled bytes32 string.", "severity": "HIGH", "contract": "PassBreeding.sol", "function": "reveal()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-664"], "2": ["CWE-410"]}, "title": "Vesting contract may not have enough tokens", "description": "The Vesting contract may not have sufficient tokens.", "severity": "MEDIUM", "contract": "TokenVesting.sol", "function": "N/A", "lineNumber": "11"}, {"id": 3, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Breeding fees must be updated when maxBreedTimes is updated", "description": "In the PassBase contract, the default value for maxBreedTimes is 3, but when updating the maxBreedTimes variable, the breeding fees are not updated accordingly.", "severity": "MEDIUM", "contract": "PassBase.sol", "function": "setMaxBreedTimes()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "PassNFT.sol - transfer function can only be used by token owner", "description": "The transfer function allows approved user calling it. However, if the calling user is not the owner of input token, they still cannot transfer it using the transfer function.", "severity": "MEDIUM", "contract": "PassNFT", "function": "transfer()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "PassBreeding.sol - Autobirth daemon cannot call giveBirth without _revealHash", "description": "The autobirth daemon may not have the corresponding _revealHash of the input _dataHash so it cannot call the giveBirth function.", "severity": "MEDIUM", "contract": "PassBreeding", "function": "breedWithAuto()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "classTokenCount may exceed classTokenLimit", "description": "In the _selectClass function, when the selectedClass is Bronze , the classTokenCount may exceed the classTokenLimit.", "severity": "LOW", "contract": "PassBase.sol", "function": "_selectClass()", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-166"]}, "title": "PassNFT.sol - Missing IERC721Enumerable and IERC721Metadata interface", "description": "The supportsInterface function of the PassNFT contract does not include IERC721Enumerable and IERC721Metadata interfaces.", "severity": "LOW", "contract": "PassNFT", "function": "supportsInterface(bytes4 _interfaceId)", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "Pausable Logic Must Be Implemented in _beforeTokenTransfer Hook", "description": "The SingSingToken contract extends the Pausable contract which may be used to pause token transfers. However, the implementation is not correct.", "severity": "LOW", "contract": "SingSingToken", "function": "_beforeTokenTransfer", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Verichains_Lab/Verichains Public Audit Report - SingSing Smartcontracts - v1.0.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ],
+                "4": [
+                    "CWE-638"
+                ],
+                "5": [
+                    "CWE-424"
+                ],
+                "6": [
+                    "CWE-425"
+                ]
+            },
+            "title": "PassBreeding.sol - Missing contract call blocking",
+            "description": "The finding does not provide a detailed description.",
+            "severity": "CRITICAL",
+            "contract": "PassBreeding",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-330"
+                ],
+                "3": [
+                    "CWE-334"
+                ]
+            },
+            "title": "User can control randomness result in reveal function",
+            "description": "The reveal function generates a random number used for creating a superpass, but users can delay calling the giveBirth function to control the random result since the blockHash is a zero-filled bytes32 string.",
+            "severity": "HIGH",
+            "contract": "PassBreeding.sol",
+            "function": "reveal()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-410"
+                ]
+            },
+            "title": "Vesting contract may not have enough tokens",
+            "description": "The Vesting contract may not have sufficient tokens.",
+            "severity": "MEDIUM",
+            "contract": "TokenVesting.sol",
+            "function": "N/A",
+            "lineNumber": "11"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Breeding fees must be updated when maxBreedTimes is updated",
+            "description": "In the PassBase contract, the default value for maxBreedTimes is 3, but when updating the maxBreedTimes variable, the breeding fees are not updated accordingly.",
+            "severity": "MEDIUM",
+            "contract": "PassBase.sol",
+            "function": "setMaxBreedTimes()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "PassNFT.sol - transfer function can only be used by token owner",
+            "description": "The transfer function allows approved user calling it. However, if the calling user is not the owner of input token, they still cannot transfer it using the transfer function.",
+            "severity": "MEDIUM",
+            "contract": "PassNFT",
+            "function": "transfer()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "PassBreeding.sol - Autobirth daemon cannot call giveBirth without _revealHash",
+            "description": "The autobirth daemon may not have the corresponding _revealHash of the input _dataHash so it cannot call the giveBirth function.",
+            "severity": "MEDIUM",
+            "contract": "PassBreeding",
+            "function": "breedWithAuto()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "classTokenCount may exceed classTokenLimit",
+            "description": "In the _selectClass function, when the selectedClass is Bronze , the classTokenCount may exceed the classTokenLimit.",
+            "severity": "LOW",
+            "contract": "PassBase.sol",
+            "function": "_selectClass()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-166"
+                ]
+            },
+            "title": "PassNFT.sol - Missing IERC721Enumerable and IERC721Metadata interface",
+            "description": "The supportsInterface function of the PassNFT contract does not include IERC721Enumerable and IERC721Metadata interfaces.",
+            "severity": "LOW",
+            "contract": "PassNFT",
+            "function": "supportsInterface(bytes4 _interfaceId)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Pausable Logic Must Be Implemented in _beforeTokenTransfer Hook",
+            "description": "The SingSingToken contract extends the Pausable contract which may be used to pause token transfers. However, the implementation is not correct.",
+            "severity": "LOW",
+            "contract": "SingSingToken",
+            "function": "_beforeTokenTransfer",
+            "lineNumber": "N/A"
+        }
+    ]
+}

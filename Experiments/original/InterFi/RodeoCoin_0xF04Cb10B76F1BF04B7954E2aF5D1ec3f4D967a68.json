@@ -1,1 +1,284 @@
-{"path": "./Audit_Reports_2024/InterFi/RodeoCoin_0xF04Cb10B76F1BF04B7954E2aF5D1ec3f4D967a68.pdf", "project_info": {"url": "https://github.com/interfinetwork/audited-codes/blob/main/RodeoCoin.sol", "commit_hash": "38f6e89a3537c5d8d4c6711af9c15ab1514d48dc", "address": "0xF04Cb10B76F1BF04B7954E2aF5D1ec3f4D967a68"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "isExcludedFromFees", "description": "The 'isExcludedFromFees' function has been declared as public but is not explicitly marked as view or pure, which may lead to unintended state changes.", "severity": "Medium", "contract": "DividendTracker", "function": "isExcludedFromFees", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"]}, "title": "Unprotected Function", "description": "The withdrawableDividendOf function is declared as public and does not have any access modifiers, making it vulnerable to unauthorized access.", "severity": "High", "contract": "N/A", "function": "withdrawableDividendOf", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-703"]}, "title": "dividendTokenBalanceOf", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-749"]}, "title": "Unprotected External Function", "description": "The processDividendTracker function is declared as external and lacks access modifiers, posing a potential security risk.", "severity": "High", "contract": "DividendTracker", "function": "processDividendTracker(uint256)", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-287"]}, "title": "claim", "description": "External function claim has a potential vulnerability.", "severity": "High", "contract": "DividendTracker", "function": "claim()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "_transfer", "description": "Potential reentrancy vulnerability in _transfer function.", "severity": "High", "contract": "RODEO COIN", "function": "_transfer(address,address,uint256)", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Unanalyzed getRewardToken Function", "description": "The getRewardToken function has been identified but its functionality and potential vulnerabilities have not been analyzed.", "severity": "Unknown", "contract": "N/A", "function": "getRewardToken(uint256)", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "swapTokensForEth", "description": "Potential vulnerability in swapExactTokensForETHSupportingFeeOnTransferTokens function.", "severity": "High", "contract": "N/A", "function": "swapExactTokensForETHSupportingFeeOnTransferTokens", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-284"]}, "title": "addLiquidity", "description": "External function addLiquidity has a critical severity level.", "severity": "Critical", "contract": "IUniswapV2Router02", "function": "addLiquidity", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-710"], "2": ["CWE-1059"]}, "title": "swapBack", "description": "Private function swapBack has no description provided.", "severity": "N/A", "contract": "DividendTracker", "function": "swapBack()", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "resetFee", "description": "Unprotected resetFee function allows onlyOwner to modify fee settings.", "severity": "High", "contract": "DividendTracker", "function": "resetFee()", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "rescueTokens", "description": "The rescueTokens function has a vulnerability.", "severity": "High", "contract": "DividendTracker", "function": "rescueTokens()", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"], "4": ["CWE-638"], "5": ["CWE-424"], "6": ["CWE-425"]}, "title": "withdrawStuckEth", "description": "N/A", "severity": "Critical", "contract": "DividendTracker", "function": "withdrawStuckEth()", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "withdrawToken", "description": "External function allowing owner to withdraw tokens.", "severity": "High", "contract": "DividendTracker", "function": "withdrawToken(address,uint256)", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "updateDividendTracker", "description": "N/A", "severity": "High", "contract": "DividendTracker", "function": "updateDividendTracker", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/InterFi/RodeoCoin_0xF04Cb10B76F1BF04B7954E2aF5D1ec3f4D967a68.pdf",
+    "project_info": {
+        "url": "https://github.com/interfinetwork/audited-codes/blob/main/RodeoCoin.sol",
+        "commit_hash": "38f6e89a3537c5d8d4c6711af9c15ab1514d48dc",
+        "address": "0xF04Cb10B76F1BF04B7954E2aF5D1ec3f4D967a68",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "isExcludedFromFees",
+            "description": "The 'isExcludedFromFees' function has been declared as public but is not explicitly marked as view or pure, which may lead to unintended state changes.",
+            "severity": "Medium",
+            "contract": "DividendTracker",
+            "function": "isExcludedFromFees",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected Function",
+            "description": "The withdrawableDividendOf function is declared as public and does not have any access modifiers, making it vulnerable to unauthorized access.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "withdrawableDividendOf",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "dividendTokenBalanceOf",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-749"
+                ]
+            },
+            "title": "Unprotected External Function",
+            "description": "The processDividendTracker function is declared as external and lacks access modifiers, posing a potential security risk.",
+            "severity": "High",
+            "contract": "DividendTracker",
+            "function": "processDividendTracker(uint256)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-287"
+                ]
+            },
+            "title": "claim",
+            "description": "External function claim has a potential vulnerability.",
+            "severity": "High",
+            "contract": "DividendTracker",
+            "function": "claim()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "_transfer",
+            "description": "Potential reentrancy vulnerability in _transfer function.",
+            "severity": "High",
+            "contract": "RODEO COIN",
+            "function": "_transfer(address,address,uint256)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Unanalyzed getRewardToken Function",
+            "description": "The getRewardToken function has been identified but its functionality and potential vulnerabilities have not been analyzed.",
+            "severity": "Unknown",
+            "contract": "N/A",
+            "function": "getRewardToken(uint256)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "swapTokensForEth",
+            "description": "Potential vulnerability in swapExactTokensForETHSupportingFeeOnTransferTokens function.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "swapExactTokensForETHSupportingFeeOnTransferTokens",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "addLiquidity",
+            "description": "External function addLiquidity has a critical severity level.",
+            "severity": "Critical",
+            "contract": "IUniswapV2Router02",
+            "function": "addLiquidity",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1059"
+                ]
+            },
+            "title": "swapBack",
+            "description": "Private function swapBack has no description provided.",
+            "severity": "N/A",
+            "contract": "DividendTracker",
+            "function": "swapBack()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "resetFee",
+            "description": "Unprotected resetFee function allows onlyOwner to modify fee settings.",
+            "severity": "High",
+            "contract": "DividendTracker",
+            "function": "resetFee()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "rescueTokens",
+            "description": "The rescueTokens function has a vulnerability.",
+            "severity": "High",
+            "contract": "DividendTracker",
+            "function": "rescueTokens()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ],
+                "4": [
+                    "CWE-638"
+                ],
+                "5": [
+                    "CWE-424"
+                ],
+                "6": [
+                    "CWE-425"
+                ]
+            },
+            "title": "withdrawStuckEth",
+            "description": "N/A",
+            "severity": "Critical",
+            "contract": "DividendTracker",
+            "function": "withdrawStuckEth()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "withdrawToken",
+            "description": "External function allowing owner to withdraw tokens.",
+            "severity": "High",
+            "contract": "DividendTracker",
+            "function": "withdrawToken(address,uint256)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "updateDividendTracker",
+            "description": "N/A",
+            "severity": "High",
+            "contract": "DividendTracker",
+            "function": "updateDividendTracker",
+            "lineNumber": "N/A"
+        }
+    ]
+}

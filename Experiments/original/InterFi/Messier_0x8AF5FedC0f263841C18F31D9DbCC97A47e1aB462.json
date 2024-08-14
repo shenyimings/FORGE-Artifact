@@ -1,1 +1,248 @@
-{"path": "./Audit_Reports_2024/InterFi/Messier_0x8AF5FedC0f263841C18F31D9DbCC97A47e1aB462.pdf", "project_info": {"url": "https://github.com/interfinetwork/audited-codes/blob/main/Messier.sol", "commit_hash": "01f3a792ae14f35b5b7ce1b6d100385868ff17b7", "address": "0x8af5fedc0f263841c18f31d9dbcc97a47e1ab462"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "Unprotected approve function", "description": "The approve function does not have any protection against unauthorized access.", "severity": "High", "contract": "N/A", "function": "approve(address,uint256)", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "Unprotected transfer function", "description": "The 'transfer' function is unprotected and can be exploited to withdraw Ether without proper authorization.", "severity": "High", "contract": "N/A", "function": "transfer(address,uint256)", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "Unprotected transferFrom function", "description": "The transferFrom function is not protected and can be exploited by malicious actors.", "severity": "High", "contract": "N/A", "function": "transferFrom()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"], "4": ["CWE-638"], "5": ["CWE-424"], "6": ["CWE-425"]}, "title": "Unprotected increaseAllowance function", "description": "The increaseAllowance function does not have proper access control, allowing unauthorized users to modify allowance.", "severity": "High", "contract": "N/A", "function": "increaseAllowance(address,uint256)", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "Unprotected decreaseAllowance function", "description": "The decreaseAllowance function is unprotected and can be exploited by an attacker to drain user funds.", "severity": "High", "contract": "N/A", "function": "decreaseAllowance(address,uint256)", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "Unprotected mint function", "description": "The mint function is unprotected, allowing unauthorized users to mint tokens.", "severity": "High", "contract": "N/A", "function": "_mint(address,uint256)", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "Unprotected burn function", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-284"]}, "title": "Unprotected initialize function", "description": "The initialize function is unprotected and can be called multiple times, potentially leading to unintended behavior.", "severity": "High", "contract": "N/A", "function": "<Constructor>", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "Unprotected renounceOwnership function", "description": "The renounceOwnership function is unprotected and can be called by anyone, allowing them to renounce ownership of the contract.", "severity": "Critical", "contract": "N/A", "function": "renounceOwnership()", "lineNumber": "715018a6"}, {"id": 9, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "Unprotected transferOwnership function", "description": "The contract owner has full centralized power to control the contract, which creates a risk of rug pull scams and centralization hacks.", "severity": "High", "contract": "N/A", "function": "transferOwnership", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "Potential reentrancy in _beforeTokenTransfer function", "description": "The _beforeTokenTransfer function may be vulnerable to reentrancy attacks.", "severity": "High", "contract": "ERC20", "function": "_beforeTokenTransfer", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Potential unauthorized script upgrade", "description": "The smart contract allows unauthorized upgrades to its scripts.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/InterFi/Messier_0x8AF5FedC0f263841C18F31D9DbCC97A47e1aB462.pdf",
+    "project_info": {
+        "url": "https://github.com/interfinetwork/audited-codes/blob/main/Messier.sol",
+        "commit_hash": "01f3a792ae14f35b5b7ce1b6d100385868ff17b7",
+        "address": "0x8af5fedc0f263841c18f31d9dbcc97a47e1ab462",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Unprotected approve function",
+            "description": "The approve function does not have any protection against unauthorized access.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "approve(address,uint256)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Unprotected transfer function",
+            "description": "The 'transfer' function is unprotected and can be exploited to withdraw Ether without proper authorization.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "transfer(address,uint256)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Unprotected transferFrom function",
+            "description": "The transferFrom function is not protected and can be exploited by malicious actors.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "transferFrom()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ],
+                "4": [
+                    "CWE-638"
+                ],
+                "5": [
+                    "CWE-424"
+                ],
+                "6": [
+                    "CWE-425"
+                ]
+            },
+            "title": "Unprotected increaseAllowance function",
+            "description": "The increaseAllowance function does not have proper access control, allowing unauthorized users to modify allowance.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "increaseAllowance(address,uint256)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Unprotected decreaseAllowance function",
+            "description": "The decreaseAllowance function is unprotected and can be exploited by an attacker to drain user funds.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "decreaseAllowance(address,uint256)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Unprotected mint function",
+            "description": "The mint function is unprotected, allowing unauthorized users to mint tokens.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "_mint(address,uint256)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Unprotected burn function",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected initialize function",
+            "description": "The initialize function is unprotected and can be called multiple times, potentially leading to unintended behavior.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "<Constructor>",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Unprotected renounceOwnership function",
+            "description": "The renounceOwnership function is unprotected and can be called by anyone, allowing them to renounce ownership of the contract.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "renounceOwnership()",
+            "lineNumber": "715018a6"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Unprotected transferOwnership function",
+            "description": "The contract owner has full centralized power to control the contract, which creates a risk of rug pull scams and centralization hacks.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "transferOwnership",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Potential reentrancy in _beforeTokenTransfer function",
+            "description": "The _beforeTokenTransfer function may be vulnerable to reentrancy attacks.",
+            "severity": "High",
+            "contract": "ERC20",
+            "function": "_beforeTokenTransfer",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Potential unauthorized script upgrade",
+            "description": "The smart contract allows unauthorized upgrades to its scripts.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

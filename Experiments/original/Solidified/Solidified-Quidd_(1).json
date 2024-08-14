@@ -1,1 +1,122 @@
-{"path": "./Audit_Reports_2024/Solidified/Solidified-Quidd_(1).pdf", "project_info": {"url": "https://github.com/Quidd/quidd-mintables-poc", "commit_hash": "6dfdf3fe35f532b595c34111b3d559c6a1573ab8", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Minter role's abilities increase vulnerability to key compromise or misuse", "description": "The `mint` and `unmint` functions can be executed by the privileged `MinterRole`, which increases the impact of accidental key disclosure, for example through a compromised web service.", "severity": "Minor", "contract": "N/A", "function": "mint() and unmint()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "ERC2981TokenIDMask.sol: Royalties can be set to 100 percent", "description": "The `_setDefaultRoyalties()` function does not have any checks beyond ensuring that the range is between 0 and 100 percent, allowing royalties to be misused to cover the full value of a transaction.", "severity": "Minor", "contract": "ERC2981TokenIDMask.sol", "function": "_setDefaultRoyalties()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-749"]}, "title": "Contract exposes dangerous functionality unless overridden", "description": "The contract QuidMintablesBase.sol does not have access control and can be instantiated on its own, allowing anyone to call default mint and unmint functions.", "severity": "High", "contract": "QuidMintablesBase.sol", "function": "mint() and unmint()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Contract may fail with excessively large numbers of token ID masks", "description": "The `_tokenIDAllowed` method iterates over a dynamic array of token id masks without bounds, which may cause the contract to fail due to block gas limit if the array grows too large.", "severity": "Note", "contract": "TokenIDMaskRestrictor.sol", "function": "_tokenIDAllowed", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1288"]}, "title": "Unnecessary function implementation already present in parent contract", "description": "The functionality of `renounceRole` is already implemented in the parent contract, with the same access control and is not required, being redundant and more expensive to run than the parent's function.", "severity": "Note", "contract": "AdminRole.sol, MinterRole.sol, PauserRole.sol", "function": "renounceRole", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-691"], "2": ["CWE-1265"]}, "title": "Reentrancy Risk in Composability Scenarios", "description": "The mint function exposed by QuiddMintablesBase.sol and QuiddMintables.sol uses _safeTransfer when handling previously unminted tokens, making it reentrant and not protected by any mutex, which may lead to reentrancy attacks.", "severity": "Note", "contract": "QuiddMintablesBase.sol, QuiddMintables.sol", "function": "mint", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Solidified/Solidified-Quidd_(1).pdf",
+    "project_info": {
+        "url": "https://github.com/Quidd/quidd-mintables-poc",
+        "commit_hash": "6dfdf3fe35f532b595c34111b3d559c6a1573ab8",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Minter role's abilities increase vulnerability to key compromise or misuse",
+            "description": "The `mint` and `unmint` functions can be executed by the privileged `MinterRole`, which increases the impact of accidental key disclosure, for example through a compromised web service.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "mint() and unmint()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "ERC2981TokenIDMask.sol: Royalties can be set to 100 percent",
+            "description": "The `_setDefaultRoyalties()` function does not have any checks beyond ensuring that the range is between 0 and 100 percent, allowing royalties to be misused to cover the full value of a transaction.",
+            "severity": "Minor",
+            "contract": "ERC2981TokenIDMask.sol",
+            "function": "_setDefaultRoyalties()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-749"
+                ]
+            },
+            "title": "Contract exposes dangerous functionality unless overridden",
+            "description": "The contract QuidMintablesBase.sol does not have access control and can be instantiated on its own, allowing anyone to call default mint and unmint functions.",
+            "severity": "High",
+            "contract": "QuidMintablesBase.sol",
+            "function": "mint() and unmint()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Contract may fail with excessively large numbers of token ID masks",
+            "description": "The `_tokenIDAllowed` method iterates over a dynamic array of token id masks without bounds, which may cause the contract to fail due to block gas limit if the array grows too large.",
+            "severity": "Note",
+            "contract": "TokenIDMaskRestrictor.sol",
+            "function": "_tokenIDAllowed",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1288"
+                ]
+            },
+            "title": "Unnecessary function implementation already present in parent contract",
+            "description": "The functionality of `renounceRole` is already implemented in the parent contract, with the same access control and is not required, being redundant and more expensive to run than the parent's function.",
+            "severity": "Note",
+            "contract": "AdminRole.sol, MinterRole.sol, PauserRole.sol",
+            "function": "renounceRole",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "Reentrancy Risk in Composability Scenarios",
+            "description": "The mint function exposed by QuiddMintablesBase.sol and QuiddMintables.sol uses _safeTransfer when handling previously unminted tokens, making it reentrant and not protected by any mutex, which may lead to reentrancy attacks.",
+            "severity": "Note",
+            "contract": "QuiddMintablesBase.sol, QuiddMintables.sol",
+            "function": "mint",
+            "lineNumber": "N/A"
+        }
+    ]
+}

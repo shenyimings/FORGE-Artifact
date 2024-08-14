@@ -1,0 +1,166 @@
+{
+    "path": "./Audit_Reports_2024/Quantstamp/deca-d-ecentralized-c-arbon-tokens-itde-initial-token-distribution-event.pdf",
+    "project_info": {
+        "url": "https://github.com/MAIAN-tool/MAIAN.git",
+        "commit_hash": "fc1c6377",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Arbitrary token minting by the owner",
+            "description": "The owner can mint an arbitrary amount of tokens for themselves by simply calling the payable function repeatedly.",
+            "severity": "High Risk",
+            "contract": "DECA_ERC20_0.4.18",
+            "function": "fallback()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "The owner would receive significantly more tokens than they should",
+            "description": "According to the comment in line 232, the owner is entitled to 2% of the tokens. However, in lines 243 and 247, the owner will actually get 50% of the tokens.",
+            "severity": "High Risk",
+            "contract": "DECA_ERC20_0.4.18.sol",
+            "function": "N/A",
+            "lineNumber": "232, 243, 247"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Testing code manages bonus sales",
+            "description": "The lines 112-116 contain testing code as opposed to production code. Specifically, time-dependent bonuses are given according to intervals determined by hours instead of weeks.",
+            "severity": "High Risk",
+            "contract": "DECA_ERC20_0.5.3.sol",
+            "function": "N/A",
+            "lineNumber": "112-116"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-908"
+                ],
+                "4": [
+                    "CWE-457"
+                ]
+            },
+            "title": "The function approve() does not set an allowance",
+            "description": "The ERC20 function `approve()` is supposed to set an allowance. In the current implementation it only emits an event and returns a boolean value.",
+            "severity": "High Risk",
+            "contract": "DECA_ERC20_0.5.3.sol",
+            "function": "approve()",
+            "lineNumber": "155-156"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Integer Overflow / Underflow",
+            "description": "Integer overflow/underflow occur when an integer hits its bit-size limit and may cause many unexpected kinds of behavior.",
+            "severity": "Medium Risk",
+            "contract": "DECA.sol",
+            "function": "appendWeeks()",
+            "lineNumber": "160"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Allowance Double-Spend Exploit",
+            "description": "The contract is vulnerable to the allowance double-spend exploit as with other ERC20 tokens.",
+            "severity": "Low Risk",
+            "contract": "DECA_ERC20_0.4.18.sol",
+            "function": "transferFrom()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-477"
+                ]
+            },
+            "title": "Outdated Syntax",
+            "description": "The code uses outdated Solidity syntax, which can lead to security issues if not updated.",
+            "severity": "Low Risk",
+            "contract": "DECA_ERC20_0.4.18.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Unlocked Pragma",
+            "description": "Every Solidity file specifies in the header a version number of the format `pragma solidity (^)0.4.*` . The caret ( `^` ) before the version number implies an unlocked pragma, meaning that the compiler will use the specified version _and above_ , hence the term \"unlocked\".",
+            "severity": "Informational",
+            "contract": "DECA_ERC20_0.4.18.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Clone-and-Own",
+            "description": "The clone-and-own approach involves copying and adjusting open source code at one's own discretion, which may involve security risks as the code may not follow best practices or contain vulnerabilities.",
+            "severity": "Informational",
+            "contract": "DECA_ERC20_0.4.18.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

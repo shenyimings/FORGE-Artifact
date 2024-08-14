@@ -1,1 +1,314 @@
-{"path": "./Audit_Reports_2024/InterFi/NutGain_0xc091377110acfb780dfb9f6c200b2ef81d8ce4ab.pdf", "project_info": {"url": "https://github.com/interfinetwork/audited-codes/blob/main/NutGain.sol", "commit_hash": "8edc90ba305a3742df2223eac8bfa14037de9524", "address": "0xc091377110acfb780dfb9f6c200b2ef81d8ce4ab"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "Unprotected approve function", "description": "The approve function does not have any access control or validation, allowing unauthorized users to approve arbitrary tokens.", "severity": "High", "contract": "N/A", "function": "approve()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "Unprotected transfer function", "description": "The transfer function is unprotected and can be exploited by malicious users.", "severity": "High", "contract": "N/A", "function": "transfer(address,uint256)", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "Unprotected transferFrom function", "description": "The transferFrom function lacks protection, allowing unauthorized access and potential exploitation.", "severity": "High", "contract": "N/A", "function": "transferFrom()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Unprotected mint function", "description": "The owner can mint tokens after initial contract creation/deployment.", "severity": "Low", "contract": "NutGain", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"]}, "title": "Unprotected burn function", "description": "The burn function does not have any access control, allowing anyone to call it and potentially drain the contract's tokens.", "severity": "High", "contract": "NUTGAIN", "function": "buyBackAndBurn()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"]}, "title": "Unprotected swap function", "description": "The swapTokensForDividendToken and swapAndSendnutgDividends functions are private but unprotected, allowing unauthorized access.", "severity": "High", "contract": "NutgDividendTracker", "function": ["swapTokensForDividendToken(uint256,address,address)", "swapAndSendnutgDividends(uint256)"], "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-284"]}, "title": "Unprotected skim function", "description": "The skim function is unprotected, allowing unauthorized access and potential manipulation of sensitive data.", "severity": "High", "contract": "N/A", "function": "skim(address)", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-693"]}, "title": "Unprotected sync function", "description": "The sync function does not have any protection mechanism which can lead to potential security risks.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-284"]}, "title": "Unprotected initialize function", "description": "The initialize function is unprotected, allowing anyone to call it and potentially alter the contract's state.", "severity": "High", "contract": "N/A", "function": "initialize()", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "Unprotected increaseAllowance function", "description": "The increaseAllowance function does not have any protection or access control, allowing unauthorized users to increase allowance.", "severity": "High", "contract": "N/A", "function": "increaseAllowance()", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "Unprotected decreaseAllowance function", "description": "The decreaseAllowance function is unprotected and can be exploited by an attacker.", "severity": "High", "contract": "N/A", "function": "decreaseAllowance()", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-284"]}, "title": "Unprotected _transfer function", "description": "The _transfer function is unprotected and can be exploited by an attacker.", "severity": "High", "contract": "N/A", "function": "_transfer()", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "Unprotected _mint function", "description": "The _mint function is unprotected and can be exploited to mint tokens without authorization.", "severity": "Critical", "contract": "N/A", "function": "_mint", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-284"]}, "title": "Unprotected _burn function", "description": "The _burn function is unprotected and can be exploited by an attacker to drain the contract's tokens.", "severity": "High", "contract": "NUTGAIN", "function": "_burn()", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "Unprotected _approve function", "description": "The _approve function is unprotected and can be exploited by unauthorized users.", "severity": "High", "contract": "N/A", "function": "_approve", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-284"]}, "title": "Unprotected _setupDecimals function", "description": "The _setupDecimals function lacks protection, potentially allowing unauthorized access or modification.", "severity": "High", "contract": "N/A", "function": "_setupDecimals", "lineNumber": "N/A"}, {"id": 16, "category": {"1": ["CWE-284"]}, "title": "Unprotected _beforeTokenTransfer function", "description": "The _beforeTokenTransfer function is unprotected and can be accessed internally without any restrictions.", "severity": "High", "contract": "DividendPayingToken", "function": "_beforeTokenTransfer", "lineNumber": "N/A"}, {"id": 17, "category": {"1": ["CWE-284"]}, "title": "Unprotected withdrawDividend function", "description": "The withdrawablenutgDividendOf function does not have any access modifiers or restrictions, making it vulnerable to unauthorized access and potential manipulation of dividend distributions.", "severity": "High", "contract": "NUTGAIN", "function": "withdrawablenutgDividendOf", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/InterFi/NutGain_0xc091377110acfb780dfb9f6c200b2ef81d8ce4ab.pdf",
+    "project_info": {
+        "url": "https://github.com/interfinetwork/audited-codes/blob/main/NutGain.sol",
+        "commit_hash": "8edc90ba305a3742df2223eac8bfa14037de9524",
+        "address": "0xc091377110acfb780dfb9f6c200b2ef81d8ce4ab",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Unprotected approve function",
+            "description": "The approve function does not have any access control or validation, allowing unauthorized users to approve arbitrary tokens.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "approve()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Unprotected transfer function",
+            "description": "The transfer function is unprotected and can be exploited by malicious users.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "transfer(address,uint256)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Unprotected transferFrom function",
+            "description": "The transferFrom function lacks protection, allowing unauthorized access and potential exploitation.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "transferFrom()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Unprotected mint function",
+            "description": "The owner can mint tokens after initial contract creation/deployment.",
+            "severity": "Low",
+            "contract": "NutGain",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected burn function",
+            "description": "The burn function does not have any access control, allowing anyone to call it and potentially drain the contract's tokens.",
+            "severity": "High",
+            "contract": "NUTGAIN",
+            "function": "buyBackAndBurn()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected swap function",
+            "description": "The swapTokensForDividendToken and swapAndSendnutgDividends functions are private but unprotected, allowing unauthorized access.",
+            "severity": "High",
+            "contract": "NutgDividendTracker",
+            "function": [
+                "swapTokensForDividendToken(uint256,address,address)",
+                "swapAndSendnutgDividends(uint256)"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected skim function",
+            "description": "The skim function is unprotected, allowing unauthorized access and potential manipulation of sensitive data.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "skim(address)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "Unprotected sync function",
+            "description": "The sync function does not have any protection mechanism which can lead to potential security risks.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected initialize function",
+            "description": "The initialize function is unprotected, allowing anyone to call it and potentially alter the contract's state.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "initialize()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Unprotected increaseAllowance function",
+            "description": "The increaseAllowance function does not have any protection or access control, allowing unauthorized users to increase allowance.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "increaseAllowance()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Unprotected decreaseAllowance function",
+            "description": "The decreaseAllowance function is unprotected and can be exploited by an attacker.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "decreaseAllowance()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected _transfer function",
+            "description": "The _transfer function is unprotected and can be exploited by an attacker.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "_transfer()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Unprotected _mint function",
+            "description": "The _mint function is unprotected and can be exploited to mint tokens without authorization.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "_mint",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected _burn function",
+            "description": "The _burn function is unprotected and can be exploited by an attacker to drain the contract's tokens.",
+            "severity": "High",
+            "contract": "NUTGAIN",
+            "function": "_burn()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Unprotected _approve function",
+            "description": "The _approve function is unprotected and can be exploited by unauthorized users.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "_approve",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected _setupDecimals function",
+            "description": "The _setupDecimals function lacks protection, potentially allowing unauthorized access or modification.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "_setupDecimals",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected _beforeTokenTransfer function",
+            "description": "The _beforeTokenTransfer function is unprotected and can be accessed internally without any restrictions.",
+            "severity": "High",
+            "contract": "DividendPayingToken",
+            "function": "_beforeTokenTransfer",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected withdrawDividend function",
+            "description": "The withdrawablenutgDividendOf function does not have any access modifiers or restrictions, making it vulnerable to unauthorized access and potential manipulation of dividend distributions.",
+            "severity": "High",
+            "contract": "NUTGAIN",
+            "function": "withdrawablenutgDividendOf",
+            "lineNumber": "N/A"
+        }
+    ]
+}

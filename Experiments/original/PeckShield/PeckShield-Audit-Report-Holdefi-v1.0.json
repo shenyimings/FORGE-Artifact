@@ -1,1 +1,150 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Holdefi-v1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-693"]}, "title": "Race Conditions with Approves", "description": "Similar to ERC20 token contracts, `Holdefi` implements `approveWithdrawSupply()`, `approveWithdrawCollateral()` and `approveBorrow()` functions to allow a spender address to manage owner\u2019s tokens, which is an essential feature in DeFi universe. However, one well-known race condition vulnerability has always been recognized in the ERC20 contracts.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Flawed Logic Of Holdefi::depositLiquidationReserve()", "description": "The `Holdefi` protocol is designed to work with both ETH and ERC20 tokens. While all flows consider this aspect and treat the markets and collateral differently for ETH and ERC20 tokens, only the `depositLiquidationReserveInternal()` function is missing the differential treatment of ERC20 tokens.", "severity": "High", "contract": "Holdefi", "function": "depositLiquidationReserveInternal()", "lineNumber": "1392-1405"}, {"id": 2, "category": {"1": ["CWE-435"], "2": ["CWE-436"], "3": ["CWE-437"]}, "title": "Suggested beforeChangeBorrowRate() in Borrow-Related Operations", "description": "In the Holdefi protocol, there are two functions `beforeChangeBorrowRate()` and `beforeChangeSupplyRate` which are used to update borrow/supply indices and promotion reserve/debt. The function `beforeChangeBorrowRate()` updates the borrow index before calling `beforeChangeSupplyRate()`.", "severity": "Undetermined", "contract": "Holdefi", "function": "beforeChangeBorrowRate()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Safe-Version Replacement With safeTransfer() And safeTransferFrom()", "description": "ERC20 token transfers using `transfer` or `transferFrom()` are required to check the return values for confirming a successful transfer. However, some token contracts may not return a value or may revert on failure.", "severity": "Medium", "contract": "Holdefi", "function": "transferFromHoldefi() and transferToHoldefi()", "lineNumber": "1088-1105"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Owner Address Centralization Risk", "description": "The `Holdefi` protocol has the notion of an administrator or owner who has exclusive access to critical functions.", "severity": "Medium", "contract": "HoldefiOwnable", "function": ["activateMarket", "deactivateMarket"], "lineNumber": "157-167"}, {"id": 5, "category": {"1": ["CWE-435"], "2": ["CWE-436"], "3": ["CWE-437"]}, "title": "Incompatibility with Deflationary/Rebasing Tokens", "description": "The Holdefi protocol's contracts support both ETH and ERC20 assets on the supply and borrow sides, but the asset-transferring routines may not work as expected with deflationary/rebasing tokens.", "severity": "Low", "contract": "Holdefi", "function": "transferFromHoldefi", "lineNumber": "1088-1099"}, {"id": 6, "category": {"1": ["CWE-691"], "2": ["CWE-1265"]}, "title": "Potential Reentrancy Risks", "description": "The `repayBorrowInternal()` function in the `Holdefi` contract violates the `checks-effects-interactions` principle, making it vulnerable to reentrancy attacks.", "severity": "Medium", "contract": "Holdefi", "function": "repayBorrowInternal()", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "Incorrect newPriceAggregator Events Emitted in HoldefiPrices::setPriceAggregator()", "description": "The function setPriceAggregator() emits incorrect NewPriceAggregator events when ERC20DecimalInterface() successfully returns tokenDecimals, using the function parameter decimals instead of the actual decimals value.", "severity": "Low", "contract": "HoldefiPrices", "function": "setPriceAggregator()", "lineNumber": "83"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Holdefi-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/holdefi/Holdefi/tree/cbd6845",
+        "commit_hash": "cbd6845",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "Race Conditions with Approves",
+            "description": "Similar to ERC20 token contracts, `Holdefi` implements `approveWithdrawSupply()`, `approveWithdrawCollateral()` and `approveBorrow()` functions to allow a spender address to manage owner\u2019s tokens, which is an essential feature in DeFi universe. However, one well-known race condition vulnerability has always been recognized in the ERC20 contracts.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Flawed Logic Of Holdefi::depositLiquidationReserve()",
+            "description": "The `Holdefi` protocol is designed to work with both ETH and ERC20 tokens. While all flows consider this aspect and treat the markets and collateral differently for ETH and ERC20 tokens, only the `depositLiquidationReserveInternal()` function is missing the differential treatment of ERC20 tokens.",
+            "severity": "High",
+            "contract": "Holdefi",
+            "function": "depositLiquidationReserveInternal()",
+            "lineNumber": "1392-1405"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-437"
+                ]
+            },
+            "title": "Suggested beforeChangeBorrowRate() in Borrow-Related Operations",
+            "description": "In the Holdefi protocol, there are two functions `beforeChangeBorrowRate()` and `beforeChangeSupplyRate` which are used to update borrow/supply indices and promotion reserve/debt. The function `beforeChangeBorrowRate()` updates the borrow index before calling `beforeChangeSupplyRate()`.",
+            "severity": "Undetermined",
+            "contract": "Holdefi",
+            "function": "beforeChangeBorrowRate()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Safe-Version Replacement With safeTransfer() And safeTransferFrom()",
+            "description": "ERC20 token transfers using `transfer` or `transferFrom()` are required to check the return values for confirming a successful transfer. However, some token contracts may not return a value or may revert on failure.",
+            "severity": "Medium",
+            "contract": "Holdefi",
+            "function": "transferFromHoldefi() and transferToHoldefi()",
+            "lineNumber": "1088-1105"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Owner Address Centralization Risk",
+            "description": "The `Holdefi` protocol has the notion of an administrator or owner who has exclusive access to critical functions.",
+            "severity": "Medium",
+            "contract": "HoldefiOwnable",
+            "function": [
+                "activateMarket",
+                "deactivateMarket"
+            ],
+            "lineNumber": "157-167"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-437"
+                ]
+            },
+            "title": "Incompatibility with Deflationary/Rebasing Tokens",
+            "description": "The Holdefi protocol's contracts support both ETH and ERC20 assets on the supply and borrow sides, but the asset-transferring routines may not work as expected with deflationary/rebasing tokens.",
+            "severity": "Low",
+            "contract": "Holdefi",
+            "function": "transferFromHoldefi",
+            "lineNumber": "1088-1099"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "Potential Reentrancy Risks",
+            "description": "The `repayBorrowInternal()` function in the `Holdefi` contract violates the `checks-effects-interactions` principle, making it vulnerable to reentrancy attacks.",
+            "severity": "Medium",
+            "contract": "Holdefi",
+            "function": "repayBorrowInternal()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect newPriceAggregator Events Emitted in HoldefiPrices::setPriceAggregator()",
+            "description": "The function setPriceAggregator() emits incorrect NewPriceAggregator events when ERC20DecimalInterface() successfully returns tokenDecimals, using the function parameter decimals instead of the actual decimals value.",
+            "severity": "Low",
+            "contract": "HoldefiPrices",
+            "function": "setPriceAggregator()",
+            "lineNumber": "83"
+        }
+    ]
+}

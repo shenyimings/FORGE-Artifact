@@ -1,1 +1,277 @@
-{"path": "./Audit_Reports_2024/QuillAudits/CR2 Smart Contract Audit Report - QuillAudits .pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-229"]}, "title": "A.1 Hypercritical functions design flaw", "description": "The Vesting contract does not place appropriate data validations while executing deposits and withdrawals, allowing users to become both investors and founders, which can lead to potential adversarial scenarios.", "severity": "High Severity", "contract": "Vesting.sol", "function": ["depositFounderLinearTokens", "depositFounderLinearTokensToInvestors", "depositFounderNonLinearTokens", "withdrawTGEFund", "withdrawInstallmentAmount", "withdrawBatch", "setNonLinearInstallments"], "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "Inexistent logic to verify investors and RoundId lead to malicious \u2026..", "description": "The lack of verification logic for investors and RoundId can lead to malicious activities such as Denial-of-Service (DoS) attacks.", "severity": "High", "contract": "PrivateRound.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-693"]}, "title": "Potential reentrancy in withdrawTaxTokens", "description": "Admins can withdraw taxed tokens. The amount they can withdraw is stored in taxedTokens[_tokenContract]. ERC777 tokens allow reentrancy, admins can call withdrawTaxTokens multiple times leading to potential rug pull.", "severity": "High", "contract": "PrivateRound.sol", "function": "withdrawTaxTokens()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"], "4": ["CWE-638"], "5": ["CWE-424"], "6": ["CWE-425"]}, "title": "A.12 Ensure secure deployment", "description": "N/A", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-710"]}, "title": "A.13 Increase code readability", "description": "In the Vesting contract, there are multiple instances where readability can be improved by implying to the following recommendations in general.", "severity": "Informational", "contract": "Vesting.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-710"], "2": ["CWE-1061"]}, "title": "A.14 Use structs Function Parameters", "description": "In the Vesting contract, functions accept inputs in an ad hoc manner which can be confusing for users or DApps composing utilizing this smart contracts.", "severity": "High", "contract": "Vesting.sol", "function": ["depositFounderLinearTokens", "depositFounderLinearTokensToInvestors", "depositFounderNonLinearTokens", "withdrawTGEFund", "withdrawInstallmentAmount", "withdrawBatch", "setNonLinearInstallments"], "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "A.15 Illogical use of require check", "description": "N/A", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "A.16 Improper ordering of round ID", "description": "The createPrivateRound function asks the user for the roundId which can collide sometimes if the roundId is already taken.", "severity": "High", "contract": "contracts/PrivateRound.sol", "function": "createPrivateRound", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-710"]}, "title": "A.17 Inconsistent order of layout", "description": "The contract components are not grouped according to their order and visibility as stated in the Solidity style guide.", "severity": "Informational", "contract": "PrivateRound.sol; Vesting.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-166"]}, "title": "A.18 Missing Natspec", "description": "There is no natural specification to elaborate the functionality of functions.", "severity": "High", "contract": "PrivateRound.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-284"]}, "title": "A.19 Inadequate Function calling", "description": "The functions depositTokens, withdrawInitialPercentage, and milestoneValidationRequest are callable by anyone even if the private round is not created.", "severity": "High", "contract": "PrivateRound.sol", "function": "depositTokens/withdrawInitialPercentage/milestoneValidationRequest", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "A.20 No event emission on external functions", "description": "No function in PrivateRound contract emits a relevant event, Events and logs are important in contracts because they facilitate communication between smart contracts and their user interfaces.", "severity": "High", "contract": "PrivateRound", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "A1. Hypercritical functions design flaw", "description": "The Vesting contract implementation does not place appropriate data validations while executing deposits and withdrawals, allowing users to become both investors and founders at the same time, leading to potential adversarial scenarios.", "severity": "High", "contract": "Vesting.sol", "function": ["depositFounderLinearTokens", "depositFounderLinearTokensToInvestors", "depositFounderNonLinearTokens", "withdrawTGEFund", "withdrawInstallmentAmount", "withdrawBatch", "setNonLinearInstallments"], "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/QuillAudits/CR2 Smart Contract Audit Report - QuillAudits .pdf",
+    "project_info": {
+        "url": "https://github.com/CR-Square/crsquareq/tree/main",
+        "commit_hash": "main",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ]
+            },
+            "title": "A.1 Hypercritical functions design flaw",
+            "description": "The Vesting contract does not place appropriate data validations while executing deposits and withdrawals, allowing users to become both investors and founders, which can lead to potential adversarial scenarios.",
+            "severity": "High Severity",
+            "contract": "Vesting.sol",
+            "function": [
+                "depositFounderLinearTokens",
+                "depositFounderLinearTokensToInvestors",
+                "depositFounderNonLinearTokens",
+                "withdrawTGEFund",
+                "withdrawInstallmentAmount",
+                "withdrawBatch",
+                "setNonLinearInstallments"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Inexistent logic to verify investors and RoundId lead to malicious \u2026..",
+            "description": "The lack of verification logic for investors and RoundId can lead to malicious activities such as Denial-of-Service (DoS) attacks.",
+            "severity": "High",
+            "contract": "PrivateRound.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "Potential reentrancy in withdrawTaxTokens",
+            "description": "Admins can withdraw taxed tokens. The amount they can withdraw is stored in taxedTokens[_tokenContract]. ERC777 tokens allow reentrancy, admins can call withdrawTaxTokens multiple times leading to potential rug pull.",
+            "severity": "High",
+            "contract": "PrivateRound.sol",
+            "function": "withdrawTaxTokens()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ],
+                "4": [
+                    "CWE-638"
+                ],
+                "5": [
+                    "CWE-424"
+                ],
+                "6": [
+                    "CWE-425"
+                ]
+            },
+            "title": "A.12 Ensure secure deployment",
+            "description": "N/A",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ]
+            },
+            "title": "A.13 Increase code readability",
+            "description": "In the Vesting contract, there are multiple instances where readability can be improved by implying to the following recommendations in general.",
+            "severity": "Informational",
+            "contract": "Vesting.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1061"
+                ]
+            },
+            "title": "A.14 Use structs Function Parameters",
+            "description": "In the Vesting contract, functions accept inputs in an ad hoc manner which can be confusing for users or DApps composing utilizing this smart contracts.",
+            "severity": "High",
+            "contract": "Vesting.sol",
+            "function": [
+                "depositFounderLinearTokens",
+                "depositFounderLinearTokensToInvestors",
+                "depositFounderNonLinearTokens",
+                "withdrawTGEFund",
+                "withdrawInstallmentAmount",
+                "withdrawBatch",
+                "setNonLinearInstallments"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "A.15 Illogical use of require check",
+            "description": "N/A",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "A.16 Improper ordering of round ID",
+            "description": "The createPrivateRound function asks the user for the roundId which can collide sometimes if the roundId is already taken.",
+            "severity": "High",
+            "contract": "contracts/PrivateRound.sol",
+            "function": "createPrivateRound",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ]
+            },
+            "title": "A.17 Inconsistent order of layout",
+            "description": "The contract components are not grouped according to their order and visibility as stated in the Solidity style guide.",
+            "severity": "Informational",
+            "contract": "PrivateRound.sol; Vesting.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-166"
+                ]
+            },
+            "title": "A.18 Missing Natspec",
+            "description": "There is no natural specification to elaborate the functionality of functions.",
+            "severity": "High",
+            "contract": "PrivateRound.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "A.19 Inadequate Function calling",
+            "description": "The functions depositTokens, withdrawInitialPercentage, and milestoneValidationRequest are callable by anyone even if the private round is not created.",
+            "severity": "High",
+            "contract": "PrivateRound.sol",
+            "function": "depositTokens/withdrawInitialPercentage/milestoneValidationRequest",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "A.20 No event emission on external functions",
+            "description": "No function in PrivateRound contract emits a relevant event, Events and logs are important in contracts because they facilitate communication between smart contracts and their user interfaces.",
+            "severity": "High",
+            "contract": "PrivateRound",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "A1. Hypercritical functions design flaw",
+            "description": "The Vesting contract implementation does not place appropriate data validations while executing deposits and withdrawals, allowing users to become both investors and founders at the same time, leading to potential adversarial scenarios.",
+            "severity": "High",
+            "contract": "Vesting.sol",
+            "function": [
+                "depositFounderLinearTokens",
+                "depositFounderLinearTokensToInvestors",
+                "depositFounderNonLinearTokens",
+                "withdrawTGEFund",
+                "withdrawInstallmentAmount",
+                "withdrawBatch",
+                "setNonLinearInstallments"
+            ],
+            "lineNumber": "N/A"
+        }
+    ]
+}

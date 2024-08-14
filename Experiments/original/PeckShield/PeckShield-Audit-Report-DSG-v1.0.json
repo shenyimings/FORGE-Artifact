@@ -1,1 +1,156 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-DSG-v1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Timely massUpdatePools During Pool Weight Changes", "description": "The `set()` function in the `LiquidityPool` contract does not timely invoke `massUpdatePools()` to update the reward distribution before the new pool weight becomes effective, which may lead to unfair reward distribution.", "severity": "Low", "contract": "LiquidityPool", "function": "set()", "lineNumber": "196-204"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Incompatibility with Deflationary Tokens", "description": "The DepositPool contract may not work as expected with deflationary tokens due to its use of safeTransferFrom() or safeTransfer() routines for asset transfer, which could lead to inconsistent internal asset balances and actual token balances maintained in individual ERC20 token contracts.", "severity": "Low", "contract": "DepositPool", "function": "deposit(), withdraw()", "lineNumber": "201-206"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Suggested Adherence of Checks-Effects-Interaction Pattern", "description": "Violating `checks-effects-interactions` principle can lead to re-entrancy attacks.", "severity": "Medium", "contract": "SinglePool", "function": "emergencyWithdraw()", "lineNumber": "204"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Duplicate Pool Detection and Prevention In Erc20EarnNftPool", "description": "The `Erc20EarnNftPool` protocol does not perform necessary sanity checks to prevent a new pool with a duplicate token from being added.", "severity": "Low", "contract": "Erc20EarnNftPool", "function": "addPool()", "lineNumber": "87"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-749"]}, "title": "Prohibited Contract Calls For computerSeed()", "description": "In the `DsgNft` contract, the `upgradeNft()` function calls the `Random.computerSeed()` routine to produce a random seed for `randomPower()` calculation.", "severity": "Low", "contract": "DsgNft", "function": "upgradeNft()", "lineNumber": "288"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Fees Bypass With Direct ERC721 transferFrom()", "description": "The protocol allows direct ERC721 transferFrom() which can bypass fees collection.", "severity": "Low", "contract": "NFTMarket", "function": "buy(uint index)", "lineNumber": "321-388"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Trust Issue of Admin Keys", "description": "The privileged administrative account `owner` has critical roles in governing and regulating system-wide operations, and its related accesses need to be scrutinized.", "severity": "Medium", "contract": "DSGToken", "function": "mint()", "lineNumber": "97-109"}, {"id": 7, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Possible Overflow in vDSGToken::_mint()", "description": "The calculation of `StakingPower` may overflow when a large amount of `DSG` tokens are transferred into the contract at one time.", "severity": "Low", "contract": "vDSGToken", "function": "_mint()", "lineNumber": "397-410"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-DSG-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/Dinosaur-eggs/core/tree/6b046e634308d09dd3e3b625cb930d61364065ca",
+        "commit_hash": "6b046e634308d09dd3e3b625cb930d61364065ca",
+        "address": "0x8e8c01e78f15912c815407117893cf0226ca4f88",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Timely massUpdatePools During Pool Weight Changes",
+            "description": "The `set()` function in the `LiquidityPool` contract does not timely invoke `massUpdatePools()` to update the reward distribution before the new pool weight becomes effective, which may lead to unfair reward distribution.",
+            "severity": "Low",
+            "contract": "LiquidityPool",
+            "function": "set()",
+            "lineNumber": "196-204"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incompatibility with Deflationary Tokens",
+            "description": "The DepositPool contract may not work as expected with deflationary tokens due to its use of safeTransferFrom() or safeTransfer() routines for asset transfer, which could lead to inconsistent internal asset balances and actual token balances maintained in individual ERC20 token contracts.",
+            "severity": "Low",
+            "contract": "DepositPool",
+            "function": "deposit(), withdraw()",
+            "lineNumber": "201-206"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Suggested Adherence of Checks-Effects-Interaction Pattern",
+            "description": "Violating `checks-effects-interactions` principle can lead to re-entrancy attacks.",
+            "severity": "Medium",
+            "contract": "SinglePool",
+            "function": "emergencyWithdraw()",
+            "lineNumber": "204"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Duplicate Pool Detection and Prevention In Erc20EarnNftPool",
+            "description": "The `Erc20EarnNftPool` protocol does not perform necessary sanity checks to prevent a new pool with a duplicate token from being added.",
+            "severity": "Low",
+            "contract": "Erc20EarnNftPool",
+            "function": "addPool()",
+            "lineNumber": "87"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-749"
+                ]
+            },
+            "title": "Prohibited Contract Calls For computerSeed()",
+            "description": "In the `DsgNft` contract, the `upgradeNft()` function calls the `Random.computerSeed()` routine to produce a random seed for `randomPower()` calculation.",
+            "severity": "Low",
+            "contract": "DsgNft",
+            "function": "upgradeNft()",
+            "lineNumber": "288"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Fees Bypass With Direct ERC721 transferFrom()",
+            "description": "The protocol allows direct ERC721 transferFrom() which can bypass fees collection.",
+            "severity": "Low",
+            "contract": "NFTMarket",
+            "function": "buy(uint index)",
+            "lineNumber": "321-388"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "The privileged administrative account `owner` has critical roles in governing and regulating system-wide operations, and its related accesses need to be scrutinized.",
+            "severity": "Medium",
+            "contract": "DSGToken",
+            "function": "mint()",
+            "lineNumber": "97-109"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Possible Overflow in vDSGToken::_mint()",
+            "description": "The calculation of `StakingPower` may overflow when a large amount of `DSG` tokens are transferred into the contract at one time.",
+            "severity": "Low",
+            "contract": "vDSGToken",
+            "function": "_mint()",
+            "lineNumber": "397-410"
+        }
+    ]
+}

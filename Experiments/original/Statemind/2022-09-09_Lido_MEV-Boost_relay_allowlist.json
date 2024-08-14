@@ -1,1 +1,136 @@
-{"path": "./Audit_Reports_2024/Statemind/2022-09-09_Lido_MEV-Boost_relay_allowlist.pdf", "project_info": {"url": "N/A", "commit_hash": "Initial commit", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"]}, "title": "Gas optimisation", "description": "In add_relay function, execution reverts only at the end at Line 155 when adding more relays than MAX_NUM_RELAYS.", "severity": "Informational", "contract": "MEVBoostRelayAllowedList", "function": "add_relay()", "lineNumber": "129, 155"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Redundant check", "description": "At Line 271, `msg.sender` is checked for zero address which is unnecessary because it's impossible to make a call from zero address.", "severity": "Informational", "contract": "MEVBoostRelayAllowedList", "function": "N/A", "lineNumber": "271"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Function _safe_erc20_transfer() doesn't revert if token is not a contract", "description": "The function `_safe_erc20_transfer()` takes address `token` as argument, but it doesn't check if that address is a contract. A low-level call to an EOA address returns `True` with no return data. This can lead to an emitting of the event `ERC20Recovered()` even though no tokens were transferred.", "severity": "N/A", "contract": "MEVBoostRelayAllowedList", "function": "_safe_erc20_transfer()", "lineNumber": "L288"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Inaccurate NatSpec comments", "description": "NatSpec comments are inaccurate at multiple locations.", "severity": "Informational", "contract": "MEVBoostRelayAllowedList", "function": "N/A", "lineNumber": "164, 189, 232"}, {"id": 4, "category": {"1": ["CWE-697"], "2": ["CWE-1025"], "3": ["CWE-595"], "4": ["CWE-597"]}, "title": "Event name RelaysUpdated is ambiguous", "description": "The event name `RelaysUpdated` can be interpreted as some relays in the list were updated.", "severity": "Informational", "contract": "MEVBoostRelayAllowedList", "function": "N/A", "lineNumber": "L21"}, {"id": 5, "category": {"1": ["CWE-664"], "2": ["CWE-496"]}, "title": "Address of a recipient in ERC20Recovered might be indexed.", "description": "In order to simplify and facilitate interaction with event logs, it makes sense to change the recipient address in the ERC20Recovered event to `indexed`.", "severity": "Informational", "contract": "MEVBoostRelayAllowedList", "function": "ERC20Recovered", "lineNumber": "34"}, {"id": 6, "category": {"1": ["CWE-710"], "2": ["CWE-1120"], "3": ["CWE-1060"]}, "title": "Inefficient storage of relays", "description": "Relays are stored in an array so to get the value by URI you need to do a linear search. It can be optimized to O(1) asymptotic.", "severity": "Informational", "contract": "MEVBoostRelayAllowedList", "function": "add_relay/remove_relay", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Statemind/2022-09-09_Lido_MEV-Boost_relay_allowlist.pdf",
+    "project_info": {
+        "url": "https://github.com/lidofinance/mev-boost-relay-allowed-list/tree/26ec6791c2466e784a894b8867db71d8de620745",
+        "commit_hash": "26ec6791c2466e784a894b8867db71d8de620745",
+        "address": "0xf95f069f9ad107938f6ba802a3da87892298610e",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Gas optimisation",
+            "description": "In add_relay function, execution reverts only at the end at Line 155 when adding more relays than MAX_NUM_RELAYS.",
+            "severity": "Informational",
+            "contract": "MEVBoostRelayAllowedList",
+            "function": "add_relay()",
+            "lineNumber": "129, 155"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Redundant check",
+            "description": "At Line 271, `msg.sender` is checked for zero address which is unnecessary because it's impossible to make a call from zero address.",
+            "severity": "Informational",
+            "contract": "MEVBoostRelayAllowedList",
+            "function": "N/A",
+            "lineNumber": "271"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Function _safe_erc20_transfer() doesn't revert if token is not a contract",
+            "description": "The function `_safe_erc20_transfer()` takes address `token` as argument, but it doesn't check if that address is a contract. A low-level call to an EOA address returns `True` with no return data. This can lead to an emitting of the event `ERC20Recovered()` even though no tokens were transferred.",
+            "severity": "N/A",
+            "contract": "MEVBoostRelayAllowedList",
+            "function": "_safe_erc20_transfer()",
+            "lineNumber": "L288"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Inaccurate NatSpec comments",
+            "description": "NatSpec comments are inaccurate at multiple locations.",
+            "severity": "Informational",
+            "contract": "MEVBoostRelayAllowedList",
+            "function": "N/A",
+            "lineNumber": "164, 189, 232"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ],
+                "2": [
+                    "CWE-1025"
+                ],
+                "3": [
+                    "CWE-595"
+                ],
+                "4": [
+                    "CWE-597"
+                ]
+            },
+            "title": "Event name RelaysUpdated is ambiguous",
+            "description": "The event name `RelaysUpdated` can be interpreted as some relays in the list were updated.",
+            "severity": "Informational",
+            "contract": "MEVBoostRelayAllowedList",
+            "function": "N/A",
+            "lineNumber": "L21"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-496"
+                ]
+            },
+            "title": "Address of a recipient in ERC20Recovered might be indexed.",
+            "description": "In order to simplify and facilitate interaction with event logs, it makes sense to change the recipient address in the ERC20Recovered event to `indexed`.",
+            "severity": "Informational",
+            "contract": "MEVBoostRelayAllowedList",
+            "function": "ERC20Recovered",
+            "lineNumber": "34"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1120"
+                ],
+                "3": [
+                    "CWE-1060"
+                ]
+            },
+            "title": "Inefficient storage of relays",
+            "description": "Relays are stored in an array so to get the value by URI you need to do a linear search. It can be optimized to O(1) asymptotic.",
+            "severity": "Informational",
+            "contract": "MEVBoostRelayAllowedList",
+            "function": "add_relay/remove_relay",
+            "lineNumber": "N/A"
+        }
+    ]
+}

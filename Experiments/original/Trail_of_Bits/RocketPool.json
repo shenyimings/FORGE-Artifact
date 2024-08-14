@@ -1,1 +1,144 @@
-{"path": "./Audit_Reports_2024/Trail_of_Bits/RocketPool.pdf", "project_info": {"url": "https://github.com/rocket-pool/rocketpool", "commit_hash": "a65b203cf99c7a991c2d85a7468a97bfb5dbba31", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"]}, "title": "Any network contract can change any node\u2019s withdrawal address", "description": "The `RocketStorage` contract uses the eternal storage pattern and has a special protected storage area that stores data related to node operators\u2019 withdrawal addresses, but it is writable by network contracts.", "severity": "High", "contract": "RocketStorage", "function": "setUint()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-697"], "2": ["CWE-1024"]}, "title": "Current storage pattern fails to ensure type safety", "description": "The current storage pattern uses untyped storage slots, which can lead to unexpected values being read from the same slot when written with different data types, causing potential loss of funds.", "severity": "N/A", "contract": "RocketStorage", "function": "N/A", "lineNumber": "159-163"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Solidity compiler optimizations can be problematic", "description": "There have been several optimization bugs with security implications, and it is unclear how many contracts in the wild actually use them. High-severity security issues due to optimization bugs have occurred in the past.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-693"], "2": ["CWE-358"]}, "title": "Upgradeable contracts can block minipool withdrawals", "description": "The `rocketMinipoolManager` contract can be upgraded by governance, which could replace it with a version in which `destroyMinipool` reverts, causing withdrawals to revert and breaking the guarantee that node operators will be able to withdraw their funds.", "severity": "High", "contract": "RocketMinipoolManager", "function": "destroyMinipool", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Lack of contract existence check on delegatecall will result in unexpected behavior", "description": "The contract will not throw an error if its implementation is incorrectly set or self-destructed. It will instead return success even though no code was executed, leading to unexpected behavior and potential scams.", "severity": "High", "contract": "RocketMinipool", "function": "constructor", "lineNumber": "102-108"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-287"]}, "title": "tx.origin in RocketStorage authentication may be an attack vector", "description": "During the initialization phase, any call that originates from the guardian account will be trusted, allowing a malicious contract to make critical storage updates.", "severity": "N/A", "contract": "RocketStorage", "function": "N/A", "lineNumber": "L36-48"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "Duplicated storage-slot computation can silently introduce errors", "description": "If the same storage slot were used to write a value of type _T_ and then to read a value of type _U_ from the same slot, the value of _U_ could be unexpected. Since storage is untyped, Solidity\u2019s type checker would be unable to catch this type mismatch, and the bug would go unnoticed.", "severity": "N/A", "contract": "RocketStorage", "function": "N/A", "lineNumber": "159-163"}, {"id": 7, "category": {"1": ["CWE-435"], "2": ["CWE-436"], "3": ["CWE-115"]}, "title": "Potential collisions between eternal storage and Solidity mapping storage slots", "description": "Potential collisions can occur between eternal storage and Solidity mapping storage slots.", "severity": "High", "contract": "RocketStorage", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/RocketPool.pdf",
+    "project_info": {
+        "url": "https://github.com/rocket-pool/rocketpool",
+        "commit_hash": "a65b203cf99c7a991c2d85a7468a97bfb5dbba31",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Any network contract can change any node\u2019s withdrawal address",
+            "description": "The `RocketStorage` contract uses the eternal storage pattern and has a special protected storage area that stores data related to node operators\u2019 withdrawal addresses, but it is writable by network contracts.",
+            "severity": "High",
+            "contract": "RocketStorage",
+            "function": "setUint()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ],
+                "2": [
+                    "CWE-1024"
+                ]
+            },
+            "title": "Current storage pattern fails to ensure type safety",
+            "description": "The current storage pattern uses untyped storage slots, which can lead to unexpected values being read from the same slot when written with different data types, causing potential loss of funds.",
+            "severity": "N/A",
+            "contract": "RocketStorage",
+            "function": "N/A",
+            "lineNumber": "159-163"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Solidity compiler optimizations can be problematic",
+            "description": "There have been several optimization bugs with security implications, and it is unclear how many contracts in the wild actually use them. High-severity security issues due to optimization bugs have occurred in the past.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-358"
+                ]
+            },
+            "title": "Upgradeable contracts can block minipool withdrawals",
+            "description": "The `rocketMinipoolManager` contract can be upgraded by governance, which could replace it with a version in which `destroyMinipool` reverts, causing withdrawals to revert and breaking the guarantee that node operators will be able to withdraw their funds.",
+            "severity": "High",
+            "contract": "RocketMinipoolManager",
+            "function": "destroyMinipool",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Lack of contract existence check on delegatecall will result in unexpected behavior",
+            "description": "The contract will not throw an error if its implementation is incorrectly set or self-destructed. It will instead return success even though no code was executed, leading to unexpected behavior and potential scams.",
+            "severity": "High",
+            "contract": "RocketMinipool",
+            "function": "constructor",
+            "lineNumber": "102-108"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-287"
+                ]
+            },
+            "title": "tx.origin in RocketStorage authentication may be an attack vector",
+            "description": "During the initialization phase, any call that originates from the guardian account will be trusted, allowing a malicious contract to make critical storage updates.",
+            "severity": "N/A",
+            "contract": "RocketStorage",
+            "function": "N/A",
+            "lineNumber": "L36-48"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Duplicated storage-slot computation can silently introduce errors",
+            "description": "If the same storage slot were used to write a value of type _T_ and then to read a value of type _U_ from the same slot, the value of _U_ could be unexpected. Since storage is untyped, Solidity\u2019s type checker would be unable to catch this type mismatch, and the bug would go unnoticed.",
+            "severity": "N/A",
+            "contract": "RocketStorage",
+            "function": "N/A",
+            "lineNumber": "159-163"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-115"
+                ]
+            },
+            "title": "Potential collisions between eternal storage and Solidity mapping storage slots",
+            "description": "Potential collisions can occur between eternal storage and Solidity mapping storage slots.",
+            "severity": "High",
+            "contract": "RocketStorage",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

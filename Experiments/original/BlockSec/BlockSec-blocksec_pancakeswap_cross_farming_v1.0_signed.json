@@ -1,1 +1,122 @@
-{"path": "./Audit_Reports_2024/BlockSec/BlockSec-blocksec_pancakeswap_cross_farming_v1.0_signed.pdf", "project_info": {"url": "N/A", "commit_hash": "e77daef1ae954d6fd96d3f4d41c5327ce5125d83", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Potential improper gas price estimation", "description": "The cross-farming project relies on a CrossFarmingSender contract to send messages to the cross-chain forwarder contract on the source chain. In the sendFarmMessage function of the CrossFarmingSender contract, the transaction fee in the destination chain is estimated by multiplying the gas price of the current transaction (i.e., in the source chain) with the estimated gas limit in the destination chain.", "severity": "Low", "contract": "CrossFarmingSender", "function": "sendFarmMessage()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "Unchecked valid range for Chainlink prices", "description": "The valid range (i.e., the minAnswer and maxAnswer range provided by the price oracle) is not checked, which may lead to unexpected behaviors.", "severity": "Low", "contract": "CrossFarmingSender.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-664"], "2": ["CWE-404"], "3": ["CWE-772"], "4": ["CWE-775"]}, "title": "Being unable to disable pools", "description": "The variable named whitelistPool in the CrossFarmingVault contract is used to allow de-positing the trustworthy LP tokens. However, once an LP token is added to the vault as a pool, it is unable to remove or disable this pool anymore.", "severity": "Low", "contract": "CrossFarmingVault", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Potential double deposit or withdrawal in the fallback situation", "description": "The attack sequence involves sending a failed transaction to relay the withdrawal message to the MessageBus, triggering the operator to initiate a call to the fallbackWithdraw function. The attacker could front-run the fallbackWithdraw function using a call to the withdraw function, allowing for potential double deposit or withdrawal.", "severity": "Medium", "contract": "CrossFarmingProxy.sol", "function": "fallbackWithdraw() and withdraw()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-710"], "2": ["CWE-1164"], "3": ["CWE-561"]}, "title": "Remove unused inherited contract", "description": "The CrossFarmingSender contract does not need to inherit from MessageSenderApp because the corresponding functionalities are not used.", "severity": "Low", "contract": "CrossFarmingSender", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-691"], "2": ["CWE-841"]}, "title": "Follow the check-effect-interactions pattern", "description": "It is recommended to follow the check-effect-interactions pattern in the contract code, which specifies that interactions like token transfers should be placed after the checks and effects on the contract state.", "severity": "N/A", "contract": "CrossFarmingVault, CrossFarmingSender", "function": "ackWithdraw(), ackEmergencyWithdraw(), sendFarmMessage()", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/BlockSec/BlockSec-blocksec_pancakeswap_cross_farming_v1.0_signed.pdf",
+    "project_info": {
+        "url": "https://github.com/chefcooper/pancake-contracts",
+        "commit_hash": "e77daef1ae954d6fd96d3f4d41c5327ce5125d83",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Potential improper gas price estimation",
+            "description": "The cross-farming project relies on a CrossFarmingSender contract to send messages to the cross-chain forwarder contract on the source chain. In the sendFarmMessage function of the CrossFarmingSender contract, the transaction fee in the destination chain is estimated by multiplying the gas price of the current transaction (i.e., in the source chain) with the estimated gas limit in the destination chain.",
+            "severity": "Low",
+            "contract": "CrossFarmingSender",
+            "function": "sendFarmMessage()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Unchecked valid range for Chainlink prices",
+            "description": "The valid range (i.e., the minAnswer and maxAnswer range provided by the price oracle) is not checked, which may lead to unexpected behaviors.",
+            "severity": "Low",
+            "contract": "CrossFarmingSender.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-775"
+                ]
+            },
+            "title": "Being unable to disable pools",
+            "description": "The variable named whitelistPool in the CrossFarmingVault contract is used to allow de-positing the trustworthy LP tokens. However, once an LP token is added to the vault as a pool, it is unable to remove or disable this pool anymore.",
+            "severity": "Low",
+            "contract": "CrossFarmingVault",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Potential double deposit or withdrawal in the fallback situation",
+            "description": "The attack sequence involves sending a failed transaction to relay the withdrawal message to the MessageBus, triggering the operator to initiate a call to the fallbackWithdraw function. The attacker could front-run the fallbackWithdraw function using a call to the withdraw function, allowing for potential double deposit or withdrawal.",
+            "severity": "Medium",
+            "contract": "CrossFarmingProxy.sol",
+            "function": "fallbackWithdraw() and withdraw()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ],
+                "3": [
+                    "CWE-561"
+                ]
+            },
+            "title": "Remove unused inherited contract",
+            "description": "The CrossFarmingSender contract does not need to inherit from MessageSenderApp because the corresponding functionalities are not used.",
+            "severity": "Low",
+            "contract": "CrossFarmingSender",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "Follow the check-effect-interactions pattern",
+            "description": "It is recommended to follow the check-effect-interactions pattern in the contract code, which specifies that interactions like token transfers should be placed after the checks and effects on the contract state.",
+            "severity": "N/A",
+            "contract": "CrossFarmingVault, CrossFarmingSender",
+            "function": "ackWithdraw(), ackEmergencyWithdraw(), sendFarmMessage()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

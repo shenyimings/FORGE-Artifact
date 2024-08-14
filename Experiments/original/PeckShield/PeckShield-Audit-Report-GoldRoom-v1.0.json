@@ -1,1 +1,144 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-GoldRoom-v1.0.pdf", "project_info": {"url": "https://github.com/GoldRoomProject/gold_room.git", "commit_hash": "451bece", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Proper Logic in LockRewards::withdrawLocked()", "description": "The issue stems from the lack of boosted amount calculation when the staked assets are removed.", "severity": "Medium", "contract": "LockRewards", "function": "withdrawLocked()", "lineNumber": "187, 191, 200"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Accommodation of Non-ERC20-Compliant Tokens", "description": "The `transfer` function does not follow the ERC-20 standard, specifically it does not throw an exception when the message caller's account balance does not have enough tokens to spend.", "severity": "Low", "contract": "Multiple Contracts", "function": "transfer()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Timely updateReward() Upon the rewardRate Change", "description": "The rewards may not be accrued using the right rewardRate if the call to updateReward() is not immediately invoked before updating the new rewardRate.", "severity": "Medium", "contract": "StakingRewards", "function": "setRewardRate()", "lineNumber": "405-407"}, {"id": 3, "category": {"1": ["CWE-435"], "2": ["CWE-436"]}, "title": "Inconsistency Between GuStableCoin And Xau", "description": "The `GoldRoom` protocol has two built-in fractional-algorithmic stablecoins `Gu` and `Xau`. Our analysis shows that these two stablecoins share the same logic, but have unnecessary inconsistency in their implementation.", "severity": "Low", "contract": "GuStableCoin, Xau", "function": "pool_burn_from()", "lineNumber": "226-230, 220-224"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Trust Issue of Admin Keys", "description": "In the GoldRoom protocol, there is a privileged `owner` account that plays a critical role in governing and regulating system-wide operations. It also has the privilege to control or govern the flow of assets managed by this protocol.", "severity": "Medium", "contract": "GrShares", "function": "setTimelock,setSynthAddress", "lineNumber": "88-91,93-99"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Incorrect Trading Fee in UniswapV2Library", "description": "The UniswapV2Library contract has an incorrect assumption of a 0.3% trading fee instead of the actual 0.25% trading fee used by PancakeSwap, which may skew token conversion calculations.", "severity": "Low", "contract": "UniswapV2Library", "function": "getAmountOut() and getAmountIn()", "lineNumber": "61-67"}, {"id": 6, "category": {"1": ["CWE-682"], "2": ["CWE-1339"]}, "title": "Simplified Logic of Pool::availableExcessGrDV()", "description": "Precision loss may occur due to different orders when both multiplication and division are involved in the `Pool::availableExcessGrDV()` function.", "severity": "Low", "contract": "Pool", "function": "availableExcessGrDV()", "lineNumber": "203"}, {"id": 7, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Improved Sanity Checks For System Parameters", "description": "DeFi protocols typically have a number of system- wide parameters that can be dynamically configured on demand. The `GoldRoom` protocol is no exception.", "severity": "Low", "contract": "Pool", "function": "setPoolParameters", "lineNumber": "537-547"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-GoldRoom-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/GoldRoomProject/gold_room.git",
+        "commit_hash": "451bece",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Proper Logic in LockRewards::withdrawLocked()",
+            "description": "The issue stems from the lack of boosted amount calculation when the staked assets are removed.",
+            "severity": "Medium",
+            "contract": "LockRewards",
+            "function": "withdrawLocked()",
+            "lineNumber": "187, 191, 200"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Accommodation of Non-ERC20-Compliant Tokens",
+            "description": "The `transfer` function does not follow the ERC-20 standard, specifically it does not throw an exception when the message caller's account balance does not have enough tokens to spend.",
+            "severity": "Low",
+            "contract": "Multiple Contracts",
+            "function": "transfer()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Timely updateReward() Upon the rewardRate Change",
+            "description": "The rewards may not be accrued using the right rewardRate if the call to updateReward() is not immediately invoked before updating the new rewardRate.",
+            "severity": "Medium",
+            "contract": "StakingRewards",
+            "function": "setRewardRate()",
+            "lineNumber": "405-407"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ]
+            },
+            "title": "Inconsistency Between GuStableCoin And Xau",
+            "description": "The `GoldRoom` protocol has two built-in fractional-algorithmic stablecoins `Gu` and `Xau`. Our analysis shows that these two stablecoins share the same logic, but have unnecessary inconsistency in their implementation.",
+            "severity": "Low",
+            "contract": "GuStableCoin, Xau",
+            "function": "pool_burn_from()",
+            "lineNumber": "226-230, 220-224"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "In the GoldRoom protocol, there is a privileged `owner` account that plays a critical role in governing and regulating system-wide operations. It also has the privilege to control or govern the flow of assets managed by this protocol.",
+            "severity": "Medium",
+            "contract": "GrShares",
+            "function": "setTimelock,setSynthAddress",
+            "lineNumber": "88-91,93-99"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect Trading Fee in UniswapV2Library",
+            "description": "The UniswapV2Library contract has an incorrect assumption of a 0.3% trading fee instead of the actual 0.25% trading fee used by PancakeSwap, which may skew token conversion calculations.",
+            "severity": "Low",
+            "contract": "UniswapV2Library",
+            "function": "getAmountOut() and getAmountIn()",
+            "lineNumber": "61-67"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "Simplified Logic of Pool::availableExcessGrDV()",
+            "description": "Precision loss may occur due to different orders when both multiplication and division are involved in the `Pool::availableExcessGrDV()` function.",
+            "severity": "Low",
+            "contract": "Pool",
+            "function": "availableExcessGrDV()",
+            "lineNumber": "203"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Improved Sanity Checks For System Parameters",
+            "description": "DeFi protocols typically have a number of system- wide parameters that can be dynamically configured on demand. The `GoldRoom` protocol is no exception.",
+            "severity": "Low",
+            "contract": "Pool",
+            "function": "setPoolParameters",
+            "lineNumber": "537-547"
+        }
+    ]
+}

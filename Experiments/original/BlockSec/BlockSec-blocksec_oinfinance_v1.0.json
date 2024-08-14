@@ -1,1 +1,362 @@
-{"path": "./Audit_Reports_2024/BlockSec/BlockSec-blocksec_oinfinance_v1.0.pdf", "project_info": {"url": "https://github.com/oinfinance/NearOinDao2.1", "commit_hash": "3bd117606c753d3c2f66b6dcddd1ae18ea47a20a", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Users in different privileges use the same white list", "description": "Functions assert_param_white, assert_white, assert_esm_white, assert_oracle_white are used for different privileges but share the same whitelist.", "severity": "N/A", "contract": "esm.rs, dparam.rs, oracle.rs", "function": "assert_esm_white, assert_param_white, assert_white, assert_oracle_white", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "burn_coin does not check the token type", "description": "The burn_coin function does not verify the token type before performing operations.", "severity": "High", "contract": "N/A", "function": "burn_coin()", "lineNumber": "19"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Reward coin\u2019s total_reward can be modified by multi-Signature managers", "description": "The total reward of the reward coin can be altered by multiple signature managers.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "19"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Redundant assertion", "description": "The address of the reward coin is checked in `ft_on_transfer`. In this case, we do not need to check the name of reward coin at the beginning of the function `inject_reward`.", "severity": "N/A", "contract": "pool.rs", "function": "inject_reward()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "Repeated assertion for user\u2019s liquidation ratio", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "21"}, {"id": 5, "category": {"1": ["CWE-435"]}, "title": "Redundant whitelist check", "description": "Function set_reward_speed invokes function assert_param_white to check privilege, and internal_set_reward_speed also invokes assert_white with same whitelist.", "severity": "N/A", "contract": "N/A", "function": "set_reward_speed() and internal_set_reward_speed()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-710"], "2": ["CWE-1164"], "3": ["CWE-561"]}, "title": "Unused function", "description": "Function `on_inject_reward` is not used by any other functions and can be removed.", "severity": "Medium", "contract": "pool.rs", "function": "on_inject_reward()", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Redundant Code", "description": "No description provided.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "22, 24"}, {"id": 8, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "The function name and the implementation is opposite", "description": "Functions `is_stake_paused`, `is_redeem_paused`, `is_claim_reward_paused`, `is_liquidation_paused`, `is_stable_paused` are defined to represent whether the function is paused or not, but when the specific attribute is live, it returns True.", "severity": "Medium", "contract": "esm.rs", "function": "is_{stake|redeem|claim_reward|liquidation|stable}_paused", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-682"], "2": ["CWE-1339"]}, "title": "The calculation precision can be enhanced", "description": "Function `internal_user_stable` aims to calculate the stable fee. The calculation precision can be enhanced by conducting multiplication before division.", "severity": "N/A", "contract": "stablefee.rs", "function": "internal_user_stable", "lineNumber": "25-30"}, {"id": 10, "category": {"1": ["CWE-682"]}, "title": "System may not record previously poked price", "description": "The outdated OIN price may lead to price manipulation without checking the freshness of the price poked by the oracle.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-682"]}, "title": "Discontinuous distribution of collateral token in liquidation", "description": "When the user\u2019s staking ratio is larger or equal than 108.5%, users have to pay the liquidation_fee, which owns 2% of the `allot_debt`. However, if the user\u2019s staking ratio is less than 108.5%, he/she does not need to pay the liquidation fee. This result in the fact that user with larger staking ratio may allot less staking token to the pool after liquidation.", "severity": "High", "contract": "liquidation", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-682"]}, "title": "Optimization of calculation precision is not necessary", "description": "Adding 1 in line 832 cannot increase the calculation precision as `self.gas_compensation_ratio` is rather large.", "severity": "N/A", "contract": "liquidation", "function": "N/A", "lineNumber": "831-832"}, {"id": 13, "category": {"1": ["CWE-682"]}, "title": "Multi-signed request can be confirmed with a relatively low confirmation ratio", "description": "The multi-signed request confirmation rate is calculated by the number of multi-signature managers when the request was created. But the number of multi-signature managers may change later. In this case, if the number of managers increases, the request can be confirmed with a low confirmation ratio.", "severity": "High", "contract": "multisign.rs", "function": "is_num_enough() and add_request_only()", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-682"]}, "title": "Block number per year is inaccurate", "description": "Inaccurate constant for BLOCK_PER_YEAR will make the results of calculations using the constant inconsistent with reality.", "severity": "Middle", "contract": "N/A", "function": "N/A", "lineNumber": "74"}, {"id": 15, "category": {"1": ["CWE-682"]}, "title": "Available minted coins is not right", "description": "Incorrect calculation of the maximum usdo can mint", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "15"}, {"id": 16, "category": {"1": ["CWE-682"]}, "title": "Payment of stable fee can result in the loss of user\u2019s deposited tokens", "description": "The contract will reduce the balance of the user's staking token when paying the stable fee with 'OIN' token instead of 'ST_NEAR', resulting in the loss of user's deposited tokens.", "severity": "High", "contract": "burn_coin:lib.rs", "function": "N/A", "lineNumber": "N/A"}, {"id": 17, "category": {"1": ["CWE-682"]}, "title": "Incorrect staking ratio", "description": "When the user's staking ratio is larger or equal than 108.5%, users have to pay the liquidation_fee, which owns 2% of the `allot_debt`. However, if the user's staking ratio is less than 108.5%, he/she does not need to pay the liquidation fee.", "severity": "High", "contract": "liquidation", "function": "N/A", "lineNumber": "N/A"}, {"id": 18, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Reward coins can beyond the limitation", "description": "The number of reward coin can be larger than the upper bound.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 19, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Same whitelist for users in different privileges", "description": "Functions assert_param_white, assert_white, assert_esm_white, and assert_oracle_white are used for different privileges but share the same whitelist.", "severity": "High", "contract": "N/A", "function": ["assert_param_white", "assert_white", "assert_esm_white", "assert_oracle_white"], "lineNumber": ["esm.rs (Listing 2.25)", "dparam.rs (Listing 2.26)", "oracle.rs (Listing 2.27)"]}, {"id": 20, "category": {"1": ["CWE-682"]}, "title": "No check on the address of stable fee", "description": "The contract reduces the balance of user's staking token instead of 'OIN' token when paying the stable fees.", "severity": "High", "contract": "burn_coin", "function": "N/A", "lineNumber": "Listing 2.22: burn_coin:lib.rs"}]}
+{
+    "path": "./Audit_Reports_2024/BlockSec/BlockSec-blocksec_oinfinance_v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/oinfinance/NearOinDao2.1",
+        "commit_hash": "3bd117606c753d3c2f66b6dcddd1ae18ea47a20a",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Users in different privileges use the same white list",
+            "description": "Functions assert_param_white, assert_white, assert_esm_white, assert_oracle_white are used for different privileges but share the same whitelist.",
+            "severity": "N/A",
+            "contract": "esm.rs, dparam.rs, oracle.rs",
+            "function": "assert_esm_white, assert_param_white, assert_white, assert_oracle_white",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "burn_coin does not check the token type",
+            "description": "The burn_coin function does not verify the token type before performing operations.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "burn_coin()",
+            "lineNumber": "19"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Reward coin\u2019s total_reward can be modified by multi-Signature managers",
+            "description": "The total reward of the reward coin can be altered by multiple signature managers.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "19"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Redundant assertion",
+            "description": "The address of the reward coin is checked in `ft_on_transfer`. In this case, we do not need to check the name of reward coin at the beginning of the function `inject_reward`.",
+            "severity": "N/A",
+            "contract": "pool.rs",
+            "function": "inject_reward()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Repeated assertion for user\u2019s liquidation ratio",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "21"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ]
+            },
+            "title": "Redundant whitelist check",
+            "description": "Function set_reward_speed invokes function assert_param_white to check privilege, and internal_set_reward_speed also invokes assert_white with same whitelist.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "set_reward_speed() and internal_set_reward_speed()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ],
+                "3": [
+                    "CWE-561"
+                ]
+            },
+            "title": "Unused function",
+            "description": "Function `on_inject_reward` is not used by any other functions and can be removed.",
+            "severity": "Medium",
+            "contract": "pool.rs",
+            "function": "on_inject_reward()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Redundant Code",
+            "description": "No description provided.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "22, 24"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "The function name and the implementation is opposite",
+            "description": "Functions `is_stake_paused`, `is_redeem_paused`, `is_claim_reward_paused`, `is_liquidation_paused`, `is_stable_paused` are defined to represent whether the function is paused or not, but when the specific attribute is live, it returns True.",
+            "severity": "Medium",
+            "contract": "esm.rs",
+            "function": "is_{stake|redeem|claim_reward|liquidation|stable}_paused",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "The calculation precision can be enhanced",
+            "description": "Function `internal_user_stable` aims to calculate the stable fee. The calculation precision can be enhanced by conducting multiplication before division.",
+            "severity": "N/A",
+            "contract": "stablefee.rs",
+            "function": "internal_user_stable",
+            "lineNumber": "25-30"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "System may not record previously poked price",
+            "description": "The outdated OIN price may lead to price manipulation without checking the freshness of the price poked by the oracle.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Discontinuous distribution of collateral token in liquidation",
+            "description": "When the user\u2019s staking ratio is larger or equal than 108.5%, users have to pay the liquidation_fee, which owns 2% of the `allot_debt`. However, if the user\u2019s staking ratio is less than 108.5%, he/she does not need to pay the liquidation fee. This result in the fact that user with larger staking ratio may allot less staking token to the pool after liquidation.",
+            "severity": "High",
+            "contract": "liquidation",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Optimization of calculation precision is not necessary",
+            "description": "Adding 1 in line 832 cannot increase the calculation precision as `self.gas_compensation_ratio` is rather large.",
+            "severity": "N/A",
+            "contract": "liquidation",
+            "function": "N/A",
+            "lineNumber": "831-832"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Multi-signed request can be confirmed with a relatively low confirmation ratio",
+            "description": "The multi-signed request confirmation rate is calculated by the number of multi-signature managers when the request was created. But the number of multi-signature managers may change later. In this case, if the number of managers increases, the request can be confirmed with a low confirmation ratio.",
+            "severity": "High",
+            "contract": "multisign.rs",
+            "function": "is_num_enough() and add_request_only()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Block number per year is inaccurate",
+            "description": "Inaccurate constant for BLOCK_PER_YEAR will make the results of calculations using the constant inconsistent with reality.",
+            "severity": "Middle",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "74"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Available minted coins is not right",
+            "description": "Incorrect calculation of the maximum usdo can mint",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "15"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Payment of stable fee can result in the loss of user\u2019s deposited tokens",
+            "description": "The contract will reduce the balance of the user's staking token when paying the stable fee with 'OIN' token instead of 'ST_NEAR', resulting in the loss of user's deposited tokens.",
+            "severity": "High",
+            "contract": "burn_coin:lib.rs",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect staking ratio",
+            "description": "When the user's staking ratio is larger or equal than 108.5%, users have to pay the liquidation_fee, which owns 2% of the `allot_debt`. However, if the user's staking ratio is less than 108.5%, he/she does not need to pay the liquidation fee.",
+            "severity": "High",
+            "contract": "liquidation",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Reward coins can beyond the limitation",
+            "description": "The number of reward coin can be larger than the upper bound.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 19,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Same whitelist for users in different privileges",
+            "description": "Functions assert_param_white, assert_white, assert_esm_white, and assert_oracle_white are used for different privileges but share the same whitelist.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": [
+                "assert_param_white",
+                "assert_white",
+                "assert_esm_white",
+                "assert_oracle_white"
+            ],
+            "lineNumber": [
+                "esm.rs (Listing 2.25)",
+                "dparam.rs (Listing 2.26)",
+                "oracle.rs (Listing 2.27)"
+            ]
+        },
+        {
+            "id": 20,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "No check on the address of stable fee",
+            "description": "The contract reduces the balance of user's staking token instead of 'OIN' token when paying the stable fees.",
+            "severity": "High",
+            "contract": "burn_coin",
+            "function": "N/A",
+            "lineNumber": "Listing 2.22: burn_coin:lib.rs"
+        }
+    ]
+}

@@ -1,1 +1,341 @@
-{"path": "./Audit_Reports_2024/InterFi/ImperialFinance_0x889e8cD93Be2FDF4CCc649Ba9D51e61CFD8C930f.pdf", "project_info": {"url": "https://github.com/interfinetwork/audited-codes/blob/main/ImperialFinance.sol", "commit_hash": "bc0b94fe1e7da06309329025fbe07c6239facb1c", "address": "0x889e8cd93be2fdf4ccc649ba9d51e61cfd8c930f"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "approve", "description": "The approve function has a potential security vulnerability.", "severity": "High", "contract": "N/A", "function": "approve(address,uint256)", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Transfer Function Vulnerability", "description": "The transfer function has a vulnerability that allows non-whitelisted wallets to transfer a specified number of tokens.", "severity": "Medium", "contract": "N/A", "function": "transfer", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "transferFrom", "description": "Potential vulnerability in transferFrom function allowing non-whitelisted wallets to interact with the smart contract.", "severity": "Low", "contract": "ImperialFinance", "function": "transferFrom", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"]}, "title": "Unprotected mint Function", "description": "The 'mint' function is declared as external and lacks access control, allowing anyone to call it.", "severity": "High", "contract": "N/A", "function": "mint", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-920"]}, "title": "burn", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Swap Function Vulnerability", "description": "Potential vulnerability in swap functions, including swapExactETHForTokensSupportingFeeOnTransferTokens and swapExactTokensForETHSupportingFeeOnTransferTokens.", "severity": "High", "contract": "N/A", "function": "swapExactETHForTokensSupportingFeeOnTransferTokens, swapExactTokensForETHSupportingFeeOnTransferTokens", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Skim", "description": "N/A", "severity": "High", "contract": "UniswapV2Pair", "function": "skim", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-284"]}, "title": "Unprotected Function 'manualSync'", "description": "The 'manualSync' function is declared as external and lacks access control, making it vulnerable to unauthorized calls.", "severity": "High", "contract": "N/A", "function": "manualSync", "lineNumber": "2"}, {"id": 8, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Uninitialized Variables", "description": "Some variables are not initialized before they are used.", "severity": "High", "contract": "ImperialToken", "function": "<Constructor>", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "manualrebase", "description": "The setRebaseFrequency function allows the owner to manually rebase, which can lead to potential security risks if not properly validated.", "severity": "High", "contract": "ImperialToken", "function": "setRebaseFrequency", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "takeFee", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "takeFee", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "addLiquidity", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "addLiquidity", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-682"]}, "title": "swapBack", "description": "Potential vulnerability in swapBack function", "severity": "Unknown", "contract": "N/A", "function": "swapBack()", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "_swapTokensForBusd", "description": "Private function _swapTokensForBusd allows swapping tokens for BUSD.", "severity": "Medium", "contract": "N/A", "function": "_swapTokensForBusd(uint256,address)", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "setEnableAntiBot", "description": "Function to enable or disable anti-bot feature", "severity": "Medium", "contract": "N/A", "function": "setEnableAntiBot(bool)", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "withdrawAllToOwner", "description": "Allows owner to withdraw all tokens, potentially leading to loss of funds.", "severity": "High", "contract": "N/A", "function": "withdrawAllToOwner(address)", "lineNumber": "N/A"}, {"id": 16, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "decreaseAllowance", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 17, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-354"]}, "title": "Increase Allowance Vulnerability", "description": "The increaseAllowance function may lead to potential security risks if not properly validated.", "severity": "Medium", "contract": "N/A", "function": "increaseAllowance(address,uint256)", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/InterFi/ImperialFinance_0x889e8cD93Be2FDF4CCc649Ba9D51e61CFD8C930f.pdf",
+    "project_info": {
+        "url": "https://github.com/interfinetwork/audited-codes/blob/main/ImperialFinance.sol",
+        "commit_hash": "bc0b94fe1e7da06309329025fbe07c6239facb1c",
+        "address": "0x889e8cd93be2fdf4ccc649ba9d51e61cfd8c930f",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "approve",
+            "description": "The approve function has a potential security vulnerability.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "approve(address,uint256)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Transfer Function Vulnerability",
+            "description": "The transfer function has a vulnerability that allows non-whitelisted wallets to transfer a specified number of tokens.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "transfer",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "transferFrom",
+            "description": "Potential vulnerability in transferFrom function allowing non-whitelisted wallets to interact with the smart contract.",
+            "severity": "Low",
+            "contract": "ImperialFinance",
+            "function": "transferFrom",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected mint Function",
+            "description": "The 'mint' function is declared as external and lacks access control, allowing anyone to call it.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "mint",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-920"
+                ]
+            },
+            "title": "burn",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Swap Function Vulnerability",
+            "description": "Potential vulnerability in swap functions, including swapExactETHForTokensSupportingFeeOnTransferTokens and swapExactTokensForETHSupportingFeeOnTransferTokens.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "swapExactETHForTokensSupportingFeeOnTransferTokens, swapExactTokensForETHSupportingFeeOnTransferTokens",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Skim",
+            "description": "N/A",
+            "severity": "High",
+            "contract": "UniswapV2Pair",
+            "function": "skim",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected Function 'manualSync'",
+            "description": "The 'manualSync' function is declared as external and lacks access control, making it vulnerable to unauthorized calls.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "manualSync",
+            "lineNumber": "2"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Uninitialized Variables",
+            "description": "Some variables are not initialized before they are used.",
+            "severity": "High",
+            "contract": "ImperialToken",
+            "function": "<Constructor>",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "manualrebase",
+            "description": "The setRebaseFrequency function allows the owner to manually rebase, which can lead to potential security risks if not properly validated.",
+            "severity": "High",
+            "contract": "ImperialToken",
+            "function": "setRebaseFrequency",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "takeFee",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "takeFee",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "addLiquidity",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "addLiquidity",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "swapBack",
+            "description": "Potential vulnerability in swapBack function",
+            "severity": "Unknown",
+            "contract": "N/A",
+            "function": "swapBack()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "_swapTokensForBusd",
+            "description": "Private function _swapTokensForBusd allows swapping tokens for BUSD.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "_swapTokensForBusd(uint256,address)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "setEnableAntiBot",
+            "description": "Function to enable or disable anti-bot feature",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "setEnableAntiBot(bool)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "withdrawAllToOwner",
+            "description": "Allows owner to withdraw all tokens, potentially leading to loss of funds.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "withdrawAllToOwner(address)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "decreaseAllowance",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-354"
+                ]
+            },
+            "title": "Increase Allowance Vulnerability",
+            "description": "The increaseAllowance function may lead to potential security risks if not properly validated.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "increaseAllowance(address,uint256)",
+            "lineNumber": "N/A"
+        }
+    ]
+}

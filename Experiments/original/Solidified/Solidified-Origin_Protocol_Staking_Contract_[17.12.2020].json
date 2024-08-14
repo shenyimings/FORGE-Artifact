@@ -1,1 +1,105 @@
-{"path": "./Audit_Reports_2024/Solidified/Solidified-Origin_Protocol_Staking_Contract_[17.12.2020].pdf", "project_info": {"url": "https://github.com/OriginProtocol/origin-dollar", "commit_hash": "0936691ee0d81f53be9f50a080a0a8f5ead2ed26", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Pre-approved stake to 0x0 Address can allow an attacker to claim invalid stake", "description": "The `_setPreApprover()` function allows setting 0x0 address for preApprover under an assumption that 0x00 address disables the `preApprovedStake()` functionality. However, this is not true - when preApprover is set to 0x0 address, an attacker could claim a stake without having a valid signature.", "severity": "Critical", "contract": "N/A", "function": "_setPreApprover() and preApprovedStake()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Inefficient loop logic might lead to block gas issues and/or excessive gas usage in some long-lived use cases", "description": "The `_stake()` function always increases the array size, leading to expensive operations and potential failure due to the block gas limit.", "severity": "Minor", "contract": "N/A", "function": "_stake() and preApprovedStake()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-693"], "2": ["CWE-345"], "3": ["CWE-353"]}, "title": "Pre-approved stake process does not implement full signature replay protection", "description": "Signatures provided for pre-approved stakes can be used multiple times since there is nothing in the signed message that prevents a signature replay attack.", "severity": "Minor", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-693"], "2": ["CWE-327"]}, "title": "Malleable signatures accepted", "description": "The `preApprovedStake()` function uses the built-in `ecrecover()` which still allows malleable signatures for backward compatibility reasons.", "severity": "Minor", "contract": "N/A", "function": "preApprovedStake()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-770"]}, "title": "Staking contract may run out of funds", "description": "The existing SingleAssetStaking.sol contract's token balance can be 'consumed' by rewards for USER_STAKE_TYPE stakes, interfering with the intended preApprovedStake() functionality.", "severity": "Minor", "contract": "SingleAssetStaking.sol", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Solidified/Solidified-Origin_Protocol_Staking_Contract_[17.12.2020].pdf",
+    "project_info": {
+        "url": "https://github.com/OriginProtocol/origin-dollar",
+        "commit_hash": "0936691ee0d81f53be9f50a080a0a8f5ead2ed26",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Pre-approved stake to 0x0 Address can allow an attacker to claim invalid stake",
+            "description": "The `_setPreApprover()` function allows setting 0x0 address for preApprover under an assumption that 0x00 address disables the `preApprovedStake()` functionality. However, this is not true - when preApprover is set to 0x0 address, an attacker could claim a stake without having a valid signature.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "_setPreApprover() and preApprovedStake()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Inefficient loop logic might lead to block gas issues and/or excessive gas usage in some long-lived use cases",
+            "description": "The `_stake()` function always increases the array size, leading to expensive operations and potential failure due to the block gas limit.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "_stake() and preApprovedStake()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-345"
+                ],
+                "3": [
+                    "CWE-353"
+                ]
+            },
+            "title": "Pre-approved stake process does not implement full signature replay protection",
+            "description": "Signatures provided for pre-approved stakes can be used multiple times since there is nothing in the signed message that prevents a signature replay attack.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-327"
+                ]
+            },
+            "title": "Malleable signatures accepted",
+            "description": "The `preApprovedStake()` function uses the built-in `ecrecover()` which still allows malleable signatures for backward compatibility reasons.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "preApprovedStake()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "Staking contract may run out of funds",
+            "description": "The existing SingleAssetStaking.sol contract's token balance can be 'consumed' by rewards for USER_STAKE_TYPE stakes, interfering with the intended preApprovedStake() functionality.",
+            "severity": "Minor",
+            "contract": "SingleAssetStaking.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

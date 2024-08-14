@@ -1,1 +1,304 @@
-{"path": "./Audit_Reports_2024/Trail_of_Bits/2023-04-mysoloans-securityreview.pdf", "project_info": {"url": "https://github.com/mysofinance/v2", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Incorrect constants", "description": "Solidity time units are now employed in constant declarations to ensure the accurate assignment of values.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-1270"]}, "title": "Tokens can be stolen through arrangerFee", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Arranger can frontrun acceptLoanTerms", "description": "The arranger can front-run the acceptLoanTerms function, allowing them to alter loan terms more frequently than intended.", "severity": "High", "contract": "N/A", "function": "acceptLoanTerms", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Risk of misconfigured loans", "description": "The grace period between reconfigurations has been revised from 30 minutes to a full day. Also, The `MIN_TIME_BETWEEN_DUE_DATES` constant has been extended from one day to a week.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Loan rollback can transfer funds to caller", "description": "The `safeTransfer` function was using `msg.sender` address instead of `_loanTerms.borrower` address, allowing funds to be transferred to the caller", "severity": "Critical", "contract": "N/A", "function": "safeTransfer()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "LP token price can be manipulated", "description": "An LP token\u2019s price is now calculated using the \u201cfair reserve\u201d concept. This improves accuracy and reduces potential manipulation.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Missing important Chainlink price feed safety checks", "description": "Data returned by Chainlink price feeds is now being sanity checked to ensure the oracle is returning accurate and up to date information.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Risk of denial of service attack via unlockCollateral", "description": "An attacker can cause a denial-of-service attack by calling unlockCollateral, leading to contract unavailability.", "severity": "High", "contract": "N/A", "function": "unlockCollateral()", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Insufficient event generation", "description": "A few state-changing functions were missing events, which would have made it easier for the codebase to detect unexpected behavior.", "severity": "Moderate", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Lack of zero checks on function arguments", "description": "The protocol fee can be set to zero without any minimum value check within the setProtocolFee function.", "severity": "N/A", "contract": "N/A", "function": "setProtocolFee()", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-237"]}, "title": "Documentation can be improved", "description": "The MYSO Finance contracts lack documentation specifying expected data validation for cross-contract calls, and the identification of core components and critical code blocks.", "severity": "Weak", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-693"], "2": ["CWE-311"], "3": ["CWE-312"]}, "title": "Insufficient protection on sensitive owner private keys", "description": "Malicious or compromised owners can abuse minting capabilities and trap contracts relying on tokens with a blacklist.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-693"], "2": ["CWE-807"], "3": ["CWE-302"]}, "title": "Use of chainID validation allows re-using signature across forks", "description": "Allows re-using signature across forks due to chainID validation", "severity": "High", "contract": "AddressRegistry", "function": "N/A", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "Off-chain signature schema may be a target for phishing", "description": "MYSO has acknowledged our recommendations regarding the potential phishing attacks targeting the off-chain signature schema.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Project dependencies contain vulnerabilities", "description": "The project's dependencies have known vulnerabilities.", "severity": "Undetermined", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-693"], "2": ["CWE-345"], "3": ["CWE-347"]}, "title": "Insufficient protection on cross-vault signature reuse", "description": "The lenderVault address has been incorporated into the hash schema for signing off-chain quotes to prevent signatures from being reused for vaults with similar configurations belonging to the same lender on the same chain.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/2023-04-mysoloans-securityreview.pdf",
+    "project_info": {
+        "url": "https://github.com/mysofinance/v2",
+        "commit_hash": "N/A",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect constants",
+            "description": "Solidity time units are now employed in constant declarations to ensure the accurate assignment of values.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-1270"
+                ]
+            },
+            "title": "Tokens can be stolen through arrangerFee",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Arranger can frontrun acceptLoanTerms",
+            "description": "The arranger can front-run the acceptLoanTerms function, allowing them to alter loan terms more frequently than intended.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "acceptLoanTerms",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Risk of misconfigured loans",
+            "description": "The grace period between reconfigurations has been revised from 30 minutes to a full day. Also, The `MIN_TIME_BETWEEN_DUE_DATES` constant has been extended from one day to a week.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Loan rollback can transfer funds to caller",
+            "description": "The `safeTransfer` function was using `msg.sender` address instead of `_loanTerms.borrower` address, allowing funds to be transferred to the caller",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "safeTransfer()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "LP token price can be manipulated",
+            "description": "An LP token\u2019s price is now calculated using the \u201cfair reserve\u201d concept. This improves accuracy and reduces potential manipulation.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Missing important Chainlink price feed safety checks",
+            "description": "Data returned by Chainlink price feeds is now being sanity checked to ensure the oracle is returning accurate and up to date information.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Risk of denial of service attack via unlockCollateral",
+            "description": "An attacker can cause a denial-of-service attack by calling unlockCollateral, leading to contract unavailability.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "unlockCollateral()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Insufficient event generation",
+            "description": "A few state-changing functions were missing events, which would have made it easier for the codebase to detect unexpected behavior.",
+            "severity": "Moderate",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Lack of zero checks on function arguments",
+            "description": "The protocol fee can be set to zero without any minimum value check within the setProtocolFee function.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "setProtocolFee()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-237"
+                ]
+            },
+            "title": "Documentation can be improved",
+            "description": "The MYSO Finance contracts lack documentation specifying expected data validation for cross-contract calls, and the identification of core components and critical code blocks.",
+            "severity": "Weak",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-311"
+                ],
+                "3": [
+                    "CWE-312"
+                ]
+            },
+            "title": "Insufficient protection on sensitive owner private keys",
+            "description": "Malicious or compromised owners can abuse minting capabilities and trap contracts relying on tokens with a blacklist.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ],
+                "3": [
+                    "CWE-302"
+                ]
+            },
+            "title": "Use of chainID validation allows re-using signature across forks",
+            "description": "Allows re-using signature across forks due to chainID validation",
+            "severity": "High",
+            "contract": "AddressRegistry",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Off-chain signature schema may be a target for phishing",
+            "description": "MYSO has acknowledged our recommendations regarding the potential phishing attacks targeting the off-chain signature schema.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Project dependencies contain vulnerabilities",
+            "description": "The project's dependencies have known vulnerabilities.",
+            "severity": "Undetermined",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-345"
+                ],
+                "3": [
+                    "CWE-347"
+                ]
+            },
+            "title": "Insufficient protection on cross-vault signature reuse",
+            "description": "The lenderVault address has been incorporated into the hash schema for signing off-chain quotes to prevent signatures from being reused for vaults with similar configurations belonging to the same lender on the same chain.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

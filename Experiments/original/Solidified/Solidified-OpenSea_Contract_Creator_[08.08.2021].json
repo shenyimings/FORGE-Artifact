@@ -1,1 +1,145 @@
-{"path": "./Audit_Reports_2024/Solidified/Solidified-OpenSea_Contract_Creator_[08.08.2021].pdf", "project_info": {"url": "https://github.com/ProjectOpenSea/opensea-contract-creator", "commit_hash": "d310f1928c0e63e3287deb3211c3d4818cf2e848", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "AssetContract.sol: Function batchMint() allows minting more tokens than TOKEN_SUPPLY_CAP", "description": "The `TOKEN_SUPPLY_CAP` check in function `batchMint()` can be overridden if the same `id` is passed multiple times inside the `_ids` array.", "severity": "Major", "contract": "AssetContract.sol", "function": "batchMint()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "ERC1155Tradable.sol: Anyone can burn() or batchBurn() tokens belonging to other accounts", "description": "The functions `burn()` and `batchBurn()` conduct no checks to determine if `_msgSender()` owns or has permission to burn `_from` tokens.", "severity": "Critical", "contract": "ERC1155Tradable.sol", "function": ["burn()", "batchBurn()"], "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Unvalidated Input in setPermanentURI() Function", "description": "The `setPermanentURI()` function does not check if the token `_id` exists and if the passed `_uri` is valid, allowing permanent setting of an invalid token URI.", "severity": "Minor", "contract": "AssetContract.sol", "function": "setPermanentURI()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-710"], "2": ["CWE-1120"], "3": ["CWE-1060"]}, "title": "NativeMetaTransaction.sol: Consider declaring function executeMetaTransaction() as external", "description": "Declaring function `executeMetaTransaction()` as `external` instead of `public` can potentially save a non-trivial amount of gas, as it will prevent all the passed parameter arrays from being copied to memory, and instead read them directly from calldata.", "severity": "Informational", "contract": "NativeMetaTransaction.sol", "function": "executeMetaTransaction()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-707"], "2": ["CWE-240"]}, "title": "Redundant Functionality Re-implementation", "description": "Contract ERC1155Tradable redundantly re-implements functionality already present in its parent ERC1155 contract, including functions such as balanceOf(), balanceOfBatch(), isApprovedForAll(), and safeTransferFrom(). The contract also declares the balances mapping, which has already been declared in its parent ERC1155 contract.", "severity": "Minor", "contract": "ERC1155Tradable", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Hard-Fork/Chain-Split Vulnerability in EIP712Base.sol", "description": "In case a hard-fork/chain-split happens after the deployment of the contract, the signed messages will be valid on both chains, since chainid() is considered only during the initialization.", "severity": "Minor", "contract": "EIP712Base.sol", "function": "getDomainSeperator()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Last failed transaction can be replayed", "description": "The last failed transaction can be replayed any time until the user issues a new successful transaction.", "severity": "Note", "contract": "NativeMetaTransaction.sol", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Solidified/Solidified-OpenSea_Contract_Creator_[08.08.2021].pdf",
+    "project_info": {
+        "url": "https://github.com/ProjectOpenSea/opensea-contract-creator",
+        "commit_hash": "d310f1928c0e63e3287deb3211c3d4818cf2e848",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "AssetContract.sol: Function batchMint() allows minting more tokens than TOKEN_SUPPLY_CAP",
+            "description": "The `TOKEN_SUPPLY_CAP` check in function `batchMint()` can be overridden if the same `id` is passed multiple times inside the `_ids` array.",
+            "severity": "Major",
+            "contract": "AssetContract.sol",
+            "function": "batchMint()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "ERC1155Tradable.sol: Anyone can burn() or batchBurn() tokens belonging to other accounts",
+            "description": "The functions `burn()` and `batchBurn()` conduct no checks to determine if `_msgSender()` owns or has permission to burn `_from` tokens.",
+            "severity": "Critical",
+            "contract": "ERC1155Tradable.sol",
+            "function": [
+                "burn()",
+                "batchBurn()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Unvalidated Input in setPermanentURI() Function",
+            "description": "The `setPermanentURI()` function does not check if the token `_id` exists and if the passed `_uri` is valid, allowing permanent setting of an invalid token URI.",
+            "severity": "Minor",
+            "contract": "AssetContract.sol",
+            "function": "setPermanentURI()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1120"
+                ],
+                "3": [
+                    "CWE-1060"
+                ]
+            },
+            "title": "NativeMetaTransaction.sol: Consider declaring function executeMetaTransaction() as external",
+            "description": "Declaring function `executeMetaTransaction()` as `external` instead of `public` can potentially save a non-trivial amount of gas, as it will prevent all the passed parameter arrays from being copied to memory, and instead read them directly from calldata.",
+            "severity": "Informational",
+            "contract": "NativeMetaTransaction.sol",
+            "function": "executeMetaTransaction()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-240"
+                ]
+            },
+            "title": "Redundant Functionality Re-implementation",
+            "description": "Contract ERC1155Tradable redundantly re-implements functionality already present in its parent ERC1155 contract, including functions such as balanceOf(), balanceOfBatch(), isApprovedForAll(), and safeTransferFrom(). The contract also declares the balances mapping, which has already been declared in its parent ERC1155 contract.",
+            "severity": "Minor",
+            "contract": "ERC1155Tradable",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Hard-Fork/Chain-Split Vulnerability in EIP712Base.sol",
+            "description": "In case a hard-fork/chain-split happens after the deployment of the contract, the signed messages will be valid on both chains, since chainid() is considered only during the initialization.",
+            "severity": "Minor",
+            "contract": "EIP712Base.sol",
+            "function": "getDomainSeperator()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Last failed transaction can be replayed",
+            "description": "The last failed transaction can be replayed any time until the user issues a new successful transaction.",
+            "severity": "Note",
+            "contract": "NativeMetaTransaction.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

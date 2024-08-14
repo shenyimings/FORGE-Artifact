@@ -1,1 +1,207 @@
-{"path": "./Audit_Reports_2024/Hacken/L1-audit-ripio-mpc-node-final.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-770"], "4": ["CWE-789"]}, "title": "Denial of Service (DoS) through Resource Exhaustion and Mutex Lock Side-Effects", "description": "An attacker can craft a message with a very large size in the header to exploit excessive memory allocation and resource exhaustion, leading to potential deadlocks.", "severity": "CRITICAL", "contract": "N/A", "function": "Decode", "lineNumber": "_internal/platform/transport/message.go:73-78"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-354"]}, "title": "Denial-of-Service via Corrupted Message Payloads", "description": "Sending messages with a corrupted `Payload` has the potential to disrupt the `runProcess` function, ultimately leading to its failure. This vulnerability could be exploited as a basis for launching a Denial-of-Service (DoS) attack.", "severity": "CRITICAL", "contract": "N/A", "function": "UpdateFromBytes", "lineNumber": "_internal/platform/tss/bnb/client.go:95"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Memory Exhaustion Risk from Vulnerable Dependency", "description": "The existing implementation of the transport layer networking in the codebase utilizes `go-libp2p` version `v0.23.2`, rendering the nodes susceptible to an Out Of Memory (OOM) attack, which can cause memory exhaustion and node failure.", "severity": "CRITICAL", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "DoS Risk from Reliable Broadcast Handling", "description": "The reliable broadcast protocol is susceptible to confirmation manipulation and DoS attacks due to improper handling of confirmation messages.", "severity": "MEDIUM", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "Reliable Broadcast Susceptible to Confirmation Manipulation", "description": "The reliable broadcast protocol is vulnerable to confirmation manipulation by malicious nodes, allowing them to induce the system to accept a message even if one of the nodes has not received it.", "severity": "MEDIUM", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Acceptance of the Infinity Point as a Public Key", "description": "Logic error in ECDSAPublicKeyToPeerID function allowing nodes to possess public keys with both coordinates set to zero, representing the point at infinity.", "severity": "LOW", "contract": "N/A", "function": "ECDSAPublicKeyToPeerID", "lineNumber": "_internal/platform/transport/transport.go:425"}, {"id": 6, "category": {"1": ["CWE-703"]}, "title": "Unhandled Errors", "description": "The project exhibits multiple instances of unhandled errors discovered within the code.", "severity": "LOW", "contract": "N/A", "function": "N/A", "lineNumber": "_internal/platform/transport/transport.go:455, 444, 465, 469"}, {"id": 7, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Documentation Lacks Comprehensive Coverage", "description": "The project's comments and documentation lack comprehensive coverage, leaving gaps in understanding its functionality and usage.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-710"], "2": ["CWE-1076"], "3": ["CWE-1078"], "4": ["CWE-1099"]}, "title": "Non-Idiomatic Interface Naming in Go", "description": "The codebase contains a `Transport` interface with a single method that does not follow idiomatic Go naming conventions, affecting code readability and comprehension.", "severity": "Code Quality", "contract": "_internal/platform/tss/bnb/client", "function": "N/A", "lineNumber": "25"}, {"id": 9, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Removal of Redundant `NewFromHost` Function", "description": "The code section pertains to a function marked for deletion: NewFromHost is only for testing purpose and should be removed.", "severity": "N/A", "contract": "N/A", "function": "NewFromHost", "lineNumber": "_internal/platform/transport/p2p/node.go:205"}, {"id": 10, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Test Coverage", "description": "The project has an overall test coverage of 81.0%, but there is a noticeable dip in the p2p package, warranting attention.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Hacken/L1-audit-ripio-mpc-node-final.pdf",
+    "project_info": {
+        "url": "https://github.com/advisories/GHSA-gcq9-qqwx-rgj3",
+        "commit_hash": "N/A",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ],
+                "4": [
+                    "CWE-789"
+                ]
+            },
+            "title": "Denial of Service (DoS) through Resource Exhaustion and Mutex Lock Side-Effects",
+            "description": "An attacker can craft a message with a very large size in the header to exploit excessive memory allocation and resource exhaustion, leading to potential deadlocks.",
+            "severity": "CRITICAL",
+            "contract": "N/A",
+            "function": "Decode",
+            "lineNumber": "_internal/platform/transport/message.go:73-78"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-354"
+                ]
+            },
+            "title": "Denial-of-Service via Corrupted Message Payloads",
+            "description": "Sending messages with a corrupted `Payload` has the potential to disrupt the `runProcess` function, ultimately leading to its failure. This vulnerability could be exploited as a basis for launching a Denial-of-Service (DoS) attack.",
+            "severity": "CRITICAL",
+            "contract": "N/A",
+            "function": "UpdateFromBytes",
+            "lineNumber": "_internal/platform/tss/bnb/client.go:95"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Memory Exhaustion Risk from Vulnerable Dependency",
+            "description": "The existing implementation of the transport layer networking in the codebase utilizes `go-libp2p` version `v0.23.2`, rendering the nodes susceptible to an Out Of Memory (OOM) attack, which can cause memory exhaustion and node failure.",
+            "severity": "CRITICAL",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "DoS Risk from Reliable Broadcast Handling",
+            "description": "The reliable broadcast protocol is susceptible to confirmation manipulation and DoS attacks due to improper handling of confirmation messages.",
+            "severity": "MEDIUM",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Reliable Broadcast Susceptible to Confirmation Manipulation",
+            "description": "The reliable broadcast protocol is vulnerable to confirmation manipulation by malicious nodes, allowing them to induce the system to accept a message even if one of the nodes has not received it.",
+            "severity": "MEDIUM",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Acceptance of the Infinity Point as a Public Key",
+            "description": "Logic error in ECDSAPublicKeyToPeerID function allowing nodes to possess public keys with both coordinates set to zero, representing the point at infinity.",
+            "severity": "LOW",
+            "contract": "N/A",
+            "function": "ECDSAPublicKeyToPeerID",
+            "lineNumber": "_internal/platform/transport/transport.go:425"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Unhandled Errors",
+            "description": "The project exhibits multiple instances of unhandled errors discovered within the code.",
+            "severity": "LOW",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "_internal/platform/transport/transport.go:455, 444, 465, 469"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Documentation Lacks Comprehensive Coverage",
+            "description": "The project's comments and documentation lack comprehensive coverage, leaving gaps in understanding its functionality and usage.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1076"
+                ],
+                "3": [
+                    "CWE-1078"
+                ],
+                "4": [
+                    "CWE-1099"
+                ]
+            },
+            "title": "Non-Idiomatic Interface Naming in Go",
+            "description": "The codebase contains a `Transport` interface with a single method that does not follow idiomatic Go naming conventions, affecting code readability and comprehension.",
+            "severity": "Code Quality",
+            "contract": "_internal/platform/tss/bnb/client",
+            "function": "N/A",
+            "lineNumber": "25"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Removal of Redundant `NewFromHost` Function",
+            "description": "The code section pertains to a function marked for deletion: NewFromHost is only for testing purpose and should be removed.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "NewFromHost",
+            "lineNumber": "_internal/platform/transport/p2p/node.go:205"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Test Coverage",
+            "description": "The project has an overall test coverage of 81.0%, but there is a noticeable dip in the p2p package, warranting attention.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

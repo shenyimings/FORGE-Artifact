@@ -1,1 +1,150 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-ApeRocket.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Non-initialization of pid in BaseStrategy::constructor()", "description": "The `BaseStrategy` constructor fails to properly initialize the `pid` state, which may cause undesirable consequences when the strategy needs to shut down.", "severity": "Medium", "contract": "BaseStrategy", "function": "constructor()", "lineNumber": "64"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Unintended Reverts in VotingEscrow::mintTo()", "description": "The `mintTo()` function in `VotingEscrow` contract does not properly calculate and grant voting power to users when staked assets are appended with the last entry having the same end date.", "severity": "Low", "contract": "VotingEscrow", "function": "mintTo()", "lineNumber": "127-149"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Incorrect Debt Accounting in Vault::_transferUserInfo()", "description": "The `_transferUserInfo()` function has a flawed logic that may cause incorrect debt accounting, leading to improper reward distribution.", "severity": "High", "contract": "Vault", "function": "_transferUserInfo()", "lineNumber": "330-334"}, {"id": 3, "category": {"1": ["CWE-691"], "2": ["CWE-1265"]}, "title": "Potential Reentrancy Risk in depositTo()", "description": "The `depositTo()` function in the `Vault` contract violates the `checks-effects-interactions` principle, making it vulnerable to reentrancy attacks.", "severity": "Low", "contract": "Vault", "function": "depositTo()", "lineNumber": "221, 236"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "Less Optimal Swaps For Liquidity Addition", "description": "The current approach of converting half assets to BNB and then adding them as liquidity may result in a small amount of BNB unspent in the current contract, which is not optimal.", "severity": "Low", "contract": "Multiple Contracts", "function": "notifyRewardAmount() and StrategyOptimizer::_swapToStakingToken()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Simplified Logic of minter()/boostManager() in Vault", "description": "Unused code and unnecessary redundancies can be safely removed in `minter()` and `boostManager()` functions.", "severity": "Informational", "contract": "Vault", "function": "minter(), boostManager()", "lineNumber": "184-186, 188-190"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Trust Issue Of Admin Keys", "description": "In the ApeRocket protocol, there is a privileged owner account that plays a critical role in governing and regulating the protocol-wide operations.", "severity": "Medium", "contract": "Multiple Contracts (ApeRocket, SafeAccessControl, VotingEscrow)", "function": "whitelistContract, blacklistContract, setAccessToMint, revokeAccessToMint", "lineNumber": "16-22, 282-288"}, {"id": 7, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-909"], "4": ["CWE-456"]}, "title": "Possible Costly LPs From Improper Vault Initialization", "description": "The `deposit()` function may cause the pool token to become extremely expensive and bring hurdles or even causes loss for later depositors due to improper vault initialization.", "severity": "Low", "contract": "Vault", "function": "deposit()", "lineNumber": "180"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-ApeRocket.pdf",
+    "project_info": {
+        "url": "https://github.com/warren-0x/platform",
+        "commit_hash": "N/A",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Non-initialization of pid in BaseStrategy::constructor()",
+            "description": "The `BaseStrategy` constructor fails to properly initialize the `pid` state, which may cause undesirable consequences when the strategy needs to shut down.",
+            "severity": "Medium",
+            "contract": "BaseStrategy",
+            "function": "constructor()",
+            "lineNumber": "64"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Unintended Reverts in VotingEscrow::mintTo()",
+            "description": "The `mintTo()` function in `VotingEscrow` contract does not properly calculate and grant voting power to users when staked assets are appended with the last entry having the same end date.",
+            "severity": "Low",
+            "contract": "VotingEscrow",
+            "function": "mintTo()",
+            "lineNumber": "127-149"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect Debt Accounting in Vault::_transferUserInfo()",
+            "description": "The `_transferUserInfo()` function has a flawed logic that may cause incorrect debt accounting, leading to improper reward distribution.",
+            "severity": "High",
+            "contract": "Vault",
+            "function": "_transferUserInfo()",
+            "lineNumber": "330-334"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "Potential Reentrancy Risk in depositTo()",
+            "description": "The `depositTo()` function in the `Vault` contract violates the `checks-effects-interactions` principle, making it vulnerable to reentrancy attacks.",
+            "severity": "Low",
+            "contract": "Vault",
+            "function": "depositTo()",
+            "lineNumber": "221, 236"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Less Optimal Swaps For Liquidity Addition",
+            "description": "The current approach of converting half assets to BNB and then adding them as liquidity may result in a small amount of BNB unspent in the current contract, which is not optimal.",
+            "severity": "Low",
+            "contract": "Multiple Contracts",
+            "function": "notifyRewardAmount() and StrategyOptimizer::_swapToStakingToken()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Simplified Logic of minter()/boostManager() in Vault",
+            "description": "Unused code and unnecessary redundancies can be safely removed in `minter()` and `boostManager()` functions.",
+            "severity": "Informational",
+            "contract": "Vault",
+            "function": "minter(), boostManager()",
+            "lineNumber": "184-186, 188-190"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue Of Admin Keys",
+            "description": "In the ApeRocket protocol, there is a privileged owner account that plays a critical role in governing and regulating the protocol-wide operations.",
+            "severity": "Medium",
+            "contract": "Multiple Contracts (ApeRocket, SafeAccessControl, VotingEscrow)",
+            "function": "whitelistContract, blacklistContract, setAccessToMint, revokeAccessToMint",
+            "lineNumber": "16-22, 282-288"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "Possible Costly LPs From Improper Vault Initialization",
+            "description": "The `deposit()` function may cause the pool token to become extremely expensive and bring hurdles or even causes loss for later depositors due to improper vault initialization.",
+            "severity": "Low",
+            "contract": "Vault",
+            "function": "deposit()",
+            "lineNumber": "180"
+        }
+    ]
+}

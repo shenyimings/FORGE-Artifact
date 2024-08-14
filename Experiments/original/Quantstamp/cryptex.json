@@ -1,1 +1,122 @@
-{"path": "./Audit_Reports_2024/Quantstamp/cryptex.pdf", "project_info": {"url": "https://github.com/governance-staking", "commit_hash": "76961ae", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Missing validation of the number of decimals for ERC20 tokens", "description": "The contract assumes tokens with 18 decimals. Based on the provided code, it is unclear whether this assumption holds.", "severity": "Low Risk", "contract": "DelegatorFactory.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Incorrect requirement in `notifyRewardAmount()`", "description": "The requirement in `notifyRewardAmount()` can be invalid if part of the users do not withdraw their rewards, meaning that the entity in charge of sending the new reward tokens might send less than expected and the requirement will still execute without throwing.", "severity": "Medium Risk", "contract": "DelegatorFactory.sol", "function": "notifyRewardAmount()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "No checks if addresses are non-zero", "description": "The functions Delegator.constructor() and DelegatorFactory.constructor() do not check if arguments of type address are non-zero.", "severity": "Low Risk", "contract": ["Delegator.sol", "DelegatorFactory.sol"], "function": ["constructor()", "constructor()"], "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Multiple invocations of `stake()`", "description": "If `stake()` is called multiple times for the same `delegator_`, user may be unable to withdraw previous stakes before the last `block.timestamp + waitTime`.", "severity": "Low Risk", "contract": "DelegatorFactory.sol", "function": "stake()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "Gas optimization", "description": "updateReward() calls rewardPerToken() twice, it's recommended to use the state variable rewardPerTokenStored inside earned() instead of calling the rewardPerToken().", "severity": "Informational", "contract": "DelegatorFactory.sol", "function": "updateReward() and earned()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Withdrawal logic requires users to save all their delegators addresses", "description": "Every time a user stakes, they are free to change the delegator contract address, meaning that when withdrawing a user might be forced to do multiple withdrawals if a single delegator does not contain a sufficient balance.", "severity": "Informational", "contract": "DelegatorFactory.sol", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Quantstamp/cryptex.pdf",
+    "project_info": {
+        "url": "https://github.com/cryptexfinance/governance-staking/tree/76961aeb6be63f547dc080659f64a4bf455582c0",
+        "commit_hash": "76961aeb6be63f547dc080659f64a4bf455582c0",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Missing validation of the number of decimals for ERC20 tokens",
+            "description": "The contract assumes tokens with 18 decimals. Based on the provided code, it is unclear whether this assumption holds.",
+            "severity": "Low Risk",
+            "contract": "DelegatorFactory.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect requirement in `notifyRewardAmount()`",
+            "description": "The requirement in `notifyRewardAmount()` can be invalid if part of the users do not withdraw their rewards, meaning that the entity in charge of sending the new reward tokens might send less than expected and the requirement will still execute without throwing.",
+            "severity": "Medium Risk",
+            "contract": "DelegatorFactory.sol",
+            "function": "notifyRewardAmount()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "No checks if addresses are non-zero",
+            "description": "The functions Delegator.constructor() and DelegatorFactory.constructor() do not check if arguments of type address are non-zero.",
+            "severity": "Low Risk",
+            "contract": [
+                "Delegator.sol",
+                "DelegatorFactory.sol"
+            ],
+            "function": [
+                "constructor()",
+                "constructor()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Multiple invocations of `stake()`",
+            "description": "If `stake()` is called multiple times for the same `delegator_`, user may be unable to withdraw previous stakes before the last `block.timestamp + waitTime`.",
+            "severity": "Low Risk",
+            "contract": "DelegatorFactory.sol",
+            "function": "stake()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Gas optimization",
+            "description": "updateReward() calls rewardPerToken() twice, it's recommended to use the state variable rewardPerTokenStored inside earned() instead of calling the rewardPerToken().",
+            "severity": "Informational",
+            "contract": "DelegatorFactory.sol",
+            "function": "updateReward() and earned()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Withdrawal logic requires users to save all their delegators addresses",
+            "description": "Every time a user stakes, they are free to change the delegator contract address, meaning that when withdrawing a user might be forced to do multiple withdrawals if a single delegator does not contain a sufficient balance.",
+            "severity": "Informational",
+            "contract": "DelegatorFactory.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

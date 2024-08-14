@@ -1,1 +1,337 @@
-{"path": "./Audit_Reports_2024/Cyberscope/2-nfts.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "RC - Redundant Checks", "description": "The contract includes redundant checks before calling the `swapExactTokensForETH` function of the Uniswap router, which are already performed within the Uniswap router's function, resulting in increased gas consumption without providing additional security or benefits.", "severity": "Critical", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "CR - Code Repetition", "description": "The contract contains repetitive code segments which can lead to issues like gas efficiency, complexity, readability, security, and maintainability of the source code.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "FSA - Fixed Swap Address", "description": "The swap address is assigned once and cannot be changed, which may prevent the contract from migrating to a new liquidity pool pair or decentralized exchange.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "RAS - Redundant Assert Statement", "description": "The contract utilizes an `assert` statement within the `add` function aiming to prevent overflow errors. This function is designed based on the SafeMath library's principles. In Solidity version 0.8.0 and later, arithmetic operations revert on overflow and underflow, making the overflow check within the function redundant.", "severity": "Minor / Informative", "contract": "N/A", "function": "add()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "RCS - Redundant Conditional Statement", "description": "There is a conditional check within the contract's transfer flow that verifies if the recipient is not equal to both `uniswapV2Pair` and `DEAD`, but this condition serves no practical purpose as there is no associated code or behavior executed when the condition is met.", "severity": "N/A", "contract": "N/A", "function": "transfer()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"], "4": ["CWE-825"], "5": ["CWE-416"]}, "title": "PTRP - Potential Transfer Revert Propagation", "description": "The contract sends funds to a `_marketingFeeReceiver`, `_buybackFeeReceiver`, and `_devFeeReceiver` as part of the transfer flow. These addresses can either be a wallet address or a contract. If the address belongs to a contract then it may revert from incoming payment. As a result, the error will propagate to the token\u2019s contract and revert the transfer.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "AOI - Arithmetic Operations Inconsistency", "description": "The contract uses both SafeMath library and native arithmetic operations, which can introduce inconsistencies and undermine safety measures, increasing the risk of unintended consequences.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "TUU - Time Units Usage", "description": "The contract is using arbitrary numbers to form time-related values, decreasing code readability and preventing compiler optimization.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "MEE - Missing Events Emission", "description": "The contract performs actions and state mutations from external methods that do not result in the emission of events.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-682"], "2": ["CWE-190"], "3": ["CWE-680"]}, "title": "PVC - Price Volatility Concern", "description": "The contract accumulates tokens from taxes to swap them for ETH. If `_swapThreshold` is set to a big number, it may trigger a huge token swap, which can lead to significant price volatility due to the token's highly volatile price.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-703"]}, "title": "MRM - Missing Revert Messages", "description": "The contract is missing error messages. These missing error messages are making it difficult to identify and fix the issue.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "RSML - Redundant SafeMath Library", "description": "The usage of the SafeMath library adds complexity, overhead and increases gas consumption unnecessarily since Solidity versions greater than or equal to 0.8.0 provide native functionality for arithmetic operations.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-909"], "4": ["CWE-456"]}, "title": "L02 - State Variables could be Declared Constant", "description": "State variables can be declared as constant using the constant keyword to ensure they cannot be changed after being set and decrease gas consumption.", "severity": "N/A", "contract": "NFT STRIKE", "function": "N/A", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-710"], "2": ["CWE-1076"], "3": ["CWE-1078"], "4": ["CWE-1099"]}, "title": "L04 - Conformance to Solidity Naming Conventions", "description": "The Solidity style guide provides guidelines for writing clean and consistent Solidity code, which can improve readability and maintainability. The finding highlights non-conformance to these naming conventions.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1288"]}, "title": "L05 - Unused State Variable", "description": "An unused state variable is a state variable that is declared in the contract, but is never used in any of the contract's functions.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-682"]}, "title": "L07 - Missing Events Arithmetic", "description": "Events are a way to record and log information about changes or actions that occur within a contract.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "25"}, {"id": 16, "category": {"1": ["CWE-682"], "2": ["CWE-369"]}, "title": "L13 - Divide before Multiply Operation", "description": "Performing divisions before multiplications may cause loss of precision.", "severity": "Critical", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 17, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "L16 - Validate Variable Setters", "description": "The contract performs operations on variables configured by user-supplied input without proper checks for zero values, leading to potential problems during execution.", "severity": "High", "contract": "NFT STRIKE", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Cyberscope/2-nfts.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0x0000000000000000000000000000000000000000"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "RC - Redundant Checks",
+            "description": "The contract includes redundant checks before calling the `swapExactTokensForETH` function of the Uniswap router, which are already performed within the Uniswap router's function, resulting in increased gas consumption without providing additional security or benefits.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "CR - Code Repetition",
+            "description": "The contract contains repetitive code segments which can lead to issues like gas efficiency, complexity, readability, security, and maintainability of the source code.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "FSA - Fixed Swap Address",
+            "description": "The swap address is assigned once and cannot be changed, which may prevent the contract from migrating to a new liquidity pool pair or decentralized exchange.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "RAS - Redundant Assert Statement",
+            "description": "The contract utilizes an `assert` statement within the `add` function aiming to prevent overflow errors. This function is designed based on the SafeMath library's principles. In Solidity version 0.8.0 and later, arithmetic operations revert on overflow and underflow, making the overflow check within the function redundant.",
+            "severity": "Minor / Informative",
+            "contract": "N/A",
+            "function": "add()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "RCS - Redundant Conditional Statement",
+            "description": "There is a conditional check within the contract's transfer flow that verifies if the recipient is not equal to both `uniswapV2Pair` and `DEAD`, but this condition serves no practical purpose as there is no associated code or behavior executed when the condition is met.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "transfer()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ],
+                "4": [
+                    "CWE-825"
+                ],
+                "5": [
+                    "CWE-416"
+                ]
+            },
+            "title": "PTRP - Potential Transfer Revert Propagation",
+            "description": "The contract sends funds to a `_marketingFeeReceiver`, `_buybackFeeReceiver`, and `_devFeeReceiver` as part of the transfer flow. These addresses can either be a wallet address or a contract. If the address belongs to a contract then it may revert from incoming payment. As a result, the error will propagate to the token\u2019s contract and revert the transfer.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "AOI - Arithmetic Operations Inconsistency",
+            "description": "The contract uses both SafeMath library and native arithmetic operations, which can introduce inconsistencies and undermine safety measures, increasing the risk of unintended consequences.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "TUU - Time Units Usage",
+            "description": "The contract is using arbitrary numbers to form time-related values, decreasing code readability and preventing compiler optimization.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "MEE - Missing Events Emission",
+            "description": "The contract performs actions and state mutations from external methods that do not result in the emission of events.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ],
+                "3": [
+                    "CWE-680"
+                ]
+            },
+            "title": "PVC - Price Volatility Concern",
+            "description": "The contract accumulates tokens from taxes to swap them for ETH. If `_swapThreshold` is set to a big number, it may trigger a huge token swap, which can lead to significant price volatility due to the token's highly volatile price.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "MRM - Missing Revert Messages",
+            "description": "The contract is missing error messages. These missing error messages are making it difficult to identify and fix the issue.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "RSML - Redundant SafeMath Library",
+            "description": "The usage of the SafeMath library adds complexity, overhead and increases gas consumption unnecessarily since Solidity versions greater than or equal to 0.8.0 provide native functionality for arithmetic operations.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "L02 - State Variables could be Declared Constant",
+            "description": "State variables can be declared as constant using the constant keyword to ensure they cannot be changed after being set and decrease gas consumption.",
+            "severity": "N/A",
+            "contract": "NFT STRIKE",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1076"
+                ],
+                "3": [
+                    "CWE-1078"
+                ],
+                "4": [
+                    "CWE-1099"
+                ]
+            },
+            "title": "L04 - Conformance to Solidity Naming Conventions",
+            "description": "The Solidity style guide provides guidelines for writing clean and consistent Solidity code, which can improve readability and maintainability. The finding highlights non-conformance to these naming conventions.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1288"
+                ]
+            },
+            "title": "L05 - Unused State Variable",
+            "description": "An unused state variable is a state variable that is declared in the contract, but is never used in any of the contract's functions.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "L07 - Missing Events Arithmetic",
+            "description": "Events are a way to record and log information about changes or actions that occur within a contract.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "25"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-369"
+                ]
+            },
+            "title": "L13 - Divide before Multiply Operation",
+            "description": "Performing divisions before multiplications may cause loss of precision.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "L16 - Validate Variable Setters",
+            "description": "The contract performs operations on variables configured by user-supplied input without proper checks for zero values, leading to potential problems during execution.",
+            "severity": "High",
+            "contract": "NFT STRIKE",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

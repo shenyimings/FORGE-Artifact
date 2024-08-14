@@ -1,1 +1,127 @@
-{"path": "./Audit_Reports_2024/Solidified/Audit Report - Animoca Publisher NFT Season 2 Contracts [18.10.2023].pdf", "project_info": {"url": "https://github.com/animoca/opencampus-ethereum-contracts/", "commit_hash": "9e8e6d371f38d04298ca05b94e556276faef511c", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Function currentMintPrice() returns zero for certain combinations of price and discount values", "description": "The function currentMintPrice() may return zero due to rounding down when `price * (100 - DISCOUNT_PERCENTAGE_x) < 100`. This can occur with specific combinations of `price` and `DISCOUNT_PERCENTAGE_x`.", "severity": "Major", "contract": "PublisherNFTSale.sol", "function": "currentMintPrice()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Function withdraw() can potentially fail when transferring ETH to a smart contract", "description": "The function `withdraw()` calls `transfer()` when sending ETH to the `to` address, which only forwards 2300 gas. In cases where the `to` address is a smart contract whose fallback function consumes more than 2300 gas, the call will always fail.", "severity": "Minor", "contract": "PublisherNFTSale.sol", "function": "withdraw()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Missing constructor validation", "description": "The `PublisherNFTSale` constructor lacks validations for array length of `discountThresholds`, `discountPercentages`, and `timestamps`, as well as non-zero checks for `mintPrice`, `mintSupplyLimit`, and `mintLimitPerAddress`.", "severity": "Minor", "contract": "PublisherNFTSale", "function": "constructor", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Discount percentages are not validated", "description": "`DISCOUNT_PERCENTAGE_1`, `DISCOUNT_PERCENTAGE_2` and `DISCOUNT_PERCENTAGE_3` can have values greater than `100`, which will result in function `currentMintPrice()` (and subsequently `mint()`) always failing.", "severity": "Minor", "contract": "PublisherNFTSale.sol", "function": "currentMintPrice()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-682"], "2": ["CWE-1339"]}, "title": "Discount percentages have low precision", "description": "The discount percentages can only be incremented in 100 BPS, which may lead to precision loss.", "severity": "Minor", "contract": "PublisherNFTSale.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Function mint() hardcodes gas calculation values", "description": "Several gas calculation values are hardcoded, which can result in potential issues in case a future EVM fork changes gas prices.", "severity": "Minor", "contract": "PublisherNFTSale.sol", "function": "mint()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Potential value mismatch between PublisherNFTMinter.MINT_SUPPLY_LIMIT and PublisherNFTSale.MINT_SUPPLY_LIMIT", "description": "In case of incorrect initialization, there could exist a case where there\u2019s a mismatch between the values of `PublisherNFTMinter.MINT_SUPPLY_LIMIT` and `PublisherNFTSale.MINT_SUPPLY_LIMIT`.", "severity": "Minor", "contract": "PublisherNFTMinter/PublisherNFTSale", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Solidified/Audit Report - Animoca Publisher NFT Season 2 Contracts [18.10.2023].pdf",
+    "project_info": {
+        "url": "https://github.com/animoca/opencampus-ethereum-contracts/",
+        "commit_hash": "9e8e6d371f38d04298ca05b94e556276faef511c",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Function currentMintPrice() returns zero for certain combinations of price and discount values",
+            "description": "The function currentMintPrice() may return zero due to rounding down when `price * (100 - DISCOUNT_PERCENTAGE_x) < 100`. This can occur with specific combinations of `price` and `DISCOUNT_PERCENTAGE_x`.",
+            "severity": "Major",
+            "contract": "PublisherNFTSale.sol",
+            "function": "currentMintPrice()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Function withdraw() can potentially fail when transferring ETH to a smart contract",
+            "description": "The function `withdraw()` calls `transfer()` when sending ETH to the `to` address, which only forwards 2300 gas. In cases where the `to` address is a smart contract whose fallback function consumes more than 2300 gas, the call will always fail.",
+            "severity": "Minor",
+            "contract": "PublisherNFTSale.sol",
+            "function": "withdraw()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Missing constructor validation",
+            "description": "The `PublisherNFTSale` constructor lacks validations for array length of `discountThresholds`, `discountPercentages`, and `timestamps`, as well as non-zero checks for `mintPrice`, `mintSupplyLimit`, and `mintLimitPerAddress`.",
+            "severity": "Minor",
+            "contract": "PublisherNFTSale",
+            "function": "constructor",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Discount percentages are not validated",
+            "description": "`DISCOUNT_PERCENTAGE_1`, `DISCOUNT_PERCENTAGE_2` and `DISCOUNT_PERCENTAGE_3` can have values greater than `100`, which will result in function `currentMintPrice()` (and subsequently `mint()`) always failing.",
+            "severity": "Minor",
+            "contract": "PublisherNFTSale.sol",
+            "function": "currentMintPrice()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "Discount percentages have low precision",
+            "description": "The discount percentages can only be incremented in 100 BPS, which may lead to precision loss.",
+            "severity": "Minor",
+            "contract": "PublisherNFTSale.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Function mint() hardcodes gas calculation values",
+            "description": "Several gas calculation values are hardcoded, which can result in potential issues in case a future EVM fork changes gas prices.",
+            "severity": "Minor",
+            "contract": "PublisherNFTSale.sol",
+            "function": "mint()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Potential value mismatch between PublisherNFTMinter.MINT_SUPPLY_LIMIT and PublisherNFTSale.MINT_SUPPLY_LIMIT",
+            "description": "In case of incorrect initialization, there could exist a case where there\u2019s a mismatch between the values of `PublisherNFTMinter.MINT_SUPPLY_LIMIT` and `PublisherNFTSale.MINT_SUPPLY_LIMIT`.",
+            "severity": "Minor",
+            "contract": "PublisherNFTMinter/PublisherNFTSale",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

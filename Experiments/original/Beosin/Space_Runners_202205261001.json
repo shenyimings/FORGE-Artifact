@@ -1,1 +1,105 @@
-{"path": "./Audit_Reports_2024/Beosin/Space_Runners_202205261001.pdf", "project_info": {"url": "https://github.com/Space-Runners/staking-solana", "commit_hash": "045c67b974a3e875fe1cbabe17106b9bbb1e6099", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "The Merkle Proof check of the stake function can be bypassed", "description": "Since the \u2018leaf\u2019 parameter of the _stake_ function is input from the outside, potential attackers can construct the correct leaf value to bypass the Merkle Proof check, and stake lots of fake NFTs to obtain income.", "severity": "High", "contract": "staking", "function": "_stake_", "lineNumber": "programs/staking/src/lib.rs #L70-L72"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "Exception in validating the UpdateState instruction.", "description": "Since the UpdateState instruction only verifies if \u2018state.mode\u2019 is Normal, this will result in that \u2018state.mode\u2019 cannot be changed to Normal when it is Paused. And users will", "severity": "High", "contract": "N/A", "function": "_UpdateState_", "lineNumber": "programs/staking/src/verifiers.rs #L45"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Lacking protections against abnormal situations", "description": "The smart contract lacks necessary protections against abnormal or unexpected situations, which can lead to potential security risks.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "Exception in the business logic of the stake method", "description": "When the time of staking is a short time before the end of Pool, the user can still receive the rewards of Pool when unstake after the pool ends.", "severity": "Low", "contract": "N/A", "function": "_stake_ method", "lineNumber": "programs/staking/src/account_defs.rs #L138"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "Centralization risk", "description": "The admin can call the _update_state_ function to set the \u2018claim_required_balance\u2019 to a maximum value, which will cause all users to be unable to withdraw rewards when calling the _claim_reward_ function.", "severity": "Low", "contract": "programs/staking/src/lib.rs", "function": "_update_state_", "lineNumber": "#L114"}]}
+{
+    "path": "./Audit_Reports_2024/Beosin/Space_Runners_202205261001.pdf",
+    "project_info": {
+        "url": "https://github.com/Space-Runners/staking-solana",
+        "commit_hash": "045c67b974a3e875fe1cbabe17106b9bbb1e6099",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "The Merkle Proof check of the stake function can be bypassed",
+            "description": "Since the \u2018leaf\u2019 parameter of the _stake_ function is input from the outside, potential attackers can construct the correct leaf value to bypass the Merkle Proof check, and stake lots of fake NFTs to obtain income.",
+            "severity": "High",
+            "contract": "staking",
+            "function": "_stake_",
+            "lineNumber": "programs/staking/src/lib.rs #L70-L72"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Exception in validating the UpdateState instruction.",
+            "description": "Since the UpdateState instruction only verifies if \u2018state.mode\u2019 is Normal, this will result in that \u2018state.mode\u2019 cannot be changed to Normal when it is Paused. And users will",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "_UpdateState_",
+            "lineNumber": "programs/staking/src/verifiers.rs #L45"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Lacking protections against abnormal situations",
+            "description": "The smart contract lacks necessary protections against abnormal or unexpected situations, which can lead to potential security risks.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Exception in the business logic of the stake method",
+            "description": "When the time of staking is a short time before the end of Pool, the user can still receive the rewards of Pool when unstake after the pool ends.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "_stake_ method",
+            "lineNumber": "programs/staking/src/account_defs.rs #L138"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Centralization risk",
+            "description": "The admin can call the _update_state_ function to set the \u2018claim_required_balance\u2019 to a maximum value, which will cause all users to be unable to withdraw rewards when calling the _claim_reward_ function.",
+            "severity": "Low",
+            "contract": "programs/staking/src/lib.rs",
+            "function": "_update_state_",
+            "lineNumber": "#L114"
+        }
+    ]
+}

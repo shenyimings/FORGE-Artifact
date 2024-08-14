@@ -1,1 +1,190 @@
-{"path": "./Audit_Reports_2024/BlockSec/BlockSec-blocksec_mellow_vaults_v1.3-signed.pdf", "project_info": {"url": "https://github.com/mellow-finance/mellow-vaults", "commit_hash": "ed3e07e5b873dbe6f4e5d632d0adc1f5b47dec8e", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Potential conflict of access control in LStrategy", "description": "The `rebalanceERC20UniV3Vaults` function requires the caller to have at least the `operator` role, which might cause a conflict of access control if the `ERC20RootVault` is set as the `operator` role.", "severity": "Low", "contract": "LStrategy", "function": "rebalanceERC20UniV3Vaults", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Unchecked governance parameters", "description": "In the Mellow project's layered governance system, there does not exist any check to verify the validity of the provided parameters in all governance contracts.", "severity": "Medium", "contract": "ProtocolGovernance and Vault Governance Contracts", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Lack of checks on the vault type for AggregateVault", "description": "In the _initialize function of the AggregateVault contract, there is no check to verify whether the zero vault is of the ERC20Vault type or not.", "severity": "Medium", "contract": "AggregateVault", "function": "_initialize", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Undetermined allocation for the liquidity mining rewards", "description": "Liquidity providers may suffer from losses because the liquidity mining rewards provided by some projects might not be claimed.", "severity": "Low", "contract": "MStrategy", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Potential dust tokens left in the vault", "description": "Dust tokens can remain in the vault due to potential issues.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "The delay mechanism to update the validator parameters could be disabled", "description": "A validator parameter can be updated through two steps, i.e., first staging the parameter and then committing it. The `BaseValidator` would add a delay in between the two steps. However, there exists an invocation path that the admin can set the parameter without any delay.", "severity": "Medium", "contract": "BaseValidator", "function": "commitValidatorParams", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "Improper price calculation in the _getTvlToken0 function", "description": "The protocol fee would be incorrectly calculated because the price is not improperly handled.", "severity": "Medium", "contract": "ERC20RootVault.sol", "function": "_getTvlToken0", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "Incorrect TVL calculation of the AAVE vault", "description": "The `_lastTvlUpdateTimestamp` is not properly updated, which may cause an incorrect calculation of the TVL of the AAVE vault.", "severity": "N/A", "contract": "AaveVault.sol", "function": "_updateTvls", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-284"]}, "title": "Lack of access control for the new governance function", "description": "The new governance function lacks any access control.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-682"]}, "title": "Inconsistent slippage checks in deposit and withdraw", "description": "The ERC20RootVault contract has inconsistent slippage checks between the deposit and withdraw functions, which may cause liquidity providers to suffer from losses.", "severity": "High", "contract": "ERC20RootVault", "function": ["deposit()", "withdraw()"], "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/BlockSec/BlockSec-blocksec_mellow_vaults_v1.3-signed.pdf",
+    "project_info": {
+        "url": "https://github.com/mellow-finance/mellow-vaults",
+        "commit_hash": "ed3e07e5b873dbe6f4e5d632d0adc1f5b47dec8e",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Potential conflict of access control in LStrategy",
+            "description": "The `rebalanceERC20UniV3Vaults` function requires the caller to have at least the `operator` role, which might cause a conflict of access control if the `ERC20RootVault` is set as the `operator` role.",
+            "severity": "Low",
+            "contract": "LStrategy",
+            "function": "rebalanceERC20UniV3Vaults",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Unchecked governance parameters",
+            "description": "In the Mellow project's layered governance system, there does not exist any check to verify the validity of the provided parameters in all governance contracts.",
+            "severity": "Medium",
+            "contract": "ProtocolGovernance and Vault Governance Contracts",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Lack of checks on the vault type for AggregateVault",
+            "description": "In the _initialize function of the AggregateVault contract, there is no check to verify whether the zero vault is of the ERC20Vault type or not.",
+            "severity": "Medium",
+            "contract": "AggregateVault",
+            "function": "_initialize",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Undetermined allocation for the liquidity mining rewards",
+            "description": "Liquidity providers may suffer from losses because the liquidity mining rewards provided by some projects might not be claimed.",
+            "severity": "Low",
+            "contract": "MStrategy",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Potential dust tokens left in the vault",
+            "description": "Dust tokens can remain in the vault due to potential issues.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "The delay mechanism to update the validator parameters could be disabled",
+            "description": "A validator parameter can be updated through two steps, i.e., first staging the parameter and then committing it. The `BaseValidator` would add a delay in between the two steps. However, there exists an invocation path that the admin can set the parameter without any delay.",
+            "severity": "Medium",
+            "contract": "BaseValidator",
+            "function": "commitValidatorParams",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improper price calculation in the _getTvlToken0 function",
+            "description": "The protocol fee would be incorrectly calculated because the price is not improperly handled.",
+            "severity": "Medium",
+            "contract": "ERC20RootVault.sol",
+            "function": "_getTvlToken0",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect TVL calculation of the AAVE vault",
+            "description": "The `_lastTvlUpdateTimestamp` is not properly updated, which may cause an incorrect calculation of the TVL of the AAVE vault.",
+            "severity": "N/A",
+            "contract": "AaveVault.sol",
+            "function": "_updateTvls",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Lack of access control for the new governance function",
+            "description": "The new governance function lacks any access control.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Inconsistent slippage checks in deposit and withdraw",
+            "description": "The ERC20RootVault contract has inconsistent slippage checks between the deposit and withdraw functions, which may cause liquidity providers to suffer from losses.",
+            "severity": "High",
+            "contract": "ERC20RootVault",
+            "function": [
+                "deposit()",
+                "withdraw()"
+            ],
+            "lineNumber": "N/A"
+        }
+    ]
+}

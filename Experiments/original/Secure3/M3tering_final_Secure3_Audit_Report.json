@@ -1,1 +1,156 @@
-{"path": "./Audit_Reports_2024/Secure3/M3tering_final_Secure3_Audit_Report.pdf", "project_info": {"url": "https://github.com/M3tering/", "commit_hash": "58b5b5ea59bacd181be6f402c6f85f561794df67", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Wrong DAI and Token Address", "description": "The addresses used for DAI and token are incorrect, which can cause price fluctuations and affect the protocol's design.", "severity": "Critical", "contract": ["Protocol-V1/Strategy_V1.sol", "Protocol-ABC/contracts/Protocol.sol", "Solaxy/src/Solaxy.sol", "Protocol-V2/Strategy_V2.sol"], "function": "N/A", "lineNumber": ["13", "17", "17", "20"]}, {"id": 1, "category": {"1": ["CWE-707"], "2": ["CWE-116"], "3": ["CWE-838"]}, "title": "Call library contracts error", "description": "The function claim calls a library contract with an external call instead of using delegatecall.", "severity": "Critical", "contract": "IProtocol", "function": "claim()", "lineNumber": "84"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Protocol.pay() can pay to the wrong revenues owner", "description": "In the Protocol.pay() function, the msg.sender sends x DAI to the Protocol contract, and amount less 0.3% of the fee is credited to tokenId owner via revenues[_ownerOf(tokenId)] += amount - fee;, but the owner is not always the user due to the design of M3ter.mint() function with onlyRole(REGISTRAR_ROLE) modifier.", "severity": "Critical", "contract": "Protocol.sol", "function": "pay(uint256, uint256)", "lineNumber": "L61-L67"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Solaxy very high redeem fee and withdraw fee not mentioned in the whitepaper", "description": "The Solaxy.computeWithdraw() charges 35.9% of the fee when withdraw DAI and The Solaxy.computeRedeem() charges 26.4% of the fee when redeem shares, which is not mentioned in the whitepaper.", "severity": "Medium", "contract": "Solaxy.sol", "function": ["computeWithdraw()", "computeRedeem()"], "lineNumber": ["250", "278"]}, {"id": 4, "category": {"1": ["CWE-284"]}, "title": "Lacks Access Control", "description": "The `_setStrategyLib()` function lacks access control, allowing anyone to set the state of `libAddress`, which could result in reentrancy attacks.", "severity": "Critical", "contract": "Protocol", "function": "_setStrategyLib(address, bool)", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Strategy_V2 should be a library contracts", "description": "Strategy_V2 doesn't have DAI token and MIMO.swapExactTokensForTokensSupportingFeeOnTransferTokens will revert.", "severity": "Medium", "contract": "Strategy_V2", "function": "N/A", "lineNumber": "8"}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Protocol :: _setFeeAddress() Missing Zero Address Check", "description": "This function lacks zero address check in important operation, which may cause some unexpected result. Also If the feeAddress is set to address(0), it may cause damage to the protocol.", "severity": "Low", "contract": "Protocol.sol", "function": "_setFeeAddress()", "lineNumber": "45-49"}, {"id": 7, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "_setTariff function unsafe cast to uint248 from uint256", "description": "In the `Protocol::_setTariff(uint256 tokenId, uint256 tariff)` function the passed in parameter `tariff` is downcast to `state.tariff`. As the `State struct` tries to pack two fields into one slot, `tariff` is defined as `uint248` hence `uint248(tariff)` can potentially overflow", "severity": "Low", "contract": "Protocol", "function": "_setTariff", "lineNumber": "54"}]}
+{
+    "path": "./Audit_Reports_2024/Secure3/M3tering_final_Secure3_Audit_Report.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "58b5b5ea59bacd181be6f402c6f85f561794df67",
+        "address": "0x1CbAd85Aa66Ff3C12dc84C5881886EEB29C1bb9b"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Wrong DAI and Token Address",
+            "description": "The addresses used for DAI and token are incorrect, which can cause price fluctuations and affect the protocol's design.",
+            "severity": "Critical",
+            "contract": [
+                "Protocol-V1/Strategy_V1.sol",
+                "Protocol-ABC/contracts/Protocol.sol",
+                "Solaxy/src/Solaxy.sol",
+                "Protocol-V2/Strategy_V2.sol"
+            ],
+            "function": "N/A",
+            "lineNumber": [
+                "13",
+                "17",
+                "17",
+                "20"
+            ]
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-116"
+                ],
+                "3": [
+                    "CWE-838"
+                ]
+            },
+            "title": "Call library contracts error",
+            "description": "The function claim calls a library contract with an external call instead of using delegatecall.",
+            "severity": "Critical",
+            "contract": "IProtocol",
+            "function": "claim()",
+            "lineNumber": "84"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Protocol.pay() can pay to the wrong revenues owner",
+            "description": "In the Protocol.pay() function, the msg.sender sends x DAI to the Protocol contract, and amount less 0.3% of the fee is credited to tokenId owner via revenues[_ownerOf(tokenId)] += amount - fee;, but the owner is not always the user due to the design of M3ter.mint() function with onlyRole(REGISTRAR_ROLE) modifier.",
+            "severity": "Critical",
+            "contract": "Protocol.sol",
+            "function": "pay(uint256, uint256)",
+            "lineNumber": "L61-L67"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Solaxy very high redeem fee and withdraw fee not mentioned in the whitepaper",
+            "description": "The Solaxy.computeWithdraw() charges 35.9% of the fee when withdraw DAI and The Solaxy.computeRedeem() charges 26.4% of the fee when redeem shares, which is not mentioned in the whitepaper.",
+            "severity": "Medium",
+            "contract": "Solaxy.sol",
+            "function": [
+                "computeWithdraw()",
+                "computeRedeem()"
+            ],
+            "lineNumber": [
+                "250",
+                "278"
+            ]
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Lacks Access Control",
+            "description": "The `_setStrategyLib()` function lacks access control, allowing anyone to set the state of `libAddress`, which could result in reentrancy attacks.",
+            "severity": "Critical",
+            "contract": "Protocol",
+            "function": "_setStrategyLib(address, bool)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Strategy_V2 should be a library contracts",
+            "description": "Strategy_V2 doesn't have DAI token and MIMO.swapExactTokensForTokensSupportingFeeOnTransferTokens will revert.",
+            "severity": "Medium",
+            "contract": "Strategy_V2",
+            "function": "N/A",
+            "lineNumber": "8"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Protocol :: _setFeeAddress() Missing Zero Address Check",
+            "description": "This function lacks zero address check in important operation, which may cause some unexpected result. Also If the feeAddress is set to address(0), it may cause damage to the protocol.",
+            "severity": "Low",
+            "contract": "Protocol.sol",
+            "function": "_setFeeAddress()",
+            "lineNumber": "45-49"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "_setTariff function unsafe cast to uint248 from uint256",
+            "description": "In the `Protocol::_setTariff(uint256 tokenId, uint256 tariff)` function the passed in parameter `tariff` is downcast to `state.tariff`. As the `State struct` tries to pack two fields into one slot, `tariff` is defined as `uint248` hence `uint248(tariff)` can potentially overflow",
+            "severity": "Low",
+            "contract": "Protocol",
+            "function": "_setTariff",
+            "lineNumber": "54"
+        }
+    ]
+}

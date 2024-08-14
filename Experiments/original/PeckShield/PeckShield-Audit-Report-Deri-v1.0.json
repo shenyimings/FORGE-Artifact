@@ -1,1 +1,122 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Deri-v1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "Timely updateCumuFundingRate During Pool Liquidity Changes", "description": "Attackers may make profits by sending multiple transactions in a block to manipulate funding rate and trade.", "severity": "Medium", "contract": "PerpetualPool", "function": "_updateCumuFundingRate()", "lineNumber": "682"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Sandwiched Liquidation To Bypass isQualifiedLiquidator() Check", "description": "In the Deri protocol, if a trader's margin ratio falls below the maintenance margin ratio, the trader will get liquidated by liquidators. The function check if the parameter, liquidator , is qualified as a liquidator. However, this check can be easily bypassed by sandwiching.", "severity": "Low", "contract": "LiquidatorQualifier", "function": "deposit()", "lineNumber": "44-49"}, {"id": 2, "category": {"1": ["CWE-693"], "2": ["CWE-807"], "3": ["CWE-302"]}, "title": "Potential Replay Of Signed Prices", "description": "In the current implementation of the Deri protocol, the `_price` is provided by a trusted oracle. If the oracle is an on-chain contract, `PerpetualPool` can get a price by the oracle\u2019s interface. Conversely, if the oracle is an EOA account, `PerpetualPool` should check the price signature first to verify if the price is authorized.", "severity": "Informational", "contract": "PerpetualPool", "function": "_updatePriceWithSignature()", "lineNumber": "708-721"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Potential Front-Running For setPool()", "description": "Front-running issue in the `setPool()` routine allowing anyone to call the function and set an arbitrary pool address to the token.", "severity": "Low", "contract": "LToken", "function": "setPool()", "lineNumber": "33"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Lack Of Sanity Checks For System Parameters", "description": "DeFi protocols typically have a number of system-wide parameters that can be dynamically configured on demand. The Deri protocol is no exception. Specifically, if we examine the `PerpetualPool` contract, it has defined a number of system-wide risk parameters, e.g., `_redemptionFeeRatio`, `_minMaintenanceMarginRatio`, and `_minLiquidationReward`. In the following, we show the `initialize()` routine that sets up these parameters.", "severity": "Informational", "contract": "PerpetualPool", "function": "initialize()", "lineNumber": "113-143"}, {"id": 5, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Incompatibility with Deflationary/Rebasing Tokens", "description": "The PerpetualPool contract's asset-transferring routines may not work as expected with deflationary or rebasing tokens that charge a fee for every transfer() or transferFrom().", "severity": "Informational", "contract": "PerpetualPool", "function": "_depositMargin()", "lineNumber": "518-531"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Deri-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/dfactory-tech/deriprotocol/tree/c3041af49f1025328fb2ffdc22a14935f10e8515",
+        "commit_hash": "c3041af49f1025328fb2ffdc22a14935f10e8515",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Timely updateCumuFundingRate During Pool Liquidity Changes",
+            "description": "Attackers may make profits by sending multiple transactions in a block to manipulate funding rate and trade.",
+            "severity": "Medium",
+            "contract": "PerpetualPool",
+            "function": "_updateCumuFundingRate()",
+            "lineNumber": "682"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Sandwiched Liquidation To Bypass isQualifiedLiquidator() Check",
+            "description": "In the Deri protocol, if a trader's margin ratio falls below the maintenance margin ratio, the trader will get liquidated by liquidators. The function check if the parameter, liquidator , is qualified as a liquidator. However, this check can be easily bypassed by sandwiching.",
+            "severity": "Low",
+            "contract": "LiquidatorQualifier",
+            "function": "deposit()",
+            "lineNumber": "44-49"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ],
+                "3": [
+                    "CWE-302"
+                ]
+            },
+            "title": "Potential Replay Of Signed Prices",
+            "description": "In the current implementation of the Deri protocol, the `_price` is provided by a trusted oracle. If the oracle is an on-chain contract, `PerpetualPool` can get a price by the oracle\u2019s interface. Conversely, if the oracle is an EOA account, `PerpetualPool` should check the price signature first to verify if the price is authorized.",
+            "severity": "Informational",
+            "contract": "PerpetualPool",
+            "function": "_updatePriceWithSignature()",
+            "lineNumber": "708-721"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Potential Front-Running For setPool()",
+            "description": "Front-running issue in the `setPool()` routine allowing anyone to call the function and set an arbitrary pool address to the token.",
+            "severity": "Low",
+            "contract": "LToken",
+            "function": "setPool()",
+            "lineNumber": "33"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Lack Of Sanity Checks For System Parameters",
+            "description": "DeFi protocols typically have a number of system-wide parameters that can be dynamically configured on demand. The Deri protocol is no exception. Specifically, if we examine the `PerpetualPool` contract, it has defined a number of system-wide risk parameters, e.g., `_redemptionFeeRatio`, `_minMaintenanceMarginRatio`, and `_minLiquidationReward`. In the following, we show the `initialize()` routine that sets up these parameters.",
+            "severity": "Informational",
+            "contract": "PerpetualPool",
+            "function": "initialize()",
+            "lineNumber": "113-143"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Incompatibility with Deflationary/Rebasing Tokens",
+            "description": "The PerpetualPool contract's asset-transferring routines may not work as expected with deflationary or rebasing tokens that charge a fee for every transfer() or transferFrom().",
+            "severity": "Informational",
+            "contract": "PerpetualPool",
+            "function": "_depositMargin()",
+            "lineNumber": "518-531"
+        }
+    ]
+}

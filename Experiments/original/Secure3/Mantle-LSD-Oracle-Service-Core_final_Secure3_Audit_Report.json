@@ -1,1 +1,270 @@
-{"path": "./Audit_Reports_2024/Secure3/Mantle-LSD-Oracle-Service-Core_final_Secure3_Audit_Report.pdf", "project_info": {"url": "https://github.com/TwoFiftySixLabs/services", "commit_hash": "44c07aec02eaa81fab10ab20c7e88787427bc0bd", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "MTO-6:Insufficient Input Validation in ComputeWithdrawals", "description": "The ComputeWithdrawals function accepts external parameters 'begin' and 'end' representing block stamps without validating their legitimacy, range, or validity before processing them.", "severity": "Medium", "contract": "N/A", "function": "ComputeWithdrawals", "lineNumber": "57-69, 71-74"}, {"id": 1, "category": {"1": ["CWE-703"]}, "title": "MTO-1:Potential panic when executing a transaction", "description": "The function Run in GCPKMSTransactor may cause a potential panic when executing a transaction.", "severity": "Medium", "contract": "GCPKMSTransactor", "function": "Run", "lineNumber": "41-67"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"], "4": ["CWE-690"]}, "title": "MTO-2:Potential Nil Dereference", "description": "N/A", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "MTO-3:Lack of Rate Limiting Control", "description": "The Analyzer uses a rate limiter ( `rate.NewLimiter` ) for controlling the frequency of its operations; however, it relies on the `maxRPS` parameter from the user without validating its value.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "87"}, {"id": 4, "category": {"1": ["CWE-703"]}, "title": "MTO-4: Change ethclient.Dial(conf.RPC Url) to ethclient.DialContext (ctx, conf.RPCUrl)", "description": "Change `ethclient.Dial(conf.RPCUrl)` to `ethclient.DialContext(ctx, conf.RPCUrl)` thus timeout function also takes effect on ethclient", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "code/oracle/service/clients.go#L25"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-287"], "3": ["CWE-306"]}, "title": "MTO-5:Lack of Authentication for Ethereum RPC", "description": "The Ethereum RPC lacks authentication.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "code/oracle/service/clients.go#L25, code/oracle/main.go#L262-L281"}, {"id": 6, "category": {"1": ["CWE-693"], "2": ["CWE-357"]}, "title": "MTO-7:Lack of Secure Headers in HTTP Responses", "description": "The health check server does not set any secure HTTP headers, which can protect against certain types of attacks, like Clickjacking.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "265"}, {"id": 7, "category": {"1": ["CWE-664"], "2": ["CWE-404"], "3": ["CWE-772"], "4": ["CWE-775"]}, "title": "MTO-8:Resources not released after querying events", "description": "Resources are not released after querying events.", "severity": "Low", "contract": "stakingLoader", "function": "Load", "lineNumber": "47-71"}, {"id": 8, "category": {"1": ["CWE-703"]}, "title": "MTO-9:Not check the existence of the block returned from the Beacon.", "description": "The function alignBlockWindow calls SignedBeaconBlock to get a Beacon block but does not check if the returned block exists, which can lead to nil pointer dereference when the block is not available.", "severity": "Low", "contract": "N/A", "function": "alignBlockWindow", "lineNumber": "355-359"}, {"id": 9, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"], "4": ["CWE-690"]}, "title": "MTO-10: Incomplete nil check", "description": "The code does not properly check for nil values before accessing properties, which can lead to runtime errors.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "91-105, 115-124"}, {"id": 10, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-233"], "4": ["CWE-234"]}, "title": "MTO-11:Missing parameter validation in withdrawals::NewAnalyzer() function", "description": "The maxRPS parameter represents the maximum requests per second and should be a positive integer. If it's not a positive integer or if it's zero or negative, it would indicate an invalid configuration. The consensusClient parameter represents the consensus client used for interacting with the blockchain. If it's nil, the analyzer won't be able to perform its functions, leading to runtime errors.", "severity": "Low", "contract": "N/A", "function": "NewAnalyzer()", "lineNumber": "46-51"}, {"id": 11, "category": {"1": ["CWE-682"]}, "title": "Incorrect Flag Type Definition", "description": "The start-block and end-block flags should define Uint64Flag, while num-runs and start-index flag should use UintFlag because they cannot have negative numbers.", "severity": "Low", "contract": "N/A", "function": ["LoadEvents", "VerifyReports"], "lineNumber": ["131-154, 162, 186, 193, 198, 203, 215", "21, 37"]}, {"id": 12, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "MTO-13:Uncontrolled Public Key Input in ValidatorsAt", "description": "The function `ValidatorsAt` processes a list of public keys sourced from a third party without proper validation, which could lead to data contamination or unexpected behavior.", "severity": "Low", "contract": "N/A", "function": "ValidatorsAt", "lineNumber": "L60-L62"}, {"id": 13, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "MTO-19: gc optimization for command regenerate-reports", "description": "The finding relates to gc optimization for the 'regenerate-reports' command.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "127-188"}]}
+{
+    "path": "./Audit_Reports_2024/Secure3/Mantle-LSD-Oracle-Service-Core_final_Secure3_Audit_Report.pdf",
+    "project_info": {
+        "url": "https://github.com/TwoFiftySixLabs/services",
+        "commit_hash": "44c07aec02eaa81fab10ab20c7e88787427bc0bd",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "MTO-6:Insufficient Input Validation in ComputeWithdrawals",
+            "description": "The ComputeWithdrawals function accepts external parameters 'begin' and 'end' representing block stamps without validating their legitimacy, range, or validity before processing them.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "ComputeWithdrawals",
+            "lineNumber": "57-69, 71-74"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "MTO-1:Potential panic when executing a transaction",
+            "description": "The function Run in GCPKMSTransactor may cause a potential panic when executing a transaction.",
+            "severity": "Medium",
+            "contract": "GCPKMSTransactor",
+            "function": "Run",
+            "lineNumber": "41-67"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ],
+                "4": [
+                    "CWE-690"
+                ]
+            },
+            "title": "MTO-2:Potential Nil Dereference",
+            "description": "N/A",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "MTO-3:Lack of Rate Limiting Control",
+            "description": "The Analyzer uses a rate limiter ( `rate.NewLimiter` ) for controlling the frequency of its operations; however, it relies on the `maxRPS` parameter from the user without validating its value.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "87"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "MTO-4: Change ethclient.Dial(conf.RPC Url) to ethclient.DialContext (ctx, conf.RPCUrl)",
+            "description": "Change `ethclient.Dial(conf.RPCUrl)` to `ethclient.DialContext(ctx, conf.RPCUrl)` thus timeout function also takes effect on ethclient",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "code/oracle/service/clients.go#L25"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-287"
+                ],
+                "3": [
+                    "CWE-306"
+                ]
+            },
+            "title": "MTO-5:Lack of Authentication for Ethereum RPC",
+            "description": "The Ethereum RPC lacks authentication.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "code/oracle/service/clients.go#L25, code/oracle/main.go#L262-L281"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-357"
+                ]
+            },
+            "title": "MTO-7:Lack of Secure Headers in HTTP Responses",
+            "description": "The health check server does not set any secure HTTP headers, which can protect against certain types of attacks, like Clickjacking.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "265"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-775"
+                ]
+            },
+            "title": "MTO-8:Resources not released after querying events",
+            "description": "Resources are not released after querying events.",
+            "severity": "Low",
+            "contract": "stakingLoader",
+            "function": "Load",
+            "lineNumber": "47-71"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "MTO-9:Not check the existence of the block returned from the Beacon.",
+            "description": "The function alignBlockWindow calls SignedBeaconBlock to get a Beacon block but does not check if the returned block exists, which can lead to nil pointer dereference when the block is not available.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "alignBlockWindow",
+            "lineNumber": "355-359"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ],
+                "4": [
+                    "CWE-690"
+                ]
+            },
+            "title": "MTO-10: Incomplete nil check",
+            "description": "The code does not properly check for nil values before accessing properties, which can lead to runtime errors.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "91-105, 115-124"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-233"
+                ],
+                "4": [
+                    "CWE-234"
+                ]
+            },
+            "title": "MTO-11:Missing parameter validation in withdrawals::NewAnalyzer() function",
+            "description": "The maxRPS parameter represents the maximum requests per second and should be a positive integer. If it's not a positive integer or if it's zero or negative, it would indicate an invalid configuration. The consensusClient parameter represents the consensus client used for interacting with the blockchain. If it's nil, the analyzer won't be able to perform its functions, leading to runtime errors.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "NewAnalyzer()",
+            "lineNumber": "46-51"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect Flag Type Definition",
+            "description": "The start-block and end-block flags should define Uint64Flag, while num-runs and start-index flag should use UintFlag because they cannot have negative numbers.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": [
+                "LoadEvents",
+                "VerifyReports"
+            ],
+            "lineNumber": [
+                "131-154, 162, 186, 193, 198, 203, 215",
+                "21, 37"
+            ]
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "MTO-13:Uncontrolled Public Key Input in ValidatorsAt",
+            "description": "The function `ValidatorsAt` processes a list of public keys sourced from a third party without proper validation, which could lead to data contamination or unexpected behavior.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "ValidatorsAt",
+            "lineNumber": "L60-L62"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "MTO-19: gc optimization for command regenerate-reports",
+            "description": "The finding relates to gc optimization for the 'regenerate-reports' command.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "127-188"
+        }
+    ]
+}

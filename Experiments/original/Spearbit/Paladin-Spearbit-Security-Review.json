@@ -1,1 +1,153 @@
-{"path": "./Audit_Reports_2024/Spearbit/Paladin-Spearbit-Security-Review.pdf", "project_info": {"url": "https://github.com/PaladinFinance/Warden-Quest", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-710"], "2": ["CWE-1164"]}, "title": "Typo on comment", "description": "Across the codebase, there is a typo on the comment.", "severity": "_Informational", "contract": "QuestBoard.sol", "function": "N/A", "lineNumber": "L231"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-287"]}, "title": "Verify user has indeed voted", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-435"], "2": ["CWE-436"]}, "title": "Tokens could be sent / withdrawn multiple times by accident", "description": "Functions closeQuestPeriod() and closePartOfQuestPeriod() have similar functionality but interfere with each other, causing tokens to be sent/withdrawn multiple times by accident.", "severity": "High Risk", "contract": "QuestBoard.sol", "function": ["closeQuestPeriod()", "closePartOfQuestPeriod()"], "lineNumber": "L678-L815"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Limit possibilities of `recoverERC20()`", "description": "Function `recoverERC20()` in contract `MultiMerkleDistributor.sol` allows the retrieval of all ERC20 tokens from the `MultiMerkleDistributor.sol` whereas the comment indicates it is only meant to retrieve those tokens that have been sent by mistake.", "severity": "Medium Risk", "contract": "MultiMerkleDistributor.sol, QuestBoard.sol", "function": "recoverERC20()", "lineNumber": "L296-L300, L986-L991"}, {"id": 4, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Updating `QuestBoard` in `MultiMerkleDistributor.sol` will not work", "description": "N/A", "severity": "N/A", "contract": "MultiMerkleDistributor.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Old quests can be extended via `increaseQuestDuration()`", "description": "Function `increaseQuestDuration()` does not check if a quest is already in the past. Extending a quest from the past in duration is probably not useful.", "severity": "Medium Risk", "contract": "QuestBoard.sol", "function": "increaseQuestDuration()", "lineNumber": "L380-L438"}, {"id": 6, "category": {"1": ["CWE-691"], "2": ["CWE-841"]}, "title": "Accidental call of `addQuest` could block contracts", "description": "N/A", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-703"]}, "title": "Reduce impact of `emergencyUpdatequestPeriod()`", "description": "Adding a check to `emergencyUpdatequestPeriod()` to prevent calling `updateQuestPeriod()` when not closed yet.", "severity": "High Risk", "contract": "N/A", "function": "emergencyUpdatequestPeriod()", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Spearbit/Paladin-Spearbit-Security-Review.pdf",
+    "project_info": {
+        "url": "https://github.com/PaladinFinance/Warden-Quest",
+        "commit_hash": "N/A",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ]
+            },
+            "title": "Typo on comment",
+            "description": "Across the codebase, there is a typo on the comment.",
+            "severity": "_Informational",
+            "contract": "QuestBoard.sol",
+            "function": "N/A",
+            "lineNumber": "L231"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-287"
+                ]
+            },
+            "title": "Verify user has indeed voted",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ]
+            },
+            "title": "Tokens could be sent / withdrawn multiple times by accident",
+            "description": "Functions closeQuestPeriod() and closePartOfQuestPeriod() have similar functionality but interfere with each other, causing tokens to be sent/withdrawn multiple times by accident.",
+            "severity": "High Risk",
+            "contract": "QuestBoard.sol",
+            "function": [
+                "closeQuestPeriod()",
+                "closePartOfQuestPeriod()"
+            ],
+            "lineNumber": "L678-L815"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Limit possibilities of `recoverERC20()`",
+            "description": "Function `recoverERC20()` in contract `MultiMerkleDistributor.sol` allows the retrieval of all ERC20 tokens from the `MultiMerkleDistributor.sol` whereas the comment indicates it is only meant to retrieve those tokens that have been sent by mistake.",
+            "severity": "Medium Risk",
+            "contract": "MultiMerkleDistributor.sol, QuestBoard.sol",
+            "function": "recoverERC20()",
+            "lineNumber": "L296-L300, L986-L991"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Updating `QuestBoard` in `MultiMerkleDistributor.sol` will not work",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "MultiMerkleDistributor.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Old quests can be extended via `increaseQuestDuration()`",
+            "description": "Function `increaseQuestDuration()` does not check if a quest is already in the past. Extending a quest from the past in duration is probably not useful.",
+            "severity": "Medium Risk",
+            "contract": "QuestBoard.sol",
+            "function": "increaseQuestDuration()",
+            "lineNumber": "L380-L438"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "Accidental call of `addQuest` could block contracts",
+            "description": "N/A",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Reduce impact of `emergencyUpdatequestPeriod()`",
+            "description": "Adding a check to `emergencyUpdatequestPeriod()` to prevent calling `updateQuestPeriod()` when not closed yet.",
+            "severity": "High Risk",
+            "contract": "N/A",
+            "function": "emergencyUpdatequestPeriod()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

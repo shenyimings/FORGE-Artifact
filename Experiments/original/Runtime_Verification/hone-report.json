@@ -1,1 +1,236 @@
-{"path": "./Audit_Reports_2024/Runtime_V\u0435rification/hone-report.pdf", "project_info": {"url": "N/A", "commit_hash": "703f8f86f595c3422548e8e0672f5d157bfbad99", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"], "2": ["CWE-1339"]}, "title": "Precision loss in the calculation of the exchange rate can result in accumulation of assets by the contract", "description": "The precision loss in the exchange rate calculation can lead to dust accumulation, affecting the amounts of dAlgo in circulation and algos in the balance of the staking contract.", "severity": "Low", "contract": "Staking Contract", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Possibility for dAlgo price inflation and algos theft by sending dAlgos to the contract", "description": "Sending dAlgos or algos to the staking contract without an accompanying application call can manipulate the exchange rate, reducing the amount of dAlgos issued per algo staked. This allows malicious users to steal algos from other users.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Multiple application calls can use the same payment to stake algos", "description": "The 'on_stake' function allows multiple application calls to use the same payment to stake algos, resulting in surplus dAlgo received by malicious users that can be used for unstaking algos that do not belong to them.", "severity": "High", "contract": "N/A", "function": "on_stake", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"], "2": ["CWE-1339"]}, "title": "Loss of dAlgos sent to the user if the exchange rate multiplied by the amount staked is greater than 2 [64]", "description": "In the on_stake function, performing a pop operation without checking the value on top of the stack can cause precision loss, leading to failure of sending correct amount of dAlgos to users.", "severity": "High", "contract": "N/A", "function": "on_stake", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Calculation of amounts of algo to be sent can overflow", "description": "The multiplication opcode executed in line 422 can overflow the 64 bit integer range when calculating the amount of algos to be sent for the user when unstaking, given high exchange rate and large amount of dAlgos.", "severity": "Low", "contract": "N/A", "function": "unstaking function", "lineNumber": "422"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "No check on the fees_redeemed variable when redeeming fees", "description": "The handling of staking operations and rewards/fees was performed by different contracts without checks on the 'fees_redeemed' variable at the beginning of the 'on_redeem_fees' function, allowing for unnecessary actions that can lead to undesired operations.", "severity": "Low", "contract": "Beneficiary Contract", "function": "on_redeem_fees()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-237"], "4": ["CWE-239"]}, "title": "Malformed transaction groups are accepted for fee redemption", "description": "The function which handles the fee redemption in the beneficiary contract has no validations to the prior application call that should precede it.", "severity": "Medium", "contract": "Beneficiary Contract", "function": "fee redemption operation", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "User can call the unstake function sending 0 dAlgos in an asset transfer", "description": "The unstake function can be successfully executed when the user sends 0 dAlgos to the contract, which can trigger the 'return_all_algos' function and send all available algos in the staking contract to the sender.", "severity": "Low", "contract": "Staking Contract", "function": "on_unstake", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-682"]}, "title": "Staking can return 0 dAlgos", "description": "The staking contract has a constraint that enforces all deposits to have an amount greater than 1000 microAlgos. However, if the exchange rate is too low, staking 1 microAlgo could result in returning 0 dAlgos.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "The fee collector can receive all algos in the contract", "description": "The contract creator account can set the fees to be 100% of the algos held by the contract due to lack of enforcement of a safe range for 'fee_basis_points' in the fee redemption function, which implies that the contract creator account can set the fees to be 100% of the algos held by the contract.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Migrations can be requested and performed in between the end of registration and redemption of fees", "description": "Migrations can be performed after the time window for staking and unstaking has closed and before the redemption window opens, allowing a malicious user who compromises the creator account to request migration of assets without users being able to withdraw their assets until opening of the redemption window.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "No checks on specific Algorand fields and properties", "description": "The smart contract does not verify possible misconfigured fields or interference by a malicious third party, which may impact assets held by an account. Specifically, there are no checks on RekeyTo, AssetCloseTo/CloseRemainderTo fields, and frozen assets.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Runtime_V\u0435rification/hone-report.pdf",
+    "project_info": {
+        "url": "https://github.com/malturki/tealer",
+        "commit_hash": "703f8f86f595c3422548e8e0672f5d157bfbad99",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "Precision loss in the calculation of the exchange rate can result in accumulation of assets by the contract",
+            "description": "The precision loss in the exchange rate calculation can lead to dust accumulation, affecting the amounts of dAlgo in circulation and algos in the balance of the staking contract.",
+            "severity": "Low",
+            "contract": "Staking Contract",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Possibility for dAlgo price inflation and algos theft by sending dAlgos to the contract",
+            "description": "Sending dAlgos or algos to the staking contract without an accompanying application call can manipulate the exchange rate, reducing the amount of dAlgos issued per algo staked. This allows malicious users to steal algos from other users.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Multiple application calls can use the same payment to stake algos",
+            "description": "The 'on_stake' function allows multiple application calls to use the same payment to stake algos, resulting in surplus dAlgo received by malicious users that can be used for unstaking algos that do not belong to them.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "on_stake",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "Loss of dAlgos sent to the user if the exchange rate multiplied by the amount staked is greater than 2 [64]",
+            "description": "In the on_stake function, performing a pop operation without checking the value on top of the stack can cause precision loss, leading to failure of sending correct amount of dAlgos to users.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "on_stake",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Calculation of amounts of algo to be sent can overflow",
+            "description": "The multiplication opcode executed in line 422 can overflow the 64 bit integer range when calculating the amount of algos to be sent for the user when unstaking, given high exchange rate and large amount of dAlgos.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "unstaking function",
+            "lineNumber": "422"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "No check on the fees_redeemed variable when redeeming fees",
+            "description": "The handling of staking operations and rewards/fees was performed by different contracts without checks on the 'fees_redeemed' variable at the beginning of the 'on_redeem_fees' function, allowing for unnecessary actions that can lead to undesired operations.",
+            "severity": "Low",
+            "contract": "Beneficiary Contract",
+            "function": "on_redeem_fees()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-237"
+                ],
+                "4": [
+                    "CWE-239"
+                ]
+            },
+            "title": "Malformed transaction groups are accepted for fee redemption",
+            "description": "The function which handles the fee redemption in the beneficiary contract has no validations to the prior application call that should precede it.",
+            "severity": "Medium",
+            "contract": "Beneficiary Contract",
+            "function": "fee redemption operation",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "User can call the unstake function sending 0 dAlgos in an asset transfer",
+            "description": "The unstake function can be successfully executed when the user sends 0 dAlgos to the contract, which can trigger the 'return_all_algos' function and send all available algos in the staking contract to the sender.",
+            "severity": "Low",
+            "contract": "Staking Contract",
+            "function": "on_unstake",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Staking can return 0 dAlgos",
+            "description": "The staking contract has a constraint that enforces all deposits to have an amount greater than 1000 microAlgos. However, if the exchange rate is too low, staking 1 microAlgo could result in returning 0 dAlgos.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "The fee collector can receive all algos in the contract",
+            "description": "The contract creator account can set the fees to be 100% of the algos held by the contract due to lack of enforcement of a safe range for 'fee_basis_points' in the fee redemption function, which implies that the contract creator account can set the fees to be 100% of the algos held by the contract.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Migrations can be requested and performed in between the end of registration and redemption of fees",
+            "description": "Migrations can be performed after the time window for staking and unstaking has closed and before the redemption window opens, allowing a malicious user who compromises the creator account to request migration of assets without users being able to withdraw their assets until opening of the redemption window.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "No checks on specific Algorand fields and properties",
+            "description": "The smart contract does not verify possible misconfigured fields or interference by a malicious third party, which may impact assets held by an account. Specifically, there are no checks on RekeyTo, AssetCloseTo/CloseRemainderTo fields, and frozen assets.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

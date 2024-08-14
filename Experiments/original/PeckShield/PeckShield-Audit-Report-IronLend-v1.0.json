@@ -1,1 +1,151 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-IronLend-v1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Adjusted blocksPerYear Constant in Interest Model", "description": "The computation assumes the block time of 3 seconds per block, which should be 2 seconds per block on Polygon.", "severity": "Low", "contract": "BaseJumpRateModelV2", "function": "N/A", "lineNumber": "24"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Non ERC20-Compliance Of RToken", "description": "The `RToken` contract does not fully comply with the ERC20 specification, specifically the `transfer()` function returns an error instead of reverting if the caller does not have enough tokens to spend.", "severity": "Medium", "contract": "RToken", "function": "transfer()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "Possible Front-running For Unintended Payment In repayBorrowBehalf()", "description": "The Iron Lend protocol's repayBorrowFresh() function allows for repaying partial or full current borrowing balance and supports the payment on behalf of another borrowing user (via repayBorrowBehalf()). However, this assumption may be taken advantage of to launch a front-running borrow() operation, resulting in a higher borrowing balance for repayment.", "severity": "Low", "contract": "RToken", "function": "repayBorrowFresh()", "lineNumber": "853"}, {"id": 3, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Improved Reward Management in grantRewardInternal()", "description": "The `grantRewardInternal()` function in `IronController` directly mints reward tokens to claimers, but lacks a check to ensure the minted amount is within the intended range.", "severity": "Undetermined", "contract": "IronController", "function": "grantRewardInternal()", "lineNumber": "1236-1243"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Consistency in IronController Setters", "description": "Inconsistency in setter `_setCloseFactor()` where it reverts transaction when caller is not authorized admin, unlike other setters which return failure.", "severity": "Low", "contract": "IronController", "function": "_setCloseFactor()", "lineNumber": "824-828"}, {"id": 5, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Redundant State/Code Removal", "description": "The `Iron Lend` protocol includes unused code or unnecessary redundancies that can be safely removed, such as local variables defined but not used in the `RToken` contract and redundant condition validation in the `_acceptAdmin()` routine.", "severity": "Informational", "contract": "RToken", "function": "_acceptAdmin()", "lineNumber": "110, 1133"}, {"id": 6, "category": {"1": ["CWE-435"], "2": ["CWE-436"]}, "title": "Interface Inconsistency Between RErc20 And REther", "description": "The interfaces of RErc20 and REther types are surprisingly different, with RErc20 returning an error code while REther reverts upon any failure.", "severity": "Low", "contract": "Multiple Contracts", "function": ["repayBorrow()", "mint()", "liquidateBorrow()", "repayBorrowBehalf()"], "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Minting of unlimited number of sundae tokens?", "description": "The token contract allows the owner or privileged users to mint tokens to a specific address", "severity": "High", "contract": "RToken", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-IronLend-v1.0.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Adjusted blocksPerYear Constant in Interest Model",
+            "description": "The computation assumes the block time of 3 seconds per block, which should be 2 seconds per block on Polygon.",
+            "severity": "Low",
+            "contract": "BaseJumpRateModelV2",
+            "function": "N/A",
+            "lineNumber": "24"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Non ERC20-Compliance Of RToken",
+            "description": "The `RToken` contract does not fully comply with the ERC20 specification, specifically the `transfer()` function returns an error instead of reverting if the caller does not have enough tokens to spend.",
+            "severity": "Medium",
+            "contract": "RToken",
+            "function": "transfer()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Possible Front-running For Unintended Payment In repayBorrowBehalf()",
+            "description": "The Iron Lend protocol's repayBorrowFresh() function allows for repaying partial or full current borrowing balance and supports the payment on behalf of another borrowing user (via repayBorrowBehalf()). However, this assumption may be taken advantage of to launch a front-running borrow() operation, resulting in a higher borrowing balance for repayment.",
+            "severity": "Low",
+            "contract": "RToken",
+            "function": "repayBorrowFresh()",
+            "lineNumber": "853"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Improved Reward Management in grantRewardInternal()",
+            "description": "The `grantRewardInternal()` function in `IronController` directly mints reward tokens to claimers, but lacks a check to ensure the minted amount is within the intended range.",
+            "severity": "Undetermined",
+            "contract": "IronController",
+            "function": "grantRewardInternal()",
+            "lineNumber": "1236-1243"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Consistency in IronController Setters",
+            "description": "Inconsistency in setter `_setCloseFactor()` where it reverts transaction when caller is not authorized admin, unlike other setters which return failure.",
+            "severity": "Low",
+            "contract": "IronController",
+            "function": "_setCloseFactor()",
+            "lineNumber": "824-828"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Redundant State/Code Removal",
+            "description": "The `Iron Lend` protocol includes unused code or unnecessary redundancies that can be safely removed, such as local variables defined but not used in the `RToken` contract and redundant condition validation in the `_acceptAdmin()` routine.",
+            "severity": "Informational",
+            "contract": "RToken",
+            "function": "_acceptAdmin()",
+            "lineNumber": "110, 1133"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ]
+            },
+            "title": "Interface Inconsistency Between RErc20 And REther",
+            "description": "The interfaces of RErc20 and REther types are surprisingly different, with RErc20 returning an error code while REther reverts upon any failure.",
+            "severity": "Low",
+            "contract": "Multiple Contracts",
+            "function": [
+                "repayBorrow()",
+                "mint()",
+                "liquidateBorrow()",
+                "repayBorrowBehalf()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Minting of unlimited number of sundae tokens?",
+            "description": "The token contract allows the owner or privileged users to mint tokens to a specific address",
+            "severity": "High",
+            "contract": "RToken",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

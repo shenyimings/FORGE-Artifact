@@ -1,1 +1,286 @@
-{"path": "./Audit_Reports_2024/Trail_of_Bits/computable.pdf", "project_info": {"url": "N/A", "commit_hash": "1502a7993d914047401fb3a7a3ee5d4dcfae2c7a", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "Candidate proposal denial-of-service by front-running transactions", "description": "The voting process has two functions that can be front-run to produce a denial-of-service attack during the voting process.", "severity": "Medium", "contract": "Listing and Datatrust", "function": "list() and register()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Re-parameterization may be abused to exploit markets", "description": "Certain parameters of the contracts can be configured to invalid values, causing a variety of issues and breaking expected interactions between contracts. Re-parameterization lacks sanity/threshold/limit checks on all parameters.", "severity": "High", "contract": "Parametrizer", "function": "resolveReparam", "lineNumber": "L194-L232"}, {"id": 2, "category": {"1": ["CWE-707"], "2": ["CWE-228"], "3": ["CWE-237"], "4": ["CWE-239"]}, "title": "increaseApproval and decreaseApproval do not follow ERC20 standard", "description": "The increaseApproval and decreaseApproval functions in EtherToken and MarketToken contracts use non-standard names and do not return a boolean value as expected in ERC20.", "severity": "Low", "contract": "EtherToken, MarketToken", "function": "increaseApproval, decreaseApproval", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Missing check for zero address in setPrivileged", "description": "The setPrivileged function does not check for zero addresses in its parameters, which can lead to an incorrect and irrecoverable state if a zero address is passed.", "severity": "Low", "contract": "MarketToken, Voting", "function": "setPrivileged()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-693"]}, "title": "Staked tokens can be destroyed through a failed challenge", "description": "Tokens that are not unstaked can be destroyed if the tokens\u2019 owner is challenged and wins.", "severity": "High", "contract": "Voting", "function": "transferStake", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Staked tokens can be destroyed through a challenge re-creation", "description": "Tokens that are not unstaked can be destroyed if the tokens\u2019 owner challenges a listing multiple times.", "severity": "High", "contract": "Voting", "function": "addCandidate()", "lineNumber": "L134-L136"}, {"id": 6, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "A successful challenge may force the Maker to lose all tokens", "description": "When a successful challenge is resolved, it forcibly removes the listing and burns the associated tokens, without giving the listing owner (i.e., Maker) a chance to withdraw reward tokens already accumulated.", "severity": "Medium", "contract": "Listing", "function": "removeListing()", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "Bookkeeping inconsistency in Datatrust in case of price change", "description": "When requesting a delivery, the user pays its cost. The actual delivery cost and the cost paid can differ if the fees parameter are changed during the delivery. As a result, the datatrust contract can have an unexpected deficit or surplus.", "severity": "Low", "contract": "Datatrust", "function": "requestDelivery", "lineNumber": "L209-211"}, {"id": 8, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "EtherToken/MarketToken owners can drain ether from users", "description": "The owner of EtherToken and MarketToken contracts have the power to initialize their accounts with any number of tokens and then withdraw them.", "severity": "High", "contract": "EtherToken, MarketToken", "function": "withdraw()", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-682"]}, "title": "Reporting excess bytes delivered will prevent ongoing purchases", "description": "When requesting a delivery, the user pays its cost. The actual delivery cost and the amount paid can differ if the Backend reports more bytes delivered than what was paid for.", "severity": "Medium", "contract": "Datatrust.vy", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-682"], "2": ["CWE-190"], "3": ["CWE-680"]}, "title": "Delivering more bytes than purchased can trigger unexpected behavior for third parties", "description": "The Backend is allowed to deliver and report more bytes than purchased. If the user has no other ongoing purchase, the report will fail, leading to unexpected behavior for the Backend.", "severity": "Low", "contract": "Datatrust.vy", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "Request delivery denial of service by front-running transactions", "description": "The delivery process has a function that can be front-run to produce a denial-of-service attack during the delivery process.", "severity": "Low", "contract": "Datatrust", "function": "requestDelivery()", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Attackers can prevent new challenges/listings/backends, parameter changes, and stake retrievals", "description": "Candidate creation allows attackers to block essential operations performed by other users.", "severity": "Medium", "contract": "Voting", "function": "addCandidate()", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-284"], "2": ["CWE-923"], "3": ["CWE-940"]}, "title": "Malicious backend candidate can exploit submitted url for phishing or denial-of-service.", "description": "An incorrect update schema allows attackers to temporarily steal the Backend URL destination, leading to denial of service for phishing campaigns.", "severity": "High", "contract": "Datatrust", "function": "register() and getBackendUrl()", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Quick buy and sell allows vote manipulation", "description": "Computable\u2019s voting mechanism relies on staking, allowing anyone with a large fund to manipulate the vote by buying a large amount of Market tokens just before voting ends and selling them right after it.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/computable.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "1502a7993d914047401fb3a7a3ee5d4dcfae2c7a",
+        "address": "0x5eb6de38ee506f72e2e6d26f6ed55267cf58998f"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Candidate proposal denial-of-service by front-running transactions",
+            "description": "The voting process has two functions that can be front-run to produce a denial-of-service attack during the voting process.",
+            "severity": "Medium",
+            "contract": "Listing and Datatrust",
+            "function": "list() and register()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Re-parameterization may be abused to exploit markets",
+            "description": "Certain parameters of the contracts can be configured to invalid values, causing a variety of issues and breaking expected interactions between contracts. Re-parameterization lacks sanity/threshold/limit checks on all parameters.",
+            "severity": "High",
+            "contract": "Parametrizer",
+            "function": "resolveReparam",
+            "lineNumber": "L194-L232"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-237"
+                ],
+                "4": [
+                    "CWE-239"
+                ]
+            },
+            "title": "increaseApproval and decreaseApproval do not follow ERC20 standard",
+            "description": "The increaseApproval and decreaseApproval functions in EtherToken and MarketToken contracts use non-standard names and do not return a boolean value as expected in ERC20.",
+            "severity": "Low",
+            "contract": "EtherToken, MarketToken",
+            "function": "increaseApproval, decreaseApproval",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Missing check for zero address in setPrivileged",
+            "description": "The setPrivileged function does not check for zero addresses in its parameters, which can lead to an incorrect and irrecoverable state if a zero address is passed.",
+            "severity": "Low",
+            "contract": "MarketToken, Voting",
+            "function": "setPrivileged()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "Staked tokens can be destroyed through a failed challenge",
+            "description": "Tokens that are not unstaked can be destroyed if the tokens\u2019 owner is challenged and wins.",
+            "severity": "High",
+            "contract": "Voting",
+            "function": "transferStake",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Staked tokens can be destroyed through a challenge re-creation",
+            "description": "Tokens that are not unstaked can be destroyed if the tokens\u2019 owner challenges a listing multiple times.",
+            "severity": "High",
+            "contract": "Voting",
+            "function": "addCandidate()",
+            "lineNumber": "L134-L136"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "A successful challenge may force the Maker to lose all tokens",
+            "description": "When a successful challenge is resolved, it forcibly removes the listing and burns the associated tokens, without giving the listing owner (i.e., Maker) a chance to withdraw reward tokens already accumulated.",
+            "severity": "Medium",
+            "contract": "Listing",
+            "function": "removeListing()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Bookkeeping inconsistency in Datatrust in case of price change",
+            "description": "When requesting a delivery, the user pays its cost. The actual delivery cost and the cost paid can differ if the fees parameter are changed during the delivery. As a result, the datatrust contract can have an unexpected deficit or surplus.",
+            "severity": "Low",
+            "contract": "Datatrust",
+            "function": "requestDelivery",
+            "lineNumber": "L209-211"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "EtherToken/MarketToken owners can drain ether from users",
+            "description": "The owner of EtherToken and MarketToken contracts have the power to initialize their accounts with any number of tokens and then withdraw them.",
+            "severity": "High",
+            "contract": "EtherToken, MarketToken",
+            "function": "withdraw()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Reporting excess bytes delivered will prevent ongoing purchases",
+            "description": "When requesting a delivery, the user pays its cost. The actual delivery cost and the amount paid can differ if the Backend reports more bytes delivered than what was paid for.",
+            "severity": "Medium",
+            "contract": "Datatrust.vy",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ],
+                "3": [
+                    "CWE-680"
+                ]
+            },
+            "title": "Delivering more bytes than purchased can trigger unexpected behavior for third parties",
+            "description": "The Backend is allowed to deliver and report more bytes than purchased. If the user has no other ongoing purchase, the report will fail, leading to unexpected behavior for the Backend.",
+            "severity": "Low",
+            "contract": "Datatrust.vy",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Request delivery denial of service by front-running transactions",
+            "description": "The delivery process has a function that can be front-run to produce a denial-of-service attack during the delivery process.",
+            "severity": "Low",
+            "contract": "Datatrust",
+            "function": "requestDelivery()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Attackers can prevent new challenges/listings/backends, parameter changes, and stake retrievals",
+            "description": "Candidate creation allows attackers to block essential operations performed by other users.",
+            "severity": "Medium",
+            "contract": "Voting",
+            "function": "addCandidate()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-923"
+                ],
+                "3": [
+                    "CWE-940"
+                ]
+            },
+            "title": "Malicious backend candidate can exploit submitted url for phishing or denial-of-service.",
+            "description": "An incorrect update schema allows attackers to temporarily steal the Backend URL destination, leading to denial of service for phishing campaigns.",
+            "severity": "High",
+            "contract": "Datatrust",
+            "function": "register() and getBackendUrl()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Quick buy and sell allows vote manipulation",
+            "description": "Computable\u2019s voting mechanism relies on staking, allowing anyone with a large fund to manipulate the vote by buying a large amount of Market tokens just before voting ends and selling them right after it.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

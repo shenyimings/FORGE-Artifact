@@ -1,1 +1,225 @@
-{"path": "./Audit_Reports_2024/Trail_of_Bits/2022-07-beanstalk-fixreview.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Attackers could mint more Fertilizer than intended due to an unused variable", "description": "Due to an unused local variable, an attacker could mint more Fertilizer than should be allowed by the sale.", "severity": "Medium", "contract": "FertilizerFacet", "function": "mintFertilizer()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-691"], "2": ["CWE-841"]}, "title": "Lack of a two-step process for ownership transfer", "description": "Transferring ownership in one function call is error-prone and could result in irrevocable mistakes.", "severity": "High", "contract": "OwnershipFacet.sol", "function": "transferOwnership()", "lineNumber": "13-16"}, {"id": 2, "category": {"1": ["CWE-682"], "2": ["CWE-191"]}, "title": "Possible underflow could allow more Fertilizer than MAX_RAISE to be minted", "description": "If the amount of Fertilizer purchased reaches MAX_RAISE (i.e., 77 million), an attacker could simply send one USDC to the CUSTODIAN wallet to cause the remaining() function to underflow, allowing the sale to continue indefinitely.", "severity": "Medium", "contract": "FertilizerPremint", "function": "remaining()", "lineNumber": "L84-87"}, {"id": 3, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Risk of Fertilizer id collision that could result in loss of funds", "description": "If a user mints Fertilizer tokens twice during two different seasons, the same token `id` for", "severity": "High", "contract": "Fertilizer.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "The sunrise() function rewards callers only with the base incentive", "description": "The increasing incentive that encourages users to call the `sunrise()` function in a timely manner is not actually applied.", "severity": "Medium", "contract": "SeasonFacet", "function": "sunrise()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Solidity compiler optimizations can be problematic", "description": "Beanstalk has enabled optional compiler optimizations in Solidity which have had several optimization bugs with security implications.", "severity": "Informational", "contract": "The Beanstalk protocol", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "Lack of support for external transfers of nonstandard ERC20 tokens", "description": "The code uses the standard `transferFrom` operation from the given token contract without checking the operation\u2019s `returndata`; as a result, successfully executed transactions that fail to transfer tokens will go unnoticed, causing confusion in users who believe their funds were successfully transferred.", "severity": "Informational", "contract": "TokenFacet", "function": "transferToken()", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Plot transfers from users with allowances revert if the owner has an existing pod listing", "description": "When a plot transfer is executed by a user with an allowance and there is an existing listing for the pods contained in that plot, the transfer will revert.", "severity": "High", "contract": "MarketplaceFacet", "function": "_cancelPodListing()", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Users can sow more Bean tokens than are burned", "description": "The contract allows users to partially fill 'amount' and transfer as much as they own, but still allows them to sow the full 'amount', which means users can sow more Bean tokens than are burned.", "severity": "Undetermined", "contract": "FieldFacet", "function": "receiveToken()", "lineNumber": "41-53"}, {"id": 9, "category": {"1": ["CWE-682"]}, "title": "Pods may never ripen", "description": "The protocol's inability to incentivize users to lend Bean tokens during extended periods of decreasing supply, potentially disrupting its ability to return Bean to its value peg.", "severity": "Undetermined", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-435"], "2": ["CWE-436"], "3": ["CWE-437"]}, "title": "Bean and the offer backing it are strongly correlated", "description": "Reflexivity is present whenever a stablecoin and the offer backing it are strongly correlated, even if the backing offer is time sensitive.", "severity": "Undetermined", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Ability to whitelist assets uncorrelated with Bean price, misaligning governance incentives", "description": "Stalk holders can deposit whitelisted assets without a strong correlation to Bean, potentially protecting them from financial penalties if the price of Bean crashes, which may misalign governance incentives.", "severity": "Economic", "contract": "The Beanstalk protocol", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-703"]}, "title": "Unchecked burnFrom return value", "description": "The unripeToken contract's burnFrom method does not check its return value, which could lead to potential issues if the method reverts.", "severity": "Medium", "contract": "UnripeFacet", "function": "ripen()", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/2022-07-beanstalk-fixreview.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Attackers could mint more Fertilizer than intended due to an unused variable",
+            "description": "Due to an unused local variable, an attacker could mint more Fertilizer than should be allowed by the sale.",
+            "severity": "Medium",
+            "contract": "FertilizerFacet",
+            "function": "mintFertilizer()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "Lack of a two-step process for ownership transfer",
+            "description": "Transferring ownership in one function call is error-prone and could result in irrevocable mistakes.",
+            "severity": "High",
+            "contract": "OwnershipFacet.sol",
+            "function": "transferOwnership()",
+            "lineNumber": "13-16"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-191"
+                ]
+            },
+            "title": "Possible underflow could allow more Fertilizer than MAX_RAISE to be minted",
+            "description": "If the amount of Fertilizer purchased reaches MAX_RAISE (i.e., 77 million), an attacker could simply send one USDC to the CUSTODIAN wallet to cause the remaining() function to underflow, allowing the sale to continue indefinitely.",
+            "severity": "Medium",
+            "contract": "FertilizerPremint",
+            "function": "remaining()",
+            "lineNumber": "L84-87"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Risk of Fertilizer id collision that could result in loss of funds",
+            "description": "If a user mints Fertilizer tokens twice during two different seasons, the same token `id` for",
+            "severity": "High",
+            "contract": "Fertilizer.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "The sunrise() function rewards callers only with the base incentive",
+            "description": "The increasing incentive that encourages users to call the `sunrise()` function in a timely manner is not actually applied.",
+            "severity": "Medium",
+            "contract": "SeasonFacet",
+            "function": "sunrise()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Solidity compiler optimizations can be problematic",
+            "description": "Beanstalk has enabled optional compiler optimizations in Solidity which have had several optimization bugs with security implications.",
+            "severity": "Informational",
+            "contract": "The Beanstalk protocol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Lack of support for external transfers of nonstandard ERC20 tokens",
+            "description": "The code uses the standard `transferFrom` operation from the given token contract without checking the operation\u2019s `returndata`; as a result, successfully executed transactions that fail to transfer tokens will go unnoticed, causing confusion in users who believe their funds were successfully transferred.",
+            "severity": "Informational",
+            "contract": "TokenFacet",
+            "function": "transferToken()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Plot transfers from users with allowances revert if the owner has an existing pod listing",
+            "description": "When a plot transfer is executed by a user with an allowance and there is an existing listing for the pods contained in that plot, the transfer will revert.",
+            "severity": "High",
+            "contract": "MarketplaceFacet",
+            "function": "_cancelPodListing()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Users can sow more Bean tokens than are burned",
+            "description": "The contract allows users to partially fill 'amount' and transfer as much as they own, but still allows them to sow the full 'amount', which means users can sow more Bean tokens than are burned.",
+            "severity": "Undetermined",
+            "contract": "FieldFacet",
+            "function": "receiveToken()",
+            "lineNumber": "41-53"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Pods may never ripen",
+            "description": "The protocol's inability to incentivize users to lend Bean tokens during extended periods of decreasing supply, potentially disrupting its ability to return Bean to its value peg.",
+            "severity": "Undetermined",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-437"
+                ]
+            },
+            "title": "Bean and the offer backing it are strongly correlated",
+            "description": "Reflexivity is present whenever a stablecoin and the offer backing it are strongly correlated, even if the backing offer is time sensitive.",
+            "severity": "Undetermined",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Ability to whitelist assets uncorrelated with Bean price, misaligning governance incentives",
+            "description": "Stalk holders can deposit whitelisted assets without a strong correlation to Bean, potentially protecting them from financial penalties if the price of Bean crashes, which may misalign governance incentives.",
+            "severity": "Economic",
+            "contract": "The Beanstalk protocol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Unchecked burnFrom return value",
+            "description": "The unripeToken contract's burnFrom method does not check its return value, which could lead to potential issues if the method reverts.",
+            "severity": "Medium",
+            "contract": "UnripeFacet",
+            "function": "ripen()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

@@ -1,1 +1,347 @@
-{"path": "./Audit_Reports_2024/Techrate/Spectra Full Smart Contract Security Audit.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "0xa2f017966d967ec697C7A20Cf9D0b43CB8d4fF1D"}, "findings": [{"id": 0, "category": {"1": ["CWE-710"], "2": ["CWE-1164"], "3": ["CWE-561"]}, "title": "addLiquidity function is not used", "description": "The addLiquidity function is declared but not utilized anywhere in the contract.", "severity": "Medium", "contract": "N/A", "function": "addLiquidity", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "buyBackTokens function is not used", "description": "The buyBackTokens function is declared but never utilized within the contract.", "severity": "Informational", "contract": "N/A", "function": "buyBackTokens", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1287"]}, "title": "_SliquidityFee stays unused", "description": "The _SliquidityFee variable remains unused.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Unused Contract Balance", "description": "The swapTokens function only swaps tLiquidity amount and may leave remaining contract balance unused.", "severity": "High", "contract": "Spectra", "function": "swapTokens", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Owner can change tax and liquidity fees", "description": "The owner has the privilege to modify tax and liquidity fees.", "severity": "High", "contract": "N/A", "function": "setTaxFeePercent, setTaxes, setHappyHourTaxes", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Owner can change maximum transaction amount", "description": "The owner has the privilege to modify the maximum transaction amount.", "severity": "High", "contract": "N/A", "function": "setMaxTxAmount()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Owner can start and end happy hour (reduced taxes)", "description": "The owner has the privilege to start and end happy hour which reduces taxes.", "severity": "High", "contract": "Spectra", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Owner can change happy taxes", "description": "The owner has the privilege to modify happy hour taxes.", "severity": "High", "contract": "N/A", "function": "setHappyHourTaxes()", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Owner can change taxes", "description": "The owner has the privilege to modify tax fees.", "severity": "High", "contract": "N/A", "function": "setTaxes()", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Owner can exclude from the fee", "description": "The owner has the privilege to exclude certain addresses or transactions from paying fees.", "severity": "High", "contract": "N/A", "function": "_transferToExcluded, _transferFromExcluded, _transferBothExcluded", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Owner can change marketingDivisor", "description": "The owner has the privilege to change the marketing divisor.", "severity": "High", "contract": "N/A", "function": "setMarketingDivisor", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Owner can change minimum number of tokens to add to liquidity", "description": "The owner has the privilege to modify the minimum number of tokens required to add to liquidity.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Owner can change _maxWalletAmount", "description": "The owner has the privilege to modify the maximum wallet amount.", "severity": "High", "contract": "N/A", "function": "setMaxWalletAmount()", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Owner can change marketing address", "description": "The owner has the privilege to modify the marketing address.", "severity": "High", "contract": "N/A", "function": "setMarketingAddress()", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Owner can enable before and after presale modes", "description": "The owner has privileges to enable before and after presale modes, which could lead to potential security risks.", "severity": "High", "contract": "N/A", "function": "prepareForPreSale() and afterPreSale()", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-284"], "2": ["CWE-282"], "3": ["CWE-708"]}, "title": "Owner can lock and unlock", "description": "The owner has the ability to lock and unlock, which could allow them to retake privileges even after ownership was renounced.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 16, "category": {"1": ["CWE-284"], "2": ["CWE-282"], "3": ["CWE-708"]}, "title": "Owner could retake privileges even after the ownership was renounced", "description": "The owner can still execute certain functions and regain control even after renouncing ownership.", "severity": "High", "contract": "N/A", "function": "Multiple functions (see description)", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Techrate/Spectra Full Smart Contract Security Audit.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0xa2f017966d967ec697C7A20Cf9D0b43CB8d4fF1D"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ],
+                "3": [
+                    "CWE-561"
+                ]
+            },
+            "title": "addLiquidity function is not used",
+            "description": "The addLiquidity function is declared but not utilized anywhere in the contract.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "addLiquidity",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "buyBackTokens function is not used",
+            "description": "The buyBackTokens function is declared but never utilized within the contract.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "buyBackTokens",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1287"
+                ]
+            },
+            "title": "_SliquidityFee stays unused",
+            "description": "The _SliquidityFee variable remains unused.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Unused Contract Balance",
+            "description": "The swapTokens function only swaps tLiquidity amount and may leave remaining contract balance unused.",
+            "severity": "High",
+            "contract": "Spectra",
+            "function": "swapTokens",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Owner can change tax and liquidity fees",
+            "description": "The owner has the privilege to modify tax and liquidity fees.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "setTaxFeePercent, setTaxes, setHappyHourTaxes",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Owner can change maximum transaction amount",
+            "description": "The owner has the privilege to modify the maximum transaction amount.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "setMaxTxAmount()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Owner can start and end happy hour (reduced taxes)",
+            "description": "The owner has the privilege to start and end happy hour which reduces taxes.",
+            "severity": "High",
+            "contract": "Spectra",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Owner can change happy taxes",
+            "description": "The owner has the privilege to modify happy hour taxes.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "setHappyHourTaxes()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Owner can change taxes",
+            "description": "The owner has the privilege to modify tax fees.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "setTaxes()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Owner can exclude from the fee",
+            "description": "The owner has the privilege to exclude certain addresses or transactions from paying fees.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "_transferToExcluded, _transferFromExcluded, _transferBothExcluded",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Owner can change marketingDivisor",
+            "description": "The owner has the privilege to change the marketing divisor.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "setMarketingDivisor",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Owner can change minimum number of tokens to add to liquidity",
+            "description": "The owner has the privilege to modify the minimum number of tokens required to add to liquidity.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Owner can change _maxWalletAmount",
+            "description": "The owner has the privilege to modify the maximum wallet amount.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "setMaxWalletAmount()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Owner can change marketing address",
+            "description": "The owner has the privilege to modify the marketing address.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "setMarketingAddress()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Owner can enable before and after presale modes",
+            "description": "The owner has privileges to enable before and after presale modes, which could lead to potential security risks.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "prepareForPreSale() and afterPreSale()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-282"
+                ],
+                "3": [
+                    "CWE-708"
+                ]
+            },
+            "title": "Owner can lock and unlock",
+            "description": "The owner has the ability to lock and unlock, which could allow them to retake privileges even after ownership was renounced.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-282"
+                ],
+                "3": [
+                    "CWE-708"
+                ]
+            },
+            "title": "Owner could retake privileges even after the ownership was renounced",
+            "description": "The owner can still execute certain functions and regain control even after renouncing ownership.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "Multiple functions (see description)",
+            "lineNumber": "N/A"
+        }
+    ]
+}

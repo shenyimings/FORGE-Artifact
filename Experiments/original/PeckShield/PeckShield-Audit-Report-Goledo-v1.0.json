@@ -1,1 +1,118 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Goledo-v1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-435"], "2": ["CWE-436"]}, "title": "Incompatibility With Deflationary/Rebasing Tokens", "description": "The LendingPool contract is designed to be the main entry for interaction with borrowing/lending users and implements a number of low-level helper routines to transfer assets into or out of the protocol. These asset-transferring routines work as expected with standard ERC20 tokens, but may not be compatible with deflationary/rebasing tokens.", "severity": "Low", "contract": "LendingPool", "function": "deposit()", "lineNumber": "107-122"}, {"id": 1, "category": {"1": ["CWE-693"]}, "title": "Revisited Reentrancy Protection In Current Implementation", "description": "The deposit() routine in the MasterChef contract has potential reentrancy risk.", "severity": "Medium", "contract": "MasterChef", "function": "deposit()", "lineNumber": "222"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Incentive Inconsistency Between AToken And StableDebtToken", "description": "The `Goledo` protocol extends the built-in `IncentivesController` framework to engage protocol users. While reviewing the logic to integrate the incentive mechanism, we observe unnecessary inconsistency that may introduce unwanted confusion and errors.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-909"], "4": ["CWE-456"]}, "title": "Immutable States If Only Set At Constructor()", "description": "Declare state variables as `immutable` to reduce gas efficiency by avoiding storage reading and writing.", "severity": "Informational", "contract": "Multiple Contracts", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-693"], "2": ["CWE-345"], "3": ["CWE-347"]}, "title": "Fork-Compliant Domain Separator In AToken", "description": "The `AToken` token contract initializes the state variable `DOMAIN_SEPARATOR` inside the `initialize()` function (lines 78-80). The domain separator is computed using EIP712_DOMAIN, aTokenName, EIP712_REVISION, chainId, and address(this).", "severity": "Low", "contract": "AToken", "function": "initialize()", "lineNumber": "78-80"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Trust Issue of Admin Keys", "description": "In the Goledo protocol, there is a privileged `owner` account that plays a critical role in governing and regulating the system-wide operations.", "severity": "Medium", "contract": "Multiple Contracts", "function": "setOnwardIncentives()", "lineNumber": "123"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Goledo-v1.0.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ]
+            },
+            "title": "Incompatibility With Deflationary/Rebasing Tokens",
+            "description": "The LendingPool contract is designed to be the main entry for interaction with borrowing/lending users and implements a number of low-level helper routines to transfer assets into or out of the protocol. These asset-transferring routines work as expected with standard ERC20 tokens, but may not be compatible with deflationary/rebasing tokens.",
+            "severity": "Low",
+            "contract": "LendingPool",
+            "function": "deposit()",
+            "lineNumber": "107-122"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "Revisited Reentrancy Protection In Current Implementation",
+            "description": "The deposit() routine in the MasterChef contract has potential reentrancy risk.",
+            "severity": "Medium",
+            "contract": "MasterChef",
+            "function": "deposit()",
+            "lineNumber": "222"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incentive Inconsistency Between AToken And StableDebtToken",
+            "description": "The `Goledo` protocol extends the built-in `IncentivesController` framework to engage protocol users. While reviewing the logic to integrate the incentive mechanism, we observe unnecessary inconsistency that may introduce unwanted confusion and errors.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "Immutable States If Only Set At Constructor()",
+            "description": "Declare state variables as `immutable` to reduce gas efficiency by avoiding storage reading and writing.",
+            "severity": "Informational",
+            "contract": "Multiple Contracts",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-345"
+                ],
+                "3": [
+                    "CWE-347"
+                ]
+            },
+            "title": "Fork-Compliant Domain Separator In AToken",
+            "description": "The `AToken` token contract initializes the state variable `DOMAIN_SEPARATOR` inside the `initialize()` function (lines 78-80). The domain separator is computed using EIP712_DOMAIN, aTokenName, EIP712_REVISION, chainId, and address(this).",
+            "severity": "Low",
+            "contract": "AToken",
+            "function": "initialize()",
+            "lineNumber": "78-80"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "In the Goledo protocol, there is a privileged `owner` account that plays a critical role in governing and regulating the system-wide operations.",
+            "severity": "Medium",
+            "contract": "Multiple Contracts",
+            "function": "setOnwardIncentives()",
+            "lineNumber": "123"
+        }
+    ]
+}

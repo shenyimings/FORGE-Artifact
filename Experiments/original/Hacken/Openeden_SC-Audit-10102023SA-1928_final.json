@@ -1,1 +1,433 @@
-{"path": "./Audit_Reports_2024/Hacken/Openeden_SC-Audit-10102023SA-1928_final.pdf", "project_info": {"url": "https://github.com/OpenEdenHQ/openeden.vault.v2.audit", "commit_hash": "4aed24dac07c442ad0fca131b4749d950465d5be", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Denial of Service; Assets Locked in Withdrawal Queue Due to Absent Verifications", "description": "Assets can be locked in withdrawal queue due to absent verifications.", "severity": "Critical", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "C02. Missing KYC Verification in \u2018Deposit()\u2019 Function", "description": "The contract allows users to deposit tokens without verifying their KYC status, contrary to the specifications mentioned in the public documentation.", "severity": "High", "contract": "OpenEdenVaultV2.sol", "function": "deposit()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "M01. Unrestricted Fee Configuration", "description": "The system owner possesses unrestricted control over transaction fee configuration, which may lead to unfair and unjust fee charging, resulting in users receiving no tokens for their transactions.", "severity": "High", "contract": "feeManager", "function": "setTransactionFeeWeekday(), setTransactionFeeWeekend()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "L01. Missing Zero Address Validation", "description": "The zero address validation check is not implemented for certain functions, which can break Open Eden main business flow if set to zero address (0x0).", "severity": "Low", "contract": "OpenEdenVaultV2", "function": ["setOplTreasury()", "setFeeManager()", "setKycManager()", "setOperator()", "setUsdcPriceFeed()", "setTBillPriceFeed()", "setController()", "setTreasury()", "setQTreasury()"], "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "Possibility of Dangerous Assumption on USDC Peg When Calculating TBillUsdcRate", "description": "The contract assumes that the USDC stablecoin will always maintain a 1:1 peg with the US dollar when the fixedPriceOn flag is true, which can lead to potential vulnerabilities and financial risks.", "severity": "Low", "contract": "OpenEden vault", "function": "tbillUsdcRate()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1173"]}, "title": "L03. Usage of Deprecated Oracle Functions", "description": "The codebase contains the usage of deprecated oracle function for getting USDC/USD price, the latestAnswer. It is crucial to update the codebase to use the latest recommended oracle function, latestRoundData, and ensure that the return data is handled correctly to avoid issues such as receiving stale or incorrect price data.", "severity": "Medium", "contract": "OpenEdenVaultV2", "function": "tbillUsdcRate()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "L04. Overpermisive offRamp Function", "description": "The offRamp() function can be used to withdraw treasury share tokens as contract operator can specify an address of token that should be withdrawn, leading to Denial of Service (DoS).", "severity": "Medium", "contract": "OpenEdenVaultV2", "function": "offRamp()", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-693"]}, "title": "L05. Missing Protection Against USDC Depeg", "description": "The smart contract lacks safeguards to mitigate the impact of potential USDC depeg events, which could lead to users receiving fewer shares than anticipated or significantly altered final amounts of USDC received during withdrawal.", "severity": "Low", "contract": "OpenEdenVaultV2", "function": "deposit(), redeem(), processWithdrawalQueue()", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "L06. Missing Failover Mechanism to Unlock Withdrawal Queue Blocked by Non-Banned Users", "description": "The withdrawal queue can be blocked by non-banned users, and there is no failover mechanism to unlock it.", "severity": "Critical", "contract": "N/A", "function": "redeem()", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "I01. Redundant Declaration", "description": "Declaring boolean variables as false in the constructor function is redundantly consuming Gas since their default value is always false in Solidity.", "severity": "Informational", "contract": "OEPausable", "function": "constructor()", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-710"]}, "title": "I02. Solidity Style Guides Violation", "description": "Inconsistent adherence to official Solidity style guide and naming conventions, affecting code readability and maintainability.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-710"], "2": ["CWE-1164"]}, "title": "I03. Commented Code Parts", "description": "The presence of commented-out code indicates an unfinished implementation, potentially causing confusion for both developers and users and decreasing code readability.", "severity": "N/A", "contract": ["TBillPriceOracle", "FeeManager", "DoubleQueueModified", "Controller"], "function": "N/A", "lineNumber": ["6", "188-189", "195-201", "3", "5", "4"]}, {"id": 12, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "I04. State Variables Default Visibility", "description": "Visibility for following variables were not specified, which can lead to incorrect assumptions about which inheriting contract can access the variable.", "severity": "Medium", "contract": ["feeManager", "OpenEdenVaultV2"], "function": "N/A", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "I05. Typo in the Function Name", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-693"]}, "title": "I06. Usage of Toggle Switch Mechanism", "description": "The flipFixedPrice function incorporates a toggle-switch mechanism, which can pose a risk if inadvertently invoked several times and is not configured for the intended action.", "severity": "Medium", "contract": "OpenEdenVaultV2", "function": "flipFixedPrice()", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "I07. Missing Event Indexes", "description": "Missing event indexes.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 16, "category": {"1": ["CWE-710"], "2": ["CWE-1068"]}, "title": "I08. Mismatch Between Contract Name and Filename", "description": "Mismatch between contract name and filename in smart contracts.", "severity": "N/A", "contract": "Multiple Contracts", "function": "N/A", "lineNumber": "N/A"}, {"id": 17, "category": {"1": ["CWE-710"], "2": ["CWE-1120"], "3": ["CWE-1060"]}, "title": "I09. Use Custom Errors Instead Of Error Strings To Save Gas", "description": "Custom errors can save approximately 50 Gas each time they are hit because they avoid the need to allocate and store revert strings, resulting in cost savings.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 18, "category": {"1": ["CWE-710"], "2": ["CWE-1127"]}, "title": "I10. Floating Pragma", "description": "Avoid using a floating pragma in the final deployment and consider known bugs for the compiler version that is chosen.", "severity": "N/A", "contract": "Multiple", "function": "N/A", "lineNumber": "N/A"}, {"id": 19, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "I11. Missing Overflow Check in Queue Implementation", "description": "The code contains a function called pushBack, which inserts an item at the end of the queue without checking for overflow.", "severity": "N/A", "contract": "./contracts/DoubleQueueModified.sol", "function": "pushBack()", "lineNumber": "N/A"}, {"id": 20, "category": {"1": ["CWE-691"], "2": ["CWE-362"]}, "title": "Checks-Effect-Interaction Pattern Violation", "description": "The Checks-Effects-Interactions pattern is violated inside following functions: _processDeposit(), _processWithdraw(), and processWithdrawalQueue(). This may lead to reentrancies, race conditions, and denial of service vulnerabilities during implementation of new functionality.", "severity": "High", "contract": "OpenEdenVaultV2", "function": "_processDeposit(), _processWithdraw(), processWithdrawalQueue()", "lineNumber": "N/A"}, {"id": 21, "category": {"1": ["CWE-682"]}, "title": "I13. Setting Insufficient Max Deviation of TBill Price Parameter Can Lead to Value Loss Due to Frontrunning", "description": "The Treasury Bills exchange rate is governed by the TBillPriceOracle contract, where the price parameter is subject to modification through the updatePrice function. However, a potential security concern arises in scenarios where the Oracle authority permits substantial deviations from the previous price.", "severity": "N/A", "contract": "TBillPriceOracle", "function": "constructor(), updateMaxPriceDeviation()", "lineNumber": "N/A"}, {"id": 22, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-354"]}, "title": "I14. Missing Validation for Setting Deposit and Withdrawal Limits", "description": "The contract allows the owner to set the _minDeposit value greater than _maxDeposit and _minWithdraw value greater than _maxWithdraw without input validation, leading to unexpected results and hindering the contract's usability.", "severity": "N/A", "contract": "feeManager", "function": "setMinDeposit(), setMaxDeposit(), setMinWithdraw(), setMaxWithdraw()", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Hacken/Openeden_SC-Audit-10102023SA-1928_final.pdf",
+    "project_info": {
+        "url": "https://github.com/OpenEdenHQ/openeden.vault.v2.audit",
+        "commit_hash": "4aed24dac07c442ad0fca131b4749d950465d5be",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Denial of Service; Assets Locked in Withdrawal Queue Due to Absent Verifications",
+            "description": "Assets can be locked in withdrawal queue due to absent verifications.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "C02. Missing KYC Verification in \u2018Deposit()\u2019 Function",
+            "description": "The contract allows users to deposit tokens without verifying their KYC status, contrary to the specifications mentioned in the public documentation.",
+            "severity": "High",
+            "contract": "OpenEdenVaultV2.sol",
+            "function": "deposit()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "M01. Unrestricted Fee Configuration",
+            "description": "The system owner possesses unrestricted control over transaction fee configuration, which may lead to unfair and unjust fee charging, resulting in users receiving no tokens for their transactions.",
+            "severity": "High",
+            "contract": "feeManager",
+            "function": "setTransactionFeeWeekday(), setTransactionFeeWeekend()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "L01. Missing Zero Address Validation",
+            "description": "The zero address validation check is not implemented for certain functions, which can break Open Eden main business flow if set to zero address (0x0).",
+            "severity": "Low",
+            "contract": "OpenEdenVaultV2",
+            "function": [
+                "setOplTreasury()",
+                "setFeeManager()",
+                "setKycManager()",
+                "setOperator()",
+                "setUsdcPriceFeed()",
+                "setTBillPriceFeed()",
+                "setController()",
+                "setTreasury()",
+                "setQTreasury()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Possibility of Dangerous Assumption on USDC Peg When Calculating TBillUsdcRate",
+            "description": "The contract assumes that the USDC stablecoin will always maintain a 1:1 peg with the US dollar when the fixedPriceOn flag is true, which can lead to potential vulnerabilities and financial risks.",
+            "severity": "Low",
+            "contract": "OpenEden vault",
+            "function": "tbillUsdcRate()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1173"
+                ]
+            },
+            "title": "L03. Usage of Deprecated Oracle Functions",
+            "description": "The codebase contains the usage of deprecated oracle function for getting USDC/USD price, the latestAnswer. It is crucial to update the codebase to use the latest recommended oracle function, latestRoundData, and ensure that the return data is handled correctly to avoid issues such as receiving stale or incorrect price data.",
+            "severity": "Medium",
+            "contract": "OpenEdenVaultV2",
+            "function": "tbillUsdcRate()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "L04. Overpermisive offRamp Function",
+            "description": "The offRamp() function can be used to withdraw treasury share tokens as contract operator can specify an address of token that should be withdrawn, leading to Denial of Service (DoS).",
+            "severity": "Medium",
+            "contract": "OpenEdenVaultV2",
+            "function": "offRamp()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "L05. Missing Protection Against USDC Depeg",
+            "description": "The smart contract lacks safeguards to mitigate the impact of potential USDC depeg events, which could lead to users receiving fewer shares than anticipated or significantly altered final amounts of USDC received during withdrawal.",
+            "severity": "Low",
+            "contract": "OpenEdenVaultV2",
+            "function": "deposit(), redeem(), processWithdrawalQueue()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "L06. Missing Failover Mechanism to Unlock Withdrawal Queue Blocked by Non-Banned Users",
+            "description": "The withdrawal queue can be blocked by non-banned users, and there is no failover mechanism to unlock it.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "redeem()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "I01. Redundant Declaration",
+            "description": "Declaring boolean variables as false in the constructor function is redundantly consuming Gas since their default value is always false in Solidity.",
+            "severity": "Informational",
+            "contract": "OEPausable",
+            "function": "constructor()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ]
+            },
+            "title": "I02. Solidity Style Guides Violation",
+            "description": "Inconsistent adherence to official Solidity style guide and naming conventions, affecting code readability and maintainability.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ]
+            },
+            "title": "I03. Commented Code Parts",
+            "description": "The presence of commented-out code indicates an unfinished implementation, potentially causing confusion for both developers and users and decreasing code readability.",
+            "severity": "N/A",
+            "contract": [
+                "TBillPriceOracle",
+                "FeeManager",
+                "DoubleQueueModified",
+                "Controller"
+            ],
+            "function": "N/A",
+            "lineNumber": [
+                "6",
+                "188-189",
+                "195-201",
+                "3",
+                "5",
+                "4"
+            ]
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "I04. State Variables Default Visibility",
+            "description": "Visibility for following variables were not specified, which can lead to incorrect assumptions about which inheriting contract can access the variable.",
+            "severity": "Medium",
+            "contract": [
+                "feeManager",
+                "OpenEdenVaultV2"
+            ],
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "I05. Typo in the Function Name",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "I06. Usage of Toggle Switch Mechanism",
+            "description": "The flipFixedPrice function incorporates a toggle-switch mechanism, which can pose a risk if inadvertently invoked several times and is not configured for the intended action.",
+            "severity": "Medium",
+            "contract": "OpenEdenVaultV2",
+            "function": "flipFixedPrice()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "I07. Missing Event Indexes",
+            "description": "Missing event indexes.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1068"
+                ]
+            },
+            "title": "I08. Mismatch Between Contract Name and Filename",
+            "description": "Mismatch between contract name and filename in smart contracts.",
+            "severity": "N/A",
+            "contract": "Multiple Contracts",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1120"
+                ],
+                "3": [
+                    "CWE-1060"
+                ]
+            },
+            "title": "I09. Use Custom Errors Instead Of Error Strings To Save Gas",
+            "description": "Custom errors can save approximately 50 Gas each time they are hit because they avoid the need to allocate and store revert strings, resulting in cost savings.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1127"
+                ]
+            },
+            "title": "I10. Floating Pragma",
+            "description": "Avoid using a floating pragma in the final deployment and consider known bugs for the compiler version that is chosen.",
+            "severity": "N/A",
+            "contract": "Multiple",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 19,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "I11. Missing Overflow Check in Queue Implementation",
+            "description": "The code contains a function called pushBack, which inserts an item at the end of the queue without checking for overflow.",
+            "severity": "N/A",
+            "contract": "./contracts/DoubleQueueModified.sol",
+            "function": "pushBack()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 20,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-362"
+                ]
+            },
+            "title": "Checks-Effect-Interaction Pattern Violation",
+            "description": "The Checks-Effects-Interactions pattern is violated inside following functions: _processDeposit(), _processWithdraw(), and processWithdrawalQueue(). This may lead to reentrancies, race conditions, and denial of service vulnerabilities during implementation of new functionality.",
+            "severity": "High",
+            "contract": "OpenEdenVaultV2",
+            "function": "_processDeposit(), _processWithdraw(), processWithdrawalQueue()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 21,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "I13. Setting Insufficient Max Deviation of TBill Price Parameter Can Lead to Value Loss Due to Frontrunning",
+            "description": "The Treasury Bills exchange rate is governed by the TBillPriceOracle contract, where the price parameter is subject to modification through the updatePrice function. However, a potential security concern arises in scenarios where the Oracle authority permits substantial deviations from the previous price.",
+            "severity": "N/A",
+            "contract": "TBillPriceOracle",
+            "function": "constructor(), updateMaxPriceDeviation()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 22,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-354"
+                ]
+            },
+            "title": "I14. Missing Validation for Setting Deposit and Withdrawal Limits",
+            "description": "The contract allows the owner to set the _minDeposit value greater than _maxDeposit and _minWithdraw value greater than _maxWithdraw without input validation, leading to unexpected results and hindering the contract's usability.",
+            "severity": "N/A",
+            "contract": "feeManager",
+            "function": "setMinDeposit(), setMaxDeposit(), setMinWithdraw(), setMaxWithdraw()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

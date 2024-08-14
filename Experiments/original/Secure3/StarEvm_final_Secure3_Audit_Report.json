@@ -1,1 +1,145 @@
-{"path": "./Audit_Reports_2024/Secure3/StarEvm_final_Secure3_Audit_Report.pdf", "project_info": {"url": "https://github.com/asterso/sns-contracts/", "commit_hash": "a335f9c36dd0b89879314669672eafe05c03f648", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "_mint instead of _safeMint for ERC721", "description": "_mint function doesn\u2019t check if the receiver could actually receive ERC721 This means that some ERC721 tokens could be sent to a contract that can\u2019t handle them leading to them being lost", "severity": "Low", "contract": "BaseRegistrarImplementation", "function": "_mint", "lineNumber": "120-121,173"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Check the validity of name in preAirdrop", "description": "In the RegistrarController contract, the owner can airdrop the name to the specified user through the preAirdrop function, but the validity of the name is not checked before registration.", "severity": "Informational", "contract": "RegistrarController", "function": "preAirdrop()", "lineNumber": "284"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Missing event record", "description": "The smart contract does not emit events when certain actions are performed.", "severity": "Informational", "contract": "Multiple contracts (NSPriceOracle, RegistrarController, Referral, BaseRegistrarImplementation)", "function": "N/A", "lineNumber": "38, 44-73, 52, 61, 63, 65, 82, 93, 95, 99, 116, 118, 281"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "The contracts use unlocked pragma", "description": "The contracts use unlocked pragma allowing wide enough range of versions, which can introduce various types of undesired behavior if the contract gets accidentally deployed using another compiler version compared to one they tested with.", "severity": "Informational", "contract": ["Resolver", "NSPriceOracle", "BaseRegistrarImplementation", "Referral", "NodeController", "RegistrarController"], "function": "N/A", "lineNumber": ["2", "2", "2", "2", "2", "3"]}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "Use bytes.concat() instead of abi.encodePacked()", "description": "Using abi.encodePacked() to concatenate dynamic byte arrays can lead to unexpected behavior due to its handling of variable-length arguments, resulting in unnecessary memory allocation and issues with non-32-byte-aligned data types.", "severity": "Informational", "contract": ["NodeController", "BaseRegistrarImplementation", "Resolver", "RegistrarController"], "function": ["makeNode", "N/A", "makeNode", "register"], "lineNumber": ["80", "116, 158", "203", "298"]}, {"id": 5, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-1235"]}, "title": "STA-18: Using storage instead of memory for structs/arrays saves gas", "description": "Declaring a variable with the 'memory' keyword when fetching data from a storage location can incur unnecessary gas costs. Instead, declaring the variable with the 'storage' keyword and caching any fields that need to be re-read in stack variables can be much cheaper.", "severity": "Informational", "contract": "RegistrarController", "function": "N/A", "lineNumber": "149"}]}
+{
+    "path": "./Audit_Reports_2024/Secure3/StarEvm_final_Secure3_Audit_Report.pdf",
+    "project_info": {
+        "url": "https://github.com/asterso/sns-contracts/",
+        "commit_hash": "a335f9c36dd0b89879314669672eafe05c03f648",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "_mint instead of _safeMint for ERC721",
+            "description": "_mint function doesn\u2019t check if the receiver could actually receive ERC721 This means that some ERC721 tokens could be sent to a contract that can\u2019t handle them leading to them being lost",
+            "severity": "Low",
+            "contract": "BaseRegistrarImplementation",
+            "function": "_mint",
+            "lineNumber": "120-121,173"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Check the validity of name in preAirdrop",
+            "description": "In the RegistrarController contract, the owner can airdrop the name to the specified user through the preAirdrop function, but the validity of the name is not checked before registration.",
+            "severity": "Informational",
+            "contract": "RegistrarController",
+            "function": "preAirdrop()",
+            "lineNumber": "284"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Missing event record",
+            "description": "The smart contract does not emit events when certain actions are performed.",
+            "severity": "Informational",
+            "contract": "Multiple contracts (NSPriceOracle, RegistrarController, Referral, BaseRegistrarImplementation)",
+            "function": "N/A",
+            "lineNumber": "38, 44-73, 52, 61, 63, 65, 82, 93, 95, 99, 116, 118, 281"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "The contracts use unlocked pragma",
+            "description": "The contracts use unlocked pragma allowing wide enough range of versions, which can introduce various types of undesired behavior if the contract gets accidentally deployed using another compiler version compared to one they tested with.",
+            "severity": "Informational",
+            "contract": [
+                "Resolver",
+                "NSPriceOracle",
+                "BaseRegistrarImplementation",
+                "Referral",
+                "NodeController",
+                "RegistrarController"
+            ],
+            "function": "N/A",
+            "lineNumber": [
+                "2",
+                "2",
+                "2",
+                "2",
+                "2",
+                "3"
+            ]
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Use bytes.concat() instead of abi.encodePacked()",
+            "description": "Using abi.encodePacked() to concatenate dynamic byte arrays can lead to unexpected behavior due to its handling of variable-length arguments, resulting in unnecessary memory allocation and issues with non-32-byte-aligned data types.",
+            "severity": "Informational",
+            "contract": [
+                "NodeController",
+                "BaseRegistrarImplementation",
+                "Resolver",
+                "RegistrarController"
+            ],
+            "function": [
+                "makeNode",
+                "N/A",
+                "makeNode",
+                "register"
+            ],
+            "lineNumber": [
+                "80",
+                "116, 158",
+                "203",
+                "298"
+            ]
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-1235"
+                ]
+            },
+            "title": "STA-18: Using storage instead of memory for structs/arrays saves gas",
+            "description": "Declaring a variable with the 'memory' keyword when fetching data from a storage location can incur unnecessary gas costs. Instead, declaring the variable with the 'storage' keyword and caching any fields that need to be re-read in stack variables can be much cheaper.",
+            "severity": "Informational",
+            "contract": "RegistrarController",
+            "function": "N/A",
+            "lineNumber": "149"
+        }
+    ]
+}

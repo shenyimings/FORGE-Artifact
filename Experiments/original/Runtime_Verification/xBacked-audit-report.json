@@ -1,1 +1,178 @@
-{"path": "./Audit_Reports_2024/Runtime_V\u0435rification/xBacked-audit-report.pdf", "project_info": {"url": "N/A", "commit_hash": "df0b3f1c242ccced2f5ea8aace5b4dea6a639886", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "Oracle dysfunction", "description": "The smart-contract relies on correct and timely price updates by Oracle. In case of Oracle dysfunction (e.g., due to DDoS attack), divergence of real collateral price and last recorded one may open the door for an attack.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Immutability of Oracle and Admin addresses", "description": "In case of compromising Oracle or Admin addresses (leakage of private keys), there is no way to prevent an exploit of the smart-contract because these addresses are immutable and stored in global state.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Manipulation of vault proposals", "description": "An attacker can manipulate collateral ratio and push out other vaults from an array of proposed risky vaults by using controlled vaults with a small amount of collateral and debt. This can lead to draining a lot of collateral.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-909"], "4": ["CWE-456"]}, "title": "Absence of clear state handlers", "description": "No smart-contract has a handler of forced clearing of local state by an user due to the lack of corresponding functionality in Reach language for Algorand specifics. Consequences will be distortion of financial properties of the protocol because of loss of tracking of some part of collateral and stablecoin.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-703"]}, "title": "N/A", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Arithmetics precision, overflows/underflows", "description": "Increase arithmetic precision by rewriting code to avoid potential overflows or underflows.", "severity": "Medium", "contract": "liquidation_and_stake.rsh", "function": "calculatePendingRewardPoints", "lineNumber": "282"}, {"id": 6, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Possible issues in protocol termination stage", "description": "Both smart-contracts depend on rest balances upon termination, but these balances depend on user behavior, allowing a single user to block deprecation. A suggested solution is to implement a 'grace period' for participants to withdraw collateral or staking assets before terminating the contracts.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-693"], "2": ["CWE-358"]}, "title": "Pause state in stability_pool.rsh", "description": "There is no pause state in the smart-contract which may be useful to have an ability to temporarily pause operations.", "severity": "Medium", "contract": "stability_pool.rsh", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Refactoring recommendations", "description": "Move checks from helper functions to API entries for better visibility and less chance of redundant execution.", "severity": "Informative", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Runtime_V\u0435rification/xBacked-audit-report.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "df0b3f1c242ccced2f5ea8aace5b4dea6a639886",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Oracle dysfunction",
+            "description": "The smart-contract relies on correct and timely price updates by Oracle. In case of Oracle dysfunction (e.g., due to DDoS attack), divergence of real collateral price and last recorded one may open the door for an attack.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Immutability of Oracle and Admin addresses",
+            "description": "In case of compromising Oracle or Admin addresses (leakage of private keys), there is no way to prevent an exploit of the smart-contract because these addresses are immutable and stored in global state.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Manipulation of vault proposals",
+            "description": "An attacker can manipulate collateral ratio and push out other vaults from an array of proposed risky vaults by using controlled vaults with a small amount of collateral and debt. This can lead to draining a lot of collateral.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "Absence of clear state handlers",
+            "description": "No smart-contract has a handler of forced clearing of local state by an user due to the lack of corresponding functionality in Reach language for Algorand specifics. Consequences will be distortion of financial properties of the protocol because of loss of tracking of some part of collateral and stablecoin.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "N/A",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Arithmetics precision, overflows/underflows",
+            "description": "Increase arithmetic precision by rewriting code to avoid potential overflows or underflows.",
+            "severity": "Medium",
+            "contract": "liquidation_and_stake.rsh",
+            "function": "calculatePendingRewardPoints",
+            "lineNumber": "282"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Possible issues in protocol termination stage",
+            "description": "Both smart-contracts depend on rest balances upon termination, but these balances depend on user behavior, allowing a single user to block deprecation. A suggested solution is to implement a 'grace period' for participants to withdraw collateral or staking assets before terminating the contracts.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-358"
+                ]
+            },
+            "title": "Pause state in stability_pool.rsh",
+            "description": "There is no pause state in the smart-contract which may be useful to have an ability to temporarily pause operations.",
+            "severity": "Medium",
+            "contract": "stability_pool.rsh",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Refactoring recommendations",
+            "description": "Move checks from helper functions to API entries for better visibility and less chance of redundant execution.",
+            "severity": "Informative",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

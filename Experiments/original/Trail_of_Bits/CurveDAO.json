@@ -1,1 +1,227 @@
-{"path": "./Audit_Reports_2024/Trail_of_Bits/CurveDAO.pdf", "project_info": {"url": "https://github.com/crytic/blockchain-security-contacts", "commit_hash": "f1c8f43", "address": "0xdac17f958d2ee523a2206206994597c13d831ec7"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Lack of value verification on decimals is error-prone", "description": "The lack of `uint8` type in Vyper requires that all return values of erc20.`decimals()` calls are checked. `VotingEscrow` calls `decimals()` without checking the return value:", "severity": "Low", "contract": "VotingEscrow", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Lack of events is error-prone", "description": "Several critical operations do not trigger events, making it difficult to review correct behavior of contracts once deployed.", "severity": "Informational", "contract": ["PoolProxy", "ERC20CRV", "GaugeController", "LiquidityGauge", "VotingEscrow"], "function": ["set_admins", "set_burner", "update_mining_parameters", "set_minter", "set_admin", "transfer_ownership", "_change_type_weight", "_change_gauge_weight", "vote_for_gauge_weights", "_update_liquidity_limit", "add_to_whitelist", "remove_from_whitelist"], "lineNumber": ["40", "50", "71", "144", "150", "80", "224", "272", "359", "75", "85", "103", "110"]}, {"id": 2, "category": {"1": ["CWE-691"], "2": ["CWE-362"]}, "title": "Race condition in removing addresses from whitelist and withdrawing", "description": "A race condition vulnerability exists in the VotingEscrow contract where a malicious user can circumvent the restrictions imposed by the whitelist by calling 'withdraw' before the 'remove_from_whitelist' transaction is mined.", "severity": "Informational", "contract": "VotingEscrow", "function": "remove_from_whitelist, withdraw", "lineNumber": "96-99"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Lack of documentation is error-prone", "description": "The overall codebase lacks code documentation, high-level description, and examples. As a result, the contracts are difficult to review and the likelihood of user mistakes is high.", "severity": "Informational", "contract": "Several contracts including VotingEscrow and GaugeController", "function": ["withdraw", "deposit", "vote_for_gauge_weights"], "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "VotingEscrow\u2019s balanceOfAt and totalSupplyAt can return different values for the same block", "description": "VotingEscrow's balanceOfAt and totalSupplyAt functions use binary search to return their corresponding values for a given block, but because the balance and supply can vary within the same block, these functions can return different values when called on the current block.", "severity": "Low", "contract": "VotingEscrow.vy", "function": ["balanceOfAt", "totalSupplyAt"], "lineNumber": ["L359-L369", "L324-L335"]}, {"id": 5, "category": {"1": ["CWE-693"], "2": ["CWE-807"], "3": ["CWE-302"]}, "title": "No incentive to vote early in GaugeController", "description": "GaugeController voting offers no incentive to vote early, so late-voting users have benefit over early voters.", "severity": "Medium", "contract": "GaugeController", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Several loops are not executable due to gas limitation", "description": "The codebase relies on several loops that can iterate hundreds of times with costly gas consumption, which may cause the contract to run out of gas.", "severity": "High", "contract": "LiquidityGauge and VotingEscrow", "function": "_checkpoint", "lineNumber": "LiquidityGauge.vy#L115-L128, VotingEscrow.vy#L158-L181"}, {"id": 7, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "Testing smart contract code in Brownie can be unreliable", "description": "The Brownie testing system is unreliable when dealing with time-dependent and high-consumption gas tests, causing issues with testing smart contract code.", "severity": "Undetermined", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-710"], "2": ["CWE-684"], "3": ["CWE-440"]}, "title": "Aragon's voting does not follow voting best practices", "description": "Curve Dao uses Aragon's Voting.sol contract for voting, but its voting logic is simple and does not prevent several abuses that can occur with on-chain voting.", "severity": "High", "contract": "Voting.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-682"]}, "title": "Race condition may result in users earning less interest than expected", "description": "The absence of a minimal interest rate might return a lower bonus for users than expected.", "severity": "Informational", "contract": "LiquidityGauge.vy", "function": "_update_liquidity_limit", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/CurveDAO.pdf",
+    "project_info": {
+        "url": "https://github.com/curvefi/curve-dao-contracts/tree/5cab2f79f0939e4f6887a5a71ff9fb1af0194217",
+        "commit_hash": "5cab2f79f0939e4f6887a5a71ff9fb1af0194217",
+        "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Lack of value verification on decimals is error-prone",
+            "description": "The lack of `uint8` type in Vyper requires that all return values of erc20.`decimals()` calls are checked. `VotingEscrow` calls `decimals()` without checking the return value:",
+            "severity": "Low",
+            "contract": "VotingEscrow",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Lack of events is error-prone",
+            "description": "Several critical operations do not trigger events, making it difficult to review correct behavior of contracts once deployed.",
+            "severity": "Informational",
+            "contract": [
+                "PoolProxy",
+                "ERC20CRV",
+                "GaugeController",
+                "LiquidityGauge",
+                "VotingEscrow"
+            ],
+            "function": [
+                "set_admins",
+                "set_burner",
+                "update_mining_parameters",
+                "set_minter",
+                "set_admin",
+                "transfer_ownership",
+                "_change_type_weight",
+                "_change_gauge_weight",
+                "vote_for_gauge_weights",
+                "_update_liquidity_limit",
+                "add_to_whitelist",
+                "remove_from_whitelist"
+            ],
+            "lineNumber": [
+                "40",
+                "50",
+                "71",
+                "144",
+                "150",
+                "80",
+                "224",
+                "272",
+                "359",
+                "75",
+                "85",
+                "103",
+                "110"
+            ]
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-362"
+                ]
+            },
+            "title": "Race condition in removing addresses from whitelist and withdrawing",
+            "description": "A race condition vulnerability exists in the VotingEscrow contract where a malicious user can circumvent the restrictions imposed by the whitelist by calling 'withdraw' before the 'remove_from_whitelist' transaction is mined.",
+            "severity": "Informational",
+            "contract": "VotingEscrow",
+            "function": "remove_from_whitelist, withdraw",
+            "lineNumber": "96-99"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Lack of documentation is error-prone",
+            "description": "The overall codebase lacks code documentation, high-level description, and examples. As a result, the contracts are difficult to review and the likelihood of user mistakes is high.",
+            "severity": "Informational",
+            "contract": "Several contracts including VotingEscrow and GaugeController",
+            "function": [
+                "withdraw",
+                "deposit",
+                "vote_for_gauge_weights"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "VotingEscrow\u2019s balanceOfAt and totalSupplyAt can return different values for the same block",
+            "description": "VotingEscrow's balanceOfAt and totalSupplyAt functions use binary search to return their corresponding values for a given block, but because the balance and supply can vary within the same block, these functions can return different values when called on the current block.",
+            "severity": "Low",
+            "contract": "VotingEscrow.vy",
+            "function": [
+                "balanceOfAt",
+                "totalSupplyAt"
+            ],
+            "lineNumber": [
+                "L359-L369",
+                "L324-L335"
+            ]
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ],
+                "3": [
+                    "CWE-302"
+                ]
+            },
+            "title": "No incentive to vote early in GaugeController",
+            "description": "GaugeController voting offers no incentive to vote early, so late-voting users have benefit over early voters.",
+            "severity": "Medium",
+            "contract": "GaugeController",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Several loops are not executable due to gas limitation",
+            "description": "The codebase relies on several loops that can iterate hundreds of times with costly gas consumption, which may cause the contract to run out of gas.",
+            "severity": "High",
+            "contract": "LiquidityGauge and VotingEscrow",
+            "function": "_checkpoint",
+            "lineNumber": "LiquidityGauge.vy#L115-L128, VotingEscrow.vy#L158-L181"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Testing smart contract code in Brownie can be unreliable",
+            "description": "The Brownie testing system is unreliable when dealing with time-dependent and high-consumption gas tests, causing issues with testing smart contract code.",
+            "severity": "Undetermined",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-684"
+                ],
+                "3": [
+                    "CWE-440"
+                ]
+            },
+            "title": "Aragon's voting does not follow voting best practices",
+            "description": "Curve Dao uses Aragon's Voting.sol contract for voting, but its voting logic is simple and does not prevent several abuses that can occur with on-chain voting.",
+            "severity": "High",
+            "contract": "Voting.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Race condition may result in users earning less interest than expected",
+            "description": "The absence of a minimal interest rate might return a lower bonus for users than expected.",
+            "severity": "Informational",
+            "contract": "LiquidityGauge.vy",
+            "function": "_update_liquidity_limit",
+            "lineNumber": "N/A"
+        }
+    ]
+}

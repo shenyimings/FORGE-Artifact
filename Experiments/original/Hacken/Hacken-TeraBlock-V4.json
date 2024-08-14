@@ -1,1 +1,143 @@
-{"path": "./Audit_Reports_2024/Hacken/Hacken-TeraBlock-V4.pdf", "project_info": {"url": "https://github.com/TeraBlock/tb-stake-v1-contracts", "commit_hash": "07427df50fc509de887a009489872a6202180a1e", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Missing Allowance Check", "description": "The safeTransferFrom() function of ERC20 is being called in other functions but they never check if there is enough allowance before calling it.", "severity": "Medium", "contract": "Pool.sol, PoolFactory.sol", "function": "deposit(), depositRewards()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-703"]}, "title": "Possible Out-Of-Gas Exception", "description": "Iterating over stakeIds and amounts may lead to enormous Gas consumption due to the arrays\u2019 size, which could lead to a potential Out-of-Gas exception.", "severity": "Medium", "contract": "PoolFactory.sol", "function": "withdrawBatch()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Redundant Subtraction", "description": "1 is subtracted from stakeId which can be performed off-chain and a valid id can be passed.", "severity": "Low", "contract": "Pool.sol", "function": ["withdraw()", "getRewardsEarned()", "isEligibleForRewards()"], "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Checks-Effects-Interactions Pattern Violation", "description": "The state variables of a pool are updated after depositing or withdrawing tokens from the farm contract.", "severity": "Low", "contract": "PoolFactory.sol", "function": "depositRewards()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Missing Zero Address Validation", "description": "Address parameters are being used without checking against the possibility of 0x0, which can lead to unwanted external calls to 0x0.", "severity": "Low", "contract": "AccessProtected.sol, Pool.sol", "function": "setAdmin(), getStakes(), getTotalStaked(), getRewardsEarned()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "The owner can Withdraw Both Reward and Staking Tokens", "description": "The owner can withdraw both reward and staking tokens from the pools without informing users, which can lead to sudden balance changes in the pools.", "severity": "High", "contract": "Pool.sol, PoolFactory.sol", "function": "recoverTokens()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "Missing Staking Token Balance Check", "description": "It is not checked whether there are enough tokens in the system before withdrawal process, which can lead to reverts.", "severity": "Medium", "contract": "Pool.sol", "function": "withdraw()", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Hacken/Hacken-TeraBlock-V4.pdf",
+    "project_info": {
+        "url": "https://github.com/TeraBlock/tb-stake-v1-contracts",
+        "commit_hash": "07427df50fc509de887a009489872a6202180a1e",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Missing Allowance Check",
+            "description": "The safeTransferFrom() function of ERC20 is being called in other functions but they never check if there is enough allowance before calling it.",
+            "severity": "Medium",
+            "contract": "Pool.sol, PoolFactory.sol",
+            "function": "deposit(), depositRewards()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Possible Out-Of-Gas Exception",
+            "description": "Iterating over stakeIds and amounts may lead to enormous Gas consumption due to the arrays\u2019 size, which could lead to a potential Out-of-Gas exception.",
+            "severity": "Medium",
+            "contract": "PoolFactory.sol",
+            "function": "withdrawBatch()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Redundant Subtraction",
+            "description": "1 is subtracted from stakeId which can be performed off-chain and a valid id can be passed.",
+            "severity": "Low",
+            "contract": "Pool.sol",
+            "function": [
+                "withdraw()",
+                "getRewardsEarned()",
+                "isEligibleForRewards()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Checks-Effects-Interactions Pattern Violation",
+            "description": "The state variables of a pool are updated after depositing or withdrawing tokens from the farm contract.",
+            "severity": "Low",
+            "contract": "PoolFactory.sol",
+            "function": "depositRewards()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Missing Zero Address Validation",
+            "description": "Address parameters are being used without checking against the possibility of 0x0, which can lead to unwanted external calls to 0x0.",
+            "severity": "Low",
+            "contract": "AccessProtected.sol, Pool.sol",
+            "function": "setAdmin(), getStakes(), getTotalStaked(), getRewardsEarned()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "The owner can Withdraw Both Reward and Staking Tokens",
+            "description": "The owner can withdraw both reward and staking tokens from the pools without informing users, which can lead to sudden balance changes in the pools.",
+            "severity": "High",
+            "contract": "Pool.sol, PoolFactory.sol",
+            "function": "recoverTokens()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Missing Staking Token Balance Check",
+            "description": "It is not checked whether there are enough tokens in the system before withdrawal process, which can lead to reverts.",
+            "severity": "Medium",
+            "contract": "Pool.sol",
+            "function": "withdraw()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

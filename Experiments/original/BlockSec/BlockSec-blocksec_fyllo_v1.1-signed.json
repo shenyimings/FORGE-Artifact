@@ -1,1 +1,140 @@
-{"path": "./Audit_Reports_2024/BlockSec/BlockSec-blocksec_fyllo_v1.1-signed.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Potential access control problem in the VotingEscrow contract", "description": "In the `VotingEscrow` contract, anyone can lock FYO tokens of other users through the `deposit_for` function if certain requirements are met.", "severity": "Medium", "contract": "VotingEscrow", "function": "deposit_for()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Potential price manipulation on the reward allocation speed", "description": "In the `fyllo-dao` project, there exists a price manipulation problem in the `_checkpoint` function of the `LiquidityGaugeV3` contract. The project provides incentives to the holders of `fToken` s by adopting a mechanism similar to the Curve DAO project.", "severity": "Medium", "contract": "LiquidityGaugeV3", "function": "_checkpoint", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Delayed updates of voting powers in the LiquidityGaugeV3 contract", "description": "If users lock FYO tokens in the VotingEscrow contract, it would reduce the voting power ratio of all other users, but this decrease is not updated into the LiquidityGaugeV3 contract in time. It may lead to incorrect calculation of the reward amounts.", "severity": "N/A", "contract": "LiquidityGaugeV3", "function": "_update_liquidity_limit", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Insufficient check of prices", "description": "In the getPrice function of ChainlinkAdaptor contract, the delay of the retrieved price is not checked and the valid range (minAnswer, maxAnswer) for each price feed is ignored.", "severity": "High", "contract": "ChainlinkAdaptor", "function": "getPrice()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"], "4": ["CWE-638"]}, "title": "No access control to update the interest rate model", "description": "The finding suggests implementing correct access control for the `updateJumpRateModel` function.", "severity": "Medium", "contract": "N/A", "function": "updateJumpRateModel()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Accounting update problem in the LiquidityGaugeV3 contract", "description": "The LiquidityGaugeV3 contract has accounting update problems due to interdependencies of variables that could cause incorrect handling of state variables. Specifically, the _checkpoint_dao and _checkpoint_rewards functions calculate rewards based on working_supply, but if working_supply is updated without calling these functions, it would cause accounting problems.", "severity": "Medium", "contract": "LiquidityGaugeV3", "function": "_update_liquidity_limit, user_checkpoint", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "Potential inconsistent epoch length in the LiquidityGaugeV3 contract", "description": "In the fyllo-dao project, there exists a potential inconsistency in the _checkpoint_dao function of the LiquidityGaugeV3 contract. Specifically, the epoch retrieved from RewardPolicyMaker (at line 302) is assumed to be the length of WEEK (which is the total seconds in a week, i.e., 604,800 seconds). However, in the RewardPolicyMaker contract, the epoch length may not be fixed.", "severity": "Low", "contract": "LiquidityGaugeV3", "function": "_checkpoint_dao", "lineNumber": "302"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "Token balance manipulation in the CToken contract", "description": "A malicious operator can manipulate the underlying token balance for the CToken contract, affecting the calculation of the exchange rate and potentially causing unexpected behaviors.", "severity": "N/A", "contract": "CToken", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/BlockSec/BlockSec-blocksec_fyllo_v1.1-signed.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Potential access control problem in the VotingEscrow contract",
+            "description": "In the `VotingEscrow` contract, anyone can lock FYO tokens of other users through the `deposit_for` function if certain requirements are met.",
+            "severity": "Medium",
+            "contract": "VotingEscrow",
+            "function": "deposit_for()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Potential price manipulation on the reward allocation speed",
+            "description": "In the `fyllo-dao` project, there exists a price manipulation problem in the `_checkpoint` function of the `LiquidityGaugeV3` contract. The project provides incentives to the holders of `fToken` s by adopting a mechanism similar to the Curve DAO project.",
+            "severity": "Medium",
+            "contract": "LiquidityGaugeV3",
+            "function": "_checkpoint",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Delayed updates of voting powers in the LiquidityGaugeV3 contract",
+            "description": "If users lock FYO tokens in the VotingEscrow contract, it would reduce the voting power ratio of all other users, but this decrease is not updated into the LiquidityGaugeV3 contract in time. It may lead to incorrect calculation of the reward amounts.",
+            "severity": "N/A",
+            "contract": "LiquidityGaugeV3",
+            "function": "_update_liquidity_limit",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Insufficient check of prices",
+            "description": "In the getPrice function of ChainlinkAdaptor contract, the delay of the retrieved price is not checked and the valid range (minAnswer, maxAnswer) for each price feed is ignored.",
+            "severity": "High",
+            "contract": "ChainlinkAdaptor",
+            "function": "getPrice()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ],
+                "4": [
+                    "CWE-638"
+                ]
+            },
+            "title": "No access control to update the interest rate model",
+            "description": "The finding suggests implementing correct access control for the `updateJumpRateModel` function.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "updateJumpRateModel()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Accounting update problem in the LiquidityGaugeV3 contract",
+            "description": "The LiquidityGaugeV3 contract has accounting update problems due to interdependencies of variables that could cause incorrect handling of state variables. Specifically, the _checkpoint_dao and _checkpoint_rewards functions calculate rewards based on working_supply, but if working_supply is updated without calling these functions, it would cause accounting problems.",
+            "severity": "Medium",
+            "contract": "LiquidityGaugeV3",
+            "function": "_update_liquidity_limit, user_checkpoint",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Potential inconsistent epoch length in the LiquidityGaugeV3 contract",
+            "description": "In the fyllo-dao project, there exists a potential inconsistency in the _checkpoint_dao function of the LiquidityGaugeV3 contract. Specifically, the epoch retrieved from RewardPolicyMaker (at line 302) is assumed to be the length of WEEK (which is the total seconds in a week, i.e., 604,800 seconds). However, in the RewardPolicyMaker contract, the epoch length may not be fixed.",
+            "severity": "Low",
+            "contract": "LiquidityGaugeV3",
+            "function": "_checkpoint_dao",
+            "lineNumber": "302"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Token balance manipulation in the CToken contract",
+            "description": "A malicious operator can manipulate the underlying token balance for the CToken contract, affecting the calculation of the exchange rate and potentially causing unexpected behaviors.",
+            "severity": "N/A",
+            "contract": "CToken",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

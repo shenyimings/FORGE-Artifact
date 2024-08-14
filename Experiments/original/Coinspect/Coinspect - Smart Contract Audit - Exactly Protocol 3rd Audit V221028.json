@@ -1,1 +1,361 @@
-{"path": "./Audit_Reports_2024/Coinspect/Coinspect - Smart Contract Audit - Exactly Protocol 3rd Audit V221028.pdf", "project_info": {"url": "https://github.com/exactly-protocol/protocol", "commit_hash": "af5b4907ec63fe034fb8dde62bae99222d8407bc", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Users can bypass critical liquidity checks", "description": "Liquidity checks in functions `Market.borrowAtMaturity` and `Market.withdrawAtMaturity` are made using variables with outdated values, allowing borrows of non-trivial amounts when the protocol is illiquid.", "severity": "High", "contract": "Market.sol", "function": ["borrowAtMaturity", "withdrawAtMaturity"], "lineNumber": "249,337"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Depositors unfairly harmed by spreadBadDebt sandwich", "description": "Attackers can profit by sandwiching calls that result in bad debt being distributed among depositors, such as `liquidate` and `handleBadDebt`. As a consequence, protocols floating assets depositors decrease their assets in a higher than fair proportion.", "severity": "High", "contract": "N/A", "function": "liquidate() and handleBadDebt()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Protocol bad debt distribution can be prevented indeterminately", "description": "The externally-callable bad debt distribution mechanism lacks incentives for callers and can be blocked or abused to profit and/or harm floating assets depositors.", "severity": "High", "contract": "Auditor.sol", "function": "handleBadDebt()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Users may waste funds on deposits", "description": "Earnings are capped at a certain deposit amount under some circumstances. Deposits over that amount will be unnecessarily locked from the user perspective, as the maximum yield is limited.", "severity": "Medium", "contract": "Market.sol", "function": "depositAtMaturity", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-682"], "2": ["CWE-1339"]}, "title": "Lack of precision in the approximation of the Interest Rate Curve", "description": "The rate calculation at `InterestRateModel.fixedRate` and `InterestRateModel.floatingRate` uses a different equation for rate calculation at small variations, to handle an indetermination when the utilization delta tends to zero.", "severity": "Medium", "contract": "InterestRateModel", "function": "fixedRate,floatingRate", "lineNumber": "86,107"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Incorrect calculations after modification of parameters", "description": "When new parameters are configured (new Interest Rate Model, or new damping speed) they are not effective from the moment they are configured, but from the last time they were used in the past.", "severity": "High", "contract": "Market", "function": "updateFloatingDebt()", "lineNumber": "969"}, {"id": 6, "category": {"1": ["CWE-710"], "2": ["CWE-1068"]}, "title": "Upgradeability pattern not fully respected", "description": "The protocol uses an upgradability pattern for its core contracts which is partially not respecting the OpenZeppelin recommended best practices.", "severity": "Low", "contract": "Market.sol, MarketETHRouter.sol and Auditor.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Unbounded setters could allow Admin role to steal from users", "description": "Several protocol parameters can be modified through unbounded setters that do not enforce any limits to the Administrative role rights, allowing the owner to break the protocol and rug users.", "severity": "Low", "contract": "Market.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-682"], "2": ["CWE-1339"]}, "title": "Loss of precision due to division before multiplication", "description": "Due to the integer nature of variables in Solidity, it is possible to lose precision in the results if divisions are made before multiplications.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-166"]}, "title": "Missing Natspec documentation", "description": "There are several contracts, public and external functions, and variables with missing or incomplete NatSpec documentation.", "severity": "Info", "contract": "Multiple Contracts", "function": "N/A", "lineNumber": "Auditor.sol L11, Auditor.sol L16, Auditor.sol L17, Auditor.sol L18, Auditor.sol L20, Auditor.sol L22, Auditor.sol L394"}, {"id": 10, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-233"]}, "title": "Hardcoded constants", "description": "Hardcoded constants used across the codebase for comparisons and checks are sometimes difficult to understand without having a context or reading the documentation.", "severity": "Info", "contract": ["Auditor.sol", "InterestRateModel.sol", "Market.sol"], "function": "N/A", "lineNumber": ["L234", "L61", "L72", "L85", "L106", "L115", "L249"]}, {"id": 11, "category": {"1": ["CWE-682"], "2": ["CWE-190"], "3": ["CWE-680"]}, "title": "Maximum maturities per market can increase liquidation costs", "description": "Increasing the number of admitted maturities per market can lead to a scenario where gas cost outweighs the incentive of interacting with the protocol, resulting in increased liquidation costs.", "severity": "Info", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-664"], "2": ["CWE-221"], "3": ["CWE-223"], "4": ["CWE-778"]}, "title": "Lack of emitted event on spreadBadDebt", "description": "The lack of an emitted event when spreading bad debt can impact third parties relying on these events if they are unaware that the values may be outdated.", "severity": "Info", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Loops and nested loops (e.g. account liquidity calculations) and associated gas costs", "description": "The gas consumption of key actions performed across markets ramps up if the owner decides to increase the number of admitted maturities per market, leading to a scenario where the gas cost outweighs the incentive of interacting with the protocol.", "severity": "High", "contract": "N/A", "function": "borrowAtMaturity()", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Externally-callable bad debt distribution mechanism", "description": "It is possible to prevent the bad debt distribution process by transferring a few shares to the account with the bad debt after it was liquidated.", "severity": "High", "contract": "Auditor.sol", "function": "handleBadDebt()", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-682"]}, "title": "Possibility of creating non-liquidatable positions", "description": "It is possible to create non-liquidatable debt that can not be distributed between holders due to the `handleBadDebt` function returning if the account has collateral in any market, allowing a position with bad debt which can not be liquidated nor distributed to remain in the platform.", "severity": "Medium", "contract": "Market.sol", "function": "handleBadDebt()", "lineNumber": "N/A"}, {"id": 16, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Defense-in-depth principle not being respected in several time-locked", "description": "Several protocol parameters can be modified through unbounded setters that do not enforce any limits to the Administrative role rights. The owner can break the protocol in some cases and even rug users.", "severity": "Low", "contract": "Market.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 17, "category": {"1": ["CWE-682"], "2": ["CWE-1339"]}, "title": "Interest rate curve approximation precision", "description": "The calculation of interest rate curve approximation is incorrect and causes a discontinuity at the 2.5e9 boundary, affecting rate calculations at small values.", "severity": "Medium", "contract": "Market.sol", "function": "N/A", "lineNumber": "969"}, {"id": 18, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Unexpected yield caps", "description": "Earnings are capped at a certain deposit amount under some circumstances. Deposits over that amount will be unnecessarily locked from the user perspective, as the maximum yield is limited.", "severity": "Medium", "contract": "N/A", "function": "depositAtMaturity", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Coinspect/Coinspect - Smart Contract Audit - Exactly Protocol 3rd Audit V221028.pdf",
+    "project_info": {
+        "url": "https://github.com/exactly-protocol/protocol",
+        "commit_hash": "af5b4907ec63fe034fb8dde62bae99222d8407bc",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Users can bypass critical liquidity checks",
+            "description": "Liquidity checks in functions `Market.borrowAtMaturity` and `Market.withdrawAtMaturity` are made using variables with outdated values, allowing borrows of non-trivial amounts when the protocol is illiquid.",
+            "severity": "High",
+            "contract": "Market.sol",
+            "function": [
+                "borrowAtMaturity",
+                "withdrawAtMaturity"
+            ],
+            "lineNumber": "249,337"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Depositors unfairly harmed by spreadBadDebt sandwich",
+            "description": "Attackers can profit by sandwiching calls that result in bad debt being distributed among depositors, such as `liquidate` and `handleBadDebt`. As a consequence, protocols floating assets depositors decrease their assets in a higher than fair proportion.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "liquidate() and handleBadDebt()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Protocol bad debt distribution can be prevented indeterminately",
+            "description": "The externally-callable bad debt distribution mechanism lacks incentives for callers and can be blocked or abused to profit and/or harm floating assets depositors.",
+            "severity": "High",
+            "contract": "Auditor.sol",
+            "function": "handleBadDebt()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Users may waste funds on deposits",
+            "description": "Earnings are capped at a certain deposit amount under some circumstances. Deposits over that amount will be unnecessarily locked from the user perspective, as the maximum yield is limited.",
+            "severity": "Medium",
+            "contract": "Market.sol",
+            "function": "depositAtMaturity",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "Lack of precision in the approximation of the Interest Rate Curve",
+            "description": "The rate calculation at `InterestRateModel.fixedRate` and `InterestRateModel.floatingRate` uses a different equation for rate calculation at small variations, to handle an indetermination when the utilization delta tends to zero.",
+            "severity": "Medium",
+            "contract": "InterestRateModel",
+            "function": "fixedRate,floatingRate",
+            "lineNumber": "86,107"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect calculations after modification of parameters",
+            "description": "When new parameters are configured (new Interest Rate Model, or new damping speed) they are not effective from the moment they are configured, but from the last time they were used in the past.",
+            "severity": "High",
+            "contract": "Market",
+            "function": "updateFloatingDebt()",
+            "lineNumber": "969"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1068"
+                ]
+            },
+            "title": "Upgradeability pattern not fully respected",
+            "description": "The protocol uses an upgradability pattern for its core contracts which is partially not respecting the OpenZeppelin recommended best practices.",
+            "severity": "Low",
+            "contract": "Market.sol, MarketETHRouter.sol and Auditor.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Unbounded setters could allow Admin role to steal from users",
+            "description": "Several protocol parameters can be modified through unbounded setters that do not enforce any limits to the Administrative role rights, allowing the owner to break the protocol and rug users.",
+            "severity": "Low",
+            "contract": "Market.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "Loss of precision due to division before multiplication",
+            "description": "Due to the integer nature of variables in Solidity, it is possible to lose precision in the results if divisions are made before multiplications.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-166"
+                ]
+            },
+            "title": "Missing Natspec documentation",
+            "description": "There are several contracts, public and external functions, and variables with missing or incomplete NatSpec documentation.",
+            "severity": "Info",
+            "contract": "Multiple Contracts",
+            "function": "N/A",
+            "lineNumber": "Auditor.sol L11, Auditor.sol L16, Auditor.sol L17, Auditor.sol L18, Auditor.sol L20, Auditor.sol L22, Auditor.sol L394"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-233"
+                ]
+            },
+            "title": "Hardcoded constants",
+            "description": "Hardcoded constants used across the codebase for comparisons and checks are sometimes difficult to understand without having a context or reading the documentation.",
+            "severity": "Info",
+            "contract": [
+                "Auditor.sol",
+                "InterestRateModel.sol",
+                "Market.sol"
+            ],
+            "function": "N/A",
+            "lineNumber": [
+                "L234",
+                "L61",
+                "L72",
+                "L85",
+                "L106",
+                "L115",
+                "L249"
+            ]
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ],
+                "3": [
+                    "CWE-680"
+                ]
+            },
+            "title": "Maximum maturities per market can increase liquidation costs",
+            "description": "Increasing the number of admitted maturities per market can lead to a scenario where gas cost outweighs the incentive of interacting with the protocol, resulting in increased liquidation costs.",
+            "severity": "Info",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-221"
+                ],
+                "3": [
+                    "CWE-223"
+                ],
+                "4": [
+                    "CWE-778"
+                ]
+            },
+            "title": "Lack of emitted event on spreadBadDebt",
+            "description": "The lack of an emitted event when spreading bad debt can impact third parties relying on these events if they are unaware that the values may be outdated.",
+            "severity": "Info",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Loops and nested loops (e.g. account liquidity calculations) and associated gas costs",
+            "description": "The gas consumption of key actions performed across markets ramps up if the owner decides to increase the number of admitted maturities per market, leading to a scenario where the gas cost outweighs the incentive of interacting with the protocol.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "borrowAtMaturity()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Externally-callable bad debt distribution mechanism",
+            "description": "It is possible to prevent the bad debt distribution process by transferring a few shares to the account with the bad debt after it was liquidated.",
+            "severity": "High",
+            "contract": "Auditor.sol",
+            "function": "handleBadDebt()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Possibility of creating non-liquidatable positions",
+            "description": "It is possible to create non-liquidatable debt that can not be distributed between holders due to the `handleBadDebt` function returning if the account has collateral in any market, allowing a position with bad debt which can not be liquidated nor distributed to remain in the platform.",
+            "severity": "Medium",
+            "contract": "Market.sol",
+            "function": "handleBadDebt()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Defense-in-depth principle not being respected in several time-locked",
+            "description": "Several protocol parameters can be modified through unbounded setters that do not enforce any limits to the Administrative role rights. The owner can break the protocol in some cases and even rug users.",
+            "severity": "Low",
+            "contract": "Market.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "Interest rate curve approximation precision",
+            "description": "The calculation of interest rate curve approximation is incorrect and causes a discontinuity at the 2.5e9 boundary, affecting rate calculations at small values.",
+            "severity": "Medium",
+            "contract": "Market.sol",
+            "function": "N/A",
+            "lineNumber": "969"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Unexpected yield caps",
+            "description": "Earnings are capped at a certain deposit amount under some circumstances. Deposits over that amount will be unnecessarily locked from the user perspective, as the maximum yield is limited.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "depositAtMaturity",
+            "lineNumber": "N/A"
+        }
+    ]
+}

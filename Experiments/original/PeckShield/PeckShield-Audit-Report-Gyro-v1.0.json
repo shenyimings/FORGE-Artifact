@@ -1,1 +1,112 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Gyro-v1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Proper Logic Of Distributor::nextRewardFor()", "description": "The `Distributor` contract's `nextRewardFor()` function always returns the last hit on the given recipient address and does not accumulate rewards together in case of multiple occurrences of the same recipient.", "severity": "Low", "contract": "Distributor", "function": "nextRewardFor()", "lineNumber": "127-135"}, {"id": 1, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-1419"]}, "title": "Fork-Resistant Domain Separator in Gyro And sGyro", "description": "The state variable DOMAIN_SEPARATOR in ERC20Permit is initialized once inside the initialize() function, which might lead to a fork-resistant domain separator issue.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"], "2": ["CWE-191"]}, "title": "Potentially Unwanted Reverts in BondCalculator::getKValue()", "description": "The getKValue() function may potentially revert due to underflow when calculating decimals if token0+token1 < 18, and can be improved by explicitly detecting underflow and adjusting the constant product result accordingly.", "severity": "Low", "contract": "BondCalculator", "function": "getKValue()", "lineNumber": "15-19"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Trust Issue of Admin Keys", "description": "In the Gyro protocol, there is a privileged `owner` account that plays a critical role in governing and regulating the system- wide operations (e.g., parameter setting and contract adjustment). It also has the privilege to control or govern the flow of assets managed by this protocol.", "severity": "Medium", "contract": "Multiple Contracts", "function": "initializeBondTerms()", "lineNumber": "122-141"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Meaningful Events For Important States Change", "description": "In Ethereum, events are used to record runtime dynamics and store arguments passed in transaction logs, making them accessible to external analytics and reporting tools. However, there is a lack of emitting important events that reflect changes in protocol-wide contracts, specifically when the escrowContract is being updated.", "severity": "Low", "contract": "GyroVault", "function": "setContract", "lineNumber": "295-300"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Potential Rebasing Perturbation", "description": "The rebasing operation may be influenced by a user staking or unstaking to increase/decrease the circulating supply of sGyro right before epoch.nextBlock is reached, potentially causing a loss and bringing a smaller return as expected to the trading user.", "severity": "Informational", "contract": "GyroVault", "function": "rebase()", "lineNumber": "234-258"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Gyro-v1.0.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0x8B1522402FECe066d83E0F6C97024248Be3C8c01"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Proper Logic Of Distributor::nextRewardFor()",
+            "description": "The `Distributor` contract's `nextRewardFor()` function always returns the last hit on the given recipient address and does not accumulate rewards together in case of multiple occurrences of the same recipient.",
+            "severity": "Low",
+            "contract": "Distributor",
+            "function": "nextRewardFor()",
+            "lineNumber": "127-135"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-1419"
+                ]
+            },
+            "title": "Fork-Resistant Domain Separator in Gyro And sGyro",
+            "description": "The state variable DOMAIN_SEPARATOR in ERC20Permit is initialized once inside the initialize() function, which might lead to a fork-resistant domain separator issue.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-191"
+                ]
+            },
+            "title": "Potentially Unwanted Reverts in BondCalculator::getKValue()",
+            "description": "The getKValue() function may potentially revert due to underflow when calculating decimals if token0+token1 < 18, and can be improved by explicitly detecting underflow and adjusting the constant product result accordingly.",
+            "severity": "Low",
+            "contract": "BondCalculator",
+            "function": "getKValue()",
+            "lineNumber": "15-19"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "In the Gyro protocol, there is a privileged `owner` account that plays a critical role in governing and regulating the system- wide operations (e.g., parameter setting and contract adjustment). It also has the privilege to control or govern the flow of assets managed by this protocol.",
+            "severity": "Medium",
+            "contract": "Multiple Contracts",
+            "function": "initializeBondTerms()",
+            "lineNumber": "122-141"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Meaningful Events For Important States Change",
+            "description": "In Ethereum, events are used to record runtime dynamics and store arguments passed in transaction logs, making them accessible to external analytics and reporting tools. However, there is a lack of emitting important events that reflect changes in protocol-wide contracts, specifically when the escrowContract is being updated.",
+            "severity": "Low",
+            "contract": "GyroVault",
+            "function": "setContract",
+            "lineNumber": "295-300"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Potential Rebasing Perturbation",
+            "description": "The rebasing operation may be influenced by a user staking or unstaking to increase/decrease the circulating supply of sGyro right before epoch.nextBlock is reached, potentially causing a loss and bringing a smaller return as expected to the trading user.",
+            "severity": "Informational",
+            "contract": "GyroVault",
+            "function": "rebase()",
+            "lineNumber": "234-258"
+        }
+    ]
+}

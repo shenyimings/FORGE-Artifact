@@ -1,1 +1,314 @@
-{"path": "./Audit_Reports_2024/QuillAudits/QuillAudit-Watchdog_Smart_Contract_Audit_Report.pdf", "project_info": {"url": "https://drive.google.com/file/d/1sGoyqvUx8NhmVS_fdyYNlHnsrANd6uCP/view?usp=sharing", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"], "2": ["CWE-1339"]}, "title": "Divide before multiply", "description": "Multiplying after division without proper method can cause precision loss.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Integer overflow/underflow", "description": "Having overflow/underflow vulnerabilities is very common for smart contracts. In this contract many arithmetic calculations are used without a safemath library.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "ERC20 transfer() does not return boolean", "description": "The ERC20 transfer function does not return a boolean value indicating success or failure of the transaction.", "severity": "High", "contract": "N/A", "function": "transfer()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "ERC20 approve() race", "description": "A vulnerability where an attacker can exploit the approval function of ERC20 tokens by racing against other transactions.", "severity": "High", "contract": "N/A", "function": "approve()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-697"]}, "title": "Dangerous strict equalities", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Tautology or contradiction", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "Return values of low-level calls", "description": "N/A", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Missing Zero Address Validation", "description": "Contract lacks zero address checks, hence are prone to be initialized with zero addresses.", "severity": "Low", "contract": "N/A", "function": ["setEcosystemAddress", "setIsFeeExempt", "setLiquidityReceiver", "setMarketingReceiver", "setBusdSettings"], "lineNumber": ["#L235", "#L353", "#L379", "#L383", "#L419"]}, {"id": 8, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Private modifier", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Revert/require functions", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Using block.timestamp", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-693"], "2": ["CWE-807"], "3": ["CWE-302"]}, "title": "Multiple Sends", "description": "An attacker can frontrun an approval transaction to spend previously approved tokens and then again spend newly approved tokens, resulting in the allowance being increased without the owner's intention.", "severity": "High", "contract": "N/A", "function": "approve()", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Using SHA3", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-664"], "2": ["CWE-404"], "3": ["CWE-772"]}, "title": "Using suicide", "description": "The use of the 'suicide' function can lead to unintended contract behavior and potential security risks.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-703"], "2": ["CWE-397"]}, "title": "Using throw", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-710"], "2": ["CWE-1177"], "3": ["CWE-676"]}, "title": "Using inline assembly", "description": "The use of inline assembly can pose security risks and make the code harder to read and maintain.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 16, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "Frontrunning/Sandwich attack", "description": "The buyBUSD() function contains router interactions and is prone to frontrunning/sandwich attacks due to a minimum amount of tokens to receive being 0.", "severity": "Low", "contract": "N/A", "function": "buyBUSD()", "lineNumber": "#L318, #L322"}]}
+{
+    "path": "./Audit_Reports_2024/QuillAudits/QuillAudit-Watchdog_Smart_Contract_Audit_Report.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "Divide before multiply",
+            "description": "Multiplying after division without proper method can cause precision loss.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Integer overflow/underflow",
+            "description": "Having overflow/underflow vulnerabilities is very common for smart contracts. In this contract many arithmetic calculations are used without a safemath library.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "ERC20 transfer() does not return boolean",
+            "description": "The ERC20 transfer function does not return a boolean value indicating success or failure of the transaction.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "transfer()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "ERC20 approve() race",
+            "description": "A vulnerability where an attacker can exploit the approval function of ERC20 tokens by racing against other transactions.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "approve()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ]
+            },
+            "title": "Dangerous strict equalities",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Tautology or contradiction",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Return values of low-level calls",
+            "description": "N/A",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Missing Zero Address Validation",
+            "description": "Contract lacks zero address checks, hence are prone to be initialized with zero addresses.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": [
+                "setEcosystemAddress",
+                "setIsFeeExempt",
+                "setLiquidityReceiver",
+                "setMarketingReceiver",
+                "setBusdSettings"
+            ],
+            "lineNumber": [
+                "#L235",
+                "#L353",
+                "#L379",
+                "#L383",
+                "#L419"
+            ]
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Private modifier",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Revert/require functions",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Using block.timestamp",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ],
+                "3": [
+                    "CWE-302"
+                ]
+            },
+            "title": "Multiple Sends",
+            "description": "An attacker can frontrun an approval transaction to spend previously approved tokens and then again spend newly approved tokens, resulting in the allowance being increased without the owner's intention.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "approve()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Using SHA3",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ]
+            },
+            "title": "Using suicide",
+            "description": "The use of the 'suicide' function can lead to unintended contract behavior and potential security risks.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-397"
+                ]
+            },
+            "title": "Using throw",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1177"
+                ],
+                "3": [
+                    "CWE-676"
+                ]
+            },
+            "title": "Using inline assembly",
+            "description": "The use of inline assembly can pose security risks and make the code harder to read and maintain.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Frontrunning/Sandwich attack",
+            "description": "The buyBUSD() function contains router interactions and is prone to frontrunning/sandwich attacks due to a minimum amount of tokens to receive being 0.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "buyBUSD()",
+            "lineNumber": "#L318, #L322"
+        }
+    ]
+}

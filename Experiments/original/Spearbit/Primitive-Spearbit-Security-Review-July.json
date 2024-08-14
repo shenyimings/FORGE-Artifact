@@ -1,1 +1,124 @@
-{"path": "./Audit_Reports_2024/Spearbit/Primitive-Spearbit-Security-Review-July.pdf", "project_info": {"url": "https://github.com/primitivefinance/portfolio", "commit_hash": "f8302e0e9d406c70dfd5178157f75bbd8d3a21de", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Malicious strategy can disable swapping and (de-)allocating at any time", "description": "A malicious strategy can disable swapping and (de-)allocating at any time, as well as enable privileged parties to trade out all pool reserves by implementing custom logic in the `validateSwap` function.", "severity": "Informational", "contract": "NormalStrategyLib.sol", "function": "N/A", "lineNumber": "L654"}, {"id": 1, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "findRootForSwappingIn functions should use MINIMUM_INVARIANT_DELTA", "description": "Instead of adding +1, consider using adding +MINIMUM_INVARIANT_DELTA instead to find curve values such that it matches the swap invariant check in _validateSwap.", "severity": "N/A", "contract": "N/A", "function": "findRootForSwappingIn", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "tradingFunction returns wrong invariant at bounds, allowing to steal all pool reserves", "description": "The tradingFunction computing the invariant value of k = \u03a6 \u00b9(y/K) - \u03a6 \u00b9(1-x) + \u03c3\u03c4 returns the wrong value at the bounds of x and y. The bounds of x are 0 and 1e18, the bounds of y are 0 and K, the strike price.", "severity": "Critical", "contract": "NormalStrategyLib.sol", "function": "tradingFunction", "lineNumber": "L157-L165"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "getSpotPrice, approximateReservesGivenPrice, getStrategyData ignore time to maturity", "description": "The reported spot price will be wrong after the pool has been initialized and integrators cannot rely on this value because `getSpotPrice`, `approximateReservesGivenPrice` and `getStrategyData` ignore time to maturity.", "severity": "Medium Risk", "contract": "NormalStrategyLib.sol", "function": "transform", "lineNumber": "L375"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "Numerical error on larger trades favors the swapper relative to mathematically ideal pricing", "description": "Deviations in the swapper's favor as large as 25% were observed (and larger ones likely exist) due to numerical errors, favoring the swapper more than smaller swaps.", "severity": "Low Risk", "contract": "Portfolio.sol", "function": "N/A", "lineNumber": "L473"}, {"id": 5, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "getMaxOrder overestimates output values", "description": "The getMaxOrder function adds +1 to the output value, overestimating the output value. This can lead to failed swaps if this value is used.", "severity": "Low Risk", "contract": "NormalStrategy.sol", "function": "getMaxOrder", "lineNumber": "L230-L237"}, {"id": 6, "category": {"1": ["CWE-691"], "2": ["CWE-1265"]}, "title": "Improve reentrancy guards", "description": "The current way of protecting against reentrancy works by setting multicall flags and locks on multicalls and single-action calls. However, the single calls essentially skip reentrancy guards if the outer context is a multicall.", "severity": "Low Risk", "contract": "Portfolio.sol", "function": "N/A", "lineNumber": "124"}]}
+{
+    "path": "./Audit_Reports_2024/Spearbit/Primitive-Spearbit-Security-Review-July.pdf",
+    "project_info": {
+        "url": "https://github.com/primitivefinance/portfolio",
+        "commit_hash": "f8302e0e9d406c70dfd5178157f75bbd8d3a21de",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Malicious strategy can disable swapping and (de-)allocating at any time",
+            "description": "A malicious strategy can disable swapping and (de-)allocating at any time, as well as enable privileged parties to trade out all pool reserves by implementing custom logic in the `validateSwap` function.",
+            "severity": "Informational",
+            "contract": "NormalStrategyLib.sol",
+            "function": "N/A",
+            "lineNumber": "L654"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "findRootForSwappingIn functions should use MINIMUM_INVARIANT_DELTA",
+            "description": "Instead of adding +1, consider using adding +MINIMUM_INVARIANT_DELTA instead to find curve values such that it matches the swap invariant check in _validateSwap.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "findRootForSwappingIn",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "tradingFunction returns wrong invariant at bounds, allowing to steal all pool reserves",
+            "description": "The tradingFunction computing the invariant value of k = \u03a6 \u00b9(y/K) - \u03a6 \u00b9(1-x) + \u03c3\u03c4 returns the wrong value at the bounds of x and y. The bounds of x are 0 and 1e18, the bounds of y are 0 and K, the strike price.",
+            "severity": "Critical",
+            "contract": "NormalStrategyLib.sol",
+            "function": "tradingFunction",
+            "lineNumber": "L157-L165"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "getSpotPrice, approximateReservesGivenPrice, getStrategyData ignore time to maturity",
+            "description": "The reported spot price will be wrong after the pool has been initialized and integrators cannot rely on this value because `getSpotPrice`, `approximateReservesGivenPrice` and `getStrategyData` ignore time to maturity.",
+            "severity": "Medium Risk",
+            "contract": "NormalStrategyLib.sol",
+            "function": "transform",
+            "lineNumber": "L375"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Numerical error on larger trades favors the swapper relative to mathematically ideal pricing",
+            "description": "Deviations in the swapper's favor as large as 25% were observed (and larger ones likely exist) due to numerical errors, favoring the swapper more than smaller swaps.",
+            "severity": "Low Risk",
+            "contract": "Portfolio.sol",
+            "function": "N/A",
+            "lineNumber": "L473"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "getMaxOrder overestimates output values",
+            "description": "The getMaxOrder function adds +1 to the output value, overestimating the output value. This can lead to failed swaps if this value is used.",
+            "severity": "Low Risk",
+            "contract": "NormalStrategy.sol",
+            "function": "getMaxOrder",
+            "lineNumber": "L230-L237"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "Improve reentrancy guards",
+            "description": "The current way of protecting against reentrancy works by setting multicall flags and locks on multicalls and single-action calls. However, the single calls essentially skip reentrancy guards if the outer context is a multicall.",
+            "severity": "Low Risk",
+            "contract": "Portfolio.sol",
+            "function": "N/A",
+            "lineNumber": "124"
+        }
+    ]
+}

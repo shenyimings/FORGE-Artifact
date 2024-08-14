@@ -1,1 +1,107 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Hegic(v8888)-v1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "v8888", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-693"]}, "title": "Revisited Reentrancy Protection In HegicPool", "description": "Potential reentrancy vulnerability in the `provideFrom()` function of `HegicPool` contract, which can be exploited by an evil attacker through `_checkOnERC721Received()` callback function.", "severity": "Undetermined", "contract": "HegicPool", "function": "provideFrom()", "lineNumber": "406"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Improper Logic In PriceCalculator::_priceModifier()", "description": "The logic of the `_priceModifier()` function needs to be revised due to the public `utilizationRate` storage variable always being 0 because there is no function to update it in the contract.", "severity": "Low", "contract": "PriceCalculator", "function": "_priceModifier()", "lineNumber": "99,118-123"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Trust Issue Of Admin Keys", "description": "In the Hegic protocol, there is a privileged account (with the DEFAULT_ADMIN_ROLE) that plays a critical role in governing and regulating the protocol-wide operations, allowing it to transfer all assets out of the Hegic Pool.", "severity": "High", "contract": "HegicPool", "function": "approve()", "lineNumber": "197-198"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Potential Overflow In HegicMath::sqrt()", "description": "In the `Hegic` protocol, the `HegicMath` library has a potential overflow in the `sqrt()` function due to incorrect calculation of square root.", "severity": "Low", "contract": "HegicMath", "function": "sqrt()", "lineNumber": "29"}, {"id": 4, "category": {"1": ["CWE-707"], "2": ["CWE-228"]}, "title": "Accommodation of Non-ERC20-Compliant Tokens", "description": "The approve() routine may have idiosyncrasies from current widely-used token contracts due to non-compliance with ERC-20 specification, requiring a specific sequence of calls to mitigate the known approve()/transferFrom() race condition.", "severity": "Low", "contract": "Facade/HegicPool", "function": "approve()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "Potential Sandwich/MEV Attack For createOption()", "description": "In the `Facade` contract, the `createOption()` function is vulnerable to a potential `Sandwich/MEV` attack due to lack of slippage control.", "severity": "Medium", "contract": "Facade", "function": "createOption()", "lineNumber": "152, 82"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Hegic(v8888)-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/hegic/Hegic-protocol-v8888/tree/f0b6606",
+        "commit_hash": "f0b6606",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "Revisited Reentrancy Protection In HegicPool",
+            "description": "Potential reentrancy vulnerability in the `provideFrom()` function of `HegicPool` contract, which can be exploited by an evil attacker through `_checkOnERC721Received()` callback function.",
+            "severity": "Undetermined",
+            "contract": "HegicPool",
+            "function": "provideFrom()",
+            "lineNumber": "406"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improper Logic In PriceCalculator::_priceModifier()",
+            "description": "The logic of the `_priceModifier()` function needs to be revised due to the public `utilizationRate` storage variable always being 0 because there is no function to update it in the contract.",
+            "severity": "Low",
+            "contract": "PriceCalculator",
+            "function": "_priceModifier()",
+            "lineNumber": "99,118-123"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue Of Admin Keys",
+            "description": "In the Hegic protocol, there is a privileged account (with the DEFAULT_ADMIN_ROLE) that plays a critical role in governing and regulating the protocol-wide operations, allowing it to transfer all assets out of the Hegic Pool.",
+            "severity": "High",
+            "contract": "HegicPool",
+            "function": "approve()",
+            "lineNumber": "197-198"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Potential Overflow In HegicMath::sqrt()",
+            "description": "In the `Hegic` protocol, the `HegicMath` library has a potential overflow in the `sqrt()` function due to incorrect calculation of square root.",
+            "severity": "Low",
+            "contract": "HegicMath",
+            "function": "sqrt()",
+            "lineNumber": "29"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-228"
+                ]
+            },
+            "title": "Accommodation of Non-ERC20-Compliant Tokens",
+            "description": "The approve() routine may have idiosyncrasies from current widely-used token contracts due to non-compliance with ERC-20 specification, requiring a specific sequence of calls to mitigate the known approve()/transferFrom() race condition.",
+            "severity": "Low",
+            "contract": "Facade/HegicPool",
+            "function": "approve()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Potential Sandwich/MEV Attack For createOption()",
+            "description": "In the `Facade` contract, the `createOption()` function is vulnerable to a potential `Sandwich/MEV` attack due to lack of slippage control.",
+            "severity": "Medium",
+            "contract": "Facade",
+            "function": "createOption()",
+            "lineNumber": "152, 82"
+        }
+    ]
+}

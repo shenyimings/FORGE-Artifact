@@ -1,1 +1,303 @@
-{"path": "./Audit_Reports_2024/Cyberscope/ppface.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "0xa528fe7be4668dd738f2cbdb21e274adaf40e76b"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "ST - Stops Transactions", "description": "The transactions are initially disabled for all users excluding the authorized addresses. The owner can enable the transactions for all users. Once the transactions are enabled, the owner will not be able to disable them again.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1284"]}, "title": "EIS - Excessively Integer Size", "description": "The contract uses a bigger unsigned integer data type than necessary, consuming more storage space and requiring additional computational resources, leading to higher transaction costs, longer execution times, and potential scalability bottlenecks.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "RSW - Redundant Storage Writes", "description": "The contract updates the `_noFee` status of an account even if its current state is the same as the one passed as an argument. As a result, the contract performs redundant storage writes.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "PTRP - Potential Transfer Revert Propagation", "description": "The contract sends funds to `contestReceiver` and `marketingAddress` as part of the transfer flow. These addresses can either be a wallet address or a contract. If the addresses belong to a contract, then it may revert from incoming payment. As a result, the error will propagate to the token\u2019s contract and revert the transfer.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "RIC - Redundant If Condition", "description": "The contract uses an if statement to check if `feeAmount` is greater than zero within the `takeTaxes` function, but this check is redundant as the `_transfer` function already requires `amount` to be greater than zero.", "severity": "N/A", "contract": "N/A", "function": "takeTaxes", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "FSA - Fixed Swap Address", "description": "The swap address is assigned once and cannot be changed, which may prevent the contract from migrating to a new liquidity pool pair or decentralized exchange.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "MEE - Missing Events Emission", "description": "The contract performs actions and state mutations from external methods that do not result in the emission of events.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "PVC - Price Volatility Concern", "description": "The contract accumulates tokens from taxes to swap them for ETH, but the price of the token can be highly volatile, potentially leading to significant price volatility for parties involved.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "ULTW - Transfers Liquidity to Team Wallet", "description": "The contract owner has the authority to transfer funds without limit to the team wallet, accumulated from fees collected from the contract.", "severity": "High", "contract": "N/A", "function": "setFeeDistribution", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "RSML - Redundant SafeMath Library", "description": "The usage of the SafeMath library adds complexity, overhead and increases gas consumption unnecessarily since Solidity versions 0.8.0 and above have native functionality for arithmetic operations that revert to underflow and overflow.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-909"], "4": ["CWE-456"]}, "title": "IDI - Immutable Declaration Improvement", "description": "The contract declares state variables that their value is initialized once in the constructor and are not modified afterwards.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-909"], "4": ["CWE-456"]}, "title": "L02 - State Variables could be Declared Constant", "description": "State variables can be declared as constant using the constant keyword to ensure their values cannot be changed after being set, which also decreases gas consumption.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-710"]}, "title": "L04 - Conformance to Solidity Naming Conventions", "description": "The Solidity style guide provides guidelines for writing clean and consistent Solidity code, improving readability and maintainability.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-682"]}, "title": "L07 - Missing Events Arithmetic", "description": "Events are a way to record and log information about changes or actions that occur within a contract.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "24"}, {"id": 14, "category": {"1": ["CWE-710"], "2": ["CWE-1164"], "3": ["CWE-561"]}, "title": "L09 - Dead Code Elimination", "description": "Dead code can make a contract more difficult to understand and maintain, and can also increase the size of the contract and the cost of deploying and interacting with it.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-682"]}, "title": "L20 - Succeeded Transfer Check", "description": "According to the ERC20 specification, the transfer methods should be checked if the result is successful. Otherwise, the contract may wrongly assume that the transfer has been established.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Cyberscope/ppface.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0xa528fe7be4668dd738f2cbdb21e274adaf40e76b"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "ST - Stops Transactions",
+            "description": "The transactions are initially disabled for all users excluding the authorized addresses. The owner can enable the transactions for all users. Once the transactions are enabled, the owner will not be able to disable them again.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1284"
+                ]
+            },
+            "title": "EIS - Excessively Integer Size",
+            "description": "The contract uses a bigger unsigned integer data type than necessary, consuming more storage space and requiring additional computational resources, leading to higher transaction costs, longer execution times, and potential scalability bottlenecks.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "RSW - Redundant Storage Writes",
+            "description": "The contract updates the `_noFee` status of an account even if its current state is the same as the one passed as an argument. As a result, the contract performs redundant storage writes.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "PTRP - Potential Transfer Revert Propagation",
+            "description": "The contract sends funds to `contestReceiver` and `marketingAddress` as part of the transfer flow. These addresses can either be a wallet address or a contract. If the addresses belong to a contract, then it may revert from incoming payment. As a result, the error will propagate to the token\u2019s contract and revert the transfer.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "RIC - Redundant If Condition",
+            "description": "The contract uses an if statement to check if `feeAmount` is greater than zero within the `takeTaxes` function, but this check is redundant as the `_transfer` function already requires `amount` to be greater than zero.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "takeTaxes",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "FSA - Fixed Swap Address",
+            "description": "The swap address is assigned once and cannot be changed, which may prevent the contract from migrating to a new liquidity pool pair or decentralized exchange.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "MEE - Missing Events Emission",
+            "description": "The contract performs actions and state mutations from external methods that do not result in the emission of events.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "PVC - Price Volatility Concern",
+            "description": "The contract accumulates tokens from taxes to swap them for ETH, but the price of the token can be highly volatile, potentially leading to significant price volatility for parties involved.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "ULTW - Transfers Liquidity to Team Wallet",
+            "description": "The contract owner has the authority to transfer funds without limit to the team wallet, accumulated from fees collected from the contract.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "setFeeDistribution",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "RSML - Redundant SafeMath Library",
+            "description": "The usage of the SafeMath library adds complexity, overhead and increases gas consumption unnecessarily since Solidity versions 0.8.0 and above have native functionality for arithmetic operations that revert to underflow and overflow.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "IDI - Immutable Declaration Improvement",
+            "description": "The contract declares state variables that their value is initialized once in the constructor and are not modified afterwards.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "L02 - State Variables could be Declared Constant",
+            "description": "State variables can be declared as constant using the constant keyword to ensure their values cannot be changed after being set, which also decreases gas consumption.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ]
+            },
+            "title": "L04 - Conformance to Solidity Naming Conventions",
+            "description": "The Solidity style guide provides guidelines for writing clean and consistent Solidity code, improving readability and maintainability.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "L07 - Missing Events Arithmetic",
+            "description": "Events are a way to record and log information about changes or actions that occur within a contract.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "24"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ],
+                "3": [
+                    "CWE-561"
+                ]
+            },
+            "title": "L09 - Dead Code Elimination",
+            "description": "Dead code can make a contract more difficult to understand and maintain, and can also increase the size of the contract and the cost of deploying and interacting with it.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "L20 - Succeeded Transfer Check",
+            "description": "According to the ERC20 specification, the transfer methods should be checked if the result is successful. Otherwise, the contract may wrongly assume that the transfer has been established.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

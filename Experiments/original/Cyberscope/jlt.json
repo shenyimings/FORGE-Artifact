@@ -1,1 +1,314 @@
-{"path": "./Audit_Reports_2024/Cyberscope/jlt.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "ST - Stops Transactions", "description": "The contract owner has the authority to stop sales for all users excluding the owner, potentially operating as a honeypot.", "severity": "High", "contract": "JLT Token", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "FRV - Fee Restoration Vulnerability", "description": "The contract demonstrates a potential vulnerability upon removing and restoring the fees when the fees have been set to zero, leading to unintended consequences such as incorrect fee calculations or unexpected behavior within the contract.", "severity": "Critical", "contract": "N/A", "function": "remove fees and restore fees functions", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1288"]}, "title": "ULF - Unused Liquidity Functionality", "description": "The contract contains a private `addLiquidity` function designed to facilitate the addition of liquidity to a Uniswap V2 pool, but it is never invoked in any part of the contract's code.", "severity": "Medium", "contract": "N/A", "function": "addLiquidity", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-710"], "2": ["CWE-1126"]}, "title": "IDI - Immutable Declaration Improvement", "description": "The contract declares state variables that are initialized once in the constructor and are not modified afterwards. Declaring these variables as immutable can save gas by allowing the Solidity compiler to make certain optimizations.", "severity": "N/A", "contract": "JLT Token", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-710"], "2": ["CWE-1120"]}, "title": "IFH - Inefficient Fee Handling", "description": "The contract's `_tokenTransfer` function has redundant code and unnecessary complexity due to separate `if` conditions for fee management logic, leading to potential inefficiencies in gas usage and making the code harder to read and maintain.", "severity": "Medium", "contract": "JLT Token", "function": "_tokenTransfer()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-770"]}, "title": "PLPI - Potential Liquidity Provision Inadequacy", "description": "The contract operates under the assumption that liquidity is consistently provided to the pair between the contract's token and the native currency. However, there is a possibility that liquidity is provided to a different pair. This inadequacy in liquidity provision in the main pair could expose the contract to risks.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "PTRP - Potential Transfer Revert Propagation", "description": "The contract sends funds to a `treasuryWallet` as part of the transfer flow. This address can either be a wallet address or a contract. If the address belongs to a contract then it may revert from incoming payment. As a result, the error will propagate to the token\u2019s contract and revert the transfer.", "severity": "High", "contract": "JLT Token", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-682"], "2": ["CWE-190"], "3": ["CWE-680"]}, "title": "PVC - Price Volatility Concern", "description": "The contract accumulates tokens from taxes to swap them for ETH, but the variable numTokensSellToAddToLiquidity sets a threshold that can trigger a huge token swap, potentially leading to significant price volatility due to the token's highly volatile price.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "RES - Redundant Event Statement", "description": "The `MinTokensBeforeSwapUpdated` event statement is not used in the contract's implementation.", "severity": "Medium", "contract": "JLT Token", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "RLF - Redundant Liquidity Functionality", "description": "The contract contains redundant liquidity functionality due to permanently setting `_liquidityFee` to zero with no available method to modify or update this value post-deployment.", "severity": "High", "contract": "N/A", "function": "_takeLiquidity, takeTreasury", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1286"]}, "title": "RRS - Redundant Require Statement", "description": "The contract utilizes a `require` statement within the `add` function aiming to prevent overflow errors, which is redundant due to Solidity version 0.8.0 and later reverting on overflow and underflow.", "severity": "Low", "contract": "JLT Token", "function": "add()", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "RSML - Redundant SafeMath Library", "description": "The usage of the SafeMath library adds complexity, overhead and increases gas consumption unnecessarily since Solidity versions greater than or equal to 0.8.0 provide native functionality for arithmetic operations that revert on underflow and overflow.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-682"]}, "title": "RSW - Redundant Storage Writes", "description": "The contract modifies the state of variables without checking if their current value is the same as the one given as an argument, leading to redundant storage writes and unnecessary gas consumption.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-909"], "4": ["CWE-456"]}, "title": "L02 - State Variables could be Declared Constant", "description": "State variables can be declared as constant using the constant keyword to ensure their values cannot be changed after being set, which decreases gas consumption of the corresponding transaction.", "severity": "N/A", "contract": "JLT Token", "function": "N/A", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-710"]}, "title": "L04 - Conformance to Solidity Naming Conventions", "description": "The code does not adhere to the Solidity style guide, which can affect readability and maintainability.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-682"]}, "title": "L07 - Missing Events Arithmetic", "description": "Events are a way to record and log information about changes or actions that occur within a contract. They are often used to notify external parties or clients about events that have occurred within the contract, such as the transfer of tokens or the completion of a task.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "30"}, {"id": 16, "category": {"1": ["CWE-710"], "2": ["CWE-1164"], "3": ["CWE-561"]}, "title": "L09 - Dead Code Elimination", "description": "Dead code can occur due to conditional statements that are always false, functions that are never called, or unreachable code, making a contract more difficult to understand and maintain, and increasing its size and deployment cost.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Cyberscope/jlt.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0xb8b3eef848b91affd4cb8747190d21c6b339fae8"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "ST - Stops Transactions",
+            "description": "The contract owner has the authority to stop sales for all users excluding the owner, potentially operating as a honeypot.",
+            "severity": "High",
+            "contract": "JLT Token",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "FRV - Fee Restoration Vulnerability",
+            "description": "The contract demonstrates a potential vulnerability upon removing and restoring the fees when the fees have been set to zero, leading to unintended consequences such as incorrect fee calculations or unexpected behavior within the contract.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "remove fees and restore fees functions",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1288"
+                ]
+            },
+            "title": "ULF - Unused Liquidity Functionality",
+            "description": "The contract contains a private `addLiquidity` function designed to facilitate the addition of liquidity to a Uniswap V2 pool, but it is never invoked in any part of the contract's code.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "addLiquidity",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1126"
+                ]
+            },
+            "title": "IDI - Immutable Declaration Improvement",
+            "description": "The contract declares state variables that are initialized once in the constructor and are not modified afterwards. Declaring these variables as immutable can save gas by allowing the Solidity compiler to make certain optimizations.",
+            "severity": "N/A",
+            "contract": "JLT Token",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1120"
+                ]
+            },
+            "title": "IFH - Inefficient Fee Handling",
+            "description": "The contract's `_tokenTransfer` function has redundant code and unnecessary complexity due to separate `if` conditions for fee management logic, leading to potential inefficiencies in gas usage and making the code harder to read and maintain.",
+            "severity": "Medium",
+            "contract": "JLT Token",
+            "function": "_tokenTransfer()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "PLPI - Potential Liquidity Provision Inadequacy",
+            "description": "The contract operates under the assumption that liquidity is consistently provided to the pair between the contract's token and the native currency. However, there is a possibility that liquidity is provided to a different pair. This inadequacy in liquidity provision in the main pair could expose the contract to risks.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "PTRP - Potential Transfer Revert Propagation",
+            "description": "The contract sends funds to a `treasuryWallet` as part of the transfer flow. This address can either be a wallet address or a contract. If the address belongs to a contract then it may revert from incoming payment. As a result, the error will propagate to the token\u2019s contract and revert the transfer.",
+            "severity": "High",
+            "contract": "JLT Token",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ],
+                "3": [
+                    "CWE-680"
+                ]
+            },
+            "title": "PVC - Price Volatility Concern",
+            "description": "The contract accumulates tokens from taxes to swap them for ETH, but the variable numTokensSellToAddToLiquidity sets a threshold that can trigger a huge token swap, potentially leading to significant price volatility due to the token's highly volatile price.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "RES - Redundant Event Statement",
+            "description": "The `MinTokensBeforeSwapUpdated` event statement is not used in the contract's implementation.",
+            "severity": "Medium",
+            "contract": "JLT Token",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "RLF - Redundant Liquidity Functionality",
+            "description": "The contract contains redundant liquidity functionality due to permanently setting `_liquidityFee` to zero with no available method to modify or update this value post-deployment.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "_takeLiquidity, takeTreasury",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1286"
+                ]
+            },
+            "title": "RRS - Redundant Require Statement",
+            "description": "The contract utilizes a `require` statement within the `add` function aiming to prevent overflow errors, which is redundant due to Solidity version 0.8.0 and later reverting on overflow and underflow.",
+            "severity": "Low",
+            "contract": "JLT Token",
+            "function": "add()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "RSML - Redundant SafeMath Library",
+            "description": "The usage of the SafeMath library adds complexity, overhead and increases gas consumption unnecessarily since Solidity versions greater than or equal to 0.8.0 provide native functionality for arithmetic operations that revert on underflow and overflow.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "RSW - Redundant Storage Writes",
+            "description": "The contract modifies the state of variables without checking if their current value is the same as the one given as an argument, leading to redundant storage writes and unnecessary gas consumption.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "L02 - State Variables could be Declared Constant",
+            "description": "State variables can be declared as constant using the constant keyword to ensure their values cannot be changed after being set, which decreases gas consumption of the corresponding transaction.",
+            "severity": "N/A",
+            "contract": "JLT Token",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ]
+            },
+            "title": "L04 - Conformance to Solidity Naming Conventions",
+            "description": "The code does not adhere to the Solidity style guide, which can affect readability and maintainability.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "L07 - Missing Events Arithmetic",
+            "description": "Events are a way to record and log information about changes or actions that occur within a contract. They are often used to notify external parties or clients about events that have occurred within the contract, such as the transfer of tokens or the completion of a task.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "30"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ],
+                "3": [
+                    "CWE-561"
+                ]
+            },
+            "title": "L09 - Dead Code Elimination",
+            "description": "Dead code can occur due to conditional statements that are always false, functions that are never called, or unreachable code, making a contract more difficult to understand and maintain, and increasing its size and deployment cost.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

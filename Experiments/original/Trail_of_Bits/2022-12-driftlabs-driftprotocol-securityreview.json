@@ -1,1 +1,390 @@
-{"path": "./Audit_Reports_2024/Trail_of_Bits/2022-12-driftlabs-driftprotocol-securityreview.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-229"], "4": ["CWE-230"]}, "title": "Lack of build instructions", "description": "The Drift Protocol repository does not contain instructions to build, compile, test, or run the project.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Inadequate testing", "description": "The audit report highlights coverage limitations due to time-boxed nature of testing work, including incomplete review of admin instructions, inconsistent code style, and inability to run Anchor tests reliably.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-228"]}, "title": "Invalid audit.toml prevents cargo audit from being run", "description": "The `audit.toml` file is invalid, preventing `cargo audit` from running successfully.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "test-scripts/run-anchor-tests.sh#L7-L52"}, {"id": 3, "category": {"1": ["CWE-691"], "2": ["CWE-362"]}, "title": "Race condition in Drift SDK", "description": "A race condition in the Drift SDK causes client programs to operate on non-existent or possibly stale data.", "severity": "High", "contract": "N/A", "function": "WebSocketAccountSubscriber", "lineNumber": "46-53"}, {"id": 4, "category": {"1": ["CWE-710"], "2": ["CWE-1120"]}, "title": "Loose size coupling between function invocation and requirement", "description": "The Drift Protocol codebase does not adhere to the principle of self-contained functions with a single well-defined purpose, leading to complexity issues.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "The zero-copy feature in Anchor is experimental", "description": "The Anchor framework has a bug in the zero-copy feature, or updates it with a breaking change, in a way that affects the security model of the Drift smart contract.", "severity": "High", "contract": "Drift", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1285"], "4": ["CWE-129"]}, "title": "Hard-coded indices into account data", "description": "The implementations for both `PerpMarketMap` and `SpotMarketMap` use hard-coded indices into the accounts data in order to retrieve the `marked_index` property without having to deserialize all the data.", "severity": "Informational", "contract": "PerpMarketMap, SpotMarketMap", "function": "N/A", "lineNumber": "110-111, 684"}, {"id": 7, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Missing verification of maker and maker_stats accounts", "description": "The code did not check that the `maker` and `maker_stats` accounts have the same authority.", "severity": "N/A", "contract": "N/A", "function": "get_maker_and_maker_stats", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Panics used for error handling", "description": "Using panics for error handling can lead to programmer errors being ignored and user errors not being properly handled.", "severity": "Undetermined", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-710"], "2": ["CWE-1164"]}, "title": "Testing code used in production", "description": "The testing code was found to be used in production environment.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-682"]}, "title": "Inconsistent use of checked arithmetic", "description": "The code uses inconsistent style and lacks explanation for obtained digits, making it difficult to determine correctness.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-697"], "2": ["CWE-1023"], "3": ["CWE-478"]}, "title": "Inconsistent and incomplete exchange status checks", "description": "The exchange's status is represented using an enum which does not allow more than one individual operation to be paused. The exchange's status is checked in multiple, inconsistent ways (e.g., in function annotations and in function bodies).", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"], "4": ["CWE-638"]}, "title": "Spot market access controls are incomplete", "description": "Functions involving spot markets do not include checks to verify that the market is valid, unlike functions involving perpetual markets.", "severity": "Informational", "contract": "programs/drift/src/instructions/{admin.rs, user.rs}", "function": ["handle_place_perp_order", "handle_place_spot_order"], "lineNumber": ["L32-42", "L688-691"]}, {"id": 13, "category": {"1": ["CWE-682"]}, "title": "Oracles can be invalid in at most one way", "description": "The oracle validity function does not account for the possibility of an oracle being both 'too volatile' and 'too uncertain', leading to potential oversight.", "severity": "Medium", "contract": "N/A", "function": "oracle_validity", "lineNumber": "L21\u2013L29"}, {"id": 14, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Code duplication", "description": "The code does not use the right abstractions and has duplicated logic in different functions.", "severity": "Medium", "contract": "liquidation", "function": "N/A", "lineNumber": "L201\u2013L246, L162\u2013L175"}, {"id": 15, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Inconsistent use of integer types", "description": "The contract uses differently sized types or types with different signedness, which can cause conversions from one integer type to another and lead to failures.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 16, "category": {"1": ["CWE-710"], "2": ["CWE-1061"]}, "title": "Use of opaque constants in tests", "description": "Using opaque constants in tests may make the code harder to understand and maintain.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 17, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1285"], "4": ["CWE-129"]}, "title": "Unaligned references are allowed", "description": "Alice, a Drift Protocol developer, accidentally introduces errors caused by the use of unaligned references, affecting the contract operation and leading to a loss of funds.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "programs/drift/src/lib.rs#L1\u2013L4"}, {"id": 18, "category": {"1": ["CWE-682"], "2": ["CWE-190"], "3": ["CWE-680"]}, "title": "Size of created accounts derived from in-memory representation", "description": "The size of created accounts is derived from the in-memory representation, which can lead to issues if the in-memory size is smaller than the required serialized data size, causing instructions that save data to the account to fail.", "severity": "High", "contract": "N/A", "function": "initialize_spot_market", "lineNumber": "N/A"}, {"id": 19, "category": {"1": ["CWE-435"], "2": ["CWE-436"], "3": ["CWE-115"]}, "title": "Accounts from contexts are not always used by the instruction", "description": "The `drift_signer` account is assumed to be used by the instruction but it's not always the case, leading to confusion around the use of accounts.", "severity": "Informational", "contract": "programs/Drift/src/instructions/admin.rs", "function": "N/A", "lineNumber": "L1989\u2013L2007"}]}
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/2022-12-driftlabs-driftprotocol-securityreview.pdf",
+    "project_info": {
+        "url": "https://github.com/drift-labs/drift-sim/tree/5d67e68b328ab4be5164e987d06b271765458342",
+        "commit_hash": "5d67e68b328ab4be5164e987d06b271765458342",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ],
+                "4": [
+                    "CWE-230"
+                ]
+            },
+            "title": "Lack of build instructions",
+            "description": "The Drift Protocol repository does not contain instructions to build, compile, test, or run the project.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Inadequate testing",
+            "description": "The audit report highlights coverage limitations due to time-boxed nature of testing work, including incomplete review of admin instructions, inconsistent code style, and inability to run Anchor tests reliably.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ]
+            },
+            "title": "Invalid audit.toml prevents cargo audit from being run",
+            "description": "The `audit.toml` file is invalid, preventing `cargo audit` from running successfully.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "test-scripts/run-anchor-tests.sh#L7-L52"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-362"
+                ]
+            },
+            "title": "Race condition in Drift SDK",
+            "description": "A race condition in the Drift SDK causes client programs to operate on non-existent or possibly stale data.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "WebSocketAccountSubscriber",
+            "lineNumber": "46-53"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1120"
+                ]
+            },
+            "title": "Loose size coupling between function invocation and requirement",
+            "description": "The Drift Protocol codebase does not adhere to the principle of self-contained functions with a single well-defined purpose, leading to complexity issues.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "The zero-copy feature in Anchor is experimental",
+            "description": "The Anchor framework has a bug in the zero-copy feature, or updates it with a breaking change, in a way that affects the security model of the Drift smart contract.",
+            "severity": "High",
+            "contract": "Drift",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1285"
+                ],
+                "4": [
+                    "CWE-129"
+                ]
+            },
+            "title": "Hard-coded indices into account data",
+            "description": "The implementations for both `PerpMarketMap` and `SpotMarketMap` use hard-coded indices into the accounts data in order to retrieve the `marked_index` property without having to deserialize all the data.",
+            "severity": "Informational",
+            "contract": "PerpMarketMap, SpotMarketMap",
+            "function": "N/A",
+            "lineNumber": "110-111, 684"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Missing verification of maker and maker_stats accounts",
+            "description": "The code did not check that the `maker` and `maker_stats` accounts have the same authority.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "get_maker_and_maker_stats",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Panics used for error handling",
+            "description": "Using panics for error handling can lead to programmer errors being ignored and user errors not being properly handled.",
+            "severity": "Undetermined",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ]
+            },
+            "title": "Testing code used in production",
+            "description": "The testing code was found to be used in production environment.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Inconsistent use of checked arithmetic",
+            "description": "The code uses inconsistent style and lacks explanation for obtained digits, making it difficult to determine correctness.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ],
+                "2": [
+                    "CWE-1023"
+                ],
+                "3": [
+                    "CWE-478"
+                ]
+            },
+            "title": "Inconsistent and incomplete exchange status checks",
+            "description": "The exchange's status is represented using an enum which does not allow more than one individual operation to be paused. The exchange's status is checked in multiple, inconsistent ways (e.g., in function annotations and in function bodies).",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ],
+                "4": [
+                    "CWE-638"
+                ]
+            },
+            "title": "Spot market access controls are incomplete",
+            "description": "Functions involving spot markets do not include checks to verify that the market is valid, unlike functions involving perpetual markets.",
+            "severity": "Informational",
+            "contract": "programs/drift/src/instructions/{admin.rs, user.rs}",
+            "function": [
+                "handle_place_perp_order",
+                "handle_place_spot_order"
+            ],
+            "lineNumber": [
+                "L32-42",
+                "L688-691"
+            ]
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Oracles can be invalid in at most one way",
+            "description": "The oracle validity function does not account for the possibility of an oracle being both 'too volatile' and 'too uncertain', leading to potential oversight.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "oracle_validity",
+            "lineNumber": "L21\u2013L29"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Code duplication",
+            "description": "The code does not use the right abstractions and has duplicated logic in different functions.",
+            "severity": "Medium",
+            "contract": "liquidation",
+            "function": "N/A",
+            "lineNumber": "L201\u2013L246, L162\u2013L175"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Inconsistent use of integer types",
+            "description": "The contract uses differently sized types or types with different signedness, which can cause conversions from one integer type to another and lead to failures.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1061"
+                ]
+            },
+            "title": "Use of opaque constants in tests",
+            "description": "Using opaque constants in tests may make the code harder to understand and maintain.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1285"
+                ],
+                "4": [
+                    "CWE-129"
+                ]
+            },
+            "title": "Unaligned references are allowed",
+            "description": "Alice, a Drift Protocol developer, accidentally introduces errors caused by the use of unaligned references, affecting the contract operation and leading to a loss of funds.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "programs/drift/src/lib.rs#L1\u2013L4"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ],
+                "3": [
+                    "CWE-680"
+                ]
+            },
+            "title": "Size of created accounts derived from in-memory representation",
+            "description": "The size of created accounts is derived from the in-memory representation, which can lead to issues if the in-memory size is smaller than the required serialized data size, causing instructions that save data to the account to fail.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "initialize_spot_market",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 19,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-115"
+                ]
+            },
+            "title": "Accounts from contexts are not always used by the instruction",
+            "description": "The `drift_signer` account is assumed to be used by the instruction but it's not always the case, leading to confusion around the use of accounts.",
+            "severity": "Informational",
+            "contract": "programs/Drift/src/instructions/admin.rs",
+            "function": "N/A",
+            "lineNumber": "L1989\u2013L2007"
+        }
+    ]
+}

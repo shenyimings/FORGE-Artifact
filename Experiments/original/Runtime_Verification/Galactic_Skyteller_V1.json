@@ -1,1 +1,164 @@
-{"path": "./Audit_Reports_2024/Runtime_V\u0435rification/Galactic_Skyteller_V1.pdf", "project_info": {"url": "https://github.com/runtimeverification/verified-smart-contracts", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Mitigation from edge-cases in arithmetic operations", "description": "Reverts caused by arithmetic overflow might occur due to large integer multiplications and improper rounding during division. This can lead to precision loss and incorrect calculations.", "severity": "Informative", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "Sweeps are vulnerable to price manipulation attacks, natural slippage and MEV", "description": "The Sweeper contract is vulnerable to price manipulation attacks due to its reliance on price oracles. Additionally, there exists a timespan between the submission of the sweep transaction and its execution, resulting in natural slippage that can be amplified by miners for their own benefit.", "severity": "High", "contract": "Sweeper", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Inconsistencies and calculation errors may arise for amountOut value", "description": "An inconsistency between the actual amount of tokens spent and the reported amountOut value can exist for fee-on-transfer tokens and reports by a malicious delegate.", "severity": "Medium", "contract": "SkytellerRouterV1", "function": "sweep()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Contracts depend on off-chain security", "description": "The contract's behavior is unclear when a user provides invalid or unintended parameters, which can put the contract into a temporary DoS state.", "severity": "Medium", "contract": "N/A", "function": "initialize()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "Routers are destructible", "description": "The owner of a router can destroy it at any time without further sanity checks, leading to permanent loss of assets.", "severity": "High", "contract": "Router", "function": "selfDestruct()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "Push based fund transfers to Sweeper", "description": "Token transfers to SkytellerSweeper from routers and other contracts are performed in a push-based style, which may lead to re-entrancy attacks and asset theft.", "severity": "High", "contract": "Router", "function": "sweep()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-664"], "2": ["CWE-221"], "3": ["CWE-223"]}, "title": "Oracle data may be outdated", "description": "Chainlink oracles are not necessarily always up-to-date and it is recommended to check the `updatedAt` timestamp whenever a price is obtained from an Oracle.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Constructors and Intializers should emit events", "description": "No event is being emitted during the construction and initialization of the contracts in the project, making it hard to monitor and track the statuses of the contracts.", "severity": "Informative", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-682"]}, "title": "Redundant code in SkytellerSweeperV1.derivePrice()", "description": "The variable `decimals` is shadowed by the actual return value or calculated redundantly for some execution branches.", "severity": "Informative", "contract": "SkytellerSweeperV1", "function": "derivePrice()", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Runtime_V\u0435rification/Galactic_Skyteller_V1.pdf",
+    "project_info": {
+        "url": "https://github.com/generalgalactic/skyteller-solidity-contracts/tree/7193fa1adf215412ee5f8bf17640e155e03d8560",
+        "commit_hash": "7193fa1adf215412ee5f8bf17640e155e03d8560",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Mitigation from edge-cases in arithmetic operations",
+            "description": "Reverts caused by arithmetic overflow might occur due to large integer multiplications and improper rounding during division. This can lead to precision loss and incorrect calculations.",
+            "severity": "Informative",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Sweeps are vulnerable to price manipulation attacks, natural slippage and MEV",
+            "description": "The Sweeper contract is vulnerable to price manipulation attacks due to its reliance on price oracles. Additionally, there exists a timespan between the submission of the sweep transaction and its execution, resulting in natural slippage that can be amplified by miners for their own benefit.",
+            "severity": "High",
+            "contract": "Sweeper",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Inconsistencies and calculation errors may arise for amountOut value",
+            "description": "An inconsistency between the actual amount of tokens spent and the reported amountOut value can exist for fee-on-transfer tokens and reports by a malicious delegate.",
+            "severity": "Medium",
+            "contract": "SkytellerRouterV1",
+            "function": "sweep()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Contracts depend on off-chain security",
+            "description": "The contract's behavior is unclear when a user provides invalid or unintended parameters, which can put the contract into a temporary DoS state.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "initialize()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Routers are destructible",
+            "description": "The owner of a router can destroy it at any time without further sanity checks, leading to permanent loss of assets.",
+            "severity": "High",
+            "contract": "Router",
+            "function": "selfDestruct()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Push based fund transfers to Sweeper",
+            "description": "Token transfers to SkytellerSweeper from routers and other contracts are performed in a push-based style, which may lead to re-entrancy attacks and asset theft.",
+            "severity": "High",
+            "contract": "Router",
+            "function": "sweep()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-221"
+                ],
+                "3": [
+                    "CWE-223"
+                ]
+            },
+            "title": "Oracle data may be outdated",
+            "description": "Chainlink oracles are not necessarily always up-to-date and it is recommended to check the `updatedAt` timestamp whenever a price is obtained from an Oracle.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Constructors and Intializers should emit events",
+            "description": "No event is being emitted during the construction and initialization of the contracts in the project, making it hard to monitor and track the statuses of the contracts.",
+            "severity": "Informative",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Redundant code in SkytellerSweeperV1.derivePrice()",
+            "description": "The variable `decimals` is shadowed by the actual return value or calculated redundantly for some execution branches.",
+            "severity": "Informative",
+            "contract": "SkytellerSweeperV1",
+            "function": "derivePrice()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

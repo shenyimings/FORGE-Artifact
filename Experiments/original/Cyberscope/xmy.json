@@ -1,1 +1,220 @@
-{"path": "./Audit_Reports_2024/Cyberscope/xmy.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-664"], "2": ["CWE-400"]}, "title": "CSAO - Contract State Access Optimization", "description": "The contract is utilizing a loop to calculate the `presaleSold` variable by incrementing it with the `totalPresaleAmount` in each iteration. This approach leads to repeated state access and modification of the `presaleSold` variable within the loop, which can be inefficient, especially when dealing with a large number of iterations.", "severity": "Critical", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-697"], "2": ["CWE-1024"]}, "title": "UACA - Unsafe Address Comparison Assumption", "description": "The contract's `_isAddLiquidity` and `_isRemoveLiquidity` functions compare the `tokenOther` address with the contract's own address to decide which reserve value to use, making an assumption about the ordering of addresses that may not hold true in all cases.", "severity": "Critical", "contract": "N/A", "function": "_isAddLiquidity and _isRemoveLiquidity", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"], "2": ["CWE-369"]}, "title": "ZD - Zero Division", "description": "The contract uses variables that may be set to zero as denominators, leading to unpredictable and potentially harmful results, such as a transaction revert.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1284"]}, "title": "VO - Variable Optimization", "description": "The contract is utilizing `uint256` for various state variables, which may be over-allocating storage space. Variables `_decimals`, `mineRate`, `preSaleRate`, `_buyLPFee`, `sell_burnFee`, `addLiquidityFee`, `removeLiquidityFee`, and `_progressMineLPBlockDebt` could fit into smaller data types, such as `uint8` or `uint16`.", "severity": "Minor / Informative", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "MRPC - Missing Reward Prevalidation Check", "description": "The contract attempts to refund a user without verifying if the contract has enough balance to refund the user or if.", "severity": "High", "contract": "TokenDistributor", "function": "getMineReward, getInvitorReward", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "FSA - Fixed Swap Address", "description": "The swap address is assigned once and cannot be changed, which may prevent the contract from migrating to a new liquidity pool pair or decentralized exchange.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "MEE - Missing Events Emission", "description": "The contract performs actions and state mutations from external methods that do not result in the emission of events.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "OCTD - Transfers Contract's Tokens", "description": "The contract owner has the authority to claim all the balance of the contract by calling the `claimTokens` and `claimContractToken` functions.", "severity": "High", "contract": "N/A", "function": "claimTokens, claimContractToken", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "RSW - Redundant Storage Writes", "description": "The contract updates the router address even if its current state is the same as the one passed as an argument, resulting in redundant storage writes.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-703"]}, "title": "MRM - Missing Revert Messages", "description": "The contract is missing error messages. These missing error messages are making it difficult to identify and fix the issue.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-682"]}, "title": "TUU - Time Units Usage", "description": "The contract is using arbitrary numbers to form time-related values, decreasing code readability and preventing compiler optimization.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "CR - Code Repetition", "description": "The contract contains repetitive code segments which can lead to issues like gas efficiency, complexity, readability, security, and maintainability of the source code.", "severity": "N/A", "contract": "N/A", "function": "_isAddLiquidity and _isRemoveLiquidity", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Cyberscope/xmy.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0xC7ca0aBfeFBAC7128d0533312532F6Ad8E07ded3"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ]
+            },
+            "title": "CSAO - Contract State Access Optimization",
+            "description": "The contract is utilizing a loop to calculate the `presaleSold` variable by incrementing it with the `totalPresaleAmount` in each iteration. This approach leads to repeated state access and modification of the `presaleSold` variable within the loop, which can be inefficient, especially when dealing with a large number of iterations.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ],
+                "2": [
+                    "CWE-1024"
+                ]
+            },
+            "title": "UACA - Unsafe Address Comparison Assumption",
+            "description": "The contract's `_isAddLiquidity` and `_isRemoveLiquidity` functions compare the `tokenOther` address with the contract's own address to decide which reserve value to use, making an assumption about the ordering of addresses that may not hold true in all cases.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "_isAddLiquidity and _isRemoveLiquidity",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-369"
+                ]
+            },
+            "title": "ZD - Zero Division",
+            "description": "The contract uses variables that may be set to zero as denominators, leading to unpredictable and potentially harmful results, such as a transaction revert.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1284"
+                ]
+            },
+            "title": "VO - Variable Optimization",
+            "description": "The contract is utilizing `uint256` for various state variables, which may be over-allocating storage space. Variables `_decimals`, `mineRate`, `preSaleRate`, `_buyLPFee`, `sell_burnFee`, `addLiquidityFee`, `removeLiquidityFee`, and `_progressMineLPBlockDebt` could fit into smaller data types, such as `uint8` or `uint16`.",
+            "severity": "Minor / Informative",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "MRPC - Missing Reward Prevalidation Check",
+            "description": "The contract attempts to refund a user without verifying if the contract has enough balance to refund the user or if.",
+            "severity": "High",
+            "contract": "TokenDistributor",
+            "function": "getMineReward, getInvitorReward",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "FSA - Fixed Swap Address",
+            "description": "The swap address is assigned once and cannot be changed, which may prevent the contract from migrating to a new liquidity pool pair or decentralized exchange.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "MEE - Missing Events Emission",
+            "description": "The contract performs actions and state mutations from external methods that do not result in the emission of events.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "OCTD - Transfers Contract's Tokens",
+            "description": "The contract owner has the authority to claim all the balance of the contract by calling the `claimTokens` and `claimContractToken` functions.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "claimTokens, claimContractToken",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "RSW - Redundant Storage Writes",
+            "description": "The contract updates the router address even if its current state is the same as the one passed as an argument, resulting in redundant storage writes.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "MRM - Missing Revert Messages",
+            "description": "The contract is missing error messages. These missing error messages are making it difficult to identify and fix the issue.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "TUU - Time Units Usage",
+            "description": "The contract is using arbitrary numbers to form time-related values, decreasing code readability and preventing compiler optimization.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "CR - Code Repetition",
+            "description": "The contract contains repetitive code segments which can lead to issues like gas efficiency, complexity, readability, security, and maintainability of the source code.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "_isAddLiquidity and _isRemoveLiquidity",
+            "lineNumber": "N/A"
+        }
+    ]
+}

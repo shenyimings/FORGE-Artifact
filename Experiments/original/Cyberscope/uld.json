@@ -1,1 +1,202 @@
-{"path": "./Audit_Reports_2024/Cyberscope/uld.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "0x2254846a9037cb97a683bd6250d8591630fe4a7c"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "ST - Stop Transactions", "description": "The contract owner has the authority to stop transactions for all users excluding the owner by setting the _maxTxAmount to zero.", "severity": "Medium", "contract": "N/A", "function": "_transfer()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "ELFM - Exceed Limit Fees Manipulation", "description": "The contract owner has the authority to increase over the allowed limit of 25%. The owner may take advantage of it by calling the setTaxFeePercent and setLiquidityFeePercent function with a high percentage value.", "severity": "Critical", "contract": "N/A", "function": ["setTaxFeePercent", "setLiquidityFeePercent"], "lineNumber": "887,891"}, {"id": 2, "category": {"1": ["CWE-703"]}, "title": "Contract Diagnostics", "description": "The audit report provides a list of diagnostics checks performed on the contract.", "severity": "N/A", "contract": "CoinToken", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "STC - Succeeded Transfer Check", "description": "According to the ERC20 specification, the transfer methods should be checked if the result is successful. Otherwise, the contract may wrongly assume that the transfer has been established.", "severity": "Minor", "contract": "N/A", "function": "claimTokens()", "lineNumber": "L963"}, {"id": 4, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-909"], "4": ["CWE-456"]}, "title": "FSA - Fixed Swap Address", "description": "The swap address is assigned once in the constructor and it cannot be changed, which may prevent the contract from catching up with decentralized swaps' updates.", "severity": "Minor", "contract": "N/A", "function": "Constructor", "lineNumber": "847"}, {"id": 5, "category": {"1": ["CWE-682"], "2": ["CWE-191"]}, "title": "MAL - Misused Algorithmic Logic", "description": "The algorithmic flow does not follow the required business logic. The calculation of tTranferAmount will provoke underflow if both fees are set to 100% due to the subtractions.", "severity": "Minor", "contract": "N/A", "function": "_getTValues(uint256)", "lineNumber": "929"}, {"id": 6, "category": {"1": ["CWE-710"], "2": ["CWE-1126"]}, "title": "L01 - Public Function could be Declared External", "description": "Public functions that are never called by the contract should be declared external to save gas.", "severity": "Minor", "contract": "N/A", "function": ["claimTokens", "setMaxTxPercent", "lock", "allowance", "name", "increaseAllowance", "unlock", "symbol", "decimals"], "lineNumber": "812, 423, 769, 899, 879, 808, 787, 825, 842, 816, 891, 803, 875, 432, 990, 438, 778, 792, 765, 761, 451, 798, 757, 783, 443, 895, 959"}, {"id": 7, "category": {"1": ["CWE-710"], "2": ["CWE-1076"]}, "title": "L04 - Conformance to Solidity Naming Conventions", "description": "Solidity defines a naming convention that should be followed.", "severity": "Minor", "contract": "N/A", "function": "N/A", "lineNumber": "496,513,698,495,899,707,969,394,695,535,963"}, {"id": 8, "category": {"1": ["CWE-682"]}, "title": "L07 - Missing Events Arithmetic", "description": "Detected missing events for critical arithmetic parameters. There are functions that have no event emitted, so it is difficult to track off-chain changes.", "severity": "minor", "contract": "N/A", "function": "N/A", "lineNumber": "887,883,891,895"}, {"id": 9, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "L09 - Dead Code Elimination", "description": "Dead code elimination is necessary to remove unreachable or redundant code.", "severity": "Minor", "contract": "N/A", "function": "N/A", "lineNumber": "291, 342, 352, 357, 264, 327, 317"}]}
+{
+    "path": "./Audit_Reports_2024/Cyberscope/uld.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0x2254846a9037cb97a683bd6250d8591630fe4a7c"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "ST - Stop Transactions",
+            "description": "The contract owner has the authority to stop transactions for all users excluding the owner by setting the _maxTxAmount to zero.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "_transfer()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "ELFM - Exceed Limit Fees Manipulation",
+            "description": "The contract owner has the authority to increase over the allowed limit of 25%. The owner may take advantage of it by calling the setTaxFeePercent and setLiquidityFeePercent function with a high percentage value.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": [
+                "setTaxFeePercent",
+                "setLiquidityFeePercent"
+            ],
+            "lineNumber": "887,891"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Contract Diagnostics",
+            "description": "The audit report provides a list of diagnostics checks performed on the contract.",
+            "severity": "N/A",
+            "contract": "CoinToken",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "STC - Succeeded Transfer Check",
+            "description": "According to the ERC20 specification, the transfer methods should be checked if the result is successful. Otherwise, the contract may wrongly assume that the transfer has been established.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "claimTokens()",
+            "lineNumber": "L963"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "FSA - Fixed Swap Address",
+            "description": "The swap address is assigned once in the constructor and it cannot be changed, which may prevent the contract from catching up with decentralized swaps' updates.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "Constructor",
+            "lineNumber": "847"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-191"
+                ]
+            },
+            "title": "MAL - Misused Algorithmic Logic",
+            "description": "The algorithmic flow does not follow the required business logic. The calculation of tTranferAmount will provoke underflow if both fees are set to 100% due to the subtractions.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "_getTValues(uint256)",
+            "lineNumber": "929"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1126"
+                ]
+            },
+            "title": "L01 - Public Function could be Declared External",
+            "description": "Public functions that are never called by the contract should be declared external to save gas.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": [
+                "claimTokens",
+                "setMaxTxPercent",
+                "lock",
+                "allowance",
+                "name",
+                "increaseAllowance",
+                "unlock",
+                "symbol",
+                "decimals"
+            ],
+            "lineNumber": "812, 423, 769, 899, 879, 808, 787, 825, 842, 816, 891, 803, 875, 432, 990, 438, 778, 792, 765, 761, 451, 798, 757, 783, 443, 895, 959"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1076"
+                ]
+            },
+            "title": "L04 - Conformance to Solidity Naming Conventions",
+            "description": "Solidity defines a naming convention that should be followed.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "496,513,698,495,899,707,969,394,695,535,963"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "L07 - Missing Events Arithmetic",
+            "description": "Detected missing events for critical arithmetic parameters. There are functions that have no event emitted, so it is difficult to track off-chain changes.",
+            "severity": "minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "887,883,891,895"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "L09 - Dead Code Elimination",
+            "description": "Dead code elimination is necessary to remove unreachable or redundant code.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "291, 342, 352, 357, 264, 327, 317"
+        }
+    ]
+}

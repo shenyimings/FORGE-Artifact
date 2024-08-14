@@ -1,1 +1,127 @@
-{"path": "./Audit_Reports_2024/Runtime_V\u0435rification/Pact_Fi.pdf", "project_info": {"url": "https://github.com/pactfi/contracts_v1", "commit_hash": "4148978545fa226335a2b85d9a89734989d5ab51", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"]}, "title": "Pool monopolisation attack", "description": "An attacker possessing substantial but realistic capital can bootstrap a valid pool and create prohibitively expensive liquidity tokens, preventing other people from adding small amounts of liquidity to the pool.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Indefinite locking of funds on first mint", "description": "On initial LT mint, if a user deposits either (a, 0) or (0, b) such as a > 0 and b > 0 then zero liquidity tokens are minted and the non-zero amount is donated to the pool.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-253"]}, "title": "Indefinite locking of funds via swaps in absence of liquidity tokens", "description": "Neither the top level function `on_swap`, nor the internal functions `_swap_primary` and `_swap_secondary` check that the number of LTs minted is non-zero. This causes an unintended loophole allowing, via swaps, to bootstrap a pool that would be valid for swaps, but in which no one will own any LTs.", "severity": "Low", "contract": "N/A", "function": "on_swap", "lineNumber": "336"}, {"id": 3, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Bootstrapping large symmetrical pools can be denied due to integer overflow", "description": "When bootstrapping a large symmetrical pool, the amount of LTs minted is \u221a(a*b), where a > 0 and b > 0. The multiplication operation will overflow the uint64 type if the product of a and b is greater than 2^64-1 in base units.", "severity": "Informative", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-691"], "2": ["CWE-841"]}, "title": "Pool bootstrap process is not always atomic", "description": "Bootstrapping a valid pool involves four steps: deploying an instance of the exchange.py contract, opting the contracts into the primary and secondary ASAs, triggering the creation of the liquidity ASA, and providing initial liquidity. Steps 2 and 3 are independent but must be done by the pool's creator in order for the pool to be operational.", "severity": "Informative", "contract": "exchange.py", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Redundant computation in `on_add_liquidity`", "description": "The expression `Min(lt_primary.load(), lt_secondary.load())` is computed on line 408 and then recomputed again several times.", "severity": "Informative", "contract": "N/A", "function": "on_add_liquidity", "lineNumber": "L408"}, {"id": 6, "category": {"1": ["CWE-697"], "2": ["CWE-1025"], "3": ["CWE-486"]}, "title": "Liquidity token unit name is the same for every pool", "description": "The unit name for a pool's Liquidity Token is always LQT, which may become confusing if users want to create pools trading LTs of other pools for algos or other asas.", "severity": "Informative", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Runtime_V\u0435rification/Pact_Fi.pdf",
+    "project_info": {
+        "url": "https://github.com/pactfi/contracts_v1",
+        "commit_hash": "4148978545fa226335a2b85d9a89734989d5ab51",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Pool monopolisation attack",
+            "description": "An attacker possessing substantial but realistic capital can bootstrap a valid pool and create prohibitively expensive liquidity tokens, preventing other people from adding small amounts of liquidity to the pool.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Indefinite locking of funds on first mint",
+            "description": "On initial LT mint, if a user deposits either (a, 0) or (0, b) such as a > 0 and b > 0 then zero liquidity tokens are minted and the non-zero amount is donated to the pool.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-253"
+                ]
+            },
+            "title": "Indefinite locking of funds via swaps in absence of liquidity tokens",
+            "description": "Neither the top level function `on_swap`, nor the internal functions `_swap_primary` and `_swap_secondary` check that the number of LTs minted is non-zero. This causes an unintended loophole allowing, via swaps, to bootstrap a pool that would be valid for swaps, but in which no one will own any LTs.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "on_swap",
+            "lineNumber": "336"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Bootstrapping large symmetrical pools can be denied due to integer overflow",
+            "description": "When bootstrapping a large symmetrical pool, the amount of LTs minted is \u221a(a*b), where a > 0 and b > 0. The multiplication operation will overflow the uint64 type if the product of a and b is greater than 2^64-1 in base units.",
+            "severity": "Informative",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "Pool bootstrap process is not always atomic",
+            "description": "Bootstrapping a valid pool involves four steps: deploying an instance of the exchange.py contract, opting the contracts into the primary and secondary ASAs, triggering the creation of the liquidity ASA, and providing initial liquidity. Steps 2 and 3 are independent but must be done by the pool's creator in order for the pool to be operational.",
+            "severity": "Informative",
+            "contract": "exchange.py",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Redundant computation in `on_add_liquidity`",
+            "description": "The expression `Min(lt_primary.load(), lt_secondary.load())` is computed on line 408 and then recomputed again several times.",
+            "severity": "Informative",
+            "contract": "N/A",
+            "function": "on_add_liquidity",
+            "lineNumber": "L408"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ],
+                "2": [
+                    "CWE-1025"
+                ],
+                "3": [
+                    "CWE-486"
+                ]
+            },
+            "title": "Liquidity token unit name is the same for every pool",
+            "description": "The unit name for a pool's Liquidity Token is always LQT, which may become confusing if users want to create pools trading LTs of other pools for algos or other asas.",
+            "severity": "Informative",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

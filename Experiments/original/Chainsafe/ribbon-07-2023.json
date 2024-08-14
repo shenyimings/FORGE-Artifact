@@ -1,1 +1,296 @@
-{"path": "./Audit_Reports_2024/Chainsafe/ribbon-07-2023.pdf", "project_info": {"url": "N/A", "commit_hash": "9a7c788f123cf1e82b207b1ddbcddcab14727019", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-710"], "2": ["CWE-1164"]}, "title": "Unused `SafeMath` Import", "description": "The contract imports `SafeMath` but does not utilize it.", "severity": "Low", "contract": "RibbonAutocallVault", "function": "N/A", "lineNumber": "4"}, {"id": 1, "category": {"1": ["CWE-710"], "2": ["CWE-1164"]}, "title": "Unused `SafeERC20` Import", "description": "The `SafeERC20` import is not utilized within the contract.", "severity": "Low", "contract": "RibbonAutocallVault", "function": "N/A", "lineNumber": "6"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Optimization: `initialize()` Function Reads `period` Multiple Times", "description": "The `initialize()` function reads `period` from storage multiple times; consider storing it in a local variable", "severity": "Optimization", "contract": "RibbonAutocallVault", "function": "initialize()", "lineNumber": "116"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Inadequate Period Validation", "description": "The `setPeriodAndObservationFrequency()` function only checks that `_period > 0`, but during initialization, the `verifyInitializerParams()` function performs more checks of the `_period` value.", "severity": "Medium", "contract": "RibbonAutocallVault", "function": "setPeriodAndObservationFrequency()", "lineNumber": "206"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "Incorrect Variable Usage", "description": "In the setPeriodAndObservationFrequency() function, 'period' should be replaced with '_period' in the _obsFreq check and ensure next observation frequency evenly divides the next period.", "severity": "Minor", "contract": "RibbonAutocallVault", "function": "setPeriodAndObservationFrequency()", "lineNumber": "207"}, {"id": 5, "category": {"1": ["CWE-693"], "2": ["CWE-357"], "3": ["CWE-450"]}, "title": "Confusing Function Name `_setPutOptionPayoff()`", "description": "The function name implies a setter while it's a view function (getter)", "severity": "Minor", "contract": "RibbonAutocallVault", "function": "_setPutOptionPayoff()", "lineNumber": "358"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "Unnecessary Payoff Calculations", "description": "In the `_setPutOptionPayoff()` function, there is no need to do payoff calculations if `_nOptionType != OptionType.DIP`, it could be just assigned 0.", "severity": "Optimization", "contract": "RibbonAutocallVault", "function": "_setPutOptionPayoff()", "lineNumber": "376"}, {"id": 7, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Optimization of `_couponsEarned()` Function", "description": "The `_couponsEarned()` function reads `reserveRatio` from storage multiple times, consider storing it in a local variable.", "severity": "Optimization", "contract": "RibbonAutocallVault", "function": "_couponsEarned()", "lineNumber": "400"}, {"id": 8, "category": {"1": ["CWE-682"]}, "title": "Optimization: `_couponsEarned()` Function Reads `couponState.couponType` Multiple Times", "description": "The `_couponsEarned()` function reads `couponState.couponType` from storage multiple times, consider storing it in a local variable.", "severity": "Optimization", "contract": "RibbonAutocallVault", "function": "_couponsEarned()", "lineNumber": "421"}, {"id": 9, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-1235"]}, "title": "Optimization: `_autocallState()` Function Reads `obsFreq` from Storage Multiple Times", "description": "The `_autocallState()` function reads `obsFreq` from storage multiple times, consider storing it in a local variable.", "severity": "Optimization", "contract": "RibbonAutocallVault", "function": "_autocallState()", "lineNumber": "450"}, {"id": 10, "category": {"1": ["CWE-682"]}, "title": "Optimization of `_lastObservation()` Function", "description": "The `_lastObservation()` function reads `numTotalObs` from storage multiple times, consider storing it in a local variable.", "severity": "Optimization", "contract": "RibbonAutocallVault", "function": "_lastObservation()", "lineNumber": "496"}, {"id": 11, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Optimization of `_lastObservation()` Function", "description": "The `_lastObservation()` function reads `obsFreq` from storage multiple times, consider storing it in a local variable.", "severity": "Optimization", "contract": "RibbonAutocallVault", "function": "_lastObservation()", "lineNumber": "499"}, {"id": 12, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Unnecessary Use of SafeMath", "description": "No need to use SafeMath for the 0.8.x Solidity version because SafeMath is default in the 0.8.x Solidity version", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1288"]}, "title": "Unused `InitiateGnosisAuction` Event", "description": "`InitiateGnosisAuction` event is declared but not utilized within the contract.", "severity": "Note", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Unnecessary Array Update", "description": "In the `_removeDepositor()` function, updating `array[arraayLength - 1]` with `array[i]` is unnecessary because `array[arrayLength - 1]` is deleted when `array.pop()` is performed.", "severity": "Note", "contract": "RibbonTreasuryVault", "function": "_removeDepositor()", "lineNumber": "455"}, {"id": 15, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Unnecessary Iteration", "description": "In the `_removeDepositor()` function once `excludeDepositor` is deleted from the array, no need to iterate over the array anymore. A break from the for loop can be performed.", "severity": "Optimization", "contract": "RibbonTreasuryVault", "function": "_removeDepositor()", "lineNumber": "458"}, {"id": 16, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Unnecessary Use of SafeMath", "description": "No need to use `SafeMath` for the 0.8.x Solidity version because `SafeMath` is default in the 0.8.x Solidity version", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Chainsafe/ribbon-07-2023.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "9a7c788f123cf1e82b207b1ddbcddcab14727019",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ]
+            },
+            "title": "Unused `SafeMath` Import",
+            "description": "The contract imports `SafeMath` but does not utilize it.",
+            "severity": "Low",
+            "contract": "RibbonAutocallVault",
+            "function": "N/A",
+            "lineNumber": "4"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ]
+            },
+            "title": "Unused `SafeERC20` Import",
+            "description": "The `SafeERC20` import is not utilized within the contract.",
+            "severity": "Low",
+            "contract": "RibbonAutocallVault",
+            "function": "N/A",
+            "lineNumber": "6"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Optimization: `initialize()` Function Reads `period` Multiple Times",
+            "description": "The `initialize()` function reads `period` from storage multiple times; consider storing it in a local variable",
+            "severity": "Optimization",
+            "contract": "RibbonAutocallVault",
+            "function": "initialize()",
+            "lineNumber": "116"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Inadequate Period Validation",
+            "description": "The `setPeriodAndObservationFrequency()` function only checks that `_period > 0`, but during initialization, the `verifyInitializerParams()` function performs more checks of the `_period` value.",
+            "severity": "Medium",
+            "contract": "RibbonAutocallVault",
+            "function": "setPeriodAndObservationFrequency()",
+            "lineNumber": "206"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect Variable Usage",
+            "description": "In the setPeriodAndObservationFrequency() function, 'period' should be replaced with '_period' in the _obsFreq check and ensure next observation frequency evenly divides the next period.",
+            "severity": "Minor",
+            "contract": "RibbonAutocallVault",
+            "function": "setPeriodAndObservationFrequency()",
+            "lineNumber": "207"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-357"
+                ],
+                "3": [
+                    "CWE-450"
+                ]
+            },
+            "title": "Confusing Function Name `_setPutOptionPayoff()`",
+            "description": "The function name implies a setter while it's a view function (getter)",
+            "severity": "Minor",
+            "contract": "RibbonAutocallVault",
+            "function": "_setPutOptionPayoff()",
+            "lineNumber": "358"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Unnecessary Payoff Calculations",
+            "description": "In the `_setPutOptionPayoff()` function, there is no need to do payoff calculations if `_nOptionType != OptionType.DIP`, it could be just assigned 0.",
+            "severity": "Optimization",
+            "contract": "RibbonAutocallVault",
+            "function": "_setPutOptionPayoff()",
+            "lineNumber": "376"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Optimization of `_couponsEarned()` Function",
+            "description": "The `_couponsEarned()` function reads `reserveRatio` from storage multiple times, consider storing it in a local variable.",
+            "severity": "Optimization",
+            "contract": "RibbonAutocallVault",
+            "function": "_couponsEarned()",
+            "lineNumber": "400"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Optimization: `_couponsEarned()` Function Reads `couponState.couponType` Multiple Times",
+            "description": "The `_couponsEarned()` function reads `couponState.couponType` from storage multiple times, consider storing it in a local variable.",
+            "severity": "Optimization",
+            "contract": "RibbonAutocallVault",
+            "function": "_couponsEarned()",
+            "lineNumber": "421"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-1235"
+                ]
+            },
+            "title": "Optimization: `_autocallState()` Function Reads `obsFreq` from Storage Multiple Times",
+            "description": "The `_autocallState()` function reads `obsFreq` from storage multiple times, consider storing it in a local variable.",
+            "severity": "Optimization",
+            "contract": "RibbonAutocallVault",
+            "function": "_autocallState()",
+            "lineNumber": "450"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Optimization of `_lastObservation()` Function",
+            "description": "The `_lastObservation()` function reads `numTotalObs` from storage multiple times, consider storing it in a local variable.",
+            "severity": "Optimization",
+            "contract": "RibbonAutocallVault",
+            "function": "_lastObservation()",
+            "lineNumber": "496"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Optimization of `_lastObservation()` Function",
+            "description": "The `_lastObservation()` function reads `obsFreq` from storage multiple times, consider storing it in a local variable.",
+            "severity": "Optimization",
+            "contract": "RibbonAutocallVault",
+            "function": "_lastObservation()",
+            "lineNumber": "499"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Unnecessary Use of SafeMath",
+            "description": "No need to use SafeMath for the 0.8.x Solidity version because SafeMath is default in the 0.8.x Solidity version",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1288"
+                ]
+            },
+            "title": "Unused `InitiateGnosisAuction` Event",
+            "description": "`InitiateGnosisAuction` event is declared but not utilized within the contract.",
+            "severity": "Note",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Unnecessary Array Update",
+            "description": "In the `_removeDepositor()` function, updating `array[arraayLength - 1]` with `array[i]` is unnecessary because `array[arrayLength - 1]` is deleted when `array.pop()` is performed.",
+            "severity": "Note",
+            "contract": "RibbonTreasuryVault",
+            "function": "_removeDepositor()",
+            "lineNumber": "455"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Unnecessary Iteration",
+            "description": "In the `_removeDepositor()` function once `excludeDepositor` is deleted from the array, no need to iterate over the array anymore. A break from the for loop can be performed.",
+            "severity": "Optimization",
+            "contract": "RibbonTreasuryVault",
+            "function": "_removeDepositor()",
+            "lineNumber": "458"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Unnecessary Use of SafeMath",
+            "description": "No need to use `SafeMath` for the 0.8.x Solidity version because `SafeMath` is default in the 0.8.x Solidity version",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

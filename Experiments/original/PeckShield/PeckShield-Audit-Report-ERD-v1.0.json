@@ -1,1 +1,150 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-ERD-v1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-691"], "2": ["CWE-1265"]}, "title": "Potential Reentrancy Risk in sendCollateral()", "description": "Violation of `checks-effects-interactions` principle in `sendCollateral()` function, potentially leading to reentrancy attacks.", "severity": "Medium", "contract": "ActivePool", "function": "sendCollateral()", "lineNumber": "163"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Improved WETH Input Amount in _adjustArray()", "description": "The `_adjustArray()` function does not correctly update the input amount of `WETH`.", "severity": "N/A", "contract": "BorrowerOperations", "function": "_adjustArray()", "lineNumber": "296-325"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Revised Collateral Priority Update in setCollateralPriority()", "description": "In the `ERD` protocol, the `CollateralManager` contract maintains a list of the supported collaterals and their parameters. The collaterals are sorted in descending order per their priorities. However, there is a logical issue that may mess up the collaterals priority order and their parameters.", "severity": "Medium", "contract": "CollateralManager", "function": "setCollateralPriority()", "lineNumber": "159-165"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Revised Transfer Validation in EToken::transferFrom()", "description": "Logic issue in transfer validation may permit forbidden transfers or block permitted ones.", "severity": "High", "contract": "EToken", "function": "transferFrom()", "lineNumber": "100, 105, 115"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "Revised Shares Update in EToken::transfer()", "description": "The share balance update in EToken transfer does not add the corresponding share amount to the recipient\u2019s share balance.", "severity": "High", "contract": "EToken", "function": "transfer()", "lineNumber": "91-97"}, {"id": 5, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Timely Price Update in validAdjustment()", "description": "The `collateralManager.validAdjustment()` routine does not update prices via the `priceFeed` for all collaterals before using the last good prices, which may be out of date without an initiative price update request to the oracle.", "severity": "Medium", "contract": "Multiple contracts", "function": "validAdjustment()", "lineNumber": "599"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "Revised EUSD Amount to Mint in _mintToTreasury()", "description": "In the ERD protocol, the trove owner has to pay a low interest for the trove debt. The interest that is accumulated by a trove from the last operation to the present will be minted to the treasury. However, we notice the EUSDToken contract implements a standard ERC20 which has no special processing for the liquidityIndex. As a result, the treasury actually receives a scaled token balance which may be less than the minted amount.", "severity": "Medium", "contract": "TroveLogic", "function": "_mintToTreasury()", "lineNumber": "185"}, {"id": 7, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Trust Issue on Admin Keys", "description": "In the ERD protocol, there is a privileged account, i.e., `owner`, that plays a critical role in regulating the protocol-wide operations and has extra power to set protocol contracts addresses, add/remove collateral, set collateral priority, pause/unpause a collateral, etc.", "severity": "Medium", "contract": "CollateralManager", "function": ["setAddresses()", "setStatus()", "setOracle()", "setEToken()", "setRatio()"], "lineNumber": ["73-81", "161-162", "164-169", "171-176", "178-185"]}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-ERD-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/Ethereum-ERD/dev-upgradeable/tree/0725084e",
+        "commit_hash": "0725084e",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "Potential Reentrancy Risk in sendCollateral()",
+            "description": "Violation of `checks-effects-interactions` principle in `sendCollateral()` function, potentially leading to reentrancy attacks.",
+            "severity": "Medium",
+            "contract": "ActivePool",
+            "function": "sendCollateral()",
+            "lineNumber": "163"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improved WETH Input Amount in _adjustArray()",
+            "description": "The `_adjustArray()` function does not correctly update the input amount of `WETH`.",
+            "severity": "N/A",
+            "contract": "BorrowerOperations",
+            "function": "_adjustArray()",
+            "lineNumber": "296-325"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Revised Collateral Priority Update in setCollateralPriority()",
+            "description": "In the `ERD` protocol, the `CollateralManager` contract maintains a list of the supported collaterals and their parameters. The collaterals are sorted in descending order per their priorities. However, there is a logical issue that may mess up the collaterals priority order and their parameters.",
+            "severity": "Medium",
+            "contract": "CollateralManager",
+            "function": "setCollateralPriority()",
+            "lineNumber": "159-165"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Revised Transfer Validation in EToken::transferFrom()",
+            "description": "Logic issue in transfer validation may permit forbidden transfers or block permitted ones.",
+            "severity": "High",
+            "contract": "EToken",
+            "function": "transferFrom()",
+            "lineNumber": "100, 105, 115"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Revised Shares Update in EToken::transfer()",
+            "description": "The share balance update in EToken transfer does not add the corresponding share amount to the recipient\u2019s share balance.",
+            "severity": "High",
+            "contract": "EToken",
+            "function": "transfer()",
+            "lineNumber": "91-97"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Timely Price Update in validAdjustment()",
+            "description": "The `collateralManager.validAdjustment()` routine does not update prices via the `priceFeed` for all collaterals before using the last good prices, which may be out of date without an initiative price update request to the oracle.",
+            "severity": "Medium",
+            "contract": "Multiple contracts",
+            "function": "validAdjustment()",
+            "lineNumber": "599"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Revised EUSD Amount to Mint in _mintToTreasury()",
+            "description": "In the ERD protocol, the trove owner has to pay a low interest for the trove debt. The interest that is accumulated by a trove from the last operation to the present will be minted to the treasury. However, we notice the EUSDToken contract implements a standard ERC20 which has no special processing for the liquidityIndex. As a result, the treasury actually receives a scaled token balance which may be less than the minted amount.",
+            "severity": "Medium",
+            "contract": "TroveLogic",
+            "function": "_mintToTreasury()",
+            "lineNumber": "185"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue on Admin Keys",
+            "description": "In the ERD protocol, there is a privileged account, i.e., `owner`, that plays a critical role in regulating the protocol-wide operations and has extra power to set protocol contracts addresses, add/remove collateral, set collateral priority, pause/unpause a collateral, etc.",
+            "severity": "Medium",
+            "contract": "CollateralManager",
+            "function": [
+                "setAddresses()",
+                "setStatus()",
+                "setOracle()",
+                "setEToken()",
+                "setRatio()"
+            ],
+            "lineNumber": [
+                "73-81",
+                "161-162",
+                "164-169",
+                "171-176",
+                "178-185"
+            ]
+        }
+    ]
+}

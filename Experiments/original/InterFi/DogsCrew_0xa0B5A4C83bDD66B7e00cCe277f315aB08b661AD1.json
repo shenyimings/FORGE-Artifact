@@ -1,1 +1,276 @@
-{"path": "./Audit_Reports_2024/InterFi/DogsCrew_0xa0B5A4C83bDD66B7e00cCe277f315aB08b661AD1.pdf", "project_info": {"url": "https://github.com/interfinetwork/audited-codes/blob/main/DogsCrew.sol", "commit_hash": "0fde1b93ee05dd2e153e3058bcd9e7421950a503", "address": "0xa0B5A4C83bDD66B7e00cCe277f315aB08b661AD1"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Minting of unlimited number of sundae tokens", "description": "The function mint allows the owner to create an unlimited number of tokens without any restriction.", "severity": "High", "contract": "DogsCrew", "function": "mint(address,uint256)", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Potential unauthorized script upgrade", "description": "The contract allows an unauthorized script upgrade which can lead to potential security risks.", "severity": "High", "contract": "N/A", "function": "unpause()", "lineNumber": "8456cb59"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Total Supply", "description": "The total token supply functionality may have potential issues.", "severity": "Medium", "contract": "DogsCrew", "function": "totalSupply()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1173"]}, "title": "Balance Of", "description": "The 'balanceOf' function has been declared as external but its implementation is not provided.", "severity": "Unknown", "contract": "N/A", "function": "balanceOf", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "Transfer", "description": "executes transfers of a specified number of tokens to a specified address", "severity": "Medium", "contract": "DogsCrew", "function": "transfer()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "Unprotected Approve Function", "description": "The approve function is declared as external and can be called by anyone, potentially leading to unauthorized approval of tokens.", "severity": "High", "contract": "N/A", "function": "approve", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-284"]}, "title": "Allowance", "description": "The allowance function has no access control, allowing anyone to query the allowance of any user.", "severity": "High", "contract": "N/A", "function": "allowance", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-664"], "2": ["CWE-404"], "3": ["CWE-772"], "4": ["CWE-401"]}, "title": "Burn", "description": "The burn function has a vulnerability.", "severity": "High", "contract": "N/A", "function": "burn", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-284"]}, "title": "Mint", "description": "The mint function has an access control issue as it can only be called by the owner.", "severity": "High", "contract": "N/A", "function": "mint(address,uint256)", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Blacklist", "description": "The 'editBlackList' function allows an address to be added or removed from a blacklist, which can be used to block certain accounts.", "severity": "Medium", "contract": "N/A", "function": "editBlackList(address,bool)", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Pause", "description": "The Pausable contract has pause and unpause functions that can only be called by the owner when the contract is not paused or paused respectively.", "severity": "Medium", "contract": "Pausable", "function": "pause/unpause", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-284"], "2": ["CWE-282"], "3": ["CWE-708"]}, "title": "Transfer Ownership", "description": "executes transfer of contract ownership to a specified wallet", "severity": "Medium", "contract": "DogsCrew", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-284"], "2": ["CWE-282"], "3": ["CWE-708"]}, "title": "Renounce", "description": "The renounceOwnership function allows the owner to relinquish ownership without transferring it, which can lead to a loss of control over the contract.", "severity": "High", "contract": "Ownable", "function": "renounceOwnership()", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-284"], "2": ["CWE-282"], "3": ["CWE-708"]}, "title": "Ownership", "description": "The active smart contract owner has elevated privileges to pause/un-pause the smart contract function modules, set swap status, blacklist certain wallets from interacting with the contract, and mint tokens after initial deployment.", "severity": "High", "contract": "N/A", "function": "Multiple functions (setSwapActive, editBlackList, _mint, etc.)", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/InterFi/DogsCrew_0xa0B5A4C83bDD66B7e00cCe277f315aB08b661AD1.pdf",
+    "project_info": {
+        "url": "https://github.com/interfinetwork/audited-codes/blob/main/DogsCrew.sol",
+        "commit_hash": "0fde1b93ee05dd2e153e3058bcd9e7421950a503",
+        "address": "0xa0B5A4C83bDD66B7e00cCe277f315aB08b661AD1",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Minting of unlimited number of sundae tokens",
+            "description": "The function mint allows the owner to create an unlimited number of tokens without any restriction.",
+            "severity": "High",
+            "contract": "DogsCrew",
+            "function": "mint(address,uint256)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Potential unauthorized script upgrade",
+            "description": "The contract allows an unauthorized script upgrade which can lead to potential security risks.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "unpause()",
+            "lineNumber": "8456cb59"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Total Supply",
+            "description": "The total token supply functionality may have potential issues.",
+            "severity": "Medium",
+            "contract": "DogsCrew",
+            "function": "totalSupply()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1173"
+                ]
+            },
+            "title": "Balance Of",
+            "description": "The 'balanceOf' function has been declared as external but its implementation is not provided.",
+            "severity": "Unknown",
+            "contract": "N/A",
+            "function": "balanceOf",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Transfer",
+            "description": "executes transfers of a specified number of tokens to a specified address",
+            "severity": "Medium",
+            "contract": "DogsCrew",
+            "function": "transfer()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Unprotected Approve Function",
+            "description": "The approve function is declared as external and can be called by anyone, potentially leading to unauthorized approval of tokens.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "approve",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Allowance",
+            "description": "The allowance function has no access control, allowing anyone to query the allowance of any user.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "allowance",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-401"
+                ]
+            },
+            "title": "Burn",
+            "description": "The burn function has a vulnerability.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "burn",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Mint",
+            "description": "The mint function has an access control issue as it can only be called by the owner.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "mint(address,uint256)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Blacklist",
+            "description": "The 'editBlackList' function allows an address to be added or removed from a blacklist, which can be used to block certain accounts.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "editBlackList(address,bool)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Pause",
+            "description": "The Pausable contract has pause and unpause functions that can only be called by the owner when the contract is not paused or paused respectively.",
+            "severity": "Medium",
+            "contract": "Pausable",
+            "function": "pause/unpause",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-282"
+                ],
+                "3": [
+                    "CWE-708"
+                ]
+            },
+            "title": "Transfer Ownership",
+            "description": "executes transfer of contract ownership to a specified wallet",
+            "severity": "Medium",
+            "contract": "DogsCrew",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-282"
+                ],
+                "3": [
+                    "CWE-708"
+                ]
+            },
+            "title": "Renounce",
+            "description": "The renounceOwnership function allows the owner to relinquish ownership without transferring it, which can lead to a loss of control over the contract.",
+            "severity": "High",
+            "contract": "Ownable",
+            "function": "renounceOwnership()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-282"
+                ],
+                "3": [
+                    "CWE-708"
+                ]
+            },
+            "title": "Ownership",
+            "description": "The active smart contract owner has elevated privileges to pause/un-pause the smart contract function modules, set swap status, blacklist certain wallets from interacting with the contract, and mint tokens after initial deployment.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "Multiple functions (setSwapActive, editBlackList, _mint, etc.)",
+            "lineNumber": "N/A"
+        }
+    ]
+}

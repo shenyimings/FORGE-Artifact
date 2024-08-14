@@ -1,1 +1,145 @@
-{"path": "./Audit_Reports_2024/QuillAudits/Anryton Smart Contract Audit Report - QuillAudits.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Wrong _maturedAmt calculation while un-staking and withdrawing tokens", "description": "In Stake contract when user tries to un-stake the amount it is calculated over the period of 13 to 18 months after locking(stake for) of 12 months. But for the unstakeTokens() function when called for 13-17 months the amount released is correct but for the 18th month it does not calculate the values correctly.", "severity": "High", "contract": "Stake", "function": "unstakeTokens()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Inconsistent Matured Token Amounts", "description": "View functions vesting() and getMaturedStakeAmt() return different matured token amounts than the actual transferred amount in withdraw() and _unStakeTokens()", "severity": "High", "contract": "Stake", "function": ["vesting()", "getMaturedStakeAmt()", "withdraw()", "_unStakeTokens()"], "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Inconsistent Token Transfer in withdraw() Function", "description": "The withdraw function transfers the same number of tokens after 40 seconds (>7*5) as transferred after 215 seconds (>42*5), indicating potential inconsistencies in token transfer logic.", "severity": "Medium", "contract": "Stake", "function": "withdraw()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Rounding error issue", "description": "In the _vesting function, dividing by 12 or 24 without proper method causes a rounding issue, leading to loss of tokens.", "severity": "High", "contract": "Stake", "function": "_vesting", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "Wrong age calculation in _calcMarketting()", "description": "Rounding issue due to division by 12 or 24 according to sale in _vesting function", "severity": "High", "contract": "Stake", "function": "_calcMarketting()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-697"]}, "title": "String length comparison in _compareEqual() will lead to more number of tokens withdrawn than intended", "description": "Comparison of string lengths in the _compareEqual() function may result in withdrawing a greater number of tokens than intended.", "severity": "Medium", "contract": "Stake", "function": "_compareEqual()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-697"]}, "title": "In _lockTokens() wrong address is being used for totalLocks", "description": "totalLocks of _to address should be used as locking of _to address\u2019s token takes place.", "severity": "Low", "contract": "Stake", "function": "_lockTokens()", "lineNumber": "243"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "getLeftBalance() returns the wrong balance", "description": "N/A", "severity": "Low", "contract": "Stake", "function": "getLeftBalance()", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-682"], "2": ["CWE-369"]}, "title": "Wrong total supply value", "description": "Rounding issue in _vesting function due to division by 12 or 24 without decimal support, causing loss of tokens.", "severity": "High", "contract": "Anryton", "function": "_vesting", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/QuillAudits/Anryton Smart Contract Audit Report - QuillAudits.pdf",
+    "project_info": {
+        "url": "https://github.com/kuldeep349/anrytonContract/tree/ec82637f71d95a9ae854f3ed5aa0ed458f5f22ca",
+        "commit_hash": "ec82637f71d95a9ae854f3ed5aa0ed458f5f22ca",
+        "address": "0x6CB0c296F81175DE85Ab2b24359E0D25195Bd317",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Wrong _maturedAmt calculation while un-staking and withdrawing tokens",
+            "description": "In Stake contract when user tries to un-stake the amount it is calculated over the period of 13 to 18 months after locking(stake for) of 12 months. But for the unstakeTokens() function when called for 13-17 months the amount released is correct but for the 18th month it does not calculate the values correctly.",
+            "severity": "High",
+            "contract": "Stake",
+            "function": "unstakeTokens()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Inconsistent Matured Token Amounts",
+            "description": "View functions vesting() and getMaturedStakeAmt() return different matured token amounts than the actual transferred amount in withdraw() and _unStakeTokens()",
+            "severity": "High",
+            "contract": "Stake",
+            "function": [
+                "vesting()",
+                "getMaturedStakeAmt()",
+                "withdraw()",
+                "_unStakeTokens()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Inconsistent Token Transfer in withdraw() Function",
+            "description": "The withdraw function transfers the same number of tokens after 40 seconds (>7*5) as transferred after 215 seconds (>42*5), indicating potential inconsistencies in token transfer logic.",
+            "severity": "Medium",
+            "contract": "Stake",
+            "function": "withdraw()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Rounding error issue",
+            "description": "In the _vesting function, dividing by 12 or 24 without proper method causes a rounding issue, leading to loss of tokens.",
+            "severity": "High",
+            "contract": "Stake",
+            "function": "_vesting",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Wrong age calculation in _calcMarketting()",
+            "description": "Rounding issue due to division by 12 or 24 according to sale in _vesting function",
+            "severity": "High",
+            "contract": "Stake",
+            "function": "_calcMarketting()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ]
+            },
+            "title": "String length comparison in _compareEqual() will lead to more number of tokens withdrawn than intended",
+            "description": "Comparison of string lengths in the _compareEqual() function may result in withdrawing a greater number of tokens than intended.",
+            "severity": "Medium",
+            "contract": "Stake",
+            "function": "_compareEqual()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ]
+            },
+            "title": "In _lockTokens() wrong address is being used for totalLocks",
+            "description": "totalLocks of _to address should be used as locking of _to address\u2019s token takes place.",
+            "severity": "Low",
+            "contract": "Stake",
+            "function": "_lockTokens()",
+            "lineNumber": "243"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "getLeftBalance() returns the wrong balance",
+            "description": "N/A",
+            "severity": "Low",
+            "contract": "Stake",
+            "function": "getLeftBalance()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-369"
+                ]
+            },
+            "title": "Wrong total supply value",
+            "description": "Rounding issue in _vesting function due to division by 12 or 24 without decimal support, causing loss of tokens.",
+            "severity": "High",
+            "contract": "Anryton",
+            "function": "_vesting",
+            "lineNumber": "N/A"
+        }
+    ]
+}

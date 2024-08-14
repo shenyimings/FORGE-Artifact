@@ -1,1 +1,144 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-LegendsNeverDie-v1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Business Logic Error in _claimWeekly()", "description": "In Legends Never Die, the users can stake their LND tokens into Legend vault and will get BNB-ETH plus BEP20 tokens as rewards. There are two kinds of rewards: weekly rewards and yearly rewards. Weekly rewards are rewards that can be claimed after each week while yearly rewards are rewards that can be claimed after the auction lobby is over. When reviewing the implementation of the MasterVault contract, we notice that the claimWeekly() function has a business logic error which could allow users to claim more rewards than they deserve.", "severity": "High", "contract": "MasterVault", "function": "_claimWeekly()", "lineNumber": "354"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Business Logic Error in _claimYearlyReward()", "description": "The `_claimYearlyReward()` function has a business logic error which may make users unable to get yearly rewards.", "severity": "High", "contract": "MasterVault", "function": "_claimYearlyReward()", "lineNumber": "571, 563"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Business Logic Error in getOfferingTokens()", "description": "The `getOfferingTokens()` function has a business logic error which may lead users to get less weekly/yearly rewards due to incorrect calculations of `vault.totalSupply` and `vault.allTotalSupply` when the contract owner calls this function more than one time.", "severity": "Medium", "contract": "MasterVault", "function": "getOfferingTokens()", "lineNumber": "681, 687"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Improved Handling of Corner Cases in _getPreviousBalance()", "description": "The MasterVault smart contract allows users to stake their LND tokens into Legend vault to get rewards. The internal function _getPreviousBalance() is called to get the LND token total balance of all users from the previous vaults.", "severity": "Medium", "contract": "MasterVault", "function": "_getPreviousBalance()", "lineNumber": "242"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Improved Handling of Corner Cases in _add()", "description": "The `_add()` function in `MasterVault` contract can be improved by applying more rigorous sanity checks to avoid undesirable consequences.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Unfair Token Yearly Reward Mechanism", "description": "The current token yearly reward mechanism might be unfair for certain stakers due to the calculation of userStakedInfo and userAmountStrength only depending on the start staking week and latest LND token balance, respectively.", "severity": "Low", "contract": "MasterVault", "function": "_claimYearlyReward()", "lineNumber": "572-573"}, {"id": 6, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Accommodation Of Possible Non-Compliant ERC20 Tokens", "description": "The `transfer` function may not comply with the ERC20 standard due to possible idiosyncrasies from current widely-used token contracts, which can cause issues if not handled properly.", "severity": "Medium", "contract": "MasterVault", "function": "_exitAll()", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Assumed Trust on Admin Keys", "description": "In the `Legends Never Die` smart contracts, there are some special accounts like `owner` and `admin` that play critical roles in governing and regulating the entire operation and maintenance.", "severity": "Low", "contract": "MasterVault", "function": ["setYearlyRewardIndex()", "sweep()"], "lineNumber": ["591-593", "640-641"]}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-LegendsNeverDie-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/mygittab/CurrySwap-Food-Vault-and-Liquidity-Mining-contracts/tree/1133386",
+        "commit_hash": "1133386",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Business Logic Error in _claimWeekly()",
+            "description": "In Legends Never Die, the users can stake their LND tokens into Legend vault and will get BNB-ETH plus BEP20 tokens as rewards. There are two kinds of rewards: weekly rewards and yearly rewards. Weekly rewards are rewards that can be claimed after each week while yearly rewards are rewards that can be claimed after the auction lobby is over. When reviewing the implementation of the MasterVault contract, we notice that the claimWeekly() function has a business logic error which could allow users to claim more rewards than they deserve.",
+            "severity": "High",
+            "contract": "MasterVault",
+            "function": "_claimWeekly()",
+            "lineNumber": "354"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Business Logic Error in _claimYearlyReward()",
+            "description": "The `_claimYearlyReward()` function has a business logic error which may make users unable to get yearly rewards.",
+            "severity": "High",
+            "contract": "MasterVault",
+            "function": "_claimYearlyReward()",
+            "lineNumber": "571, 563"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Business Logic Error in getOfferingTokens()",
+            "description": "The `getOfferingTokens()` function has a business logic error which may lead users to get less weekly/yearly rewards due to incorrect calculations of `vault.totalSupply` and `vault.allTotalSupply` when the contract owner calls this function more than one time.",
+            "severity": "Medium",
+            "contract": "MasterVault",
+            "function": "getOfferingTokens()",
+            "lineNumber": "681, 687"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Improved Handling of Corner Cases in _getPreviousBalance()",
+            "description": "The MasterVault smart contract allows users to stake their LND tokens into Legend vault to get rewards. The internal function _getPreviousBalance() is called to get the LND token total balance of all users from the previous vaults.",
+            "severity": "Medium",
+            "contract": "MasterVault",
+            "function": "_getPreviousBalance()",
+            "lineNumber": "242"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Improved Handling of Corner Cases in _add()",
+            "description": "The `_add()` function in `MasterVault` contract can be improved by applying more rigorous sanity checks to avoid undesirable consequences.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Unfair Token Yearly Reward Mechanism",
+            "description": "The current token yearly reward mechanism might be unfair for certain stakers due to the calculation of userStakedInfo and userAmountStrength only depending on the start staking week and latest LND token balance, respectively.",
+            "severity": "Low",
+            "contract": "MasterVault",
+            "function": "_claimYearlyReward()",
+            "lineNumber": "572-573"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Accommodation Of Possible Non-Compliant ERC20 Tokens",
+            "description": "The `transfer` function may not comply with the ERC20 standard due to possible idiosyncrasies from current widely-used token contracts, which can cause issues if not handled properly.",
+            "severity": "Medium",
+            "contract": "MasterVault",
+            "function": "_exitAll()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Assumed Trust on Admin Keys",
+            "description": "In the `Legends Never Die` smart contracts, there are some special accounts like `owner` and `admin` that play critical roles in governing and regulating the entire operation and maintenance.",
+            "severity": "Low",
+            "contract": "MasterVault",
+            "function": [
+                "setYearlyRewardIndex()",
+                "sweep()"
+            ],
+            "lineNumber": [
+                "591-593",
+                "640-641"
+            ]
+        }
+    ]
+}

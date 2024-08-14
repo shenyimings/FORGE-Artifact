@@ -1,1 +1,104 @@
-{"path": "./Audit_Reports_2024/QuillAudits/Therapoid Smart Contract Audit Report - QuillAudits .pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-282"], "3": ["CWE-708"]}, "title": "Ownership Transfer must be a two-step process.", "description": "The contract uses openzeppelin\u2019s ownable contract to manage ownership. The transferOwnership() function allows the current owner to transfer his privileges to another address. However, it would be safer if the transition is managed by implementing a two-step approach: _transferOwnership() and _updateOwnership().", "severity": "Low", "contract": "openscineceNFT.sol, IssueSCI.sol", "function": "transferOwnership()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "NFT with mintID 1111111 will be replaced upon receiving a new NFT", "description": "The _transfer function treats an NFT of mintId 1111111 as an empty slot and replaces it with the received NFT, causing potential loss.", "severity": "High", "contract": "ParentOpenTherapoid.sol", "function": "_transfer()", "lineNumber": "145"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "For loop optimization", "description": "In bulkTransfer(), there is a for loop which iterates the value of recipients.length times. Each time the for loop executes recipient.length is calculated which consumes some gas. This can be optimized by calculating the value of recipient.length outside the for loop.", "severity": "Informational", "contract": "ChildOpenTherapoid.sol", "function": "bulkTransfer()", "lineNumber": "189"}, {"id": 3, "category": {"1": ["CWE-710"], "2": ["CWE-1061"], "3": ["CWE-766"]}, "title": "State variable that can be declared immutable", "description": "State variables that get initialized in the constructor and don't change their value throughout the code, should be declared immutable to save gas.", "severity": "Informational", "contract": "ChildOpenTherapoid.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "NFT with mintID 1111111 will be replaced upon receiving another NFT.", "description": "If an NFT of mintId 1111111 is held by a user and they receive another NFT, it will be treated as an empty slot and replaced by the mintID of the received NFT.", "severity": "High", "contract": "ParentOpenTherapoid.sol", "function": "_transfer()", "lineNumber": "145"}]}
+{
+    "path": "./Audit_Reports_2024/QuillAudits/Therapoid Smart Contract Audit Report - QuillAudits .pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-282"
+                ],
+                "3": [
+                    "CWE-708"
+                ]
+            },
+            "title": "Ownership Transfer must be a two-step process.",
+            "description": "The contract uses openzeppelin\u2019s ownable contract to manage ownership. The transferOwnership() function allows the current owner to transfer his privileges to another address. However, it would be safer if the transition is managed by implementing a two-step approach: _transferOwnership() and _updateOwnership().",
+            "severity": "Low",
+            "contract": "openscineceNFT.sol, IssueSCI.sol",
+            "function": "transferOwnership()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "NFT with mintID 1111111 will be replaced upon receiving a new NFT",
+            "description": "The _transfer function treats an NFT of mintId 1111111 as an empty slot and replaces it with the received NFT, causing potential loss.",
+            "severity": "High",
+            "contract": "ParentOpenTherapoid.sol",
+            "function": "_transfer()",
+            "lineNumber": "145"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "For loop optimization",
+            "description": "In bulkTransfer(), there is a for loop which iterates the value of recipients.length times. Each time the for loop executes recipient.length is calculated which consumes some gas. This can be optimized by calculating the value of recipient.length outside the for loop.",
+            "severity": "Informational",
+            "contract": "ChildOpenTherapoid.sol",
+            "function": "bulkTransfer()",
+            "lineNumber": "189"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1061"
+                ],
+                "3": [
+                    "CWE-766"
+                ]
+            },
+            "title": "State variable that can be declared immutable",
+            "description": "State variables that get initialized in the constructor and don't change their value throughout the code, should be declared immutable to save gas.",
+            "severity": "Informational",
+            "contract": "ChildOpenTherapoid.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "NFT with mintID 1111111 will be replaced upon receiving another NFT.",
+            "description": "If an NFT of mintId 1111111 is held by a user and they receive another NFT, it will be treated as an empty slot and replaced by the mintID of the received NFT.",
+            "severity": "High",
+            "contract": "ParentOpenTherapoid.sol",
+            "function": "_transfer()",
+            "lineNumber": "145"
+        }
+    ]
+}

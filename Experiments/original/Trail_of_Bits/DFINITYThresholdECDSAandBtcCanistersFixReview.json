@@ -1,1 +1,91 @@
-{"path": "./Audit_Reports_2024/Trail_of_Bits/DFINITYThresholdECDSAandBtcCanistersFixReview.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1287"]}, "title": "Lack of validation of signed dealing against original dealing", "description": "The `EcdsaPreSignerImpl::validate_dealing_support` method does not check that the content of signed dealings matches the original dealings, allowing a malicious receiver to change the requested height or internal data before signing.", "severity": "Medium", "contract": "ic/rs/consensus/src/ecdsa/pre_signer.rs", "function": "EcdsaPreSignerImpl::validate_dealing_support", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "The ECDSA payload is not updated if a quadruple fails to complete", "description": "If a transcript fails to complete, the corresponding quadruple will also fail to complete and its ID will remain in the `quadruples_in_creation` set until the key is reshared and the set is purged.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "ic/rs/consensus/src/ecdsa/payload_builder.rs:752-782"}, {"id": 2, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-770"]}, "title": "Malicious canisters can exhaust the number of available quadruples", "description": "By requesting a large number of signatures, a canister (or set of canisters) could exhaust the number of available quadruples, preventing other signature requests from completing", "severity": "Undetermined", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "Aggregated signatures are dropped if their request IDs are not recognized", "description": "The `update_signature_agreements` function aggregates completed signatures from the ECDSA pool but drops the signature if its associated signing request ID is not in the set of ongoing signatures.", "severity": "Informational", "contract": "N/A", "function": "update_signature_agreements", "lineNumber": "817-830"}]}
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/DFINITYThresholdECDSAandBtcCanistersFixReview.pdf",
+    "project_info": {
+        "url": "https://github.com/dfinity/ic/tree/master",
+        "commit_hash": "master",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1287"
+                ]
+            },
+            "title": "Lack of validation of signed dealing against original dealing",
+            "description": "The `EcdsaPreSignerImpl::validate_dealing_support` method does not check that the content of signed dealings matches the original dealings, allowing a malicious receiver to change the requested height or internal data before signing.",
+            "severity": "Medium",
+            "contract": "ic/rs/consensus/src/ecdsa/pre_signer.rs",
+            "function": "EcdsaPreSignerImpl::validate_dealing_support",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "The ECDSA payload is not updated if a quadruple fails to complete",
+            "description": "If a transcript fails to complete, the corresponding quadruple will also fail to complete and its ID will remain in the `quadruples_in_creation` set until the key is reshared and the set is purged.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "ic/rs/consensus/src/ecdsa/payload_builder.rs:752-782"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "Malicious canisters can exhaust the number of available quadruples",
+            "description": "By requesting a large number of signatures, a canister (or set of canisters) could exhaust the number of available quadruples, preventing other signature requests from completing",
+            "severity": "Undetermined",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Aggregated signatures are dropped if their request IDs are not recognized",
+            "description": "The `update_signature_agreements` function aggregates completed signatures from the ECDSA pool but drops the signature if its associated signing request ID is not in the set of ongoing signatures.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "update_signature_agreements",
+            "lineNumber": "817-830"
+        }
+    ]
+}

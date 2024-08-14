@@ -1,1 +1,192 @@
-{"path": "./Audit_Reports_2024/Secure3/UniPassVerifierContract_final_Secure3_Audit_Report.pdf", "project_info": {"url": "https://github.com/UniPassID/UniPass-verifier-contract", "commit_hash": "cf6e856df8aada682eccab1459e6028fd7c2bb09", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Lack of Point Validation in point_mul Function", "description": "The point_mul function lacks validation for G1 points, which could lead to potential security issues.", "severity": "Critical", "contract": "PlonkCoreLib.sol", "function": "point_mul(G1Point memory p, Fr memory s)", "lineNumber": "263-270"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Inconsistency in Formula Representation for z_substring Calculation", "description": "There is a discrepancy between the provided comment and the previously derived formula for the calculation of the z_substring term. The inconsistency lies in the coefficient used for this term.", "severity": "Medium", "contract": "PlookupSingleCore.sol", "function": "verify_at_z()", "lineNumber": "263-375"}, {"id": 2, "category": {"1": ["CWE-697"]}, "title": "Information Leakage in batch_evaluate_lagrange_poly_out_of_domain Function with a Potential Attack Scenario", "description": "The function returns an additional finite field element `return_zeta_pow_n` which could potentially leak sensitive information about `at` and `domain_size`, allowing attackers to gain insight into the cryptographic system.", "severity": "Medium", "contract": "PlookupSingleCore", "function": "batch_evaluate_lagrange_poly_out_of_domain", "lineNumber": "173"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "trust model is obscured in UnipassVerifier contract verifyProof", "description": "The membership of G1 is checked in `new_g1_checked`, but not checked for G2 in `new_g2`, and `vk.omega` is also not checked.", "severity": "Medium", "contract": "UnipassVerifier", "function": "verifyProof", "lineNumber": "464"}, {"id": 4, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Collision computation in UnipassVerifier contract setupVKHash function", "description": "The hash function used in the setupVKHash function is vulnerable to collision attacks and can be improved by adding an additional layer of randomness to the hash value.", "severity": "Low", "contract": "UnipassVerifier", "function": "setupVKHash()", "lineNumber": "56-84"}, {"id": 5, "category": {"1": ["CWE-682"], "2": ["CWE-190"], "3": ["CWE-680"]}, "title": "Gas Optimization for Large Data Array.", "description": "The setupVKHash() function has a potential gas optimization issue due to the large data array 'vkdata' used in the sha256() function, which could lead to high gas costs if the array is very large.", "severity": "Low", "contract": "UnipassVerifier", "function": "setupVKHash()", "lineNumber": "56-84"}, {"id": 6, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Integer Overflow and Underflow risk in UnipassVerifier.sol contract sha256PaddingLen function", "description": "The function may face issues with the input value of input_len causing integer overflow or underflow.", "severity": "Low", "contract": "UnipassVerifier.sol", "function": "sha256PaddingLen(uint256)", "lineNumber": "132-140"}, {"id": 7, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Integer Overflow and Underflow risk in UnipassVerifier contract verifyProof function", "description": "The function may face issues with integer overflow or underflow due to unchecked increment of uint256 variables.", "severity": "Low", "contract": "UnipassVerifier", "function": "verifyProof()", "lineNumber": "394-483"}, {"id": 8, "category": {"1": ["CWE-682"]}, "title": "Logical error in UnipassVerifier.sol contract setBit function", "description": "Logical error in the setBit function of UnipassVerifier.sol contract.", "severity": "Low", "contract": "UnipassVerifier", "function": "setBit(bytes1, uint8)", "lineNumber": "86-88"}, {"id": 9, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "abi.encodePacked() should not be used with dynamic types when passing the result to a hash function such as keccack256()", "description": "Using abi.encodePacked() with dynamic types can result in hash collisions, instead use abi.encode() which pads items to 32 bytes preventing hash collisions.", "severity": "Low", "contract": "UnipassVerifier", "function": "N/A", "lineNumber": "159-169,196-206,248-258,286-293"}, {"id": 10, "category": {"1": ["CWE-703"]}, "title": "Missing Error Messages and Event Emissions in new_g1_checked Function", "description": "The new_g1_checked function is missing error messages and event emissions. It should emit events to inform external listeners about the occurrences of certain events, such as the creation of new G1 points, and provide descriptive error messages for require statements to facilitate better debugging.", "severity": "Informational", "contract": "PlonkCoreLib.sol", "function": "new_g1_checked(uint256 x, uint256 y)", "lineNumber": "102-123"}]}
+{
+    "path": "./Audit_Reports_2024/Secure3/UniPassVerifierContract_final_Secure3_Audit_Report.pdf",
+    "project_info": {
+        "url": "https://github.com/UniPassID/UniPass-verifier-contract",
+        "commit_hash": "cf6e856df8aada682eccab1459e6028fd7c2bb09",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Lack of Point Validation in point_mul Function",
+            "description": "The point_mul function lacks validation for G1 points, which could lead to potential security issues.",
+            "severity": "Critical",
+            "contract": "PlonkCoreLib.sol",
+            "function": "point_mul(G1Point memory p, Fr memory s)",
+            "lineNumber": "263-270"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Inconsistency in Formula Representation for z_substring Calculation",
+            "description": "There is a discrepancy between the provided comment and the previously derived formula for the calculation of the z_substring term. The inconsistency lies in the coefficient used for this term.",
+            "severity": "Medium",
+            "contract": "PlookupSingleCore.sol",
+            "function": "verify_at_z()",
+            "lineNumber": "263-375"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ]
+            },
+            "title": "Information Leakage in batch_evaluate_lagrange_poly_out_of_domain Function with a Potential Attack Scenario",
+            "description": "The function returns an additional finite field element `return_zeta_pow_n` which could potentially leak sensitive information about `at` and `domain_size`, allowing attackers to gain insight into the cryptographic system.",
+            "severity": "Medium",
+            "contract": "PlookupSingleCore",
+            "function": "batch_evaluate_lagrange_poly_out_of_domain",
+            "lineNumber": "173"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "trust model is obscured in UnipassVerifier contract verifyProof",
+            "description": "The membership of G1 is checked in `new_g1_checked`, but not checked for G2 in `new_g2`, and `vk.omega` is also not checked.",
+            "severity": "Medium",
+            "contract": "UnipassVerifier",
+            "function": "verifyProof",
+            "lineNumber": "464"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Collision computation in UnipassVerifier contract setupVKHash function",
+            "description": "The hash function used in the setupVKHash function is vulnerable to collision attacks and can be improved by adding an additional layer of randomness to the hash value.",
+            "severity": "Low",
+            "contract": "UnipassVerifier",
+            "function": "setupVKHash()",
+            "lineNumber": "56-84"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ],
+                "3": [
+                    "CWE-680"
+                ]
+            },
+            "title": "Gas Optimization for Large Data Array.",
+            "description": "The setupVKHash() function has a potential gas optimization issue due to the large data array 'vkdata' used in the sha256() function, which could lead to high gas costs if the array is very large.",
+            "severity": "Low",
+            "contract": "UnipassVerifier",
+            "function": "setupVKHash()",
+            "lineNumber": "56-84"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Integer Overflow and Underflow risk in UnipassVerifier.sol contract sha256PaddingLen function",
+            "description": "The function may face issues with the input value of input_len causing integer overflow or underflow.",
+            "severity": "Low",
+            "contract": "UnipassVerifier.sol",
+            "function": "sha256PaddingLen(uint256)",
+            "lineNumber": "132-140"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Integer Overflow and Underflow risk in UnipassVerifier contract verifyProof function",
+            "description": "The function may face issues with integer overflow or underflow due to unchecked increment of uint256 variables.",
+            "severity": "Low",
+            "contract": "UnipassVerifier",
+            "function": "verifyProof()",
+            "lineNumber": "394-483"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Logical error in UnipassVerifier.sol contract setBit function",
+            "description": "Logical error in the setBit function of UnipassVerifier.sol contract.",
+            "severity": "Low",
+            "contract": "UnipassVerifier",
+            "function": "setBit(bytes1, uint8)",
+            "lineNumber": "86-88"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "abi.encodePacked() should not be used with dynamic types when passing the result to a hash function such as keccack256()",
+            "description": "Using abi.encodePacked() with dynamic types can result in hash collisions, instead use abi.encode() which pads items to 32 bytes preventing hash collisions.",
+            "severity": "Low",
+            "contract": "UnipassVerifier",
+            "function": "N/A",
+            "lineNumber": "159-169,196-206,248-258,286-293"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Missing Error Messages and Event Emissions in new_g1_checked Function",
+            "description": "The new_g1_checked function is missing error messages and event emissions. It should emit events to inform external listeners about the occurrences of certain events, such as the creation of new G1 points, and provide descriptive error messages for require statements to facilitate better debugging.",
+            "severity": "Informational",
+            "contract": "PlonkCoreLib.sol",
+            "function": "new_g1_checked(uint256 x, uint256 y)",
+            "lineNumber": "102-123"
+        }
+    ]
+}

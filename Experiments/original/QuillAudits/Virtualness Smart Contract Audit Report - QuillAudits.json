@@ -1,1 +1,227 @@
-{"path": "./Audit_Reports_2024/QuillAudits/Virtualness Smart Contract Audit Report - QuillAudits.pdf", "project_info": {"url": "https://github.com/virtualness-io/Virtualness-protocol-contracts/", "commit_hash": "1bdd83650a12bb1a91f6a56a2d6aecb65d8d28b0", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "User can use mintData created and signed for different order", "description": "A mint data signed for one order can be used for another order if sell.order.trader and sell.order.collection.tokenId match with mintData.creators[0].account and mintData.tokenId respectively.", "severity": "High", "contract": "ProtocolV1Core", "function": "fulfillLazyMintOrder()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Centralization in isApprovedForAll", "description": "isApprovedForAll returns true for all addresses with a minter role, allowing malicious minters to transfer tokens without approval and reducing user control over token approvals.", "severity": "Medium", "contract": "ERC1155Virtualness", "function": "isApprovedForAll()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-697"]}, "title": "Add extra check for zero address signer", "description": "It can happen that invalid signature may end up recovering invalid signer as the zero address.", "severity": "Low", "contract": "ERC721Virtualness", "function": "lazyMint()", "lineNumber": "193"}, {"id": 3, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-909"], "4": ["CWE-456"]}, "title": "Absence of setBaseURI", "description": "Base Uri is not getting set in the initialize function, and the contract doesn't have internal setBaseURI() from ERC1155URIStorageUpgradeable exposed with public function.", "severity": "Low", "contract": "ERC1155Virtualness", "function": "initialize()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Limit for fees can be added", "description": "Currently the fees have no limit so the fee rate can be anything. Fee limit can be added in the contract so that it can't exceed a certain limit.", "severity": "Informational", "contract": "ProtocolV1Core", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Pass receiveAmount instead of price", "description": "The parameter getting passed to royaltyInfo() should be verified and changed if it's not intentional.", "severity": "Informational", "contract": "N/A", "function": "royaltyInfo()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-354"]}, "title": "Unlocked pragma", "description": "The compiler version is not fixed.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-770"]}, "title": "Use of fee on transfer token in contract", "description": "The issue with the token is that with each functionality(transfer) that happens it takes some fees out of it.", "severity": "Informational", "contract": "ProtocolV1Core", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-691"], "2": ["CWE-362"]}, "title": "Consideration for the scenario", "description": "The team should note that scenarios like this can happen because of the logic of the code, where the user creates a second order while the first order is still there.", "severity": "Informational", "contract": "ProtocolV1Core", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-682"]}, "title": "Nonce is getting used as OrderId while emitting OrdersMatched", "description": "The nonce value is being utilized as the OrderId when emitting the OrdersMatched event in matchAndTransfer() and matchAndLazyMint() functions.", "severity": "Informational", "contract": "ProtocolV1Core", "function": "matchAndTransfer(), matchAndLazyMint()", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-710"], "2": ["CWE-1164"], "3": ["CWE-561"]}, "title": "Unused and commented code in the contract", "description": "In the lazyMint() function there is some code on L187 and L197 which is commented out and is not used.", "severity": "Low", "contract": "ERC1155Virtualness", "function": "lazyMint()", "lineNumber": "L187, L197"}, {"id": 11, "category": {"1": ["CWE-710"], "2": ["CWE-1164"]}, "title": "Unused imports", "description": "ERC721Upgradeable and AccessControlUpgradeable are not getting inherited by ERC721Virtualness. Unused/uninherited imports can be removed.", "severity": "Low", "contract": "ERC721Virtualness", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/QuillAudits/Virtualness Smart Contract Audit Report - QuillAudits.pdf",
+    "project_info": {
+        "url": "https://github.com/virtualness-io/Virtualness-protocol-contracts/",
+        "commit_hash": "1bdd83650a12bb1a91f6a56a2d6aecb65d8d28b0",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "User can use mintData created and signed for different order",
+            "description": "A mint data signed for one order can be used for another order if sell.order.trader and sell.order.collection.tokenId match with mintData.creators[0].account and mintData.tokenId respectively.",
+            "severity": "High",
+            "contract": "ProtocolV1Core",
+            "function": "fulfillLazyMintOrder()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Centralization in isApprovedForAll",
+            "description": "isApprovedForAll returns true for all addresses with a minter role, allowing malicious minters to transfer tokens without approval and reducing user control over token approvals.",
+            "severity": "Medium",
+            "contract": "ERC1155Virtualness",
+            "function": "isApprovedForAll()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ]
+            },
+            "title": "Add extra check for zero address signer",
+            "description": "It can happen that invalid signature may end up recovering invalid signer as the zero address.",
+            "severity": "Low",
+            "contract": "ERC721Virtualness",
+            "function": "lazyMint()",
+            "lineNumber": "193"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "Absence of setBaseURI",
+            "description": "Base Uri is not getting set in the initialize function, and the contract doesn't have internal setBaseURI() from ERC1155URIStorageUpgradeable exposed with public function.",
+            "severity": "Low",
+            "contract": "ERC1155Virtualness",
+            "function": "initialize()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Limit for fees can be added",
+            "description": "Currently the fees have no limit so the fee rate can be anything. Fee limit can be added in the contract so that it can't exceed a certain limit.",
+            "severity": "Informational",
+            "contract": "ProtocolV1Core",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Pass receiveAmount instead of price",
+            "description": "The parameter getting passed to royaltyInfo() should be verified and changed if it's not intentional.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "royaltyInfo()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-354"
+                ]
+            },
+            "title": "Unlocked pragma",
+            "description": "The compiler version is not fixed.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "Use of fee on transfer token in contract",
+            "description": "The issue with the token is that with each functionality(transfer) that happens it takes some fees out of it.",
+            "severity": "Informational",
+            "contract": "ProtocolV1Core",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-362"
+                ]
+            },
+            "title": "Consideration for the scenario",
+            "description": "The team should note that scenarios like this can happen because of the logic of the code, where the user creates a second order while the first order is still there.",
+            "severity": "Informational",
+            "contract": "ProtocolV1Core",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Nonce is getting used as OrderId while emitting OrdersMatched",
+            "description": "The nonce value is being utilized as the OrderId when emitting the OrdersMatched event in matchAndTransfer() and matchAndLazyMint() functions.",
+            "severity": "Informational",
+            "contract": "ProtocolV1Core",
+            "function": "matchAndTransfer(), matchAndLazyMint()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ],
+                "3": [
+                    "CWE-561"
+                ]
+            },
+            "title": "Unused and commented code in the contract",
+            "description": "In the lazyMint() function there is some code on L187 and L197 which is commented out and is not used.",
+            "severity": "Low",
+            "contract": "ERC1155Virtualness",
+            "function": "lazyMint()",
+            "lineNumber": "L187, L197"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ]
+            },
+            "title": "Unused imports",
+            "description": "ERC721Upgradeable and AccessControlUpgradeable are not getting inherited by ERC721Virtualness. Unused/uninherited imports can be removed.",
+            "severity": "Low",
+            "contract": "ERC721Virtualness",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

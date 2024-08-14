@@ -1,1 +1,68 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Whitehole-v1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Improved Update of Boosted Borrow in NftCore::liquidate()", "description": "The boosted information of the borrower is not properly updated in the liquidation due to incorrect updating of boosted information for the `msg.sender` which is actually the `NftCore` contract, not the borrower.", "severity": "Medium", "contract": "NftCore", "function": "liquidate()", "lineNumber": "273"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"], "4": ["CWE-638"], "5": ["CWE-424"], "6": ["CWE-425"]}, "title": "Suggested whenNotPaused for Core::liquidateBorrow()", "description": "The liquidateBorrow() function is not guarded by the whenNotPaused modifier, thus it can still be executed even when the contract is paused.", "severity": "Low", "contract": "Core", "function": "liquidateBorrow()", "lineNumber": "230-235"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Timely checkpoint() for Each REBATE_ CYCLE", "description": "The `checkpoint()` function always uses the latest `totalScore/slope` to calculate the `totalScore` for the check point of the passed weeks, which may result in unexpected rebates for users. It is recommended to use the specific `totalScore/slope` of the week to create its check point or ensure the check point of each week can be created timely.", "severity": "Low", "contract": "RebateDistributor", "function": "checkpoint()", "lineNumber": "408-427"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Whitehole-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/deracer-io/whitehole-finance/tree/f4ed4ace",
+        "commit_hash": "f4ed4ace",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improved Update of Boosted Borrow in NftCore::liquidate()",
+            "description": "The boosted information of the borrower is not properly updated in the liquidation due to incorrect updating of boosted information for the `msg.sender` which is actually the `NftCore` contract, not the borrower.",
+            "severity": "Medium",
+            "contract": "NftCore",
+            "function": "liquidate()",
+            "lineNumber": "273"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ],
+                "4": [
+                    "CWE-638"
+                ],
+                "5": [
+                    "CWE-424"
+                ],
+                "6": [
+                    "CWE-425"
+                ]
+            },
+            "title": "Suggested whenNotPaused for Core::liquidateBorrow()",
+            "description": "The liquidateBorrow() function is not guarded by the whenNotPaused modifier, thus it can still be executed even when the contract is paused.",
+            "severity": "Low",
+            "contract": "Core",
+            "function": "liquidateBorrow()",
+            "lineNumber": "230-235"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Timely checkpoint() for Each REBATE_ CYCLE",
+            "description": "The `checkpoint()` function always uses the latest `totalScore/slope` to calculate the `totalScore` for the check point of the passed weeks, which may result in unexpected rebates for users. It is recommended to use the specific `totalScore/slope` of the week to create its check point or ensure the check point of each week can be created timely.",
+            "severity": "Low",
+            "contract": "RebateDistributor",
+            "function": "checkpoint()",
+            "lineNumber": "408-427"
+        }
+    ]
+}

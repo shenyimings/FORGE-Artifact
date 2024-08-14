@@ -1,1 +1,114 @@
-{"path": "./Audit_Reports_2024/HAECHI_AUDIT/[HAECHI AUDIT] Iskra Market Place Audit Report.pdf", "project_info": {"url": "https://github.com/iskraworld/iskra-contracts", "commit_hash": "bc467fab9b248b9a747062944e02522012593bc2", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "increaseAmount and decreaseAmount function has no cardtype check logic", "description": "The _increaseAmount()_ and _decreaseAmount()_ functions don\u2019t have cardtype checking logic. This will change _marketCards[_cardId].availableCardAmount_ value of ERC721.", "severity": "Medium", "contract": "Marketplace.sol", "function": ["increaseAmount()", "decreaseAmount()"], "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "batchUnregisterCards doesn\u2019t need to check the owner of given _cardIds", "description": "The batchUnregisterCards function is checking the owner of _cardIds but unregisterCard function already has the onlyCardOwner modifier.", "severity": "Tips", "contract": "Marketplace.sol", "function": "batchUnregisterCards", "lineNumber": "500"}, {"id": 2, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1173"]}, "title": "Lack of signed data can cause signature replay attack", "description": "The contract ServerSignVerifier does not include purpose and scope in the signature data, which may lead to a signature replay attack if the same signer is used by multiple contracts.", "severity": "Low", "contract": "ServerSignVerifier", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Contract doesn\u2019t check the return value of the transfer function", "description": "When transferring ERC20 from MarketPlace Contract, the return value is not checked. If you use a token that returns false without reverting when the _transfer_ function fails, the function can be executed even if the _transfer_ function fails.", "severity": "Tips", "contract": "Marketplace.sol", "function": ["calculatePayment()", "claimRevenue()"], "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "TokenPricer contract must validate expiration value", "description": "The client sets the expiration value, but the _TokenPricerByVerifying_ contract does not know when the data was created and signed. If there is a price change with a client setting the expiration high, it can cause a problem.", "severity": "Tips", "contract": "TokenPricerByVerifying", "function": "getPrice(bytes memory _data)", "lineNumber": "L15"}]}
+{
+    "path": "./Audit_Reports_2024/HAECHI_AUDIT/[HAECHI AUDIT] Iskra Market Place Audit Report.pdf",
+    "project_info": {
+        "url": "https://github.com/iskraworld/iskra-contracts",
+        "commit_hash": "bc467fab9b248b9a747062944e02522012593bc2",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "increaseAmount and decreaseAmount function has no cardtype check logic",
+            "description": "The _increaseAmount()_ and _decreaseAmount()_ functions don\u2019t have cardtype checking logic. This will change _marketCards[_cardId].availableCardAmount_ value of ERC721.",
+            "severity": "Medium",
+            "contract": "Marketplace.sol",
+            "function": [
+                "increaseAmount()",
+                "decreaseAmount()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "batchUnregisterCards doesn\u2019t need to check the owner of given _cardIds",
+            "description": "The batchUnregisterCards function is checking the owner of _cardIds but unregisterCard function already has the onlyCardOwner modifier.",
+            "severity": "Tips",
+            "contract": "Marketplace.sol",
+            "function": "batchUnregisterCards",
+            "lineNumber": "500"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1173"
+                ]
+            },
+            "title": "Lack of signed data can cause signature replay attack",
+            "description": "The contract ServerSignVerifier does not include purpose and scope in the signature data, which may lead to a signature replay attack if the same signer is used by multiple contracts.",
+            "severity": "Low",
+            "contract": "ServerSignVerifier",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Contract doesn\u2019t check the return value of the transfer function",
+            "description": "When transferring ERC20 from MarketPlace Contract, the return value is not checked. If you use a token that returns false without reverting when the _transfer_ function fails, the function can be executed even if the _transfer_ function fails.",
+            "severity": "Tips",
+            "contract": "Marketplace.sol",
+            "function": [
+                "calculatePayment()",
+                "claimRevenue()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "TokenPricer contract must validate expiration value",
+            "description": "The client sets the expiration value, but the _TokenPricerByVerifying_ contract does not know when the data was created and signed. If there is a price change with a client setting the expiration high, it can cause a problem.",
+            "severity": "Tips",
+            "contract": "TokenPricerByVerifying",
+            "function": "getPrice(bytes memory _data)",
+            "lineNumber": "L15"
+        }
+    ]
+}

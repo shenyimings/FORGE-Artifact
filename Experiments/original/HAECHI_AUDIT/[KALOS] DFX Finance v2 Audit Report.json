@@ -1,1 +1,229 @@
-{"path": "./Audit_Reports_2024/HAECHI_AUDIT/[KALOS] DFX Finance v2 Audit Report.pdf", "project_info": {"url": "https://github.com/dfx-finance/protocol-v2", "commit_hash": "5b4482440c4c3b636398b968283bcbb014809455", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"], "2": ["CWE-191"]}, "title": "LP withdrawal may not work if the minter is not the withdrawer", "description": "The withdraw function decreases the totalMinted value of msg.sender, causing a problem when the user calling withdraw() is not the one who minted the LP tokens, leading to an underflow and making the transferability of the LP token practically useless.", "severity": "High", "contract": "Curve.sol", "function": "withdraw()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "The whitelisting option is always turned off", "description": "In the newCurve() method of CurveFactoryV2 contract, the turnOffWhitelisting() function is called immediately after a new curve is deployed, making the whitelisting option turned off. There are no functions to turn the whitelisting options back on.", "severity": "Tips", "contract": "CurveFactoryV2", "function": "newCurve()", "lineNumber": "#L218"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "newCurve() cause DoS by Front-Running", "description": "The newCurve() function can cause a denial of service (DoS) via front-running.", "severity": "Medium", "contract": "CurveFactoryV2.sol", "function": "newCurve(CurveInfo)", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-693"]}, "title": "unzap() has no MEV Protection", "description": "The unzap() function lacks MEV protection, allowing users to be sandwiched and lose a significant portion of their money.", "severity": "Medium", "contract": "Zap.sol", "function": "unzap()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "newCurve() needs more input validation", "description": "The newCurves() function lacks sufficient input validation, which can lead to issues if users deposit LP. It is recommended to validate inputs such as base weights and quote weights, base currency, quote currency, token decimals, and oracle address.", "severity": "Medium", "contract": "CurveFactoryV2.sol", "function": "newCurves()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "targetSwap\u2019s buggy implementation leads to LP draining attack", "description": "The `_targetAmount` argument specifies the raw amount of target to be received, but there is a logic error/bug in the `targetSwap` function that can lead to LP draining attacks.", "severity": "Critical", "contract": "Swaps.sol", "function": "targetSwap()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Front-Running on pool guard amount setting", "description": "Two types of front-running are possible: user front-runs owner by depositing more LP than desired pool guard amount, or owner front-runs user by setting pool guard amount less than user's deposit amount.", "severity": "Tips", "contract": "Curve.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-697"]}, "title": "Lack of Zero Address Check for Factory Address", "description": "The `curveFactory` address parameter needs to be checked if it is the zero address.", "severity": "Tips", "contract": "AssimilatorFactory.sol", "function": ["constructor", "setCurveFactory"], "lineNumber": ["N/A", "L22"]}, {"id": 8, "category": {"1": ["CWE-682"]}, "title": "AssimilatorFactory\u2019s transferFee() method does not use their return parameter", "description": "`transferFee()` method\u2019s return parameter `transferSuccess_` boolean variable is not used and returns false which is unintuitive.", "severity": "Tips", "contract": "AssimilatorV2", "function": "transferFee()", "lineNumber": "234"}, {"id": 9, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Oracle Update Can Be Sandwiched to Extract Value from LP, Fee Parameter Is Incorrectly Set", "description": "The Chainlink price oracle information can be sandwiched between two swaps to extract value from liquidity providers due to incorrectly set fee parameters.", "severity": "Tips", "contract": "N/A", "function": "swap functions", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-682"]}, "title": "Assimilator\u2019s functions can be simplified, and improve on precision as well", "description": "The Assimilator's functions can be improved for gas efficiency, precision, and code readability by simplifying computations. For example, `viewNumeraireBalanceLPRatio` can be rewritten as `(bal(usdc) * baseWeight) / (10^6 * quoteWeight)` in ABDKMath64x64 form.", "severity": "Tips", "contract": "AssimilatorV2.sol", "function": "intakeNumeraireLPRatio, viewRawAmountLPRatio, viewNumeraireBalanceLPRatio", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-682"]}, "title": "Incorrect calculation of _swapInfo.totalFees may lead to excessive fees for the user", "description": "The incorrect calculation of total fees due to using input tokens instead of output tokens can result in excessive fees for users.", "severity": "Low", "contract": "Swaps.sol", "function": "N/A", "lineNumber": "71"}, {"id": 12, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "The first LP can be front-run to lose a portion of their assets, via unbalanced small transfer", "description": "An attacker can front-run an LP's transaction and send very small amounts of tokens to create an unbalanced liquidity pool, allowing them to steal a significant amount of assets.", "severity": "Critical", "contract": "ProportionalLiquidity.sol", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/HAECHI_AUDIT/[KALOS] DFX Finance v2 Audit Report.pdf",
+    "project_info": {
+        "url": "https://github.com/dfx-finance/protocol-v2",
+        "commit_hash": "5b4482440c4c3b636398b968283bcbb014809455",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-191"
+                ]
+            },
+            "title": "LP withdrawal may not work if the minter is not the withdrawer",
+            "description": "The withdraw function decreases the totalMinted value of msg.sender, causing a problem when the user calling withdraw() is not the one who minted the LP tokens, leading to an underflow and making the transferability of the LP token practically useless.",
+            "severity": "High",
+            "contract": "Curve.sol",
+            "function": "withdraw()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "The whitelisting option is always turned off",
+            "description": "In the newCurve() method of CurveFactoryV2 contract, the turnOffWhitelisting() function is called immediately after a new curve is deployed, making the whitelisting option turned off. There are no functions to turn the whitelisting options back on.",
+            "severity": "Tips",
+            "contract": "CurveFactoryV2",
+            "function": "newCurve()",
+            "lineNumber": "#L218"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "newCurve() cause DoS by Front-Running",
+            "description": "The newCurve() function can cause a denial of service (DoS) via front-running.",
+            "severity": "Medium",
+            "contract": "CurveFactoryV2.sol",
+            "function": "newCurve(CurveInfo)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "unzap() has no MEV Protection",
+            "description": "The unzap() function lacks MEV protection, allowing users to be sandwiched and lose a significant portion of their money.",
+            "severity": "Medium",
+            "contract": "Zap.sol",
+            "function": "unzap()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "newCurve() needs more input validation",
+            "description": "The newCurves() function lacks sufficient input validation, which can lead to issues if users deposit LP. It is recommended to validate inputs such as base weights and quote weights, base currency, quote currency, token decimals, and oracle address.",
+            "severity": "Medium",
+            "contract": "CurveFactoryV2.sol",
+            "function": "newCurves()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "targetSwap\u2019s buggy implementation leads to LP draining attack",
+            "description": "The `_targetAmount` argument specifies the raw amount of target to be received, but there is a logic error/bug in the `targetSwap` function that can lead to LP draining attacks.",
+            "severity": "Critical",
+            "contract": "Swaps.sol",
+            "function": "targetSwap()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Front-Running on pool guard amount setting",
+            "description": "Two types of front-running are possible: user front-runs owner by depositing more LP than desired pool guard amount, or owner front-runs user by setting pool guard amount less than user's deposit amount.",
+            "severity": "Tips",
+            "contract": "Curve.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ]
+            },
+            "title": "Lack of Zero Address Check for Factory Address",
+            "description": "The `curveFactory` address parameter needs to be checked if it is the zero address.",
+            "severity": "Tips",
+            "contract": "AssimilatorFactory.sol",
+            "function": [
+                "constructor",
+                "setCurveFactory"
+            ],
+            "lineNumber": [
+                "N/A",
+                "L22"
+            ]
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "AssimilatorFactory\u2019s transferFee() method does not use their return parameter",
+            "description": "`transferFee()` method\u2019s return parameter `transferSuccess_` boolean variable is not used and returns false which is unintuitive.",
+            "severity": "Tips",
+            "contract": "AssimilatorV2",
+            "function": "transferFee()",
+            "lineNumber": "234"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Oracle Update Can Be Sandwiched to Extract Value from LP, Fee Parameter Is Incorrectly Set",
+            "description": "The Chainlink price oracle information can be sandwiched between two swaps to extract value from liquidity providers due to incorrectly set fee parameters.",
+            "severity": "Tips",
+            "contract": "N/A",
+            "function": "swap functions",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Assimilator\u2019s functions can be simplified, and improve on precision as well",
+            "description": "The Assimilator's functions can be improved for gas efficiency, precision, and code readability by simplifying computations. For example, `viewNumeraireBalanceLPRatio` can be rewritten as `(bal(usdc) * baseWeight) / (10^6 * quoteWeight)` in ABDKMath64x64 form.",
+            "severity": "Tips",
+            "contract": "AssimilatorV2.sol",
+            "function": "intakeNumeraireLPRatio, viewRawAmountLPRatio, viewNumeraireBalanceLPRatio",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect calculation of _swapInfo.totalFees may lead to excessive fees for the user",
+            "description": "The incorrect calculation of total fees due to using input tokens instead of output tokens can result in excessive fees for users.",
+            "severity": "Low",
+            "contract": "Swaps.sol",
+            "function": "N/A",
+            "lineNumber": "71"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "The first LP can be front-run to lose a portion of their assets, via unbalanced small transfer",
+            "description": "An attacker can front-run an LP's transaction and send very small amounts of tokens to create an unbalanced liquidity pool, allowing them to steal a significant amount of assets.",
+            "severity": "Critical",
+            "contract": "ProportionalLiquidity.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

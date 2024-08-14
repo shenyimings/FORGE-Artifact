@@ -1,1 +1,169 @@
-{"path": "./Audit_Reports_2024/Ackee_Blockchain/ackee-blockchain-helio-report.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "C1: `withdraw_ayment` and `cancel_ayment` instructions will not work after the pay stream ends", "description": "The `amount_available` method may lead to a situation where the number of intervals is higher than it actually is, causing the recipient to be unable to claim tokens for services offered.", "severity": "High", "contract": "payment.rs", "function": "withdraw_ayment and cancel_ayment instructions", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "C2: Possibility of stealing tokens from escrow token account", "description": "The `Withdraw` context does not check whether the given `payment_token_account` is associated with the `payment_account`. This allows an attacker to pass in any `payment__token_ account`, potentially leading to token theft.", "severity": "High", "contract": "withdraw.rs, cancel_payment.rs", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "C3: Possibility of stuck tokens", "description": "The `amount_available` method will not work if the `amount * interval < duration`. In such cases, the `interval_amount` will be zero (due to truncating division), and it causes the result of the `amount_available` method to be zero, even though the escrow account contains some tokens.", "severity": "High", "contract": "payment.rs", "function": "withdraw_payment", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-707"], "2": ["CWE-74"], "3": ["CWE-99"]}, "title": "C4: Using the same struct for SOL payments as for token payments results in the possibility of a tokens lock attack", "description": "Using the same struct for SOL payments as for token payments allows sending a valid token payment into SOL instructions instead of SOL payment, resulting in a tokens lock attack.", "severity": "High", "contract": "N/A", "function": "cancel_payment.rs", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-664"], "2": ["CWE-404"], "3": ["CWE-772"], "4": ["CWE-775"]}, "title": "M1: Hanging `payment_token_account` (s)", "description": "There is currently no way to close (`payment_token_account`) accounts, and fees stay stuck there forever.", "severity": "Low", "contract": "cancel_payment.rs", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-664"], "2": ["CWE-400"]}, "title": "L1: Using `find_program_address` instead of `create_program_address`", "description": "Using `find_program_address` may exceed the instruction compute budget due to variable computation time, and it's recommended to derive PDAs in off-chain client programs using `create_program_assistant`.", "severity": "Low", "contract": "cancel_payment.rs, withdraw.rs", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1288"]}, "title": "I1: `PaymentAccount` struct has unused fields", "description": "The `id` and `nr_payments` fields of the `PaymentAccount` struct are never used.", "severity": "Informational", "contract": "payment.rs", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "I2: Unnecessary mutable modifier", "description": "In structure `CreatePayment`, accounts `recipient` and `recipient_token_account` do not have to be mutable.", "severity": "Informational", "contract": "N/A", "function": "create_payment.rs", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-682"]}, "title": "C3F: Possibility of stuck tokens", "description": "The `interval_amount` is zero when less than one smallest currency unit is due to the truncation, causing `amount_available` method to return zero even though the escrow account contains some tokens.", "severity": "High", "contract": "payment.rs", "function": "amount_available", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Ackee_Blockchain/ackee-blockchain-helio-report.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "C1: `withdraw_ayment` and `cancel_ayment` instructions will not work after the pay stream ends",
+            "description": "The `amount_available` method may lead to a situation where the number of intervals is higher than it actually is, causing the recipient to be unable to claim tokens for services offered.",
+            "severity": "High",
+            "contract": "payment.rs",
+            "function": "withdraw_ayment and cancel_ayment instructions",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "C2: Possibility of stealing tokens from escrow token account",
+            "description": "The `Withdraw` context does not check whether the given `payment_token_account` is associated with the `payment_account`. This allows an attacker to pass in any `payment__token_ account`, potentially leading to token theft.",
+            "severity": "High",
+            "contract": "withdraw.rs, cancel_payment.rs",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "C3: Possibility of stuck tokens",
+            "description": "The `amount_available` method will not work if the `amount * interval < duration`. In such cases, the `interval_amount` will be zero (due to truncating division), and it causes the result of the `amount_available` method to be zero, even though the escrow account contains some tokens.",
+            "severity": "High",
+            "contract": "payment.rs",
+            "function": "withdraw_payment",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-74"
+                ],
+                "3": [
+                    "CWE-99"
+                ]
+            },
+            "title": "C4: Using the same struct for SOL payments as for token payments results in the possibility of a tokens lock attack",
+            "description": "Using the same struct for SOL payments as for token payments allows sending a valid token payment into SOL instructions instead of SOL payment, resulting in a tokens lock attack.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "cancel_payment.rs",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-775"
+                ]
+            },
+            "title": "M1: Hanging `payment_token_account` (s)",
+            "description": "There is currently no way to close (`payment_token_account`) accounts, and fees stay stuck there forever.",
+            "severity": "Low",
+            "contract": "cancel_payment.rs",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ]
+            },
+            "title": "L1: Using `find_program_address` instead of `create_program_address`",
+            "description": "Using `find_program_address` may exceed the instruction compute budget due to variable computation time, and it's recommended to derive PDAs in off-chain client programs using `create_program_assistant`.",
+            "severity": "Low",
+            "contract": "cancel_payment.rs, withdraw.rs",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1288"
+                ]
+            },
+            "title": "I1: `PaymentAccount` struct has unused fields",
+            "description": "The `id` and `nr_payments` fields of the `PaymentAccount` struct are never used.",
+            "severity": "Informational",
+            "contract": "payment.rs",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "I2: Unnecessary mutable modifier",
+            "description": "In structure `CreatePayment`, accounts `recipient` and `recipient_token_account` do not have to be mutable.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "create_payment.rs",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "C3F: Possibility of stuck tokens",
+            "description": "The `interval_amount` is zero when less than one smallest currency unit is due to the truncation, causing `amount_available` method to return zero even though the escrow account contains some tokens.",
+            "severity": "High",
+            "contract": "payment.rs",
+            "function": "amount_available",
+            "lineNumber": "N/A"
+        }
+    ]
+}

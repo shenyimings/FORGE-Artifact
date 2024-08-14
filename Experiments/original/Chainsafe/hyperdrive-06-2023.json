@@ -1,1 +1,454 @@
-{"path": "./Audit_Reports_2024/Chainsafe/hyperdrive-06-2023.pdf", "project_info": {"url": "N/A", "commit_hash": "9e960c556654225345ddaad1ce81c81871e218d1", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Duplicate Code for Checking msg.sender", "description": "The updateImplementation(), updateGovernance(), updateHyperdriveGovernance(), and updateFees() functions have identical code for checking msg.sender. It's recommended to add an internal function or a modifier.", "severity": "Note", "contract": "HyperdriveFactory", "function": "updateImplementation(), updateGovernance(), updateHyperdriveGovernance(), updateFees()", "lineNumber": "52"}, {"id": 1, "category": {"1": ["CWE-710"], "2": ["CWE-1068"]}, "title": "Wrong Comments", "description": "There are wrong comments in HyperdriveFactory.sol contract at line 65.", "severity": "Note", "contract": "HyperdriveFactory", "function": "N/A", "lineNumber": "65"}, {"id": 2, "category": {"1": ["CWE-710"], "2": ["CWE-1068"]}, "title": "Wrong Comments", "description": "The comments on line 83 of HyperdriveFactory.sol are incorrect.", "severity": "Note", "contract": "HyperdriveFactory", "function": "N/A", "lineNumber": "83"}, {"id": 3, "category": {"1": ["CWE-710"], "2": ["CWE-1068"]}, "title": "Incorrect Comment", "description": "The comment mentions 'aave hyperdrive instance' and it should mention DSR.", "severity": "Note", "contract": "DSRHyperdriveFactory", "function": "N/A", "lineNumber": "36"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "Unclear Withdrawal Logic", "description": "The `withdraw()` function proceeds with withdrawal even when `withdrawValue` is 0 without reverting, unclear why this condition is necessary.", "severity": "Note", "contract": "AaveHyperdrive", "function": "withdraw()", "lineNumber": "108"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Incorrect Calculation of `sharePrice`", "description": "`sharePrice` is calculated incorrectly in the `_withdraw()` function and should be the opposite (`withdrawValue` / `shares`).", "severity": "Minor", "contract": "AaveHyperdrive", "function": "_withdraw()", "lineNumber": "125"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "Optimization of `totalShares` Read", "description": "The `_pricePerShare()` function reads `totalShares` multiple times from storage, which can be optimized.", "severity": "Optimization", "contract": "AaveHyperdrive", "function": "_pricePerShare()", "lineNumber": "138"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "Wrong Comment in `_deposit()` Function", "description": "There is a wrong comment in the `_deposit()` function. If `asUnderlying` is false, the transaction is reverted.", "severity": "Note", "contract": "DsrHyperdrive", "function": "_deposit()", "lineNumber": "58"}, {"id": 8, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Undocumented Function Parameter", "description": "The `asUnderlying` parameter of the `_withdraw()` function is not described.", "severity": "Note", "contract": "DsrHyperdrive", "function": "_withdraw()", "lineNumber": "100"}, {"id": 9, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Shares Amount Check", "description": "Note, a check that the `shares` amount doesn\u2019t exceed", "severity": "Note", "contract": "DsrHyperdrive", "function": "N/A", "lineNumber": "115"}, {"id": 10, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-770"]}, "title": "Multiple Reads of `pot` from Storage", "description": "The `chi()` function reads `pot` multiple times from storage, which can be optimized.", "severity": "Optimization", "contract": "DsrHyperdrive", "function": "chi()", "lineNumber": "155"}, {"id": 11, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Missing Getter for `totalShares`", "description": "There is no getter function for the variable `totalShares`.", "severity": "Note", "contract": "AaveHyperdriveDataProvider", "function": "N/A", "lineNumber": "29"}, {"id": 12, "category": {"1": ["CWE-682"]}, "title": "Incorrect Comment", "description": "The comment 'By setting these addresses to 0' is incorrect: the balances of these addresses are set to `type(uint256).max`.", "severity": "Note", "contract": "ERC20Permit", "function": "N/A", "lineNumber": "47"}, {"id": 13, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-770"]}, "title": "Unnecessary Storage Reads", "description": "The `nonces[owner]` variable is read multiple times from storage in the `permit()` function, which can be optimized.", "severity": "Optimization", "contract": "ERC20Permit", "function": "permit()", "lineNumber": "207"}, {"id": 14, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-354"]}, "title": "Insufficient Validation of mintPercent", "description": "The constructor lacks a check to ensure that mintPercent is less than 10000 (100%).", "severity": "Note", "contract": "BondWrapper", "function": "constructor()", "lineNumber": "17"}, {"id": 15, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Optimization of Maturity Time Check", "description": "Checking `maturityTime` could be performed at the first line of the `mint()` function before creating `assetId`.", "severity": "Optimization", "contract": "BondWrapper", "function": "mint()", "lineNumber": "57"}, {"id": 16, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Undefined Behavior with Force-Revert Delegatecall Pattern", "description": "Using success output as part of a force-revert delegatecall pattern can lead to undefined behavior if an unsuccessful revert occurs. It is recommended to use a staticcall wrapped delegate call pattern or ensure there are no unexpected reverts in DataProviders.", "severity": "High", "contract": "AaveHyperdriveDataProvider", "function": "N/A", "lineNumber": "18"}, {"id": 17, "category": {"1": ["CWE-682"]}, "title": "Improvement of `overestimatedProceeds` Calculation", "description": "The `removeLiquidity()` function has an `overestimatedProceeds` calculation which would be more readable as", "severity": "Minor", "contract": "HyperdriveLP", "function": "removeLiquidity()", "lineNumber": "305"}, {"id": 18, "category": {"1": ["CWE-682"]}, "title": "Improper Calculation Readability", "description": "The `_compensateWithdrawalPool()` function's `maxSharesReleased` calculation can be improved by using `_lpTotalSupply.mulDivDown(_withdrawalProceeds, _presentValue)` for better readability and unit consistency.", "severity": "Medium", "contract": "HyperdriveLP", "function": "_compensateWithdrawalPool()", "lineNumber": "483"}, {"id": 19, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Unnecessary Read of Timestamp", "description": "The `recordPrice()` function excessively reads the `_buffer[head].timestamp` which is equal to already loaded `_oracle.lastTimestamp`. This can be optimized by reusing the already loaded value.", "severity": "Optimization", "contract": "HyperdriveTWAP", "function": "recordPrice()", "lineNumber": "33"}, {"id": 20, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-770"]}, "title": "Unnecessary Storage Reads", "description": "The `_deposit()` function reads `totalShares` multiple times from storage, which can be optimized.", "severity": "Optimization", "contract": "AaveHyperdrive", "function": "_deposit()", "lineNumber": "79"}, {"id": 21, "category": {"1": ["CWE-682"]}, "title": "Multiple Reads of `totalShares` from Storage", "description": "The `_withdraw()` function reads `totalShares` multiple times from storage, which can be optimized.", "severity": "Optimization", "contract": "AaveHyperdrive", "function": "_withdraw()", "lineNumber": "106"}, {"id": 22, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Optimization of `totalShares` Read", "description": "The `_deposit()` function reads `totalShares` multiple times from storage, which can be optimized.", "severity": "Optimization", "contract": "DsrHyperdrive", "function": "_deposit()", "lineNumber": "86"}, {"id": 23, "category": {"1": ["CWE-682"]}, "title": "Multiple Reads of `totalShares` from Storage", "description": "In the `_withdraw()` function of DsrHyperdrive contract, `totalShares` is read multiple times from storage, which can be optimized.", "severity": "Optimization", "contract": "DsrHyperdrive", "function": "_withdraw()", "lineNumber": "115"}, {"id": 24, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Repeated Function Code", "description": "The `_pricePerShare()` function code is duplicated in DsrHyperdrive and DsrHyperdriveDataProvider contracts.", "severity": "Note", "contract": "DsrHyperdriveDataProvider", "function": "_pricePerShare()", "lineNumber": "73"}, {"id": 25, "category": {"1": ["CWE-682"]}, "title": "Optimization Opportunity: Early Calculation of `mintedFromBonds`", "description": "The variable `mintedFromBonds` could be calculated earlier and passed as `_minOutput` to the `hyperdrive.closeLong()` function, potentially improving efficiency.", "severity": "Note", "contract": "BondWrapper", "function": "closeLong()", "lineNumber": "110"}, {"id": 26, "category": {"1": ["CWE-682"]}, "title": "Potential Double Calculation", "description": "The `receivedAmount` is only calculated if `!andBurn` in the `mintedFromBonds` `close()` function, which could lead to double calculation and incorrect subtraction.", "severity": "Note", "contract": "BondWrapper", "function": "mintedFromBonds close()", "lineNumber": "119"}]}
+{
+    "path": "./Audit_Reports_2024/Chainsafe/hyperdrive-06-2023.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "9e960c556654225345ddaad1ce81c81871e218d1",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Duplicate Code for Checking msg.sender",
+            "description": "The updateImplementation(), updateGovernance(), updateHyperdriveGovernance(), and updateFees() functions have identical code for checking msg.sender. It's recommended to add an internal function or a modifier.",
+            "severity": "Note",
+            "contract": "HyperdriveFactory",
+            "function": "updateImplementation(), updateGovernance(), updateHyperdriveGovernance(), updateFees()",
+            "lineNumber": "52"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1068"
+                ]
+            },
+            "title": "Wrong Comments",
+            "description": "There are wrong comments in HyperdriveFactory.sol contract at line 65.",
+            "severity": "Note",
+            "contract": "HyperdriveFactory",
+            "function": "N/A",
+            "lineNumber": "65"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1068"
+                ]
+            },
+            "title": "Wrong Comments",
+            "description": "The comments on line 83 of HyperdriveFactory.sol are incorrect.",
+            "severity": "Note",
+            "contract": "HyperdriveFactory",
+            "function": "N/A",
+            "lineNumber": "83"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1068"
+                ]
+            },
+            "title": "Incorrect Comment",
+            "description": "The comment mentions 'aave hyperdrive instance' and it should mention DSR.",
+            "severity": "Note",
+            "contract": "DSRHyperdriveFactory",
+            "function": "N/A",
+            "lineNumber": "36"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Unclear Withdrawal Logic",
+            "description": "The `withdraw()` function proceeds with withdrawal even when `withdrawValue` is 0 without reverting, unclear why this condition is necessary.",
+            "severity": "Note",
+            "contract": "AaveHyperdrive",
+            "function": "withdraw()",
+            "lineNumber": "108"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect Calculation of `sharePrice`",
+            "description": "`sharePrice` is calculated incorrectly in the `_withdraw()` function and should be the opposite (`withdrawValue` / `shares`).",
+            "severity": "Minor",
+            "contract": "AaveHyperdrive",
+            "function": "_withdraw()",
+            "lineNumber": "125"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Optimization of `totalShares` Read",
+            "description": "The `_pricePerShare()` function reads `totalShares` multiple times from storage, which can be optimized.",
+            "severity": "Optimization",
+            "contract": "AaveHyperdrive",
+            "function": "_pricePerShare()",
+            "lineNumber": "138"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Wrong Comment in `_deposit()` Function",
+            "description": "There is a wrong comment in the `_deposit()` function. If `asUnderlying` is false, the transaction is reverted.",
+            "severity": "Note",
+            "contract": "DsrHyperdrive",
+            "function": "_deposit()",
+            "lineNumber": "58"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Undocumented Function Parameter",
+            "description": "The `asUnderlying` parameter of the `_withdraw()` function is not described.",
+            "severity": "Note",
+            "contract": "DsrHyperdrive",
+            "function": "_withdraw()",
+            "lineNumber": "100"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Shares Amount Check",
+            "description": "Note, a check that the `shares` amount doesn\u2019t exceed",
+            "severity": "Note",
+            "contract": "DsrHyperdrive",
+            "function": "N/A",
+            "lineNumber": "115"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "Multiple Reads of `pot` from Storage",
+            "description": "The `chi()` function reads `pot` multiple times from storage, which can be optimized.",
+            "severity": "Optimization",
+            "contract": "DsrHyperdrive",
+            "function": "chi()",
+            "lineNumber": "155"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Missing Getter for `totalShares`",
+            "description": "There is no getter function for the variable `totalShares`.",
+            "severity": "Note",
+            "contract": "AaveHyperdriveDataProvider",
+            "function": "N/A",
+            "lineNumber": "29"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect Comment",
+            "description": "The comment 'By setting these addresses to 0' is incorrect: the balances of these addresses are set to `type(uint256).max`.",
+            "severity": "Note",
+            "contract": "ERC20Permit",
+            "function": "N/A",
+            "lineNumber": "47"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "Unnecessary Storage Reads",
+            "description": "The `nonces[owner]` variable is read multiple times from storage in the `permit()` function, which can be optimized.",
+            "severity": "Optimization",
+            "contract": "ERC20Permit",
+            "function": "permit()",
+            "lineNumber": "207"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-354"
+                ]
+            },
+            "title": "Insufficient Validation of mintPercent",
+            "description": "The constructor lacks a check to ensure that mintPercent is less than 10000 (100%).",
+            "severity": "Note",
+            "contract": "BondWrapper",
+            "function": "constructor()",
+            "lineNumber": "17"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Optimization of Maturity Time Check",
+            "description": "Checking `maturityTime` could be performed at the first line of the `mint()` function before creating `assetId`.",
+            "severity": "Optimization",
+            "contract": "BondWrapper",
+            "function": "mint()",
+            "lineNumber": "57"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Undefined Behavior with Force-Revert Delegatecall Pattern",
+            "description": "Using success output as part of a force-revert delegatecall pattern can lead to undefined behavior if an unsuccessful revert occurs. It is recommended to use a staticcall wrapped delegate call pattern or ensure there are no unexpected reverts in DataProviders.",
+            "severity": "High",
+            "contract": "AaveHyperdriveDataProvider",
+            "function": "N/A",
+            "lineNumber": "18"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improvement of `overestimatedProceeds` Calculation",
+            "description": "The `removeLiquidity()` function has an `overestimatedProceeds` calculation which would be more readable as",
+            "severity": "Minor",
+            "contract": "HyperdriveLP",
+            "function": "removeLiquidity()",
+            "lineNumber": "305"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improper Calculation Readability",
+            "description": "The `_compensateWithdrawalPool()` function's `maxSharesReleased` calculation can be improved by using `_lpTotalSupply.mulDivDown(_withdrawalProceeds, _presentValue)` for better readability and unit consistency.",
+            "severity": "Medium",
+            "contract": "HyperdriveLP",
+            "function": "_compensateWithdrawalPool()",
+            "lineNumber": "483"
+        },
+        {
+            "id": 19,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Unnecessary Read of Timestamp",
+            "description": "The `recordPrice()` function excessively reads the `_buffer[head].timestamp` which is equal to already loaded `_oracle.lastTimestamp`. This can be optimized by reusing the already loaded value.",
+            "severity": "Optimization",
+            "contract": "HyperdriveTWAP",
+            "function": "recordPrice()",
+            "lineNumber": "33"
+        },
+        {
+            "id": 20,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "Unnecessary Storage Reads",
+            "description": "The `_deposit()` function reads `totalShares` multiple times from storage, which can be optimized.",
+            "severity": "Optimization",
+            "contract": "AaveHyperdrive",
+            "function": "_deposit()",
+            "lineNumber": "79"
+        },
+        {
+            "id": 21,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Multiple Reads of `totalShares` from Storage",
+            "description": "The `_withdraw()` function reads `totalShares` multiple times from storage, which can be optimized.",
+            "severity": "Optimization",
+            "contract": "AaveHyperdrive",
+            "function": "_withdraw()",
+            "lineNumber": "106"
+        },
+        {
+            "id": 22,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Optimization of `totalShares` Read",
+            "description": "The `_deposit()` function reads `totalShares` multiple times from storage, which can be optimized.",
+            "severity": "Optimization",
+            "contract": "DsrHyperdrive",
+            "function": "_deposit()",
+            "lineNumber": "86"
+        },
+        {
+            "id": 23,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Multiple Reads of `totalShares` from Storage",
+            "description": "In the `_withdraw()` function of DsrHyperdrive contract, `totalShares` is read multiple times from storage, which can be optimized.",
+            "severity": "Optimization",
+            "contract": "DsrHyperdrive",
+            "function": "_withdraw()",
+            "lineNumber": "115"
+        },
+        {
+            "id": 24,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Repeated Function Code",
+            "description": "The `_pricePerShare()` function code is duplicated in DsrHyperdrive and DsrHyperdriveDataProvider contracts.",
+            "severity": "Note",
+            "contract": "DsrHyperdriveDataProvider",
+            "function": "_pricePerShare()",
+            "lineNumber": "73"
+        },
+        {
+            "id": 25,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Optimization Opportunity: Early Calculation of `mintedFromBonds`",
+            "description": "The variable `mintedFromBonds` could be calculated earlier and passed as `_minOutput` to the `hyperdrive.closeLong()` function, potentially improving efficiency.",
+            "severity": "Note",
+            "contract": "BondWrapper",
+            "function": "closeLong()",
+            "lineNumber": "110"
+        },
+        {
+            "id": 26,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Potential Double Calculation",
+            "description": "The `receivedAmount` is only calculated if `!andBurn` in the `mintedFromBonds` `close()` function, which could lead to double calculation and incorrect subtraction.",
+            "severity": "Note",
+            "contract": "BondWrapper",
+            "function": "mintedFromBonds close()",
+            "lineNumber": "119"
+        }
+    ]
+}

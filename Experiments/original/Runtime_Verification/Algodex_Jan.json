@@ -1,1 +1,136 @@
-{"path": "./Audit_Reports_2024/Runtime_V\u0435rification/Algodex_Jan.pdf", "project_info": {"url": "https://github.com/algodex/", "commit_hash": "651f842a3aed7e752ab2ba1aa49b1fd908d04861", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "Transaction fee is not checked in Buy order creation and cancellation", "description": "The transaction fees are not checked to be within reasonable bounds when creating a Buy order or cancelling a Buy order.", "severity": "Medium", "contract": "algo_delegate_template_teal.js", "function": "N/A", "lineNumber": "48-149, 150-225"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Application ID of Algo order book is not checked when cancelling a Buy order", "description": "The Algo escrow contract intends to perform an application call to the Algo order book stateful contract, but does not check the `ApplicationID`. This allows an attacker to craft a valid order cancellation transaction group with the application call transaction referring to an arbitrary application, bringing the Algo order book into an inconsistent state.", "severity": "High", "contract": "Algo escrow", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Missing check for escrow owner in Algo order book", "description": "The code fragment starting on line 272 of dex_teal.js intends to validate that the Algo escrow contract and the Algo order book contract have consistent information on who is the escrow\u2019s owner. However, the logic does not perform the intended validation since the resulting boolean expression is popped from the stack instead of being asserted.", "severity": "N/A", "contract": "dex_teal.js", "function": "N/A", "lineNumber": "272"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "Centralized authority", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "Redundant opcodes in Algo order book contract", "description": "Use of instruction `app_local_get` is redundant when called as the next local state accessor after `app_local_get_ex`, since the latter already pushes the result of the former as the second return value onto stack.", "severity": "Informative", "contract": "dex_teal.js", "function": "N/A", "lineNumber": "208, 274"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Late check of GroupSize in Algo escrow contract", "description": "The contract starts with a loop that goes through the whole transaction group and checks the `RekeyTo` and `AssetCloseTo` properties. The checks that the transaction group is of valid size (up to four transactions) is performed later in the contract.", "severity": "Informative", "contract": "Algo escrow contract", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Redundant checks in Algo escrow contract", "description": "The Algo escrow stateless contract performs redundant validation of various transaction fields, which are not necessary and can be removed to reduce code length.", "severity": "Informative", "contract": "Algo escrow contract", "function": "N/A", "lineNumber": "66-68, 74-76"}]}
+{
+    "path": "./Audit_Reports_2024/Runtime_V\u0435rification/Algodex_Jan.pdf",
+    "project_info": {
+        "url": "https://github.com/algodex/algodex-architecture/tree/48a502e3712f5900eb9266d42a524cb4f0456851",
+        "commit_hash": "48a502e3712f5900eb9266d42a524cb4f0456851",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Transaction fee is not checked in Buy order creation and cancellation",
+            "description": "The transaction fees are not checked to be within reasonable bounds when creating a Buy order or cancelling a Buy order.",
+            "severity": "Medium",
+            "contract": "algo_delegate_template_teal.js",
+            "function": "N/A",
+            "lineNumber": "48-149, 150-225"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Application ID of Algo order book is not checked when cancelling a Buy order",
+            "description": "The Algo escrow contract intends to perform an application call to the Algo order book stateful contract, but does not check the `ApplicationID`. This allows an attacker to craft a valid order cancellation transaction group with the application call transaction referring to an arbitrary application, bringing the Algo order book into an inconsistent state.",
+            "severity": "High",
+            "contract": "Algo escrow",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Missing check for escrow owner in Algo order book",
+            "description": "The code fragment starting on line 272 of dex_teal.js intends to validate that the Algo escrow contract and the Algo order book contract have consistent information on who is the escrow\u2019s owner. However, the logic does not perform the intended validation since the resulting boolean expression is popped from the stack instead of being asserted.",
+            "severity": "N/A",
+            "contract": "dex_teal.js",
+            "function": "N/A",
+            "lineNumber": "272"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Centralized authority",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Redundant opcodes in Algo order book contract",
+            "description": "Use of instruction `app_local_get` is redundant when called as the next local state accessor after `app_local_get_ex`, since the latter already pushes the result of the former as the second return value onto stack.",
+            "severity": "Informative",
+            "contract": "dex_teal.js",
+            "function": "N/A",
+            "lineNumber": "208, 274"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Late check of GroupSize in Algo escrow contract",
+            "description": "The contract starts with a loop that goes through the whole transaction group and checks the `RekeyTo` and `AssetCloseTo` properties. The checks that the transaction group is of valid size (up to four transactions) is performed later in the contract.",
+            "severity": "Informative",
+            "contract": "Algo escrow contract",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Redundant checks in Algo escrow contract",
+            "description": "The Algo escrow stateless contract performs redundant validation of various transaction fields, which are not necessary and can be removed to reduce code length.",
+            "severity": "Informative",
+            "contract": "Algo escrow contract",
+            "function": "N/A",
+            "lineNumber": "66-68, 74-76"
+        }
+    ]
+}

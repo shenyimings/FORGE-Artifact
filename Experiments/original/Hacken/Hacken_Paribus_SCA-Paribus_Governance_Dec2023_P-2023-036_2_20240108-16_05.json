@@ -1,1 +1,134 @@
-{"path": "./Audit_Reports_2024/Hacken/Hacken_Paribus_SCA-Paribus_Governance_Dec2023_P-2023-036_2_20240108-16_05.pdf", "project_info": {"url": "https://github.com/Paribus/paribus-protocol", "commit_hash": "a45f4e9acab6879e90af4655a093f708e5418028", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "F-2023-0058 - Redundant Function", "description": "The `getBlockTimestamp()` and the `getBlockNumber()` functions are redundant, as they only return the global variables `block.timestamp` and `block.number`, leading to unnecessary gas and storage consumption.", "severity": "Info", "contract": ["Timelock.sol", "GovernorDelegate.sol"], "function": ["getBlockTimestamp()", "getBlockNumber()"], "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-703"]}, "title": "F-2023-0050 - Unsafe Use of DelegateCall", "description": "The contract uses delegatecall which does not indicate whether the callee reverted or encountered an exception, leading to execution continuation even if the delegatecall fails.", "severity": "Medium", "contract": "GovernorDelegator.sol", "function": "delegateTo(address, bytes)", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "F-2023-0053 - Redundant Fallback function", "description": "The `Timelock` contracts accept native tokens through `fallback` function. The contract's purpose is not to store native tokens, and this introduces unnecessary complexity, raises deployment costs, and may result in temporary fund lock.", "severity": "Low", "contract": "Timelock", "function": "fallback()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "F-2023-0055 - Missing Zero Address Validation", "description": "Address input parameters are being used without checking against the possibility of 0x0 value.", "severity": "Low", "contract": ["Timelock.sol", "GovernorModerator.sol", "GovernorDelegate.sol"], "function": ["_setModerator()", "_setWhitelistGuardian()", "_setPendingAdmin()", "constructor()"], "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-354"]}, "title": "F-2023-0057 - Missing Validation Of msg.value In executeTransaction()", "description": "The `executeTransaction()` function lacks validation to ensure that the `msg.value` used matches the required value for the queued transaction, which may result in a temporary funds lock.", "severity": "Medium", "contract": "Timelock", "function": "executeTransaction()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "F-2023-0060 - Funds Lock", "description": "The GovernorDelegator.sol contract's fallback function accepts native coins but cannot handle them by design, leading to a funds lock situation.", "severity": "Medium", "contract": "GovernorDelegator.sol", "function": "fallback()", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Hacken/Hacken_Paribus_SCA-Paribus_Governance_Dec2023_P-2023-036_2_20240108-16_05.pdf",
+    "project_info": {
+        "url": "https://github.com/Paribus/paribus-protocol",
+        "commit_hash": "a45f4e9acab6879e90af4655a093f708e5418028",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "F-2023-0058 - Redundant Function",
+            "description": "The `getBlockTimestamp()` and the `getBlockNumber()` functions are redundant, as they only return the global variables `block.timestamp` and `block.number`, leading to unnecessary gas and storage consumption.",
+            "severity": "Info",
+            "contract": [
+                "Timelock.sol",
+                "GovernorDelegate.sol"
+            ],
+            "function": [
+                "getBlockTimestamp()",
+                "getBlockNumber()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "F-2023-0050 - Unsafe Use of DelegateCall",
+            "description": "The contract uses delegatecall which does not indicate whether the callee reverted or encountered an exception, leading to execution continuation even if the delegatecall fails.",
+            "severity": "Medium",
+            "contract": "GovernorDelegator.sol",
+            "function": "delegateTo(address, bytes)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "F-2023-0053 - Redundant Fallback function",
+            "description": "The `Timelock` contracts accept native tokens through `fallback` function. The contract's purpose is not to store native tokens, and this introduces unnecessary complexity, raises deployment costs, and may result in temporary fund lock.",
+            "severity": "Low",
+            "contract": "Timelock",
+            "function": "fallback()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "F-2023-0055 - Missing Zero Address Validation",
+            "description": "Address input parameters are being used without checking against the possibility of 0x0 value.",
+            "severity": "Low",
+            "contract": [
+                "Timelock.sol",
+                "GovernorModerator.sol",
+                "GovernorDelegate.sol"
+            ],
+            "function": [
+                "_setModerator()",
+                "_setWhitelistGuardian()",
+                "_setPendingAdmin()",
+                "constructor()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-354"
+                ]
+            },
+            "title": "F-2023-0057 - Missing Validation Of msg.value In executeTransaction()",
+            "description": "The `executeTransaction()` function lacks validation to ensure that the `msg.value` used matches the required value for the queued transaction, which may result in a temporary funds lock.",
+            "severity": "Medium",
+            "contract": "Timelock",
+            "function": "executeTransaction()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "F-2023-0060 - Funds Lock",
+            "description": "The GovernorDelegator.sol contract's fallback function accepts native coins but cannot handle them by design, leading to a funds lock situation.",
+            "severity": "Medium",
+            "contract": "GovernorDelegator.sol",
+            "function": "fallback()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

@@ -1,1 +1,212 @@
-{"path": "./Audit_Reports_2024/Runtime_V\u0435rification/Runtime_V\u0435rification-Tinyman.pdf", "project_info": {"url": "https://github.com/malturki/tealer", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Bootstrapping Broken Pools through Ill-formed Transaction Groups", "description": "The pool_logicsig contract computes a value and pushes it to the top of the stack but that value is never used.", "severity": "High", "contract": "pool_logicsig", "function": "N/A", "lineNumber": "280-286"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Leaking Funds When Burning LP Tokens Due to Miscalculated Withdraw Amount", "description": "A calculation error in burning LP tokens can cause an incorrect amount of Asset2 to be sent out to a pooler, leading to inflation of the supply amount and incorrect price adjustments.", "severity": "Critical", "contract": "N/A", "function": "N/A", "lineNumber": "394"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"], "4": ["CWE-638"], "5": ["CWE-424"], "6": ["CWE-425"]}, "title": "Draining of Pool Funds Due to Missing GroupSize Checks", "description": "The pool_logicsig and validator_approval contracts do not check the global GroupSize property of the transaction group being executed along every possible execution path. This can potentially be exploited by an attacker to drain the pool account of its Algos and/or assets.", "severity": "Critical", "contract": "pool_logicsig, validator_approval", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Losing Unclaimed Excess LP Token Amounts When Minting (and Locking Them Up Indefinitely)", "description": "The application state update fragment incorrectly overrides the current value instead of adding to it, causing the pooler to lose any unclaimed excess amount when performing a mint operation before claiming the current excess amount.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "844-850"}, {"id": 4, "category": {"1": ["CWE-697"]}, "title": "Vulnerability to LP Token Deflation Attack", "description": "The contract incorrectly enforces the inverse of a check when the products 'minted_squared' and 'amounts_product_squared' differ only in the low 64 bits, enabling an attacker to severely deflate the value of an LP token.", "severity": "Critical", "contract": "N/A", "function": "N/A", "lineNumber": "519-538,536"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Miscalculated Protocol Fee Due to a Rounding Error", "description": "The formula for calculating the protocol fee might produce 0 more often than necessary due to integer division being performed before multiplication, resulting in significant losses in protocol fees over a large number of small-to-medium-sized swaps.", "severity": "Medium", "contract": "N/A", "function": "swap operation", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Draining/Locking Up of Funds in Pools Involving Untrusted Assets", "description": "A malicious or compromised account with authority over an asset in a Tinyman pool can drain all assets and Algos from the pool, or lock up all assets, preventing users from swapping assets or burning LP tokens.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "Alternative Protocol Fee Calculation Method", "description": "The protocol calculates the protocol fee and allocates the fee in LP tokens every time a swap operation is performed, which may generally yield less protocol fees being allocated to the protocol than what should actually be allocated due to truncation in integer division.", "severity": "Informative", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Including Arbitrary Character Sequences in Liquidity Pool Asset Name", "description": "The validator_approval contract does not check if foreign asset IDs correspond to the pool's asset pair, allowing arbitrary character sequences in liquidity pool asset names.", "severity": "Informative", "contract": "validator_approval", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "Using Tinyman as a Price Oracle", "description": "Tinyman may be used as a price oracle by querying the pool's current supply of assets, but it can potentially be manipulated by sandwiching a price query between two swaps in the opposite direction.", "severity": "Informative", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-710"], "2": ["CWE-1120"]}, "title": "Code Readability/Maintainability Improvement Opportunities", "description": "Improvement opportunities to enhance code readability and maintainability.", "severity": "Informative", "contract": "pool_logicsic, valicator_approval", "function": "N/A", "lineNumber": "Multiple locations (l[digit]+, 147, 553, 568, 651, 654, 660, 727, 729, 733, 756, 767, 5, 9)"}, {"id": 11, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Code Size Optimization Opportunities", "description": "Optimize code size by using int instead of byte to represent Asset/App IDs, factoring out common computations, and removing redundant checks.", "severity": "Informative", "contract": "N/A", "function": "N/A", "lineNumber": "269-274, 311-318"}]}
+{
+    "path": "./Audit_Reports_2024/Runtime_V\u0435rification/Runtime_V\u0435rification-Tinyman.pdf",
+    "project_info": {
+        "url": "https://github.com/malturki/tealer",
+        "commit_hash": "N/A",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Bootstrapping Broken Pools through Ill-formed Transaction Groups",
+            "description": "The pool_logicsig contract computes a value and pushes it to the top of the stack but that value is never used.",
+            "severity": "High",
+            "contract": "pool_logicsig",
+            "function": "N/A",
+            "lineNumber": "280-286"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Leaking Funds When Burning LP Tokens Due to Miscalculated Withdraw Amount",
+            "description": "A calculation error in burning LP tokens can cause an incorrect amount of Asset2 to be sent out to a pooler, leading to inflation of the supply amount and incorrect price adjustments.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "394"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ],
+                "4": [
+                    "CWE-638"
+                ],
+                "5": [
+                    "CWE-424"
+                ],
+                "6": [
+                    "CWE-425"
+                ]
+            },
+            "title": "Draining of Pool Funds Due to Missing GroupSize Checks",
+            "description": "The pool_logicsig and validator_approval contracts do not check the global GroupSize property of the transaction group being executed along every possible execution path. This can potentially be exploited by an attacker to drain the pool account of its Algos and/or assets.",
+            "severity": "Critical",
+            "contract": "pool_logicsig, validator_approval",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Losing Unclaimed Excess LP Token Amounts When Minting (and Locking Them Up Indefinitely)",
+            "description": "The application state update fragment incorrectly overrides the current value instead of adding to it, causing the pooler to lose any unclaimed excess amount when performing a mint operation before claiming the current excess amount.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "844-850"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ]
+            },
+            "title": "Vulnerability to LP Token Deflation Attack",
+            "description": "The contract incorrectly enforces the inverse of a check when the products 'minted_squared' and 'amounts_product_squared' differ only in the low 64 bits, enabling an attacker to severely deflate the value of an LP token.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "519-538,536"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Miscalculated Protocol Fee Due to a Rounding Error",
+            "description": "The formula for calculating the protocol fee might produce 0 more often than necessary due to integer division being performed before multiplication, resulting in significant losses in protocol fees over a large number of small-to-medium-sized swaps.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "swap operation",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Draining/Locking Up of Funds in Pools Involving Untrusted Assets",
+            "description": "A malicious or compromised account with authority over an asset in a Tinyman pool can drain all assets and Algos from the pool, or lock up all assets, preventing users from swapping assets or burning LP tokens.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Alternative Protocol Fee Calculation Method",
+            "description": "The protocol calculates the protocol fee and allocates the fee in LP tokens every time a swap operation is performed, which may generally yield less protocol fees being allocated to the protocol than what should actually be allocated due to truncation in integer division.",
+            "severity": "Informative",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Including Arbitrary Character Sequences in Liquidity Pool Asset Name",
+            "description": "The validator_approval contract does not check if foreign asset IDs correspond to the pool's asset pair, allowing arbitrary character sequences in liquidity pool asset names.",
+            "severity": "Informative",
+            "contract": "validator_approval",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Using Tinyman as a Price Oracle",
+            "description": "Tinyman may be used as a price oracle by querying the pool's current supply of assets, but it can potentially be manipulated by sandwiching a price query between two swaps in the opposite direction.",
+            "severity": "Informative",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1120"
+                ]
+            },
+            "title": "Code Readability/Maintainability Improvement Opportunities",
+            "description": "Improvement opportunities to enhance code readability and maintainability.",
+            "severity": "Informative",
+            "contract": "pool_logicsic, valicator_approval",
+            "function": "N/A",
+            "lineNumber": "Multiple locations (l[digit]+, 147, 553, 568, 651, 654, 660, 727, 729, 733, 756, 767, 5, 9)"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Code Size Optimization Opportunities",
+            "description": "Optimize code size by using int instead of byte to represent Asset/App IDs, factoring out common computations, and removing redundant checks.",
+            "severity": "Informative",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "269-274, 311-318"
+        }
+    ]
+}

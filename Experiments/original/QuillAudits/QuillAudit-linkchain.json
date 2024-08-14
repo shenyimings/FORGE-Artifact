@@ -1,1 +1,272 @@
-{"path": "./Audit_Reports_2024/QuillAudits/QuillAudit-linkchain.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "No bounty function is present, but tokens for the same are reserved", "description": "Tokens are reserved for bounty (BOUNTY_TOKENS = 2000000) without a corresponding bounty function.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Hardcap and softcap in terms of dollars in description and ether in smart contracts", "description": "Inconsistency between hardcap and softcap definitions in description (dollars) and smart contract implementation (ether), requiring an ether to dollar conversion mechanism.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Token Pool Initialization Error", "description": "The totalSupply and other token pools are not being multiplied by 10\u00b9\u2078, which is a standard decimal precision for tokens.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Inconsistent Investment Price Unit", "description": "The minimum investment price is specified in USD in the description but implemented in ether in the contract.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-710"], "2": ["CWE-1076"], "3": ["CWE-1078"], "4": ["CWE-1099"]}, "title": "Declaration of a variables and function name is not standardised at all", "description": "Variables and function names are not following the Solidity style guide, which can lead to confusion and errors.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "No Reserve Account as Mentioned in Deployment Steps", "description": "The constructor of crowdsale does not have a reserve account as specified in the deployment steps.", "severity": "Medium", "contract": "Crowdsale", "function": "constructor", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Unprotected Whitelisting", "description": "The addAddressToWhitelist function does not check the current stage of a sale before whitelisting the user, which can lead to whitelisting users for already ended sales.", "severity": "Medium", "contract": "N/A", "function": "addAddressToWhitelist()", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-233"], "4": ["CWE-236"]}, "title": "Solidity version must be fixed", "description": "The Solidity version pragma should be a fixed version instead of a range.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-435"]}, "title": "Incorrect Contract Separation", "description": "Only tokens for sale should be part of tokenSale contract and rest of functionality should be handled in token contract only.", "severity": "Medium", "contract": "tokenSale", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-710"], "2": ["CWE-1076"], "3": ["CWE-1078"], "4": ["CWE-1106"]}, "title": "Should use view keyword instead of constant in following functions", "description": "The functions allowance, balanceOf, and getStopReceive are declared with the 'constant' keyword, which is deprecated. It is recommended to replace 'constant' with 'view' for better code readability and maintainability.", "severity": "Medium", "contract": "N/A", "function": ["allowance(address owner, address spender)", "balanceOf(address who)", "getStopReceive()"], "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-710"], "2": ["CWE-1061"]}, "title": "Variable and function names should be meaningFul", "description": "Some of the variable names are totally meaningless. For example, 'idtotokens' does not make any sense. It should be like 'StageToTokens'. If you are calculating number of tokens in every stage of sale.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-703"]}, "title": "Constructor of crowdsale must check the argument with require statement", "description": "The constructor of the crowdsale contract does not validate its arguments using a require statement, which can lead to unnecessary gas waste if incorrect arguments are passed.", "severity": "Medium", "contract": "Crowdsale", "function": "constructor()", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-682"]}, "title": "No Conversion of Ether to USD", "description": "The contract uses ether as the unit of measurement but the conversion rate is dynamic and not explicitly defined.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-710"], "2": ["CWE-1059"]}, "title": "Contract Structure Readability", "description": "The contract structure should be organized in a way that makes it easy for the community to understand.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-710"], "2": ["CWE-1059"]}, "title": "Code should be properly commented", "description": "The code lacks proper comments, making it difficult for the community to understand the contract structure.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/QuillAudits/QuillAudit-linkchain.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "No bounty function is present, but tokens for the same are reserved",
+            "description": "Tokens are reserved for bounty (BOUNTY_TOKENS = 2000000) without a corresponding bounty function.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Hardcap and softcap in terms of dollars in description and ether in smart contracts",
+            "description": "Inconsistency between hardcap and softcap definitions in description (dollars) and smart contract implementation (ether), requiring an ether to dollar conversion mechanism.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Token Pool Initialization Error",
+            "description": "The totalSupply and other token pools are not being multiplied by 10\u00b9\u2078, which is a standard decimal precision for tokens.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Inconsistent Investment Price Unit",
+            "description": "The minimum investment price is specified in USD in the description but implemented in ether in the contract.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1076"
+                ],
+                "3": [
+                    "CWE-1078"
+                ],
+                "4": [
+                    "CWE-1099"
+                ]
+            },
+            "title": "Declaration of a variables and function name is not standardised at all",
+            "description": "Variables and function names are not following the Solidity style guide, which can lead to confusion and errors.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "No Reserve Account as Mentioned in Deployment Steps",
+            "description": "The constructor of crowdsale does not have a reserve account as specified in the deployment steps.",
+            "severity": "Medium",
+            "contract": "Crowdsale",
+            "function": "constructor",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Unprotected Whitelisting",
+            "description": "The addAddressToWhitelist function does not check the current stage of a sale before whitelisting the user, which can lead to whitelisting users for already ended sales.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "addAddressToWhitelist()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-233"
+                ],
+                "4": [
+                    "CWE-236"
+                ]
+            },
+            "title": "Solidity version must be fixed",
+            "description": "The Solidity version pragma should be a fixed version instead of a range.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ]
+            },
+            "title": "Incorrect Contract Separation",
+            "description": "Only tokens for sale should be part of tokenSale contract and rest of functionality should be handled in token contract only.",
+            "severity": "Medium",
+            "contract": "tokenSale",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1076"
+                ],
+                "3": [
+                    "CWE-1078"
+                ],
+                "4": [
+                    "CWE-1106"
+                ]
+            },
+            "title": "Should use view keyword instead of constant in following functions",
+            "description": "The functions allowance, balanceOf, and getStopReceive are declared with the 'constant' keyword, which is deprecated. It is recommended to replace 'constant' with 'view' for better code readability and maintainability.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": [
+                "allowance(address owner, address spender)",
+                "balanceOf(address who)",
+                "getStopReceive()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1061"
+                ]
+            },
+            "title": "Variable and function names should be meaningFul",
+            "description": "Some of the variable names are totally meaningless. For example, 'idtotokens' does not make any sense. It should be like 'StageToTokens'. If you are calculating number of tokens in every stage of sale.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Constructor of crowdsale must check the argument with require statement",
+            "description": "The constructor of the crowdsale contract does not validate its arguments using a require statement, which can lead to unnecessary gas waste if incorrect arguments are passed.",
+            "severity": "Medium",
+            "contract": "Crowdsale",
+            "function": "constructor()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "No Conversion of Ether to USD",
+            "description": "The contract uses ether as the unit of measurement but the conversion rate is dynamic and not explicitly defined.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1059"
+                ]
+            },
+            "title": "Contract Structure Readability",
+            "description": "The contract structure should be organized in a way that makes it easy for the community to understand.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1059"
+                ]
+            },
+            "title": "Code should be properly commented",
+            "description": "The code lacks proper comments, making it difficult for the community to understand the contract structure.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

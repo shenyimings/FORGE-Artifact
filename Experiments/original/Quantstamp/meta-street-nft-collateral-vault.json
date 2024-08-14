@@ -1,1 +1,170 @@
-{"path": "./Audit_Reports_2024/Quantstamp/meta-street-nft-collateral-vault.pdf", "project_info": {"url": "https://github.com/metastreet-contracts", "commit_hash": "29cfed7", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"], "2": ["CWE-369"]}, "title": "QSP-13 Zero-Value Transfers", "description": "It is currently possible to withdraw or request the redemption of the zero amount.", "severity": "Undetermined", "contract": "LPToken, Vault", "function": "deposit(), redeem(), withdraw()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-237"]}, "title": "Lack of documentation on the Admin Fee implementation in the white paper", "description": "The white paper lacks documentation on the Admin Fee implementation.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-703"]}, "title": "Lack of documentation on the note adapter implementation in the white paper", "description": "The white paper lacks documentation on the note adapter implementation.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "System is only compatible with ERC20 tokens with 18 decimals", "description": "The system has a limitation where it can only work with ERC20 tokens that have 18 decimals.", "severity": "Undetermined", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Loan Default : Could not find the exact corresponding code", "description": "The code for Loan Default is not present in the scope.", "severity": "Unknown", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-237"], "4": ["CWE-239"]}, "title": "Collateral Value : There is no corresponding code", "description": "The documentation mentions Collateral Value but there is no corresponding code found in the scope.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Sell Note shows some discrepancies: Validate loan purchase price is greater than minimum purchase price", "description": "The sellNote function lacks validation of loan purchase price being greater than the minimum purchase price.", "severity": "Medium", "contract": "Vault", "function": "_sellNote(...)", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Validate Vault has sufficient cash for purchase", "description": "Unclear whether it is expected to be `purchasePrice > _totalCashBalance` or `purchasePrice >= _totalCashBalance`.", "severity": "N/A", "contract": "Vault", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-682"]}, "title": "Validate Senior Tranche Return is less than loan return was not found in the code", "description": "Admin fees are only applicable to successful loan repayments, but the adminFeeRate has not been factored out of the seniorTrancheReturn on unsuccessful loan repayments.", "severity": "Medium Risk", "contract": "Vault.sol", "function": "_sellNote(...) and onLoadExpired(...)", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Quantstamp/meta-street-nft-collateral-vault.pdf",
+    "project_info": {
+        "url": "https://github.com/metastreet-labs/metastreet-contracts/tree/a09c65f7fcf4d0f1eb42ef12b6eda9f1de3b5389",
+        "commit_hash": "a09c65f7fcf4d0f1eb42ef12b6eda9f1de3b5389",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-369"
+                ]
+            },
+            "title": "QSP-13 Zero-Value Transfers",
+            "description": "It is currently possible to withdraw or request the redemption of the zero amount.",
+            "severity": "Undetermined",
+            "contract": "LPToken, Vault",
+            "function": "deposit(), redeem(), withdraw()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-237"
+                ]
+            },
+            "title": "Lack of documentation on the Admin Fee implementation in the white paper",
+            "description": "The white paper lacks documentation on the Admin Fee implementation.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Lack of documentation on the note adapter implementation in the white paper",
+            "description": "The white paper lacks documentation on the note adapter implementation.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "System is only compatible with ERC20 tokens with 18 decimals",
+            "description": "The system has a limitation where it can only work with ERC20 tokens that have 18 decimals.",
+            "severity": "Undetermined",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Loan Default : Could not find the exact corresponding code",
+            "description": "The code for Loan Default is not present in the scope.",
+            "severity": "Unknown",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-237"
+                ],
+                "4": [
+                    "CWE-239"
+                ]
+            },
+            "title": "Collateral Value : There is no corresponding code",
+            "description": "The documentation mentions Collateral Value but there is no corresponding code found in the scope.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Sell Note shows some discrepancies: Validate loan purchase price is greater than minimum purchase price",
+            "description": "The sellNote function lacks validation of loan purchase price being greater than the minimum purchase price.",
+            "severity": "Medium",
+            "contract": "Vault",
+            "function": "_sellNote(...)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Validate Vault has sufficient cash for purchase",
+            "description": "Unclear whether it is expected to be `purchasePrice > _totalCashBalance` or `purchasePrice >= _totalCashBalance`.",
+            "severity": "N/A",
+            "contract": "Vault",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Validate Senior Tranche Return is less than loan return was not found in the code",
+            "description": "Admin fees are only applicable to successful loan repayments, but the adminFeeRate has not been factored out of the seniorTrancheReturn on unsuccessful loan repayments.",
+            "severity": "Medium Risk",
+            "contract": "Vault.sol",
+            "function": "_sellNote(...) and onLoadExpired(...)",
+            "lineNumber": "N/A"
+        }
+    ]
+}

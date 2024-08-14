@@ -1,1 +1,56 @@
-{"path": "./Audit_Reports_2024/Iosiro/Iosiro-1inch Exchange Staking Rewards Smart Contract Audit.pdf", "project_info": {"url": "https://github.com/1inch-exchange/1inch-liquidity-protocol", "commit_hash": "c9c8bc600e8e7897f70f84b006de601d4f4bcbe3", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Unbounded for-loop anti-pattern", "description": "The `tokenRewards` array continually grows due to the inability to remove completed staking reward programs, impacting gas costs of functions that loop through it.", "severity": "Informational", "contract": "BaseReward.sol", "function": "updateReward()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-693"]}, "title": "Missing reentrancy protection", "description": "The `getReward` function did not make use of a modifier to protect against potential reentrancy attacks.", "severity": "Informational", "contract": "BaseRewards.sol", "function": "getReward()", "lineNumber": "L75"}, {"id": 2, "category": {"1": ["CWE-435"], "2": ["CWE-436"]}, "title": "Potential conflict between TokenRewards with the same gift", "description": "The contract owner could add multiple `TokenReward` programs with the same ERC-20 gift. If the `rewardDistribution` of one `TokenReward` program sent tokens and only distributed a portion of the tokens through the `notifyRewardAmount` function, the remaining tokens would be available for the other `TokenReward` instances to claim.", "severity": "Low", "contract": "BaseRewards.sol", "function": "N/A", "lineNumber": "L116"}]}
+{
+    "path": "./Audit_Reports_2024/Iosiro/Iosiro-1inch Exchange Staking Rewards Smart Contract Audit.pdf",
+    "project_info": {
+        "url": "https://github.com/1inch-exchange/1inch-liquidity-protocol",
+        "commit_hash": "c9c8bc600e8e7897f70f84b006de601d4f4bcbe3",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Unbounded for-loop anti-pattern",
+            "description": "The `tokenRewards` array continually grows due to the inability to remove completed staking reward programs, impacting gas costs of functions that loop through it.",
+            "severity": "Informational",
+            "contract": "BaseReward.sol",
+            "function": "updateReward()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "Missing reentrancy protection",
+            "description": "The `getReward` function did not make use of a modifier to protect against potential reentrancy attacks.",
+            "severity": "Informational",
+            "contract": "BaseRewards.sol",
+            "function": "getReward()",
+            "lineNumber": "L75"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ]
+            },
+            "title": "Potential conflict between TokenRewards with the same gift",
+            "description": "The contract owner could add multiple `TokenReward` programs with the same ERC-20 gift. If the `rewardDistribution` of one `TokenReward` program sent tokens and only distributed a portion of the tokens through the `notifyRewardAmount` function, the remaining tokens would be available for the other `TokenReward` instances to claim.",
+            "severity": "Low",
+            "contract": "BaseRewards.sol",
+            "function": "N/A",
+            "lineNumber": "L116"
+        }
+    ]
+}

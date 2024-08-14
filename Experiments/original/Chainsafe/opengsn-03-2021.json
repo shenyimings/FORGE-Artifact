@@ -1,1 +1,352 @@
-{"path": "./Audit_Reports_2024/Chainsafe/opengsn-03-2021.pdf", "project_info": {"url": "N/A", "commit_hash": "9856bdd7b55a779452fa7f30eebe39ef36a7b411", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-707"], "2": ["CWE-116"], "3": ["CWE-838"]}, "title": "Forwarder suffixData", "description": "Consider modifying the interface so that suffixData is accepted in a hash form.", "severity": "Low", "contract": "Forwarder", "function": "N/A", "lineNumber": "40"}, {"id": 1, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "IStakeManager unstakeDelay and withdrawBlock optimization", "description": "Optimization opportunity to pack unstakeDelay and withdrawBlock into the same slot as the owner in order to optimize gas usage.", "severity": "Informational", "contract": "IStakeManager", "function": "N/A", "lineNumber": "55"}, {"id": 2, "category": {"1": ["CWE-710"], "2": ["CWE-477"]}, "title": "Unused Function readAddress", "description": "The function `readAddress` is not used and can be considered obsolete.", "severity": "Note", "contract": "MinLibBytes", "function": "readAddress()", "lineNumber": "22"}, {"id": 3, "category": {"1": ["CWE-664"], "2": ["CWE-404"], "3": ["CWE-772"], "4": ["CWE-775"]}, "title": "BasePaymaster ERC20 token withdrawal", "description": "Consider adding a function to withdraw ERC20 tokens from the paymaster, in case they end up locked.", "severity": "Informational", "contract": "BasePaymaster", "function": "N/A", "lineNumber": "99"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "RelayHub gas usage optimization", "description": "Optimization, `balances[account]` read twice in this function. Consider putting it into a local variable to optimize gas usage.", "severity": "Low", "contract": "RelayHub", "function": "N/A", "lineNumber": "121"}, {"id": 5, "category": {"1": ["CWE-682"], "2": ["CWE-191"]}, "title": "RelayHub underflow possibility", "description": "Subtraction could cause an underflow though it is safe because it will revert further down in `calculateCharge` and the worker can be subsequently penalized.", "severity": "N/A", "contract": "RelayHub", "function": "N/A", "lineNumber": "240"}, {"id": 6, "category": {"1": ["CWE-435"]}, "title": "RelayHub stakeInfo pulling", "description": "The `stakeInfo` is excessively pulled from the `StakeManager` and then immediately passed back to it.", "severity": "Optimization", "contract": "RelayHub", "function": "N/A", "lineNumber": "418"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "StakeManager excessive storage reads", "description": "Optimization, there are 3 excessive storage reads here, consider using local variables instead to optimize gas usage.", "severity": "Low", "contract": "StakeManager", "function": "N/A", "lineNumber": "43"}, {"id": 8, "category": {"1": ["CWE-664"], "2": ["CWE-400"]}, "title": "StakeManager ether burning", "description": "Burning ether could be wasteful. Consider directing it to", "severity": "Note", "contract": "StakeManager", "function": "N/A", "lineNumber": "140"}, {"id": 9, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"], "4": ["CWE-638"], "5": ["CWE-424"], "6": ["CWE-425"]}, "title": "RelayHub penalizer modification", "description": "RelayHub's `penalizer` could not be modified.", "severity": "N/A", "contract": "RelayHub", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "RelayHub workerToManager clearing", "description": "workerToManager could not be cleared once assigned.", "severity": "Medium", "contract": "RelayHub", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-770"]}, "title": "RelayHub workerCount increase limitation", "description": "workerCount could not increase above the maxWorkerCount", "severity": "Medium", "contract": "RelayHub", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "RelayHub penalize caller restriction", "description": "The `penalize` function can only be called by `penalizer` in RelayHub.", "severity": "Medium", "contract": "RelayHub", "function": "penalize()", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "RelayHub Paymaster balance decrease", "description": "Paymaster's balance could not be decreased without the legitimate relay request.", "severity": "N/A", "contract": "RelayHub", "function": "N/A", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "StakeManager relay manager and owner address equality", "description": "Relay manager and its owner cannot have the same address.", "severity": "N/A", "contract": "StakeManager", "function": "N/A", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-770"]}, "title": "StakeManager stakes sum limitation", "description": "Sum of the `stakes` is always less than or equal to the StakeManager contract's balance.", "severity": "N/A", "contract": "StakeManager", "function": "N/A", "lineNumber": "N/A"}, {"id": 16, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "StakeManager stake decrease restriction", "description": "Stake could not be decreased without a call from RelayHub or the stake owner.", "severity": "N/A", "contract": "StakeManager", "function": "N/A", "lineNumber": "N/A"}, {"id": 17, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "StakeManager unstakeDelay decrease restriction", "description": "unstakeDelay could not be decreased without a withdrawal.", "severity": "N/A", "contract": "StakeManager", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Chainsafe/opengsn-03-2021.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "9856bdd7b55a779452fa7f30eebe39ef36a7b411",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-116"
+                ],
+                "3": [
+                    "CWE-838"
+                ]
+            },
+            "title": "Forwarder suffixData",
+            "description": "Consider modifying the interface so that suffixData is accepted in a hash form.",
+            "severity": "Low",
+            "contract": "Forwarder",
+            "function": "N/A",
+            "lineNumber": "40"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "IStakeManager unstakeDelay and withdrawBlock optimization",
+            "description": "Optimization opportunity to pack unstakeDelay and withdrawBlock into the same slot as the owner in order to optimize gas usage.",
+            "severity": "Informational",
+            "contract": "IStakeManager",
+            "function": "N/A",
+            "lineNumber": "55"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-477"
+                ]
+            },
+            "title": "Unused Function readAddress",
+            "description": "The function `readAddress` is not used and can be considered obsolete.",
+            "severity": "Note",
+            "contract": "MinLibBytes",
+            "function": "readAddress()",
+            "lineNumber": "22"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-775"
+                ]
+            },
+            "title": "BasePaymaster ERC20 token withdrawal",
+            "description": "Consider adding a function to withdraw ERC20 tokens from the paymaster, in case they end up locked.",
+            "severity": "Informational",
+            "contract": "BasePaymaster",
+            "function": "N/A",
+            "lineNumber": "99"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "RelayHub gas usage optimization",
+            "description": "Optimization, `balances[account]` read twice in this function. Consider putting it into a local variable to optimize gas usage.",
+            "severity": "Low",
+            "contract": "RelayHub",
+            "function": "N/A",
+            "lineNumber": "121"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-191"
+                ]
+            },
+            "title": "RelayHub underflow possibility",
+            "description": "Subtraction could cause an underflow though it is safe because it will revert further down in `calculateCharge` and the worker can be subsequently penalized.",
+            "severity": "N/A",
+            "contract": "RelayHub",
+            "function": "N/A",
+            "lineNumber": "240"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ]
+            },
+            "title": "RelayHub stakeInfo pulling",
+            "description": "The `stakeInfo` is excessively pulled from the `StakeManager` and then immediately passed back to it.",
+            "severity": "Optimization",
+            "contract": "RelayHub",
+            "function": "N/A",
+            "lineNumber": "418"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "StakeManager excessive storage reads",
+            "description": "Optimization, there are 3 excessive storage reads here, consider using local variables instead to optimize gas usage.",
+            "severity": "Low",
+            "contract": "StakeManager",
+            "function": "N/A",
+            "lineNumber": "43"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ]
+            },
+            "title": "StakeManager ether burning",
+            "description": "Burning ether could be wasteful. Consider directing it to",
+            "severity": "Note",
+            "contract": "StakeManager",
+            "function": "N/A",
+            "lineNumber": "140"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ],
+                "4": [
+                    "CWE-638"
+                ],
+                "5": [
+                    "CWE-424"
+                ],
+                "6": [
+                    "CWE-425"
+                ]
+            },
+            "title": "RelayHub penalizer modification",
+            "description": "RelayHub's `penalizer` could not be modified.",
+            "severity": "N/A",
+            "contract": "RelayHub",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "RelayHub workerToManager clearing",
+            "description": "workerToManager could not be cleared once assigned.",
+            "severity": "Medium",
+            "contract": "RelayHub",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "RelayHub workerCount increase limitation",
+            "description": "workerCount could not increase above the maxWorkerCount",
+            "severity": "Medium",
+            "contract": "RelayHub",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "RelayHub penalize caller restriction",
+            "description": "The `penalize` function can only be called by `penalizer` in RelayHub.",
+            "severity": "Medium",
+            "contract": "RelayHub",
+            "function": "penalize()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "RelayHub Paymaster balance decrease",
+            "description": "Paymaster's balance could not be decreased without the legitimate relay request.",
+            "severity": "N/A",
+            "contract": "RelayHub",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "StakeManager relay manager and owner address equality",
+            "description": "Relay manager and its owner cannot have the same address.",
+            "severity": "N/A",
+            "contract": "StakeManager",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "StakeManager stakes sum limitation",
+            "description": "Sum of the `stakes` is always less than or equal to the StakeManager contract's balance.",
+            "severity": "N/A",
+            "contract": "StakeManager",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "StakeManager stake decrease restriction",
+            "description": "Stake could not be decreased without a call from RelayHub or the stake owner.",
+            "severity": "N/A",
+            "contract": "StakeManager",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "StakeManager unstakeDelay decrease restriction",
+            "description": "unstakeDelay could not be decreased without a withdrawal.",
+            "severity": "N/A",
+            "contract": "StakeManager",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

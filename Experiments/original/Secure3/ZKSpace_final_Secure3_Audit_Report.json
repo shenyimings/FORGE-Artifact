@@ -1,1 +1,127 @@
-{"path": "./Audit_Reports_2024/Secure3/ZKSpace_final_Secure3_Audit_Report.pdf", "project_info": {"url": "https://github.com/l2labs/zksync-v1-periphery", "commit_hash": "111f808f0188fdb396e0538b2976539a0329feae", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1173"]}, "title": "EIP-2612 permit is not encouraged to be used in zksync era", "description": "The EIP-2612 permit function is implemented in zksPair contracts, but it's not recommended to use it in zksync era due to native account abstraction support.", "severity": "Low", "contract": "ZksERC20", "function": "permit()", "lineNumber": "73"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Inconsistent SQRT Method Implementation", "description": "The Math Library uses different methods to calculate SQRT, which can lead to inconsistencies and potential security issues.", "severity": "Low", "contract": "ZksPair.sol", "function": "N/A", "lineNumber": "L10, L23, L96"}, {"id": 2, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Gas Optimization:No need to call abi.encodePacked when there's only a single bytes argument", "description": "The function keccak256(abi.encodePacked(type(ZksPair).creationCode)) can be optimized by removing abi.encodePacked since it has only one bytes argument.", "severity": "Informational", "contract": "ZksFactory.sol", "function": "N/A", "lineNumber": "8"}, {"id": 3, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Gas Optimization:Unused variable", "description": "Variables not used could be deleted to save gas. Variable `INIT_CODE_PAIR_HASH` not used in `ZksFactory` contract, but used in deploy scripts to do some test or debug.", "severity": "Informational", "contract": "ZksFactory", "function": "N/A", "lineNumber": "8"}, {"id": 4, "category": {"1": ["CWE-703"]}, "title": "Missing error message in require statements", "description": "In the transferFrom function of WETH.sol contract, require statements lack appropriate error messages to better understand the reason for triggering the require.", "severity": "Informational", "contract": "WETH", "function": "transferFrom(address, address, uint)", "lineNumber": "63, 66"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-354"]}, "title": "Unlocked Pragma Version", "description": "Most solidity files have a pragma solidity version number with ^0.8.0. The caret (^) points to unlocked pragma, meaning the compiler will use the specified version or above.", "severity": "Informational", "contract": ["Token", "ZksERC20", "ZksFactory", "ZksPair", "ZksRouter", "WETH"], "function": "N/A", "lineNumber": ["2", "2", "2", "2", "2", "16"]}]}
+{
+    "path": "./Audit_Reports_2024/Secure3/ZKSpace_final_Secure3_Audit_Report.pdf",
+    "project_info": {
+        "url": "https://github.com/l2labs/zksync-v1-periphery",
+        "commit_hash": "111f808f0188fdb396e0538b2976539a0329feae",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1173"
+                ]
+            },
+            "title": "EIP-2612 permit is not encouraged to be used in zksync era",
+            "description": "The EIP-2612 permit function is implemented in zksPair contracts, but it's not recommended to use it in zksync era due to native account abstraction support.",
+            "severity": "Low",
+            "contract": "ZksERC20",
+            "function": "permit()",
+            "lineNumber": "73"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Inconsistent SQRT Method Implementation",
+            "description": "The Math Library uses different methods to calculate SQRT, which can lead to inconsistencies and potential security issues.",
+            "severity": "Low",
+            "contract": "ZksPair.sol",
+            "function": "N/A",
+            "lineNumber": "L10, L23, L96"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Gas Optimization:No need to call abi.encodePacked when there's only a single bytes argument",
+            "description": "The function keccak256(abi.encodePacked(type(ZksPair).creationCode)) can be optimized by removing abi.encodePacked since it has only one bytes argument.",
+            "severity": "Informational",
+            "contract": "ZksFactory.sol",
+            "function": "N/A",
+            "lineNumber": "8"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Gas Optimization:Unused variable",
+            "description": "Variables not used could be deleted to save gas. Variable `INIT_CODE_PAIR_HASH` not used in `ZksFactory` contract, but used in deploy scripts to do some test or debug.",
+            "severity": "Informational",
+            "contract": "ZksFactory",
+            "function": "N/A",
+            "lineNumber": "8"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Missing error message in require statements",
+            "description": "In the transferFrom function of WETH.sol contract, require statements lack appropriate error messages to better understand the reason for triggering the require.",
+            "severity": "Informational",
+            "contract": "WETH",
+            "function": "transferFrom(address, address, uint)",
+            "lineNumber": "63, 66"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-354"
+                ]
+            },
+            "title": "Unlocked Pragma Version",
+            "description": "Most solidity files have a pragma solidity version number with ^0.8.0. The caret (^) points to unlocked pragma, meaning the compiler will use the specified version or above.",
+            "severity": "Informational",
+            "contract": [
+                "Token",
+                "ZksERC20",
+                "ZksFactory",
+                "ZksPair",
+                "ZksRouter",
+                "WETH"
+            ],
+            "function": "N/A",
+            "lineNumber": [
+                "2",
+                "2",
+                "2",
+                "2",
+                "2",
+                "16"
+            ]
+        }
+    ]
+}

@@ -1,1 +1,192 @@
-{"path": "./Audit_Reports_2024/Solidified/Solidified-Vega_Protocol_[11.10.2021].pdf", "project_info": {"url": "https://github.com/vegaprotocol/", "commit_hash": "b4724ecda8fdd636251966b42752f51205bc63b8", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "ERC20_Asset_Pool.sol: Function withdraw() assumes all tokens return a value on transfer", "description": "The function `withdraw()` assumes that all tokens' `transfer()` function returns a value, which is not true for a lot of common tokens that don\u2019t fully conform to the `ERC20` standard.", "severity": "Critical", "contract": "ERC20_Asset_Pool.sol", "function": "withdraw()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "ETH_Asset_Pool.sol: Contract will always fail to receive ETH", "description": "The `ETH_Asset_Pool` contract lacks a `receive()` function, causing it to always revert transactions and preventing it from receiving ETH.", "severity": "Major", "contract": "ETH_Asset_Pool", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "ETH_Asset_Pool.sol: Function withdraw() can potentially fail when transferring ETH to a smart contract", "description": "The function `withdraw()` calls `transfer()` which only forwards 2300 gas. In cases where the target address is a smart contract whose fallback function consumes more than 2300 gas, the call will always fail.", "severity": "Minor", "contract": "ETH_Asset_Pool.sol", "function": "withdraw()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "Contracts could potentially be assigned an invalid multisig_control_address", "description": "In the case where `ETH_Asset_Pool` and `ERC20_Asset_Pool` contracts are mistakenly assigned an invalid `multisig_control_address`, the contracts will be permanently locked out of setting a new `multisig_control_address` or `ETH_bridge_address`.", "severity": "Minor", "contract": "ETH_Asset_Pool.sol / ERC20_Asset_Pool.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Unvalidated new_address in transfer_stake() Function", "description": "Lack of validation for `new_address` can result in users accidentally burning their staked tokens.", "severity": "Note", "contract": "Vega_Staking_Bridge.sol", "function": "transfer_stake()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-710"], "2": ["CWE-1120"], "3": ["CWE-1060"]}, "title": "MultisigControl Contracts: gas usage could be optimized", "description": "Declaring `signatures` array as `memory` consumes extra gas as the compiler copies its value from `calldata`. Consider declaring `signatures` as `calldata` or all functions as `external` instead of `public`.", "severity": "Minor", "contract": "MultisigControl", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Unnecessary Use of SafeMath Library", "description": "The ERC20_Bridge_Logic contract uses the SafeMath library unnecessarily since Solidity versions 8.0 and later automatically revert on arithmetic underflow and overflow.", "severity": "Minor", "contract": "ERC20_Bridge_Logic", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-435"], "2": ["CWE-436"]}, "title": "MultisigControl.sol: Events do not conform to the IMultisigControl interface", "description": "The `MultisigControl` contract declares events with only one parameter, while `IMultisigControl` declares them with two parameters.", "severity": "Minor", "contract": "MultisigControl", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "ETH_Asset_Pool.sol: Contract\u2019s ETH balance is not checked before initiating a transfer", "description": "The contract does not check its ETH balance before transferring, which can cause transactions to revert without providing an adequate error message.", "severity": "Minor", "contract": "ETH_Asset_Pool.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Allowed countries are easily gameable", "description": "Users are required to enter their country code when claiming a code in functions claim_targeted() and claim_untargeted(), however this is impossible to enforce.", "severity": "Minor", "contract": "Claim_Codes.sol", "function": "claim_targeted() and claim_untargeted()", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Solidified/Solidified-Vega_Protocol_[11.10.2021].pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "b4724ecda8fdd636251966b42752f51205bc63b8",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "ERC20_Asset_Pool.sol: Function withdraw() assumes all tokens return a value on transfer",
+            "description": "The function `withdraw()` assumes that all tokens' `transfer()` function returns a value, which is not true for a lot of common tokens that don\u2019t fully conform to the `ERC20` standard.",
+            "severity": "Critical",
+            "contract": "ERC20_Asset_Pool.sol",
+            "function": "withdraw()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "ETH_Asset_Pool.sol: Contract will always fail to receive ETH",
+            "description": "The `ETH_Asset_Pool` contract lacks a `receive()` function, causing it to always revert transactions and preventing it from receiving ETH.",
+            "severity": "Major",
+            "contract": "ETH_Asset_Pool",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "ETH_Asset_Pool.sol: Function withdraw() can potentially fail when transferring ETH to a smart contract",
+            "description": "The function `withdraw()` calls `transfer()` which only forwards 2300 gas. In cases where the target address is a smart contract whose fallback function consumes more than 2300 gas, the call will always fail.",
+            "severity": "Minor",
+            "contract": "ETH_Asset_Pool.sol",
+            "function": "withdraw()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Contracts could potentially be assigned an invalid multisig_control_address",
+            "description": "In the case where `ETH_Asset_Pool` and `ERC20_Asset_Pool` contracts are mistakenly assigned an invalid `multisig_control_address`, the contracts will be permanently locked out of setting a new `multisig_control_address` or `ETH_bridge_address`.",
+            "severity": "Minor",
+            "contract": "ETH_Asset_Pool.sol / ERC20_Asset_Pool.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Unvalidated new_address in transfer_stake() Function",
+            "description": "Lack of validation for `new_address` can result in users accidentally burning their staked tokens.",
+            "severity": "Note",
+            "contract": "Vega_Staking_Bridge.sol",
+            "function": "transfer_stake()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1120"
+                ],
+                "3": [
+                    "CWE-1060"
+                ]
+            },
+            "title": "MultisigControl Contracts: gas usage could be optimized",
+            "description": "Declaring `signatures` array as `memory` consumes extra gas as the compiler copies its value from `calldata`. Consider declaring `signatures` as `calldata` or all functions as `external` instead of `public`.",
+            "severity": "Minor",
+            "contract": "MultisigControl",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Unnecessary Use of SafeMath Library",
+            "description": "The ERC20_Bridge_Logic contract uses the SafeMath library unnecessarily since Solidity versions 8.0 and later automatically revert on arithmetic underflow and overflow.",
+            "severity": "Minor",
+            "contract": "ERC20_Bridge_Logic",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ]
+            },
+            "title": "MultisigControl.sol: Events do not conform to the IMultisigControl interface",
+            "description": "The `MultisigControl` contract declares events with only one parameter, while `IMultisigControl` declares them with two parameters.",
+            "severity": "Minor",
+            "contract": "MultisigControl",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "ETH_Asset_Pool.sol: Contract\u2019s ETH balance is not checked before initiating a transfer",
+            "description": "The contract does not check its ETH balance before transferring, which can cause transactions to revert without providing an adequate error message.",
+            "severity": "Minor",
+            "contract": "ETH_Asset_Pool.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Allowed countries are easily gameable",
+            "description": "Users are required to enter their country code when claiming a code in functions claim_targeted() and claim_untargeted(), however this is impossible to enforce.",
+            "severity": "Minor",
+            "contract": "Claim_Codes.sol",
+            "function": "claim_targeted() and claim_untargeted()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

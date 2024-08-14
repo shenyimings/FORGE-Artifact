@@ -1,1 +1,155 @@
-{"path": "./Audit_Reports_2024/Secure3/UniWhaleP2_final_Secure3_Audit_Report.pdf", "project_info": {"url": "https://github.com/uniwhale-io/uniwhale-v1", "commit_hash": "a83bb294d52b764483e6b02d537427b45b8c800b", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"]}, "title": "Centralization risk in RevenuePool::mint", "description": "Centralization risk in RevenuePool::mint function", "severity": "Medium", "contract": "RevenuePool", "function": "mint()", "lineNumber": "93-100"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Centralized risk in UniwhaleToken::mint", "description": "N/A", "severity": "Informational", "contract": "UniwhaleToken", "function": "initialize() and mint()", "lineNumber": "52-58, 115"}, {"id": 2, "category": {"1": ["CWE-284"]}, "title": "Centralization risk in RevenuePool::transferBase and RevenuePool::transferFromPool", "description": "N/A", "severity": "Low", "contract": "RevenuePool", "function": ["transferBase", "transferFromPool"], "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-710"]}, "title": "Code Style in UniwhaleToken contract", "description": "N/A", "severity": "N/A", "contract": "UniwhaleToken", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-435"]}, "title": "Duplicate functionality in RevenuePool::transferFromPool", "description": "The transferFromPool function and the transferBase function have the same functionality with only one additional _token parameter, which can only be equal to baseToken.", "severity": "Informational", "contract": "RevenuePool", "function": "transferFromPool()", "lineNumber": "48-55"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Tokens transferred into RevenuePool are improperly distributed among claimers", "description": "When the sum of all shares are less than 1e18, not all tokens transferred into RevenuePool are distributed to claimers. In other word, the sum of claimer's balance is less than the total balance of `RevenuePool`.", "severity": "Low", "contract": "RevenuePool", "function": "transferIn()", "lineNumber": "76"}, {"id": 6, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1286"]}, "title": "Unnecessary getter for public variables in contract", "description": "Compiler will generate a default getter function for public variable. The `getTotalStaked()` function is unnecessary for public variable `totalStaked`.", "severity": "Informational", "contract": "AbstractStakeable and RevenuePool", "function": "getTotalStaked() and balance(address claimer)", "lineNumber": "16, 19"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "setShare might fail unexpectedly when change _share of existing claimer", "description": "The setShare function may fail unexpectedly when changing the share of an existing claimer due to incorrect total share calculation.", "severity": "Low", "contract": "RevenuePool", "function": "setShare()", "lineNumber": "L59-L66"}, {"id": 8, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Logic Issue in AbstractERC20Stakeable::_getRewards Function", "description": "The current implementation of _getRewards function may cause sudden reward decrease when a whale stakes a large amount of tokens.", "severity": "Low", "contract": "AbstractERC20Stakeable", "function": "_getRewards()", "lineNumber": "66-71"}]}
+{
+    "path": "./Audit_Reports_2024/Secure3/UniWhaleP2_final_Secure3_Audit_Report.pdf",
+    "project_info": {
+        "url": "https://github.com/uniwhale-io/uniwhale-v1",
+        "commit_hash": "a83bb294d52b764483e6b02d537427b45b8c800b",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Centralization risk in RevenuePool::mint",
+            "description": "Centralization risk in RevenuePool::mint function",
+            "severity": "Medium",
+            "contract": "RevenuePool",
+            "function": "mint()",
+            "lineNumber": "93-100"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Centralized risk in UniwhaleToken::mint",
+            "description": "N/A",
+            "severity": "Informational",
+            "contract": "UniwhaleToken",
+            "function": "initialize() and mint()",
+            "lineNumber": "52-58, 115"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Centralization risk in RevenuePool::transferBase and RevenuePool::transferFromPool",
+            "description": "N/A",
+            "severity": "Low",
+            "contract": "RevenuePool",
+            "function": [
+                "transferBase",
+                "transferFromPool"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ]
+            },
+            "title": "Code Style in UniwhaleToken contract",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "UniwhaleToken",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ]
+            },
+            "title": "Duplicate functionality in RevenuePool::transferFromPool",
+            "description": "The transferFromPool function and the transferBase function have the same functionality with only one additional _token parameter, which can only be equal to baseToken.",
+            "severity": "Informational",
+            "contract": "RevenuePool",
+            "function": "transferFromPool()",
+            "lineNumber": "48-55"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Tokens transferred into RevenuePool are improperly distributed among claimers",
+            "description": "When the sum of all shares are less than 1e18, not all tokens transferred into RevenuePool are distributed to claimers. In other word, the sum of claimer's balance is less than the total balance of `RevenuePool`.",
+            "severity": "Low",
+            "contract": "RevenuePool",
+            "function": "transferIn()",
+            "lineNumber": "76"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1286"
+                ]
+            },
+            "title": "Unnecessary getter for public variables in contract",
+            "description": "Compiler will generate a default getter function for public variable. The `getTotalStaked()` function is unnecessary for public variable `totalStaked`.",
+            "severity": "Informational",
+            "contract": "AbstractStakeable and RevenuePool",
+            "function": "getTotalStaked() and balance(address claimer)",
+            "lineNumber": "16, 19"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "setShare might fail unexpectedly when change _share of existing claimer",
+            "description": "The setShare function may fail unexpectedly when changing the share of an existing claimer due to incorrect total share calculation.",
+            "severity": "Low",
+            "contract": "RevenuePool",
+            "function": "setShare()",
+            "lineNumber": "L59-L66"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Logic Issue in AbstractERC20Stakeable::_getRewards Function",
+            "description": "The current implementation of _getRewards function may cause sudden reward decrease when a whale stakes a large amount of tokens.",
+            "severity": "Low",
+            "contract": "AbstractERC20Stakeable",
+            "function": "_getRewards()",
+            "lineNumber": "66-71"
+        }
+    ]
+}

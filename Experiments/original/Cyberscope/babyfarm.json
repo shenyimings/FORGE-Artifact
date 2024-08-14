@@ -1,1 +1,234 @@
-{"path": "./Audit_Reports_2024/Cyberscope/babyfarm.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "BC - Blacklists Addresses", "description": "The contract owner has the authority to stop addresses from transactions, which may be exploited by calling the `addInBlackList` function.", "severity": "High", "contract": "BabyFarm", "function": "addInBlackList()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "UPA - Unexcluded Pinksale Address", "description": "The contract's fee mechanism does not exempt the Pinksale factory address, preventing pool creation on Pinksale and potentially causing operational issues with decentralized exchange platforms.", "severity": "High", "contract": "BabyFarm", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-435"]}, "title": "DFF - Duplicate Fee Functionality", "description": "The contract has two separate functions, `BuyFee` and `SellFee`, which operate by applying a fee percentage represented by the `_buy` and `_sell` variables. However, these variables are equal and not configured to be updated, leading to functional redundancy.", "severity": "Medium", "contract": "BabyFarm", "function": "BuyFee and SellFee", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "CO - Code Optimization", "description": "The `isBlackListed` function can be optimized by directly returning the result of the condition check, eliminating the need for the if-else statement.", "severity": "N/A", "contract": "BabyFarm", "function": "isBlackListed()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "RFF - Redundant Fee Function", "description": "The `betweenFee` function deducts a fee termed `_inbetweenFee_`, but since `_inbetweenFee_` is initialized with 0 and lacks any mechanism for updating, the calculation always results in zero, rendering the fee deduction non-functional.", "severity": "High", "contract": "BabyFarm", "function": "betweenFee()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "MEE - Missing Events Emission", "description": "The contract performs actions and state mutations from external methods that do not result in the emission of events.", "severity": "N/A", "contract": "BabyFarm", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "CR - Code Repetition", "description": "The contract contains repetitive code segments which can lead to issues like gas efficiency, complexity, readability, security, and maintainability of the source code.", "severity": "N/A", "contract": "BabyFarm", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "RSML - Redundant SafeMath Library", "description": "The usage of the SafeMath library adds complexity, overhead and increases gas consumption unnecessarily since Solidity versions greater than or equal to 0.8.0 have native functionality that replaces it.", "severity": "Medium", "contract": "BabyFarm", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-909"], "4": ["CWE-456"]}, "title": "L02 - State Variables could be Declared Constant", "description": "State variables can be declared as constant using the constant keyword to ensure they cannot be changed after being set and decrease gas consumption.", "severity": "Informational", "contract": "BabyFarm", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-710"]}, "title": "L04 - Conformance to Solidity Naming Conventions", "description": "The code does not adhere to the Solidity style guide's naming conventions, which can affect readability and maintainability.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-697"]}, "title": "L11 - Unnecessary Boolean equality", "description": "Boolean equality is unnecessary when comparing two boolean values.", "severity": "Low", "contract": "BabyFarm", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-682"]}, "title": "L18 - Multiple Pragma Directives", "description": "If the contract includes multiple conflicting pragma directives, it may produce unexpected errors.", "severity": "Medium", "contract": "BabyFarm", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "L19 - Stable Compiler Version", "description": "The `^` symbol indicates that any version of Solidity that is compatible with the specified version (i.e., any version that is a higher minor or patch version) can be used to compile the contract. The version lock is a mechanism that allows the author to specify a minimum version of the Solidity compiler that must be used to compile the contract code.", "severity": "N/A", "contract": "BabyFarm", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Cyberscope/babyfarm.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0x8d25a02248b31227735cd4d4524a1bd54a951759"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "BC - Blacklists Addresses",
+            "description": "The contract owner has the authority to stop addresses from transactions, which may be exploited by calling the `addInBlackList` function.",
+            "severity": "High",
+            "contract": "BabyFarm",
+            "function": "addInBlackList()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "UPA - Unexcluded Pinksale Address",
+            "description": "The contract's fee mechanism does not exempt the Pinksale factory address, preventing pool creation on Pinksale and potentially causing operational issues with decentralized exchange platforms.",
+            "severity": "High",
+            "contract": "BabyFarm",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ]
+            },
+            "title": "DFF - Duplicate Fee Functionality",
+            "description": "The contract has two separate functions, `BuyFee` and `SellFee`, which operate by applying a fee percentage represented by the `_buy` and `_sell` variables. However, these variables are equal and not configured to be updated, leading to functional redundancy.",
+            "severity": "Medium",
+            "contract": "BabyFarm",
+            "function": "BuyFee and SellFee",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "CO - Code Optimization",
+            "description": "The `isBlackListed` function can be optimized by directly returning the result of the condition check, eliminating the need for the if-else statement.",
+            "severity": "N/A",
+            "contract": "BabyFarm",
+            "function": "isBlackListed()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "RFF - Redundant Fee Function",
+            "description": "The `betweenFee` function deducts a fee termed `_inbetweenFee_`, but since `_inbetweenFee_` is initialized with 0 and lacks any mechanism for updating, the calculation always results in zero, rendering the fee deduction non-functional.",
+            "severity": "High",
+            "contract": "BabyFarm",
+            "function": "betweenFee()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "MEE - Missing Events Emission",
+            "description": "The contract performs actions and state mutations from external methods that do not result in the emission of events.",
+            "severity": "N/A",
+            "contract": "BabyFarm",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "CR - Code Repetition",
+            "description": "The contract contains repetitive code segments which can lead to issues like gas efficiency, complexity, readability, security, and maintainability of the source code.",
+            "severity": "N/A",
+            "contract": "BabyFarm",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "RSML - Redundant SafeMath Library",
+            "description": "The usage of the SafeMath library adds complexity, overhead and increases gas consumption unnecessarily since Solidity versions greater than or equal to 0.8.0 have native functionality that replaces it.",
+            "severity": "Medium",
+            "contract": "BabyFarm",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "L02 - State Variables could be Declared Constant",
+            "description": "State variables can be declared as constant using the constant keyword to ensure they cannot be changed after being set and decrease gas consumption.",
+            "severity": "Informational",
+            "contract": "BabyFarm",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ]
+            },
+            "title": "L04 - Conformance to Solidity Naming Conventions",
+            "description": "The code does not adhere to the Solidity style guide's naming conventions, which can affect readability and maintainability.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ]
+            },
+            "title": "L11 - Unnecessary Boolean equality",
+            "description": "Boolean equality is unnecessary when comparing two boolean values.",
+            "severity": "Low",
+            "contract": "BabyFarm",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "L18 - Multiple Pragma Directives",
+            "description": "If the contract includes multiple conflicting pragma directives, it may produce unexpected errors.",
+            "severity": "Medium",
+            "contract": "BabyFarm",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "L19 - Stable Compiler Version",
+            "description": "The `^` symbol indicates that any version of Solidity that is compatible with the specified version (i.e., any version that is a higher minor or patch version) can be used to compile the contract. The version lock is a mechanism that allows the author to specify a minimum version of the Solidity compiler that must be used to compile the contract code.",
+            "severity": "N/A",
+            "contract": "BabyFarm",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

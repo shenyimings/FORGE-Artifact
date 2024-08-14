@@ -1,1 +1,145 @@
-{"path": "./Audit_Reports_2024/Solidified/Solidified-Aztec.pdf", "project_info": {"url": "https://github.com/AztecProtocol/aztec2-internal", "commit_hash": "25c02619428f03d91358c0685dffcecf6f640d3c", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-435"], "2": ["CWE-436"], "3": ["CWE-437"]}, "title": "ETH deposit attack can revert bridge transactions", "description": "An attacker could frontrun each rollup transaction to calculate the interactionNonce and deposit 1 wei for all interactionNonce values which involves an ETH transaction. This would force a revert of all bridge interactions with ETH as an output asset.", "severity": "Critical", "contract": "DefiBridgeProxy", "function": "recoverTokens()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-253"]}, "title": "ETH deposit attack for async bridge interactions", "description": "The ETH deposit attack can also be applied for async bridge interactions due to an incorrect check in the transferTokenAsync method of the RollupProcessor contract.", "severity": "Critical", "contract": "RollupProcessor", "function": "transferTokenAsync", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-703"]}, "title": "Entire rollup transaction can be reverted by a malicious ERC20 implementation", "description": "A malicious ERC20 implementation with high gas limit can cause an out of gas error and revert the entire rollup transaction.", "severity": "Critical", "contract": "RollupProcessor", "function": "setSupportedAsset()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Anyone can deposit the assets of users after ERC20 approval", "description": "The function `depositPendingFunds` allows depositing `ERC20` tokens on behalf of any account as long as `ERC20` approval has been issued for the `RollupProcessor`. This can lead to loss of tokens in case of a smart contract if not programmed to handle such a case.", "severity": "Critical", "contract": "RollupProcessor", "function": "depositPendingFunds()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "Missing access control for processing DeFi interaction", "description": "The `processAsyncDefiInteraction` function in the `RollupProcessor` contract lacks access control, allowing anyone to call it even before the bridge is ready to finalize the bridge interaction.", "severity": "Minor", "contract": "RollupProcessor", "function": "processAsyncDefiInteraction", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "Contract deployer address always added as rollupProvider", "description": "In the `initialize` method in the `RollupProcessor` contract, the `rollupProvider` is always set to `msg.sender`, which may be incorrect if `contractOwner` is not the deployer's address.", "severity": "Minor", "contract": "RollupProcessor", "function": "initialize()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Missing bridge canFinalise check in the RollupProcessor", "description": "The processAsyncDefiInteraction method in the RollupProcessor doesn't check if the bridge implements the canFinalise method.", "severity": "Minor", "contract": "RollupProcessor", "function": "processAsyncDefiInteraction", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Solidified/Solidified-Aztec.pdf",
+    "project_info": {
+        "url": "https://github.com/AztecProtocol/aztec2-internal",
+        "commit_hash": "25c02619428f03d91358c0685dffcecf6f640d3c",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-437"
+                ]
+            },
+            "title": "ETH deposit attack can revert bridge transactions",
+            "description": "An attacker could frontrun each rollup transaction to calculate the interactionNonce and deposit 1 wei for all interactionNonce values which involves an ETH transaction. This would force a revert of all bridge interactions with ETH as an output asset.",
+            "severity": "Critical",
+            "contract": "DefiBridgeProxy",
+            "function": "recoverTokens()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-253"
+                ]
+            },
+            "title": "ETH deposit attack for async bridge interactions",
+            "description": "The ETH deposit attack can also be applied for async bridge interactions due to an incorrect check in the transferTokenAsync method of the RollupProcessor contract.",
+            "severity": "Critical",
+            "contract": "RollupProcessor",
+            "function": "transferTokenAsync",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Entire rollup transaction can be reverted by a malicious ERC20 implementation",
+            "description": "A malicious ERC20 implementation with high gas limit can cause an out of gas error and revert the entire rollup transaction.",
+            "severity": "Critical",
+            "contract": "RollupProcessor",
+            "function": "setSupportedAsset()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Anyone can deposit the assets of users after ERC20 approval",
+            "description": "The function `depositPendingFunds` allows depositing `ERC20` tokens on behalf of any account as long as `ERC20` approval has been issued for the `RollupProcessor`. This can lead to loss of tokens in case of a smart contract if not programmed to handle such a case.",
+            "severity": "Critical",
+            "contract": "RollupProcessor",
+            "function": "depositPendingFunds()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Missing access control for processing DeFi interaction",
+            "description": "The `processAsyncDefiInteraction` function in the `RollupProcessor` contract lacks access control, allowing anyone to call it even before the bridge is ready to finalize the bridge interaction.",
+            "severity": "Minor",
+            "contract": "RollupProcessor",
+            "function": "processAsyncDefiInteraction",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Contract deployer address always added as rollupProvider",
+            "description": "In the `initialize` method in the `RollupProcessor` contract, the `rollupProvider` is always set to `msg.sender`, which may be incorrect if `contractOwner` is not the deployer's address.",
+            "severity": "Minor",
+            "contract": "RollupProcessor",
+            "function": "initialize()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Missing bridge canFinalise check in the RollupProcessor",
+            "description": "The processAsyncDefiInteraction method in the RollupProcessor doesn't check if the bridge implements the canFinalise method.",
+            "severity": "Minor",
+            "contract": "RollupProcessor",
+            "function": "processAsyncDefiInteraction",
+            "lineNumber": "N/A"
+        }
+    ]
+}

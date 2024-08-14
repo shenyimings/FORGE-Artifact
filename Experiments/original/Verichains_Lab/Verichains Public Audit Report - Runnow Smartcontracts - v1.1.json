@@ -1,1 +1,161 @@
-{"path": "./Audit_Reports_2024/Verichains_Lab/Verichains Public Audit Report - Runnow Smartcontracts - v1.1.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "Missing NFT and offer ownership check when updating offer", "description": "The `offer` function allows users to update previous offers by using existing `data.id`, but it lacks checks for NFT and offer ownership, enabling malicious updates of offers with unauthorized `itemAddress`, `tokenId`, or `price` values.", "severity": "CRITICAL", "contract": "Marketplace.sol", "function": "offer(OrderItemStruct calldata data)", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-691"], "2": ["CWE-362"]}, "title": "Front-running in buy function", "description": "The `buy` function in the `Marketplace` contract is vulnerable to front-running attack. The attacker can listen for pending `buy(id)` transaction from buyers and quickly update the offer price for that `id`. This causes user to buy the NFT item with an unexpected price.", "severity": "CRITICAL", "contract": "Marketplace", "function": "buy(string memory id)", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"], "2": ["CWE-190"], "3": ["CWE-680"]}, "title": "User can buy listed NFTs without money", "description": "Two critical bugs were found in the 'buy' function of the 'MarketplaceV2' contract: 1) a user can buy an NFT item at a zero price if the payment tokenAddress is not supported, and 2) a user can set msg.value equal to the tokenPrice and pass the price check to buy the NFT successfully.", "severity": "CRITICAL", "contract": "MarketplaceV2", "function": "buy(string memory id, address tokenAddress, uint256 amount)", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Missing a month when distributing for farming and staking", "description": "In the `getAmountForFarmingAndStaking` function, the `linearAmount` is distributed for months from 1 to 35, so one distribution month is missing (35/36).", "severity": "CRITICAL", "contract": "RunnowVesting.sol", "function": "getAmountForFarmingAndStaking()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Public sale amount is not distributed for market and community", "description": "In the `getAmountForMktAndCommunity` function, the `publicSaleAmount` is extracted from the `maxAmount`. However, it is not being distributed to the market and community.", "severity": "CRITICAL", "contract": "RunnowVesting.sol", "function": "getAmountForMktAndCommunity()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Missing a month when distributing for market and community", "description": "The `linearAmount` in the `getAmountForMktAndCommunity` function is distributed for months from 1 to 36, but month 35 is missing.", "severity": "CRITICAL", "contract": "RunnowVesting.sol", "function": "getAmountForMktAndCommunity(uint256 month)", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-664"], "2": ["CWE-404"], "3": ["CWE-772"], "4": ["CWE-401"]}, "title": "The remaining money is stuck inside the contract", "description": "In the `buy` function, if a user sends more money than the item price, the remaining money would be held inside the contract without any mechanism to get it back.", "severity": "LOW", "contract": "Marketplace.sol", "function": "buy(string memory id)", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-691"], "2": ["CWE-1265"]}, "title": "Reentrancy attack to create fake offers", "description": "The `buy` function in the `Marketplace` contract is vulnerable to front-running attacks and reentrancy attacks, allowing an NFT owner to create a new offer without the corresponding NFT item inside the `Marketplace` contract.", "severity": "LOW", "contract": "Marketplace", "function": "buy(string memory id)", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Verichains_Lab/Verichains Public Audit Report - Runnow Smartcontracts - v1.1.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Missing NFT and offer ownership check when updating offer",
+            "description": "The `offer` function allows users to update previous offers by using existing `data.id`, but it lacks checks for NFT and offer ownership, enabling malicious updates of offers with unauthorized `itemAddress`, `tokenId`, or `price` values.",
+            "severity": "CRITICAL",
+            "contract": "Marketplace.sol",
+            "function": "offer(OrderItemStruct calldata data)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-362"
+                ]
+            },
+            "title": "Front-running in buy function",
+            "description": "The `buy` function in the `Marketplace` contract is vulnerable to front-running attack. The attacker can listen for pending `buy(id)` transaction from buyers and quickly update the offer price for that `id`. This causes user to buy the NFT item with an unexpected price.",
+            "severity": "CRITICAL",
+            "contract": "Marketplace",
+            "function": "buy(string memory id)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ],
+                "3": [
+                    "CWE-680"
+                ]
+            },
+            "title": "User can buy listed NFTs without money",
+            "description": "Two critical bugs were found in the 'buy' function of the 'MarketplaceV2' contract: 1) a user can buy an NFT item at a zero price if the payment tokenAddress is not supported, and 2) a user can set msg.value equal to the tokenPrice and pass the price check to buy the NFT successfully.",
+            "severity": "CRITICAL",
+            "contract": "MarketplaceV2",
+            "function": "buy(string memory id, address tokenAddress, uint256 amount)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Missing a month when distributing for farming and staking",
+            "description": "In the `getAmountForFarmingAndStaking` function, the `linearAmount` is distributed for months from 1 to 35, so one distribution month is missing (35/36).",
+            "severity": "CRITICAL",
+            "contract": "RunnowVesting.sol",
+            "function": "getAmountForFarmingAndStaking()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Public sale amount is not distributed for market and community",
+            "description": "In the `getAmountForMktAndCommunity` function, the `publicSaleAmount` is extracted from the `maxAmount`. However, it is not being distributed to the market and community.",
+            "severity": "CRITICAL",
+            "contract": "RunnowVesting.sol",
+            "function": "getAmountForMktAndCommunity()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Missing a month when distributing for market and community",
+            "description": "The `linearAmount` in the `getAmountForMktAndCommunity` function is distributed for months from 1 to 36, but month 35 is missing.",
+            "severity": "CRITICAL",
+            "contract": "RunnowVesting.sol",
+            "function": "getAmountForMktAndCommunity(uint256 month)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-401"
+                ]
+            },
+            "title": "The remaining money is stuck inside the contract",
+            "description": "In the `buy` function, if a user sends more money than the item price, the remaining money would be held inside the contract without any mechanism to get it back.",
+            "severity": "LOW",
+            "contract": "Marketplace.sol",
+            "function": "buy(string memory id)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "Reentrancy attack to create fake offers",
+            "description": "The `buy` function in the `Marketplace` contract is vulnerable to front-running attacks and reentrancy attacks, allowing an NFT owner to create a new offer without the corresponding NFT item inside the `Marketplace` contract.",
+            "severity": "LOW",
+            "contract": "Marketplace",
+            "function": "buy(string memory id)",
+            "lineNumber": "N/A"
+        }
+    ]
+}

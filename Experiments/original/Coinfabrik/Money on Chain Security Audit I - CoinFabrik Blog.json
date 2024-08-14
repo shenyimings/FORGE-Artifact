@@ -1,1 +1,257 @@
-{"path": "./Audit_Reports_2024/Coinfabrik/Money on Chain Security Audit I - CoinFabrik Blog.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Misuse of the different call methods: call.value(), send() and transfer.", "description": "The finding highlights the incorrect usage of different call methods such as call.value(), send(), and transfer(). This can lead to potential security vulnerabilities in the smart contract.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Integer Rounding Errors, Overflow, Underflow, and SafeMath Functions", "description": "The contract uses unsafe arithmetic operations that can lead to integer rounding errors, overflow, or underflow, which may cause unintended behavior. The usage of SafeMath functions is recommended to prevent these issues.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-354"]}, "title": "Old compiler version pragmas.", "description": "The solidity compiler version of 0.4.24 required in the pragmas is 11 months old at the time of writing this document. While no vulnerability related to using this specific version was found, it's recommended to upgrade to a more recent version as many issues and ambiguities get fixed in each release.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-691"], "2": ["CWE-362"]}, "title": "Race conditions such as reentrancy attacks or front running.", "description": "Vulnerability to race conditions including reentrancy attacks and front running, which can lead to unintended behavior and potential security risks.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Misuse of block timestamps, assuming anything other than them being strictly increasing.", "description": "The contract assumes block timestamps to be anything other than strictly increasing, which can lead to security vulnerabilities as block timestamps must always increase.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Contract softlocking attacks (DoS)", "description": "Multiple unbounded loops may result in Denial of Service, causing contract softlocking and making functions always fail unless the gas limit increases or the collection shrinks.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Potential gas cost of functions being over the gas limit.", "description": "The gas cost of certain functions may exceed the gas limit, potentially causing issues with contract execution.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-710"], "2": ["CWE-1177"]}, "title": "Fraudulent or erroneous code.", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-435"]}, "title": "Code and contract interaction complexity.", "description": "The audit report highlights the complexity of code and contract interactions as a potential security finding, but does not provide specific details about the issue.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-703"], "2": ["CWE-755"], "3": ["CWE-544"]}, "title": "Wrong or missing error handling.", "description": "Missing or incorrect implementation of error handling mechanisms.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-770"]}, "title": "Overuse of transfers in a single transaction instead of using withdrawal patterns.", "description": "The contract uses multiple transfers in a single transaction which can lead to issues, instead it is recommended to use withdrawal patterns for better security and efficiency.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-229"]}, "title": "Insufficient analysis of the function input requirements", "description": "The contract does not properly analyze the input requirements of its functions, which can lead to potential security vulnerabilities.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-710"], "2": ["CWE-1059"], "3": ["CWE-1110"]}, "title": "Undocumented functions", "description": "Most of the functions in the project are properly documented, but some aren\u2019t and others have outdated documentation.", "severity": "Medium", "contract": "MocSettlement", "function": "alterRedeemRequestAmount()", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-703"], "2": ["CWE-393"]}, "title": "Outdated documentation", "description": "Some functions have outdated documentation, for example, the function alterRedeemRequestAmount in MocSettlement specifies it returns an amount but doesn't return anything.", "severity": "Medium", "contract": "MocSettlement", "function": "alterRedeemRequestAmount()", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Coinfabrik/Money on Chain Security Audit I - CoinFabrik Blog.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Misuse of the different call methods: call.value(), send() and transfer.",
+            "description": "The finding highlights the incorrect usage of different call methods such as call.value(), send(), and transfer(). This can lead to potential security vulnerabilities in the smart contract.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Integer Rounding Errors, Overflow, Underflow, and SafeMath Functions",
+            "description": "The contract uses unsafe arithmetic operations that can lead to integer rounding errors, overflow, or underflow, which may cause unintended behavior. The usage of SafeMath functions is recommended to prevent these issues.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-354"
+                ]
+            },
+            "title": "Old compiler version pragmas.",
+            "description": "The solidity compiler version of 0.4.24 required in the pragmas is 11 months old at the time of writing this document. While no vulnerability related to using this specific version was found, it's recommended to upgrade to a more recent version as many issues and ambiguities get fixed in each release.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-362"
+                ]
+            },
+            "title": "Race conditions such as reentrancy attacks or front running.",
+            "description": "Vulnerability to race conditions including reentrancy attacks and front running, which can lead to unintended behavior and potential security risks.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Misuse of block timestamps, assuming anything other than them being strictly increasing.",
+            "description": "The contract assumes block timestamps to be anything other than strictly increasing, which can lead to security vulnerabilities as block timestamps must always increase.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Contract softlocking attacks (DoS)",
+            "description": "Multiple unbounded loops may result in Denial of Service, causing contract softlocking and making functions always fail unless the gas limit increases or the collection shrinks.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Potential gas cost of functions being over the gas limit.",
+            "description": "The gas cost of certain functions may exceed the gas limit, potentially causing issues with contract execution.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1177"
+                ]
+            },
+            "title": "Fraudulent or erroneous code.",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ]
+            },
+            "title": "Code and contract interaction complexity.",
+            "description": "The audit report highlights the complexity of code and contract interactions as a potential security finding, but does not provide specific details about the issue.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-755"
+                ],
+                "3": [
+                    "CWE-544"
+                ]
+            },
+            "title": "Wrong or missing error handling.",
+            "description": "Missing or incorrect implementation of error handling mechanisms.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "Overuse of transfers in a single transaction instead of using withdrawal patterns.",
+            "description": "The contract uses multiple transfers in a single transaction which can lead to issues, instead it is recommended to use withdrawal patterns for better security and efficiency.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ]
+            },
+            "title": "Insufficient analysis of the function input requirements",
+            "description": "The contract does not properly analyze the input requirements of its functions, which can lead to potential security vulnerabilities.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1059"
+                ],
+                "3": [
+                    "CWE-1110"
+                ]
+            },
+            "title": "Undocumented functions",
+            "description": "Most of the functions in the project are properly documented, but some aren\u2019t and others have outdated documentation.",
+            "severity": "Medium",
+            "contract": "MocSettlement",
+            "function": "alterRedeemRequestAmount()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-393"
+                ]
+            },
+            "title": "Outdated documentation",
+            "description": "Some functions have outdated documentation, for example, the function alterRedeemRequestAmount in MocSettlement specifies it returns an amount but doesn't return anything.",
+            "severity": "Medium",
+            "contract": "MocSettlement",
+            "function": "alterRedeemRequestAmount()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

@@ -1,1 +1,204 @@
-{"path": "./Audit_Reports_2024/Cyberscope/befx.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "ST - Stops Transactions", "description": "The contract owner has the authority to stop transactions for all users excluding the owner by setting `maxWallet` or `maxTransactionAmount` to a very low value.", "severity": "Medium", "contract": "DividendTokenWithAntibot", "function": "N/A", "lineNumber": "245"}, {"id": 1, "category": {"1": ["CWE-435"]}, "title": "PTRP - Potential Transfer Revert Propagation", "description": "The contract does not tolerate potential revert from underlying contracts when interaction is part of main transfer flow.", "severity": "Minor / Informative", "contract": "DividendTokenDividendTracker", "function": "N/A", "lineNumber": "319"}, {"id": 2, "category": {"1": ["CWE-682"], "2": ["CWE-190"], "3": ["CWE-680"]}, "title": "PVC - Price Volatility Concern", "description": "The contract accumulates tokens from the taxes to swap them for ETH. The variable `swapTokensAtAmount` sets a threshold where the contract will trigger the swap functionality. If the variable is set to a big number, then the contract will swap a huge amount of tokens for ETH. It is important to note that the price of the token representing it, can be highly volatile.", "severity": "Minor / Informative", "contract": "DividendTokenDividendTracker", "function": "N/A", "lineNumber": "239"}, {"id": 3, "category": {"1": ["CWE-710"], "2": ["CWE-1076"], "3": ["CWE-1078"], "4": ["CWE-1099"]}, "title": "L04 - Conformance to Solidity Naming Conventions", "description": "The code does not follow Solidity naming conventions, which can decrease readability and maintainability.", "severity": "Minor / Informative", "contract": ["DividendTokenWithAntibot", "DividendTokenDividendTracker"], "function": "N/A", "lineNumber": ["30,57,245,251,285,325,332,333,354,355,376,377", "80,100,101,102,103,162,169,181,195,370"]}, {"id": 4, "category": {"1": ["CWE-710"], "2": ["CWE-1164"], "3": ["CWE-561"]}, "title": "L09 - Dead Code Elimination", "description": "Dead code can occur due to conditional statements that are always false, functions that are never called, or unreachable code, making the contract harder to understand and maintain.", "severity": "Minor / Informative", "contract": "DividendTokenDividendTracker.sol", "function": "N/A", "lineNumber": "L214"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-229"], "4": ["CWE-232"]}, "title": "L12 - Using Variables before Declaration", "description": "The contract is using a variable before the declaration. This is usually happening either if it has not been declared yet or if the variable has been declared in a different scope.", "severity": "Minor / Informative", "contract": "DividendTokenWithAntibot.sol", "function": "N/A", "lineNumber": "653,654,655"}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "L14 - Uninitialized Variables in Local Scope", "description": "Using an uninitialized local variable can lead to unpredictable behavior and potentially cause errors in the contract. It's important to always initialize local variables with appropriate values before using them.", "severity": "Minor / Informative", "contract": "DividendTokenWithAntibot.sol", "function": "N/A", "lineNumber": "607,608,609,653,654,655"}, {"id": 7, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "L16 - Validate Variable Setters", "description": "Validate variable setters to prevent potential security issues.", "severity": "Minor / Informative", "contract": "DividendTokenWithAntibot", "function": "N/A", "lineNumber": "287"}, {"id": 8, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "L19 - Stable Compiler Version", "description": "The compiler version used is not stable.", "severity": "Minor / Informative", "contract": "DividendTokenDividendTracker.sol", "function": "N/A", "lineNumber": "2"}, {"id": 9, "category": {"1": ["CWE-682"]}, "title": "L20 - Succeeded Transfer Check", "description": "According to the ERC20 specification, the transfer methods should be checked if the result is successful. Otherwise, the contract may wrongly assume that the transfer has been established.", "severity": "Minor / Informative", "contract": "DividendTokenWithAntibot.sol", "function": "N/A", "lineNumber": "677,687"}]}
+{
+    "path": "./Audit_Reports_2024/Cyberscope/befx.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0x75b2fdd95418e093fca7db858b36549e5e412076"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "ST - Stops Transactions",
+            "description": "The contract owner has the authority to stop transactions for all users excluding the owner by setting `maxWallet` or `maxTransactionAmount` to a very low value.",
+            "severity": "Medium",
+            "contract": "DividendTokenWithAntibot",
+            "function": "N/A",
+            "lineNumber": "245"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ]
+            },
+            "title": "PTRP - Potential Transfer Revert Propagation",
+            "description": "The contract does not tolerate potential revert from underlying contracts when interaction is part of main transfer flow.",
+            "severity": "Minor / Informative",
+            "contract": "DividendTokenDividendTracker",
+            "function": "N/A",
+            "lineNumber": "319"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ],
+                "3": [
+                    "CWE-680"
+                ]
+            },
+            "title": "PVC - Price Volatility Concern",
+            "description": "The contract accumulates tokens from the taxes to swap them for ETH. The variable `swapTokensAtAmount` sets a threshold where the contract will trigger the swap functionality. If the variable is set to a big number, then the contract will swap a huge amount of tokens for ETH. It is important to note that the price of the token representing it, can be highly volatile.",
+            "severity": "Minor / Informative",
+            "contract": "DividendTokenDividendTracker",
+            "function": "N/A",
+            "lineNumber": "239"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1076"
+                ],
+                "3": [
+                    "CWE-1078"
+                ],
+                "4": [
+                    "CWE-1099"
+                ]
+            },
+            "title": "L04 - Conformance to Solidity Naming Conventions",
+            "description": "The code does not follow Solidity naming conventions, which can decrease readability and maintainability.",
+            "severity": "Minor / Informative",
+            "contract": [
+                "DividendTokenWithAntibot",
+                "DividendTokenDividendTracker"
+            ],
+            "function": "N/A",
+            "lineNumber": [
+                "30,57,245,251,285,325,332,333,354,355,376,377",
+                "80,100,101,102,103,162,169,181,195,370"
+            ]
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ],
+                "3": [
+                    "CWE-561"
+                ]
+            },
+            "title": "L09 - Dead Code Elimination",
+            "description": "Dead code can occur due to conditional statements that are always false, functions that are never called, or unreachable code, making the contract harder to understand and maintain.",
+            "severity": "Minor / Informative",
+            "contract": "DividendTokenDividendTracker.sol",
+            "function": "N/A",
+            "lineNumber": "L214"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ],
+                "4": [
+                    "CWE-232"
+                ]
+            },
+            "title": "L12 - Using Variables before Declaration",
+            "description": "The contract is using a variable before the declaration. This is usually happening either if it has not been declared yet or if the variable has been declared in a different scope.",
+            "severity": "Minor / Informative",
+            "contract": "DividendTokenWithAntibot.sol",
+            "function": "N/A",
+            "lineNumber": "653,654,655"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "L14 - Uninitialized Variables in Local Scope",
+            "description": "Using an uninitialized local variable can lead to unpredictable behavior and potentially cause errors in the contract. It's important to always initialize local variables with appropriate values before using them.",
+            "severity": "Minor / Informative",
+            "contract": "DividendTokenWithAntibot.sol",
+            "function": "N/A",
+            "lineNumber": "607,608,609,653,654,655"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "L16 - Validate Variable Setters",
+            "description": "Validate variable setters to prevent potential security issues.",
+            "severity": "Minor / Informative",
+            "contract": "DividendTokenWithAntibot",
+            "function": "N/A",
+            "lineNumber": "287"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "L19 - Stable Compiler Version",
+            "description": "The compiler version used is not stable.",
+            "severity": "Minor / Informative",
+            "contract": "DividendTokenDividendTracker.sol",
+            "function": "N/A",
+            "lineNumber": "2"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "L20 - Succeeded Transfer Check",
+            "description": "According to the ERC20 specification, the transfer methods should be checked if the result is successful. Otherwise, the contract may wrongly assume that the transfer has been established.",
+            "severity": "Minor / Informative",
+            "contract": "DividendTokenWithAntibot.sol",
+            "function": "N/A",
+            "lineNumber": "677,687"
+        }
+    ]
+}

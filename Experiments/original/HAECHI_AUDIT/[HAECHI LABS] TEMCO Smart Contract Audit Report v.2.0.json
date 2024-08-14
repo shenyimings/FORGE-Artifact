@@ -1,1 +1,73 @@
-{"path": "./Audit_Reports_2024/HAECHI_AUDIT/[HAECHI LABS] TEMCO Smart Contract Audit Report v.2.0.pdf", "project_info": {"url": "https://github.com/HAECHI-LABS/audit-temco", "commit_hash": "06a3e4ce660c83e8438f1b4ff8b2700183e961a8", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "TemcoToken#mintTo() can burn tokens.", "description": "Unintended behavior where TemcoToken#mintTo() function can burn tokens.", "severity": "CRITICAL", "contract": "TemcoToken", "function": "mintTo()", "lineNumber": "209-216"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Owner can mint limitlessly.", "description": "The owner of the contract can execute the mint function regardless of the totalSupply, which goes against TEMCO's whitepaper stating a maximum token volume of 6,000,000,000.", "severity": "CRITICAL", "contract": "TemcoToken", "function": "_mint()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "TemcoToken#mintTo() triggers an incorrect Event.", "description": "_TemcoToken#mintTo()_ is a function that moves __value_ amount of tokens from __from_ to __to_. However, among the events triggered, there is one event in _Transfer_ that moves __value_ from address(0) to __to_. Considering most ethereum block explorers determine token transfers based on the _Transfer_ event, the ethereum block explorer might consider it an incorrect transfer of assets.", "severity": "MINOR", "contract": "TemcoToken", "function": "mintTo()", "lineNumber": "209-216"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "In TemcoToken#transferFrom(), when _from is locked, sending fails but the transaction seems successful.", "description": "Sending fails when _from is locked, but the transaction appears to be successful.", "severity": "MINOR", "contract": "TemcoToken", "function": "transferFrom()", "lineNumber": "80-93"}]}
+{
+    "path": "./Audit_Reports_2024/HAECHI_AUDIT/[HAECHI LABS] TEMCO Smart Contract Audit Report v.2.0.pdf",
+    "project_info": {
+        "url": "https://github.com/HAECHI-LABS/audit-temco",
+        "commit_hash": "06a3e4ce660c83e8438f1b4ff8b2700183e961a8",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "TemcoToken#mintTo() can burn tokens.",
+            "description": "Unintended behavior where TemcoToken#mintTo() function can burn tokens.",
+            "severity": "CRITICAL",
+            "contract": "TemcoToken",
+            "function": "mintTo()",
+            "lineNumber": "209-216"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Owner can mint limitlessly.",
+            "description": "The owner of the contract can execute the mint function regardless of the totalSupply, which goes against TEMCO's whitepaper stating a maximum token volume of 6,000,000,000.",
+            "severity": "CRITICAL",
+            "contract": "TemcoToken",
+            "function": "_mint()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "TemcoToken#mintTo() triggers an incorrect Event.",
+            "description": "_TemcoToken#mintTo()_ is a function that moves __value_ amount of tokens from __from_ to __to_. However, among the events triggered, there is one event in _Transfer_ that moves __value_ from address(0) to __to_. Considering most ethereum block explorers determine token transfers based on the _Transfer_ event, the ethereum block explorer might consider it an incorrect transfer of assets.",
+            "severity": "MINOR",
+            "contract": "TemcoToken",
+            "function": "mintTo()",
+            "lineNumber": "209-216"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "In TemcoToken#transferFrom(), when _from is locked, sending fails but the transaction seems successful.",
+            "description": "Sending fails when _from is locked, but the transaction appears to be successful.",
+            "severity": "MINOR",
+            "contract": "TemcoToken",
+            "function": "transferFrom()",
+            "lineNumber": "80-93"
+        }
+    ]
+}

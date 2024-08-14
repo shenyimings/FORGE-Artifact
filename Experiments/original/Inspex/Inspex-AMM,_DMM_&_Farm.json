@@ -1,1 +1,347 @@
-{"path": "./Audit_Reports_2024/Inspex/Inspex-AMM,_DMM_&_Farm.pdf", "project_info": {"url": "https://github.com/Evry-Finance/evry-finance-dmm-swap", "commit_hash": "144843b7db62e6fc1cb764ade4ab02af08c8450d", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Farm - Unsupported Design for Deflationary Token", "description": "In Farms contract, users can deposit tokens to acquire rewards ($EVRY), but an issue arises when the pool uses a deflationary token (reducing circulating supply upon transfer). The deposited amount is reduced due to deflationary mechanism, but the contract recognizes it as full amount.", "severity": "Info", "contract": "Farms.sol", "function": "deposit()", "lineNumber": "138"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "AMM Swap - Design Flaw in Fee Calculation", "description": "The fees of the platform can be bypassed by calling the swap() function through a custom contract, causing loss of profit to the platform and reducing the reward of the liquidity providers.", "severity": "High", "contract": "EvryPair", "function": "swap()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "AMM Swap - Centralized Control of State Variable", "description": "The controlling authorities can change the critical state variables to gain additional profit. Thus, it is unfair to the other users.", "severity": "Medium", "contract": "EvryFactory", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-703"]}, "title": "AMM Swap - Unchecked Value for Fees Setting", "description": "The swap transactions will be reverted, resulting in denial of service on the EvryRouter contract and loss of reputation for the platform.", "severity": "Low", "contract": "EvryFactory", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-273"]}, "title": "AMM Swap - Insufficient Logging for Privileged Functions", "description": "Privileged functions' executions cannot be monitored easily by the users.", "severity": "Very Low", "contract": "EvryFactory", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-233"]}, "title": "AMM Swap - Inexplicit Solidity Compiler Version", "description": "The smart contract does not explicitly specify the solidity compiler version, which is a best practice recommendation.", "severity": "Info", "contract": "EvryERC20 EvryFactory EvryPair EvryRouter", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "DMM Swap - Centralized Control of State Variable", "description": "The controlling authorities can change critical state variables to gain additional profit, which is unfair to other users.", "severity": "Medium", "contract": "DaoRegistry DMMFactoryDelegate", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-693"], "2": ["CWE-778"]}, "title": "DMM Swap - Insufficient Logging for Privileged Functions", "description": "Privileged functions' executions cannot be monitored easily by the users.", "severity": "Very Low", "contract": "DMMRouter02DelegateCall ManageUserAddress", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-682"]}, "title": "DMM Swap - Improper Platform Fee Condition", "description": "The platform fee can be lower than what the platform intended, and that difference will be added to the part owned by the liquidity providers instead.", "severity": "Very Low", "contract": "DMMPool", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-710"], "2": ["CWE-1061"], "3": ["CWE-766"]}, "title": "DMM Swap - Improper Function Visibility", "description": "Improper function visibility in ManageUserAddress contract, which is a best practice recommendation with no security impact.", "severity": "Info", "contract": "ManageUserAddress", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "Farm - Use of Upgradable Contract", "description": "The logic of the Farms smart contract can be arbitrarily changed by the proxy owner, allowing malicious actions such as stealing user funds.", "severity": "High", "contract": "Farms", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Farm - Denial of Service in Beneficiary Mechanism", "description": "In the Farms contract, users can deposit tokens specified in each pool to gain $EVRY reward using the deposit() function. The _for variable in the function can be controlled by the users, allowing the deposit by one address for another beneficiary address to gain the reward.", "severity": "High", "contract": "Farms", "function": "deposit(address,uint256,uint256)", "lineNumber": "133-140"}, {"id": 12, "category": {"1": ["CWE-664"], "2": ["CWE-404"], "3": ["CWE-772"], "4": ["CWE-775"]}, "title": "Farm - Improper Token Release Mechanism", "description": "The smart contracts will be unusable when the cap is reached, preventing users from depositing or withdrawing their funds.", "severity": "High", "contract": "EVRYDistributor Farms", "function": "N/A", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-682"]}, "title": "Farm - Reward Miscalculation", "description": "The reward miscalculation can lead to an unfair $EVRY distribution for the platform users, causing them to gain more or less $EVRY than they should.", "severity": "Medium", "contract": "Farms", "function": "updatePool(uint256 pid)", "lineNumber": "240"}, {"id": 14, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "Farm - Centralized Control of State Variable", "description": "Critical state variables can be updated any time by the controlling authorities without notifying users, causing unfair impacts to them.", "severity": "Medium", "contract": "Farms", "function": ["setEvryPerBlock()", "addPool()", "setPoolAllocation()", "renounceOwnership()", "transferOwnership()"], "lineNumber": ["79", "87", "108", "60", "69"]}, {"id": 15, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Farm - Insufficient Logging for Privileged Functions", "description": "Privileged functions that are executable by the controlling parties are not logged properly by emitting events.", "severity": "Very Low", "contract": "Farms", "function": "setEvryPerBlock()", "lineNumber": "79-81"}, {"id": 16, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Farm - Availability of Emergency Withdraw Function", "description": "The Farms contract lacks an emergencyWithdraw() function, which can be useful in cases where unforeseen circumstances cause impact to the state variables of the contract, making the withdraw() function unusable.", "severity": "Info", "contract": "Farms", "function": "emergencyWithdraw() / withdraw()", "lineNumber": "N/A"}, {"id": 17, "category": {"1": ["CWE-710"], "2": ["CWE-1061"], "3": ["CWE-766"]}, "title": "Farm - Improper Function Visibility", "description": "Improper adherence to coding standards due to improper function visibility.", "severity": "Info", "contract": "Farms", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Inspex/Inspex-AMM,_DMM_&_Farm.pdf",
+    "project_info": {
+        "url": "https://github.com/Evry-Finance/evry-finance-dmm-swap",
+        "commit_hash": "144843b7db62e6fc1cb764ade4ab02af08c8450d",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Farm - Unsupported Design for Deflationary Token",
+            "description": "In Farms contract, users can deposit tokens to acquire rewards ($EVRY), but an issue arises when the pool uses a deflationary token (reducing circulating supply upon transfer). The deposited amount is reduced due to deflationary mechanism, but the contract recognizes it as full amount.",
+            "severity": "Info",
+            "contract": "Farms.sol",
+            "function": "deposit()",
+            "lineNumber": "138"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "AMM Swap - Design Flaw in Fee Calculation",
+            "description": "The fees of the platform can be bypassed by calling the swap() function through a custom contract, causing loss of profit to the platform and reducing the reward of the liquidity providers.",
+            "severity": "High",
+            "contract": "EvryPair",
+            "function": "swap()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "AMM Swap - Centralized Control of State Variable",
+            "description": "The controlling authorities can change the critical state variables to gain additional profit. Thus, it is unfair to the other users.",
+            "severity": "Medium",
+            "contract": "EvryFactory",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "AMM Swap - Unchecked Value for Fees Setting",
+            "description": "The swap transactions will be reverted, resulting in denial of service on the EvryRouter contract and loss of reputation for the platform.",
+            "severity": "Low",
+            "contract": "EvryFactory",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-273"
+                ]
+            },
+            "title": "AMM Swap - Insufficient Logging for Privileged Functions",
+            "description": "Privileged functions' executions cannot be monitored easily by the users.",
+            "severity": "Very Low",
+            "contract": "EvryFactory",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-233"
+                ]
+            },
+            "title": "AMM Swap - Inexplicit Solidity Compiler Version",
+            "description": "The smart contract does not explicitly specify the solidity compiler version, which is a best practice recommendation.",
+            "severity": "Info",
+            "contract": "EvryERC20 EvryFactory EvryPair EvryRouter",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "DMM Swap - Centralized Control of State Variable",
+            "description": "The controlling authorities can change critical state variables to gain additional profit, which is unfair to other users.",
+            "severity": "Medium",
+            "contract": "DaoRegistry DMMFactoryDelegate",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-778"
+                ]
+            },
+            "title": "DMM Swap - Insufficient Logging for Privileged Functions",
+            "description": "Privileged functions' executions cannot be monitored easily by the users.",
+            "severity": "Very Low",
+            "contract": "DMMRouter02DelegateCall ManageUserAddress",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "DMM Swap - Improper Platform Fee Condition",
+            "description": "The platform fee can be lower than what the platform intended, and that difference will be added to the part owned by the liquidity providers instead.",
+            "severity": "Very Low",
+            "contract": "DMMPool",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1061"
+                ],
+                "3": [
+                    "CWE-766"
+                ]
+            },
+            "title": "DMM Swap - Improper Function Visibility",
+            "description": "Improper function visibility in ManageUserAddress contract, which is a best practice recommendation with no security impact.",
+            "severity": "Info",
+            "contract": "ManageUserAddress",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Farm - Use of Upgradable Contract",
+            "description": "The logic of the Farms smart contract can be arbitrarily changed by the proxy owner, allowing malicious actions such as stealing user funds.",
+            "severity": "High",
+            "contract": "Farms",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Farm - Denial of Service in Beneficiary Mechanism",
+            "description": "In the Farms contract, users can deposit tokens specified in each pool to gain $EVRY reward using the deposit() function. The _for variable in the function can be controlled by the users, allowing the deposit by one address for another beneficiary address to gain the reward.",
+            "severity": "High",
+            "contract": "Farms",
+            "function": "deposit(address,uint256,uint256)",
+            "lineNumber": "133-140"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-775"
+                ]
+            },
+            "title": "Farm - Improper Token Release Mechanism",
+            "description": "The smart contracts will be unusable when the cap is reached, preventing users from depositing or withdrawing their funds.",
+            "severity": "High",
+            "contract": "EVRYDistributor Farms",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Farm - Reward Miscalculation",
+            "description": "The reward miscalculation can lead to an unfair $EVRY distribution for the platform users, causing them to gain more or less $EVRY than they should.",
+            "severity": "Medium",
+            "contract": "Farms",
+            "function": "updatePool(uint256 pid)",
+            "lineNumber": "240"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Farm - Centralized Control of State Variable",
+            "description": "Critical state variables can be updated any time by the controlling authorities without notifying users, causing unfair impacts to them.",
+            "severity": "Medium",
+            "contract": "Farms",
+            "function": [
+                "setEvryPerBlock()",
+                "addPool()",
+                "setPoolAllocation()",
+                "renounceOwnership()",
+                "transferOwnership()"
+            ],
+            "lineNumber": [
+                "79",
+                "87",
+                "108",
+                "60",
+                "69"
+            ]
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Farm - Insufficient Logging for Privileged Functions",
+            "description": "Privileged functions that are executable by the controlling parties are not logged properly by emitting events.",
+            "severity": "Very Low",
+            "contract": "Farms",
+            "function": "setEvryPerBlock()",
+            "lineNumber": "79-81"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Farm - Availability of Emergency Withdraw Function",
+            "description": "The Farms contract lacks an emergencyWithdraw() function, which can be useful in cases where unforeseen circumstances cause impact to the state variables of the contract, making the withdraw() function unusable.",
+            "severity": "Info",
+            "contract": "Farms",
+            "function": "emergencyWithdraw() / withdraw()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1061"
+                ],
+                "3": [
+                    "CWE-766"
+                ]
+            },
+            "title": "Farm - Improper Function Visibility",
+            "description": "Improper adherence to coding standards due to improper function visibility.",
+            "severity": "Info",
+            "contract": "Farms",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

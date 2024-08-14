@@ -1,1 +1,139 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-JUKU-v1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Incorrect Spend Allowance Management in CBI/JUKU", "description": "The spend allowance needs to be adjusted based on the actual amount received by the receiver account, but it is currently adjusted based on the sent amount, which includes the feesAmount.", "severity": "High", "contract": "JUKU", "function": "transferFrom()", "lineNumber": "136"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Potential Front-Running/MEV With Reduced Return", "description": "The conversion in `CBI_`Treasury and MultiSigTreasury does not enforce meaningful slippage control, allowing front-running/MEV attacks with reduced return.", "severity": "Medium", "contract": "CBI_Treasury, MultiSigTreasury", "function": "_swapTokens()", "lineNumber": "314-320"}, {"id": 2, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-770"]}, "title": "Improper Limit Enforcement in CBI_Treasury", "description": "The enforcement of swapLimit and withdrawLimit needs to be revisited as it ensures the remaining amount after the operation will not be smaller than the limit instead of ensuring the input amount does not exceed the limit.", "severity": "Medium", "contract": "CBI_Treasury", "function": "_swapTokens() and _withdraw()", "lineNumber": "317-319,320"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "Trust Issue of Admin Keys", "description": "Privileged admin account needs to be scrutinized and properly managed, especially in relation to proxy-admin privileges.", "severity": "Medium", "contract": "Multiple Contracts", "function": "updateAllowedToken()", "lineNumber": "525-541"}, {"id": 4, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Improved Logic in updateLowerAdmin()", "description": "The `updateLowerAdmin()` function does not properly update the `lowerAdmin` state variable after revoking and configuring the role for the new admin.", "severity": "Low", "contract": "CMultiSigTreasury", "function": "updateLowerAdmin()", "lineNumber": "390-396"}, {"id": 5, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Revisited Quorum Enforcement in MultiSigTreasury", "description": "The `MultiSigTreasury` contract has a corner case where the quorum is set to 1 and the number of 'for'-votes will be initialized to `trxInfo.confirmations=1`, preventing the condition for triggering the execution from being achieved.", "severity": "Low", "contract": "MultiSigTreasury", "function": "withdrawVote()", "lineNumber": "303-319"}, {"id": 6, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1287"]}, "title": "Accommodation of Non-ERC20-Compliant Tokens", "description": "The `transfer` function does not follow the ERC20 standard, which may cause issues if not handled properly.", "severity": "Low", "contract": "YieldOptimizer", "function": "transfer()", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-JUKU-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/blaize-tech/cbi-smart-contracts/tree/311f391",
+        "commit_hash": "311f391",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect Spend Allowance Management in CBI/JUKU",
+            "description": "The spend allowance needs to be adjusted based on the actual amount received by the receiver account, but it is currently adjusted based on the sent amount, which includes the feesAmount.",
+            "severity": "High",
+            "contract": "JUKU",
+            "function": "transferFrom()",
+            "lineNumber": "136"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Potential Front-Running/MEV With Reduced Return",
+            "description": "The conversion in `CBI_`Treasury and MultiSigTreasury does not enforce meaningful slippage control, allowing front-running/MEV attacks with reduced return.",
+            "severity": "Medium",
+            "contract": "CBI_Treasury, MultiSigTreasury",
+            "function": "_swapTokens()",
+            "lineNumber": "314-320"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "Improper Limit Enforcement in CBI_Treasury",
+            "description": "The enforcement of swapLimit and withdrawLimit needs to be revisited as it ensures the remaining amount after the operation will not be smaller than the limit instead of ensuring the input amount does not exceed the limit.",
+            "severity": "Medium",
+            "contract": "CBI_Treasury",
+            "function": "_swapTokens() and _withdraw()",
+            "lineNumber": "317-319,320"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "Privileged admin account needs to be scrutinized and properly managed, especially in relation to proxy-admin privileges.",
+            "severity": "Medium",
+            "contract": "Multiple Contracts",
+            "function": "updateAllowedToken()",
+            "lineNumber": "525-541"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Improved Logic in updateLowerAdmin()",
+            "description": "The `updateLowerAdmin()` function does not properly update the `lowerAdmin` state variable after revoking and configuring the role for the new admin.",
+            "severity": "Low",
+            "contract": "CMultiSigTreasury",
+            "function": "updateLowerAdmin()",
+            "lineNumber": "390-396"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Revisited Quorum Enforcement in MultiSigTreasury",
+            "description": "The `MultiSigTreasury` contract has a corner case where the quorum is set to 1 and the number of 'for'-votes will be initialized to `trxInfo.confirmations=1`, preventing the condition for triggering the execution from being achieved.",
+            "severity": "Low",
+            "contract": "MultiSigTreasury",
+            "function": "withdrawVote()",
+            "lineNumber": "303-319"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1287"
+                ]
+            },
+            "title": "Accommodation of Non-ERC20-Compliant Tokens",
+            "description": "The `transfer` function does not follow the ERC20 standard, which may cause issues if not handled properly.",
+            "severity": "Low",
+            "contract": "YieldOptimizer",
+            "function": "transfer()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

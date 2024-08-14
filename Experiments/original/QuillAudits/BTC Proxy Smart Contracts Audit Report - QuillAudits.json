@@ -1,1 +1,91 @@
-{"path": "./Audit_Reports_2024/QuillAudits/BTC Proxy Smart Contracts Audit Report - QuillAudits.pdf", "project_info": {"url": "https://github.com/Proxy-Protocol/BTCpx-ERC20", "commit_hash": "5ca45abbe3d0eb2ee6abf92726b74f44c3a75e58", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "ProcessTx will work with unconfirmed transactions", "description": "The processTx function does not check if the minimum number of confirmation criteria is met before processing a transaction, allowing it to work with unconfirmed transactions.", "severity": "High", "contract": "Relay.sol", "function": "processTx", "lineNumber": "L461-L466"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "Unchecked Status Key in processTx", "description": "If the number of confirmations are not enough, we are still adding to the pendingMints mapping and setting txsInformation[uuid].status to false. But we are not checking this status key while processTx is called.", "severity": "High", "contract": "Relay.sol", "function": "processTx", "lineNumber": "L461-L466"}, {"id": 2, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-770"]}, "title": "verifyTx function prone to repeated minting attack", "description": "The verifyTx function is missing a mapping of BTC transaction Id => boolean which will mark a transaction id as already verified and minted. This will prevent minting for the same transaction id repeatedly.", "severity": "High", "contract": "Relay Contract", "function": "verifyTx", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "verifyTx function prone to minting for zero confirmation transactions", "description": "Function verifyTx is prone to adding values to pendingMints mapping for the transactions with zero confirmations.", "severity": "High", "contract": "Relay.sol", "function": "verifyTx()", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/QuillAudits/BTC Proxy Smart Contracts Audit Report - QuillAudits.pdf",
+    "project_info": {
+        "url": "https://github.com/Proxy-Protocol/BTCpx-ERC20",
+        "commit_hash": "5ca45abbe3d0eb2ee6abf92726b74f44c3a75e58",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "ProcessTx will work with unconfirmed transactions",
+            "description": "The processTx function does not check if the minimum number of confirmation criteria is met before processing a transaction, allowing it to work with unconfirmed transactions.",
+            "severity": "High",
+            "contract": "Relay.sol",
+            "function": "processTx",
+            "lineNumber": "L461-L466"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Unchecked Status Key in processTx",
+            "description": "If the number of confirmations are not enough, we are still adding to the pendingMints mapping and setting txsInformation[uuid].status to false. But we are not checking this status key while processTx is called.",
+            "severity": "High",
+            "contract": "Relay.sol",
+            "function": "processTx",
+            "lineNumber": "L461-L466"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "verifyTx function prone to repeated minting attack",
+            "description": "The verifyTx function is missing a mapping of BTC transaction Id => boolean which will mark a transaction id as already verified and minted. This will prevent minting for the same transaction id repeatedly.",
+            "severity": "High",
+            "contract": "Relay Contract",
+            "function": "verifyTx",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "verifyTx function prone to minting for zero confirmation transactions",
+            "description": "Function verifyTx is prone to adding values to pendingMints mapping for the transactions with zero confirmations.",
+            "severity": "High",
+            "contract": "Relay.sol",
+            "function": "verifyTx()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

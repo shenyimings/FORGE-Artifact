@@ -1,1 +1,432 @@
-{"path": "./Audit_Reports_2024/Quantstamp/firestarter.pdf", "project_info": {"url": "https://github.com/Firestarter-Finance/contracts", "commit_hash": "eb96d7b", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "QSP-1 Initialization with multiple owners can be front-run", "description": "The `initialize()` function takes an array of `owners` as an input parameter and gives all these addresses the `DEFAULT_ADMIN_ROLE`, same role given to the `msg.sender` in the same function. Given that the `initialize()` function does not return a particular value to indicate its successful execution and given that it might be executed by a script together with several subsequent contract calls, the legitimate owner who is making the call might be front-run by a malicious entity who inserts itself as one of the owners, alongside all other owners.", "severity": "High", "contract": "Presale.sol, Whitelist.sol", "function": "initialize()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "QSP-2 Unsafe casts potentially leading to overflows", "description": "In L154, L158, L178, L202, L244, L259, L263, L288 of `Staking.sol`, unsigned integers are cast/converted to signed integers, potentially leading to overflows.", "severity": "High Risk", "contract": "Staking.sol", "function": "N/A", "lineNumber": "L154, L158, L178, L202, L244, L259, L263, L288"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "QSP-3 KYC is not checked in any of the contracts", "description": "The `UserData` structure has a `isKycPassed` attribute, which is never used in the code. The documentation indicates that: \"it should always be true but we have some exceptions for the Firestarter campaign\".", "severity": "High Risk", "contract": "Whitelist.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "QSP-4 Public presale period can be shortened", "description": "The intention behind the `presalePeriod` state variable is to have a fixed size period for the public sale, which cannot be shortened even if the presale is paused. However, it is still possible to shorten the public presale period in case the private sale is not ended (by calling `endPrivateSale()` ) before the `block.timestamp` passes the value of `startTime`.", "severity": "Medium Risk", "contract": "Presale.sol", "function": "setStartTime() and endPrivateSale()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-693"]}, "title": "QSP-5 Reentrancy possible when (un)locking tokens", "description": "The `TokenLock.unlock()` function writes to the `lockInfo.amount` state variable after performing two ERC20 `transfer()` calls, making it vulnerable to reentrancy attacks. A similar issue occurs in the `TokenLock.lock()` function.", "severity": "Medium Risk", "contract": "TokenLock.sol, Staking.sol, Vesting.sol, Presale.sol", "function": "unlock(), lock()", "lineNumber": "L110, L117"}, {"id": 5, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "QSP-6 Vesting may start before unsold tokens are withdrawn", "description": "Vesting may start before unsold tokens are withdrawn, causing the projectOwner to receive a lower amount of tokens than expected.", "severity": "Medium Risk", "contract": "Presale.sol", "function": "withdrawUnsoldToken()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "QSP-7 Multiple owners increases the risk of a hack", "description": "The Presale and Whitelist contracts have multiple addresses which may perform privileged function calls. This design decision increases the likelihood of a hack because if ANY of the addresses is compromised, then an attacker could tamper with the presale or whitelist.", "severity": "Medium Risk", "contract": "Presale.sol, Whitelist.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-682"], "2": ["CWE-191"]}, "title": "QSP-8 Denial-of-service due to integer underflow", "description": "There is a potential integer overflow on L178 in `Staking.totalRewards()` , in case `totalRewardDebt > flamePerSecond * stakingPeriod` , because the result is cast to  `unit256` . This underflow is caught by the `SafeCast.toUint256()` function. However, it would cause an effective denial-of-service to all the functions of the `Staking` contract, which are using this function.", "severity": "Low", "contract": "Staking.sol", "function": "totalRewards()", "lineNumber": "178"}, {"id": 8, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "QSP-9 Missing input validation", "description": "It is important to validate inputs, even if they only come from trusted addresses, to avoid human error.", "severity": "Low Risk", "contract": "TokenLock.sol, Vesting.sol, Presale.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-682"], "2": ["CWE-1339"]}, "title": "Increased loss of precision", "description": "Integer division truncates the result, which leads to a loss of precision. When division is followed by a multiplication, this loss of precision is further increased.", "severity": "Low Risk", "contract": "Vesting.sol", "function": "vested()", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-693"]}, "title": "QSP-11 Local variable shadowing", "description": "The `name` and `symbol` input parameters of the `CustomToken.constructor` are shadowing the state variables of the `ERC20` contract that `CustomToken` inherits from.", "severity": "Low Risk", "contract": "CustomToken.sol", "function": "constructor()", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-284"], "2": ["CWE-282"], "3": ["CWE-708"]}, "title": "QSP-12 Privileged roles and ownership", "description": "Certain contracts have state variables, e.g. `owner` , which provide certain addresses with privileged roles. Such roles may pose a risk to end-users.", "severity": "Low Risk", "contract": "Presale.sol, Vesting.sol, Staking.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-284"], "2": ["CWE-282"], "3": ["CWE-708"]}, "title": "QSP-13 Contract Could Be Left Without Ownership", "description": "An actor with the `onlyOwner` role can renounce the ownership of the contract by setting the owner to the zero address, preventing any further functions with `onlyOwner` to be callable.", "severity": "Low Risk", "contract": "Staking.sol", "function": "renounceOwnership()", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-908"], "4": ["CWE-457"]}, "title": "QSP-14 Uninitialized state variables", "description": "State variables should always be initialized before they are used, unless they are explicitly stated (in the comments) to be initialized to the default value.", "severity": "Informational", "contract": "Presale.sol, ProjectPresale.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-435"], "2": ["CWE-436"]}, "title": "Two different versions of IERC20.sol", "description": "The installed project contains 2 different instances of `IERC20.sol`.", "severity": "Informational", "contract": "contracts/interfaces/IERC20.sol, @openzeppelin/contracts/token/ERC20/IERC20.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-703"], "2": ["CWE-393"]}, "title": "QSP-16 Ignored return value", "description": "The call to `IERC20(rewardToken).approve()` is ignored on L140 in `Vesting.init()`. This could lead to unexpected errors when calling other functions that are expecting the `presale` contract to be approved for transferring the `rewardToken`.", "severity": "Informational", "contract": "Vesting.sol", "function": "init()", "lineNumber": "140"}, {"id": 16, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "QSP-17 Events not emitted on state change", "description": "An event should always be emitted when a state change is performed to facilitate smart contract monitoring by other systems which want to integrate with the smart contract. This is not the case for the `Vesting.init()` function, which does not emit any event upon a successful change of the `owner` state variable.", "severity": "Informational", "contract": "Vesting.sol", "function": "init()", "lineNumber": "N/A"}, {"id": 17, "category": {"1": ["CWE-682"]}, "title": "QSP-18 Unlocked pragma", "description": "The version of the Solidity defined in the code is not fixed. This can lead to unintended or unexpected behaviours in the implementation due to different compiler versions between what is intended in the code and the output at compile time.", "severity": "Informational", "contract": "Multiple contracts (CustomToken.sol, FirestarterPresale.sol, Presale.sol, ProjectPresale.sol, TokenLock.sol, Vesting.sol, Whitelist.sol)", "function": "N/A", "lineNumber": "N/A"}, {"id": 18, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "QSP-19 Gas concerns / for-loops", "description": "For-loops used to iterate over user-supplied arrays can run out of gas if array length is too large.", "severity": "Informational", "contract": ["Whitelist.sol", "Presale.sol"], "function": ["addToWhitelist", "removeFromWhitelist"], "lineNumber": ["L54", "L198"]}, {"id": 19, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "QSP-20 Obsolete check", "description": "The `startPresale()` function uses the `whileDeposited` modifier which checks and has an obsolete check on L276-279 that can be removed to save gas and improve code readability.", "severity": "Informational", "contract": "Presale.sol", "function": "startPresale()", "lineNumber": "L276-279"}, {"id": 20, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "QSP-21 Unclear maximum allocation", "description": "The check in Presale.deposit is unclear regarding maxAlloc, which represents the maximum allocation for the public sale, but the comment above its declaration in Whitelist.sol indicates it as 'Max allocation for this user'.", "severity": "Informational", "contract": "Presale.sol, Whitelist.sol", "function": "deposit()", "lineNumber": "N/A"}, {"id": 21, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "QSP-22 Wrong event emitted in setEarlyWithdrawal", "description": "In L107 of `Staking.sol` of function `setEarlyWithdrawal`, the event `LogFlamePerSecond` is emitted, however event `LogEarlyWithdrawal` exists and seems should've been used instead.", "severity": "Undetermined", "contract": "Staking.sol", "function": "setEarlyWithdrawal", "lineNumber": "L107"}, {"id": 22, "category": {"1": ["CWE-682"]}, "title": "QSP-23 Incorrect accounting for totalUsers", "description": "In L91 of `Whitelist.sol`, if the provided `users` array contains already whitelisted users, the update of `totalUsers` will be incorrect, resulting in `totalUsers` being larger than the actual number of whitelisted users.", "severity": "Undetermined", "contract": "Whitelist.sol", "function": "N/A", "lineNumber": "L91"}]}
+{
+    "path": "./Audit_Reports_2024/Quantstamp/firestarter.pdf",
+    "project_info": {
+        "url": "https://github.com/Firestarter-Finance/contracts",
+        "commit_hash": "eb96d7b",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "QSP-1 Initialization with multiple owners can be front-run",
+            "description": "The `initialize()` function takes an array of `owners` as an input parameter and gives all these addresses the `DEFAULT_ADMIN_ROLE`, same role given to the `msg.sender` in the same function. Given that the `initialize()` function does not return a particular value to indicate its successful execution and given that it might be executed by a script together with several subsequent contract calls, the legitimate owner who is making the call might be front-run by a malicious entity who inserts itself as one of the owners, alongside all other owners.",
+            "severity": "High",
+            "contract": "Presale.sol, Whitelist.sol",
+            "function": "initialize()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "QSP-2 Unsafe casts potentially leading to overflows",
+            "description": "In L154, L158, L178, L202, L244, L259, L263, L288 of `Staking.sol`, unsigned integers are cast/converted to signed integers, potentially leading to overflows.",
+            "severity": "High Risk",
+            "contract": "Staking.sol",
+            "function": "N/A",
+            "lineNumber": "L154, L158, L178, L202, L244, L259, L263, L288"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "QSP-3 KYC is not checked in any of the contracts",
+            "description": "The `UserData` structure has a `isKycPassed` attribute, which is never used in the code. The documentation indicates that: \"it should always be true but we have some exceptions for the Firestarter campaign\".",
+            "severity": "High Risk",
+            "contract": "Whitelist.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "QSP-4 Public presale period can be shortened",
+            "description": "The intention behind the `presalePeriod` state variable is to have a fixed size period for the public sale, which cannot be shortened even if the presale is paused. However, it is still possible to shorten the public presale period in case the private sale is not ended (by calling `endPrivateSale()` ) before the `block.timestamp` passes the value of `startTime`.",
+            "severity": "Medium Risk",
+            "contract": "Presale.sol",
+            "function": "setStartTime() and endPrivateSale()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "QSP-5 Reentrancy possible when (un)locking tokens",
+            "description": "The `TokenLock.unlock()` function writes to the `lockInfo.amount` state variable after performing two ERC20 `transfer()` calls, making it vulnerable to reentrancy attacks. A similar issue occurs in the `TokenLock.lock()` function.",
+            "severity": "Medium Risk",
+            "contract": "TokenLock.sol, Staking.sol, Vesting.sol, Presale.sol",
+            "function": "unlock(), lock()",
+            "lineNumber": "L110, L117"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "QSP-6 Vesting may start before unsold tokens are withdrawn",
+            "description": "Vesting may start before unsold tokens are withdrawn, causing the projectOwner to receive a lower amount of tokens than expected.",
+            "severity": "Medium Risk",
+            "contract": "Presale.sol",
+            "function": "withdrawUnsoldToken()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "QSP-7 Multiple owners increases the risk of a hack",
+            "description": "The Presale and Whitelist contracts have multiple addresses which may perform privileged function calls. This design decision increases the likelihood of a hack because if ANY of the addresses is compromised, then an attacker could tamper with the presale or whitelist.",
+            "severity": "Medium Risk",
+            "contract": "Presale.sol, Whitelist.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-191"
+                ]
+            },
+            "title": "QSP-8 Denial-of-service due to integer underflow",
+            "description": "There is a potential integer overflow on L178 in `Staking.totalRewards()` , in case `totalRewardDebt > flamePerSecond * stakingPeriod` , because the result is cast to  `unit256` . This underflow is caught by the `SafeCast.toUint256()` function. However, it would cause an effective denial-of-service to all the functions of the `Staking` contract, which are using this function.",
+            "severity": "Low",
+            "contract": "Staking.sol",
+            "function": "totalRewards()",
+            "lineNumber": "178"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "QSP-9 Missing input validation",
+            "description": "It is important to validate inputs, even if they only come from trusted addresses, to avoid human error.",
+            "severity": "Low Risk",
+            "contract": "TokenLock.sol, Vesting.sol, Presale.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "Increased loss of precision",
+            "description": "Integer division truncates the result, which leads to a loss of precision. When division is followed by a multiplication, this loss of precision is further increased.",
+            "severity": "Low Risk",
+            "contract": "Vesting.sol",
+            "function": "vested()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "QSP-11 Local variable shadowing",
+            "description": "The `name` and `symbol` input parameters of the `CustomToken.constructor` are shadowing the state variables of the `ERC20` contract that `CustomToken` inherits from.",
+            "severity": "Low Risk",
+            "contract": "CustomToken.sol",
+            "function": "constructor()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-282"
+                ],
+                "3": [
+                    "CWE-708"
+                ]
+            },
+            "title": "QSP-12 Privileged roles and ownership",
+            "description": "Certain contracts have state variables, e.g. `owner` , which provide certain addresses with privileged roles. Such roles may pose a risk to end-users.",
+            "severity": "Low Risk",
+            "contract": "Presale.sol, Vesting.sol, Staking.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-282"
+                ],
+                "3": [
+                    "CWE-708"
+                ]
+            },
+            "title": "QSP-13 Contract Could Be Left Without Ownership",
+            "description": "An actor with the `onlyOwner` role can renounce the ownership of the contract by setting the owner to the zero address, preventing any further functions with `onlyOwner` to be callable.",
+            "severity": "Low Risk",
+            "contract": "Staking.sol",
+            "function": "renounceOwnership()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-908"
+                ],
+                "4": [
+                    "CWE-457"
+                ]
+            },
+            "title": "QSP-14 Uninitialized state variables",
+            "description": "State variables should always be initialized before they are used, unless they are explicitly stated (in the comments) to be initialized to the default value.",
+            "severity": "Informational",
+            "contract": "Presale.sol, ProjectPresale.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ]
+            },
+            "title": "Two different versions of IERC20.sol",
+            "description": "The installed project contains 2 different instances of `IERC20.sol`.",
+            "severity": "Informational",
+            "contract": "contracts/interfaces/IERC20.sol, @openzeppelin/contracts/token/ERC20/IERC20.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-393"
+                ]
+            },
+            "title": "QSP-16 Ignored return value",
+            "description": "The call to `IERC20(rewardToken).approve()` is ignored on L140 in `Vesting.init()`. This could lead to unexpected errors when calling other functions that are expecting the `presale` contract to be approved for transferring the `rewardToken`.",
+            "severity": "Informational",
+            "contract": "Vesting.sol",
+            "function": "init()",
+            "lineNumber": "140"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "QSP-17 Events not emitted on state change",
+            "description": "An event should always be emitted when a state change is performed to facilitate smart contract monitoring by other systems which want to integrate with the smart contract. This is not the case for the `Vesting.init()` function, which does not emit any event upon a successful change of the `owner` state variable.",
+            "severity": "Informational",
+            "contract": "Vesting.sol",
+            "function": "init()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "QSP-18 Unlocked pragma",
+            "description": "The version of the Solidity defined in the code is not fixed. This can lead to unintended or unexpected behaviours in the implementation due to different compiler versions between what is intended in the code and the output at compile time.",
+            "severity": "Informational",
+            "contract": "Multiple contracts (CustomToken.sol, FirestarterPresale.sol, Presale.sol, ProjectPresale.sol, TokenLock.sol, Vesting.sol, Whitelist.sol)",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "QSP-19 Gas concerns / for-loops",
+            "description": "For-loops used to iterate over user-supplied arrays can run out of gas if array length is too large.",
+            "severity": "Informational",
+            "contract": [
+                "Whitelist.sol",
+                "Presale.sol"
+            ],
+            "function": [
+                "addToWhitelist",
+                "removeFromWhitelist"
+            ],
+            "lineNumber": [
+                "L54",
+                "L198"
+            ]
+        },
+        {
+            "id": 19,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "QSP-20 Obsolete check",
+            "description": "The `startPresale()` function uses the `whileDeposited` modifier which checks and has an obsolete check on L276-279 that can be removed to save gas and improve code readability.",
+            "severity": "Informational",
+            "contract": "Presale.sol",
+            "function": "startPresale()",
+            "lineNumber": "L276-279"
+        },
+        {
+            "id": 20,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "QSP-21 Unclear maximum allocation",
+            "description": "The check in Presale.deposit is unclear regarding maxAlloc, which represents the maximum allocation for the public sale, but the comment above its declaration in Whitelist.sol indicates it as 'Max allocation for this user'.",
+            "severity": "Informational",
+            "contract": "Presale.sol, Whitelist.sol",
+            "function": "deposit()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 21,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "QSP-22 Wrong event emitted in setEarlyWithdrawal",
+            "description": "In L107 of `Staking.sol` of function `setEarlyWithdrawal`, the event `LogFlamePerSecond` is emitted, however event `LogEarlyWithdrawal` exists and seems should've been used instead.",
+            "severity": "Undetermined",
+            "contract": "Staking.sol",
+            "function": "setEarlyWithdrawal",
+            "lineNumber": "L107"
+        },
+        {
+            "id": 22,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "QSP-23 Incorrect accounting for totalUsers",
+            "description": "In L91 of `Whitelist.sol`, if the provided `users` array contains already whitelisted users, the update of `totalUsers` will be incorrect, resulting in `totalUsers` being larger than the actual number of whitelisted users.",
+            "severity": "Undetermined",
+            "contract": "Whitelist.sol",
+            "function": "N/A",
+            "lineNumber": "L91"
+        }
+    ]
+}

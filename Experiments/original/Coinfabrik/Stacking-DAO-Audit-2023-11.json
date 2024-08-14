@@ -1,1 +1,135 @@
-{"path": "./Audit_Reports_2024/Coinfabrik/Stacking-DAO-Audit-2023-11.pdf", "project_info": {"url": "https://github.com/StackingDAO/StackingDAO", "commit_hash": "3a799d246991fc1ea5652d4c587b81a04d8f59eb", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Blocked Withdrawals and Stolen Rewards", "description": "The administrator can block withdrawals by setting `shutdown-withdrawals` to `true` or disabling the core contract from the `contracts` map in `dao.clar`, allowing them to freeze funds, set the reward commission to 100%, and assign all earned rewards to themselves.", "severity": "Critical", "contract": "core-v1.clar", "function": "N/A", "lineNumber": "197, 199, 200, 229, 231"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Reward Miscalculation", "description": "The calculate-cumm-reward-per-stake() function in the staking-v1 contract exhibits a security vulnerability where the rewards-per-block variable is not properly deinitialized, leading to unintended reward inflation.", "severity": "Critical", "contract": "staking-v1", "function": "calculate-cumm-reward-per-stake()", "lineNumber": "219-239"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Update Codebase for Mainnet", "description": "The codebase has many instances of comments with the text 'TODO: update for mainnet', referring to hardcoded addresses and other environment variables. These instances should be resolved before deploying to mainnet.", "severity": "Critical", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-703"]}, "title": "Panicking on Possible Error", "description": "Using `unwrap-panic` results in the transaction being finished because of a runtime error when the provided value is an error or a `none`. The runtime error does not allow the caller to handle that error and act in response.", "severity": "Minor", "contract": ["ststx-withdraw-nft", "core-v1", "reserve-v1"], "function": "N/A", "lineNumber": ["137", "233", "40"]}, {"id": 4, "category": {"1": ["CWE-284"]}, "title": "No Limit for the Reward Commission", "description": "The commission is defined by the administrator through set-commission() and can be set to any value, even 100%. The greater the commission, the lower the increase on the reserve contract, and consequently the lower the rewards for STX stakers.", "severity": "Minor", "contract": "contracts/core-v1.clar", "function": "set-commission()", "lineNumber": "263, 299"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "No Limit for the Staking Percentage", "description": "The staking percentage defines how much from the reward commission is assigned to stDAO stakers, while the rest of the commission is for the protocol. This percentage is defined by the administrator through `set-staking-percentage()` and can be set to any value, even 0%.", "severity": "Minor", "contract": "commission-v1.clar", "function": "set-staking-percentage()", "lineNumber": "32, 72"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Any Whitelisted Principal Can Disable Others", "description": "Any whitelisted principal can disable others by calling set-contract-enabled() function, allowing them to take control over the system.", "severity": "Minor", "contract": "dao.clar", "function": "set-contract-enabled()", "lineNumber": "78"}]}
+{
+    "path": "./Audit_Reports_2024/Coinfabrik/Stacking-DAO-Audit-2023-11.pdf",
+    "project_info": {
+        "url": "https://github.com/StackingDAO/StackingDAO",
+        "commit_hash": "3a799d246991fc1ea5652d4c587b81a04d8f59eb",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Blocked Withdrawals and Stolen Rewards",
+            "description": "The administrator can block withdrawals by setting `shutdown-withdrawals` to `true` or disabling the core contract from the `contracts` map in `dao.clar`, allowing them to freeze funds, set the reward commission to 100%, and assign all earned rewards to themselves.",
+            "severity": "Critical",
+            "contract": "core-v1.clar",
+            "function": "N/A",
+            "lineNumber": "197, 199, 200, 229, 231"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Reward Miscalculation",
+            "description": "The calculate-cumm-reward-per-stake() function in the staking-v1 contract exhibits a security vulnerability where the rewards-per-block variable is not properly deinitialized, leading to unintended reward inflation.",
+            "severity": "Critical",
+            "contract": "staking-v1",
+            "function": "calculate-cumm-reward-per-stake()",
+            "lineNumber": "219-239"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Update Codebase for Mainnet",
+            "description": "The codebase has many instances of comments with the text 'TODO: update for mainnet', referring to hardcoded addresses and other environment variables. These instances should be resolved before deploying to mainnet.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Panicking on Possible Error",
+            "description": "Using `unwrap-panic` results in the transaction being finished because of a runtime error when the provided value is an error or a `none`. The runtime error does not allow the caller to handle that error and act in response.",
+            "severity": "Minor",
+            "contract": [
+                "ststx-withdraw-nft",
+                "core-v1",
+                "reserve-v1"
+            ],
+            "function": "N/A",
+            "lineNumber": [
+                "137",
+                "233",
+                "40"
+            ]
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "No Limit for the Reward Commission",
+            "description": "The commission is defined by the administrator through set-commission() and can be set to any value, even 100%. The greater the commission, the lower the increase on the reserve contract, and consequently the lower the rewards for STX stakers.",
+            "severity": "Minor",
+            "contract": "contracts/core-v1.clar",
+            "function": "set-commission()",
+            "lineNumber": "263, 299"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "No Limit for the Staking Percentage",
+            "description": "The staking percentage defines how much from the reward commission is assigned to stDAO stakers, while the rest of the commission is for the protocol. This percentage is defined by the administrator through `set-staking-percentage()` and can be set to any value, even 0%.",
+            "severity": "Minor",
+            "contract": "commission-v1.clar",
+            "function": "set-staking-percentage()",
+            "lineNumber": "32, 72"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Any Whitelisted Principal Can Disable Others",
+            "description": "Any whitelisted principal can disable others by calling set-contract-enabled() function, allowing them to take control over the system.",
+            "severity": "Minor",
+            "contract": "dao.clar",
+            "function": "set-contract-enabled()",
+            "lineNumber": "78"
+        }
+    ]
+}

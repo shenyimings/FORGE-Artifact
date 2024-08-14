@@ -1,1 +1,257 @@
-{"path": "./Audit_Reports_2024/Inspex/Inspex-BlucamonFactory_&_Distribution.pdf", "project_info": {"url": "https://github.com/BlucaOrganization/public-smart-contracts", "commit_hash": "5ef5e677b35740bc8685e3877a80809b26f7fced", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "Centralized Control of State Variable", "description": "Critical state variables can be updated any time by the controlling authorities without notifying users.", "severity": "High", "contract": ["BlucaDependency", "BlucamonAirdrop", "BlucamonFactory", "BlucamonSummoning", "ExclusiveSale", "StandardSale"], "function": ["setWhitelistSetter()", "setSpawner()", "setBreeder()", "setAirdropSetter()", "setFounder()", "setSummoner()", "setWhitelist()", "setBlucamonId()", "setDefaultElementalFragments()", "setSummonFee()", "setSetter()", "setFounder()", "setDefaultRarity()", "setEvent()", "setCurrentNumber()", "setPrefixTokenUri()"], "lineNumber": ["49", "54", "61", "68", "75", "82", "33", "35", "43", "20", "42", "46", "50", "54", "68", "72"]}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Manual Token Minting by Contract Owner", "description": "The contract owner can arbitrarily mint Blucamon NFTs without proper metadata, causing denial of service and potential profit.", "severity": "Medium", "contract": "BlucamonOwnership", "function": "safeMint()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-691"], "2": ["CWE-841"]}, "title": "Improper Sale Properties Modification During On-Going Sale Event", "description": "The modification of sale properties during an on-going sale event is unfair to users and can result in loss of reputation for the platform and monetary impact for users.", "severity": "Medium", "contract": ["ExclusiveSale", "StandardSale"], "function": "setEvent()", "lineNumber": ["42-60", "54-72"]}, {"id": 3, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Design Flaw in blucamonId State Usage", "description": "The execution of spawn() function will be reverted when the blucamonId state overlaps the id of the minted NFT, causing disruption to the service, resulting in loss of reputation for the platform.", "severity": "Medium", "contract": "BlucamonOwnership and BlucamonAirdrop", "function": "spawn(), mintBlucamons() and setWhitelist()", "lineNumber": "198-216, 33-51"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Improper State Modification of BUSD Contract Address", "description": "The $BUSD contract address can be changed to any token at any time by the setter role, resulting in loss of reputation for the platform and monetary impact for users.", "severity": "Low", "contract": "StandardSale.sol", "function": "constructor()", "lineNumber": "11-15"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Design Flaw in ExclusiveSale and StandardSale Contracts", "description": "The setCurrentNumber() function can set currentNumber to any number, causing the number of eggs bought to not match the currentNumber, and the total can be exceeded by setting the currentNumber. This can damage the platform's reputation.", "severity": "Very Low", "contract": "ExclusiveSale, StandardSale", "function": "setCurrentNumber(), validatePurchasing()", "lineNumber": "58-60, 125-130"}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-273"]}, "title": "Insufficient Logging for Privileged Functions", "description": "Privileged functions that are executable by the controlling parties are not logged properly by emitting events.", "severity": "Very Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Payment of Amount Exceeding the Purchase Price", "description": "The ExclusiveSale contract allows payment of an amount exceeding the purchase price.", "severity": "Info", "contract": "ExclusiveSale", "function": "purchaseEgg()", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Inexplicit Solidity Compiler Version", "description": "The smart contract does not explicitly define the Solidity compiler version, which can lead to potential security risks due to unmaintained third-party components.", "severity": "Info", "contract": "BlucamonAirdrop, BlucaDependency, BlucamonFactory, BlucamonOwnership, BlucamonSummoning, ExclusiveSale, StandardSale", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-284"], "2": ["CWE-749"]}, "title": "Improper Function Visibility", "description": "The safeMint() function has improper visibility and should be changed to external if it is not called from any internal function.", "severity": "Info", "contract": "BlucamonOwnership.sol", "function": "safeMint(address, uint256)", "lineNumber": "61-63"}, {"id": 10, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Use of Low-Level Callings", "description": "The contracts use low-level function callings to call external contracts without properly checking the return value, which can lead to unexpected behaviors.", "severity": "Info", "contract": "BlucamonSummoning, ExclusiveSale, StandardSale", "function": "summon(), purchaseEgg(), getBlucamonId()", "lineNumber": "25, 32, 96, 110, 76, 89"}]}
+{
+    "path": "./Audit_Reports_2024/Inspex/Inspex-BlucamonFactory_&_Distribution.pdf",
+    "project_info": {
+        "url": "https://github.com/BlucaOrganization/public-smart-contracts",
+        "commit_hash": "5ef5e677b35740bc8685e3877a80809b26f7fced",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Centralized Control of State Variable",
+            "description": "Critical state variables can be updated any time by the controlling authorities without notifying users.",
+            "severity": "High",
+            "contract": [
+                "BlucaDependency",
+                "BlucamonAirdrop",
+                "BlucamonFactory",
+                "BlucamonSummoning",
+                "ExclusiveSale",
+                "StandardSale"
+            ],
+            "function": [
+                "setWhitelistSetter()",
+                "setSpawner()",
+                "setBreeder()",
+                "setAirdropSetter()",
+                "setFounder()",
+                "setSummoner()",
+                "setWhitelist()",
+                "setBlucamonId()",
+                "setDefaultElementalFragments()",
+                "setSummonFee()",
+                "setSetter()",
+                "setFounder()",
+                "setDefaultRarity()",
+                "setEvent()",
+                "setCurrentNumber()",
+                "setPrefixTokenUri()"
+            ],
+            "lineNumber": [
+                "49",
+                "54",
+                "61",
+                "68",
+                "75",
+                "82",
+                "33",
+                "35",
+                "43",
+                "20",
+                "42",
+                "46",
+                "50",
+                "54",
+                "68",
+                "72"
+            ]
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Manual Token Minting by Contract Owner",
+            "description": "The contract owner can arbitrarily mint Blucamon NFTs without proper metadata, causing denial of service and potential profit.",
+            "severity": "Medium",
+            "contract": "BlucamonOwnership",
+            "function": "safeMint()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "Improper Sale Properties Modification During On-Going Sale Event",
+            "description": "The modification of sale properties during an on-going sale event is unfair to users and can result in loss of reputation for the platform and monetary impact for users.",
+            "severity": "Medium",
+            "contract": [
+                "ExclusiveSale",
+                "StandardSale"
+            ],
+            "function": "setEvent()",
+            "lineNumber": [
+                "42-60",
+                "54-72"
+            ]
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Design Flaw in blucamonId State Usage",
+            "description": "The execution of spawn() function will be reverted when the blucamonId state overlaps the id of the minted NFT, causing disruption to the service, resulting in loss of reputation for the platform.",
+            "severity": "Medium",
+            "contract": "BlucamonOwnership and BlucamonAirdrop",
+            "function": "spawn(), mintBlucamons() and setWhitelist()",
+            "lineNumber": "198-216, 33-51"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Improper State Modification of BUSD Contract Address",
+            "description": "The $BUSD contract address can be changed to any token at any time by the setter role, resulting in loss of reputation for the platform and monetary impact for users.",
+            "severity": "Low",
+            "contract": "StandardSale.sol",
+            "function": "constructor()",
+            "lineNumber": "11-15"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Design Flaw in ExclusiveSale and StandardSale Contracts",
+            "description": "The setCurrentNumber() function can set currentNumber to any number, causing the number of eggs bought to not match the currentNumber, and the total can be exceeded by setting the currentNumber. This can damage the platform's reputation.",
+            "severity": "Very Low",
+            "contract": "ExclusiveSale, StandardSale",
+            "function": "setCurrentNumber(), validatePurchasing()",
+            "lineNumber": "58-60, 125-130"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-273"
+                ]
+            },
+            "title": "Insufficient Logging for Privileged Functions",
+            "description": "Privileged functions that are executable by the controlling parties are not logged properly by emitting events.",
+            "severity": "Very Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Payment of Amount Exceeding the Purchase Price",
+            "description": "The ExclusiveSale contract allows payment of an amount exceeding the purchase price.",
+            "severity": "Info",
+            "contract": "ExclusiveSale",
+            "function": "purchaseEgg()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Inexplicit Solidity Compiler Version",
+            "description": "The smart contract does not explicitly define the Solidity compiler version, which can lead to potential security risks due to unmaintained third-party components.",
+            "severity": "Info",
+            "contract": "BlucamonAirdrop, BlucaDependency, BlucamonFactory, BlucamonOwnership, BlucamonSummoning, ExclusiveSale, StandardSale",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-749"
+                ]
+            },
+            "title": "Improper Function Visibility",
+            "description": "The safeMint() function has improper visibility and should be changed to external if it is not called from any internal function.",
+            "severity": "Info",
+            "contract": "BlucamonOwnership.sol",
+            "function": "safeMint(address, uint256)",
+            "lineNumber": "61-63"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Use of Low-Level Callings",
+            "description": "The contracts use low-level function callings to call external contracts without properly checking the return value, which can lead to unexpected behaviors.",
+            "severity": "Info",
+            "contract": "BlucamonSummoning, ExclusiveSale, StandardSale",
+            "function": "summon(), purchaseEgg(), getBlucamonId()",
+            "lineNumber": "25, 32, 96, 110, 76, 89"
+        }
+    ]
+}

@@ -1,1 +1,229 @@
-{"path": "./Audit_Reports_2024/Spearbit/Brink-Spearbit-Security-Review-Engagement-2.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"], "2": ["CWE-128"]}, "title": "Inline assembly leaves dirty higher order bits for `_proxyOwner` variable", "description": "The expression `mload(sub(mload(0x40), 0x0c))` reads from a memory location that was not directly used in the context of `proxyOwner`, resulting in dirty higher order bits.", "severity": "Low", "contract": "Account.sol", "function": "N/A", "lineNumber": "160-165"}, {"id": 1, "category": {"1": ["CWE-703"]}, "title": "The function may silently fail during account creation `deployAndCall`", "description": "The function `deployAndCall` relies on `AccountFactory.deployAccount` to create a new account and return its address. However, if the `CREATE2` instruction fails, it will return 0, causing `deployAndCall` to silently fail.", "severity": "Low", "contract": "DeployAndCall.sol", "function": "deployAndCall", "lineNumber": "L17"}, {"id": 2, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Hardcode `mload(initCode)` to save 3 gas", "description": "Optimization suggestion to hardcode `mload(initCode)` to save 3 gas.", "severity": "Gas Optimization", "contract": "AccountFactory.sol", "function": "N/A", "lineNumber": "L23"}, {"id": 3, "category": {"1": ["CWE-710"], "2": ["CWE-1120"], "3": ["CWE-1060"]}, "title": "Use scratch space in `proxyOwner` to save gas", "description": "Using scratch space in `proxyOwner` can save gas by avoiding two `MLOAD`s.", "severity": "Gas Optimization", "contract": "Account", "function": "N/A", "lineNumber": "L163"}, {"id": 4, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Saving 1 byte off the constructor code", "description": "Optimization to save 1 byte in the constructor code", "severity": "Informational", "contract": "AccountFactory.sol", "function": "constructor", "lineNumber": "L19"}, {"id": 5, "category": {"1": ["CWE-710"], "2": ["CWE-1120"], "3": ["CWE-1060"]}, "title": "Vanity address optimization", "description": "By finding the appropriate salt for the implementation contract, to make the deployment address have as many zeros as possible, it is possible to save gas for the account factory deployment.", "severity": "Gas optimization", "contract": "AccountFactory.sol", "function": "deployAccount", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-707"], "2": ["CWE-172"]}, "title": "Use `bytes.concat` instead of `abi.encodePacked`", "description": "Since 0.8.4 it is possible to use `bytes.concat`, which expects literals, `bytes`, and `bytesNN` inputs, and is aimed to replace most use cases of `abi.encodePacked`. It is more expressive, avoids the complex rules of `abi.encodePacked`, and the latter is expected to be phased out in the future.", "severity": "Informational", "contract": "AccountFactory.sol", "function": "deployAccount", "lineNumber": "L16-L21"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "Use `<address>.code.length` instead of `extcodesize` in inline assembly", "description": "In Solidity versions before 0.8.1, using `extcodesize` was inefficient as it copied the entire code to memory and then calculated the size. It is recommended to use `<address>.code.length` instead.", "severity": "Informational", "contract": "SaltedDeployer.sol", "function": "N/A", "lineNumber": "48-58"}, {"id": 8, "category": {"1": ["CWE-710"], "2": ["CWE-1164"], "3": ["CWE-563"]}, "title": "Use file-level constant for `SALT`", "description": "This salt is duplicated in both the contracts `Account/AccountFactory.sol` and `Deployers/SaltedDeployer.sol`. It may make sense placing the `SALT` as a file-level constant in `AccountFactory` and using that in `SaltedDeployer`. This would reduce the risk of mismatched salt during future changes.", "severity": "Informational", "contract": "AccountFactory.sol, SaltedDeployer.sol", "function": "N/A", "lineNumber": "9, 20"}, {"id": 9, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Use constants for offsets in `proxyOwner`", "description": "N/A", "severity": "Informational", "contract": "N/A", "function": "proxyOwner", "lineNumber": "10"}, {"id": 10, "category": {"1": ["CWE-710"], "2": ["CWE-1061"]}, "title": "Document that the variable `callData` must have location `memory` in the function `deployAndCall`", "description": "The function `deployAndCall` uses assembly code relying on the memory layout caused by the `memory` specifier, so it is suggested to include a comment in the code to ensure the location remains unchanged.", "severity": "Informational", "contract": "Batched/DeployAndCall.sol", "function": "deployAndCall(address owner, bytes memory callData)", "lineNumber": "L16"}, {"id": 11, "category": {"1": ["CWE-682"]}, "title": "Document that `deployAndCall` may not call the created account", "description": "The function `deployAndCall(address owner, bytes memory callData)` deploys a new account and calls into it. While it always deploys a new account, it only calls into it if the `callData` is non-empty.", "severity": "Informational", "contract": "Batched/DeployAndCall.sol", "function": "deployAndCall(address owner, bytes memory callData)", "lineNumber": "L15"}, {"id": 12, "category": {"1": ["CWE-682"]}, "title": "Using underscores to improve readability of hex value", "description": "Improve readability of hex values by using underscores.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "11"}]}
+{
+    "path": "./Audit_Reports_2024/Spearbit/Brink-Spearbit-Security-Review-Engagement-2.pdf",
+    "project_info": {
+        "url": "https://github.com/brinktrade/brink-core/tree/db0027533b228a6994acdbcb06713b5a3a3ecb38",
+        "commit_hash": "db0027533b228a6994acdbcb06713b5a3a3ecb38",
+        "address": "0x94324fcF2cC42F702F7dCBEe5e61E947DC9e2D91",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-128"
+                ]
+            },
+            "title": "Inline assembly leaves dirty higher order bits for `_proxyOwner` variable",
+            "description": "The expression `mload(sub(mload(0x40), 0x0c))` reads from a memory location that was not directly used in the context of `proxyOwner`, resulting in dirty higher order bits.",
+            "severity": "Low",
+            "contract": "Account.sol",
+            "function": "N/A",
+            "lineNumber": "160-165"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "The function may silently fail during account creation `deployAndCall`",
+            "description": "The function `deployAndCall` relies on `AccountFactory.deployAccount` to create a new account and return its address. However, if the `CREATE2` instruction fails, it will return 0, causing `deployAndCall` to silently fail.",
+            "severity": "Low",
+            "contract": "DeployAndCall.sol",
+            "function": "deployAndCall",
+            "lineNumber": "L17"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Hardcode `mload(initCode)` to save 3 gas",
+            "description": "Optimization suggestion to hardcode `mload(initCode)` to save 3 gas.",
+            "severity": "Gas Optimization",
+            "contract": "AccountFactory.sol",
+            "function": "N/A",
+            "lineNumber": "L23"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1120"
+                ],
+                "3": [
+                    "CWE-1060"
+                ]
+            },
+            "title": "Use scratch space in `proxyOwner` to save gas",
+            "description": "Using scratch space in `proxyOwner` can save gas by avoiding two `MLOAD`s.",
+            "severity": "Gas Optimization",
+            "contract": "Account",
+            "function": "N/A",
+            "lineNumber": "L163"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Saving 1 byte off the constructor code",
+            "description": "Optimization to save 1 byte in the constructor code",
+            "severity": "Informational",
+            "contract": "AccountFactory.sol",
+            "function": "constructor",
+            "lineNumber": "L19"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1120"
+                ],
+                "3": [
+                    "CWE-1060"
+                ]
+            },
+            "title": "Vanity address optimization",
+            "description": "By finding the appropriate salt for the implementation contract, to make the deployment address have as many zeros as possible, it is possible to save gas for the account factory deployment.",
+            "severity": "Gas optimization",
+            "contract": "AccountFactory.sol",
+            "function": "deployAccount",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-172"
+                ]
+            },
+            "title": "Use `bytes.concat` instead of `abi.encodePacked`",
+            "description": "Since 0.8.4 it is possible to use `bytes.concat`, which expects literals, `bytes`, and `bytesNN` inputs, and is aimed to replace most use cases of `abi.encodePacked`. It is more expressive, avoids the complex rules of `abi.encodePacked`, and the latter is expected to be phased out in the future.",
+            "severity": "Informational",
+            "contract": "AccountFactory.sol",
+            "function": "deployAccount",
+            "lineNumber": "L16-L21"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Use `<address>.code.length` instead of `extcodesize` in inline assembly",
+            "description": "In Solidity versions before 0.8.1, using `extcodesize` was inefficient as it copied the entire code to memory and then calculated the size. It is recommended to use `<address>.code.length` instead.",
+            "severity": "Informational",
+            "contract": "SaltedDeployer.sol",
+            "function": "N/A",
+            "lineNumber": "48-58"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ],
+                "3": [
+                    "CWE-563"
+                ]
+            },
+            "title": "Use file-level constant for `SALT`",
+            "description": "This salt is duplicated in both the contracts `Account/AccountFactory.sol` and `Deployers/SaltedDeployer.sol`. It may make sense placing the `SALT` as a file-level constant in `AccountFactory` and using that in `SaltedDeployer`. This would reduce the risk of mismatched salt during future changes.",
+            "severity": "Informational",
+            "contract": "AccountFactory.sol, SaltedDeployer.sol",
+            "function": "N/A",
+            "lineNumber": "9, 20"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Use constants for offsets in `proxyOwner`",
+            "description": "N/A",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "proxyOwner",
+            "lineNumber": "10"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1061"
+                ]
+            },
+            "title": "Document that the variable `callData` must have location `memory` in the function `deployAndCall`",
+            "description": "The function `deployAndCall` uses assembly code relying on the memory layout caused by the `memory` specifier, so it is suggested to include a comment in the code to ensure the location remains unchanged.",
+            "severity": "Informational",
+            "contract": "Batched/DeployAndCall.sol",
+            "function": "deployAndCall(address owner, bytes memory callData)",
+            "lineNumber": "L16"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Document that `deployAndCall` may not call the created account",
+            "description": "The function `deployAndCall(address owner, bytes memory callData)` deploys a new account and calls into it. While it always deploys a new account, it only calls into it if the `callData` is non-empty.",
+            "severity": "Informational",
+            "contract": "Batched/DeployAndCall.sol",
+            "function": "deployAndCall(address owner, bytes memory callData)",
+            "lineNumber": "L15"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Using underscores to improve readability of hex value",
+            "description": "Improve readability of hex values by using underscores.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "11"
+        }
+    ]
+}

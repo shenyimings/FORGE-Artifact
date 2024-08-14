@@ -1,1 +1,136 @@
-{"path": "./Audit_Reports_2024/Trail_of_Bits/2022-09-alphasoc-alphasocapi-securityreview.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-707"], "2": ["CWE-116"], "3": ["CWE-838"]}, "title": "API keys are leaked outside of the application server", "description": "API key verification is handled by the `AuthKey` function which passes the plaintext value of a key to the database as part of the database query, leaking API keys outside of the application server.", "severity": "Low", "contract": "clap/internal/dbstore/customer.go", "function": "AuthKey", "lineNumber": "L73\u2013L82"}, {"id": 1, "category": {"1": ["CWE-693"], "2": ["CWE-327"], "3": ["CWE-328"], "4": ["CWE-916"]}, "title": "Unused insecure authentication mechanism", "description": "The `clap` code contains an unused insecure authentication mechanism, the `FixedKeyAuther` strategy, that stores configured plaintext keys and verifies them through a non-constant-time comparison, creating a timing attack risk.", "severity": "Informational", "contract": "clap", "function": "FixedKeyAuther.AuthKey()", "lineNumber": "L57-L67"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Use of panics to handle user-triggerable errors", "description": "The system generally adheres to Go error-handling conventions. However, we identified unnecessary uses of panics to handle user-triggerable errors.", "severity": "Moderate", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-287"]}, "title": "Confusing API authentication mechanism", "description": "API key verification is handled by the `AuthKey` function which uses the `auth` method, passing plaintext value of a key to the database as part of the database query.", "severity": "Low", "contract": "clap/internal/dbstore/customer.go", "function": "AuthKey()", "lineNumber": "L73\u2013L82"}, {"id": 4, "category": {"1": ["CWE-707"], "2": ["CWE-172"]}, "title": "Use of MD5 can lead to filename collisions", "description": "When generating a filename, the deriveQueueFile function uses an unsafe MD5 hash function to hash the destinationID that is included in the filename.", "severity": "Informational", "contract": "ae", "function": "deriveQueueFile", "lineNumber": "L363\u2013L379"}, {"id": 5, "category": {"1": ["CWE-284"]}, "title": "Overly broad file permissions", "description": "In several parts of the `ae` code, files are created with overly broad permissions that allow them to be read by anyone in the system.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "50, 291, 127, 223, 197, 16, 319"}, {"id": 6, "category": {"1": ["CWE-703"]}, "title": "Unhandled errors", "description": "The `gosec` tool identified many unhandled errors in the `ae` and `clap` codebases.", "severity": "Informational", "contract": "ae and clap", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/2022-09-alphasoc-alphasocapi-securityreview.pdf",
+    "project_info": {
+        "url": "https://github.com/alphasoc/clap/tree/222c13e7157c44fd49ebd3ee5843e701aea263e9",
+        "commit_hash": "222c13e7157c44fd49ebd3ee5843e701aea263e9",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-116"
+                ],
+                "3": [
+                    "CWE-838"
+                ]
+            },
+            "title": "API keys are leaked outside of the application server",
+            "description": "API key verification is handled by the `AuthKey` function which passes the plaintext value of a key to the database as part of the database query, leaking API keys outside of the application server.",
+            "severity": "Low",
+            "contract": "clap/internal/dbstore/customer.go",
+            "function": "AuthKey",
+            "lineNumber": "L73\u2013L82"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-327"
+                ],
+                "3": [
+                    "CWE-328"
+                ],
+                "4": [
+                    "CWE-916"
+                ]
+            },
+            "title": "Unused insecure authentication mechanism",
+            "description": "The `clap` code contains an unused insecure authentication mechanism, the `FixedKeyAuther` strategy, that stores configured plaintext keys and verifies them through a non-constant-time comparison, creating a timing attack risk.",
+            "severity": "Informational",
+            "contract": "clap",
+            "function": "FixedKeyAuther.AuthKey()",
+            "lineNumber": "L57-L67"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Use of panics to handle user-triggerable errors",
+            "description": "The system generally adheres to Go error-handling conventions. However, we identified unnecessary uses of panics to handle user-triggerable errors.",
+            "severity": "Moderate",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-287"
+                ]
+            },
+            "title": "Confusing API authentication mechanism",
+            "description": "API key verification is handled by the `AuthKey` function which uses the `auth` method, passing plaintext value of a key to the database as part of the database query.",
+            "severity": "Low",
+            "contract": "clap/internal/dbstore/customer.go",
+            "function": "AuthKey()",
+            "lineNumber": "L73\u2013L82"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-172"
+                ]
+            },
+            "title": "Use of MD5 can lead to filename collisions",
+            "description": "When generating a filename, the deriveQueueFile function uses an unsafe MD5 hash function to hash the destinationID that is included in the filename.",
+            "severity": "Informational",
+            "contract": "ae",
+            "function": "deriveQueueFile",
+            "lineNumber": "L363\u2013L379"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Overly broad file permissions",
+            "description": "In several parts of the `ae` code, files are created with overly broad permissions that allow them to be read by anyone in the system.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "50, 291, 127, 223, 197, 16, 319"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Unhandled errors",
+            "description": "The `gosec` tool identified many unhandled errors in the `ae` and `clap` codebases.",
+            "severity": "Informational",
+            "contract": "ae and clap",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

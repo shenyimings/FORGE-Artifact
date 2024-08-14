@@ -1,1 +1,167 @@
-{"path": "./Audit_Reports_2024/Trail_of_Bits/PerpetualProtocolV2.pdf", "project_info": {"url": "https://github.com/perpetual-protocol/perp-lushan", "commit_hash": "bac1ae0b6dd633275b175e06169c5cb02896b8e5", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Lack of zero-value checks on functions", "description": "The `setClearingHouse` function in `ClearingHouseCallee` contract and the `setExchange` function in `OrderBook` contract fail to validate some of their incoming arguments, allowing callers to accidentally set important state variables to the zero address.", "severity": "Informational", "contract": ["ClearingHouseCallee", "OrderBook"], "function": ["setClearingHouse", "setExchange"], "lineNumber": ["30-33", "93-96"]}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Solidity compiler optimizations can be problematic", "description": "The Perpetual Protocol V2 contracts have enabled optional compiler optimizations in Solidity which may lead to high-severity security issues due to optimization bugs.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "mulDiv reverts instead of returning MIN_INT", "description": "The `mulDiv` function cannot return the minimum signed value (-2^255); it reverts on receiving this value.", "severity": "Informational", "contract": "PerpMath.sol", "function": "mulDiv()", "lineNumber": "84"}, {"id": 3, "category": {"1": ["CWE-435"], "2": ["CWE-436"]}, "title": "Discrepancies between code and specification", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "13"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-354"]}, "title": "Missing Chainlink price feed safety checks", "description": "Certain safety checks that should be used to validate data returned from `latestRoundData` and `getRoundData` are missing.", "severity": "Medium", "contract": "ChainlinkPriceFeed.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Band price feed may return invalid prices in two edge cases", "description": "The Band price feed returns a price instead of reverting in two edge cases: 1) there is not enough historical data and an entry in the `observations` array is empty, and 2) the historical data is very old. The prices returned in these edge cases could be incorrect.", "severity": "Medium", "contract": "BandPriceFeed.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Ever-increasing priceCumulative variables", "description": "In the Band price feed, `observations.priceCumulative` variables can increase indefinitely and overflow without checks for overflows or a way to reset the variable (or the whole `observations` array).", "severity": "Medium", "contract": "BandPriceFeed.sol", "function": "update()", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "Lack of rounding in Emergency price feed", "description": "The Emergency price feed does not round down negative arithmetic mean ticks, as Uniswap\u2019s `OracleLibrary` does.", "severity": "Informational", "contract": "EmergencyPriceFeed.sol", "function": "N/A", "lineNumber": "65-66"}, {"id": 8, "category": {"1": ["CWE-697"]}, "title": "It is possible to pollute the observations array", "description": "In new versions of the Chainlink and Band price feeds, it is possible to pollute the `observations` array with a single observation because the strict equality in `require` \u2019s condition was changed to a loose equality.", "severity": "Medium", "contract": "CumulativeTwap.sol", "function": "_update", "lineNumber": "43-46"}]}
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/PerpetualProtocolV2.pdf",
+    "project_info": {
+        "url": "https://github.com/perpetual-protocol/perp-lushan",
+        "commit_hash": "bac1ae0b6dd633275b175e06169c5cb02896b8e5",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Lack of zero-value checks on functions",
+            "description": "The `setClearingHouse` function in `ClearingHouseCallee` contract and the `setExchange` function in `OrderBook` contract fail to validate some of their incoming arguments, allowing callers to accidentally set important state variables to the zero address.",
+            "severity": "Informational",
+            "contract": [
+                "ClearingHouseCallee",
+                "OrderBook"
+            ],
+            "function": [
+                "setClearingHouse",
+                "setExchange"
+            ],
+            "lineNumber": [
+                "30-33",
+                "93-96"
+            ]
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Solidity compiler optimizations can be problematic",
+            "description": "The Perpetual Protocol V2 contracts have enabled optional compiler optimizations in Solidity which may lead to high-severity security issues due to optimization bugs.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "mulDiv reverts instead of returning MIN_INT",
+            "description": "The `mulDiv` function cannot return the minimum signed value (-2^255); it reverts on receiving this value.",
+            "severity": "Informational",
+            "contract": "PerpMath.sol",
+            "function": "mulDiv()",
+            "lineNumber": "84"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ]
+            },
+            "title": "Discrepancies between code and specification",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "13"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-354"
+                ]
+            },
+            "title": "Missing Chainlink price feed safety checks",
+            "description": "Certain safety checks that should be used to validate data returned from `latestRoundData` and `getRoundData` are missing.",
+            "severity": "Medium",
+            "contract": "ChainlinkPriceFeed.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Band price feed may return invalid prices in two edge cases",
+            "description": "The Band price feed returns a price instead of reverting in two edge cases: 1) there is not enough historical data and an entry in the `observations` array is empty, and 2) the historical data is very old. The prices returned in these edge cases could be incorrect.",
+            "severity": "Medium",
+            "contract": "BandPriceFeed.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Ever-increasing priceCumulative variables",
+            "description": "In the Band price feed, `observations.priceCumulative` variables can increase indefinitely and overflow without checks for overflows or a way to reset the variable (or the whole `observations` array).",
+            "severity": "Medium",
+            "contract": "BandPriceFeed.sol",
+            "function": "update()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Lack of rounding in Emergency price feed",
+            "description": "The Emergency price feed does not round down negative arithmetic mean ticks, as Uniswap\u2019s `OracleLibrary` does.",
+            "severity": "Informational",
+            "contract": "EmergencyPriceFeed.sol",
+            "function": "N/A",
+            "lineNumber": "65-66"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ]
+            },
+            "title": "It is possible to pollute the observations array",
+            "description": "In new versions of the Chainlink and Band price feeds, it is possible to pollute the `observations` array with a single observation because the strict equality in `require` \u2019s condition was changed to a loose equality.",
+            "severity": "Medium",
+            "contract": "CumulativeTwap.sol",
+            "function": "_update",
+            "lineNumber": "43-46"
+        }
+    ]
+}

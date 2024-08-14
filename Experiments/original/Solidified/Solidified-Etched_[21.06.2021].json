@@ -1,1 +1,119 @@
-{"path": "./Audit_Reports_2024/Solidified/Solidified-Etched_[21.06.2021].pdf", "project_info": {"url": "https://gitlab.com/linumlabs/etched/-/tree/audit/von/audit-branch/chain", "commit_hash": "2af64f885eb84ae62c9a147d2bb800460fa54baf", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "Royalties.sol: Missing validations can cause loss of funds", "description": "The function `updateAddress()` is missing important validations, allowing the owner to overwrite existing royalty addresses and potentially lose funds forever.", "severity": "Major", "contract": "Royalties.sol", "function": "updateAddress()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Auction with active lots can be removed or updated", "description": "The function `removeAuction()` and `updateAuction()` do not check if there are any existing active Lots. Any such removed auction will lock the token transferred to it permanently.", "severity": "Major", "contract": "AuctionHub.sol", "function": "removeAuction() and updateAuction()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Casing error in import stops hardhat compilation", "description": "In the following files the directory Royalties is spelled with a minor \u2018r\u2019 instead of capital \u2018R\u2019 in the import statements, preventing the hardhat build script from executing.", "severity": "Minor", "contract": ["BaseAcution.sol", "Registry.sol"], "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Burn does not decrease circulating supply", "description": "The function `_burn()` does not reduce the circulating supply count.", "severity": "Minor", "contract": "NFTBase.sol", "function": "_burn()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "tokenDrain() will fail if an ERC20 token's transfer() function does not return true", "description": "The function `tokenDrain()` relies on the provided token to return `true` on successful transfer. However, this is not always the case. Some tokens may succeed silently. In this case, the function would always revert.", "severity": "Minor", "contract": "NFT.sol", "function": "tokenDrain()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "NFT.sol: Unnecessary state variable write operation", "description": "The `onlyAuctions` modifier sets the `auctionHubInstance_ contract` variable every time it is called, but the variable is never read.", "severity": "Minor", "contract": "NFT.sol", "function": "onlyAuctions modifier", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Solidified/Solidified-Etched_[21.06.2021].pdf",
+    "project_info": {
+        "url": "https://gitlab.com/linumlabs/etched/-/tree/audit/von/audit-branch/chain",
+        "commit_hash": "2af64f885eb84ae62c9a147d2bb800460fa54baf",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Royalties.sol: Missing validations can cause loss of funds",
+            "description": "The function `updateAddress()` is missing important validations, allowing the owner to overwrite existing royalty addresses and potentially lose funds forever.",
+            "severity": "Major",
+            "contract": "Royalties.sol",
+            "function": "updateAddress()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Auction with active lots can be removed or updated",
+            "description": "The function `removeAuction()` and `updateAuction()` do not check if there are any existing active Lots. Any such removed auction will lock the token transferred to it permanently.",
+            "severity": "Major",
+            "contract": "AuctionHub.sol",
+            "function": "removeAuction() and updateAuction()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Casing error in import stops hardhat compilation",
+            "description": "In the following files the directory Royalties is spelled with a minor \u2018r\u2019 instead of capital \u2018R\u2019 in the import statements, preventing the hardhat build script from executing.",
+            "severity": "Minor",
+            "contract": [
+                "BaseAcution.sol",
+                "Registry.sol"
+            ],
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Burn does not decrease circulating supply",
+            "description": "The function `_burn()` does not reduce the circulating supply count.",
+            "severity": "Minor",
+            "contract": "NFTBase.sol",
+            "function": "_burn()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "tokenDrain() will fail if an ERC20 token's transfer() function does not return true",
+            "description": "The function `tokenDrain()` relies on the provided token to return `true` on successful transfer. However, this is not always the case. Some tokens may succeed silently. In this case, the function would always revert.",
+            "severity": "Minor",
+            "contract": "NFT.sol",
+            "function": "tokenDrain()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "NFT.sol: Unnecessary state variable write operation",
+            "description": "The `onlyAuctions` modifier sets the `auctionHubInstance_ contract` variable every time it is called, but the variable is never read.",
+            "severity": "Minor",
+            "contract": "NFT.sol",
+            "function": "onlyAuctions modifier",
+            "lineNumber": "N/A"
+        }
+    ]
+}

@@ -1,1 +1,217 @@
-{"path": "./Audit_Reports_2024/Composable_Security/2023_01_MilkyIce.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Use of spot reserves in DEX pool", "description": "The contract takes the balance of MIC tokens in the DEX pool to calculate the amount of sMIC tokens to be minted. However, the reserves can be easily imbalanced under certain conditions.", "severity": "CRITICAL", "contract": "MultiERC20WeightedLocker", "function": "_stake_", "lineNumber": "L225, L228"}, {"id": 1, "category": {"1": ["CWE-284"]}, "title": "No access control in withdrawFor function", "description": "The _withdrawFor_ function in Staking and MintStaking contracts is an external function that allows users to decrease the staking balance of indicated users without any access control, thus the function can be called by any address.", "severity": "High", "contract": "Staking and MintStaking", "function": "_withdrawFor_", "lineNumber": "L153 (Staking.sol), L103 (MintStaking.sol)"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "Unauthorized mint of staking contract tokens", "description": "The _MintStaking_ contract mints a fixed amount of reward in _ERC20_ tokens owned by the project creator. The reward is paid in _MintableToken_ which can only be minted by the staking contract. Functions _stakeFor_ and _collectRewardsFor_ are not protected and anyone can call them.", "severity": "High", "contract": "MintStaking", "function": "_stakeFor_, _collectRewardsFor_", "lineNumber": "89, 117"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Invalid amount of burnt tokens in staking contract", "description": "The audit report does not provide a detailed description of this finding.", "severity": "N/A", "contract": "Staking.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "Theft of rewards and denial of service via unauthorized schedule of staking period", "description": "An attacker can steal rewards or cause a denial of service by scheduling a new staking period with arbitrary duration time or reward amount, preventing others from setting new rewards periods.", "severity": "Critical", "contract": "N/A", "function": "_startNewRewardsPeriod_", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "Instant change of sensitive protocol parameters", "description": "The team added a Timelock contract and plans to transfer ownership of the MultiERC20WeightedLocker and Airdrop contracts to it.", "severity": "N/A", "contract": "MultiERC20WeightedLocker, Airdrop", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "Inability to handle all ERC20 tokens", "description": "The functions _stake_, _withdraw_, and _collectRewardsFor_ do not handle ERC20 tokens that do not return any value on transfers (simply reverts on failures), which would cause the functions to revert and not allow handling such lockable assets.", "severity": "Medium", "contract": ["MultiERC20WeightedLocker", "Staking"], "function": ["_stake_", "_withdraw_", "_collectRewardsFor_"], "lineNumber": ["L200", "L308", "L144"]}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "Inconsistent deposit variables values", "description": "When a user deposits multiple stakes, the protocol sets inconsistent values for _depositors_ and _depositorsAmount_ variables, resulting in multiple repetitions of the same depositor in the list and an inflated number of depositors.", "severity": "N/A", "contract": "MultiERC20WeightedLocker.sol", "function": "_addDeposit_", "lineNumber": "L466-L467"}, {"id": 8, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-354"]}, "title": "Lack of parameters validation", "description": "The _addLockableAsset_ function does not validate the parameters of added assets and it is reasonable to check whether the reward modifier is greater than 100% to make sure that it is profitable. The same validation should be applied to lock periods.", "severity": "N/A", "contract": "MultiERC20WeightedLocker.sol", "function": "_addLockableAsset_", "lineNumber": "L157"}, {"id": 9, "category": {"1": ["CWE-682"]}, "title": "Invalid value of locked amounts variable", "description": "The _liquidateStaleDeposit_ function updates the contract's state on each liquidation but forgets to decrease the _lockedAssetAmount_ variable, resulting in an invalid value.", "severity": "N/A", "contract": "MultiERC20WeightedLocker.sol", "function": "_liquidateStaleDeposit_", "lineNumber": "L379"}, {"id": 10, "category": {"1": ["CWE-682"]}, "title": "Invalid update of current period reward", "description": "The _currentPeriodRewardsAmount_ variable does not include remaining rewards from the previous period when calculating the reward rate.", "severity": "N/A", "contract": "Staking.sol", "function": "__notifyRewardAmount_", "lineNumber": "L198"}, {"id": 11, "category": {"1": ["CWE-682"]}, "title": "Invalid value of collected rewards variable", "description": "The collectedRewardsInCurrentPeriod variable is increased in the collectRewardsFor function.", "severity": "MINOR", "contract": "N/A", "function": "collectRewardsFor", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Composable_Security/2023_01_MilkyIce.pdf",
+    "project_info": {
+        "url": "https://github.com/codefunded/smartcontracts/tree/29243d5578765a6a3b70e4cbd52be80d4017ef54",
+        "commit_hash": "29243d5578765a6a3b70e4cbd52be80d4017ef54",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Use of spot reserves in DEX pool",
+            "description": "The contract takes the balance of MIC tokens in the DEX pool to calculate the amount of sMIC tokens to be minted. However, the reserves can be easily imbalanced under certain conditions.",
+            "severity": "CRITICAL",
+            "contract": "MultiERC20WeightedLocker",
+            "function": "_stake_",
+            "lineNumber": "L225, L228"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "No access control in withdrawFor function",
+            "description": "The _withdrawFor_ function in Staking and MintStaking contracts is an external function that allows users to decrease the staking balance of indicated users without any access control, thus the function can be called by any address.",
+            "severity": "High",
+            "contract": "Staking and MintStaking",
+            "function": "_withdrawFor_",
+            "lineNumber": "L153 (Staking.sol), L103 (MintStaking.sol)"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Unauthorized mint of staking contract tokens",
+            "description": "The _MintStaking_ contract mints a fixed amount of reward in _ERC20_ tokens owned by the project creator. The reward is paid in _MintableToken_ which can only be minted by the staking contract. Functions _stakeFor_ and _collectRewardsFor_ are not protected and anyone can call them.",
+            "severity": "High",
+            "contract": "MintStaking",
+            "function": "_stakeFor_, _collectRewardsFor_",
+            "lineNumber": "89, 117"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Invalid amount of burnt tokens in staking contract",
+            "description": "The audit report does not provide a detailed description of this finding.",
+            "severity": "N/A",
+            "contract": "Staking.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Theft of rewards and denial of service via unauthorized schedule of staking period",
+            "description": "An attacker can steal rewards or cause a denial of service by scheduling a new staking period with arbitrary duration time or reward amount, preventing others from setting new rewards periods.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "_startNewRewardsPeriod_",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Instant change of sensitive protocol parameters",
+            "description": "The team added a Timelock contract and plans to transfer ownership of the MultiERC20WeightedLocker and Airdrop contracts to it.",
+            "severity": "N/A",
+            "contract": "MultiERC20WeightedLocker, Airdrop",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Inability to handle all ERC20 tokens",
+            "description": "The functions _stake_, _withdraw_, and _collectRewardsFor_ do not handle ERC20 tokens that do not return any value on transfers (simply reverts on failures), which would cause the functions to revert and not allow handling such lockable assets.",
+            "severity": "Medium",
+            "contract": [
+                "MultiERC20WeightedLocker",
+                "Staking"
+            ],
+            "function": [
+                "_stake_",
+                "_withdraw_",
+                "_collectRewardsFor_"
+            ],
+            "lineNumber": [
+                "L200",
+                "L308",
+                "L144"
+            ]
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Inconsistent deposit variables values",
+            "description": "When a user deposits multiple stakes, the protocol sets inconsistent values for _depositors_ and _depositorsAmount_ variables, resulting in multiple repetitions of the same depositor in the list and an inflated number of depositors.",
+            "severity": "N/A",
+            "contract": "MultiERC20WeightedLocker.sol",
+            "function": "_addDeposit_",
+            "lineNumber": "L466-L467"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-354"
+                ]
+            },
+            "title": "Lack of parameters validation",
+            "description": "The _addLockableAsset_ function does not validate the parameters of added assets and it is reasonable to check whether the reward modifier is greater than 100% to make sure that it is profitable. The same validation should be applied to lock periods.",
+            "severity": "N/A",
+            "contract": "MultiERC20WeightedLocker.sol",
+            "function": "_addLockableAsset_",
+            "lineNumber": "L157"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Invalid value of locked amounts variable",
+            "description": "The _liquidateStaleDeposit_ function updates the contract's state on each liquidation but forgets to decrease the _lockedAssetAmount_ variable, resulting in an invalid value.",
+            "severity": "N/A",
+            "contract": "MultiERC20WeightedLocker.sol",
+            "function": "_liquidateStaleDeposit_",
+            "lineNumber": "L379"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Invalid update of current period reward",
+            "description": "The _currentPeriodRewardsAmount_ variable does not include remaining rewards from the previous period when calculating the reward rate.",
+            "severity": "N/A",
+            "contract": "Staking.sol",
+            "function": "__notifyRewardAmount_",
+            "lineNumber": "L198"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Invalid value of collected rewards variable",
+            "description": "The collectedRewardsInCurrentPeriod variable is increased in the collectRewardsFor function.",
+            "severity": "MINOR",
+            "contract": "N/A",
+            "function": "collectRewardsFor",
+            "lineNumber": "N/A"
+        }
+    ]
+}

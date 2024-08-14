@@ -1,1 +1,332 @@
-{"path": "./Audit_Reports_2024/Trail_of_Bits/2023-09-uniswap-wallet-securityreview.pdf", "project_info": {"url": "https://github.com/trufflesecurity/trufflehog", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Use of improperly pinned GitHub Actions", "description": "The GitHub Actions workflows use several third-party actions pinned to a tag or branch name instead of a full commit SHA. This configuration enables repository owners to silently modify the actions.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "17-18, 27-28, 44"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Password policy issues on wallet backup with Google Drive", "description": "The wallet uses `zxcvbn` to inform users about the strength of their passwords.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Infinite errors loop when the QR code is invalid", "description": "One functionality issue led to an infinite error loop.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Static AES-GCM nonce used for cloud backup encryption", "description": "The Uniswap mobile wallet uses a constant nonce of 16 zeros for AES-GCM encryption, which is usually a critical vulnerability but has reduced impact due to key changes before every encryption.", "severity": "Critical", "contract": "N/A", "function": "encrypt() and backupMnemonicToCloudStorage()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1173"]}, "title": "Insecure Argon2 Algorithm Usage", "description": "The contract uses Argon2I algorithm instead of the recommended Argon2ID, making it more prone to brute-force attacks and side-channel analysis.", "severity": "Medium", "contract": "Uniswap Mobile Wallet", "function": "keyFromPassword", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-707"], "2": ["CWE-116"]}, "title": "Errors from cryptographic operations contain too much information", "description": "The `restoreMnemonicFromCloudStorage` function is too verbose and returns three different errors, depending on the type of exception returned from the decrypting routine, which may allow attackers to extract valuable information about plaintexts.", "severity": "Informational", "contract": "Uniswap Android application", "function": "restoreMnemonicFromCloudStorage()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "Device-to-device backups are not disabled", "description": "The Uniswap mobile wallet does not disable local device-\u00adto-\u00addevice transfers. Encrypted shared preferences may be shared with other devices.", "severity": "Low", "contract": "Uniswap Android application", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-284"]}, "title": "8. Overly broad permission requests", "description": "The application requests the `android.permission.SYSTEM_ALERT_WINDOW` permission which appears to be broader than warranted by the respective functionalities of the application.", "severity": "Critical", "contract": "Uniswap Android application", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-682"]}, "title": "Transaction amounts are obscured and lazily validated in initial views", "description": "Valid amounts are cached and used even if an invalid amount is later typed into the input box, which can lead to a user signing a transaction with a large amount of tokens.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-284"], "2": ["CWE-749"]}, "title": "Potentially insecure exported NotificationOpenedReceiver activity", "description": "The `NotificationOpenedReceiver` becomes an activity and is unexported, but it became silently exported in commit `560203a`. A victim installs a malicious application on his device. The malicious application uses the exported activity to steal sensitive files from the victim's Uniswap mobile wallet, which allows the attacker to steal the victim's funds.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-693"], "2": ["CWE-345"], "3": ["CWE-349"]}, "title": "Lack of certificate pinning for connections to the Uniswap server", "description": "The Uniswap mobile wallet does not use certificate pinning to require HTTPS connections to the Uniswap server to use a specific and trusted certificate or to be signed by a specific certificate authority (CA).", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-284"]}, "title": "Third-party apps can take and read screenshots of the Android client screen", "description": "The Android client is vulnerable to unauthorized screenshot access by third-party applications.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-284"], "2": ["CWE-287"]}, "title": "Local biometric authentication is prone to bypasses", "description": "The local biometric authentication implemented in the tryLocalAuthenticate function can be bypassed by an attacker with root access to the device.", "severity": "High", "contract": "N/A", "function": "tryLocalAuthenticate", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-664"], "2": ["CWE-922"], "3": ["CWE-312"], "4": ["CWE-316"]}, "title": "Wallet private keys and mnemonics may be kept in RAM", "description": "The Uniswap Android mobile wallet decrypts data stored in encrypted shared preferences and caches the data in the wallet process\u2019 memory, which contains plaintext private keys.", "severity": "Informational", "contract": "RnEthersRs", "function": "retrieveOrCreateWalletForAddress", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Wallet sends requests with private data before the app is unlocked", "description": "Requests sent before the wallet is unlocked go to the `api.uniswap.org` endpoint, which contains operations like `TransactionList` and `PortfolioBalances` as well as the addresses of the currently registered mnemonic.", "severity": "N/A", "contract": "Uniswap Mobile Wallet", "function": "N/A", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Biometric is not enabled for app access after enrolment", "description": "During initial enrollment, biometric authentication was only enabled for transaction signing and not for application access, allowing unauthorized access to the plaintext mnemonic.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 16, "category": {"1": ["CWE-284"]}, "title": "Wallet does not require a minimum device-access security policy", "description": "The wallet application does not enforce a minimum device-access security policy.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 17, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1284"]}, "title": "Transaction amount validation issue", "description": "The application does not properly validate transaction amounts, allowing users to be tricked into sending more tokens than intended due to whitespace and character issues.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/2023-09-uniswap-wallet-securityreview.pdf",
+    "project_info": {
+        "url": "https://github.com/Uniswap/ethers-rs-mobile",
+        "commit_hash": "0e3e3c6113aa296bdb93475d0335cb4fb0dcff6f",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Use of improperly pinned GitHub Actions",
+            "description": "The GitHub Actions workflows use several third-party actions pinned to a tag or branch name instead of a full commit SHA. This configuration enables repository owners to silently modify the actions.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "17-18, 27-28, 44"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Password policy issues on wallet backup with Google Drive",
+            "description": "The wallet uses `zxcvbn` to inform users about the strength of their passwords.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Infinite errors loop when the QR code is invalid",
+            "description": "One functionality issue led to an infinite error loop.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Static AES-GCM nonce used for cloud backup encryption",
+            "description": "The Uniswap mobile wallet uses a constant nonce of 16 zeros for AES-GCM encryption, which is usually a critical vulnerability but has reduced impact due to key changes before every encryption.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "encrypt() and backupMnemonicToCloudStorage()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1173"
+                ]
+            },
+            "title": "Insecure Argon2 Algorithm Usage",
+            "description": "The contract uses Argon2I algorithm instead of the recommended Argon2ID, making it more prone to brute-force attacks and side-channel analysis.",
+            "severity": "Medium",
+            "contract": "Uniswap Mobile Wallet",
+            "function": "keyFromPassword",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-116"
+                ]
+            },
+            "title": "Errors from cryptographic operations contain too much information",
+            "description": "The `restoreMnemonicFromCloudStorage` function is too verbose and returns three different errors, depending on the type of exception returned from the decrypting routine, which may allow attackers to extract valuable information about plaintexts.",
+            "severity": "Informational",
+            "contract": "Uniswap Android application",
+            "function": "restoreMnemonicFromCloudStorage()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Device-to-device backups are not disabled",
+            "description": "The Uniswap mobile wallet does not disable local device-\u00adto-\u00addevice transfers. Encrypted shared preferences may be shared with other devices.",
+            "severity": "Low",
+            "contract": "Uniswap Android application",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "8. Overly broad permission requests",
+            "description": "The application requests the `android.permission.SYSTEM_ALERT_WINDOW` permission which appears to be broader than warranted by the respective functionalities of the application.",
+            "severity": "Critical",
+            "contract": "Uniswap Android application",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Transaction amounts are obscured and lazily validated in initial views",
+            "description": "Valid amounts are cached and used even if an invalid amount is later typed into the input box, which can lead to a user signing a transaction with a large amount of tokens.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-749"
+                ]
+            },
+            "title": "Potentially insecure exported NotificationOpenedReceiver activity",
+            "description": "The `NotificationOpenedReceiver` becomes an activity and is unexported, but it became silently exported in commit `560203a`. A victim installs a malicious application on his device. The malicious application uses the exported activity to steal sensitive files from the victim's Uniswap mobile wallet, which allows the attacker to steal the victim's funds.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-345"
+                ],
+                "3": [
+                    "CWE-349"
+                ]
+            },
+            "title": "Lack of certificate pinning for connections to the Uniswap server",
+            "description": "The Uniswap mobile wallet does not use certificate pinning to require HTTPS connections to the Uniswap server to use a specific and trusted certificate or to be signed by a specific certificate authority (CA).",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Third-party apps can take and read screenshots of the Android client screen",
+            "description": "The Android client is vulnerable to unauthorized screenshot access by third-party applications.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-287"
+                ]
+            },
+            "title": "Local biometric authentication is prone to bypasses",
+            "description": "The local biometric authentication implemented in the tryLocalAuthenticate function can be bypassed by an attacker with root access to the device.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "tryLocalAuthenticate",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-922"
+                ],
+                "3": [
+                    "CWE-312"
+                ],
+                "4": [
+                    "CWE-316"
+                ]
+            },
+            "title": "Wallet private keys and mnemonics may be kept in RAM",
+            "description": "The Uniswap Android mobile wallet decrypts data stored in encrypted shared preferences and caches the data in the wallet process\u2019 memory, which contains plaintext private keys.",
+            "severity": "Informational",
+            "contract": "RnEthersRs",
+            "function": "retrieveOrCreateWalletForAddress",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Wallet sends requests with private data before the app is unlocked",
+            "description": "Requests sent before the wallet is unlocked go to the `api.uniswap.org` endpoint, which contains operations like `TransactionList` and `PortfolioBalances` as well as the addresses of the currently registered mnemonic.",
+            "severity": "N/A",
+            "contract": "Uniswap Mobile Wallet",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Biometric is not enabled for app access after enrolment",
+            "description": "During initial enrollment, biometric authentication was only enabled for transaction signing and not for application access, allowing unauthorized access to the plaintext mnemonic.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Wallet does not require a minimum device-access security policy",
+            "description": "The wallet application does not enforce a minimum device-access security policy.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1284"
+                ]
+            },
+            "title": "Transaction amount validation issue",
+            "description": "The application does not properly validate transaction amounts, allowing users to be tricked into sending more tokens than intended due to whitespace and character issues.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

@@ -1,1 +1,179 @@
-{"path": "./Audit_Reports_2024/Inspex/Inspex-DripBar,_MasterBarista,_LatteV2_&_BeanBagV2.pdf", "project_info": {"url": "https://github.com/latteswap-official/latteswap-contract", "commit_hash": "3cea9238c2a69e129562e6a7b3f45e89b6540c1e", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "Use of Upgradable Contract Design", "description": "The logic of affected contracts can be arbitrarily changed, allowing the proxy owner to perform malicious actions such as stealing user funds anytime they want.", "severity": "High", "contract": "DripBar MasterBarista BeanBagV2", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Unrestricted Addition of $LATTE Minter", "description": "The contract owner can mint an arbitrary amount of $LATTE until the total supply cap (cap) is filled, which can then be dumped in the market to gain profit and lower the price of $LATTE, resulting in monetary loss for the token holders.", "severity": "High", "contract": "MasterBarista", "function": "mintExtraReward()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "Centralized Control of State Variable", "description": "Critical state variables can be updated any time by the controlling authorities without notifying users, causing unfair impacts to them.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-770"]}, "title": "Unchecked Repeated Migration", "description": "The $LATTEV2 will not be migrated to the newer contract, causing the new BeanBagV2 to have insufficient reward token for the users. This causes monetary loss to the users and reputation damage to the platform.", "severity": "Low", "contract": "MasterBarista", "function": "migrate()", "lineNumber": "839-857"}, {"id": 4, "category": {"1": ["CWE-703"]}, "title": "Denial of Service on Cap Exceeding", "description": "If the cap is reduced to a low number and the allocation point of each pool is not set to 0 before the cap is reached, the execution of `mint()` function in the `updatePool()` will be reverted, causing all functions in the `MasterBarista` that call `updatePool()` to be unusable.", "severity": "Low", "contract": "MasterBarista", "function": "updatePool()", "lineNumber": "483-488"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "Unsupported Design for Deflationary Reward Token in DripBar", "description": "Insufficient amount of reward token will be transferred to the DripBar contract on the addition of a new reward campaign, causing some users to be unable to claim their reward.", "severity": "Low", "contract": "DripBar", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-273"]}, "title": "Insufficient Logging for Privileged Function", "description": "Privileged function that is executable by the controlling parties is not logged properly by emitting an event.", "severity": "Very Low", "contract": "DripBar.sol", "function": "emergencyRewardWithdraw(uint256,uint256,address)", "lineNumber": "305-312"}, {"id": 7, "category": {"1": ["CWE-710"], "2": ["CWE-684"], "3": ["CWE-440"]}, "title": "Unsupported Design for Deflationary Staking Token in DripBar", "description": "The DripBar contract has an unsupported design for deflationary staking token.", "severity": "Info", "contract": "DripBar", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-710"], "2": ["CWE-684"], "3": ["CWE-440"]}, "title": "Unsupported Design for Deflationary Staking Token in MasterBarista", "description": "The MasterBarista contract will not support the deflationary token as the staking token.", "severity": "Info", "contract": "MasterBarista", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Inspex/Inspex-DripBar,_MasterBarista,_LatteV2_&_BeanBagV2.pdf",
+    "project_info": {
+        "url": "https://github.com/latteswap-official/latteswap-contract",
+        "commit_hash": "3cea9238c2a69e129562e6a7b3f45e89b6540c1e",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Use of Upgradable Contract Design",
+            "description": "The logic of affected contracts can be arbitrarily changed, allowing the proxy owner to perform malicious actions such as stealing user funds anytime they want.",
+            "severity": "High",
+            "contract": "DripBar MasterBarista BeanBagV2",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Unrestricted Addition of $LATTE Minter",
+            "description": "The contract owner can mint an arbitrary amount of $LATTE until the total supply cap (cap) is filled, which can then be dumped in the market to gain profit and lower the price of $LATTE, resulting in monetary loss for the token holders.",
+            "severity": "High",
+            "contract": "MasterBarista",
+            "function": "mintExtraReward()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Centralized Control of State Variable",
+            "description": "Critical state variables can be updated any time by the controlling authorities without notifying users, causing unfair impacts to them.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "Unchecked Repeated Migration",
+            "description": "The $LATTEV2 will not be migrated to the newer contract, causing the new BeanBagV2 to have insufficient reward token for the users. This causes monetary loss to the users and reputation damage to the platform.",
+            "severity": "Low",
+            "contract": "MasterBarista",
+            "function": "migrate()",
+            "lineNumber": "839-857"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Denial of Service on Cap Exceeding",
+            "description": "If the cap is reduced to a low number and the allocation point of each pool is not set to 0 before the cap is reached, the execution of `mint()` function in the `updatePool()` will be reverted, causing all functions in the `MasterBarista` that call `updatePool()` to be unusable.",
+            "severity": "Low",
+            "contract": "MasterBarista",
+            "function": "updatePool()",
+            "lineNumber": "483-488"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Unsupported Design for Deflationary Reward Token in DripBar",
+            "description": "Insufficient amount of reward token will be transferred to the DripBar contract on the addition of a new reward campaign, causing some users to be unable to claim their reward.",
+            "severity": "Low",
+            "contract": "DripBar",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-273"
+                ]
+            },
+            "title": "Insufficient Logging for Privileged Function",
+            "description": "Privileged function that is executable by the controlling parties is not logged properly by emitting an event.",
+            "severity": "Very Low",
+            "contract": "DripBar.sol",
+            "function": "emergencyRewardWithdraw(uint256,uint256,address)",
+            "lineNumber": "305-312"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-684"
+                ],
+                "3": [
+                    "CWE-440"
+                ]
+            },
+            "title": "Unsupported Design for Deflationary Staking Token in DripBar",
+            "description": "The DripBar contract has an unsupported design for deflationary staking token.",
+            "severity": "Info",
+            "contract": "DripBar",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-684"
+                ],
+                "3": [
+                    "CWE-440"
+                ]
+            },
+            "title": "Unsupported Design for Deflationary Staking Token in MasterBarista",
+            "description": "The MasterBarista contract will not support the deflationary token as the staking token.",
+            "severity": "Info",
+            "contract": "MasterBarista",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

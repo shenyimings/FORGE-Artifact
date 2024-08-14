@@ -1,1 +1,149 @@
-{"path": "./Audit_Reports_2024/Trail_of_Bits/FraxQ22022.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Risk of unexpected results when long-term swaps involving rebasing tokens are canceled", "description": "FraxSwap\u2019s use of rebasing tokens could cause transactions to revert after users cancel or withdraw from long-term swaps.", "severity": "High", "contract": "UniV2TWAMMPair.sol", "function": "cancelLongTermSwap(uint256 orderId)", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Missing liquidity checks when initiating long-term swaps", "description": "The contract does not perform adequate liquidity checks before initiating long-term swaps, leading to potential division-by-zero errors and pool operation reverts.", "severity": "Critical", "contract": "Uniswap_V2_TWAMM/twamm/LongTermOrders", "function": "computeVirtualBalances()", "lineNumber": "118-128"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Missing events in several contracts", "description": "The function does not emit any events; it will be difficult to monitor issues that may arise whenever the function is executed.", "severity": "N/A", "contract": ["LongTermOrders", "FPIControllerPool", "CPITrackerOracle"], "function": ["unspecified", "toggleMints()", "toggleRedeems()", "setFraxBorrowCap(int256)", "setMintCap(uint256)"], "lineNumber": ["216-252", "N/A", "N/A", "N/A", "N/A"]}, {"id": 3, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Unsafe integer conversions in FPIControllerPool", "description": "Explicit conversions from uint256 to int256 can produce unexpected results and malicious users could exploit this by adjusting variables to bypass code limits.", "severity": "High", "contract": "FPIControllerPool", "function": ["giveFRAXToAMO", "price_info"], "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "leveragedPosition and repayAssetWithCollateral do not update the exchangeRate", "description": "Some FraxLend functions do not update the exchange rate, allowing insolvent users to call them.", "severity": "High", "contract": "FraxLendCore", "function": ["leveragedPosition", "repayAssetWithCollateral"], "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Risk of hash collisions in FraxLendPairDeployer that could block certain deployments", "description": "In the FraxLendPairDeployer contract, a hash collision could occur between different types of deployments, blocking authenticated users' contracts from being deployed due to malicious front-running by unauthenticated users.", "severity": "High", "contract": "FraxLendPairDeployer", "function": "_deploySecond", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"], "2": ["CWE-369"]}, "title": "Division-by-zero error due to inadequate liquidity", "description": "In the computeVirtualBalances function of LongTermOrders contract, a division-by-zero error can occur if a long-term swap is submitted before adequate liquidity has been added to the pool.", "severity": "Critical", "contract": "LongTermOrders", "function": "computeVirtualBalances", "lineNumber": "L118-128"}]}
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/FraxQ22022.pdf",
+    "project_info": {
+        "url": "https://github.com/FraxFinance/frax-solidity/tree/19dd2637ba17b8224173fd05ff356a58706edb82",
+        "commit_hash": "19dd2637ba17b8224173fd05ff356a58706edb82",
+        "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Risk of unexpected results when long-term swaps involving rebasing tokens are canceled",
+            "description": "FraxSwap\u2019s use of rebasing tokens could cause transactions to revert after users cancel or withdraw from long-term swaps.",
+            "severity": "High",
+            "contract": "UniV2TWAMMPair.sol",
+            "function": "cancelLongTermSwap(uint256 orderId)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Missing liquidity checks when initiating long-term swaps",
+            "description": "The contract does not perform adequate liquidity checks before initiating long-term swaps, leading to potential division-by-zero errors and pool operation reverts.",
+            "severity": "Critical",
+            "contract": "Uniswap_V2_TWAMM/twamm/LongTermOrders",
+            "function": "computeVirtualBalances()",
+            "lineNumber": "118-128"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Missing events in several contracts",
+            "description": "The function does not emit any events; it will be difficult to monitor issues that may arise whenever the function is executed.",
+            "severity": "N/A",
+            "contract": [
+                "LongTermOrders",
+                "FPIControllerPool",
+                "CPITrackerOracle"
+            ],
+            "function": [
+                "unspecified",
+                "toggleMints()",
+                "toggleRedeems()",
+                "setFraxBorrowCap(int256)",
+                "setMintCap(uint256)"
+            ],
+            "lineNumber": [
+                "216-252",
+                "N/A",
+                "N/A",
+                "N/A",
+                "N/A"
+            ]
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Unsafe integer conversions in FPIControllerPool",
+            "description": "Explicit conversions from uint256 to int256 can produce unexpected results and malicious users could exploit this by adjusting variables to bypass code limits.",
+            "severity": "High",
+            "contract": "FPIControllerPool",
+            "function": [
+                "giveFRAXToAMO",
+                "price_info"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "leveragedPosition and repayAssetWithCollateral do not update the exchangeRate",
+            "description": "Some FraxLend functions do not update the exchange rate, allowing insolvent users to call them.",
+            "severity": "High",
+            "contract": "FraxLendCore",
+            "function": [
+                "leveragedPosition",
+                "repayAssetWithCollateral"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Risk of hash collisions in FraxLendPairDeployer that could block certain deployments",
+            "description": "In the FraxLendPairDeployer contract, a hash collision could occur between different types of deployments, blocking authenticated users' contracts from being deployed due to malicious front-running by unauthenticated users.",
+            "severity": "High",
+            "contract": "FraxLendPairDeployer",
+            "function": "_deploySecond",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-369"
+                ]
+            },
+            "title": "Division-by-zero error due to inadequate liquidity",
+            "description": "In the computeVirtualBalances function of LongTermOrders contract, a division-by-zero error can occur if a long-term swap is submitted before adequate liquidity has been added to the pool.",
+            "severity": "Critical",
+            "contract": "LongTermOrders",
+            "function": "computeVirtualBalances",
+            "lineNumber": "L118-128"
+        }
+    ]
+}

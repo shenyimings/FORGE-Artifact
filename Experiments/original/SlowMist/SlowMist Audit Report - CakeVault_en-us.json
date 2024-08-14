@@ -1,1 +1,75 @@
-{"path": "./Audit_Reports_2024/SlowMist/SlowMist Audit Report - CakeVault_en-us.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "0xa80240Eb5d7E05d3F250cF000eEc0891d00b51CC"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "The deflationary token docking issue", "description": "Users can transfer a deflationary token into the vault contract through the deposit function, but the number of tokens transferred by the user may differ from the number of tokens actually received in the contract.", "severity": "Suggestion", "contract": "Vault", "function": "deposit(uint256 _amount)", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "CakeAtLastUserAction parameter record error issue", "description": "In the Vault contract, the user can withdraw the funds staked by the user through the withdraw function. If the user does not withdraw all funds (user.shares> 0), this function will recalculate the user's cakeAtLastUserAction value. In the calculation process, the number of cake tokens obtained by the balanceOf function is used to participate in the calculation. But at the end of this function, a certain amount of cake tokens will be transferred to the user through the safeTransfer function, so the number of cake tokens obtained by the balanceOf function used in the calculation of cakeAtLastUserAction is relatively large.", "severity": "Suggestion", "contract": "Vault", "function": "withdraw()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Missing event records", "description": "It is recommended that event logging be performed when modifying sensitive parameters of the contract for follow-up self-examination or community review.", "severity": "Suggestion", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-691"], "2": ["CWE-841"]}, "title": "Emergency withdrawal issue", "description": "The admin role can make emergency withdrawals of cake tokens from the MasterChef contract to the Vault contract via the emergencyWithdraw function, but if performed while the contract is not suspended, it may cause unintended results.", "severity": "Low", "contract": "Vault", "function": "emergencyWithdraw()", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/SlowMist/SlowMist Audit Report - CakeVault_en-us.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0xa80240Eb5d7E05d3F250cF000eEc0891d00b51CC"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "The deflationary token docking issue",
+            "description": "Users can transfer a deflationary token into the vault contract through the deposit function, but the number of tokens transferred by the user may differ from the number of tokens actually received in the contract.",
+            "severity": "Suggestion",
+            "contract": "Vault",
+            "function": "deposit(uint256 _amount)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "CakeAtLastUserAction parameter record error issue",
+            "description": "In the Vault contract, the user can withdraw the funds staked by the user through the withdraw function. If the user does not withdraw all funds (user.shares> 0), this function will recalculate the user's cakeAtLastUserAction value. In the calculation process, the number of cake tokens obtained by the balanceOf function is used to participate in the calculation. But at the end of this function, a certain amount of cake tokens will be transferred to the user through the safeTransfer function, so the number of cake tokens obtained by the balanceOf function used in the calculation of cakeAtLastUserAction is relatively large.",
+            "severity": "Suggestion",
+            "contract": "Vault",
+            "function": "withdraw()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Missing event records",
+            "description": "It is recommended that event logging be performed when modifying sensitive parameters of the contract for follow-up self-examination or community review.",
+            "severity": "Suggestion",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "Emergency withdrawal issue",
+            "description": "The admin role can make emergency withdrawals of cake tokens from the MasterChef contract to the Vault contract via the emergencyWithdraw function, but if performed while the contract is not suspended, it may cause unintended results.",
+            "severity": "Low",
+            "contract": "Vault",
+            "function": "emergencyWithdraw()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

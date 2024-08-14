@@ -1,1 +1,166 @@
-{"path": "./Audit_Reports_2024/Trail_of_Bits/RSKj.pdf", "project_info": {"url": "https://github.com/rsksmart/rskj", "commit_hash": "4cb1492b", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-664"], "2": ["CWE-404"], "3": ["CWE-772"], "4": ["CWE-401"]}, "title": "Remove the memory leaks in the Trie", "description": "Close the input streams used in the Trie to prevent a potential memory leak that could lead to denial of service.", "severity": "Undetermined", "contract": "TrieImpl", "function": "N/A", "lineNumber": "204, 712, 788"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Headers Not Properly Deleted in the BlockStore", "description": "In co.rsk.net.BlockStore, the function calls to headersbynumber.remove(\u2026) and headersbyparent.remove(\u2026) are expecting a Long, but in two instances within BlockStore are instead passed a Set. This will not cause an exception; it will silently fail to remove anything from the headersbynumber and headersbyparent maps.", "severity": "Undetermined", "contract": "BlockStore", "function": "N/A", "lineNumber": "240, 248"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Fix the erroneous EVM instruction implementations", "description": "Fix the CALL gas computation, use the correct value supplied to the CREATE instruction, and remove the duplicate log entries. The current CALL gas computation and CREATE instruction can be used to introduce backdoors in smart contracts. The duplicated log entries can cause a misinterpretation of events.", "severity": "Critical", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Fix the erroneous RLP encoding", "description": "The implementation of RLP encoding in the getEncoded function is incorrect and does not store the expected information, leading to potential errors when using this encoding.", "severity": "Undetermined", "contract": "ContractDetailsCacheImpl", "function": "getEncoded()", "lineNumber": "L202"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Missing Implementation of EIPs May Lead to Denial of Service", "description": "RSK implements only EIP 155 and lacks implementation of EIP 160, 161, and 170, making it more vulnerable to denial of service attacks.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-703"]}, "title": "Infinite Loop in EthereumJ Key Verification", "description": "The verify function in org.ethereum.crypto.ECKey has an infinite recursion issue causing a stack overflow exception.", "severity": "Informational", "contract": "ECKey", "function": "verify()", "lineNumber": "697, 709"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "Wrong msg.value Parameter in CREATE Leads to a Broken Contract", "description": "The RSKJ implementation does not use the value given as the parameter of the CREATE instruction, but uses instead the value of the current transaction, leading to an incorrect amount of ether in msg.value.", "severity": "High", "contract": "N/A", "function": "createContract()", "lineNumber": "625-627, 572"}, {"id": 7, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Denial of Service", "description": "RSK may be more vulnerable to denial of service attacks than the current Ethereum blockchain due to missing implementation of EIPs (155, 160, 161, 170)", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-682"]}, "title": "EVM incompatibility", "description": "Ether can be transferred during the creation of a contract. The RSKJ implementation does not use the value given as the parameter of the CREATE instruction, but uses instead the value of the current transaction.", "severity": "High", "contract": "Program", "function": "createContract()", "lineNumber": "625-627"}, {"id": 9, "category": {"1": ["CWE-682"]}, "title": "Incorrect Encoding Implementation Leads to Wrong RLP Encoding", "description": "The implementation of RLP encoding is not correct and does not store the expected information.", "severity": "Undetermined", "contract": "ContractDetailsCacheImpl.java", "function": "getEncoded()", "lineNumber": "202"}]}
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/RSKj.pdf",
+    "project_info": {
+        "url": "https://github.com/rsksmart/rskj",
+        "commit_hash": "4cb1492b",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-401"
+                ]
+            },
+            "title": "Remove the memory leaks in the Trie",
+            "description": "Close the input streams used in the Trie to prevent a potential memory leak that could lead to denial of service.",
+            "severity": "Undetermined",
+            "contract": "TrieImpl",
+            "function": "N/A",
+            "lineNumber": "204, 712, 788"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Headers Not Properly Deleted in the BlockStore",
+            "description": "In co.rsk.net.BlockStore, the function calls to headersbynumber.remove(\u2026) and headersbyparent.remove(\u2026) are expecting a Long, but in two instances within BlockStore are instead passed a Set. This will not cause an exception; it will silently fail to remove anything from the headersbynumber and headersbyparent maps.",
+            "severity": "Undetermined",
+            "contract": "BlockStore",
+            "function": "N/A",
+            "lineNumber": "240, 248"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Fix the erroneous EVM instruction implementations",
+            "description": "Fix the CALL gas computation, use the correct value supplied to the CREATE instruction, and remove the duplicate log entries. The current CALL gas computation and CREATE instruction can be used to introduce backdoors in smart contracts. The duplicated log entries can cause a misinterpretation of events.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Fix the erroneous RLP encoding",
+            "description": "The implementation of RLP encoding in the getEncoded function is incorrect and does not store the expected information, leading to potential errors when using this encoding.",
+            "severity": "Undetermined",
+            "contract": "ContractDetailsCacheImpl",
+            "function": "getEncoded()",
+            "lineNumber": "L202"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Missing Implementation of EIPs May Lead to Denial of Service",
+            "description": "RSK implements only EIP 155 and lacks implementation of EIP 160, 161, and 170, making it more vulnerable to denial of service attacks.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Infinite Loop in EthereumJ Key Verification",
+            "description": "The verify function in org.ethereum.crypto.ECKey has an infinite recursion issue causing a stack overflow exception.",
+            "severity": "Informational",
+            "contract": "ECKey",
+            "function": "verify()",
+            "lineNumber": "697, 709"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Wrong msg.value Parameter in CREATE Leads to a Broken Contract",
+            "description": "The RSKJ implementation does not use the value given as the parameter of the CREATE instruction, but uses instead the value of the current transaction, leading to an incorrect amount of ether in msg.value.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "createContract()",
+            "lineNumber": "625-627, 572"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Denial of Service",
+            "description": "RSK may be more vulnerable to denial of service attacks than the current Ethereum blockchain due to missing implementation of EIPs (155, 160, 161, 170)",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "EVM incompatibility",
+            "description": "Ether can be transferred during the creation of a contract. The RSKJ implementation does not use the value given as the parameter of the CREATE instruction, but uses instead the value of the current transaction.",
+            "severity": "High",
+            "contract": "Program",
+            "function": "createContract()",
+            "lineNumber": "625-627"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect Encoding Implementation Leads to Wrong RLP Encoding",
+            "description": "The implementation of RLP encoding is not correct and does not store the expected information.",
+            "severity": "Undetermined",
+            "contract": "ContractDetailsCacheImpl.java",
+            "function": "getEncoded()",
+            "lineNumber": "202"
+        }
+    ]
+}

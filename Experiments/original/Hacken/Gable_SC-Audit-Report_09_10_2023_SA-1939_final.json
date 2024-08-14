@@ -1,1 +1,245 @@
-{"path": "./Audit_Reports_2024/Hacken/Gable_SC-Audit-Report_09_10_2023_SA-1939_final.pdf", "project_info": {"url": "https://github.com/gable-finance/gable/tree/main/src/backend/scrypto/flashloan-pool/", "commit_hash": "afeb0343533798020630fcf45432abce7580b7e8", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Owner Could Withdraw More Than Deposited", "description": "Incorrect validation in owner_withdraw_xrd function allows owner to withdraw more than deposited liquidity due to lack of check against owner's deposited amount and possibility of negative Decimal values.", "severity": "High", "contract": "N/A", "function": "owner_withdraw_xrd", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "M01. Missing upper bound on interest rate change", "description": "The interest rate can be set to an illogically high value by the contract owner or wallet with ADMIN role, potentially causing users to pay a fee several times higher than their loan amount.", "severity": "Medium", "contract": "flashloan-pool", "function": "update_interest_rate()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "M02. Missing validations in multiple calculations could lead to unexpected state", "description": "Missing validation of Decimal values exceeding zero threshold in update_aggregate_im and update_supplier_kvs functions can cause unexpected state.", "severity": "Low", "contract": "flashloan-pool", "function": ["update_aggregate_im", "update_supplier_kvs", "update_interest_rate"], "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Macros used for debugging should not be used in production code", "description": "The current contract code has been found to contain many instances of debugging macros, such as debug!() and info!(). While they are very helpful during the code development and testing phase, their use in production code is considered bad practice.", "severity": "N/A", "contract": "flashloan-pool", "function": "most of the contract\u2019s functions", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Owner is able to unlock and update royalties for function calls", "description": "The owner has set up some royalties for public methods and even specified that the amount is locked. However they reserved a right to unlock and update the amount they charge from users for calling these methods (protocol enforces a hard cap).", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "L03. Wrong limit for the size of box", "description": "The box_size is set to 250 and cannot be changed back once lowered, which multiplies as the box_size * box_size is the maximum possible number of users of the contract.", "severity": "Medium", "contract": "flashloan-pool", "function": "update_box_size()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-237"], "4": ["CWE-238"]}, "title": "L04. Floating Language Version", "description": "The language version could be pinned in automation/CI scripts or proclaimed in README or other kinds of developer documentation.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "./rust-toolchain.toml"}, {"id": 7, "category": {"1": ["CWE-710"], "2": ["CWE-1164"], "3": ["CWE-561"]}, "title": "L05. Test functions should be removed", "description": "Test functions like deposit_batch() should not be available in the production version of the code and should be removed from the final version of the protocol.", "severity": "Low", "contract": "flashloan-pool", "function": "deposit_batch()", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "I01. Suggestion for searching a vacant box", "description": "The code can be simplified to improve Code Quality by using an optional box index and matching on the option.", "severity": "Informational", "contract": "flashloan-pool", "function": "deposit_lsu()", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-710"]}, "title": "I02. Unformatted Code", "description": "Unformatted code found in the contract.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-710"], "2": ["CWE-1120"], "3": ["CWE-1080"]}, "title": "The contract code is a single monolith file", "description": "Splitting the lib.rs file into separate files/modules would increase its readability and quality.", "severity": "Medium", "contract": "flashloan-pool", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-710"]}, "title": "Suggestions for idiomatic code style", "description": "The contract code does not follow idiomatic code style.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-229"]}, "title": "I05. Former name is mentioned", "description": "The README.md file as well as Functional Requirements mentions the old protocol name.", "severity": "Informational", "contract": "flashloan-pool", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Hacken/Gable_SC-Audit-Report_09_10_2023_SA-1939_final.pdf",
+    "project_info": {
+        "url": "https://github.com/gable-finance/gable/tree/main/src/backend/scrypto/flashloan-pool/",
+        "commit_hash": "afeb0343533798020630fcf45432abce7580b7e8",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Owner Could Withdraw More Than Deposited",
+            "description": "Incorrect validation in owner_withdraw_xrd function allows owner to withdraw more than deposited liquidity due to lack of check against owner's deposited amount and possibility of negative Decimal values.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "owner_withdraw_xrd",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "M01. Missing upper bound on interest rate change",
+            "description": "The interest rate can be set to an illogically high value by the contract owner or wallet with ADMIN role, potentially causing users to pay a fee several times higher than their loan amount.",
+            "severity": "Medium",
+            "contract": "flashloan-pool",
+            "function": "update_interest_rate()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "M02. Missing validations in multiple calculations could lead to unexpected state",
+            "description": "Missing validation of Decimal values exceeding zero threshold in update_aggregate_im and update_supplier_kvs functions can cause unexpected state.",
+            "severity": "Low",
+            "contract": "flashloan-pool",
+            "function": [
+                "update_aggregate_im",
+                "update_supplier_kvs",
+                "update_interest_rate"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Macros used for debugging should not be used in production code",
+            "description": "The current contract code has been found to contain many instances of debugging macros, such as debug!() and info!(). While they are very helpful during the code development and testing phase, their use in production code is considered bad practice.",
+            "severity": "N/A",
+            "contract": "flashloan-pool",
+            "function": "most of the contract\u2019s functions",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Owner is able to unlock and update royalties for function calls",
+            "description": "The owner has set up some royalties for public methods and even specified that the amount is locked. However they reserved a right to unlock and update the amount they charge from users for calling these methods (protocol enforces a hard cap).",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "L03. Wrong limit for the size of box",
+            "description": "The box_size is set to 250 and cannot be changed back once lowered, which multiplies as the box_size * box_size is the maximum possible number of users of the contract.",
+            "severity": "Medium",
+            "contract": "flashloan-pool",
+            "function": "update_box_size()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-237"
+                ],
+                "4": [
+                    "CWE-238"
+                ]
+            },
+            "title": "L04. Floating Language Version",
+            "description": "The language version could be pinned in automation/CI scripts or proclaimed in README or other kinds of developer documentation.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "./rust-toolchain.toml"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ],
+                "3": [
+                    "CWE-561"
+                ]
+            },
+            "title": "L05. Test functions should be removed",
+            "description": "Test functions like deposit_batch() should not be available in the production version of the code and should be removed from the final version of the protocol.",
+            "severity": "Low",
+            "contract": "flashloan-pool",
+            "function": "deposit_batch()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "I01. Suggestion for searching a vacant box",
+            "description": "The code can be simplified to improve Code Quality by using an optional box index and matching on the option.",
+            "severity": "Informational",
+            "contract": "flashloan-pool",
+            "function": "deposit_lsu()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ]
+            },
+            "title": "I02. Unformatted Code",
+            "description": "Unformatted code found in the contract.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1120"
+                ],
+                "3": [
+                    "CWE-1080"
+                ]
+            },
+            "title": "The contract code is a single monolith file",
+            "description": "Splitting the lib.rs file into separate files/modules would increase its readability and quality.",
+            "severity": "Medium",
+            "contract": "flashloan-pool",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ]
+            },
+            "title": "Suggestions for idiomatic code style",
+            "description": "The contract code does not follow idiomatic code style.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ]
+            },
+            "title": "I05. Former name is mentioned",
+            "description": "The README.md file as well as Functional Requirements mentions the old protocol name.",
+            "severity": "Informational",
+            "contract": "flashloan-pool",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

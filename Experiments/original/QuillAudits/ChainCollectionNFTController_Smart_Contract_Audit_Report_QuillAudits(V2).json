@@ -1,1 +1,210 @@
-{"path": "./Audit_Reports_2024/QuillAudits/ChainCollectionNFTController_Smart_Contract_Audit_Report_QuillAudits(V2).pdf", "project_info": {"url": "https://github.com/adilghani/chaincollection-contracts/tree/main", "commit_hash": "f4af6c258d93ce36386df213bf6196da8613f7f1", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "Function should be internal", "description": "The function should be declared as internal to prevent unauthorized access and potential security risks.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Missing zero check and same address check", "description": "There is missing zero check for both \u201cusdToken\u201d and \u201cweth\u201d addresses as well as same address checks. According to the functionality of the contract, these addresses can only be set once (during deployement) and if it\u2019s set to zero or any non-existent address then there could be loss of funds.", "severity": "Medium", "contract": "N/A", "function": "constructor", "lineNumber": "1764"}, {"id": 2, "category": {"1": ["CWE-703"]}, "title": "N/A", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Unlocked pragma (pragma solidity ^0.8.0)", "description": "Contracts should be deployed with the same compiler version and flags that they have been tested with thoroughly. Locking the pragma helps to ensure that contracts do not accidentally get deployed using, for example, an outdated compiler version that might introduce bugs.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "Multiple Pragmas used (pragma solidity ^0.6.0 <0.8.0)", "description": "Imported contracts (by OpenZeppelin) are using solidity version till 0.8.0 and the main contract was tested with the functionalities of version 0.8.7, which is not recommended to use these versions while deployment with locked pragmas.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-710"], "2": ["CWE-1076"], "3": ["CWE-1078"], "4": ["CWE-1099"]}, "title": "Lack of following Solidity Naming Guidelines", "description": "The contract does not follow Solidity naming guidelines, which can affect code readability.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Non-usage of inherited contract", "description": "Contract inherits ERC721Holder contract but is never holding any NFTs at any point of time.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "1698"}, {"id": 7, "category": {"1": ["CWE-710"], "2": ["CWE-1126"]}, "title": "Public function could be declared external", "description": "Public functions that are never called by the contract should be declared external to save gas", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-682"]}, "title": "usdToken Decimal problem", "description": "When using USDT instead of BUSD, it would create a different result because of decimal differences, and it is advised to write a separate function for getting the price when usdToken is set to address of USDT or USDC stablecoin.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "2360, 2369"}, {"id": 9, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Seller can buy his own NFT", "description": "NFT owner can list his own token for sale- then buy his own token for sale. This can result in the seller fooling the royalty design easily by buying his own token and reaching the limit faster so that he can get royalty on his first actual sale itself.", "severity": "High", "contract": "N/A", "function": "buyToken()", "lineNumber": "1802"}, {"id": 10, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "Non-transfer of NFT after listing possible", "description": "When a seller lists an NFT for sale, the NFT remains with the owner himself(instead of this getting transferred to the NFT Controller smart contract). According to the dev team, the seller But it is entirely possible that the seller removes that approval after listing his NFT on sale.", "severity": "Low", "contract": "N/A", "function": "readyToSellTokenTo()", "lineNumber": "1871"}]}
+{
+    "path": "./Audit_Reports_2024/QuillAudits/ChainCollectionNFTController_Smart_Contract_Audit_Report_QuillAudits(V2).pdf",
+    "project_info": {
+        "url": "https://github.com/adilghani/chaincollection-contracts/tree/main",
+        "commit_hash": "f4af6c258d93ce36386df213bf6196da8613f7f1",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Function should be internal",
+            "description": "The function should be declared as internal to prevent unauthorized access and potential security risks.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Missing zero check and same address check",
+            "description": "There is missing zero check for both \u201cusdToken\u201d and \u201cweth\u201d addresses as well as same address checks. According to the functionality of the contract, these addresses can only be set once (during deployement) and if it\u2019s set to zero or any non-existent address then there could be loss of funds.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "constructor",
+            "lineNumber": "1764"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "N/A",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Unlocked pragma (pragma solidity ^0.8.0)",
+            "description": "Contracts should be deployed with the same compiler version and flags that they have been tested with thoroughly. Locking the pragma helps to ensure that contracts do not accidentally get deployed using, for example, an outdated compiler version that might introduce bugs.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Multiple Pragmas used (pragma solidity ^0.6.0 <0.8.0)",
+            "description": "Imported contracts (by OpenZeppelin) are using solidity version till 0.8.0 and the main contract was tested with the functionalities of version 0.8.7, which is not recommended to use these versions while deployment with locked pragmas.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1076"
+                ],
+                "3": [
+                    "CWE-1078"
+                ],
+                "4": [
+                    "CWE-1099"
+                ]
+            },
+            "title": "Lack of following Solidity Naming Guidelines",
+            "description": "The contract does not follow Solidity naming guidelines, which can affect code readability.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Non-usage of inherited contract",
+            "description": "Contract inherits ERC721Holder contract but is never holding any NFTs at any point of time.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "1698"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1126"
+                ]
+            },
+            "title": "Public function could be declared external",
+            "description": "Public functions that are never called by the contract should be declared external to save gas",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "usdToken Decimal problem",
+            "description": "When using USDT instead of BUSD, it would create a different result because of decimal differences, and it is advised to write a separate function for getting the price when usdToken is set to address of USDT or USDC stablecoin.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "2360, 2369"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Seller can buy his own NFT",
+            "description": "NFT owner can list his own token for sale- then buy his own token for sale. This can result in the seller fooling the royalty design easily by buying his own token and reaching the limit faster so that he can get royalty on his first actual sale itself.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "buyToken()",
+            "lineNumber": "1802"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Non-transfer of NFT after listing possible",
+            "description": "When a seller lists an NFT for sale, the NFT remains with the owner himself(instead of this getting transferred to the NFT Controller smart contract). According to the dev team, the seller But it is entirely possible that the seller removes that approval after listing his NFT on sale.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "readyToSellTokenTo()",
+            "lineNumber": "1871"
+        }
+    ]
+}

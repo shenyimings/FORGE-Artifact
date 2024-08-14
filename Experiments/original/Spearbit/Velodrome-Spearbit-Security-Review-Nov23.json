@@ -1,1 +1,163 @@
-{"path": "./Audit_Reports_2024/Spearbit/Velodrome-Spearbit-Security-Review-Nov23.pdf", "project_info": {"url": "https://github.com/velodrome-finance/contracts, https://github.com/velodrome-finance/slipstream, https://github.com/velodrome-finance/universal-router", "commit_hash": "ba4b19...c64449, 9ab341...7c8c46, 5834d3...005601", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Loss to users of the NonfungiblePositionManager for tokens that have very high decimals", "description": "The casting of amount0 from uint256 to uint128 as well as the sum of tokensOwed overflow can cause a loss to users of the NonfungiblePositionManager for tokens that have very high decimals.", "severity": "Low Risk", "contract": "NonfungiblePositionManager", "function": "N/A", "lineNumber": "L308-L322"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "First Depositor Imbalanced LPing for Stable Pool may cause loss to 2nd depositor", "description": "The first depositor can imbalance the pool by donating imbalanced tokens, syncing reserves, minting with a small amount of tokens, and rebasing the LP token value, causing subsequent depositors who deposit in a balanced way to lose some of their value.", "severity": "N/A", "contract": "Pool", "function": "N/A", "lineNumber": "L307-L314, L316-L317"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "CLGauge stakers can earn more than their due, with claimable rewards exceeding available rewards", "description": "Staking users are intended to earn rewards submitted during an epoch. In case there was no staking, the rewards should be rolled over, and available to stakers in the next epoch where rewards are added. However, the current logic can also retroactively apply rewards from prior epochs, resulting in a doubling of claimable rewards from prior periods.", "severity": "High Risk", "contract": "CLPool.sol, CLGauge.sol", "function": "_updateRewardsGrowthGlobal, _earned", "lineNumber": "L860-L865, L120-L123, L302-L306"}, {"id": 3, "category": {"1": ["CWE-664"], "2": ["CWE-404"], "3": ["CWE-772"], "4": ["CWE-401"]}, "title": "SwapRouter doesn't refund unspent ETH after swapping", "description": "The contract doesn't refund unspent ETH when swaps made via SwapRouter are partial, resulting in leftover ETH that can be withdrawn by anyone, causing a loss to the SwapRouter user.", "severity": "High Risk", "contract": "SwapRouter.sol", "function": ["exactInputSingle()", "exactInput()", "exactOutputSingle()", "exactOutput()"], "lineNumber": ["106", "126", "196", "220"]}, {"id": 4, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Undistributed rewards are not rolled over when additional rewards are announced in an epoch", "description": "Undistributed rewards are not rolled over during additional reward notifications in an epoch, leading to locked rewards in the contract.", "severity": "High Risk", "contract": "CLGauge", "function": "_notifyRewardAmount()", "lineNumber": "L346-L350"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Reward notification can unnecessarily reduce tnsl , causing locking of rewards", "description": "The CLPool.timeNoStakedLiquidity variable tracks the duration when there was a reward in a pool but no staked liquidity. However, it incorrectly detects the length of timeNoStakedLiquidity outside of its epoch, resulting in tnsl being mistakenly reduced when it shouldn't.", "severity": "High Risk", "contract": "CLGauge", "function": "_notifyRewardAmount()", "lineNumber": "L325"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "CLGauge.deposit() doesn't verify that the liquidity to stake is from the pool the gauge integrates with", "description": "Allows a malicious actor to stake liquidity into a CLGauge from a fake CLPool and earn gauge rewards, stealing them from the liquidity providers of the gauge's pool.", "severity": "Critical", "contract": "CLGauge", "function": "deposit()", "lineNumber": "L160"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "Liquidity staked at ticks can be manipulated to impact swap fees and rewards", "description": "The total amount of staked liquidity in a pool can be skewed during swapping as pool's staked liquidity is updated with the values stored at ticks, which will have a strong impact on the protocol since both swap fees and gauge rewards are computed based on the amount of staked liquidity.", "severity": "Medium Risk", "contract": "CLPool", "function": "stake()", "lineNumber": "L544-L545, L726"}]}
+{
+    "path": "./Audit_Reports_2024/Spearbit/Velodrome-Spearbit-Security-Review-Nov23.pdf",
+    "project_info": {
+        "url": "https://github.com/velodrome-finance/contracts, https://github.com/velodrome-finance/slipstream, https://github.com/velodrome-finance/universal-router",
+        "commit_hash": "ba4b19...c64449, 9ab341...7c8c46, 5834d3...005601",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Loss to users of the NonfungiblePositionManager for tokens that have very high decimals",
+            "description": "The casting of amount0 from uint256 to uint128 as well as the sum of tokensOwed overflow can cause a loss to users of the NonfungiblePositionManager for tokens that have very high decimals.",
+            "severity": "Low Risk",
+            "contract": "NonfungiblePositionManager",
+            "function": "N/A",
+            "lineNumber": "L308-L322"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "First Depositor Imbalanced LPing for Stable Pool may cause loss to 2nd depositor",
+            "description": "The first depositor can imbalance the pool by donating imbalanced tokens, syncing reserves, minting with a small amount of tokens, and rebasing the LP token value, causing subsequent depositors who deposit in a balanced way to lose some of their value.",
+            "severity": "N/A",
+            "contract": "Pool",
+            "function": "N/A",
+            "lineNumber": "L307-L314, L316-L317"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "CLGauge stakers can earn more than their due, with claimable rewards exceeding available rewards",
+            "description": "Staking users are intended to earn rewards submitted during an epoch. In case there was no staking, the rewards should be rolled over, and available to stakers in the next epoch where rewards are added. However, the current logic can also retroactively apply rewards from prior epochs, resulting in a doubling of claimable rewards from prior periods.",
+            "severity": "High Risk",
+            "contract": "CLPool.sol, CLGauge.sol",
+            "function": "_updateRewardsGrowthGlobal, _earned",
+            "lineNumber": "L860-L865, L120-L123, L302-L306"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-401"
+                ]
+            },
+            "title": "SwapRouter doesn't refund unspent ETH after swapping",
+            "description": "The contract doesn't refund unspent ETH when swaps made via SwapRouter are partial, resulting in leftover ETH that can be withdrawn by anyone, causing a loss to the SwapRouter user.",
+            "severity": "High Risk",
+            "contract": "SwapRouter.sol",
+            "function": [
+                "exactInputSingle()",
+                "exactInput()",
+                "exactOutputSingle()",
+                "exactOutput()"
+            ],
+            "lineNumber": [
+                "106",
+                "126",
+                "196",
+                "220"
+            ]
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Undistributed rewards are not rolled over when additional rewards are announced in an epoch",
+            "description": "Undistributed rewards are not rolled over during additional reward notifications in an epoch, leading to locked rewards in the contract.",
+            "severity": "High Risk",
+            "contract": "CLGauge",
+            "function": "_notifyRewardAmount()",
+            "lineNumber": "L346-L350"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Reward notification can unnecessarily reduce tnsl , causing locking of rewards",
+            "description": "The CLPool.timeNoStakedLiquidity variable tracks the duration when there was a reward in a pool but no staked liquidity. However, it incorrectly detects the length of timeNoStakedLiquidity outside of its epoch, resulting in tnsl being mistakenly reduced when it shouldn't.",
+            "severity": "High Risk",
+            "contract": "CLGauge",
+            "function": "_notifyRewardAmount()",
+            "lineNumber": "L325"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "CLGauge.deposit() doesn't verify that the liquidity to stake is from the pool the gauge integrates with",
+            "description": "Allows a malicious actor to stake liquidity into a CLGauge from a fake CLPool and earn gauge rewards, stealing them from the liquidity providers of the gauge's pool.",
+            "severity": "Critical",
+            "contract": "CLGauge",
+            "function": "deposit()",
+            "lineNumber": "L160"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Liquidity staked at ticks can be manipulated to impact swap fees and rewards",
+            "description": "The total amount of staked liquidity in a pool can be skewed during swapping as pool's staked liquidity is updated with the values stored at ticks, which will have a strong impact on the protocol since both swap fees and gauge rewards are computed based on the amount of staked liquidity.",
+            "severity": "Medium Risk",
+            "contract": "CLPool",
+            "function": "stake()",
+            "lineNumber": "L544-L545, L726"
+        }
+    ]
+}

@@ -1,1 +1,476 @@
-{"path": "./Audit_Reports_2024/Hacken/L1-audit-Polkadex-Parachain-final-report-24082023.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-664"], "2": ["CWE-404"], "3": ["CWE-772"], "4": ["CWE-401"]}, "title": "Loss of Treasury Funds", "description": "Trapped treasury funds due to improper account management, leading to potential liquidity issues and challenges in managing system finances.", "severity": "HIGH", "contract": "xcm-helper", "function": "N/A", "lineNumber": "_pallets/xcm-helper/src/lib.rs:208_, _runtime/src/lib.rs:467_"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "Local Nonce Dependency and Potential DoS Attack via Locking Withdrawals", "description": "Potential logic bug in `withdraw_asset` extrinsic allowing malicious actors to launch a denial-of-service (DoS) attack, locking withdrawals due to local nonce dependency and potential nonce mismatch.", "severity": "CRITICAL", "contract": "xcm-helper", "function": "withdraw_asset", "lineNumber": "_pallets/xcm-helper/src/lib.rs:372"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Proposals Resource Exhaustion", "description": "In the `thea-council` pallet's proposal management, an attacker can generate a large number of fake proposals, leading to resource exhaustion and making it difficult for legitimate users to manage pending proposals.", "severity": "HIGH", "contract": "thea-council", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Council Locking Issue in the Voting System", "description": "A malicious individual or group can secure a position among the last two council members and unilaterally remove the other member without discussion, gaining control over the council.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-770"]}, "title": "No transaction weighting for extrinsics in router pallet", "description": "In `router` pallet, all extrinsic weights are tagged with 0, which can lead to blockchain resources being drained or overloaded.", "severity": "MEDIUM", "contract": "Router Pallet", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "No transaction weighting for extrinsics in swap pallet", "description": "In `swap` pallet, all extrinsic weights are tagged with 0, which can lead to Denial of Service (DoS) vulnerability.", "severity": "MEDIUM", "contract": "swap", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-697"], "2": ["CWE-1025"], "3": ["CWE-595"], "4": ["CWE-597"]}, "title": "Only 2 active council members allows a weaker consensus", "description": "When there are only 2 active council members, it leads to a weaker consensus as it requires only a 1/2 majority instead of the intended 2/3 majority rule, allowing malicious actors to gain control over the council.", "severity": "High", "contract": "N/A", "function": "remove_proposal()", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Council Members can have more than one seat", "description": "No protections are in place to prevent a council member from occupying more than one slot in the governance system, leading to denial of service (DoS) if the council cannot reach consensus.", "severity": "MEDIUM", "contract": "_pallets/thea-council/src/lib.rs", "function": "add_member", "lineNumber": "140"}, {"id": 8, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Incorrect Nonce Incrementation in withdraw_asset Function", "description": "The `withdraw_asset` extrinsic in the `xcm-helper` pallet exhibits improper nonce incrementation that occurs even if the transaction fails, potentially leading to undesirable consequences.", "severity": "LOW", "contract": "xcm-helper", "function": "withdraw_asset", "lineNumber": "_pallets/xcm-helper/src/lib.rs:372"}, {"id": 9, "category": {"1": ["CWE-682"]}, "title": "Inaccurate Consensus Threshold Calculation", "description": "The current implementation of the consensus threshold calculation uses a 'round down' approach, which can lead to a lower consensus threshold than intended.", "severity": "LOW", "contract": "_pallets/thea-council/ src/lib.rs", "function": "N/A", "lineNumber": "221"}, {"id": 10, "category": {"1": ["CWE-664"], "2": ["CWE-410"]}, "title": "Max Pending Members Can Limit Council Expansion", "description": "There is no mechanism to delete unclaimed membership or incentivize claiming membership within a certain period, which can limit the ability to add new members to the council, thus restricting the expansion of the governance system.", "severity": "LOW", "contract": "thea-council", "function": "execute_add_member", "lineNumber": "253"}, {"id": 11, "category": {"1": ["CWE-664"], "2": ["CWE-404"], "3": ["CWE-772"], "4": ["CWE-401"]}, "title": "Absence of Refund Mechanism for Unused Weight in WeightTrader Implementation", "description": "The lack of refund mechanism for unused weight can lead to inefficiency and unfairness, as users who pay for more weight than they actually need during XCM execution won't receive any refund for the unused portion.", "severity": "Medium", "contract": "WeightTrader", "function": "refund_weight", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-229"], "4": ["CWE-232"]}, "title": "Compilation and Linter Warnings", "description": "Addressing compilation and linter warnings to improve code quality and prevent potential issues such as unoptimized or inefficient code, deprecated functions or methods, unnecessary or unused variables and imports, non-idiomatic Rust patterns, and potential coding errors or logic flaws.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Error variants Improvement in `thea-council`", "description": "In the `thea-council` pallet, some error variants are unused and should be removed, while others should be added or used for better clarity and error handling.", "severity": "N/A", "contract": "`thea-council` pallet", "function": "N/A", "lineNumber": "_pallets/thea-council/src/lib.rs:112_"}, {"id": 14, "category": {"1": ["CWE-703"], "2": ["CWE-397"]}, "title": "Inaccurate Error Handling in xcm-helper Pallet", "description": "The `xcm-helper` pallet's Error enum uses a generic `InternalError` variant for multiple error situations, making it difficult for developers to diagnose specific issues and understand the root cause of an error.", "severity": "Medium", "contract": "xcm-helper", "function": "handle_deposit, deposit_native_token, deposit_non_native_token", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Inefficient Use of BoundedVec Size Limit", "description": "The BoundedVec size limit is set to a higher value than necessary, which can lead to inefficiencies and potential issues. It is recommended to adjust the size limit to match the maximum number of council members (10) for better code clarity and maintainability.", "severity": "Medium", "contract": "Proposals", "function": "N/A", "lineNumber": "N/A"}, {"id": 16, "category": {"1": ["CWE-710"], "2": ["CWE-1126"]}, "title": "Magic Numbers As Constants", "description": "Usage of magic numbers as constant, directly hardcoded in pallets code, can lead to maintainability, readability, and potential security issues.", "severity": "Code Quality", "contract": "thea-council", "function": "N/A", "lineNumber": "_pallets/thea-council/src/lib.rs:73"}, {"id": 17, "category": {"1": ["CWE-682"]}, "title": "Missing Benchmark Calculations for Extrinsic Weights", "description": "The project lacks benchmark calculations for extrinsic weights of all pallets, which can lead to inefficient and unstable runtime environment, inaccurate transaction fees, and poor performance.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 18, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "No Code Test Coverage", "description": "The project lacks comprehensive test coverage, which can lead to security, stability, and maintainability issues.", "severity": "Critical", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 19, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Typographical Errors in the Project", "description": "Fix typographical errors `Paracdhain` to `Parachain` and `foregin` to `foreign` in pallets/xcm-helper/src/lib.rs.", "severity": "N/A", "contract": "xcm-helper", "function": "N/A", "lineNumber": "42"}, {"id": 20, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "Unnecessary Checks and Wrong Error Variant in `do_claim_membership` function", "description": "The `do_claim_membership` function contains unnecessary checks and uses an incorrect error variant, which can be refactored to improve code quality and avoid potential confusion.", "severity": "Code Quality", "contract": "_pallets/thea-council/src/lib.rs_", "function": "do_claim_membership", "lineNumber": "275"}, {"id": 21, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Unresolved TODO macros", "description": "The `todo!()` macro is used as a placeholder in two functions: `can_withdraw` and `convert`, which will result in a panic if encountered in production.", "severity": "Critical", "contract": "xcm-helper", "function": ["can_withdraw()", "convert()"], "lineNumber": ["N/A", "_pallets/xcm-helper/src/lib.rs:487"]}, {"id": 22, "category": {"1": ["CWE-710"], "2": ["CWE-1164"], "3": ["CWE-561"]}, "title": "Unused function insert_pending_withdrawal", "description": "The `insert_pending_withdrawal` function in the `xcm-helper` pallet is currently unused and does not contribute to the code's functionality.", "severity": "Code quality", "contract": "xcm-helper", "function": "insert_pending_withdrawal()", "lineNumber": "749"}, {"id": 23, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Usage of sudo pallet with a root account", "description": "The usage of sudo pallet and root account to set the initial Thea key allows for arbitrary setting of the Thea key at any time, potentially compromising security and decentralization.", "severity": "High", "contract": "xcm-helper", "function": "set_thea_key", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Hacken/L1-audit-Polkadex-Parachain-final-report-24082023.pdf",
+    "project_info": {
+        "url": "https://github.com/Polkadex-Substrate/parachain/tree/684fac00a125f45344b29bbd4003a2ec9af10f6b",
+        "commit_hash": "684fac00a125f45344b29bbd4003a2ec9af10f6b",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-401"
+                ]
+            },
+            "title": "Loss of Treasury Funds",
+            "description": "Trapped treasury funds due to improper account management, leading to potential liquidity issues and challenges in managing system finances.",
+            "severity": "HIGH",
+            "contract": "xcm-helper",
+            "function": "N/A",
+            "lineNumber": "_pallets/xcm-helper/src/lib.rs:208_, _runtime/src/lib.rs:467_"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Local Nonce Dependency and Potential DoS Attack via Locking Withdrawals",
+            "description": "Potential logic bug in `withdraw_asset` extrinsic allowing malicious actors to launch a denial-of-service (DoS) attack, locking withdrawals due to local nonce dependency and potential nonce mismatch.",
+            "severity": "CRITICAL",
+            "contract": "xcm-helper",
+            "function": "withdraw_asset",
+            "lineNumber": "_pallets/xcm-helper/src/lib.rs:372"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Proposals Resource Exhaustion",
+            "description": "In the `thea-council` pallet's proposal management, an attacker can generate a large number of fake proposals, leading to resource exhaustion and making it difficult for legitimate users to manage pending proposals.",
+            "severity": "HIGH",
+            "contract": "thea-council",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Council Locking Issue in the Voting System",
+            "description": "A malicious individual or group can secure a position among the last two council members and unilaterally remove the other member without discussion, gaining control over the council.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "No transaction weighting for extrinsics in router pallet",
+            "description": "In `router` pallet, all extrinsic weights are tagged with 0, which can lead to blockchain resources being drained or overloaded.",
+            "severity": "MEDIUM",
+            "contract": "Router Pallet",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "No transaction weighting for extrinsics in swap pallet",
+            "description": "In `swap` pallet, all extrinsic weights are tagged with 0, which can lead to Denial of Service (DoS) vulnerability.",
+            "severity": "MEDIUM",
+            "contract": "swap",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ],
+                "2": [
+                    "CWE-1025"
+                ],
+                "3": [
+                    "CWE-595"
+                ],
+                "4": [
+                    "CWE-597"
+                ]
+            },
+            "title": "Only 2 active council members allows a weaker consensus",
+            "description": "When there are only 2 active council members, it leads to a weaker consensus as it requires only a 1/2 majority instead of the intended 2/3 majority rule, allowing malicious actors to gain control over the council.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "remove_proposal()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Council Members can have more than one seat",
+            "description": "No protections are in place to prevent a council member from occupying more than one slot in the governance system, leading to denial of service (DoS) if the council cannot reach consensus.",
+            "severity": "MEDIUM",
+            "contract": "_pallets/thea-council/src/lib.rs",
+            "function": "add_member",
+            "lineNumber": "140"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Incorrect Nonce Incrementation in withdraw_asset Function",
+            "description": "The `withdraw_asset` extrinsic in the `xcm-helper` pallet exhibits improper nonce incrementation that occurs even if the transaction fails, potentially leading to undesirable consequences.",
+            "severity": "LOW",
+            "contract": "xcm-helper",
+            "function": "withdraw_asset",
+            "lineNumber": "_pallets/xcm-helper/src/lib.rs:372"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Inaccurate Consensus Threshold Calculation",
+            "description": "The current implementation of the consensus threshold calculation uses a 'round down' approach, which can lead to a lower consensus threshold than intended.",
+            "severity": "LOW",
+            "contract": "_pallets/thea-council/ src/lib.rs",
+            "function": "N/A",
+            "lineNumber": "221"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-410"
+                ]
+            },
+            "title": "Max Pending Members Can Limit Council Expansion",
+            "description": "There is no mechanism to delete unclaimed membership or incentivize claiming membership within a certain period, which can limit the ability to add new members to the council, thus restricting the expansion of the governance system.",
+            "severity": "LOW",
+            "contract": "thea-council",
+            "function": "execute_add_member",
+            "lineNumber": "253"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-401"
+                ]
+            },
+            "title": "Absence of Refund Mechanism for Unused Weight in WeightTrader Implementation",
+            "description": "The lack of refund mechanism for unused weight can lead to inefficiency and unfairness, as users who pay for more weight than they actually need during XCM execution won't receive any refund for the unused portion.",
+            "severity": "Medium",
+            "contract": "WeightTrader",
+            "function": "refund_weight",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ],
+                "4": [
+                    "CWE-232"
+                ]
+            },
+            "title": "Compilation and Linter Warnings",
+            "description": "Addressing compilation and linter warnings to improve code quality and prevent potential issues such as unoptimized or inefficient code, deprecated functions or methods, unnecessary or unused variables and imports, non-idiomatic Rust patterns, and potential coding errors or logic flaws.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Error variants Improvement in `thea-council`",
+            "description": "In the `thea-council` pallet, some error variants are unused and should be removed, while others should be added or used for better clarity and error handling.",
+            "severity": "N/A",
+            "contract": "`thea-council` pallet",
+            "function": "N/A",
+            "lineNumber": "_pallets/thea-council/src/lib.rs:112_"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-397"
+                ]
+            },
+            "title": "Inaccurate Error Handling in xcm-helper Pallet",
+            "description": "The `xcm-helper` pallet's Error enum uses a generic `InternalError` variant for multiple error situations, making it difficult for developers to diagnose specific issues and understand the root cause of an error.",
+            "severity": "Medium",
+            "contract": "xcm-helper",
+            "function": "handle_deposit, deposit_native_token, deposit_non_native_token",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Inefficient Use of BoundedVec Size Limit",
+            "description": "The BoundedVec size limit is set to a higher value than necessary, which can lead to inefficiencies and potential issues. It is recommended to adjust the size limit to match the maximum number of council members (10) for better code clarity and maintainability.",
+            "severity": "Medium",
+            "contract": "Proposals",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1126"
+                ]
+            },
+            "title": "Magic Numbers As Constants",
+            "description": "Usage of magic numbers as constant, directly hardcoded in pallets code, can lead to maintainability, readability, and potential security issues.",
+            "severity": "Code Quality",
+            "contract": "thea-council",
+            "function": "N/A",
+            "lineNumber": "_pallets/thea-council/src/lib.rs:73"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Missing Benchmark Calculations for Extrinsic Weights",
+            "description": "The project lacks benchmark calculations for extrinsic weights of all pallets, which can lead to inefficient and unstable runtime environment, inaccurate transaction fees, and poor performance.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "No Code Test Coverage",
+            "description": "The project lacks comprehensive test coverage, which can lead to security, stability, and maintainability issues.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 19,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Typographical Errors in the Project",
+            "description": "Fix typographical errors `Paracdhain` to `Parachain` and `foregin` to `foreign` in pallets/xcm-helper/src/lib.rs.",
+            "severity": "N/A",
+            "contract": "xcm-helper",
+            "function": "N/A",
+            "lineNumber": "42"
+        },
+        {
+            "id": 20,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Unnecessary Checks and Wrong Error Variant in `do_claim_membership` function",
+            "description": "The `do_claim_membership` function contains unnecessary checks and uses an incorrect error variant, which can be refactored to improve code quality and avoid potential confusion.",
+            "severity": "Code Quality",
+            "contract": "_pallets/thea-council/src/lib.rs_",
+            "function": "do_claim_membership",
+            "lineNumber": "275"
+        },
+        {
+            "id": 21,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Unresolved TODO macros",
+            "description": "The `todo!()` macro is used as a placeholder in two functions: `can_withdraw` and `convert`, which will result in a panic if encountered in production.",
+            "severity": "Critical",
+            "contract": "xcm-helper",
+            "function": [
+                "can_withdraw()",
+                "convert()"
+            ],
+            "lineNumber": [
+                "N/A",
+                "_pallets/xcm-helper/src/lib.rs:487"
+            ]
+        },
+        {
+            "id": 22,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ],
+                "3": [
+                    "CWE-561"
+                ]
+            },
+            "title": "Unused function insert_pending_withdrawal",
+            "description": "The `insert_pending_withdrawal` function in the `xcm-helper` pallet is currently unused and does not contribute to the code's functionality.",
+            "severity": "Code quality",
+            "contract": "xcm-helper",
+            "function": "insert_pending_withdrawal()",
+            "lineNumber": "749"
+        },
+        {
+            "id": 23,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Usage of sudo pallet with a root account",
+            "description": "The usage of sudo pallet and root account to set the initial Thea key allows for arbitrary setting of the Thea key at any time, potentially compromising security and decentralization.",
+            "severity": "High",
+            "contract": "xcm-helper",
+            "function": "set_thea_key",
+            "lineNumber": "N/A"
+        }
+    ]
+}

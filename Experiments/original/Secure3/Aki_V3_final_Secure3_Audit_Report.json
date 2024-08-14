@@ -1,1 +1,97 @@
-{"path": "./Audit_Reports_2024/Secure3/Aki_V3_final_Secure3_Audit_Report.pdf", "project_info": {"url": "N/A", "commit_hash": "913ad21faa40bfcff9f38a805627c0939de209ad2cc39e229f0569b614f973f7", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Unchecked ERC-20 transfer() and transferFrom() call", "description": "The return value of `transfer` and `transferFrom` function is not checked, which can lead to silent transfer failures and unexpected behavior in the contract.", "severity": "Medium", "contract": "AkiTokenDispenser3.sol", "function": ["depositTokensIntoPool", "claimTokens"], "lineNumber": ["67", "70", "80", "103", "134"]}, {"id": 1, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "User reward should not be set after reward claiming is started", "description": "The user reward should not be set after reward claiming is started because it can cause unexpected errors and affect the share/rewardToken ratio.", "severity": "Low", "contract": "AkiTokenDispenser3", "function": ["setShares", "batchSetShares", "claimTokens"], "lineNumber": "42-53, 59, 95-96"}, {"id": 2, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "setShares() lacks zero address validation", "description": "_address can be zero and if that's the case, the shares will be assigned to a zero address and the winner'sNotClaimed will be inaccurately increased one.", "severity": "Low", "contract": "AkiTokenDispenser3", "function": "setShares()", "lineNumber": "42-43"}, {"id": 3, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "uint256 _shares is always non-negative", "description": "The check in setShares() function require (_shares >= 0 , \"Shares must be non-negative\" ); is redundant as the uint256 _shares is unsigned integer and it is always >= 0", "severity": "Informational", "contract": "AkiTokenDispenser3", "function": "setShares()", "lineNumber": "42-43"}]}
+{
+    "path": "./Audit_Reports_2024/Secure3/Aki_V3_final_Secure3_Audit_Report.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "913ad21faa40bfcff9f38a805627c0939de209ad2cc39e229f0569b614f973f7",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Unchecked ERC-20 transfer() and transferFrom() call",
+            "description": "The return value of `transfer` and `transferFrom` function is not checked, which can lead to silent transfer failures and unexpected behavior in the contract.",
+            "severity": "Medium",
+            "contract": "AkiTokenDispenser3.sol",
+            "function": [
+                "depositTokensIntoPool",
+                "claimTokens"
+            ],
+            "lineNumber": [
+                "67",
+                "70",
+                "80",
+                "103",
+                "134"
+            ]
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "User reward should not be set after reward claiming is started",
+            "description": "The user reward should not be set after reward claiming is started because it can cause unexpected errors and affect the share/rewardToken ratio.",
+            "severity": "Low",
+            "contract": "AkiTokenDispenser3",
+            "function": [
+                "setShares",
+                "batchSetShares",
+                "claimTokens"
+            ],
+            "lineNumber": "42-53, 59, 95-96"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "setShares() lacks zero address validation",
+            "description": "_address can be zero and if that's the case, the shares will be assigned to a zero address and the winner'sNotClaimed will be inaccurately increased one.",
+            "severity": "Low",
+            "contract": "AkiTokenDispenser3",
+            "function": "setShares()",
+            "lineNumber": "42-43"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "uint256 _shares is always non-negative",
+            "description": "The check in setShares() function require (_shares >= 0 , \"Shares must be non-negative\" ); is redundant as the uint256 _shares is unsigned integer and it is always >= 0",
+            "severity": "Informational",
+            "contract": "AkiTokenDispenser3",
+            "function": "setShares()",
+            "lineNumber": "42-43"
+        }
+    ]
+}

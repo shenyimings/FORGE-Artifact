@@ -1,1 +1,255 @@
-{"path": "./Audit_Reports_2024/Trail_of_Bits/2023-07-dragonfly2-securityreview.pdf", "project_info": {"url": "https://github.com/DragonFly2", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-287"], "3": ["CWE-306"]}, "title": "Authentication is not enabled for some Manager\u2019s endpoints", "description": "The `/api/v1/jobs` and `/preheats` endpoints in Manager web UI are accessible without authentication, allowing any user with network access to create, delete, and modify jobs, and create preheat jobs.", "severity": "Undetermined", "contract": "Dragonfly2/manager/router/router.go", "function": "N/A", "lineNumber": "191"}, {"id": 1, "category": {"1": ["CWE-707"], "2": ["CWE-74"], "3": ["CWE-99"]}, "title": "Server-side request forgery vulnerabilities", "description": "N/A", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "23"}, {"id": 2, "category": {"1": ["CWE-693"], "2": ["CWE-326"]}, "title": "Manager makes requests to external endpoints with disabled TLS authentication", "description": "The Manager disables TLS certificate verification in two HTTP clients.", "severity": "Low", "contract": "Dragonfly2/manager/job/preheat.go", "function": "getAuthToken", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-237"], "4": ["CWE-239"]}, "title": "Incorrect handling of a task structure's usedTraffic field", "description": "The 'usedTraffic' field is handled incorrectly due to uninitialized variable usage as a guard for method calls.", "severity": "High", "contract": "N/A", "function": "AddTraffic", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"]}, "title": "Directories created via os.MkdirAll are not checked for permissions", "description": "Lack of pre-existence or post-verification checks for newly created files and directories when using os.MkdirAll.", "severity": "N/A", "contract": "DragonFly2", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Slicing operations with hard-coded indexes and without explicit length validation", "description": "Array slicing operations are performed with hard-coded indexes without explicit length validation, which can cause a panic if the arrays are smaller than the indexes.", "severity": "Informational", "contract": "N/A", "function": "buildDownloadPieceHTTPRequest", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-703"]}, "title": "Files are closed without error check", "description": "In multiple locations throughout the codebase, files are not explicitly closed or checked for errors after writing, leading to undefined behavior when disk failures occur.", "severity": "Undetermined", "contract": "N/A", "function": "localTaskStore.WritePiece", "lineNumber": "124\u2013128"}, {"id": 7, "category": {"1": ["CWE-697"], "2": ["CWE-1254"]}, "title": "Timing attacks against Proxy\u2019s basic authentication are possible", "description": "The access control mechanism for the Proxy feature uses simple string comparisons and is therefore vulnerable to timing attacks.", "severity": "N/A", "contract": "Dragonfly2/ client/daemon/proxy/proxy.go", "function": "ServeHTTP", "lineNumber": "316"}, {"id": 8, "category": {"1": ["CWE-703"]}, "title": "Possible panics due to nil pointer dereference when using variables created alongside an error", "description": "Dereferencing the first return value of a function even when it returns an error can result in a `nil` dereference, causing code to panic.", "severity": "Denial of Service", "contract": "Dragonfly2", "function": "N/A", "lineNumber": "621-626"}, {"id": 9, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "TrimLeft is used instead of TrimPrefix", "description": "The code uses strings.TrimLeft instead of strings.TrimPrefix which may lead to incorrect trimming results.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-691"], "2": ["CWE-362"]}, "title": "Vertex.DeleteInEdges and Vertex.DeleteOutEdges functions are not thread safe", "description": "The `Vertex.DeleteInEdges` and `Vertex.DeleteOutEdges` methods are prone to inconsistent state due to race conditions between threads, causing a parent vertex to have the child in its `Children` set but the child vertex not having the parent in its `Parents` set.", "severity": "Critical", "contract": "Dragonfly2/pkg/graph/dag/vertex", "function": "Vertex.DeleteInEdges and Vertex.DeleteOutEdges", "lineNumber": "54-61"}, {"id": 11, "category": {"1": ["CWE-284"]}, "title": "Arbitrary file read and write on a peer machine", "description": "Peers can send requests to create files in arbitrary file system locations and read arbitrary files, allowing them to steal secret data and gain remote code execution capabilities.", "severity": "High", "contract": "N/A", "function": "ImportTask, ExportTask", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-284"], "2": ["CWE-287"], "3": ["CWE-295"], "4": ["CWE-297"]}, "title": "Manager generates mTLS certificates for arbitrary IP addresses", "description": "A peer can obtain a valid TLS certificate for arbitrary IP addresses, effectively rendering the mTLS authentication useless.", "severity": "High", "contract": "Dragonfly2/manager/rpcserver/security_server_v1.go", "function": "Certificate gRPC service", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "gRPC requests are weakly validated", "description": "The gRPC requests are weakly validated, and some requests' fields are not validated at all.", "severity": "Undetermined", "contract": "DragonFly2", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/2023-07-dragonfly2-securityreview.pdf",
+    "project_info": {
+        "url": "https://github.com/dragonflyoss/Dragonfly2/tree/b3a516804fb873d10d866979a0c6353b148cd3f1",
+        "commit_hash": "b3a516804fb873d10d866979a0c6353b148cd3f1",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-287"
+                ],
+                "3": [
+                    "CWE-306"
+                ]
+            },
+            "title": "Authentication is not enabled for some Manager\u2019s endpoints",
+            "description": "The `/api/v1/jobs` and `/preheats` endpoints in Manager web UI are accessible without authentication, allowing any user with network access to create, delete, and modify jobs, and create preheat jobs.",
+            "severity": "Undetermined",
+            "contract": "Dragonfly2/manager/router/router.go",
+            "function": "N/A",
+            "lineNumber": "191"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-74"
+                ],
+                "3": [
+                    "CWE-99"
+                ]
+            },
+            "title": "Server-side request forgery vulnerabilities",
+            "description": "N/A",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "23"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-326"
+                ]
+            },
+            "title": "Manager makes requests to external endpoints with disabled TLS authentication",
+            "description": "The Manager disables TLS certificate verification in two HTTP clients.",
+            "severity": "Low",
+            "contract": "Dragonfly2/manager/job/preheat.go",
+            "function": "getAuthToken",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-237"
+                ],
+                "4": [
+                    "CWE-239"
+                ]
+            },
+            "title": "Incorrect handling of a task structure's usedTraffic field",
+            "description": "The 'usedTraffic' field is handled incorrectly due to uninitialized variable usage as a guard for method calls.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "AddTraffic",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Directories created via os.MkdirAll are not checked for permissions",
+            "description": "Lack of pre-existence or post-verification checks for newly created files and directories when using os.MkdirAll.",
+            "severity": "N/A",
+            "contract": "DragonFly2",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Slicing operations with hard-coded indexes and without explicit length validation",
+            "description": "Array slicing operations are performed with hard-coded indexes without explicit length validation, which can cause a panic if the arrays are smaller than the indexes.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "buildDownloadPieceHTTPRequest",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Files are closed without error check",
+            "description": "In multiple locations throughout the codebase, files are not explicitly closed or checked for errors after writing, leading to undefined behavior when disk failures occur.",
+            "severity": "Undetermined",
+            "contract": "N/A",
+            "function": "localTaskStore.WritePiece",
+            "lineNumber": "124\u2013128"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ],
+                "2": [
+                    "CWE-1254"
+                ]
+            },
+            "title": "Timing attacks against Proxy\u2019s basic authentication are possible",
+            "description": "The access control mechanism for the Proxy feature uses simple string comparisons and is therefore vulnerable to timing attacks.",
+            "severity": "N/A",
+            "contract": "Dragonfly2/ client/daemon/proxy/proxy.go",
+            "function": "ServeHTTP",
+            "lineNumber": "316"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Possible panics due to nil pointer dereference when using variables created alongside an error",
+            "description": "Dereferencing the first return value of a function even when it returns an error can result in a `nil` dereference, causing code to panic.",
+            "severity": "Denial of Service",
+            "contract": "Dragonfly2",
+            "function": "N/A",
+            "lineNumber": "621-626"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "TrimLeft is used instead of TrimPrefix",
+            "description": "The code uses strings.TrimLeft instead of strings.TrimPrefix which may lead to incorrect trimming results.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-362"
+                ]
+            },
+            "title": "Vertex.DeleteInEdges and Vertex.DeleteOutEdges functions are not thread safe",
+            "description": "The `Vertex.DeleteInEdges` and `Vertex.DeleteOutEdges` methods are prone to inconsistent state due to race conditions between threads, causing a parent vertex to have the child in its `Children` set but the child vertex not having the parent in its `Parents` set.",
+            "severity": "Critical",
+            "contract": "Dragonfly2/pkg/graph/dag/vertex",
+            "function": "Vertex.DeleteInEdges and Vertex.DeleteOutEdges",
+            "lineNumber": "54-61"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Arbitrary file read and write on a peer machine",
+            "description": "Peers can send requests to create files in arbitrary file system locations and read arbitrary files, allowing them to steal secret data and gain remote code execution capabilities.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "ImportTask, ExportTask",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-287"
+                ],
+                "3": [
+                    "CWE-295"
+                ],
+                "4": [
+                    "CWE-297"
+                ]
+            },
+            "title": "Manager generates mTLS certificates for arbitrary IP addresses",
+            "description": "A peer can obtain a valid TLS certificate for arbitrary IP addresses, effectively rendering the mTLS authentication useless.",
+            "severity": "High",
+            "contract": "Dragonfly2/manager/rpcserver/security_server_v1.go",
+            "function": "Certificate gRPC service",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "gRPC requests are weakly validated",
+            "description": "The gRPC requests are weakly validated, and some requests' fields are not validated at all.",
+            "severity": "Undetermined",
+            "contract": "DragonFly2",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

@@ -1,1 +1,156 @@
-{"path": "./Audit_Reports_2024/Quantstamp/staked-seed-node-ssn-operations.pdf", "project_info": {"url": "https://github.com/Zilliqa/staking-contract", "commit_hash": "c61eb18", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Staking Parameters May Lead to an Incorrect State", "description": "There is no sanity check to ensure staking-related parameters are set correctly, i.e., that `minstake <= maxstake` and `maxstake <= contractmaxstake`.", "severity": "Medium Risk", "contract": "ssnlist.scilla", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "Centralization of Power", "description": "Update: developers have improved documentation as suggested by Quantstamp. However, centralization of power itself cannot be removed given the current logic;", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Added SSNs May Not Have Staked", "description": "In `add_ssn`, if the target SSN has `stake_amount` different than zero, its status is set to `active`, even though there is no guarantee that the same SSN has made any deposit (staked). Similarly, `totalstakedeposit` is also updated, but again, there is no guarantee that a deposit has been made.", "severity": "Medium Risk", "contract": "ssnlist.scilla", "function": "add_ssn", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-664"], "2": ["CWE-404"], "3": ["CWE-772"], "4": ["CWE-401"]}, "title": "Removed SSNs Do Not Get Any of Their Remaining Funds", "description": "Upon removing an SSN, the latter should be returned all of its remaining funds. Currently, this is not the case.", "severity": "Medium Risk", "contract": "ssnlist.scilla", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "Gas Usage / `for` Loop Concerns", "description": "High gas costs may prevent users from wanting to use the smart contract and even worse, some gas usage issues may prevent the contract from providing services entirely. For example, if a `for` loop requires too much gas to exit, then it may prevent the contract from functioning correctly entirely.", "severity": "Medium", "contract": "contracts/ssnlist.scilla", "function": "N/A", "lineNumber": "L432"}, {"id": 5, "category": {"1": ["CWE-664"], "2": ["CWE-404"], "3": ["CWE-772"], "4": ["CWE-775"]}, "title": "Proxy Lacks Withdraw Mechanism", "description": "The proxy does not have a mechanism to ensure the underlying `SSNList` contract preserves intended behavior, which could lead to funds being locked in the proxy.", "severity": "Informational", "contract": "proxy.scilla", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Verifier Cannot Be Unset", "description": "The `verifier` value can never be unset back to `None` once it is updated by means of a call to `update_verifier`.", "severity": "_Undetermined_", "contract": "ssnlist.scilla, proxy.scilla", "function": "update_verifier", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1287"]}, "title": "No Guarantee of Compatible Upgrade", "description": "Method `upgradeTo` in the proxy contract allows upgrading to a new implementation. However, there is no guarantee that the implementation will satisfy the expected interface for `SSNList`. Thus, by upgrading to a faulty implementation, accessing the functionality in `SSNList` by means of the proxy may not work.", "severity": "Undetermined", "contract": "proxy.scilla", "function": "upgradeTo()", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Quantstamp/staked-seed-node-ssn-operations.pdf",
+    "project_info": {
+        "url": "https://github.com/Zilliqa/staking-contract",
+        "commit_hash": "c61eb18",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Staking Parameters May Lead to an Incorrect State",
+            "description": "There is no sanity check to ensure staking-related parameters are set correctly, i.e., that `minstake <= maxstake` and `maxstake <= contractmaxstake`.",
+            "severity": "Medium Risk",
+            "contract": "ssnlist.scilla",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Centralization of Power",
+            "description": "Update: developers have improved documentation as suggested by Quantstamp. However, centralization of power itself cannot be removed given the current logic;",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Added SSNs May Not Have Staked",
+            "description": "In `add_ssn`, if the target SSN has `stake_amount` different than zero, its status is set to `active`, even though there is no guarantee that the same SSN has made any deposit (staked). Similarly, `totalstakedeposit` is also updated, but again, there is no guarantee that a deposit has been made.",
+            "severity": "Medium Risk",
+            "contract": "ssnlist.scilla",
+            "function": "add_ssn",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-401"
+                ]
+            },
+            "title": "Removed SSNs Do Not Get Any of Their Remaining Funds",
+            "description": "Upon removing an SSN, the latter should be returned all of its remaining funds. Currently, this is not the case.",
+            "severity": "Medium Risk",
+            "contract": "ssnlist.scilla",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Gas Usage / `for` Loop Concerns",
+            "description": "High gas costs may prevent users from wanting to use the smart contract and even worse, some gas usage issues may prevent the contract from providing services entirely. For example, if a `for` loop requires too much gas to exit, then it may prevent the contract from functioning correctly entirely.",
+            "severity": "Medium",
+            "contract": "contracts/ssnlist.scilla",
+            "function": "N/A",
+            "lineNumber": "L432"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-775"
+                ]
+            },
+            "title": "Proxy Lacks Withdraw Mechanism",
+            "description": "The proxy does not have a mechanism to ensure the underlying `SSNList` contract preserves intended behavior, which could lead to funds being locked in the proxy.",
+            "severity": "Informational",
+            "contract": "proxy.scilla",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Verifier Cannot Be Unset",
+            "description": "The `verifier` value can never be unset back to `None` once it is updated by means of a call to `update_verifier`.",
+            "severity": "_Undetermined_",
+            "contract": "ssnlist.scilla, proxy.scilla",
+            "function": "update_verifier",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1287"
+                ]
+            },
+            "title": "No Guarantee of Compatible Upgrade",
+            "description": "Method `upgradeTo` in the proxy contract allows upgrading to a new implementation. However, there is no guarantee that the implementation will satisfy the expected interface for `SSNList`. Thus, by upgrading to a faulty implementation, accessing the functionality in `SSNList` by means of the proxy may not work.",
+            "severity": "Undetermined",
+            "contract": "proxy.scilla",
+            "function": "upgradeTo()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

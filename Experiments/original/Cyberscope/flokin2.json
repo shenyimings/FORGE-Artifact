@@ -1,1 +1,257 @@
-{"path": "./Audit_Reports_2024/Cyberscope/flokin2.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "ST - Stops Transactions", "description": "The transactions are initially disabled for all users excluding authorized addresses. The owner can enable the transactions for all users but cannot disable them again.", "severity": "Medium", "contract": "Flokinomics 2.0", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "ELFM - Exceeds Fees Limit", "description": "The contract owner has the power to potentially impose excessive fees on transactions by using the set_All_Fees function, which could result in a maximum tReflection fees of 40%.", "severity": "High", "contract": "Flokinomics 2.0", "function": "_getValues() and set_All_Fees()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "RC - Repetitive Calculations", "description": "The contract contains methods with multiple occurrences of the same calculation being performed without utilizing a variable to store its result, leading to redundant code, hindered code readability, and increased gas consumption.", "severity": "N/A", "contract": "N/A", "function": "_getValues", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "DKO - Delete Keyword Optimization", "description": "The contract resets variables to the default state by setting the initial values. Setting values to state variables increases the gas cost.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "PVC - Price Volatility Concern", "description": "The contract accumulates tokens from taxes to swap them for ETH, but the variable `swapThreshold` can be set to a big number, leading to significant price volatility due to token price fluctuations.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "OCTD - Transfers Contract's Tokens", "description": "The contract owner has the authority to claim all the balance of the contract by calling the `clearStuckToken` function.", "severity": "High", "contract": "N/A", "function": "clearStuckToken()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "MEE - Missing Events Emission", "description": "The contract performs actions and state mutations from external methods that do not result in the emission of events.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "FSA - Fixed Swap Address", "description": "The swap address is assigned once and cannot be changed, which may prevent the contract from migrating to a new liquidity pool pair or decentralized exchange.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "EIS - Excessively Integer Size", "description": "The contract uses a bigger unsigned integer data type than necessary, consuming more storage space and requiring additional computational resources.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-710"], "2": ["CWE-1076"], "3": ["CWE-1078"], "4": ["CWE-1099"]}, "title": "L04 - Conformance to Solidity Naming Conventions", "description": "The code does not adhere to the Solidity style guide, which can lead to decreased readability and maintainability.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-682"]}, "title": "L07 - Missing Events Arithmetic", "description": "Events are a way to record and log information about changes or actions that occur within a contract. They are often used to notify external parties or clients about events that have occurred within the contract, such as the transfer of tokens or the completion of a task.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "23"}, {"id": 11, "category": {"1": ["CWE-682"], "2": ["CWE-369"]}, "title": "L13 - Divide before Multiply Operation", "description": "Performing divisions before multiplications may cause loss of precision.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-682"]}, "title": "L14 - Uninitialized Variables in Local Scope", "description": "Using an uninitialized local variable can lead to unpredictable behavior and potentially cause errors in the contract.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "L16 - Validate Variable Setters", "description": "The contract performs operations on variables configured with user-supplied input without proper checks for zero values, leading to potential problems during execution.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Cyberscope/flokin2.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0x1d3b169406091c28ee8f166b81f6855672564e4e"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "ST - Stops Transactions",
+            "description": "The transactions are initially disabled for all users excluding authorized addresses. The owner can enable the transactions for all users but cannot disable them again.",
+            "severity": "Medium",
+            "contract": "Flokinomics 2.0",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "ELFM - Exceeds Fees Limit",
+            "description": "The contract owner has the power to potentially impose excessive fees on transactions by using the set_All_Fees function, which could result in a maximum tReflection fees of 40%.",
+            "severity": "High",
+            "contract": "Flokinomics 2.0",
+            "function": "_getValues() and set_All_Fees()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "RC - Repetitive Calculations",
+            "description": "The contract contains methods with multiple occurrences of the same calculation being performed without utilizing a variable to store its result, leading to redundant code, hindered code readability, and increased gas consumption.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "_getValues",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "DKO - Delete Keyword Optimization",
+            "description": "The contract resets variables to the default state by setting the initial values. Setting values to state variables increases the gas cost.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "PVC - Price Volatility Concern",
+            "description": "The contract accumulates tokens from taxes to swap them for ETH, but the variable `swapThreshold` can be set to a big number, leading to significant price volatility due to token price fluctuations.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "OCTD - Transfers Contract's Tokens",
+            "description": "The contract owner has the authority to claim all the balance of the contract by calling the `clearStuckToken` function.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "clearStuckToken()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "MEE - Missing Events Emission",
+            "description": "The contract performs actions and state mutations from external methods that do not result in the emission of events.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "FSA - Fixed Swap Address",
+            "description": "The swap address is assigned once and cannot be changed, which may prevent the contract from migrating to a new liquidity pool pair or decentralized exchange.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "EIS - Excessively Integer Size",
+            "description": "The contract uses a bigger unsigned integer data type than necessary, consuming more storage space and requiring additional computational resources.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1076"
+                ],
+                "3": [
+                    "CWE-1078"
+                ],
+                "4": [
+                    "CWE-1099"
+                ]
+            },
+            "title": "L04 - Conformance to Solidity Naming Conventions",
+            "description": "The code does not adhere to the Solidity style guide, which can lead to decreased readability and maintainability.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "L07 - Missing Events Arithmetic",
+            "description": "Events are a way to record and log information about changes or actions that occur within a contract. They are often used to notify external parties or clients about events that have occurred within the contract, such as the transfer of tokens or the completion of a task.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "23"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-369"
+                ]
+            },
+            "title": "L13 - Divide before Multiply Operation",
+            "description": "Performing divisions before multiplications may cause loss of precision.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "L14 - Uninitialized Variables in Local Scope",
+            "description": "Using an uninitialized local variable can lead to unpredictable behavior and potentially cause errors in the contract.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "L16 - Validate Variable Setters",
+            "description": "The contract performs operations on variables configured with user-supplied input without proper checks for zero values, leading to potential problems during execution.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

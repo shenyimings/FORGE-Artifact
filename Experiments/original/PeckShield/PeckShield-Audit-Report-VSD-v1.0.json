@@ -1,1 +1,143 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-VSD-v1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "3.1 Safe-Version Replacement With safeApprove(), safeTransfer() And safeTransferFrom()", "description": "The transfer() function does not have a return value which may cause the call to revert. It is suggested to use the safe version, i.e., safeTransfer(), which is a wrapper around ERC20 operations that may either throw on failure or return false without reverts.", "severity": "Medium", "contract": "Collateral", "function": "transfer()", "lineNumber": "121-139"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Fee Consideration For Buy/Sell Amount Calculation", "description": "The swap fee is not considered when computing the token amount to buy or sell, which may not lead to the expected target price.", "severity": "Low", "contract": "N/A", "function": "_getSellAndReturnAmount() and _getBuyAmount()", "lineNumber": "306-311"}, {"id": 2, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Redundant/Unused Code Removal", "description": "The protocol implementation includes unused code or unnecessary redundancies that can be safely removed, such as the `nonReentrant` modifier in the `Implementation::advance()` routine.", "severity": "Informational", "contract": "Implementation", "function": "advance()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Sandwiched Advance With Influenced Reward/Debt Allocation", "description": "The 'step()' routine from 'Regulator' determines current VSD price and grows/shrinks total supply if the price is above/below specified upper/lower threshold.", "severity": "Medium", "contract": "Regulator", "function": "step()", "lineNumber": "35-45"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "Improved Logic Of Setters::_sellAndDepositCollateral()", "description": "The expansion and contraction mechanism is the cornerstone of the VSD protocol. In particular, when it is determined to expand during an epoch, the protocol triggers the call to growSupply(), which takes two arguments.", "severity": "Low", "contract": "Setters", "function": "_sellAndDepositCollateral()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Suggested Adherence of Checks-Effects-Interactions", "description": "A common coding best practice in Solidity is the adherence of `checks-effects-interactions` principle to mitigate re-entrancy attacks.", "severity": "Low", "contract": "Bonding", "function": "provide()", "lineNumber": "104"}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Lack Of Sanity Checks For System/Functional Parameters", "description": "The Value Set Dollar (VSD) protocol lacks sanity checks for system/functional parameters, specifically in the `Constants` contract and the `provide()` function.", "severity": "Low", "contract": "Constants", "function": "provide()", "lineNumber": "99-109"}, {"id": 7, "category": {"1": ["CWE-691"], "2": ["CWE-362"]}, "title": "Race Condition Between approveCoupons() And transferCoupons()", "description": "In the `Market` contract, there is a race condition between `approveCoupons()` and `transferCoupons()` functions.", "severity": "Low", "contract": "Market", "function": "approveCoupons() and transferCoupons()", "lineNumber": "124-134"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-VSD-v1.0.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "3.1 Safe-Version Replacement With safeApprove(), safeTransfer() And safeTransferFrom()",
+            "description": "The transfer() function does not have a return value which may cause the call to revert. It is suggested to use the safe version, i.e., safeTransfer(), which is a wrapper around ERC20 operations that may either throw on failure or return false without reverts.",
+            "severity": "Medium",
+            "contract": "Collateral",
+            "function": "transfer()",
+            "lineNumber": "121-139"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Fee Consideration For Buy/Sell Amount Calculation",
+            "description": "The swap fee is not considered when computing the token amount to buy or sell, which may not lead to the expected target price.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "_getSellAndReturnAmount() and _getBuyAmount()",
+            "lineNumber": "306-311"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Redundant/Unused Code Removal",
+            "description": "The protocol implementation includes unused code or unnecessary redundancies that can be safely removed, such as the `nonReentrant` modifier in the `Implementation::advance()` routine.",
+            "severity": "Informational",
+            "contract": "Implementation",
+            "function": "advance()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Sandwiched Advance With Influenced Reward/Debt Allocation",
+            "description": "The 'step()' routine from 'Regulator' determines current VSD price and grows/shrinks total supply if the price is above/below specified upper/lower threshold.",
+            "severity": "Medium",
+            "contract": "Regulator",
+            "function": "step()",
+            "lineNumber": "35-45"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improved Logic Of Setters::_sellAndDepositCollateral()",
+            "description": "The expansion and contraction mechanism is the cornerstone of the VSD protocol. In particular, when it is determined to expand during an epoch, the protocol triggers the call to growSupply(), which takes two arguments.",
+            "severity": "Low",
+            "contract": "Setters",
+            "function": "_sellAndDepositCollateral()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Suggested Adherence of Checks-Effects-Interactions",
+            "description": "A common coding best practice in Solidity is the adherence of `checks-effects-interactions` principle to mitigate re-entrancy attacks.",
+            "severity": "Low",
+            "contract": "Bonding",
+            "function": "provide()",
+            "lineNumber": "104"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Lack Of Sanity Checks For System/Functional Parameters",
+            "description": "The Value Set Dollar (VSD) protocol lacks sanity checks for system/functional parameters, specifically in the `Constants` contract and the `provide()` function.",
+            "severity": "Low",
+            "contract": "Constants",
+            "function": "provide()",
+            "lineNumber": "99-109"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-362"
+                ]
+            },
+            "title": "Race Condition Between approveCoupons() And transferCoupons()",
+            "description": "In the `Market` contract, there is a race condition between `approveCoupons()` and `transferCoupons()` functions.",
+            "severity": "Low",
+            "contract": "Market",
+            "function": "approveCoupons() and transferCoupons()",
+            "lineNumber": "124-134"
+        }
+    ]
+}

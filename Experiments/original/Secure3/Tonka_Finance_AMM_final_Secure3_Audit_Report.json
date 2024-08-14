@@ -1,1 +1,222 @@
-{"path": "./Audit_Reports_2024/Secure3/Tonka_Finance_AMM_final_Secure3_Audit_Report.pdf", "project_info": {"url": "https://github.com/Tonka-Finance/Tonka-Contracts", "commit_hash": "bcd5b93e7005005dbabda1f95511f441a48cf8dc", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "Lack of checking if the token0  is not an estoken", "description": "The EsSwapPair contract does not check if token0 is an estoken, which can cause the _transferFromEsToken function to revert.", "severity": "Low", "contract": "EsSwapPair", "function": "_transferFromEsToken() and initialize()", "lineNumber": "L56-L59, L337-L342"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Incorrect calculation of balance1Adjusted", "description": "The calculation of `balance1Adjusted` incorrectly subtracts 3 from `amount1In`, which seems to be a typographical error. It should be `balance1 * 1000 - amount1In * 3` instead of `balance1 * 1000 - amount1In - 3`.", "severity": "Critical", "contract": "EsSwapPair", "function": "N/A", "lineNumber": "229"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Incorrect calculation in function getAmountIn()", "description": "The calculation of amountIn in the getAmountIn function is incorrect due to inconsistent parameters.", "severity": "Critical", "contract": "EsSwapPair", "function": "getAmountIn", "lineNumber": "316-322"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Inconsistency between amount and reserve", "description": "The contract uses an incorrect calculation of denominator in the getAmountIn function, leading to a wrong amountIn, which can result in loss of fund in the protocol.", "severity": "Critical", "contract": "EsSwapPair", "function": "getAmountIn()", "lineNumber": "L270-L283, L285-L298"}, {"id": 4, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Recommendation use of safeTransferFrom()", "description": "It is recommended to use safeTransferFrom() instead of transferFrom() to transfer tokens and check the return value for successful transfer.", "severity": "Low", "contract": "EsSwapPair", "function": ["removeLiquidity", "swapExactTokensForEsTokens", "swapTokensForExactEsTokens"], "lineNumber": ["108-121", 280, 295]}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-282"], "3": ["CWE-708"]}, "title": "Ownership change should use two-step process", "description": "The contract uses openzeppelin's `Ownable` contract to manage owners, but it is possible that the `onlyOnwer` role mistakenly transfers ownership to the wrong address, resulting in the loss of the `onlyOnwer` role.", "severity": "Low", "contract": "EsSwapPair", "function": "N/A", "lineNumber": "14-16"}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Missing Zero Address Check", "description": "The `initialize` function does not check if `_token0` and `_token1` are zero addresses before initializing, which can lead to a Denial of Service (DoS) attack if the owner's private key is compromised.", "severity": "Low", "contract": "EsSwapPair", "function": "initialize()", "lineNumber": "L56-L59"}, {"id": 7, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "The EsSwapPair.initialize() function can be called multiple times by the owner", "description": "The owner can replace token0 and token1 in the pair, putting the funds in the pair in an unsafe situation.", "severity": "Low", "contract": "EsSwapPair", "function": "initialize()", "lineNumber": "55-59"}, {"id": 8, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1287"]}, "title": "Unused parameter", "description": "The parameter `path` is declared in the functions `swapExactTokensForEsTokens()` and `swapTokensFo` but never used.", "severity": "Informational", "contract": "EsSwapPair", "function": ["swapExactTokensForEsTokens()", "swapTokensForEsTokens()"], "lineNumber": "273, 288"}, {"id": 9, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Switching between 1, 2 instead of 0, 1 is more gas efficient", "description": "Using `SSTORE` from 0 to 1 (or any non-zero value) costs 20000, whereas using `SSTORE` from 1 to 2 (or any other non-zero value) costs 5000. By storing the original value once again, a refund is triggered.", "severity": "Informational", "contract": "EsSwapPair", "function": "modifier lock ()", "lineNumber": "L35-L40"}, {"id": 10, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Minting of unlimited number of sundae tokens", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": [], "title": "N/A", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Secure3/Tonka_Finance_AMM_final_Secure3_Audit_Report.pdf",
+    "project_info": {
+        "url": "https://github.com/Tonka-Finance/Tonka-Contracts",
+        "commit_hash": "bcd5b93e7005005dbabda1f95511f441a48cf8dc",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Lack of checking if the token0  is not an estoken",
+            "description": "The EsSwapPair contract does not check if token0 is an estoken, which can cause the _transferFromEsToken function to revert.",
+            "severity": "Low",
+            "contract": "EsSwapPair",
+            "function": "_transferFromEsToken() and initialize()",
+            "lineNumber": "L56-L59, L337-L342"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect calculation of balance1Adjusted",
+            "description": "The calculation of `balance1Adjusted` incorrectly subtracts 3 from `amount1In`, which seems to be a typographical error. It should be `balance1 * 1000 - amount1In * 3` instead of `balance1 * 1000 - amount1In - 3`.",
+            "severity": "Critical",
+            "contract": "EsSwapPair",
+            "function": "N/A",
+            "lineNumber": "229"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect calculation in function getAmountIn()",
+            "description": "The calculation of amountIn in the getAmountIn function is incorrect due to inconsistent parameters.",
+            "severity": "Critical",
+            "contract": "EsSwapPair",
+            "function": "getAmountIn",
+            "lineNumber": "316-322"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Inconsistency between amount and reserve",
+            "description": "The contract uses an incorrect calculation of denominator in the getAmountIn function, leading to a wrong amountIn, which can result in loss of fund in the protocol.",
+            "severity": "Critical",
+            "contract": "EsSwapPair",
+            "function": "getAmountIn()",
+            "lineNumber": "L270-L283, L285-L298"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Recommendation use of safeTransferFrom()",
+            "description": "It is recommended to use safeTransferFrom() instead of transferFrom() to transfer tokens and check the return value for successful transfer.",
+            "severity": "Low",
+            "contract": "EsSwapPair",
+            "function": [
+                "removeLiquidity",
+                "swapExactTokensForEsTokens",
+                "swapTokensForExactEsTokens"
+            ],
+            "lineNumber": [
+                "108-121",
+                280,
+                295
+            ]
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-282"
+                ],
+                "3": [
+                    "CWE-708"
+                ]
+            },
+            "title": "Ownership change should use two-step process",
+            "description": "The contract uses openzeppelin's `Ownable` contract to manage owners, but it is possible that the `onlyOnwer` role mistakenly transfers ownership to the wrong address, resulting in the loss of the `onlyOnwer` role.",
+            "severity": "Low",
+            "contract": "EsSwapPair",
+            "function": "N/A",
+            "lineNumber": "14-16"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Missing Zero Address Check",
+            "description": "The `initialize` function does not check if `_token0` and `_token1` are zero addresses before initializing, which can lead to a Denial of Service (DoS) attack if the owner's private key is compromised.",
+            "severity": "Low",
+            "contract": "EsSwapPair",
+            "function": "initialize()",
+            "lineNumber": "L56-L59"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "The EsSwapPair.initialize() function can be called multiple times by the owner",
+            "description": "The owner can replace token0 and token1 in the pair, putting the funds in the pair in an unsafe situation.",
+            "severity": "Low",
+            "contract": "EsSwapPair",
+            "function": "initialize()",
+            "lineNumber": "55-59"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1287"
+                ]
+            },
+            "title": "Unused parameter",
+            "description": "The parameter `path` is declared in the functions `swapExactTokensForEsTokens()` and `swapTokensFo` but never used.",
+            "severity": "Informational",
+            "contract": "EsSwapPair",
+            "function": [
+                "swapExactTokensForEsTokens()",
+                "swapTokensForEsTokens()"
+            ],
+            "lineNumber": "273, 288"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Switching between 1, 2 instead of 0, 1 is more gas efficient",
+            "description": "Using `SSTORE` from 0 to 1 (or any non-zero value) costs 20000, whereas using `SSTORE` from 1 to 2 (or any other non-zero value) costs 5000. By storing the original value once again, a refund is triggered.",
+            "severity": "Informational",
+            "contract": "EsSwapPair",
+            "function": "modifier lock ()",
+            "lineNumber": "L35-L40"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Minting of unlimited number of sundae tokens",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": [],
+            "title": "N/A",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

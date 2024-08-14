@@ -1,1 +1,338 @@
-{"path": "./Audit_Reports_2024/InterFi/PinkLock_AuditReport_InterFi.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"]}, "title": "approve", "description": "Unprotected approve function", "severity": "High", "contract": "IUniswapV2Pair", "function": "approve", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "Unprotected Transfer Function", "description": "The transfer function is marked as external and has a warning symbol, indicating potential security risks.", "severity": "High", "contract": "IUniswapV2Pair", "function": "transfer()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "transferFrom", "description": "N/A", "severity": "N/A", "contract": "PinkLock", "function": "**Transfer**", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"]}, "title": "Unprotected Permit Function", "description": "The permit function is marked as external and does not have any access control, allowing anyone to call it.", "severity": "High", "contract": "N/A", "function": "permit", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"]}, "title": "Unprotected mint Function", "description": "The 'mint' function is marked as external and lacks access control, potentially allowing unauthorized users to mint tokens.", "severity": "High", "contract": "IUniswapV2Pair", "function": "mint()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-770"], "4": ["CWE-789"]}, "title": "burn", "description": "Potential burn vulnerability in UniswapV2Pair contract", "severity": "High", "contract": "UniswapV2Pair", "function": "burn()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-284"]}, "title": "Unprotected Swap Function", "description": "The swap function is marked as external and does not have any access modifiers, making it vulnerable to unauthorized access.", "severity": "High", "contract": "IUniswapV2Pair", "function": "swap()", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Skim Function Vulnerability", "description": "The skim function has been marked as vulnerable.", "severity": "High", "contract": "IUniswapV2Pair", "function": "skim", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-284"]}, "title": "Unprotected Sync Function", "description": "The provided audit report fragments do not contain any information about a 'sync' finding.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-284"]}, "title": "Unprotected Initialize Function", "description": "The initialize function is declared as external and does not have any access modifiers, making it vulnerable to unauthorized calls.", "severity": "High", "contract": "N/A", "function": "initialize()", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-284"]}, "title": "_lockLpToken", "description": "Private function _lockLpToken has potential security risks.", "severity": "High", "contract": "PinkLock", "function": "_lockLpToken(address,address,address,uint256,uint256)", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "_lockNormalToken", "description": "Private function _lockNormalToken has potential security risks.", "severity": "High", "contract": "PinkLock", "function": "_lockNormalToken", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "_addLock", "description": "Private function _addLock has been identified as a potential vulnerability.", "severity": "Unknown", "contract": "PinkLock", "function": "_addLock", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-284"]}, "title": "Unlock Functionality", "description": "Publicly accessible unlock functions without proper access control.", "severity": "High", "contract": "PinkLock", "function": "N/A", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "editLock", "description": "N/A", "severity": "N/A", "contract": "PinkLock", "function": "editLock()", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-682"]}, "title": "safeTransferFromEnsureExactAmount", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 16, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "setPoolManager", "description": "N/A", "severity": "Critical", "contract": "N/A", "function": "setPoolManager()", "lineNumber": "N/A"}, {"id": 17, "category": {"1": ["CWE-284"]}, "title": "setFee", "description": "The setFee function has an access control issue as it can only be called by the owner.", "severity": "High", "contract": "N/A", "function": "setFee", "lineNumber": "N/A"}, {"id": 18, "category": {"1": ["CWE-284"]}, "title": "withdrawFee", "description": "External function 'withdrawFee' has onlyOwner access modifier.", "severity": "High", "contract": "N/A", "function": "withdrawFee()", "lineNumber": "N/A"}, {"id": 19, "category": {"1": ["CWE-284"]}, "title": "Unprotected External Function 'lock'", "description": "The external function 'lock' is accessible by anyone and can be exploited to drain fees.", "severity": "High", "contract": "PinkLock", "function": "lock()", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/InterFi/PinkLock_AuditReport_InterFi.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "approve",
+            "description": "Unprotected approve function",
+            "severity": "High",
+            "contract": "IUniswapV2Pair",
+            "function": "approve",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Unprotected Transfer Function",
+            "description": "The transfer function is marked as external and has a warning symbol, indicating potential security risks.",
+            "severity": "High",
+            "contract": "IUniswapV2Pair",
+            "function": "transfer()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "transferFrom",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "PinkLock",
+            "function": "**Transfer**",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected Permit Function",
+            "description": "The permit function is marked as external and does not have any access control, allowing anyone to call it.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "permit",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected mint Function",
+            "description": "The 'mint' function is marked as external and lacks access control, potentially allowing unauthorized users to mint tokens.",
+            "severity": "High",
+            "contract": "IUniswapV2Pair",
+            "function": "mint()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ],
+                "4": [
+                    "CWE-789"
+                ]
+            },
+            "title": "burn",
+            "description": "Potential burn vulnerability in UniswapV2Pair contract",
+            "severity": "High",
+            "contract": "UniswapV2Pair",
+            "function": "burn()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected Swap Function",
+            "description": "The swap function is marked as external and does not have any access modifiers, making it vulnerable to unauthorized access.",
+            "severity": "High",
+            "contract": "IUniswapV2Pair",
+            "function": "swap()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Skim Function Vulnerability",
+            "description": "The skim function has been marked as vulnerable.",
+            "severity": "High",
+            "contract": "IUniswapV2Pair",
+            "function": "skim",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected Sync Function",
+            "description": "The provided audit report fragments do not contain any information about a 'sync' finding.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected Initialize Function",
+            "description": "The initialize function is declared as external and does not have any access modifiers, making it vulnerable to unauthorized calls.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "initialize()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "_lockLpToken",
+            "description": "Private function _lockLpToken has potential security risks.",
+            "severity": "High",
+            "contract": "PinkLock",
+            "function": "_lockLpToken(address,address,address,uint256,uint256)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "_lockNormalToken",
+            "description": "Private function _lockNormalToken has potential security risks.",
+            "severity": "High",
+            "contract": "PinkLock",
+            "function": "_lockNormalToken",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "_addLock",
+            "description": "Private function _addLock has been identified as a potential vulnerability.",
+            "severity": "Unknown",
+            "contract": "PinkLock",
+            "function": "_addLock",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unlock Functionality",
+            "description": "Publicly accessible unlock functions without proper access control.",
+            "severity": "High",
+            "contract": "PinkLock",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "editLock",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "PinkLock",
+            "function": "editLock()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "safeTransferFromEnsureExactAmount",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "setPoolManager",
+            "description": "N/A",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "setPoolManager()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "setFee",
+            "description": "The setFee function has an access control issue as it can only be called by the owner.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "setFee",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "withdrawFee",
+            "description": "External function 'withdrawFee' has onlyOwner access modifier.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "withdrawFee()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 19,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected External Function 'lock'",
+            "description": "The external function 'lock' is accessible by anyone and can be exploited to drain fees.",
+            "severity": "High",
+            "contract": "PinkLock",
+            "function": "lock()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

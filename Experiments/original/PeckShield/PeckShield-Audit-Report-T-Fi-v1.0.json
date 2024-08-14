@@ -1,1 +1,94 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-T-Fi-v1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Timely massUpdatePools During Pool Weight Changes", "description": "In the `Farming` contract, the reward pools can be dynamically added via `add()` and the weights of supported pools can be adjusted via `set()`. When analyzing the pool weight update routine `set()`, we notice the need of timely invoking `massUpdatePools()` to update the reward distribution before the new pool weight becomes effective.", "severity": "Medium", "contract": "Farming", "function": "set()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Incompatibility with Deflationary/Rebasing Tokens", "description": "The `Farming` contract's asset-transferring routines may introduce unexpected balance inconsistencies when interacting with deflationary/rebasing tokens, requiring additional measures to ensure accurate book-keeping.", "severity": "Low", "contract": "Farming", "function": "deposit()", "lineNumber": "216-223"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "Potential Reentrancy Risk in Farming::deposit()", "description": "The `Farming::deposit()` function has a potential reentrancy risk due to non-adherence of the `checks-effects-interactions` principle, which can lead to malicious contract re-entrancy attacks.", "severity": "Low", "contract": "Farming/TokoinFoundation", "function": "deposit()", "lineNumber": "236-240"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "3.4 Trust Issue of Admin Keys", "description": "In the Surfswap protocol and T-Fi protocol, there are privileged administrative accounts (feeToSetter and DEFAULT_ADMIN_ROLE) that play a critical role in governing and regulating system-wide operations.", "severity": "Low/Medium", "contract": ["SurfswapFactory", "TokoinFoundation"], "function": ["setDevFee()", "setToken(address)"], "lineNumber": ["63-67", "32"]}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-T-Fi-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/tokoinofficial/tokoin_defi_smart_contracts/tree/fafdf33",
+        "commit_hash": "fafdf33",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Timely massUpdatePools During Pool Weight Changes",
+            "description": "In the `Farming` contract, the reward pools can be dynamically added via `add()` and the weights of supported pools can be adjusted via `set()`. When analyzing the pool weight update routine `set()`, we notice the need of timely invoking `massUpdatePools()` to update the reward distribution before the new pool weight becomes effective.",
+            "severity": "Medium",
+            "contract": "Farming",
+            "function": "set()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incompatibility with Deflationary/Rebasing Tokens",
+            "description": "The `Farming` contract's asset-transferring routines may introduce unexpected balance inconsistencies when interacting with deflationary/rebasing tokens, requiring additional measures to ensure accurate book-keeping.",
+            "severity": "Low",
+            "contract": "Farming",
+            "function": "deposit()",
+            "lineNumber": "216-223"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Potential Reentrancy Risk in Farming::deposit()",
+            "description": "The `Farming::deposit()` function has a potential reentrancy risk due to non-adherence of the `checks-effects-interactions` principle, which can lead to malicious contract re-entrancy attacks.",
+            "severity": "Low",
+            "contract": "Farming/TokoinFoundation",
+            "function": "deposit()",
+            "lineNumber": "236-240"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "3.4 Trust Issue of Admin Keys",
+            "description": "In the Surfswap protocol and T-Fi protocol, there are privileged administrative accounts (feeToSetter and DEFAULT_ADMIN_ROLE) that play a critical role in governing and regulating system-wide operations.",
+            "severity": "Low/Medium",
+            "contract": [
+                "SurfswapFactory",
+                "TokoinFoundation"
+            ],
+            "function": [
+                "setDevFee()",
+                "setToken(address)"
+            ],
+            "lineNumber": [
+                "63-67",
+                "32"
+            ]
+        }
+    ]
+}

@@ -1,1 +1,310 @@
-{"path": "./Audit_Reports_2024/Chainsafe/RibbonV2-July-2021.pdf", "project_info": {"url": "N/A", "commit_hash": "9972b464abe787e1bfafb309ebdeab1598e0f45d", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Temporary inability to complete scheduled withdrawal until the end of the current round", "description": "The finding is related to a temporary limitation on completing scheduled withdrawals during the current round.", "severity": "Major", "contract": "RibbonThetaVault", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Taking hold of any deposited funds", "description": "heldByVault is not decreased after withdrawal allowing users to withdraw the same unredeemedShares multiple times.", "severity": "Critical", "contract": "RibbonThetaVault", "function": "N/A", "lineNumber": "430"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Manager might seize power and take hold of all the funds", "description": "The increase of total value locked (TVL) in the contract may create an incentive for the manager to seize power and take hold of all the funds.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-233"]}, "title": "Unused `manager` Variable in Auction Creation", "description": "The `manager` variable is declared but not used in auction creation.", "severity": "Informational", "contract": "GnosisAuction", "function": "N/A", "lineNumber": "29"}, {"id": 4, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Optimization, in most cases double approval is not needed", "description": "Consider using a helper function to eliminate unnecessary double approvals.", "severity": "Optimization", "contract": "VaultLifecycle", "function": "N/A", "lineNumber": "46"}, {"id": 5, "category": {"1": ["CWE-284"]}, "title": "GnosisEasyAuction out of scope", "description": "Note, GnosisEasyAuction is out of scope.", "severity": "Informational", "contract": "GnosisAuction", "function": "N/A", "lineNumber": "70"}, {"id": 6, "category": {"1": ["CWE-682"], "2": ["CWE-1339"]}, "title": "Potential Loss of Precision", "description": "The check `pps > 1` should be replaced with `pps > PLACEHOLDER_UINT` to avoid potential loss of precision.", "severity": "Note", "contract": "ShareMath", "function": "N/A", "lineNumber": "21,38"}, {"id": 7, "category": {"1": ["CWE-697"]}, "title": "Incorrect Uint104 Comparison", "description": "The condition 'shares < type(uint104).max' should utilize 'assertUint104()' or '<=' to ensure accurate comparison.", "severity": "Low", "contract": "ShareMath", "function": "N/A", "lineNumber": "25, 42"}, {"id": 8, "category": {"1": ["CWE-697"]}, "title": "Incorrect Comparison", "description": "The comparison 'pps > 1' should be replaced with 'pps > PLACEHOLDER_UINT' to ensure accurate results.", "severity": "Note", "contract": "ShareMath", "function": "N/A", "lineNumber": "21,38"}, {"id": 9, "category": {"1": ["CWE-682"], "2": ["CWE-1339"]}, "title": "Potential Loss of Precision", "description": "The comparison `shares < type(uint104).max` should utilize `assertUint104()` or `<=` to prevent potential precision loss.", "severity": "Minor", "contract": "RibbonThetaVault", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-710"], "2": ["CWE-1059"], "3": ["CWE-1110"]}, "title": "Missing Comments in Function `getSharesFromReceipt`", "description": "The function `getSharesFromReceipt` lacks comments about three parameters.", "severity": "Note", "contract": "ShareMath", "function": "getSharesFromReceipt()", "lineNumber": "49"}, {"id": 11, "category": {"1": ["CWE-682"]}, "title": "Optimization of Round Check", "description": "Instead of checking if the round is already passed, it is enough to check `pps > PLACEHOLDER_UINT`.", "severity": "Optimization", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-682"]}, "title": "Optimization of Deposit Receipt Check", "description": "The check '!depositReceipt.processed' can be optimized by using 'pps > PLACEHOLDER_UINT' instead.", "severity": "Optimization", "contract": "ShareMath", "function": "N/A", "lineNumber": "61"}, {"id": 13, "category": {"1": ["CWE-697"]}, "title": "Incorrect Comparison with Maximum Value of uint104", "description": "The check `sharesFromRound < type(uint104).max` should use `assertUint104()` or <= to avoid potential issues.", "severity": "Low", "contract": "ShareMath", "function": "N/A", "lineNumber": "66"}, {"id": 14, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Potential Overflow in unredeemedShares256", "description": "The check 'unredeemedShares256 < type(uint128).max' should use assertUint128() or <= to prevent potential overflow.", "severity": "Minor", "contract": "RibbonThetaVault", "function": "N/A", "lineNumber": "307"}, {"id": 15, "category": {"1": ["CWE-697"]}, "title": "Incorrect Comparison Operator", "description": "Using `<` instead of `<=` when checking if a number is less than or equal to the maximum value of uint104 can lead to unexpected behavior.", "severity": "Minor", "contract": "RibbonThetaVault", "function": "N/A", "lineNumber": "314"}, {"id": 16, "category": {"1": ["CWE-710"], "2": ["CWE-1164"], "3": ["CWE-561"]}, "title": "Unused Function `assertUint128()`", "description": "The function `assertUint128()` is not utilized.", "severity": "Minor", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 17, "category": {"1": ["CWE-697"]}, "title": "Incorrect Comparison with uint104 Max", "description": "The comparison 'num < type(uint104).max' is incorrect and should be revised.", "severity": "Minor", "contract": "RibbonThetaVault", "function": "N/A", "lineNumber": "314"}]}
+{
+    "path": "./Audit_Reports_2024/Chainsafe/RibbonV2-July-2021.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "9972b464abe787e1bfafb309ebdeab1598e0f45d",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Temporary inability to complete scheduled withdrawal until the end of the current round",
+            "description": "The finding is related to a temporary limitation on completing scheduled withdrawals during the current round.",
+            "severity": "Major",
+            "contract": "RibbonThetaVault",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Taking hold of any deposited funds",
+            "description": "heldByVault is not decreased after withdrawal allowing users to withdraw the same unredeemedShares multiple times.",
+            "severity": "Critical",
+            "contract": "RibbonThetaVault",
+            "function": "N/A",
+            "lineNumber": "430"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Manager might seize power and take hold of all the funds",
+            "description": "The increase of total value locked (TVL) in the contract may create an incentive for the manager to seize power and take hold of all the funds.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-233"
+                ]
+            },
+            "title": "Unused `manager` Variable in Auction Creation",
+            "description": "The `manager` variable is declared but not used in auction creation.",
+            "severity": "Informational",
+            "contract": "GnosisAuction",
+            "function": "N/A",
+            "lineNumber": "29"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Optimization, in most cases double approval is not needed",
+            "description": "Consider using a helper function to eliminate unnecessary double approvals.",
+            "severity": "Optimization",
+            "contract": "VaultLifecycle",
+            "function": "N/A",
+            "lineNumber": "46"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "GnosisEasyAuction out of scope",
+            "description": "Note, GnosisEasyAuction is out of scope.",
+            "severity": "Informational",
+            "contract": "GnosisAuction",
+            "function": "N/A",
+            "lineNumber": "70"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "Potential Loss of Precision",
+            "description": "The check `pps > 1` should be replaced with `pps > PLACEHOLDER_UINT` to avoid potential loss of precision.",
+            "severity": "Note",
+            "contract": "ShareMath",
+            "function": "N/A",
+            "lineNumber": "21,38"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ]
+            },
+            "title": "Incorrect Uint104 Comparison",
+            "description": "The condition 'shares < type(uint104).max' should utilize 'assertUint104()' or '<=' to ensure accurate comparison.",
+            "severity": "Low",
+            "contract": "ShareMath",
+            "function": "N/A",
+            "lineNumber": "25, 42"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ]
+            },
+            "title": "Incorrect Comparison",
+            "description": "The comparison 'pps > 1' should be replaced with 'pps > PLACEHOLDER_UINT' to ensure accurate results.",
+            "severity": "Note",
+            "contract": "ShareMath",
+            "function": "N/A",
+            "lineNumber": "21,38"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "Potential Loss of Precision",
+            "description": "The comparison `shares < type(uint104).max` should utilize `assertUint104()` or `<=` to prevent potential precision loss.",
+            "severity": "Minor",
+            "contract": "RibbonThetaVault",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1059"
+                ],
+                "3": [
+                    "CWE-1110"
+                ]
+            },
+            "title": "Missing Comments in Function `getSharesFromReceipt`",
+            "description": "The function `getSharesFromReceipt` lacks comments about three parameters.",
+            "severity": "Note",
+            "contract": "ShareMath",
+            "function": "getSharesFromReceipt()",
+            "lineNumber": "49"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Optimization of Round Check",
+            "description": "Instead of checking if the round is already passed, it is enough to check `pps > PLACEHOLDER_UINT`.",
+            "severity": "Optimization",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Optimization of Deposit Receipt Check",
+            "description": "The check '!depositReceipt.processed' can be optimized by using 'pps > PLACEHOLDER_UINT' instead.",
+            "severity": "Optimization",
+            "contract": "ShareMath",
+            "function": "N/A",
+            "lineNumber": "61"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ]
+            },
+            "title": "Incorrect Comparison with Maximum Value of uint104",
+            "description": "The check `sharesFromRound < type(uint104).max` should use `assertUint104()` or <= to avoid potential issues.",
+            "severity": "Low",
+            "contract": "ShareMath",
+            "function": "N/A",
+            "lineNumber": "66"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Potential Overflow in unredeemedShares256",
+            "description": "The check 'unredeemedShares256 < type(uint128).max' should use assertUint128() or <= to prevent potential overflow.",
+            "severity": "Minor",
+            "contract": "RibbonThetaVault",
+            "function": "N/A",
+            "lineNumber": "307"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ]
+            },
+            "title": "Incorrect Comparison Operator",
+            "description": "Using `<` instead of `<=` when checking if a number is less than or equal to the maximum value of uint104 can lead to unexpected behavior.",
+            "severity": "Minor",
+            "contract": "RibbonThetaVault",
+            "function": "N/A",
+            "lineNumber": "314"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ],
+                "3": [
+                    "CWE-561"
+                ]
+            },
+            "title": "Unused Function `assertUint128()`",
+            "description": "The function `assertUint128()` is not utilized.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ]
+            },
+            "title": "Incorrect Comparison with uint104 Max",
+            "description": "The comparison 'num < type(uint104).max' is incorrect and should be revised.",
+            "severity": "Minor",
+            "contract": "RibbonThetaVault",
+            "function": "N/A",
+            "lineNumber": "314"
+        }
+    ]
+}

@@ -1,1 +1,182 @@
-{"path": "./Audit_Reports_2024/Quantstamp/skale-allocator.pdf", "project_info": {"url": "https://github.com/skalenetwork/skale-allocator/", "commit_hash": "6c64026b01025fdc0f8d5f7bc2e80ea3b741d492", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Unresolved TODOs", "description": "There are several TODO statements that still exist in the code.", "severity": "Medium Risk", "contract": ["SAFT.sol", "Core.sol", "CoreEscrow.sol"], "function": ["N/A", "N/A", "N/A", "N/A", "N/A", "N/A"], "lineNumber": ["199", "192", "219", "372", "240", "N/A"]}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Incorrect Unlock Times in `getTimeOfNextUnlock()`", "description": "The function incorrectly reports the next unlock time due to incorrect assignment of local variables.", "severity": "Medium Risk", "contract": "SAFT.sol, Core.sol", "function": "getTimeOfNextUnlock()", "lineNumber": "L325"}, {"id": 2, "category": {"1": ["CWE-710"], "2": ["CWE-1164"], "3": ["CWE-1071"]}, "title": "Stub", "description": "The function `getAndUpdateForbiddenForDelegationAmount()` is a stub.", "severity": "Low Risk", "contract": "SAFT.sol", "function": "getAndUpdateForbiddenForDelegationAmount()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Unclear semantics of `addSAFTRound()`", "description": "It is not clear why `vestingPeriod` is not considered when sanitizing the function arguments, since the first two parameters are in months, but the `vestingTimes` parameter could be days, months, or years.", "severity": "Low Risk", "contract": "SAFT.sol Core.sol", "function": "addSAFTRound()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Missing check in `withdrawBounty()` and `requestUndelegation()`", "description": "In the comment block, it states \"Only Owner can withdraw bounty to Core contract after Core holder is deactivated.\". However, there is no check that the holder is deactivated if the caller is the contract owner.", "severity": "Low Risk", "contract": "CoreEscrow.sol", "function": "withdrawBounty() and requestUndelegation()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Misusing `require()` `assert() revert()`", "description": "`require()` `revert()` , and `assert()` all have their own specific uses and should not be switched around.", "severity": "_Informational_", "contract": "BokkyPooBahsDateTimeLibrary.sol", "function": "N/A", "lineNumber": "217, 232, 236, 240, 244, 248, 262, 277, 281, 285, 289, 293"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-282"], "3": ["CWE-708"]}, "title": "Privileged Roles and Ownership", "description": "N/A", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Unchecked address parameters", "description": "In `initialize()`, the address parameters are not checked to be non-zero. This may lead to incorrect initialization if the default values are unintentionally passed during deployment.", "severity": "Informational", "contract": "CoreEscrow.sol", "function": "initialize()", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-682"]}, "title": "Unclear `delegate()` functionality", "description": "In `delegate()`, if the holder has already delegated their full vested amount to a validator, but then invokes the function again with a different `validatorId`, what is the result?", "severity": "_Undetermined_", "contract": "CoreEscrow.sol", "function": "delegate()", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Quantstamp/skale-allocator.pdf",
+    "project_info": {
+        "url": "https://github.com/skalenetwork/skale-allocator/",
+        "commit_hash": "6c64026b01025fdc0f8d5f7bc2e80ea3b741d492",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Unresolved TODOs",
+            "description": "There are several TODO statements that still exist in the code.",
+            "severity": "Medium Risk",
+            "contract": [
+                "SAFT.sol",
+                "Core.sol",
+                "CoreEscrow.sol"
+            ],
+            "function": [
+                "N/A",
+                "N/A",
+                "N/A",
+                "N/A",
+                "N/A",
+                "N/A"
+            ],
+            "lineNumber": [
+                "199",
+                "192",
+                "219",
+                "372",
+                "240",
+                "N/A"
+            ]
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect Unlock Times in `getTimeOfNextUnlock()`",
+            "description": "The function incorrectly reports the next unlock time due to incorrect assignment of local variables.",
+            "severity": "Medium Risk",
+            "contract": "SAFT.sol, Core.sol",
+            "function": "getTimeOfNextUnlock()",
+            "lineNumber": "L325"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ],
+                "3": [
+                    "CWE-1071"
+                ]
+            },
+            "title": "Stub",
+            "description": "The function `getAndUpdateForbiddenForDelegationAmount()` is a stub.",
+            "severity": "Low Risk",
+            "contract": "SAFT.sol",
+            "function": "getAndUpdateForbiddenForDelegationAmount()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Unclear semantics of `addSAFTRound()`",
+            "description": "It is not clear why `vestingPeriod` is not considered when sanitizing the function arguments, since the first two parameters are in months, but the `vestingTimes` parameter could be days, months, or years.",
+            "severity": "Low Risk",
+            "contract": "SAFT.sol Core.sol",
+            "function": "addSAFTRound()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Missing check in `withdrawBounty()` and `requestUndelegation()`",
+            "description": "In the comment block, it states \"Only Owner can withdraw bounty to Core contract after Core holder is deactivated.\". However, there is no check that the holder is deactivated if the caller is the contract owner.",
+            "severity": "Low Risk",
+            "contract": "CoreEscrow.sol",
+            "function": "withdrawBounty() and requestUndelegation()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Misusing `require()` `assert() revert()`",
+            "description": "`require()` `revert()` , and `assert()` all have their own specific uses and should not be switched around.",
+            "severity": "_Informational_",
+            "contract": "BokkyPooBahsDateTimeLibrary.sol",
+            "function": "N/A",
+            "lineNumber": "217, 232, 236, 240, 244, 248, 262, 277, 281, 285, 289, 293"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-282"
+                ],
+                "3": [
+                    "CWE-708"
+                ]
+            },
+            "title": "Privileged Roles and Ownership",
+            "description": "N/A",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Unchecked address parameters",
+            "description": "In `initialize()`, the address parameters are not checked to be non-zero. This may lead to incorrect initialization if the default values are unintentionally passed during deployment.",
+            "severity": "Informational",
+            "contract": "CoreEscrow.sol",
+            "function": "initialize()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Unclear `delegate()` functionality",
+            "description": "In `delegate()`, if the holder has already delegated their full vested amount to a validator, but then invokes the function again with a different `validatorId`, what is the result?",
+            "severity": "_Undetermined_",
+            "contract": "CoreEscrow.sol",
+            "function": "delegate()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

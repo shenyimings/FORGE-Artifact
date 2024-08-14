@@ -1,1 +1,269 @@
-{"path": "./Audit_Reports_2024/Solidified/Audit Report - Grease Monkey.pdf", "project_info": {"url": "https://github.com/Grease-Monkey-Games/tm-smart-contracts", "commit_hash": "4692094cc6e7badd54a93f43e31f415cb42131b6", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Users can cancel Chainlink VRF fulfillments by removing approvals", "description": "A user can see a call to `MintManager.fulfillRandomWords` in the mempool and calculate the NFT they will get. If the result is not desired, they can set the ERC20 approval of the payment token for the `MintManager` contract to zero, causing the ERC20 transfer within `fulfillRandomWords` to fail and the whole VRF fulfillment to fail due to reversion.", "severity": "Major", "contract": "MintManager", "function": "fulfillRandomWords", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Chainlink subscription funds can be drained by spamming invalid requests", "description": "The function `MintManager.requestRandomNFTs` lacks proper input validation, allowing an attacker to create many invalid requests that will fail when fulfilled, draining the Chainlink subscription funds.", "severity": "Major", "contract": "MintManager", "function": "requestRandomNFTs", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "pickRandomTokenType skips token types in some cases", "description": "The function `pickRandomTokenType` contains an error in its algorithm, causing it to skip checking certain token types.", "severity": "Minor", "contract": "MintManager", "function": "pickRandomTokenType() and pickRandomVariant()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "createCustomId vulnerable to ID collisions", "description": "The function `getCustomTokenId` in `ERC721_GMG_Asset.sol` combines different `uint256` values into one ID using bit-shift and logical OR operations, but does not validate that the value fits in the allowed range, which can cause ID collisions.", "severity": "Minor", "contract": "ERC721_GMG_Asset", "function": "getCustomTokenId", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "mintBatch can return wrong IDs", "description": "The function `mintBatch` allocates an array `allTokenIds` of size `_amount` for returning the token IDs, but the amount that is minted (which is also used in the mint loop) is stored in the variable `_amountToMint`. If not enough tokens are available for the mint, `_amountToMint` is smaller than `_amount`, resulting in trailing zeroes in the array, which may lead to errors in callers of the function.", "severity": "Minor", "contract": "N/A", "function": "mintBatch()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "MINTER_ROLE can be granted to arbitrary addresses", "description": "The MINTER_ROLE within ERC721_GMG_Asset is not restricted and can be granted to arbitrary addresses by the administrator, allowing them to mint arbitrarily and control randomness.", "severity": "Minor", "contract": "ERC721_GMG_Asset", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "Batch mints may revert when the current max supply is too low", "description": "The batch mint functions in ERC721_GMG_Asset contain a logic issue where it can result in situations where the batch mint fails, although it would not, if the amount was properly adjusted.", "severity": "Minor", "contract": "ERC721_GMG_Asset", "function": "batch mint functions (including doMint)", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "setCheckoutWallet does not update default royalty receiver", "description": "In the constructor, the default royalty receiver is set to `_checkoutWallet`. However, when the checkout wallet is later updated with `setCheckoutWallet`, the default royalty receiver is not updated. This may lead to unintended situations where an old wallet still receives royalties.", "severity": "Minor", "contract": "N/A", "function": "setCheckoutWallet", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-682"]}, "title": "getVariantRemainingSupply may return wrong values", "description": "The function `MintManager.getVariantRemainingSupply` may return incorrect values because it queries `variant.maxSupply()` which can be higher than `variant.currentMaxSupply()`, leading to unintended behavior.", "severity": "Minor", "contract": "MintManager", "function": "getVariantRemainingSupply", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Function mintType() does not have a check for _tokenType", "description": "The function `mintType()` is used to mint NFTs of a particular type but it does not check if the type of token provided as an argument (`_tokenType`) exists or not, which would cause the function to fail without any readable error.", "severity": "Minor", "contract": "N/A", "function": "mintType()", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Floating pragma", "description": "Locking the pragma helps to ensure that contracts do not accidentally get deployed using another pragma.", "severity": "Note", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-697"]}, "title": "Incorrect Balance Comparison in withdrawToken()", "description": "The function `withdrawToken()` compares the token balance with 0 instead of `_amount` and transfers the amount passed as an argument to the owner.", "severity": "Minor", "contract": "N/A", "function": "withdrawToken()", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Unnecessary receive for GMG assets", "description": "N/A", "severity": "Note", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-707"], "2": ["CWE-116"], "3": ["CWE-838"]}, "title": "Improvements for token recovery functions", "description": "The `withdrawToken` function uses `transfer` directly for transferring ERC20 tokens and `withdrawNative` uses `transfer` for transferring native tokens, which is not recommended.", "severity": "Minor", "contract": "N/A", "function": "withdrawToken, withdrawNative", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Redundant require in function fulfillRandomWords", "description": "The check 'require(getVariantRemainingSupply(randomVariant) >= 1)' is redundant because the function pickRandomVariant already takes care of the condition.", "severity": "Minor", "contract": "N/A", "function": "fulfillRandomWords()", "lineNumber": "214"}]}
+{
+    "path": "./Audit_Reports_2024/Solidified/Audit Report - Grease Monkey.pdf",
+    "project_info": {
+        "url": "https://github.com/Grease-Monkey-Games/tm-smart-contracts",
+        "commit_hash": "4692094cc6e7badd54a93f43e31f415cb42131b6",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Users can cancel Chainlink VRF fulfillments by removing approvals",
+            "description": "A user can see a call to `MintManager.fulfillRandomWords` in the mempool and calculate the NFT they will get. If the result is not desired, they can set the ERC20 approval of the payment token for the `MintManager` contract to zero, causing the ERC20 transfer within `fulfillRandomWords` to fail and the whole VRF fulfillment to fail due to reversion.",
+            "severity": "Major",
+            "contract": "MintManager",
+            "function": "fulfillRandomWords",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Chainlink subscription funds can be drained by spamming invalid requests",
+            "description": "The function `MintManager.requestRandomNFTs` lacks proper input validation, allowing an attacker to create many invalid requests that will fail when fulfilled, draining the Chainlink subscription funds.",
+            "severity": "Major",
+            "contract": "MintManager",
+            "function": "requestRandomNFTs",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "pickRandomTokenType skips token types in some cases",
+            "description": "The function `pickRandomTokenType` contains an error in its algorithm, causing it to skip checking certain token types.",
+            "severity": "Minor",
+            "contract": "MintManager",
+            "function": "pickRandomTokenType() and pickRandomVariant()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "createCustomId vulnerable to ID collisions",
+            "description": "The function `getCustomTokenId` in `ERC721_GMG_Asset.sol` combines different `uint256` values into one ID using bit-shift and logical OR operations, but does not validate that the value fits in the allowed range, which can cause ID collisions.",
+            "severity": "Minor",
+            "contract": "ERC721_GMG_Asset",
+            "function": "getCustomTokenId",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "mintBatch can return wrong IDs",
+            "description": "The function `mintBatch` allocates an array `allTokenIds` of size `_amount` for returning the token IDs, but the amount that is minted (which is also used in the mint loop) is stored in the variable `_amountToMint`. If not enough tokens are available for the mint, `_amountToMint` is smaller than `_amount`, resulting in trailing zeroes in the array, which may lead to errors in callers of the function.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "mintBatch()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "MINTER_ROLE can be granted to arbitrary addresses",
+            "description": "The MINTER_ROLE within ERC721_GMG_Asset is not restricted and can be granted to arbitrary addresses by the administrator, allowing them to mint arbitrarily and control randomness.",
+            "severity": "Minor",
+            "contract": "ERC721_GMG_Asset",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Batch mints may revert when the current max supply is too low",
+            "description": "The batch mint functions in ERC721_GMG_Asset contain a logic issue where it can result in situations where the batch mint fails, although it would not, if the amount was properly adjusted.",
+            "severity": "Minor",
+            "contract": "ERC721_GMG_Asset",
+            "function": "batch mint functions (including doMint)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "setCheckoutWallet does not update default royalty receiver",
+            "description": "In the constructor, the default royalty receiver is set to `_checkoutWallet`. However, when the checkout wallet is later updated with `setCheckoutWallet`, the default royalty receiver is not updated. This may lead to unintended situations where an old wallet still receives royalties.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "setCheckoutWallet",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "getVariantRemainingSupply may return wrong values",
+            "description": "The function `MintManager.getVariantRemainingSupply` may return incorrect values because it queries `variant.maxSupply()` which can be higher than `variant.currentMaxSupply()`, leading to unintended behavior.",
+            "severity": "Minor",
+            "contract": "MintManager",
+            "function": "getVariantRemainingSupply",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Function mintType() does not have a check for _tokenType",
+            "description": "The function `mintType()` is used to mint NFTs of a particular type but it does not check if the type of token provided as an argument (`_tokenType`) exists or not, which would cause the function to fail without any readable error.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "mintType()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Floating pragma",
+            "description": "Locking the pragma helps to ensure that contracts do not accidentally get deployed using another pragma.",
+            "severity": "Note",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ]
+            },
+            "title": "Incorrect Balance Comparison in withdrawToken()",
+            "description": "The function `withdrawToken()` compares the token balance with 0 instead of `_amount` and transfers the amount passed as an argument to the owner.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "withdrawToken()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Unnecessary receive for GMG assets",
+            "description": "N/A",
+            "severity": "Note",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-116"
+                ],
+                "3": [
+                    "CWE-838"
+                ]
+            },
+            "title": "Improvements for token recovery functions",
+            "description": "The `withdrawToken` function uses `transfer` directly for transferring ERC20 tokens and `withdrawNative` uses `transfer` for transferring native tokens, which is not recommended.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "withdrawToken, withdrawNative",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Redundant require in function fulfillRandomWords",
+            "description": "The check 'require(getVariantRemainingSupply(randomVariant) >= 1)' is redundant because the function pickRandomVariant already takes care of the condition.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "fulfillRandomWords()",
+            "lineNumber": "214"
+        }
+    ]
+}

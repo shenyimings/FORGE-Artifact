@@ -1,1 +1,164 @@
-{"path": "./Audit_Reports_2024/Quantstamp/saffron-staking-v-2.pdf", "project_info": {"url": "https://github.com/saffron-staking-v2", "commit_hash": "a1c08f0", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Possible Un-updated Pool State After Reward Allocation Update", "description": "Modifying allocation points of a pool or adding a new pool without updating the accumulated reward per block can lead to distributing more or less reward than expected.", "severity": "Medium Risk", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Duplicate LP Token Pools Allowed", "description": "SaffronStakingV2.add() allows adding more than once the same LPToken which will dilute the user's rewards since updatePool() relies on pool.lpToken.balanceOf(address(this)).", "severity": "Medium Risk", "contract": "SaffronStakingV2.sol", "function": "add()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Missing Pool Existance Checks", "description": "N/A", "severity": "Low Risk", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Incorrect Token Deposit Logic in SFIRewarder", "description": "It is unclear how tokens are deposited to SFIRewarder. However, we recommend adding a dedicated function that calls ERC20.transferFrom() to avoid any address input error when handling the transfer.", "severity": "Low Risk", "contract": "SFIRewarder.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-682"], "2": ["CWE-1339"]}, "title": "Loss of Precision in accSFIPerShare", "description": "The accSFIPerShare variable is updated by sfiReward * 1e18 / lpSupply and sfiReward uses integer division when dividing by totalAllocPoint, leading to potential precision loss.", "severity": "Low Risk", "contract": "SaffronStakingV2.sol", "function": "pendingSFI() and updatePool()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-354"]}, "title": "Lack of Validation in _allocPoint/totalAllocPoint", "description": "The value of allocation point value is not validated in both set() and add() functions which can impact totalAllocPoint. For example, if totalAllocPoint is equal to zero then both updatePool and pendingSFI will most likely throw.", "severity": "Low Risk", "contract": "SaffronStakingV2.sol", "function": "set() and add()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "Possible Inconsistencies in balance of Deflationary Tokens", "description": "N/A", "severity": "Low Risk", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "For Loop Over Dynamic Array", "description": "N/A", "severity": "Low Risk", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-770"]}, "title": "Rewards Can Get Stuck", "description": "Users might not be able to claim their already allocated and pending rewards if there is not enough SFI in the SFIRewarder contract to cover the entire reward period.", "severity": "Informational", "contract": "SFIRewarder", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Quantstamp/saffron-staking-v-2.pdf",
+    "project_info": {
+        "url": "https://github.com/saffron-finance/saffron-staking-v2/tree/a1c08f077796f6bed976a9a6d109b4e8bfd7b055",
+        "commit_hash": "a1c08f077796f6bed976a9a6d109b4e8bfd7b055",
+        "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Possible Un-updated Pool State After Reward Allocation Update",
+            "description": "Modifying allocation points of a pool or adding a new pool without updating the accumulated reward per block can lead to distributing more or less reward than expected.",
+            "severity": "Medium Risk",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Duplicate LP Token Pools Allowed",
+            "description": "SaffronStakingV2.add() allows adding more than once the same LPToken which will dilute the user's rewards since updatePool() relies on pool.lpToken.balanceOf(address(this)).",
+            "severity": "Medium Risk",
+            "contract": "SaffronStakingV2.sol",
+            "function": "add()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Missing Pool Existance Checks",
+            "description": "N/A",
+            "severity": "Low Risk",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect Token Deposit Logic in SFIRewarder",
+            "description": "It is unclear how tokens are deposited to SFIRewarder. However, we recommend adding a dedicated function that calls ERC20.transferFrom() to avoid any address input error when handling the transfer.",
+            "severity": "Low Risk",
+            "contract": "SFIRewarder.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "Loss of Precision in accSFIPerShare",
+            "description": "The accSFIPerShare variable is updated by sfiReward * 1e18 / lpSupply and sfiReward uses integer division when dividing by totalAllocPoint, leading to potential precision loss.",
+            "severity": "Low Risk",
+            "contract": "SaffronStakingV2.sol",
+            "function": "pendingSFI() and updatePool()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-354"
+                ]
+            },
+            "title": "Lack of Validation in _allocPoint/totalAllocPoint",
+            "description": "The value of allocation point value is not validated in both set() and add() functions which can impact totalAllocPoint. For example, if totalAllocPoint is equal to zero then both updatePool and pendingSFI will most likely throw.",
+            "severity": "Low Risk",
+            "contract": "SaffronStakingV2.sol",
+            "function": "set() and add()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Possible Inconsistencies in balance of Deflationary Tokens",
+            "description": "N/A",
+            "severity": "Low Risk",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "For Loop Over Dynamic Array",
+            "description": "N/A",
+            "severity": "Low Risk",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "Rewards Can Get Stuck",
+            "description": "Users might not be able to claim their already allocated and pending rewards if there is not enough SFI in the SFIRewarder contract to cover the entire reward period.",
+            "severity": "Informational",
+            "contract": "SFIRewarder",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

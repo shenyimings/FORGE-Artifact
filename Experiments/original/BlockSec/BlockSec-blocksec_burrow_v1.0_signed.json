@@ -1,1 +1,237 @@
-{"path": "./Audit_Reports_2024/BlockSec/BlockSec-blocksec_burrow_v1.0_signed.pdf", "project_info": {"url": "https://github.com/burrowland", "commit_hash": "c2e1d85030c5599d9423c2ec01525c914fe24743", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-710"], "2": ["CWE-1164"], "3": ["CWE-561"]}, "title": "Dead code is found", "description": "Function `init` is not used.", "severity": "Low", "contract": "storage.rs", "function": "init", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1287"]}, "title": "Deflation Token is not supported", "description": "The contract only supports NEP141 token and does not support other tokens like deflation tokens.", "severity": "Confirmed", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Redundant invoked functions", "description": "The function `env::predecessor_account_id()` is invoked and assigned to the variable `account_id` in line 219. Instead of invoking the function again, we can use the variable `account_id`.", "severity": "N/A", "contract": "storage.rs", "function": "N/A", "lineNumber": "219,221"}, {"id": 3, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "Reliability of oracle", "description": "No description provided", "severity": "Medium", "contract": "Burrow", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "MAX_NUM_ASSETS is a constant", "description": "The `MAX_NUM_ASSETS` in line 135 are used in assert statement. However, `MAX_NUM_ASSETS` is a constant (i.e., 10). In this case, the assert statement in line 135 may fail when new asset is added.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "135"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Missing check on the returned value", "description": "In function `shares_to_amount`, when `shares.0 < self.balance` and `shares.0 > self.shares.0`, the calculated return value will be larger than the `self.balance`.", "severity": "High", "contract": "pool.rs", "function": "shares_to_amount()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "Storage usage is wrong in liquidation action", "description": "The total calculation of the storage usage during liquidation process is wrong, which can influence the storage usage of users.", "severity": "High", "contract": "N/A", "function": "liquidation action", "lineNumber": "401, 409"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "Storage usage is wrong in setting users\u2019 storage", "description": "The logic of setting the storage usage for each account is wrong, which can influence the storage usage of users.", "severity": "High", "contract": "actions.rs", "function": "N/A", "lineNumber": "78-80"}, {"id": 8, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Incomplete asset configuration check", "description": "The validation check in function `update_asset` is incomplete, missing checks for attributes `extra_decimal` and `volatility_ratio`.", "severity": "High", "contract": "N/A", "function": "update_asset", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "The freshness of PriceData should be checked", "description": "`PriceData.timestamp` and `PriceData.recency_duration_sec` are unchecked when `PriceData` is converted into `Prices`. It is recommended to add a reasonable threshold to check the freshness of `PriceData` received from the price oracle.", "severity": "High", "contract": "common/src/lib.rs", "function": "N/A", "lineNumber": "Listing 2.7"}, {"id": 10, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-909"], "4": ["CWE-456"]}, "title": "Upgrade module of the contract", "description": "Currently, no upgrade module is implemented. When the code changes but the serialized state stays the same, the contract may not work.", "severity": "Confirmed", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "The risk of centralized design", "description": "The project has a highly centralized design. The contract owner has very high privilege that can update the asset config, contract config, add the asset farm reward, etc.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-703"]}, "title": "N/A", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/BlockSec/BlockSec-blocksec_burrow_v1.0_signed.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "c2e1d85030c5599d9423c2ec01525c914fe24743",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ],
+                "3": [
+                    "CWE-561"
+                ]
+            },
+            "title": "Dead code is found",
+            "description": "Function `init` is not used.",
+            "severity": "Low",
+            "contract": "storage.rs",
+            "function": "init",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1287"
+                ]
+            },
+            "title": "Deflation Token is not supported",
+            "description": "The contract only supports NEP141 token and does not support other tokens like deflation tokens.",
+            "severity": "Confirmed",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Redundant invoked functions",
+            "description": "The function `env::predecessor_account_id()` is invoked and assigned to the variable `account_id` in line 219. Instead of invoking the function again, we can use the variable `account_id`.",
+            "severity": "N/A",
+            "contract": "storage.rs",
+            "function": "N/A",
+            "lineNumber": "219,221"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Reliability of oracle",
+            "description": "No description provided",
+            "severity": "Medium",
+            "contract": "Burrow",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "MAX_NUM_ASSETS is a constant",
+            "description": "The `MAX_NUM_ASSETS` in line 135 are used in assert statement. However, `MAX_NUM_ASSETS` is a constant (i.e., 10). In this case, the assert statement in line 135 may fail when new asset is added.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "135"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Missing check on the returned value",
+            "description": "In function `shares_to_amount`, when `shares.0 < self.balance` and `shares.0 > self.shares.0`, the calculated return value will be larger than the `self.balance`.",
+            "severity": "High",
+            "contract": "pool.rs",
+            "function": "shares_to_amount()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Storage usage is wrong in liquidation action",
+            "description": "The total calculation of the storage usage during liquidation process is wrong, which can influence the storage usage of users.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "liquidation action",
+            "lineNumber": "401, 409"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Storage usage is wrong in setting users\u2019 storage",
+            "description": "The logic of setting the storage usage for each account is wrong, which can influence the storage usage of users.",
+            "severity": "High",
+            "contract": "actions.rs",
+            "function": "N/A",
+            "lineNumber": "78-80"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Incomplete asset configuration check",
+            "description": "The validation check in function `update_asset` is incomplete, missing checks for attributes `extra_decimal` and `volatility_ratio`.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "update_asset",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "The freshness of PriceData should be checked",
+            "description": "`PriceData.timestamp` and `PriceData.recency_duration_sec` are unchecked when `PriceData` is converted into `Prices`. It is recommended to add a reasonable threshold to check the freshness of `PriceData` received from the price oracle.",
+            "severity": "High",
+            "contract": "common/src/lib.rs",
+            "function": "N/A",
+            "lineNumber": "Listing 2.7"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "Upgrade module of the contract",
+            "description": "Currently, no upgrade module is implemented. When the code changes but the serialized state stays the same, the contract may not work.",
+            "severity": "Confirmed",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "The risk of centralized design",
+            "description": "The project has a highly centralized design. The contract owner has very high privilege that can update the asset config, contract config, add the asset farm reward, etc.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "N/A",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

@@ -1,1 +1,429 @@
-{"path": "./Audit_Reports_2024/Hacken/Paid_Network_SC-Audit-Report_180823_SA-1984_final-1.pdf", "project_info": {"url": "N/A", "commit_hash": "9cd4c55a3d2d3fb406f9c1021ba047ed4fa55a12", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"]}, "title": "M01. Unrestricted Fee Configuration", "description": "No restriction on the values of galaxyParticipationFeePercentage and crowdfundingParticipationFeePercentage, allowing them to be set to arbitrary and potentially harmful percentages, including 100%. This oversight poses a severe risk of misuse or exploitation, as it could lead to excessive fees or unintended financial consequences within the system.", "severity": "Medium", "contract": "/contracts/core/Pool.sol", "function": "initialize()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "M02. Centralization: Admin Control over TGE Date", "description": "The contract allows the administrative role to modify the Token Generation Event (TGE) date, adjust early and normal access durations, and defer vesting commencement.", "severity": "Low", "contract": "Pool.sol", "function": "updateTGEDate()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"], "4": ["CWE-638"], "5": ["CWE-424"], "6": ["CWE-425"]}, "title": "C01. withdrawPurchasedAmount() Can Be Called Without Emergency Event", "description": "The withdrawPurchasedAmount() function can be called without an emergency event, allowing users to withdraw purchased amounts even when there is no emergency.", "severity": "Critical", "contract": "Pool", "function": "withdrawPurchasedAmount()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "C02. Insufficient IDO Token Balance Can Lead To Funds Loss", "description": "The function withdrawRedundantIDO() takes Vesting contract's IDO balance as a base to calculate the difference between total IDO amount that can be claimed by users and total funded IDO amount, leading to funds loss when the owner first sets claimable status to true for users to claim their IDO tokens and then withdraws the redundant IDO tokens left in the contract.", "severity": "Critical", "contract": "Vesting", "function": "withdrawRedundantIDO()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "Inconsistent Data In withdrawRedundantIDO() Function Locks Protocol Owner\u2019s Funds", "description": "The withdrawRedundantIDO() function contains inconsistent data that locks protocol owner's funds.", "severity": "Critical", "contract": "N/A", "function": "withdrawRedundantIDO()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-664"], "2": ["CWE-404"], "3": ["CWE-772"], "4": ["CWE-775"]}, "title": "C04. Inaccessible Funds Due to Ineffective withdrawRedundantIDOToken() Function in Emergency Situations", "description": "The withdrawRedundantIDOToken() function becomes inoperative when the pool is canceled post-TGE, leading to the locking of funds in the Vesting contract.", "severity": "Critical", "contract": "Vesting", "function": "withdrawRedundantIDOToken()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "C05. withdrawPurchasedAmount() Function Allows Dual Benefits for Users", "description": "The withdrawPurchasedAmount() function allows users to claim their vested IDO tokens and also withdraw their initial deposited funds from the pool contract, resulting in dual benefits.", "severity": "Critical", "contract": "N/A", "function": "withdrawPurchasedAmount()", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "H01. Inconsistency in Purchase Amount Limitation Base On Allocation", "description": "There is a potential discrepancy in the implementation of purchase amount limitation based on allocation, where the code only checks if the amount is under the limits for per transaction but does not account for the overarching maximum allowable purchase for the entire galaxy round.", "severity": "Medium", "contract": "./contracts/core/Pool.sol", "function": "buyTokenInGalaxyPool()", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-693"], "2": ["CWE-358"]}, "title": "H02. Incorrect Implementation of Upgradability Pattern", "description": "The upgradability pattern might not have been correctly implemented, which can lead to front-running attacks on the initialize() function and broken upgradability.", "severity": "Medium", "contract": "./contracts/core/IgnitionFactory.sol", "function": "initialize()", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "H03. Insufficient balance of IDO Tokens Due to Critical Flaw in updateTime() Function", "description": "N/A", "severity": "High", "contract": "N/A", "function": "updateTime()", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "H04. Funds Lock When vestingFrequency Is Zero", "description": "When vestingFrequency is set to zero, funds can become locked.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-682"]}, "title": "Mismatch Between Documentation and Implementation of Lockup Duration", "description": "The IgnitionFactory contract's documentation mentions a lockup duration of 14 days, but the actual implementation sets LOCKUP_DURATION to 5 minutes, leading to confusion and unintended behavior.", "severity": "Low", "contract": "IgnitionFactory", "function": "N/A", "lineNumber": "./contracts/core/IgnitionFactory.sol"}, {"id": 12, "category": {"1": ["CWE-682"]}, "title": "L01. Invalid Allowance Check", "description": "Functions to buy tokens validate if the allowance is greater than the purchase amount without considering the additional fee, creating an inconsistency in the system.", "severity": "Low", "contract": "Pool", "function": "buyTokenInGalaxyPool(), buyTokenInCrowdfundingPool()", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "L02. Missing Zero Address Validation", "description": "The zero address validation check is not implemented for the initialize() function.", "severity": "Low", "contract": "Pool", "function": "initialize()", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-354"]}, "title": "L03. Missing Validation Check", "description": "Missing validation check", "severity": "Low", "contract": "Pool.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-693"], "2": ["CWE-807"], "3": ["CWE-302"]}, "title": "L04. Static DOMAIN_SEPARATOR May Lead to Signature Replay Attacks On Forked Chains.", "description": "The Pool contract initializes the DOMAIN_SEPARATOR using the network's chainID during its initialization, which remains static and does not account for potential post-deployment chain forks, leading to signature replay attacks across both versions of the chain.", "severity": "Medium", "contract": "Pool", "function": "initialize()", "lineNumber": "N/A"}, {"id": 16, "category": {"1": ["CWE-710"], "2": ["CWE-1164"]}, "title": "L05. Non Disabled Implementation Contract", "description": "BasePausable is imported but its pausability features are not used within IgnitionFactory and Vesting contracts.", "severity": "Medium", "contract": "IgnitionFactory, Vesting", "function": "N/A", "lineNumber": "N/A"}, {"id": 17, "category": {"1": ["CWE-710"], "2": ["CWE-477"]}, "title": "I01. Usage of OpenZeppelin\u2019s Deprecated Functions", "description": "The BasePausable contract utilizes a deprecated function from the OpenZeppelin library, specifically the use of _setUpRole, which is no longer recommended, potentially posing security and reliability risks.", "severity": "Medium", "contract": "BasePausable", "function": "__BasePausable__init()", "lineNumber": "N/A"}, {"id": 18, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "I02. Redundant Functions Declaration", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 19, "category": {"1": ["CWE-682"]}, "title": "I03. Redundant Variable Value Assignment", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 20, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "I04. Redundant Status Update", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 21, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "I05. Redundant Logic in isFailBeforeTGEDate() Function", "description": "The isFailBeforeTGEDate() function contains redundant logic that checks if the contract is paused or if the vesting is not funded by the TGE date, which can be eliminated.", "severity": "N/A", "contract": "Pool", "function": "isFailBeforeTGEDate()", "lineNumber": "N/A"}, {"id": 22, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-1235"]}, "title": "I06. Inefficient Data Storage: Use of Memory Instead of Calldata", "description": "Using memory instead of calldata for function parameters leads to unnecessary gas consumption due to data copying.", "severity": "N/A", "contract": ["Pool", "IgnitionList"], "function": ["initialize()", "buyTokenInGalaxyPool()", "buyTokenInCrowdfundingPool()", "_internalWhaleBuyToken()", "_internalNormalUserBuyToken()", "_verifyUser()"], "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Hacken/Paid_Network_SC-Audit-Report_180823_SA-1984_final-1.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "9cd4c55a3d2d3fb406f9c1021ba047ed4fa55a12",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "M01. Unrestricted Fee Configuration",
+            "description": "No restriction on the values of galaxyParticipationFeePercentage and crowdfundingParticipationFeePercentage, allowing them to be set to arbitrary and potentially harmful percentages, including 100%. This oversight poses a severe risk of misuse or exploitation, as it could lead to excessive fees or unintended financial consequences within the system.",
+            "severity": "Medium",
+            "contract": "/contracts/core/Pool.sol",
+            "function": "initialize()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "M02. Centralization: Admin Control over TGE Date",
+            "description": "The contract allows the administrative role to modify the Token Generation Event (TGE) date, adjust early and normal access durations, and defer vesting commencement.",
+            "severity": "Low",
+            "contract": "Pool.sol",
+            "function": "updateTGEDate()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ],
+                "4": [
+                    "CWE-638"
+                ],
+                "5": [
+                    "CWE-424"
+                ],
+                "6": [
+                    "CWE-425"
+                ]
+            },
+            "title": "C01. withdrawPurchasedAmount() Can Be Called Without Emergency Event",
+            "description": "The withdrawPurchasedAmount() function can be called without an emergency event, allowing users to withdraw purchased amounts even when there is no emergency.",
+            "severity": "Critical",
+            "contract": "Pool",
+            "function": "withdrawPurchasedAmount()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "C02. Insufficient IDO Token Balance Can Lead To Funds Loss",
+            "description": "The function withdrawRedundantIDO() takes Vesting contract's IDO balance as a base to calculate the difference between total IDO amount that can be claimed by users and total funded IDO amount, leading to funds loss when the owner first sets claimable status to true for users to claim their IDO tokens and then withdraws the redundant IDO tokens left in the contract.",
+            "severity": "Critical",
+            "contract": "Vesting",
+            "function": "withdrawRedundantIDO()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Inconsistent Data In withdrawRedundantIDO() Function Locks Protocol Owner\u2019s Funds",
+            "description": "The withdrawRedundantIDO() function contains inconsistent data that locks protocol owner's funds.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "withdrawRedundantIDO()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-775"
+                ]
+            },
+            "title": "C04. Inaccessible Funds Due to Ineffective withdrawRedundantIDOToken() Function in Emergency Situations",
+            "description": "The withdrawRedundantIDOToken() function becomes inoperative when the pool is canceled post-TGE, leading to the locking of funds in the Vesting contract.",
+            "severity": "Critical",
+            "contract": "Vesting",
+            "function": "withdrawRedundantIDOToken()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "C05. withdrawPurchasedAmount() Function Allows Dual Benefits for Users",
+            "description": "The withdrawPurchasedAmount() function allows users to claim their vested IDO tokens and also withdraw their initial deposited funds from the pool contract, resulting in dual benefits.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "withdrawPurchasedAmount()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "H01. Inconsistency in Purchase Amount Limitation Base On Allocation",
+            "description": "There is a potential discrepancy in the implementation of purchase amount limitation based on allocation, where the code only checks if the amount is under the limits for per transaction but does not account for the overarching maximum allowable purchase for the entire galaxy round.",
+            "severity": "Medium",
+            "contract": "./contracts/core/Pool.sol",
+            "function": "buyTokenInGalaxyPool()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-358"
+                ]
+            },
+            "title": "H02. Incorrect Implementation of Upgradability Pattern",
+            "description": "The upgradability pattern might not have been correctly implemented, which can lead to front-running attacks on the initialize() function and broken upgradability.",
+            "severity": "Medium",
+            "contract": "./contracts/core/IgnitionFactory.sol",
+            "function": "initialize()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "H03. Insufficient balance of IDO Tokens Due to Critical Flaw in updateTime() Function",
+            "description": "N/A",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "updateTime()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "H04. Funds Lock When vestingFrequency Is Zero",
+            "description": "When vestingFrequency is set to zero, funds can become locked.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Mismatch Between Documentation and Implementation of Lockup Duration",
+            "description": "The IgnitionFactory contract's documentation mentions a lockup duration of 14 days, but the actual implementation sets LOCKUP_DURATION to 5 minutes, leading to confusion and unintended behavior.",
+            "severity": "Low",
+            "contract": "IgnitionFactory",
+            "function": "N/A",
+            "lineNumber": "./contracts/core/IgnitionFactory.sol"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "L01. Invalid Allowance Check",
+            "description": "Functions to buy tokens validate if the allowance is greater than the purchase amount without considering the additional fee, creating an inconsistency in the system.",
+            "severity": "Low",
+            "contract": "Pool",
+            "function": "buyTokenInGalaxyPool(), buyTokenInCrowdfundingPool()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "L02. Missing Zero Address Validation",
+            "description": "The zero address validation check is not implemented for the initialize() function.",
+            "severity": "Low",
+            "contract": "Pool",
+            "function": "initialize()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-354"
+                ]
+            },
+            "title": "L03. Missing Validation Check",
+            "description": "Missing validation check",
+            "severity": "Low",
+            "contract": "Pool.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ],
+                "3": [
+                    "CWE-302"
+                ]
+            },
+            "title": "L04. Static DOMAIN_SEPARATOR May Lead to Signature Replay Attacks On Forked Chains.",
+            "description": "The Pool contract initializes the DOMAIN_SEPARATOR using the network's chainID during its initialization, which remains static and does not account for potential post-deployment chain forks, leading to signature replay attacks across both versions of the chain.",
+            "severity": "Medium",
+            "contract": "Pool",
+            "function": "initialize()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ]
+            },
+            "title": "L05. Non Disabled Implementation Contract",
+            "description": "BasePausable is imported but its pausability features are not used within IgnitionFactory and Vesting contracts.",
+            "severity": "Medium",
+            "contract": "IgnitionFactory, Vesting",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-477"
+                ]
+            },
+            "title": "I01. Usage of OpenZeppelin\u2019s Deprecated Functions",
+            "description": "The BasePausable contract utilizes a deprecated function from the OpenZeppelin library, specifically the use of _setUpRole, which is no longer recommended, potentially posing security and reliability risks.",
+            "severity": "Medium",
+            "contract": "BasePausable",
+            "function": "__BasePausable__init()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "I02. Redundant Functions Declaration",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 19,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "I03. Redundant Variable Value Assignment",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 20,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "I04. Redundant Status Update",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 21,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "I05. Redundant Logic in isFailBeforeTGEDate() Function",
+            "description": "The isFailBeforeTGEDate() function contains redundant logic that checks if the contract is paused or if the vesting is not funded by the TGE date, which can be eliminated.",
+            "severity": "N/A",
+            "contract": "Pool",
+            "function": "isFailBeforeTGEDate()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 22,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-1235"
+                ]
+            },
+            "title": "I06. Inefficient Data Storage: Use of Memory Instead of Calldata",
+            "description": "Using memory instead of calldata for function parameters leads to unnecessary gas consumption due to data copying.",
+            "severity": "N/A",
+            "contract": [
+                "Pool",
+                "IgnitionList"
+            ],
+            "function": [
+                "initialize()",
+                "buyTokenInGalaxyPool()",
+                "buyTokenInCrowdfundingPool()",
+                "_internalWhaleBuyToken()",
+                "_internalNormalUserBuyToken()",
+                "_verifyUser()"
+            ],
+            "lineNumber": "N/A"
+        }
+    ]
+}

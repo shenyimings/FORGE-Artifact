@@ -1,1 +1,326 @@
-{"path": "./Audit_Reports_2024/Cyberscope/minebnb.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "ST - Stops Transactions", "description": "The contract owner has the authority to stop transactions or sales for all users excluding authorized users by setting certain variables to restrictive values, potentially operating as a honeypot.", "severity": "Critical", "contract": "MineBNB", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "OTUT - Transfers User's Tokens", "description": "The contract owner has the authority to transfer the balance of a user's address and distribute it to specified addresses.", "severity": "High", "contract": "N/A", "function": "multiTransfer or multiTransfer_fixed", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "ELFM - Exceeds Fees Limit", "description": "The contract owner has the authority to increase over the allowed limit of 25%. The owner may take advantage of it by calling the `setFees` function with a high percentage value.", "severity": "High", "contract": "MineBNB", "function": "setFees()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "BC - Blacklists Addresses", "description": "The contract allows massively blacklisting addresses which can be abused by the owner.", "severity": "High", "contract": "MineBNB", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "ULTW - Transfers Liquidity to Team Wallet", "description": "The contract authorized addresses have the authority to transfer funds without limit to the team wallet.", "severity": "High", "contract": "N/A", "function": "clearStuckBalance, clearStuckBalance_sender", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "PVC - Price Volatility Concern", "description": "The contract accumulates tokens from taxes to swap them for ETH, but the price of the token can be highly volatile, potentially leading to significant price volatility for parties involved.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "RSW - Redundant Storage Writes", "description": "The contract modifies the state of variables without checking if their current value is the same as the one given as an argument, leading to redundant storage writes and unnecessary gas consumption.", "severity": "Medium", "contract": "MineBNB", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "MEE - Missing Events Emission", "description": "The contract performs actions and state mutations from external methods that do not result in the emission of events.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-682"], "2": ["CWE-1339"]}, "title": "DDP - Decimal Division Precision", "description": "Division of decimal (fixed point) numbers can result in rounding errors due to the way that division is implemented in Solidity, leading to issues with precise calculations with decimal numbers.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "FSA - Fixed Swap Address", "description": "The swap address is assigned once and cannot be changed, which may prevent the contract from migrating to a new liquidity pool pair or decentralized exchange.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-703"], "2": ["CWE-393"]}, "title": "MEM - Misleading Error Messages", "description": "The contract is using misleading error messages. These error messages do not accurately reflect the problem, making it difficult to identify and fix the issue.", "severity": "N/A", "contract": "MineBNB", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-909"], "4": ["CWE-456"]}, "title": "IDI - Immutable Declaration Improvement", "description": "The contract declares state variables that their value is initialized once in the constructor and are not modified afterwards.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-909"], "4": ["CWE-456"]}, "title": "L02 - State Variables could be Declared Constant", "description": "State variables can be declared as constant using the constant keyword to ensure they cannot be changed after being set, which decreases gas consumption.", "severity": "N/A", "contract": "MineBNB", "function": "N/A", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-710"], "2": ["CWE-1076"]}, "title": "L04 - Conformance to Solidity Naming Conventions", "description": "The Solidity style guide provides guidelines for writing clean and consistent Solidity code, including naming conventions for functions, variables, contracts, structs, enums, and constants. Adhering to these conventions improves readability and maintainability.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-682"]}, "title": "L07 - Missing Events Arithmetic", "description": "Events are a way to record and log information about changes or actions that occur within a contract.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "L16 - Validate Variable Setters", "description": "The contract performs operations on variables configured with user-supplied input without proper checks for zero values, leading to potential problems during execution.", "severity": "Medium", "contract": "MineBNB", "function": "N/A", "lineNumber": "N/A"}, {"id": 16, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "L19 - Stable Compiler Version", "description": "The `^` symbol indicates that any version of Solidity that is compatible with the specified version (i.e., any version that is a higher minor or patch version) can be used to compile the contract. The version lock is a mechanism that allows the author to specify a minimum version of the Solidity compiler that must be used to compile the contract code.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Cyberscope/minebnb.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "ST - Stops Transactions",
+            "description": "The contract owner has the authority to stop transactions or sales for all users excluding authorized users by setting certain variables to restrictive values, potentially operating as a honeypot.",
+            "severity": "Critical",
+            "contract": "MineBNB",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "OTUT - Transfers User's Tokens",
+            "description": "The contract owner has the authority to transfer the balance of a user's address and distribute it to specified addresses.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "multiTransfer or multiTransfer_fixed",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "ELFM - Exceeds Fees Limit",
+            "description": "The contract owner has the authority to increase over the allowed limit of 25%. The owner may take advantage of it by calling the `setFees` function with a high percentage value.",
+            "severity": "High",
+            "contract": "MineBNB",
+            "function": "setFees()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "BC - Blacklists Addresses",
+            "description": "The contract allows massively blacklisting addresses which can be abused by the owner.",
+            "severity": "High",
+            "contract": "MineBNB",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "ULTW - Transfers Liquidity to Team Wallet",
+            "description": "The contract authorized addresses have the authority to transfer funds without limit to the team wallet.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "clearStuckBalance, clearStuckBalance_sender",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "PVC - Price Volatility Concern",
+            "description": "The contract accumulates tokens from taxes to swap them for ETH, but the price of the token can be highly volatile, potentially leading to significant price volatility for parties involved.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "RSW - Redundant Storage Writes",
+            "description": "The contract modifies the state of variables without checking if their current value is the same as the one given as an argument, leading to redundant storage writes and unnecessary gas consumption.",
+            "severity": "Medium",
+            "contract": "MineBNB",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "MEE - Missing Events Emission",
+            "description": "The contract performs actions and state mutations from external methods that do not result in the emission of events.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "DDP - Decimal Division Precision",
+            "description": "Division of decimal (fixed point) numbers can result in rounding errors due to the way that division is implemented in Solidity, leading to issues with precise calculations with decimal numbers.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "FSA - Fixed Swap Address",
+            "description": "The swap address is assigned once and cannot be changed, which may prevent the contract from migrating to a new liquidity pool pair or decentralized exchange.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-393"
+                ]
+            },
+            "title": "MEM - Misleading Error Messages",
+            "description": "The contract is using misleading error messages. These error messages do not accurately reflect the problem, making it difficult to identify and fix the issue.",
+            "severity": "N/A",
+            "contract": "MineBNB",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "IDI - Immutable Declaration Improvement",
+            "description": "The contract declares state variables that their value is initialized once in the constructor and are not modified afterwards.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "L02 - State Variables could be Declared Constant",
+            "description": "State variables can be declared as constant using the constant keyword to ensure they cannot be changed after being set, which decreases gas consumption.",
+            "severity": "N/A",
+            "contract": "MineBNB",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1076"
+                ]
+            },
+            "title": "L04 - Conformance to Solidity Naming Conventions",
+            "description": "The Solidity style guide provides guidelines for writing clean and consistent Solidity code, including naming conventions for functions, variables, contracts, structs, enums, and constants. Adhering to these conventions improves readability and maintainability.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "L07 - Missing Events Arithmetic",
+            "description": "Events are a way to record and log information about changes or actions that occur within a contract.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "L16 - Validate Variable Setters",
+            "description": "The contract performs operations on variables configured with user-supplied input without proper checks for zero values, leading to potential problems during execution.",
+            "severity": "Medium",
+            "contract": "MineBNB",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "L19 - Stable Compiler Version",
+            "description": "The `^` symbol indicates that any version of Solidity that is compatible with the specified version (i.e., any version that is a higher minor or patch version) can be used to compile the contract. The version lock is a mechanism that allows the author to specify a minimum version of the Solidity compiler that must be used to compile the contract code.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

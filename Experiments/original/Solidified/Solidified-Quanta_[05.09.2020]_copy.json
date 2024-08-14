@@ -1,1 +1,138 @@
-{"path": "./Audit_Reports_2024/Solidified/Solidified-Quanta_[05.09.2020]_copy.pdf", "project_info": {"url": "https://gitlab.blockchainlabs.asia/quanta-v3/sc-qntx/tree/develop", "commit_hash": "ebf8f8cf25ef043e2f38d7152987e89f4da3382b", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Owner key holds lots of power", "description": "The owner key has excessive control over vital functions, including transferring tokens out of escrows and changing the token itself, which can critically affect the system if compromised.", "severity": "Critical", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-770"]}, "title": "Contracts can become illiquid", "description": "Both escrow contracts allow the owner to move funds or change the token regardless if they're locked in behalf of a user or not, making it possible for a user to try to withdraw tokens but the escrow contract does not have enough liquidity to fulfill it.", "severity": "Minor", "contract": "EscrowTimedRelease.sol and Escrwo3rdParty", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "approveAndCall whitelist is only enforced for meta transactions", "description": "The approveAndCall function enforces a whitelist of destinations when called through a meta transaction, but allows external calls to any contract when called directly.", "severity": "Minor", "contract": "TRI.sol", "function": "approveAndCall", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-393"]}, "title": "Return value of ERC20 transfer not verified", "description": "In Escrow3rdParty and EscrowTimedRelease contracts, five ERC20 transfers do not check return values, which may lead to failed transfers being treated as successful if used with tokens that only return false for failed transfers.", "severity": "Minor", "contract": "Escrow3rdParty, EscrowTimedRelease", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-710"], "2": ["CWE-1164"]}, "title": "5. Duplicated constant declarations", "description": "Code duplication of constants in all escrow contract files may lead to inconsistencies.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-710"], "2": ["CWE-1164"]}, "title": "Unnecessary Import of Safe Math", "description": "Unused import of Openzeppelin's safe math library in EscrowTimedRelease.sol and Escrow3rdParty.sol contracts, which also declare a custom safeAdd() function for 64 bit unsigned integers.", "severity": "Low", "contract": "EscrowTimedRelease.sol, Escrow3rdParty.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-710"], "2": ["CWE-1061"]}, "title": "Consider using Enums and Structs for improved readability", "description": "The EscrowData contract defines data structures as constants and arrays, which can be replaced with structs and enums to improve readability without drawbacks.", "severity": "Informational", "contract": "EscrowData", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Solidified/Solidified-Quanta_[05.09.2020]_copy.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "ebf8f8cf25ef043e2f38d7152987e89f4da3382b",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Owner key holds lots of power",
+            "description": "The owner key has excessive control over vital functions, including transferring tokens out of escrows and changing the token itself, which can critically affect the system if compromised.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "Contracts can become illiquid",
+            "description": "Both escrow contracts allow the owner to move funds or change the token regardless if they're locked in behalf of a user or not, making it possible for a user to try to withdraw tokens but the escrow contract does not have enough liquidity to fulfill it.",
+            "severity": "Minor",
+            "contract": "EscrowTimedRelease.sol and Escrwo3rdParty",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "approveAndCall whitelist is only enforced for meta transactions",
+            "description": "The approveAndCall function enforces a whitelist of destinations when called through a meta transaction, but allows external calls to any contract when called directly.",
+            "severity": "Minor",
+            "contract": "TRI.sol",
+            "function": "approveAndCall",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-393"
+                ]
+            },
+            "title": "Return value of ERC20 transfer not verified",
+            "description": "In Escrow3rdParty and EscrowTimedRelease contracts, five ERC20 transfers do not check return values, which may lead to failed transfers being treated as successful if used with tokens that only return false for failed transfers.",
+            "severity": "Minor",
+            "contract": "Escrow3rdParty, EscrowTimedRelease",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ]
+            },
+            "title": "5. Duplicated constant declarations",
+            "description": "Code duplication of constants in all escrow contract files may lead to inconsistencies.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ]
+            },
+            "title": "Unnecessary Import of Safe Math",
+            "description": "Unused import of Openzeppelin's safe math library in EscrowTimedRelease.sol and Escrow3rdParty.sol contracts, which also declare a custom safeAdd() function for 64 bit unsigned integers.",
+            "severity": "Low",
+            "contract": "EscrowTimedRelease.sol, Escrow3rdParty.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1061"
+                ]
+            },
+            "title": "Consider using Enums and Structs for improved readability",
+            "description": "The EscrowData contract defines data structures as constants and arrays, which can be replaced with structs and enums to improve readability without drawbacks.",
+            "severity": "Informational",
+            "contract": "EscrowData",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

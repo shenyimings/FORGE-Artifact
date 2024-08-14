@@ -1,1 +1,159 @@
-{"path": "./Audit_Reports_2024/Solidified/Solidified-Gath3r_[08.07.2021].pdf", "project_info": {"url": "N/A", "commit_hash": "bc8a7e369590", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Multiowned.sol: removeOwner breaks contract if not called on last owner", "description": "If removeOwner is not called on the last owner, an owner will be removed without decreasing the m_numOwners counter, breaking the 'All Owners' and 'Almost All Owners' checks in the contract.", "severity": "Critical", "contract": "Multiowned.sol", "function": "removeOwner()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Multiowned.sol: Missing emit keyword for events", "description": "Most of the events do not use the `emit` keyword while emitting an event.", "severity": "Minor", "contract": "Multiowned.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Edge case in confirmAndCheckForAlmostAll()", "description": "The function `confirmAndCheckForAlmostAll()` will fail if there is only one owner address and this situation is not recoverable.", "severity": "Minor", "contract": "Multiowned.sol", "function": "confirmAndCheckForAlmostAll()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-693"], "2": ["CWE-424"], "3": ["CWE-425"]}, "title": "Multiowned.sol: One malicious owner can cause DoS", "description": "A single malicious owner could always sabotage pending actions by issuing a number of pending transactions, so that the `512 == m_multiOwnedPendingIndex.length`, and the pending list is cleared.", "severity": "Minor", "contract": "Multiowned.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-710"], "2": ["CWE-1177"], "3": ["CWE-676"]}, "title": "Multiowned.sol : Consider reusing existing multisig model", "description": "The smart contract tries to implement a custom multisig approval model for transactions, which is discouraged due to the existence of reliable and well-tested solutions.", "severity": "Warning", "contract": "Multiowned.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-710"], "2": ["CWE-1076"]}, "title": "Wide Solidity compiler target", "description": "The contracts use different compiler versions defined by pragmas. It is considered best practice to stick to a single compiler version throughout the codebase.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Code cleanup", "description": "The contracts contain duplicate code and can benefit from using reusable functions and modifiers to increase readability and reduce size.", "severity": "Warning", "contract": "Multiowned.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-703"], "2": ["CWE-393"]}, "title": "Multiowned.sol: Missing return value for all code paths", "description": "In functions confirmAndCheck(), confirmAndCheckForAll(), and confirmAndCheckForAlmostAll() not all code paths return a result.", "severity": "Warning", "contract": "Multiowned.sol", "function": ["confirmAndCheck()", "confirmAndCheckForAll()", "confirmAndCheckForAlmostAll()"], "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Solidified/Solidified-Gath3r_[08.07.2021].pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "bc8a7e369590",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Multiowned.sol: removeOwner breaks contract if not called on last owner",
+            "description": "If removeOwner is not called on the last owner, an owner will be removed without decreasing the m_numOwners counter, breaking the 'All Owners' and 'Almost All Owners' checks in the contract.",
+            "severity": "Critical",
+            "contract": "Multiowned.sol",
+            "function": "removeOwner()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Multiowned.sol: Missing emit keyword for events",
+            "description": "Most of the events do not use the `emit` keyword while emitting an event.",
+            "severity": "Minor",
+            "contract": "Multiowned.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Edge case in confirmAndCheckForAlmostAll()",
+            "description": "The function `confirmAndCheckForAlmostAll()` will fail if there is only one owner address and this situation is not recoverable.",
+            "severity": "Minor",
+            "contract": "Multiowned.sol",
+            "function": "confirmAndCheckForAlmostAll()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-424"
+                ],
+                "3": [
+                    "CWE-425"
+                ]
+            },
+            "title": "Multiowned.sol: One malicious owner can cause DoS",
+            "description": "A single malicious owner could always sabotage pending actions by issuing a number of pending transactions, so that the `512 == m_multiOwnedPendingIndex.length`, and the pending list is cleared.",
+            "severity": "Minor",
+            "contract": "Multiowned.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1177"
+                ],
+                "3": [
+                    "CWE-676"
+                ]
+            },
+            "title": "Multiowned.sol : Consider reusing existing multisig model",
+            "description": "The smart contract tries to implement a custom multisig approval model for transactions, which is discouraged due to the existence of reliable and well-tested solutions.",
+            "severity": "Warning",
+            "contract": "Multiowned.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1076"
+                ]
+            },
+            "title": "Wide Solidity compiler target",
+            "description": "The contracts use different compiler versions defined by pragmas. It is considered best practice to stick to a single compiler version throughout the codebase.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Code cleanup",
+            "description": "The contracts contain duplicate code and can benefit from using reusable functions and modifiers to increase readability and reduce size.",
+            "severity": "Warning",
+            "contract": "Multiowned.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-393"
+                ]
+            },
+            "title": "Multiowned.sol: Missing return value for all code paths",
+            "description": "In functions confirmAndCheck(), confirmAndCheckForAll(), and confirmAndCheckForAlmostAll() not all code paths return a result.",
+            "severity": "Warning",
+            "contract": "Multiowned.sol",
+            "function": [
+                "confirmAndCheck()",
+                "confirmAndCheckForAll()",
+                "confirmAndCheckForAlmostAll()"
+            ],
+            "lineNumber": "N/A"
+        }
+    ]
+}

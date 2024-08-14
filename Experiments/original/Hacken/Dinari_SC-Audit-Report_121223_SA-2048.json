@@ -1,1 +1,232 @@
-{"path": "./Audit_Reports_2024/Hacken/Dinari_SC-Audit-Report_121223_SA-2048.pdf", "project_info": {"url": "https://github.com/dinaricrypto/sbt-contracts", "commit_hash": "65162eb0fc00225622c6965ad638c00d1db29e42", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "Undocumented Functionality - Changing of USDC Token Address", "description": "The contract permits alteration of the USDC stablecoin address; however, the rationale behind this modification remains undocumented.", "severity": "Low", "contract": "DualDistributor", "function": "setUSDC()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "L02. Roles Documentation Mismatch", "description": "Roles documentation mismatch due to unclear or missing information about specific use cases and scenarios where roles are intended to impose restrictions on user addresses.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "H01. Any Address Can Be Restricted by Privileged Account", "description": "The role of RESTRICTOR_ROLE, essentially representing the Protocol Administrator, grants the capability to impose restrictions on any address without necessitating prior conditions.", "severity": "N/A", "contract": "TransferRestrictor", "function": "_beforeTokenTransfer", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "H02. Unrestricted Locking of the xdShare", "description": "The xdShare Smart Contract allows for arbitrary locking at any given moment through the invocation of the lock() function by the Contract's owner.", "severity": "Medium", "contract": "xdShare", "function": "lock()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "M01. Lack of Minimal Threshold for Distribution Entity", "description": "It is possible to create a distribution that ends in the very next block. When combined with the reclaimDistribution() function, this can potentially open avenues for manipulations of distributions by entities possessing the DISTRIBUTOR_ROLE.", "severity": "Low", "contract": "DividendDistribution", "function": "createDistribution()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "M02. Unrestricted DISTRIBUTOR_ROLE in DividendDistribution", "description": "The DISTRIBUTOR_ROLE within the DividendDistribution Smart Contract possesses unrestricted authority to disburse funds to any recipient without the presence of checks or imposed restrictions.", "severity": "Medium", "contract": "DividendDistribution", "function": "distribute()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "I01. Missing Zero-Address Validation for Addresses", "description": "It is possible to call the constructor and the initialization function with zero address, which can lead to an unintended behavior of the Smart Contracts.", "severity": "Low", "contract": "DividendDistribution and xdShare", "function": "constructor() and initialize()", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "I02. Owner Role is Not Used", "description": "The Smart Contracts implement an Owner role; however, it does not possess any additional privileges beyond the default ones provided by the OpenZeppelin library.", "severity": "Low", "contract": "DividendDistribution and TransferRestrictor", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-691"], "2": ["CWE-841"]}, "title": "CEI Pattern Violation", "description": "The Smart Contracts deviate from the CEI (Check-Effects-Interaction) pattern on multiple occasions, initially emitting an event and subsequently updating the Smart Contract state.", "severity": "N/A", "contract": ["DividendDistribution", "DualDistributor"], "function": ["createDistribution()", "distribute()", "reclaimDistribution()"], "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-710"], "2": ["CWE-1164"]}, "title": "I04. Unused Import", "description": "The Smart Contract imports ReentrancyGuard, although it is not utilized anywhere within the contract.", "severity": "N/A", "contract": "xdShare", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-710"], "2": ["CWE-1076"], "3": ["CWE-1078"], "4": ["CWE-1099"]}, "title": "I05. Solidity Style Guide Violation - Contract Naming Conventions Violation", "description": "Using lowercase letters for smart contract names can lead to confusion and is not in compliance with the Solidity style guide.", "severity": "N/A", "contract": "xdShare, dShare", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Hacken/Dinari_SC-Audit-Report_121223_SA-2048.pdf",
+    "project_info": {
+        "url": "https://github.com/dinaricrypto/sbt-contracts",
+        "commit_hash": "65162eb0fc00225622c6965ad638c00d1db29e42",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Undocumented Functionality - Changing of USDC Token Address",
+            "description": "The contract permits alteration of the USDC stablecoin address; however, the rationale behind this modification remains undocumented.",
+            "severity": "Low",
+            "contract": "DualDistributor",
+            "function": "setUSDC()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "L02. Roles Documentation Mismatch",
+            "description": "Roles documentation mismatch due to unclear or missing information about specific use cases and scenarios where roles are intended to impose restrictions on user addresses.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "H01. Any Address Can Be Restricted by Privileged Account",
+            "description": "The role of RESTRICTOR_ROLE, essentially representing the Protocol Administrator, grants the capability to impose restrictions on any address without necessitating prior conditions.",
+            "severity": "N/A",
+            "contract": "TransferRestrictor",
+            "function": "_beforeTokenTransfer",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "H02. Unrestricted Locking of the xdShare",
+            "description": "The xdShare Smart Contract allows for arbitrary locking at any given moment through the invocation of the lock() function by the Contract's owner.",
+            "severity": "Medium",
+            "contract": "xdShare",
+            "function": "lock()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "M01. Lack of Minimal Threshold for Distribution Entity",
+            "description": "It is possible to create a distribution that ends in the very next block. When combined with the reclaimDistribution() function, this can potentially open avenues for manipulations of distributions by entities possessing the DISTRIBUTOR_ROLE.",
+            "severity": "Low",
+            "contract": "DividendDistribution",
+            "function": "createDistribution()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "M02. Unrestricted DISTRIBUTOR_ROLE in DividendDistribution",
+            "description": "The DISTRIBUTOR_ROLE within the DividendDistribution Smart Contract possesses unrestricted authority to disburse funds to any recipient without the presence of checks or imposed restrictions.",
+            "severity": "Medium",
+            "contract": "DividendDistribution",
+            "function": "distribute()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "I01. Missing Zero-Address Validation for Addresses",
+            "description": "It is possible to call the constructor and the initialization function with zero address, which can lead to an unintended behavior of the Smart Contracts.",
+            "severity": "Low",
+            "contract": "DividendDistribution and xdShare",
+            "function": "constructor() and initialize()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "I02. Owner Role is Not Used",
+            "description": "The Smart Contracts implement an Owner role; however, it does not possess any additional privileges beyond the default ones provided by the OpenZeppelin library.",
+            "severity": "Low",
+            "contract": "DividendDistribution and TransferRestrictor",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "CEI Pattern Violation",
+            "description": "The Smart Contracts deviate from the CEI (Check-Effects-Interaction) pattern on multiple occasions, initially emitting an event and subsequently updating the Smart Contract state.",
+            "severity": "N/A",
+            "contract": [
+                "DividendDistribution",
+                "DualDistributor"
+            ],
+            "function": [
+                "createDistribution()",
+                "distribute()",
+                "reclaimDistribution()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ]
+            },
+            "title": "I04. Unused Import",
+            "description": "The Smart Contract imports ReentrancyGuard, although it is not utilized anywhere within the contract.",
+            "severity": "N/A",
+            "contract": "xdShare",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1076"
+                ],
+                "3": [
+                    "CWE-1078"
+                ],
+                "4": [
+                    "CWE-1099"
+                ]
+            },
+            "title": "I05. Solidity Style Guide Violation - Contract Naming Conventions Violation",
+            "description": "Using lowercase letters for smart contract names can lead to confusion and is not in compliance with the Solidity style guide.",
+            "severity": "N/A",
+            "contract": "xdShare, dShare",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

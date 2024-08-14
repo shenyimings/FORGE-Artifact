@@ -1,1 +1,240 @@
-{"path": "./Audit_Reports_2024/Runtime_V\u0435rification/AshSwap.pdf", "project_info": {"url": "N/A", "commit_hash": "bddadd7d0f30879e6e7734c1b317609311c065a0", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"], "2": ["CWE-1339"]}, "title": "Possibility of precision loss when calculating constant value", "description": "There's a slight precision issue in a certain computation involved in the implementation of the Newton-Raphson algorithm for calculating the constant D of the automated market maker.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Lack of validations in the initialization of pools", "description": "The lack of validations in the protocol\u2019s liquidity pools allows malicious users to set up a pool with duplicate assets or single token, potentially leading to profit manipulation.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "Initial issuance of tokens are kept in the router can be withdrawn to the fee_distributor address", "description": "The initial token issuance in the router contract creates 1000 * 10^(-18) LP tokens that are not burnt or transferred, and can be withdrawn to the fee distributor address if the owner or router contract becomes compromised.", "severity": "Medium", "contract": "Router Contract", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "\u201cset_lp_token_identifier\u201d should not be able to be called by the emergency wallet/owner address", "description": "The 'setLpTokenIdentifier' endpoint can be called by the owner/admin address, allowing a compromised account to invalidate liquidity tokens and withdraw all tokens held by the liquidity pool.", "severity": "High", "contract": "N/A", "function": "setLpTokenIdentifier", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-682"], "2": ["CWE-1339"]}, "title": "User has no voting power until his deposited amount is greater than MAXTIME variable", "description": "In the voting escrow contract, a user's deposited balance smaller than MAXTIME causes precision loss when creating a checkpoint for after a deposit, leading to zero slope and bias used for calculating their voting power.", "severity": "Low", "contract": "Voting Escrow Contract", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "No validation of tokens in functions and views used for calculating amounts", "description": "In the liquidity pool contract, there is no validation over the tokens being handled in the 'estimateAddLiquidity' and 'estimateAmountOut' views. This allows users to supply tokens that are not held by the pool or input/output the same token, which can lead to incorrect calculations.", "severity": "Low", "contract": "Liquidity Pool Contract", "function": "estimateAddLiquidity, estimateAmountOut", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "It is possible to override the locked token identifier in the voting escrow", "description": "In the init function of Elrond's Rust smart contracts, two situations allow this function to be called: on contract deployment and contract update. In the voting escrow contract, the first operation performed during the init function is setting the locked token identifier, but there is no validation to prevent it from being overridden in update operations.", "severity": "High", "contract": "Voting Escrow", "function": "init()", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-354"]}, "title": "No validations over the output token when using convert_to_fee_tokens", "description": "In the fee collector module of the router contract, there are no guarantees that the tokens that come as an output of the sequence of swaps through burners are actually in the fee_tokens list. Furthermore, there are no validations with regards to the amount of tokens that are received in the end.", "severity": "Low", "contract": "Router Contract", "function": "convert_to_fee_tokens()", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Different reasons for failure with the same error code", "description": "Consecutive requirement assertions with the same error code are used to validate different properties, making it unclear which property causes the failure.", "severity": "Informative", "contract": "Liquidity Pool Smart Contract and Router Contract", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-693"], "2": ["CWE-182"]}, "title": "Nomenclature of the old_attribute variable", "description": "The name 'old_attribute' does not reflect its purpose as it receives reserves of an asset as a BigUInt.", "severity": "-", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "The same validation is performed twice when claiming in the fee distributor", "description": "The condition that checks if the amount to be claimed is greater than zero encapsulates the next conditional. Since 'amount' is a BigUInt and cannot have a negative value, the contents from line 279 to 281 can be merged into the first conditional block.", "severity": "N/A", "contract": "fee distributor", "function": "claiming", "lineNumber": "279-281"}, {"id": 11, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Payable tag on rewarder endpoint is not needed", "description": "In the rewarder contract, the 'mintToken' endpoint is payable but no payments are given when calling the rewarder from the farm contract. Remove the 'payable' annotation to avoid unpredictable actions.", "severity": "Informative", "contract": "Rewarder", "function": "mintToken", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Nomenclature of the calculate_per_block_rewards function", "description": "The 'calculate_per_block_rewards' function returns the amount of rewards distributed in an interval between two blocks, and a more fitting name for this function would be 'calculate_rewards_for_time_interval'.", "severity": "Informative", "contract": "Farm Contract", "function": "calculate_per_block_rewards()", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Runtime_V\u0435rification/AshSwap.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "bddadd7d0f30879e6e7734c1b317609311c065a0",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "Possibility of precision loss when calculating constant value",
+            "description": "There's a slight precision issue in a certain computation involved in the implementation of the Newton-Raphson algorithm for calculating the constant D of the automated market maker.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Lack of validations in the initialization of pools",
+            "description": "The lack of validations in the protocol\u2019s liquidity pools allows malicious users to set up a pool with duplicate assets or single token, potentially leading to profit manipulation.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Initial issuance of tokens are kept in the router can be withdrawn to the fee_distributor address",
+            "description": "The initial token issuance in the router contract creates 1000 * 10^(-18) LP tokens that are not burnt or transferred, and can be withdrawn to the fee distributor address if the owner or router contract becomes compromised.",
+            "severity": "Medium",
+            "contract": "Router Contract",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "\u201cset_lp_token_identifier\u201d should not be able to be called by the emergency wallet/owner address",
+            "description": "The 'setLpTokenIdentifier' endpoint can be called by the owner/admin address, allowing a compromised account to invalidate liquidity tokens and withdraw all tokens held by the liquidity pool.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "setLpTokenIdentifier",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "User has no voting power until his deposited amount is greater than MAXTIME variable",
+            "description": "In the voting escrow contract, a user's deposited balance smaller than MAXTIME causes precision loss when creating a checkpoint for after a deposit, leading to zero slope and bias used for calculating their voting power.",
+            "severity": "Low",
+            "contract": "Voting Escrow Contract",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "No validation of tokens in functions and views used for calculating amounts",
+            "description": "In the liquidity pool contract, there is no validation over the tokens being handled in the 'estimateAddLiquidity' and 'estimateAmountOut' views. This allows users to supply tokens that are not held by the pool or input/output the same token, which can lead to incorrect calculations.",
+            "severity": "Low",
+            "contract": "Liquidity Pool Contract",
+            "function": "estimateAddLiquidity, estimateAmountOut",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "It is possible to override the locked token identifier in the voting escrow",
+            "description": "In the init function of Elrond's Rust smart contracts, two situations allow this function to be called: on contract deployment and contract update. In the voting escrow contract, the first operation performed during the init function is setting the locked token identifier, but there is no validation to prevent it from being overridden in update operations.",
+            "severity": "High",
+            "contract": "Voting Escrow",
+            "function": "init()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-354"
+                ]
+            },
+            "title": "No validations over the output token when using convert_to_fee_tokens",
+            "description": "In the fee collector module of the router contract, there are no guarantees that the tokens that come as an output of the sequence of swaps through burners are actually in the fee_tokens list. Furthermore, there are no validations with regards to the amount of tokens that are received in the end.",
+            "severity": "Low",
+            "contract": "Router Contract",
+            "function": "convert_to_fee_tokens()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Different reasons for failure with the same error code",
+            "description": "Consecutive requirement assertions with the same error code are used to validate different properties, making it unclear which property causes the failure.",
+            "severity": "Informative",
+            "contract": "Liquidity Pool Smart Contract and Router Contract",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-182"
+                ]
+            },
+            "title": "Nomenclature of the old_attribute variable",
+            "description": "The name 'old_attribute' does not reflect its purpose as it receives reserves of an asset as a BigUInt.",
+            "severity": "-",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "The same validation is performed twice when claiming in the fee distributor",
+            "description": "The condition that checks if the amount to be claimed is greater than zero encapsulates the next conditional. Since 'amount' is a BigUInt and cannot have a negative value, the contents from line 279 to 281 can be merged into the first conditional block.",
+            "severity": "N/A",
+            "contract": "fee distributor",
+            "function": "claiming",
+            "lineNumber": "279-281"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Payable tag on rewarder endpoint is not needed",
+            "description": "In the rewarder contract, the 'mintToken' endpoint is payable but no payments are given when calling the rewarder from the farm contract. Remove the 'payable' annotation to avoid unpredictable actions.",
+            "severity": "Informative",
+            "contract": "Rewarder",
+            "function": "mintToken",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Nomenclature of the calculate_per_block_rewards function",
+            "description": "The 'calculate_per_block_rewards' function returns the amount of rewards distributed in an interval between two blocks, and a more fitting name for this function would be 'calculate_rewards_for_time_interval'.",
+            "severity": "Informative",
+            "contract": "Farm Contract",
+            "function": "calculate_per_block_rewards()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

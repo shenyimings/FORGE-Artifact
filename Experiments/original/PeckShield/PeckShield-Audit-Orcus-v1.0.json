@@ -1,1 +1,92 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Orcus-v1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Incorrect Logic in unclaimedTeamFund()", "description": "The `unclaimedTeamFund()` function has incorrect logic, always using the current emission rate without considering the possibility of elapsed time crossing multiple years.", "severity": "Medium", "contract": "ORU token contract", "function": "unclaimedTeamFund()", "lineNumber": "73-97"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Improper Logic in Farm::_calcAccOruToAdd()", "description": "The `_calcAccOruToAdd()` function in the `Farm` contract uses an incorrect scaling factor (`10**_lpDecimals`) instead of the intended `ORU_PRECISION`, which may cause inconsistency.", "severity": "Medium", "contract": "Farm", "function": "_calcAccOruToAdd()", "lineNumber": "221"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Revisited Logic in ORUSale::sendCarryOveredORU()", "description": "The privileged function sendCarryOveredORU allows the owner to drain ORU tokens before buyers can claim all purchased tokens, which can lead to an unfair advantage.", "severity": "Low", "contract": "ORUSale", "function": "sendCarryOveredORU()", "lineNumber": "103-109"}, {"id": 3, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Improved Logic to swap() in Arbitrager", "description": "Implicit assumption of deployment address of `ousd` being numerically smaller than `usdc` may not hold true on other networks, affecting portability.", "severity": "Low", "contract": "Arbitrager", "function": "sellOusd()", "lineNumber": "224-229"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "Trust Issue of Admin Keys", "description": "In the Orcus protocol, there are some privileged accounts (owners and operator) that play critical roles in governing and regulating system-wide operations. These privileged accounts need to be scrutinized.", "severity": "Medium", "contract": "BankStates", "function": "setTcrMovement,setUpdatePeriod,setTcrMin,setEcrMin,toggleMintPaused,toggleRedeemPaused,toggleZapMintPaused", "lineNumber": "72-93,95-108"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Orcus-v1.0.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect Logic in unclaimedTeamFund()",
+            "description": "The `unclaimedTeamFund()` function has incorrect logic, always using the current emission rate without considering the possibility of elapsed time crossing multiple years.",
+            "severity": "Medium",
+            "contract": "ORU token contract",
+            "function": "unclaimedTeamFund()",
+            "lineNumber": "73-97"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improper Logic in Farm::_calcAccOruToAdd()",
+            "description": "The `_calcAccOruToAdd()` function in the `Farm` contract uses an incorrect scaling factor (`10**_lpDecimals`) instead of the intended `ORU_PRECISION`, which may cause inconsistency.",
+            "severity": "Medium",
+            "contract": "Farm",
+            "function": "_calcAccOruToAdd()",
+            "lineNumber": "221"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Revisited Logic in ORUSale::sendCarryOveredORU()",
+            "description": "The privileged function sendCarryOveredORU allows the owner to drain ORU tokens before buyers can claim all purchased tokens, which can lead to an unfair advantage.",
+            "severity": "Low",
+            "contract": "ORUSale",
+            "function": "sendCarryOveredORU()",
+            "lineNumber": "103-109"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Improved Logic to swap() in Arbitrager",
+            "description": "Implicit assumption of deployment address of `ousd` being numerically smaller than `usdc` may not hold true on other networks, affecting portability.",
+            "severity": "Low",
+            "contract": "Arbitrager",
+            "function": "sellOusd()",
+            "lineNumber": "224-229"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "In the Orcus protocol, there are some privileged accounts (owners and operator) that play critical roles in governing and regulating system-wide operations. These privileged accounts need to be scrutinized.",
+            "severity": "Medium",
+            "contract": "BankStates",
+            "function": "setTcrMovement,setUpdatePeriod,setTcrMin,setEcrMin,toggleMintPaused,toggleRedeemPaused,toggleZapMintPaused",
+            "lineNumber": "72-93,95-108"
+        }
+    ]
+}

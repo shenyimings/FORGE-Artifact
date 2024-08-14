@@ -1,1 +1,238 @@
-{"path": "./Audit_Reports_2024/Solidified/Solidified-Ola_Finance_[21_Oct_2021].pdf", "project_info": {"url": "https://github.com/ola-finance/ola-audit", "commit_hash": "3bd2e4e11e21945e2b47656f4b34cacdc12e2f34", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-693"]}, "title": "Avoid shadow variables", "description": "Several contracts reuse state variable names for local variables.", "severity": "Low", "contract": ["RegistryV1", "CToken", "SingleAssetDynamicRainmake"], "function": ["registerNewLnInternal()", "_reduceReservesFresh()", "N/A"], "lineNumber": ["N/A", "N/A", "N/A"]}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "ChainlinkPriceOracle.sol: Updated timestamp can be different", "description": "The retrieve timestamp methods return only the updated timestamp and not the price updated, preventing the caller from using an accurate timestamp if the price gets updated before this function is called.", "severity": "Medium", "contract": "ChainlinkPriceOracle.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-710"], "2": ["CWE-1126"]}, "title": "A mix of Solidity compiler versions", "description": "The codebase mixes code across different major compiler versions.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-697"], "2": ["CWE-1025"], "3": ["CWE-595"], "4": ["CWE-597"]}, "title": "Function _acceptAdmin() checks for msg.sender != address(0)", "description": "The function `_acceptAdmin()` in multiple contracts checks for `msg.sender != address(0)` instead of checking `pendingAdmin != address(0)` as suggested by the comment.", "severity": "Medium", "contract": ["Unitroller.sol", "Ministry.sol", "SingleAssetDynamicRainMaker.sol"], "function": "_acceptAdmin()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-707"], "2": ["CWE-240"]}, "title": "CErc20Delegator.sol: Duplicate function implementation", "description": "The contract provides exactly the same implementation for functions already inherited from ODelegator.sol - delegateTo(), delegateToImplementation() and delegateToViewImplementation().", "severity": "Medium", "contract": "CErc20Delegator", "function": ["delegateTo()", "delegateToImplementation()", "delegateToViewImplementation()"], "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Use named constants for exponent scale", "description": "Various contracts in OlaPlatform use `1e18` for the exponent scale rather than inheriting `expScale` from the Compound code.", "severity": "Medium", "contract": "Multiple contracts in OlaPlatform", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-710"], "2": ["CWE-1164"], "3": ["CWE-561"]}, "title": "CEtherV0_01.sol: Remove unwanted constructor", "description": "The contract contains a constructor which is used to initialize the admin variable but can be removed since the contract is only used via delegate calls.", "severity": "Informational", "contract": "CEtherV0_01.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Miscellaneous notes", "description": "Improve code quality and readability by addressing duplicate functions, misspelled words, access control, reentrancy guards, and assembly proxy.", "severity": "Note", "contract": "Multiple contracts (ChainlinkPriceOracle.sol, CErc20V0_01.sol)", "function": "N/A", "lineNumber": "189"}, {"id": 8, "category": {"1": ["CWE-707"], "2": ["CWE-240"]}, "title": "Duplicate functions in ChainlinkPriceOracle.sol", "description": "The contract has duplicate functions `getPriceForAsset` and `getAssetPrice` which do the same action.", "severity": "Medium", "contract": "ChainlinkPriceOracle.sol", "function": "getPriceForAsset, getAssetPrice", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-710"], "2": ["CWE-1164"]}, "title": "Misspelled word in comment", "description": "A misspelled word 'complaint' instead of 'compliant' exists in a comment in CErc20V0_01.sol.", "severity": "Informational", "contract": "CErc20V0_01", "function": "N/A", "lineNumber": "189"}, {"id": 10, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "Lack of reentrancy guards outside of CToken", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Assembly proxy issue in various contracts", "description": "Various contracts have a copy-pasted assembly proxy that assumes the output pointer location is at 0x40 instead of checking for it.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Solidified/Solidified-Ola_Finance_[21_Oct_2021].pdf",
+    "project_info": {
+        "url": "https://github.com/ola-finance/ola-audit",
+        "commit_hash": "3bd2e4e11e21945e2b47656f4b34cacdc12e2f34",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "Avoid shadow variables",
+            "description": "Several contracts reuse state variable names for local variables.",
+            "severity": "Low",
+            "contract": [
+                "RegistryV1",
+                "CToken",
+                "SingleAssetDynamicRainmake"
+            ],
+            "function": [
+                "registerNewLnInternal()",
+                "_reduceReservesFresh()",
+                "N/A"
+            ],
+            "lineNumber": [
+                "N/A",
+                "N/A",
+                "N/A"
+            ]
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "ChainlinkPriceOracle.sol: Updated timestamp can be different",
+            "description": "The retrieve timestamp methods return only the updated timestamp and not the price updated, preventing the caller from using an accurate timestamp if the price gets updated before this function is called.",
+            "severity": "Medium",
+            "contract": "ChainlinkPriceOracle.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1126"
+                ]
+            },
+            "title": "A mix of Solidity compiler versions",
+            "description": "The codebase mixes code across different major compiler versions.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ],
+                "2": [
+                    "CWE-1025"
+                ],
+                "3": [
+                    "CWE-595"
+                ],
+                "4": [
+                    "CWE-597"
+                ]
+            },
+            "title": "Function _acceptAdmin() checks for msg.sender != address(0)",
+            "description": "The function `_acceptAdmin()` in multiple contracts checks for `msg.sender != address(0)` instead of checking `pendingAdmin != address(0)` as suggested by the comment.",
+            "severity": "Medium",
+            "contract": [
+                "Unitroller.sol",
+                "Ministry.sol",
+                "SingleAssetDynamicRainMaker.sol"
+            ],
+            "function": "_acceptAdmin()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-240"
+                ]
+            },
+            "title": "CErc20Delegator.sol: Duplicate function implementation",
+            "description": "The contract provides exactly the same implementation for functions already inherited from ODelegator.sol - delegateTo(), delegateToImplementation() and delegateToViewImplementation().",
+            "severity": "Medium",
+            "contract": "CErc20Delegator",
+            "function": [
+                "delegateTo()",
+                "delegateToImplementation()",
+                "delegateToViewImplementation()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Use named constants for exponent scale",
+            "description": "Various contracts in OlaPlatform use `1e18` for the exponent scale rather than inheriting `expScale` from the Compound code.",
+            "severity": "Medium",
+            "contract": "Multiple contracts in OlaPlatform",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ],
+                "3": [
+                    "CWE-561"
+                ]
+            },
+            "title": "CEtherV0_01.sol: Remove unwanted constructor",
+            "description": "The contract contains a constructor which is used to initialize the admin variable but can be removed since the contract is only used via delegate calls.",
+            "severity": "Informational",
+            "contract": "CEtherV0_01.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Miscellaneous notes",
+            "description": "Improve code quality and readability by addressing duplicate functions, misspelled words, access control, reentrancy guards, and assembly proxy.",
+            "severity": "Note",
+            "contract": "Multiple contracts (ChainlinkPriceOracle.sol, CErc20V0_01.sol)",
+            "function": "N/A",
+            "lineNumber": "189"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-240"
+                ]
+            },
+            "title": "Duplicate functions in ChainlinkPriceOracle.sol",
+            "description": "The contract has duplicate functions `getPriceForAsset` and `getAssetPrice` which do the same action.",
+            "severity": "Medium",
+            "contract": "ChainlinkPriceOracle.sol",
+            "function": "getPriceForAsset, getAssetPrice",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ]
+            },
+            "title": "Misspelled word in comment",
+            "description": "A misspelled word 'complaint' instead of 'compliant' exists in a comment in CErc20V0_01.sol.",
+            "severity": "Informational",
+            "contract": "CErc20V0_01",
+            "function": "N/A",
+            "lineNumber": "189"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Lack of reentrancy guards outside of CToken",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Assembly proxy issue in various contracts",
+            "description": "Various contracts have a copy-pasted assembly proxy that assumes the output pointer location is at 0x40 instead of checking for it.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

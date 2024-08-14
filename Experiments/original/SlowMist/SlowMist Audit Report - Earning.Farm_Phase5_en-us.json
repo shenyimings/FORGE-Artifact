@@ -1,1 +1,167 @@
-{"path": "./Audit_Reports_2024/SlowMist/SlowMist Audit Report - Earning.Farm_Phase5_en-us.pdf", "project_info": {"url": "https://github.com/Shata-Capital/ENF_lowrisk_farm", "commit_hash": "500611872e25f55e11ce3ef098979ae79956a37e", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Redundant Code Usage", "description": "The withdraw function in Vault contract of ENFv3/ENF_lowrisk_farm/ENF_lowrisk_ETH_farm calculates share amount without using the convertToShares function, resulting in redundant code usage.", "severity": "Suggestion", "contract": "Vault", "function": "withdraw(uint256 assets, address receiver)", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"], "2": ["CWE-1339"]}, "title": "Potential Precision Calculation Issue", "description": "The redeem function calculates assets by dividing shares * assetsPerShare() by 1e24, which may cause decimal deviation if assetDecimal is not equal to 6.", "severity": "Medium", "contract": "vault.sol", "function": "redeem(uint256,address)", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-693"], "2": ["CWE-807"], "3": ["CWE-302"]}, "title": "Business logic flaws in reward distribution", "description": "Malicious users can obtain rewards by front-running deposits to improve capital utilization during harvest operations.", "severity": "Medium", "contract": "ENF_lowrisk_farm/ENF_lowrish_ETH_farm", "function": "harvest()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Token Transfer Missing Rewards Update", "description": "In the Vault contract of ENF_lowrisk_farm/ENF_lowrisk_ETH_farm, the _updateUserData function is used to update the user's reward, but it is not updated when the user's share is transferred. This will result in accounting errors during share token transfers.", "severity": "Critical", "contract": "Vault", "function": "_transfer() and _updateUserData()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Incorrect reward receiving address", "description": "When toAsset is false, the protocol will issue the reward directly to the user, but the destination address of the reward is not the receiver address specified by the user but msg.sender.", "severity": "Critical", "contract": "ENF_lowrisk_farm/contracts/core/vault.sol, ENF_lowrish_ETH_farm/contracts/core/vault.sol", "function": "_claim", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Direct distribution of rewards is not available", "description": "When toAsset is false, the protocol will issue the reward directly to the user, but the destination address of the reward is not the receiver address specified by the user but msg.sender.", "severity": "N/A", "contract": "ENF_lowrisk_farm/contracts/core/vault.sol, ENF_lowrish_ETH_farm/contracts/core/vault.sol", "function": "_claim", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "Risk of price manipulation", "description": "N/A", "severity": "Critical", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "Issue with checking on Design Logic", "description": "The _swap function may fail to perform as expected when fromToken is address(0) due to incorrect logic.", "severity": "Medium", "contract": "vault.sol", "function": "_swap", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-697"]}, "title": "Issue with checking on fromToken", "description": "The token exchange may fail to perform as expected when fromToken is address(0) because it will be exchanged through the swapExactTokenInput function.", "severity": "Low", "contract": "ENF_lowrisk_farm/contracts/core/vault.sol, ENF_lowrish_ETH_farm/contracts/core/vault.sol", "function": "_swap", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/SlowMist/SlowMist Audit Report - Earning.Farm_Phase5_en-us.pdf",
+    "project_info": {
+        "url": "https://github.com/Shata-Capital/ENF_lowrisk_farm",
+        "commit_hash": "500611872e25f55e11ce3ef098979ae79956a37e",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Redundant Code Usage",
+            "description": "The withdraw function in Vault contract of ENFv3/ENF_lowrisk_farm/ENF_lowrisk_ETH_farm calculates share amount without using the convertToShares function, resulting in redundant code usage.",
+            "severity": "Suggestion",
+            "contract": "Vault",
+            "function": "withdraw(uint256 assets, address receiver)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "Potential Precision Calculation Issue",
+            "description": "The redeem function calculates assets by dividing shares * assetsPerShare() by 1e24, which may cause decimal deviation if assetDecimal is not equal to 6.",
+            "severity": "Medium",
+            "contract": "vault.sol",
+            "function": "redeem(uint256,address)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ],
+                "3": [
+                    "CWE-302"
+                ]
+            },
+            "title": "Business logic flaws in reward distribution",
+            "description": "Malicious users can obtain rewards by front-running deposits to improve capital utilization during harvest operations.",
+            "severity": "Medium",
+            "contract": "ENF_lowrisk_farm/ENF_lowrish_ETH_farm",
+            "function": "harvest()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Token Transfer Missing Rewards Update",
+            "description": "In the Vault contract of ENF_lowrisk_farm/ENF_lowrisk_ETH_farm, the _updateUserData function is used to update the user's reward, but it is not updated when the user's share is transferred. This will result in accounting errors during share token transfers.",
+            "severity": "Critical",
+            "contract": "Vault",
+            "function": "_transfer() and _updateUserData()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Incorrect reward receiving address",
+            "description": "When toAsset is false, the protocol will issue the reward directly to the user, but the destination address of the reward is not the receiver address specified by the user but msg.sender.",
+            "severity": "Critical",
+            "contract": "ENF_lowrisk_farm/contracts/core/vault.sol, ENF_lowrish_ETH_farm/contracts/core/vault.sol",
+            "function": "_claim",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Direct distribution of rewards is not available",
+            "description": "When toAsset is false, the protocol will issue the reward directly to the user, but the destination address of the reward is not the receiver address specified by the user but msg.sender.",
+            "severity": "N/A",
+            "contract": "ENF_lowrisk_farm/contracts/core/vault.sol, ENF_lowrish_ETH_farm/contracts/core/vault.sol",
+            "function": "_claim",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Risk of price manipulation",
+            "description": "N/A",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Issue with checking on Design Logic",
+            "description": "The _swap function may fail to perform as expected when fromToken is address(0) due to incorrect logic.",
+            "severity": "Medium",
+            "contract": "vault.sol",
+            "function": "_swap",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ]
+            },
+            "title": "Issue with checking on fromToken",
+            "description": "The token exchange may fail to perform as expected when fromToken is address(0) because it will be exchanged through the swapExactTokenInput function.",
+            "severity": "Low",
+            "contract": "ENF_lowrisk_farm/contracts/core/vault.sol, ENF_lowrish_ETH_farm/contracts/core/vault.sol",
+            "function": "_swap",
+            "lineNumber": "N/A"
+        }
+    ]
+}

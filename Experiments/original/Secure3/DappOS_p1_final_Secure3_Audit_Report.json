@@ -1,1 +1,154 @@
-{"path": "./Audit_Reports_2024/Secure3/DappOS_p1_final_Secure3_Audit_Report.pdf", "project_info": {"url": "https://github.com/DappOSDao/contracts-v1", "commit_hash": "096edc19775ec66a5a6d836ef8351cf38cd1de7a", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1287"]}, "title": "transfer and approve will revert when the token doesn't follow standard implementation.", "description": "Tokens like USDT on ethereum mainnet is not compatible with the standard ERC20. Its 'approve' and 'transfer' methods have no return value, thus if using the standard ERC20 interface will lead to revert.", "severity": "Medium", "contract": "BalancerV1", "function": "N/A", "lineNumber": "L84, L92, L97, L177, L183"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "Order status not checked when calling cancelOrder", "description": "The order status is not checked when calling cancelOrder, allowing an already cancelled order to be cancelled again and leading to payment node losing funds.", "severity": "Critical", "contract": "PayDB", "function": "_cancelOrder", "lineNumber": "224"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "OrderCancelled event not emitted.", "description": "The `OrderCancelled` event is defined in `IPayDB.sol` but never used. It should be emitted when the order is cancelled.", "severity": "Informational", "contract": "PayDB", "function": "_cancelOrder()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-909"], "4": ["CWE-456"]}, "title": "Missing immutable declaration", "description": "Confirm that the VWManager address does not change. It should be immutable.", "severity": "Informational", "contract": "PayDB", "function": "N/A", "lineNumber": "22"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "PayDB::executeDstOrderETH and payDB::executeDstOrder lack permission check", "description": "The functions executeDstOrderETH and executeDstOrder do not have a permission check to ensure they are only called by payment nodes.", "severity": "Critical", "contract": "payDB", "function": ["executeDstOrderETH", "executeDstOrder"], "lineNumber": "148, 167"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-282"], "3": ["CWE-708"]}, "title": "VWManagerService::_resetOwner needs to check if new owner is", "description": "The new owner should not be address(0), as it would result in losing control of the wallet.", "severity": "Low", "contract": "VWManagerService", "function": "_resetOwner", "lineNumber": "L79-L90"}, {"id": 6, "category": {"1": ["CWE-710"], "2": ["CWE-1068"]}, "title": "doesn't follow standard implementation.", "description": "Tokens like USDT on ethereum mainnet are not compatible with the standard ERC20. Its 'approve' and 'transfer' methods have no return value, thus if using the standard ERC20 interface will lead to revert.", "severity": "Medium", "contract": "BalancerV1", "function": "N/A", "lineNumber": "L84, L92, L97, L177, L183"}]}
+{
+    "path": "./Audit_Reports_2024/Secure3/DappOS_p1_final_Secure3_Audit_Report.pdf",
+    "project_info": {
+        "url": "https://github.com/DappOSDao/contracts-v1",
+        "commit_hash": "096edc19775ec66a5a6d836ef8351cf38cd1de7a",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1287"
+                ]
+            },
+            "title": "transfer and approve will revert when the token doesn't follow standard implementation.",
+            "description": "Tokens like USDT on ethereum mainnet is not compatible with the standard ERC20. Its 'approve' and 'transfer' methods have no return value, thus if using the standard ERC20 interface will lead to revert.",
+            "severity": "Medium",
+            "contract": "BalancerV1",
+            "function": "N/A",
+            "lineNumber": "L84, L92, L97, L177, L183"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Order status not checked when calling cancelOrder",
+            "description": "The order status is not checked when calling cancelOrder, allowing an already cancelled order to be cancelled again and leading to payment node losing funds.",
+            "severity": "Critical",
+            "contract": "PayDB",
+            "function": "_cancelOrder",
+            "lineNumber": "224"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "OrderCancelled event not emitted.",
+            "description": "The `OrderCancelled` event is defined in `IPayDB.sol` but never used. It should be emitted when the order is cancelled.",
+            "severity": "Informational",
+            "contract": "PayDB",
+            "function": "_cancelOrder()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "Missing immutable declaration",
+            "description": "Confirm that the VWManager address does not change. It should be immutable.",
+            "severity": "Informational",
+            "contract": "PayDB",
+            "function": "N/A",
+            "lineNumber": "22"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "PayDB::executeDstOrderETH and payDB::executeDstOrder lack permission check",
+            "description": "The functions executeDstOrderETH and executeDstOrder do not have a permission check to ensure they are only called by payment nodes.",
+            "severity": "Critical",
+            "contract": "payDB",
+            "function": [
+                "executeDstOrderETH",
+                "executeDstOrder"
+            ],
+            "lineNumber": "148, 167"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-282"
+                ],
+                "3": [
+                    "CWE-708"
+                ]
+            },
+            "title": "VWManagerService::_resetOwner needs to check if new owner is",
+            "description": "The new owner should not be address(0), as it would result in losing control of the wallet.",
+            "severity": "Low",
+            "contract": "VWManagerService",
+            "function": "_resetOwner",
+            "lineNumber": "L79-L90"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1068"
+                ]
+            },
+            "title": "doesn't follow standard implementation.",
+            "description": "Tokens like USDT on ethereum mainnet are not compatible with the standard ERC20. Its 'approve' and 'transfer' methods have no return value, thus if using the standard ERC20 interface will lead to revert.",
+            "severity": "Medium",
+            "contract": "BalancerV1",
+            "function": "N/A",
+            "lineNumber": "L84, L92, L97, L177, L183"
+        }
+    ]
+}

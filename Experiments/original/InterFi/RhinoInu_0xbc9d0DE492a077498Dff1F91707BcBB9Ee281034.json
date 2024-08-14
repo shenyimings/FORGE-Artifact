@@ -1,1 +1,291 @@
-{"path": "./Audit_Reports_2024/InterFi/RhinoInu_0xbc9d0DE492a077498Dff1F91707BcBB9Ee281034.pdf", "project_info": {"url": "https://github.com/interfinetwork/audited-codes/blob/main/RhinoInu.sol", "commit_hash": "6ca2140f71d359ca95c615868ff3cb433592c26e", "address": "0xbc9d0DE492a077498Dff1F91707BcBB9Ee281034"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"]}, "title": "Minting of unlimited number of sundae tokens", "description": "The smart contract allows minting of an unlimited number of sundae tokens.", "severity": "Critical", "contract": "RhinoInu", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Potential unauthorized script upgrade", "description": "Smart contract owner can withdraw $RHINO tokens from the token contract to treasury.", "severity": "Low", "contract": "N/A", "function": "withdrawAllTogameTreasury()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-691"], "2": ["CWE-1265"]}, "title": "Reentrancy in transfer and transferFrom functions", "description": "The reentrancy vulnerability exists in the transfer and transferFrom functions, allowing an attacker to drain the contract's funds.", "severity": "High", "contract": "RhinoInu", "function": ["transfer", "transferFrom"], "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-749"]}, "title": "Unprotected function calls", "description": "The functions approve, decreaseAllowance, increaseAllowance, manualSync, setFeeReceivers, setFee, and setWhitelist are called without protection.", "severity": "High", "contract": "N/A", "function": ["approve()", "decreaseAllowance(address,uint256)", "increaseAllowance()", "manualSync()", "setFeeReceivers(address,address,address)", "setFee(uint256,uint256,uint256,uint256,uint256)", "setWhitelist(address)"], "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "Centralization Risk", "description": "Active contract ownership identified, which can lead to centralization of power and increase the risk of rug pull scams.", "severity": "Low", "contract": "Rhino Inu\u2019s smart contract", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Unsecured use of external contracts", "description": "The contract utilizes rebase and allows the owner to withdraw $RHINO tokens from the token contract to treasury without proper validation or access control.", "severity": "Low", "contract": "Rhino Inu\u2019s smart contract", "function": "withdrawAllTogameTreasury()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-703"]}, "title": "Insufficient test coverage", "description": "The audit report highlights the importance of test coverage analysis to determine whether the test cases are covering the code and how much code is exercised when running those test cases.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Insecure use of symbolic execution", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-710"]}, "title": "Lack of best practices in smart contract development", "description": "The audit report highlights the importance of following established industry and academic practices, recommendations, and research to improve efficiency, effectiveness, clarity, maintainability, security, and control in smart contract development.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Vulnerabilities in constructor function", "description": "N/A", "severity": "Low", "contract": "N/A", "function": "constructor", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-284"]}, "title": "Unprotected rebase function", "description": "Rhino Inu\u2019s smart contract utilizes rebase, which can adjust the circulating token supply automatically or manually according to set parameters.", "severity": "Low Severity", "contract": "N/A", "function": "rebase", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-284"]}, "title": "Unprotected takeFee function", "description": "The takeFee function does not have any access control or protection mechanism, allowing anyone to call it and potentially drain the contract's funds.", "severity": "High", "contract": "N/A", "function": "takeFee()", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-284"]}, "title": "Unprotected addLiquidity and swapBack functions", "description": "The addLiquidity and swapBack functions are unprotected, which can lead to potential security risks.", "severity": "High", "contract": "RHINO INU", "function": ["addLiquidity", "swapBack"], "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-284"]}, "title": "Unprotected withdrawAllTogameTreasury function", "description": "The withdrawAllTogameTreasury function is unprotected and can be accessed externally, potentially allowing unauthorized withdrawals.", "severity": "High", "contract": "RhinoInu", "function": "withdrawAllTogameTreasury", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Unsecured use of onlyOwner modifier", "description": "The onlyOwner modifier is used without proper security measures.", "severity": "Low", "contract": "N/A", "function": ["setBotBlacklist(address, bool)", "withdrawAllTogameTreasury()"], "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Insecure use of validRecipient validation", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/InterFi/RhinoInu_0xbc9d0DE492a077498Dff1F91707BcBB9Ee281034.pdf",
+    "project_info": {
+        "url": "https://github.com/interfinetwork/audited-codes/blob/main/RhinoInu.sol",
+        "commit_hash": "6ca2140f71d359ca95c615868ff3cb433592c26e",
+        "address": "0xbc9d0DE492a077498Dff1F91707BcBB9Ee281034",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Minting of unlimited number of sundae tokens",
+            "description": "The smart contract allows minting of an unlimited number of sundae tokens.",
+            "severity": "Critical",
+            "contract": "RhinoInu",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Potential unauthorized script upgrade",
+            "description": "Smart contract owner can withdraw $RHINO tokens from the token contract to treasury.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "withdrawAllTogameTreasury()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "Reentrancy in transfer and transferFrom functions",
+            "description": "The reentrancy vulnerability exists in the transfer and transferFrom functions, allowing an attacker to drain the contract's funds.",
+            "severity": "High",
+            "contract": "RhinoInu",
+            "function": [
+                "transfer",
+                "transferFrom"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-749"
+                ]
+            },
+            "title": "Unprotected function calls",
+            "description": "The functions approve, decreaseAllowance, increaseAllowance, manualSync, setFeeReceivers, setFee, and setWhitelist are called without protection.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": [
+                "approve()",
+                "decreaseAllowance(address,uint256)",
+                "increaseAllowance()",
+                "manualSync()",
+                "setFeeReceivers(address,address,address)",
+                "setFee(uint256,uint256,uint256,uint256,uint256)",
+                "setWhitelist(address)"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Centralization Risk",
+            "description": "Active contract ownership identified, which can lead to centralization of power and increase the risk of rug pull scams.",
+            "severity": "Low",
+            "contract": "Rhino Inu\u2019s smart contract",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Unsecured use of external contracts",
+            "description": "The contract utilizes rebase and allows the owner to withdraw $RHINO tokens from the token contract to treasury without proper validation or access control.",
+            "severity": "Low",
+            "contract": "Rhino Inu\u2019s smart contract",
+            "function": "withdrawAllTogameTreasury()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Insufficient test coverage",
+            "description": "The audit report highlights the importance of test coverage analysis to determine whether the test cases are covering the code and how much code is exercised when running those test cases.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Insecure use of symbolic execution",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ]
+            },
+            "title": "Lack of best practices in smart contract development",
+            "description": "The audit report highlights the importance of following established industry and academic practices, recommendations, and research to improve efficiency, effectiveness, clarity, maintainability, security, and control in smart contract development.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Vulnerabilities in constructor function",
+            "description": "N/A",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "constructor",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected rebase function",
+            "description": "Rhino Inu\u2019s smart contract utilizes rebase, which can adjust the circulating token supply automatically or manually according to set parameters.",
+            "severity": "Low Severity",
+            "contract": "N/A",
+            "function": "rebase",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected takeFee function",
+            "description": "The takeFee function does not have any access control or protection mechanism, allowing anyone to call it and potentially drain the contract's funds.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "takeFee()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected addLiquidity and swapBack functions",
+            "description": "The addLiquidity and swapBack functions are unprotected, which can lead to potential security risks.",
+            "severity": "High",
+            "contract": "RHINO INU",
+            "function": [
+                "addLiquidity",
+                "swapBack"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected withdrawAllTogameTreasury function",
+            "description": "The withdrawAllTogameTreasury function is unprotected and can be accessed externally, potentially allowing unauthorized withdrawals.",
+            "severity": "High",
+            "contract": "RhinoInu",
+            "function": "withdrawAllTogameTreasury",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Unsecured use of onlyOwner modifier",
+            "description": "The onlyOwner modifier is used without proper security measures.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": [
+                "setBotBlacklist(address, bool)",
+                "withdrawAllTogameTreasury()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Insecure use of validRecipient validation",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

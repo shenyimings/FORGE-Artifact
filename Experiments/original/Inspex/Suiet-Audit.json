@@ -1,1 +1,197 @@
-{"path": "./Audit_Reports_2024/Inspex/Suiet-Audit.pdf", "project_info": {"url": "https://github.com/suiet", "commit_hash": "e9d6deea0ddc24f28fd32462c2a9ceb3cba5f29e", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Missing Chrome Version Detection", "description": "The Suiet wallet lacks Chrome version testing, which may lead to operating in an environment with known security vulnerabilities.", "severity": "Low", "contract": "Suiet Wallet", "function": "getChromeVersion()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-749"]}, "title": "Insecure Plugin Configuration: Security Settings For Content_Scripts", "description": "The Suiet wallet extension utilizes the 'http:///'' match pattern in the content_scripts section, allowing the extension's script to execute on all HTTP sites, which introduces a security vulnerability.", "severity": "N/A", "contract": "Suiet wallet extension", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Unencrypted Persistence Of Wallet Private Key In Memory", "description": "The wallet does not apply encryption to the private key during the processing of wallet data streams, resulting in its persistence in memory. This poses a security risk as the unencrypted private key remains accessible within the system's memory, potentially exposing sensitive information.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Unencrypted Persistence Of Wallet Mnemonic In Memory", "description": "The Suiet wallet does not apply encryption to the wallet's mnemonic, resulting in its persistence in memory during the processing of wallet data streams. This poses a security risk as the unencrypted mnemonic remains accessible within the system's memory, potentially exposing sensitive information.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Unencrypted Persistence Of Wallet Password In Memory", "description": "During the processing of the wallet data stream, the Suiet wallet does not encrypt the user's password, allowing it to persist in memory.", "severity": "Low", "contract": "Suiet wallet", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Unencrypted Persistence Of Wallet Private Key In Clipboard", "description": "The Suiet wallet shares a clipboard with other Chrome plugins, meaning that when exporting keys and clicking the copy button, other plugins can concurrently access the keys stored in the clipboard. This creates a potential security vulnerability.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "Potential Display Of Incorrect Data In The UI", "description": "The UI may inadvertently show incorrect or 'dirty' data due to the generation of repetitive wallet IDs, leading to inconsistencies in the displayed information.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-284"], "2": ["CWE-287"]}, "title": "Mnemonic Retrieval Risk via Fake Password after Tampering", "description": "When tampering with the cipher, a vulnerability arises in the system. Exploiting this vulnerability allows an attacker to use a fake password to retrieve the mnemonic through the \"wallet.revealMnemonic\" function.", "severity": "Medium", "contract": "N/A", "function": "wallet.revealMnemonic", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-664"], "2": ["CWE-496"]}, "title": "Failure To Reset Sensitive Information After Closing Pop-Up Window", "description": "The UI displays the 'revealMnemonic' interface without properly parsing the helper words. This occurs because sensitive information is not reset after closing the previous pop-up window.", "severity": "Low", "contract": "N/A", "function": "revealMnemonic", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-284"], "2": ["CWE-287"]}, "title": "Malicious User Login Risk with Altered Passwords", "description": "The 'maybeFixDataConsistency' function does not throw an exception when the account is not found, allowing malicious users to log into the wallet using tampered passwords.", "severity": "Low", "contract": "N/A", "function": "maybeFixDataConsistency", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-707"], "2": ["CWE-74"], "3": ["CWE-75"]}, "title": "Unfiltered Plugin Wallet Name String", "description": "Potential malicious attacks: If the plugin wallet name string is not properly filtered, hackers can exploit this vulnerability to steal sensitive user information, including passwords, private keys, and more, by sending malicious requests.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Inspex/Suiet-Audit.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "e9d6deea0ddc24f28fd32462c2a9ceb3cba5f29e",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Missing Chrome Version Detection",
+            "description": "The Suiet wallet lacks Chrome version testing, which may lead to operating in an environment with known security vulnerabilities.",
+            "severity": "Low",
+            "contract": "Suiet Wallet",
+            "function": "getChromeVersion()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-749"
+                ]
+            },
+            "title": "Insecure Plugin Configuration: Security Settings For Content_Scripts",
+            "description": "The Suiet wallet extension utilizes the 'http:///'' match pattern in the content_scripts section, allowing the extension's script to execute on all HTTP sites, which introduces a security vulnerability.",
+            "severity": "N/A",
+            "contract": "Suiet wallet extension",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Unencrypted Persistence Of Wallet Private Key In Memory",
+            "description": "The wallet does not apply encryption to the private key during the processing of wallet data streams, resulting in its persistence in memory. This poses a security risk as the unencrypted private key remains accessible within the system's memory, potentially exposing sensitive information.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Unencrypted Persistence Of Wallet Mnemonic In Memory",
+            "description": "The Suiet wallet does not apply encryption to the wallet's mnemonic, resulting in its persistence in memory during the processing of wallet data streams. This poses a security risk as the unencrypted mnemonic remains accessible within the system's memory, potentially exposing sensitive information.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Unencrypted Persistence Of Wallet Password In Memory",
+            "description": "During the processing of the wallet data stream, the Suiet wallet does not encrypt the user's password, allowing it to persist in memory.",
+            "severity": "Low",
+            "contract": "Suiet wallet",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Unencrypted Persistence Of Wallet Private Key In Clipboard",
+            "description": "The Suiet wallet shares a clipboard with other Chrome plugins, meaning that when exporting keys and clicking the copy button, other plugins can concurrently access the keys stored in the clipboard. This creates a potential security vulnerability.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Potential Display Of Incorrect Data In The UI",
+            "description": "The UI may inadvertently show incorrect or 'dirty' data due to the generation of repetitive wallet IDs, leading to inconsistencies in the displayed information.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-287"
+                ]
+            },
+            "title": "Mnemonic Retrieval Risk via Fake Password after Tampering",
+            "description": "When tampering with the cipher, a vulnerability arises in the system. Exploiting this vulnerability allows an attacker to use a fake password to retrieve the mnemonic through the \"wallet.revealMnemonic\" function.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "wallet.revealMnemonic",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-496"
+                ]
+            },
+            "title": "Failure To Reset Sensitive Information After Closing Pop-Up Window",
+            "description": "The UI displays the 'revealMnemonic' interface without properly parsing the helper words. This occurs because sensitive information is not reset after closing the previous pop-up window.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "revealMnemonic",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-287"
+                ]
+            },
+            "title": "Malicious User Login Risk with Altered Passwords",
+            "description": "The 'maybeFixDataConsistency' function does not throw an exception when the account is not found, allowing malicious users to log into the wallet using tampered passwords.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "maybeFixDataConsistency",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-74"
+                ],
+                "3": [
+                    "CWE-75"
+                ]
+            },
+            "title": "Unfiltered Plugin Wallet Name String",
+            "description": "Potential malicious attacks: If the plugin wallet name string is not properly filtered, hackers can exploit this vulnerability to steal sensitive user information, including passwords, private keys, and more, by sending malicious requests.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

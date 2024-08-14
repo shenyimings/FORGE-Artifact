@@ -1,0 +1,175 @@
+{
+    "path": "./Audit_Reports_2024/HAECHI_AUDIT/HAECHI_AUDIT-Universe_Polymorph.pdf",
+    "project_info": {
+        "url": "https://github.com/UniverseXYZ/Polymorph-Contracts/tree/polymorph-v2",
+        "commit_hash": "d719ea7911f8d3519f991ac4978a68aefd890f12",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Dao can change contract variables even after deploy",
+            "description": "After a contract is deployed, Dao can arbitrarily change key variables used when a user creates or changes Polymorph, such as _PolymorphRoot_ contract\u2019s _bulkBuyLimit_ , _maxSupply_ , _polymorphPrice_ , or _PolymorphWithGeneChanger_ contract\u2019s _baseGenomeChangePrice_ , _randomizeGenomePrice_.",
+            "severity": "Minor",
+            "contract": "_PolymorphRoot_, _PolymorphWithGeneChanger_",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-610"
+                ]
+            },
+            "title": "Main functions of the project are performed off-chain in some cases",
+            "description": "The process of polygon and mainnet syncing Polymorph using Tunnel is performed off-chain, not on smart contract. The actual transition of trait via gene of Polymorph happens off-chain.",
+            "severity": "Minor",
+            "contract": "_Polymorph_",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "There are parts excluded from the scope of the audit",
+            "description": "The audit report does not cover all parts of the smart contract, which may lead to potential security vulnerabilities being overlooked.",
+            "severity": "Unknown",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "Gene information is sometimes not set while minting polymorph",
+            "description": "The function mintPolymorphWithInfo does not update the gene information corresponding to the minted polymorph token.",
+            "severity": "Medium",
+            "contract": "PolymorphChild",
+            "function": "mintPolymorphWithInfo()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "Polymorph's gene is not initialized during the transfer of Polymorph via contract",
+            "description": "The gene information of the token is not initialized when transferring a Polymorph token via contract.",
+            "severity": "High",
+            "contract": "PolymorphRoot/PolymorphChildTunnel",
+            "function": "burnAndMintNewPolymorph()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Polymorph information is set incorrectly during the Gene Randomize process",
+            "description": "The _gene_ information of Polymorph token is not initialized correctly during the Gene Randomize process.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "randomizeGenome(uint256 tokenId)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Some parts are not implemented",
+            "description": "The audit report mentions that some parts of the contract are not implemented.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "An unnecessary implementation exists",
+            "description": "The _processMessageFromChild()_ function in FxBaseRootTunnel and _processMessageFromRoot()_ function in FxBaseChildTunnel are not implemented, causing no action when receiveMessage() is called.",
+            "severity": "N/A",
+            "contract": "FxBaseRootTunnel, FxBaseChildTunnel",
+            "function": "_processMessageFromChild(), _processMessageFromRoot()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Some implementations differ from the documentation",
+            "description": "The actual implementation of Polymorph has 38 traits, whereas the documentation specifies a total of nine traits.",
+            "severity": "Minor",
+            "contract": "Polymorph",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

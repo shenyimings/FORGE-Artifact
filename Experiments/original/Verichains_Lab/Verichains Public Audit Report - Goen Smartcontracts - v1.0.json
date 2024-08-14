@@ -1,1 +1,75 @@
-{"path": "./Audit_Reports_2024/Verichains_Lab/Verichains Public Audit Report - Goen Smartcontracts - v1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-691"], "2": ["CWE-1265"]}, "title": "Reentrancy in `withdrawAll` function if the rewardToken is WBNB", "description": "The `withdrawAll` function uses the `call` method to transfer the native token and update the state variable after the transfer action, allowing attackers to use reentrancy attacks to gain profit multiple times in a transaction.", "severity": "CRITICAL", "contract": "VaultBase", "function": "withdrawAll()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-693"]}, "title": "Reentrancy in `harvest` function if the rewardToken is WBNB", "description": "The `harvest` function uses the `_distributeReward` function implemented by the child contracts which triggers reentrancy, allowing attackers to swap tokens in the vault multiple times and get more harvestBounty. The reward factor may be affected.", "severity": "CRITICAL", "contract": "VaultBase.sol", "function": "harvest()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Attacker may spam `addUser` function to break the `harvest` and `reinvest` logics", "description": "The `addUser` function is a public function with no limitation, allowing an attacker to spam it and increase the length of the `depositUsers` array, causing the for-loop in both `harvest` and `reinvest` functions to run out of gas.", "severity": "HIGH", "contract": "VaultBase.sol", "function": "addUser(address userAddress)", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Attacker may spam `deposit` function to increase the length of `depositUsers` array", "description": "The attacker can deposit 0 token (or approximate 0) to increase the length of `depositUsers` array, as there is no limitation with the `_amount` parameter in the `deposit` function.", "severity": "MEDIUM", "contract": "VaultBase.sol", "function": "deposit(uint256 _amount)", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Verichains_Lab/Verichains Public Audit Report - Goen Smartcontracts - v1.0.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "Reentrancy in `withdrawAll` function if the rewardToken is WBNB",
+            "description": "The `withdrawAll` function uses the `call` method to transfer the native token and update the state variable after the transfer action, allowing attackers to use reentrancy attacks to gain profit multiple times in a transaction.",
+            "severity": "CRITICAL",
+            "contract": "VaultBase",
+            "function": "withdrawAll()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "Reentrancy in `harvest` function if the rewardToken is WBNB",
+            "description": "The `harvest` function uses the `_distributeReward` function implemented by the child contracts which triggers reentrancy, allowing attackers to swap tokens in the vault multiple times and get more harvestBounty. The reward factor may be affected.",
+            "severity": "CRITICAL",
+            "contract": "VaultBase.sol",
+            "function": "harvest()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Attacker may spam `addUser` function to break the `harvest` and `reinvest` logics",
+            "description": "The `addUser` function is a public function with no limitation, allowing an attacker to spam it and increase the length of the `depositUsers` array, causing the for-loop in both `harvest` and `reinvest` functions to run out of gas.",
+            "severity": "HIGH",
+            "contract": "VaultBase.sol",
+            "function": "addUser(address userAddress)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Attacker may spam `deposit` function to increase the length of `depositUsers` array",
+            "description": "The attacker can deposit 0 token (or approximate 0) to increase the length of `depositUsers` array, as there is no limitation with the `_amount` parameter in the `deposit` function.",
+            "severity": "MEDIUM",
+            "contract": "VaultBase.sol",
+            "function": "deposit(uint256 _amount)",
+            "lineNumber": "N/A"
+        }
+    ]
+}

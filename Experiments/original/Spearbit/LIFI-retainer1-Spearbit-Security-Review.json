@@ -1,1 +1,455 @@
-{"path": "./Audit_Reports_2024/Spearbit/LIFI-retainer1-Spearbit-Security-Review.pdf", "project_info": {"url": "https://github.com/lifinance/contracts", "commit_hash": "79d5263aaa46e0b4416cd21fdd1a91571fc9b164", "address": "0xd37bbe5744d730a1d98d8dc97c42f0ca46ad7146"}, "findings": [{"id": 0, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1284"]}, "title": "Unnecessary validation argument for native token amount", "description": "N/A", "severity": "Gas Optimization", "contract": "CircleBridgeFacet", "function": "swapAndStartBridgeTokensViaCircleBridge()", "lineNumber": "L65-L87"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "Restrict access for cBridge refunds", "description": "cBridge refunds need to be triggered from the contract that sent the transaction to cBridge. This can be done using the executeCallAndWithdraw function. As the function is not cBridge specific it can do any calls for the Diamond contract. Restricting what that function can call would allow more secure automation of refunds.", "severity": "Informational", "contract": "WithdrawFacet", "function": "executeCallAndWithdraw", "lineNumber": "28-56"}, {"id": 2, "category": {"1": ["CWE-435"], "2": ["CWE-436"], "3": ["CWE-437"]}, "title": "Stargate now supports multiple pools for the same token", "description": "The Stargate protocol now supports multiple pools for the same token on the same chain, each pool may be connected to one or many other chains. It is not possible to store a one-to-one token-to-pool mapping.", "severity": "Informational", "contract": "StargateFacet.sol", "function": "N/A", "lineNumber": "L25-L28"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "Expose `receiver` in `GenericSwapFacet` facet", "description": "N/A", "severity": "Informational", "contract": "GenericSwapFacet", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Track the destination chain on `ServiceFeeCollector`", "description": "`ServiceFeeCollector` collects gas fees to send to the destination chain but never tracks it.", "severity": "Informational", "contract": "ServiceFeeCollector", "function": ["collectTokenGasFees()", "collectNativeGasFees()"], "lineNumber": "L44-L56"}, {"id": 5, "category": {"1": ["CWE-435"]}, "title": "Executor can reuse SwapperV2 functions", "description": "`Executor.sol`'s `noLeftOvers` and `_fetchBalances()` is copied from `SwapperV2.sol`. Consider reusing these functions from `SwapperV2`, perhaps by extracting these functions in `LibSwap`.", "severity": "Informational", "contract": "Executor.sol", "function": "N/A", "lineNumber": "L32, L241"}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Consider adding `onERC1155Received`", "description": "N/A", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "29"}, {"id": 7, "category": {"1": ["CWE-435"], "2": ["CWE-436"]}, "title": "SquidFacet uses a different string encoding library", "description": "SquidFacet uses an OZ library to convert address to string, whereas the underlying bridge uses a different library.", "severity": "Informational", "contract": "SquidFacet", "function": "N/A", "lineNumber": "L157"}, {"id": 8, "category": {"1": ["CWE-707"], "2": ["CWE-116"], "3": ["CWE-838"]}, "title": "Assembly in StargateFacet can be replaced with Solidity", "description": "The function toBytes() contains assembly code that can also be replaced with solidity code.", "severity": "Informational", "contract": "StargateFacet", "function": "toBytes()", "lineNumber": "L295-L313"}, {"id": 9, "category": {"1": ["CWE-435"], "2": ["CWE-436"]}, "title": "Doublecheck quoteLayerZeroFee()", "description": "The function quoteLayerZeroFee uses `msg.sender` to determine a fee, while `_startBridge()` uses `_bridgeData.receiver` to execute \u2018 router.swap. This might give different results.", "severity": "Informational", "contract": "StargateFacet.sol", "function": "quoteLayerZeroFee()", "lineNumber": "168-218"}, {"id": 10, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Missing modifier refundExcessNative()", "description": "Missing modifier refundExcessNative()", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "30"}, {"id": 11, "category": {"1": ["CWE-435"], "2": ["CWE-436"]}, "title": "Special case for cfUSDC tokens in CelerIMFacet", "description": "The function startBridgeTokensViaCelerIM() has a special case for cfUSDC tokens, whereas swapAndStartBridgeTokensViaCelerIM() doesn't have this.", "severity": "Informational", "contract": "CelerIMFacet", "function": "startBridgeTokensViaCelerIM() and swapAndStartBridgeTokensViaCelerIM()", "lineNumber": "L63-L149"}, {"id": 12, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "Spam events in ServiceFeeCollector", "description": "The contract `ServiceFeeCollector` has several functions that collect fees and are permissionless. This could result in spam events, which might confuse the processing of the events.", "severity": "Low Risk", "contract": "ServiceFeeCollector", "function": "N/A", "lineNumber": "L44-L110"}, {"id": 13, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Function depositAsset() allows 0 amount of native assets", "description": "The function depositAsset() disallows amount == 0 for ERC20, however it does allow amount == 0 for native assets.", "severity": "Low Risk", "contract": "LibAsset", "function": "depositAsset()", "lineNumber": "L107-L116"}, {"id": 14, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Inadequate expiration time check in ThorSwapFacet", "description": "The expiration time for certain operations should be set to +60 minutes, but there is currently no check in place to enforce this requirement.", "severity": "Low Risk", "contract": "ThorSwapFacet", "function": "N/A", "lineNumber": "L108"}, {"id": 15, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-354"]}, "title": "Insufficient validation of bridgedTokenSymbol and sendingAssetId", "description": "The facet does not adequately check the correspondence between the `bridgedTokenSymbol` and `sendingAssetId` parameters. This oversight could allow for a random token to be sent to the Diamond, while still bridging another available token within the Diamond, even when no tokens should typically be left in the Diamond.", "severity": "Low Risk", "contract": "CBridgeFacet", "function": "N/A", "lineNumber": "L94-L128"}, {"id": 16, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "Check for destinationChainId in CBridgeFacet", "description": "Function `_startBridge()` of `CBridgeFacet` contains a check on `destinationChainId` and contains conversions to `uint64`. If both `block.chainid` and `_bridgeData.destinationChainId)` fit in an `uint64` then the checks of modifier `validateBridgeData` are already sufficient.", "severity": "Low Risk", "contract": "CBridgeFacet", "function": "_startBridge()", "lineNumber": "94-128"}, {"id": 17, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Absence of nonReentrant in HopFacetOptimized facet", "description": "The absence of nonReentrant modifier in HopFacetOptimized.sol can lead to potential attacks due to the complexity of the code and the power of ERC20Proxy.", "severity": "N/A", "contract": "HopFacetOptimized", "function": "N/A", "lineNumber": "N/A"}, {"id": 18, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Revert for excessive approvals", "description": "Certain tokens, such as UNI and COMP, undergo a reversal if the value input for approval or transfer surpasses uint96.", "severity": "Low Risk", "contract": "DeBridgeFacet.sol", "function": "N/A", "lineNumber": "L124"}, {"id": 19, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-354"]}, "title": "Inconsistent transaction failure/stuck due to missing validation of global fixed native fee rate and execution fee", "description": "The current implementation of the facet logic does not validate the global fixed native fee rate and execution fee, which can lead to inconsistent transaction failures or getting stuck in the process.", "severity": "Low Risk", "contract": "DeBridgeFacet.sol", "function": "N/A", "lineNumber": "L124"}, {"id": 20, "category": {"1": ["CWE-682"]}, "title": "Incorrect value emitted", "description": "It will be difficult to interpret the value emitted for `toAmount` as the observer won't know which of the two values has been emitted.", "severity": "Low Risk", "contract": "LibSwap.sol", "function": "swap()", "lineNumber": "76-78"}, {"id": 21, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1286"]}, "title": "Storage slots derived from hashes are prone to pre-image attacks", "description": "Storage slots manually constructed using keccak hash of a string are prone to storage slot collision as the pre-images of these hashes are known. Attackers may find a potential path to those storage slots using the keccak hash function in the codebase and some crafted payload.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 22, "category": {"1": ["CWE-697"]}, "title": "Incorrect arguments compared in SquidFacet", "description": "CallBridgeCall in SquidFacet just takes the funds from the user and returns without calling the bridge, which can lead to anyone stealing those funds.", "severity": "Critical", "contract": "SquidFacet", "function": "N/A", "lineNumber": "N/A"}, {"id": 23, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Unsafe casting of bridge amount from uint256 to uint128", "description": "The issue with the code is that it performs an unsafe cast from a `uint256` value to a `uint128` value in the call to `initiateTeleport()` function.", "severity": "Low Risk", "contract": "MakerTeleportFacet.sol", "function": "initiateTeleport()", "lineNumber": "L118"}]}
+{
+    "path": "./Audit_Reports_2024/Spearbit/LIFI-retainer1-Spearbit-Security-Review.pdf",
+    "project_info": {
+        "url": "https://github.com/lifinance/contracts",
+        "commit_hash": "79d5263aaa46e0b4416cd21fdd1a91571fc9b164",
+        "address": "0xd37bbe5744d730a1d98d8dc97c42f0ca46ad7146",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1284"
+                ]
+            },
+            "title": "Unnecessary validation argument for native token amount",
+            "description": "N/A",
+            "severity": "Gas Optimization",
+            "contract": "CircleBridgeFacet",
+            "function": "swapAndStartBridgeTokensViaCircleBridge()",
+            "lineNumber": "L65-L87"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Restrict access for cBridge refunds",
+            "description": "cBridge refunds need to be triggered from the contract that sent the transaction to cBridge. This can be done using the executeCallAndWithdraw function. As the function is not cBridge specific it can do any calls for the Diamond contract. Restricting what that function can call would allow more secure automation of refunds.",
+            "severity": "Informational",
+            "contract": "WithdrawFacet",
+            "function": "executeCallAndWithdraw",
+            "lineNumber": "28-56"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-437"
+                ]
+            },
+            "title": "Stargate now supports multiple pools for the same token",
+            "description": "The Stargate protocol now supports multiple pools for the same token on the same chain, each pool may be connected to one or many other chains. It is not possible to store a one-to-one token-to-pool mapping.",
+            "severity": "Informational",
+            "contract": "StargateFacet.sol",
+            "function": "N/A",
+            "lineNumber": "L25-L28"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Expose `receiver` in `GenericSwapFacet` facet",
+            "description": "N/A",
+            "severity": "Informational",
+            "contract": "GenericSwapFacet",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Track the destination chain on `ServiceFeeCollector`",
+            "description": "`ServiceFeeCollector` collects gas fees to send to the destination chain but never tracks it.",
+            "severity": "Informational",
+            "contract": "ServiceFeeCollector",
+            "function": [
+                "collectTokenGasFees()",
+                "collectNativeGasFees()"
+            ],
+            "lineNumber": "L44-L56"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ]
+            },
+            "title": "Executor can reuse SwapperV2 functions",
+            "description": "`Executor.sol`'s `noLeftOvers` and `_fetchBalances()` is copied from `SwapperV2.sol`. Consider reusing these functions from `SwapperV2`, perhaps by extracting these functions in `LibSwap`.",
+            "severity": "Informational",
+            "contract": "Executor.sol",
+            "function": "N/A",
+            "lineNumber": "L32, L241"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Consider adding `onERC1155Received`",
+            "description": "N/A",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "29"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ]
+            },
+            "title": "SquidFacet uses a different string encoding library",
+            "description": "SquidFacet uses an OZ library to convert address to string, whereas the underlying bridge uses a different library.",
+            "severity": "Informational",
+            "contract": "SquidFacet",
+            "function": "N/A",
+            "lineNumber": "L157"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-116"
+                ],
+                "3": [
+                    "CWE-838"
+                ]
+            },
+            "title": "Assembly in StargateFacet can be replaced with Solidity",
+            "description": "The function toBytes() contains assembly code that can also be replaced with solidity code.",
+            "severity": "Informational",
+            "contract": "StargateFacet",
+            "function": "toBytes()",
+            "lineNumber": "L295-L313"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ]
+            },
+            "title": "Doublecheck quoteLayerZeroFee()",
+            "description": "The function quoteLayerZeroFee uses `msg.sender` to determine a fee, while `_startBridge()` uses `_bridgeData.receiver` to execute \u2018 router.swap. This might give different results.",
+            "severity": "Informational",
+            "contract": "StargateFacet.sol",
+            "function": "quoteLayerZeroFee()",
+            "lineNumber": "168-218"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Missing modifier refundExcessNative()",
+            "description": "Missing modifier refundExcessNative()",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "30"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ]
+            },
+            "title": "Special case for cfUSDC tokens in CelerIMFacet",
+            "description": "The function startBridgeTokensViaCelerIM() has a special case for cfUSDC tokens, whereas swapAndStartBridgeTokensViaCelerIM() doesn't have this.",
+            "severity": "Informational",
+            "contract": "CelerIMFacet",
+            "function": "startBridgeTokensViaCelerIM() and swapAndStartBridgeTokensViaCelerIM()",
+            "lineNumber": "L63-L149"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Spam events in ServiceFeeCollector",
+            "description": "The contract `ServiceFeeCollector` has several functions that collect fees and are permissionless. This could result in spam events, which might confuse the processing of the events.",
+            "severity": "Low Risk",
+            "contract": "ServiceFeeCollector",
+            "function": "N/A",
+            "lineNumber": "L44-L110"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Function depositAsset() allows 0 amount of native assets",
+            "description": "The function depositAsset() disallows amount == 0 for ERC20, however it does allow amount == 0 for native assets.",
+            "severity": "Low Risk",
+            "contract": "LibAsset",
+            "function": "depositAsset()",
+            "lineNumber": "L107-L116"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Inadequate expiration time check in ThorSwapFacet",
+            "description": "The expiration time for certain operations should be set to +60 minutes, but there is currently no check in place to enforce this requirement.",
+            "severity": "Low Risk",
+            "contract": "ThorSwapFacet",
+            "function": "N/A",
+            "lineNumber": "L108"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-354"
+                ]
+            },
+            "title": "Insufficient validation of bridgedTokenSymbol and sendingAssetId",
+            "description": "The facet does not adequately check the correspondence between the `bridgedTokenSymbol` and `sendingAssetId` parameters. This oversight could allow for a random token to be sent to the Diamond, while still bridging another available token within the Diamond, even when no tokens should typically be left in the Diamond.",
+            "severity": "Low Risk",
+            "contract": "CBridgeFacet",
+            "function": "N/A",
+            "lineNumber": "L94-L128"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Check for destinationChainId in CBridgeFacet",
+            "description": "Function `_startBridge()` of `CBridgeFacet` contains a check on `destinationChainId` and contains conversions to `uint64`. If both `block.chainid` and `_bridgeData.destinationChainId)` fit in an `uint64` then the checks of modifier `validateBridgeData` are already sufficient.",
+            "severity": "Low Risk",
+            "contract": "CBridgeFacet",
+            "function": "_startBridge()",
+            "lineNumber": "94-128"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Absence of nonReentrant in HopFacetOptimized facet",
+            "description": "The absence of nonReentrant modifier in HopFacetOptimized.sol can lead to potential attacks due to the complexity of the code and the power of ERC20Proxy.",
+            "severity": "N/A",
+            "contract": "HopFacetOptimized",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Revert for excessive approvals",
+            "description": "Certain tokens, such as UNI and COMP, undergo a reversal if the value input for approval or transfer surpasses uint96.",
+            "severity": "Low Risk",
+            "contract": "DeBridgeFacet.sol",
+            "function": "N/A",
+            "lineNumber": "L124"
+        },
+        {
+            "id": 19,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-354"
+                ]
+            },
+            "title": "Inconsistent transaction failure/stuck due to missing validation of global fixed native fee rate and execution fee",
+            "description": "The current implementation of the facet logic does not validate the global fixed native fee rate and execution fee, which can lead to inconsistent transaction failures or getting stuck in the process.",
+            "severity": "Low Risk",
+            "contract": "DeBridgeFacet.sol",
+            "function": "N/A",
+            "lineNumber": "L124"
+        },
+        {
+            "id": 20,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect value emitted",
+            "description": "It will be difficult to interpret the value emitted for `toAmount` as the observer won't know which of the two values has been emitted.",
+            "severity": "Low Risk",
+            "contract": "LibSwap.sol",
+            "function": "swap()",
+            "lineNumber": "76-78"
+        },
+        {
+            "id": 21,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1286"
+                ]
+            },
+            "title": "Storage slots derived from hashes are prone to pre-image attacks",
+            "description": "Storage slots manually constructed using keccak hash of a string are prone to storage slot collision as the pre-images of these hashes are known. Attackers may find a potential path to those storage slots using the keccak hash function in the codebase and some crafted payload.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 22,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ]
+            },
+            "title": "Incorrect arguments compared in SquidFacet",
+            "description": "CallBridgeCall in SquidFacet just takes the funds from the user and returns without calling the bridge, which can lead to anyone stealing those funds.",
+            "severity": "Critical",
+            "contract": "SquidFacet",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 23,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Unsafe casting of bridge amount from uint256 to uint128",
+            "description": "The issue with the code is that it performs an unsafe cast from a `uint256` value to a `uint128` value in the call to `initiateTeleport()` function.",
+            "severity": "Low Risk",
+            "contract": "MakerTeleportFacet.sol",
+            "function": "initiateTeleport()",
+            "lineNumber": "L118"
+        }
+    ]
+}

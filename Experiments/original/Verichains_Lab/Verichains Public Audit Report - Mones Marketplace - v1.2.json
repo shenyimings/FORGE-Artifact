@@ -1,1 +1,109 @@
-{"path": "./Audit_Reports_2024/Verichains_Lab/Verichains Public Audit Report - Mones Marketplace - v1.2.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-710"], "2": ["CWE-1164"]}, "title": "Marketplace.sol - Typos", "description": "There are some typos in the contracts.", "severity": "INFORMATIVE", "contract": "Marketplace.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Marketplace.sol - Usage of constant and immutable", "description": "The TOTAL_MAX_FEE and TOTAL_PERCENT variables are not changed in the contract, so it's better to use constant instead of immutable. The platformAddress variable is only set to zero one time in the constructor, so it's better to use a constant variable.", "severity": "INFORMATIVE", "contract": "Marketplace.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "Marketplace.sol - Missing owner check", "description": "The modifyAsk function is missing an owner check, allowing anyone to cancel the ask and steal NFT from the marketplace.", "severity": "CRITICAL", "contract": "Marketplace.sol", "function": "modifyAsk()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-691"], "2": ["CWE-362"]}, "title": "Front running in buyAssets", "description": "Attackers can manipulate the price of an item by listening to pending transactions and sending a transaction with higher gas price to update the price before the original buy transaction is mined, resulting in users buying items at a higher price than intended.", "severity": "CRITICAL", "contract": "Marketplace.sol", "function": "buyAssets()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "Marketplace.sol - paymentAddress can be contract which has transfer fee", "description": "In buyAssets function, if the paymentAddress is a contract which has transfer fee, the amount of tokens the contract received from msg.sender can be less than price (due to the fee), so the contract will receive fewer tokens which causing not enough tokens to pay the revenue.", "severity": "INFORMATIVE", "contract": "Marketplace.sol", "function": "buyAssets()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-697"]}, "title": "Incorrect Comparison Operator", "description": "Using > instead of >= can lead to incorrect results and potential security vulnerabilities.", "severity": "Informative", "contract": "Marketplace.sol", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Verichains_Lab/Verichains Public Audit Report - Mones Marketplace - v1.2.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ]
+            },
+            "title": "Marketplace.sol - Typos",
+            "description": "There are some typos in the contracts.",
+            "severity": "INFORMATIVE",
+            "contract": "Marketplace.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Marketplace.sol - Usage of constant and immutable",
+            "description": "The TOTAL_MAX_FEE and TOTAL_PERCENT variables are not changed in the contract, so it's better to use constant instead of immutable. The platformAddress variable is only set to zero one time in the constructor, so it's better to use a constant variable.",
+            "severity": "INFORMATIVE",
+            "contract": "Marketplace.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Marketplace.sol - Missing owner check",
+            "description": "The modifyAsk function is missing an owner check, allowing anyone to cancel the ask and steal NFT from the marketplace.",
+            "severity": "CRITICAL",
+            "contract": "Marketplace.sol",
+            "function": "modifyAsk()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-362"
+                ]
+            },
+            "title": "Front running in buyAssets",
+            "description": "Attackers can manipulate the price of an item by listening to pending transactions and sending a transaction with higher gas price to update the price before the original buy transaction is mined, resulting in users buying items at a higher price than intended.",
+            "severity": "CRITICAL",
+            "contract": "Marketplace.sol",
+            "function": "buyAssets()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Marketplace.sol - paymentAddress can be contract which has transfer fee",
+            "description": "In buyAssets function, if the paymentAddress is a contract which has transfer fee, the amount of tokens the contract received from msg.sender can be less than price (due to the fee), so the contract will receive fewer tokens which causing not enough tokens to pay the revenue.",
+            "severity": "INFORMATIVE",
+            "contract": "Marketplace.sol",
+            "function": "buyAssets()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ]
+            },
+            "title": "Incorrect Comparison Operator",
+            "description": "Using > instead of >= can lead to incorrect results and potential security vulnerabilities.",
+            "severity": "Informative",
+            "contract": "Marketplace.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

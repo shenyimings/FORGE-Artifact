@@ -1,1 +1,215 @@
-{"path": "./Audit_Reports_2024/HAECHI_AUDIT/HAECHI_AUDIT-UniverseXYZ_Contract.pdf", "project_info": {"url": "https://github.com/UniverseXYZ/AuctionContracts", "commit_hash": "_126eab22b60d475a07455685dfb41453bd318265.", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "Contract Owner can change the URI of NFT", "description": "The contract owner can change the URI of NFT using UniverseERC721#updateTokenURI(), which may allow arbitrary changes to NFT information.", "severity": "Minor", "contract": "UniverseERC721", "function": "updateTokenURI()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "The privilege of Dao is too large", "description": "Dao has excessive privileges which can lead to unintended consequences.", "severity": "Minor", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Bidding algorithm behaves in an unintended direction", "description": "The bidding algorithm may behave in an unintended direction due to incorrect logic in the erc20Bid function.", "severity": "High", "contract": "N/A", "function": "erc20Bid(uint256 auctionId, uint256 amount)", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Unnecessary royaltyFee may be paid to Dao", "description": "The royalty fee calculation and deduction from auction revenue may result in unnecessary payments to the DAO.", "severity": "Minor", "contract": "N/A", "function": "captureSlotRevenue", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Withdrawing NFT does not decrease the totalDepositedERC721s value of the contract", "description": "The function withdrawDepositedERC721() withdraws NFTs existing in an auction only when the auction has already been canceled, but it does not decrease the totalDepositedERC721s value representing the total number of NFTs existing in the contract.", "severity": "Medium", "contract": "UniverseAuctionHouse", "function": "withdrawDepositedERC721()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "The Revenue of the Auction is allocated to the Auction Owner, not the NFT Depositor", "description": "In the captureSlotRevenue function, the auction revenue is allocated to the auctionsRevenue mapping which belongs to the auction owner instead of being distributed to the NFT depositor.", "severity": "High", "contract": "N/A", "function": "captureSlotRevenue(uint256,uint256)", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "Users can bid with invalid amount", "description": "The erc20Bid function allows users to bid with an invalid amount.", "severity": "High", "contract": "N/A", "function": "erc20Bid(uint256, uint256)", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-693"], "2": ["CWE-358"]}, "title": "UniverseAuctionHouse#batchDepositToAuction() may not work as intended", "description": "The function handles adding NFTs to each of multiple slots in one transaction but allows adding NFTs to the same slot multiple times if the same slot ID is entered, which might be unintended.", "severity": "Medium", "contract": "UniverseAuctionHouse", "function": "batchDepositToAuction()", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-664"], "2": ["CWE-400"]}, "title": "Unnecessary events may be emitted", "description": "The distributeCapturedAuctionRevenue() function may emit unnecessary events when the auction is finalized but yet to be captured, consuming gas.", "severity": "Low", "contract": "UniverseAuctionHouse", "function": "distributeCapturedAuctionRevenue()", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-710"], "2": ["CWE-1164"], "3": ["CWE-561"]}, "title": "Unused modifier exists", "description": "A modifier onlyIfWhitelistSupported is implemented but not used by any function.", "severity": "Low", "contract": "UniverseAuctionHouse", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-682"]}, "title": "There is a modifier that outputs a wrong error message", "description": "In the onlyAuctionOwner() modifier, its error message and its error code indicate different situations.", "severity": "Medium", "contract": "UniverseAuctionHouse", "function": "onlyAuctionOwner(uint256 auctionId)", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "An abnormal value may be registered in reservePrice of the slot", "description": "The current implementation allows the reservePrice of the second slot to be set to a value greater than the reservePrice of the first slot, which may not be intended and can affect the level of completion of the code.", "severity": "Low", "contract": "UniverseAuctionHouse", "function": "_UniverseAuctionHouse#onlyAuctionOwner()_ modifier", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/HAECHI_AUDIT/HAECHI_AUDIT-UniverseXYZ_Contract.pdf",
+    "project_info": {
+        "url": "https://github.com/UniverseXYZ/AuctionContracts",
+        "commit_hash": "_126eab22b60d475a07455685dfb41453bd318265.",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Contract Owner can change the URI of NFT",
+            "description": "The contract owner can change the URI of NFT using UniverseERC721#updateTokenURI(), which may allow arbitrary changes to NFT information.",
+            "severity": "Minor",
+            "contract": "UniverseERC721",
+            "function": "updateTokenURI()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "The privilege of Dao is too large",
+            "description": "Dao has excessive privileges which can lead to unintended consequences.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Bidding algorithm behaves in an unintended direction",
+            "description": "The bidding algorithm may behave in an unintended direction due to incorrect logic in the erc20Bid function.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "erc20Bid(uint256 auctionId, uint256 amount)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Unnecessary royaltyFee may be paid to Dao",
+            "description": "The royalty fee calculation and deduction from auction revenue may result in unnecessary payments to the DAO.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "captureSlotRevenue",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Withdrawing NFT does not decrease the totalDepositedERC721s value of the contract",
+            "description": "The function withdrawDepositedERC721() withdraws NFTs existing in an auction only when the auction has already been canceled, but it does not decrease the totalDepositedERC721s value representing the total number of NFTs existing in the contract.",
+            "severity": "Medium",
+            "contract": "UniverseAuctionHouse",
+            "function": "withdrawDepositedERC721()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "The Revenue of the Auction is allocated to the Auction Owner, not the NFT Depositor",
+            "description": "In the captureSlotRevenue function, the auction revenue is allocated to the auctionsRevenue mapping which belongs to the auction owner instead of being distributed to the NFT depositor.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "captureSlotRevenue(uint256,uint256)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Users can bid with invalid amount",
+            "description": "The erc20Bid function allows users to bid with an invalid amount.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "erc20Bid(uint256, uint256)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-358"
+                ]
+            },
+            "title": "UniverseAuctionHouse#batchDepositToAuction() may not work as intended",
+            "description": "The function handles adding NFTs to each of multiple slots in one transaction but allows adding NFTs to the same slot multiple times if the same slot ID is entered, which might be unintended.",
+            "severity": "Medium",
+            "contract": "UniverseAuctionHouse",
+            "function": "batchDepositToAuction()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ]
+            },
+            "title": "Unnecessary events may be emitted",
+            "description": "The distributeCapturedAuctionRevenue() function may emit unnecessary events when the auction is finalized but yet to be captured, consuming gas.",
+            "severity": "Low",
+            "contract": "UniverseAuctionHouse",
+            "function": "distributeCapturedAuctionRevenue()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ],
+                "3": [
+                    "CWE-561"
+                ]
+            },
+            "title": "Unused modifier exists",
+            "description": "A modifier onlyIfWhitelistSupported is implemented but not used by any function.",
+            "severity": "Low",
+            "contract": "UniverseAuctionHouse",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "There is a modifier that outputs a wrong error message",
+            "description": "In the onlyAuctionOwner() modifier, its error message and its error code indicate different situations.",
+            "severity": "Medium",
+            "contract": "UniverseAuctionHouse",
+            "function": "onlyAuctionOwner(uint256 auctionId)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "An abnormal value may be registered in reservePrice of the slot",
+            "description": "The current implementation allows the reservePrice of the second slot to be set to a value greater than the reservePrice of the first slot, which may not be intended and can affect the level of completion of the code.",
+            "severity": "Low",
+            "contract": "UniverseAuctionHouse",
+            "function": "_UniverseAuctionHouse#onlyAuctionOwner()_ modifier",
+            "lineNumber": "N/A"
+        }
+    ]
+}

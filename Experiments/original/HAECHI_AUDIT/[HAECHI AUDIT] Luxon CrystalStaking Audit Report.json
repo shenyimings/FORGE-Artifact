@@ -1,1 +1,187 @@
-{"path": "./Audit_Reports_2024/HAECHI_AUDIT/[HAECHI AUDIT] Luxon CrystalStaking Audit Report.pdf", "project_info": {"url": "https://github.com/nerdy-star/nerdy_smart_contract/blob/haechi-labs/crystal-staking/", "commit_hash": "6dfc1702b62bece149ce846745c6224840177fbb", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Reward Token fraudulent receiving", "description": "Most of the allocated reward tokens can be received by one person illegally.", "severity": "Critical", "contract": "LUXON/myPage/inventory/crystalStaking.sol", "function": "calculateRewards() and updateUserReward()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "updateUserReward() method will crashed by DoS caused by stake() method", "description": "When updateUserReward() is executed, the contract may not be able to provide rewards to users due to gas griefing from the owner.", "severity": "Medium", "contract": "LUXON/myPage/inventory/crystalStaking.sol", "function": "stake()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "fee collection bypass before calling updateUserReward()", "description": "A malicious user can bypass fee collection before calling updateUserReward function by adding dummy data to unStakers when calling the unStake function with _amount set to 0.", "severity": "Low", "contract": "LUXON/myPage/inventory/crystalStaking.sol", "function": "unStake()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "stake() method gas optimization issue", "description": "The stake() method has logic to check Token ID existence, but the implementation always runs the same whether isNew is true or false, making the for loop unnecessary.", "severity": "Tips", "contract": "crystalStaking", "function": "stake()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-664"], "2": ["CWE-404"], "3": ["CWE-772"], "4": ["CWE-775"]}, "title": "disabledLockUp() implementation problem", "description": "The disabledLockUp() function does not release the lock as intended due to incomplete implementation.", "severity": "Tips", "contract": "crystalStaking.sol", "function": "disabledLockUp(uint256[] memory _indexes)", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "removeByIndex() gas optimization issue", "description": "As the amount of values in the list array increases, the cost of gas consumption may become excessive.", "severity": "Tips", "contract": "crystalStaking.sol", "function": "removeByIndex(uint i, address[] storage list)", "lineNumber": "L406"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "removeByIndexUnStaker() gas optimization issue", "description": "As the amount of values in the list array increases, the cost of gas consumption may become excessive.", "severity": "Tips", "contract": "crystalStaking.sol", "function": "removeByIndexUnStaker(address,uint256)", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "unStake() function implements stakingUsers delete logics invalid", "description": "In the unStake() function, the logic to delete user information when the user no longer holds the staking status was implemented incorrectly, causing gas wasting.", "severity": "Tips", "contract": "crystalStaking.sol", "function": "unStake()", "lineNumber": "124"}, {"id": 8, "category": {"1": ["CWE-697"]}, "title": "claim() function use reversed equal sign", "description": "The claim() function has a require statement with a reversed equal sign, allowing users to bypass the condition and claim rewards prematurely.", "severity": "Tips", "contract": "crystalStaking.sol", "function": "claim(uint256 _index, bool disableLockup)", "lineNumber": "143"}, {"id": 9, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "unStake() method does not check _amount is zero", "description": "When calling the unStake function with parameter _amount set to 0, the user can add dummy data to unStakers. This behavior can cause a situation that removeByIndexUnStaker function inside the claim function can waste gas.", "severity": "Tips", "contract": "crystalStaking.sol", "function": "unStake(uint256,uint256)", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/HAECHI_AUDIT/[HAECHI AUDIT] Luxon CrystalStaking Audit Report.pdf",
+    "project_info": {
+        "url": "https://github.com/nerdy-star/nerdy_smart_contract/blob/haechi-labs/crystal-staking/",
+        "commit_hash": "6dfc1702b62bece149ce846745c6224840177fbb",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Reward Token fraudulent receiving",
+            "description": "Most of the allocated reward tokens can be received by one person illegally.",
+            "severity": "Critical",
+            "contract": "LUXON/myPage/inventory/crystalStaking.sol",
+            "function": "calculateRewards() and updateUserReward()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "updateUserReward() method will crashed by DoS caused by stake() method",
+            "description": "When updateUserReward() is executed, the contract may not be able to provide rewards to users due to gas griefing from the owner.",
+            "severity": "Medium",
+            "contract": "LUXON/myPage/inventory/crystalStaking.sol",
+            "function": "stake()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "fee collection bypass before calling updateUserReward()",
+            "description": "A malicious user can bypass fee collection before calling updateUserReward function by adding dummy data to unStakers when calling the unStake function with _amount set to 0.",
+            "severity": "Low",
+            "contract": "LUXON/myPage/inventory/crystalStaking.sol",
+            "function": "unStake()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "stake() method gas optimization issue",
+            "description": "The stake() method has logic to check Token ID existence, but the implementation always runs the same whether isNew is true or false, making the for loop unnecessary.",
+            "severity": "Tips",
+            "contract": "crystalStaking",
+            "function": "stake()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-775"
+                ]
+            },
+            "title": "disabledLockUp() implementation problem",
+            "description": "The disabledLockUp() function does not release the lock as intended due to incomplete implementation.",
+            "severity": "Tips",
+            "contract": "crystalStaking.sol",
+            "function": "disabledLockUp(uint256[] memory _indexes)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "removeByIndex() gas optimization issue",
+            "description": "As the amount of values in the list array increases, the cost of gas consumption may become excessive.",
+            "severity": "Tips",
+            "contract": "crystalStaking.sol",
+            "function": "removeByIndex(uint i, address[] storage list)",
+            "lineNumber": "L406"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "removeByIndexUnStaker() gas optimization issue",
+            "description": "As the amount of values in the list array increases, the cost of gas consumption may become excessive.",
+            "severity": "Tips",
+            "contract": "crystalStaking.sol",
+            "function": "removeByIndexUnStaker(address,uint256)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "unStake() function implements stakingUsers delete logics invalid",
+            "description": "In the unStake() function, the logic to delete user information when the user no longer holds the staking status was implemented incorrectly, causing gas wasting.",
+            "severity": "Tips",
+            "contract": "crystalStaking.sol",
+            "function": "unStake()",
+            "lineNumber": "124"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ]
+            },
+            "title": "claim() function use reversed equal sign",
+            "description": "The claim() function has a require statement with a reversed equal sign, allowing users to bypass the condition and claim rewards prematurely.",
+            "severity": "Tips",
+            "contract": "crystalStaking.sol",
+            "function": "claim(uint256 _index, bool disableLockup)",
+            "lineNumber": "143"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "unStake() method does not check _amount is zero",
+            "description": "When calling the unStake function with parameter _amount set to 0, the user can add dummy data to unStakers. This behavior can cause a situation that removeByIndexUnStaker function inside the claim function can waste gas.",
+            "severity": "Tips",
+            "contract": "crystalStaking.sol",
+            "function": "unStake(uint256,uint256)",
+            "lineNumber": "N/A"
+        }
+    ]
+}

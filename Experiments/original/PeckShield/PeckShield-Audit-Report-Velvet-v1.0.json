@@ -1,1 +1,96 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Velvet-v1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Improper Corner Case Handling in _swapETHToToken()", "description": "The `_swapETHToToken()` routine needs to be improved to better handle possible corner cases, specifically when the token being swapped is equal to `getETH()`.", "severity": "Medium", "contract": "Adapter", "function": "_swapETHToToken()", "lineNumber": "102-104"}, {"id": 1, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "Possible Sandwich/MEV For Reduced Returns", "description": "The current implementation of `_swapETHToToken()` and `_swapTokenToETH()` does not have necessary slippage control to mitigate possible risk.", "severity": "Low", "contract": "Adapter", "function": "_swapTokenToETH()", "lineNumber": "145-157"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Flashloan-Based Oracle Price Manipulation", "description": "The `Velvet Capital` protocol has a `PriceOracle` contract to facilitate the token price discovery. Our analysis shows the current approach to compute the on-chain token price can be manipulated.", "severity": "Critical", "contract": "PriceOracle", "function": "getTokenPrice()", "lineNumber": "100-121"}, {"id": 3, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Accommodation of Non-ERC20-Compliant Tokens", "description": "The approve() routine may not work correctly with non-ERC20-compliant tokens due to idiosyncrasies from current widely-used token contracts, which can lead to the known approve()/transferFrom() race condition.", "severity": "Low", "contract": "Adapter", "function": "approve()", "lineNumber": "194-195"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Trust Issue of Admin Keys", "description": "In the `Velvet Capital` protocol, there is a privileged manager account (with the `DEFAULT_ADMIN_ROLE`) that plays a critical role in governing and regulating the system-wide operations, but the extra power to the privileged account may also be a counter-party risk to the contract users.", "severity": "Medium", "contract": "AccessController", "function": "setupRole()", "lineNumber": "45-47"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Velvet-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/Velvet-Capital/protocols/tree/7e917cb",
+        "commit_hash": "7e917cb",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Improper Corner Case Handling in _swapETHToToken()",
+            "description": "The `_swapETHToToken()` routine needs to be improved to better handle possible corner cases, specifically when the token being swapped is equal to `getETH()`.",
+            "severity": "Medium",
+            "contract": "Adapter",
+            "function": "_swapETHToToken()",
+            "lineNumber": "102-104"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Possible Sandwich/MEV For Reduced Returns",
+            "description": "The current implementation of `_swapETHToToken()` and `_swapTokenToETH()` does not have necessary slippage control to mitigate possible risk.",
+            "severity": "Low",
+            "contract": "Adapter",
+            "function": "_swapTokenToETH()",
+            "lineNumber": "145-157"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Flashloan-Based Oracle Price Manipulation",
+            "description": "The `Velvet Capital` protocol has a `PriceOracle` contract to facilitate the token price discovery. Our analysis shows the current approach to compute the on-chain token price can be manipulated.",
+            "severity": "Critical",
+            "contract": "PriceOracle",
+            "function": "getTokenPrice()",
+            "lineNumber": "100-121"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Accommodation of Non-ERC20-Compliant Tokens",
+            "description": "The approve() routine may not work correctly with non-ERC20-compliant tokens due to idiosyncrasies from current widely-used token contracts, which can lead to the known approve()/transferFrom() race condition.",
+            "severity": "Low",
+            "contract": "Adapter",
+            "function": "approve()",
+            "lineNumber": "194-195"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "In the `Velvet Capital` protocol, there is a privileged manager account (with the `DEFAULT_ADMIN_ROLE`) that plays a critical role in governing and regulating the system-wide operations, but the extra power to the privileged account may also be a counter-party risk to the contract users.",
+            "severity": "Medium",
+            "contract": "AccessController",
+            "function": "setupRole()",
+            "lineNumber": "45-47"
+        }
+    ]
+}

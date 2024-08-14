@@ -1,1 +1,174 @@
-{"path": "./Audit_Reports_2024/Cyberscope/rpsnetwork.pdf", "project_info": {"url": "https://github.com/RPS-Labs/sdk-contracts/tree/main/contracts", "commit_hash": "5417f26bb647b8c0cc258b35b681378e5473f4fb", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "PFO - Potential Function Optimization", "description": "The Router contract includes two functions, execute and executeBatch, which exhibit overlapping functionalities and can be optimized by combining them into a single function.", "severity": "N/A", "contract": "Router", "function": "execute() and executeBatch()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-435"], "2": ["CWE-436"], "3": ["CWE-437"]}, "title": "IWM - Inefficient Winner Mapping", "description": "The contract utilizes the `fulfillRandomWords` function to randomly generate winning ticket IDs, which are then stored in the `winningTicketIds` mapping. However, this mapping is not utilized in the `executeRaffle` function, where the actual winners' addresses are determined and set by the operator.", "severity": "Medium", "contract": "N/A", "function": "fulfillRandomWords, executeRaffle", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-923"], "3": ["CWE-300"]}, "title": "CCR - Contract Centralization Risk", "description": "The contract's functionality and behavior are heavily dependent on external parameters or configurations, posing centralization risks such as Single Point of Control, Vulnerability to Attacks, Operational Delays, Trust Dependencies, and Decentralization Erosion.", "severity": "High", "contract": "N/A", "function": ["executeRaffle", "setRaffleTicketCost", "setPotLimit"], "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "EFI - External Fee Inconsistency", "description": "The contract fetches `raffleTradeFee` from an external contract and uses a constant divider (`HUNDRED_PERCENT`) to calculate `raffleDelta`. This may lead to discrepancies or calculation errors if the external contract's fee structure changes.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "URS - Unoptimized Random Selection", "description": "The contract utilizes the `fulfillRandomWords` function to generate random winners for a raffle, which includes a potentially gas-intensive process in the `_incrementRandomValueUntilUnique` method that can consume a significant amount of gas, especially if there are many duplicates.", "severity": "Critical", "contract": "RPS Network", "function": "fulfillRandomWords", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-703"]}, "title": "MEM - Missing Error Messages", "description": "The contract is missing error messages. The lack of error messages makes it difficult to identify and fix the issue.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-710"], "2": ["CWE-1076"], "3": ["CWE-1078"], "4": ["CWE-1099"]}, "title": "L04 - Conformance to Solidity Naming Conventions", "description": "Non-conformance to Solidity naming conventions can lead to decreased readability and maintainability of the code.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "L16 - Validate Variable Setters", "description": "The contract performs operations on variables configured with user-supplied input without proper checks for zero values, leading to potential problems during execution.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "L19 - Stable Compiler Version", "description": "The `^` symbol indicates that any version of Solidity that is compatible with the specified version (i.e., any version that is a higher minor or patch version) can be used to compile the contract. The version lock is a mechanism that allows the author to specify a minimum version of the Solidity compiler that must be used to compile the contract code.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Cyberscope/rpsnetwork.pdf",
+    "project_info": {
+        "url": "https://github.com/RPS-Labs/sdk-contracts/tree/main/contracts",
+        "commit_hash": "5417f26bb647b8c0cc258b35b681378e5473f4fb",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "PFO - Potential Function Optimization",
+            "description": "The Router contract includes two functions, execute and executeBatch, which exhibit overlapping functionalities and can be optimized by combining them into a single function.",
+            "severity": "N/A",
+            "contract": "Router",
+            "function": "execute() and executeBatch()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-437"
+                ]
+            },
+            "title": "IWM - Inefficient Winner Mapping",
+            "description": "The contract utilizes the `fulfillRandomWords` function to randomly generate winning ticket IDs, which are then stored in the `winningTicketIds` mapping. However, this mapping is not utilized in the `executeRaffle` function, where the actual winners' addresses are determined and set by the operator.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "fulfillRandomWords, executeRaffle",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-923"
+                ],
+                "3": [
+                    "CWE-300"
+                ]
+            },
+            "title": "CCR - Contract Centralization Risk",
+            "description": "The contract's functionality and behavior are heavily dependent on external parameters or configurations, posing centralization risks such as Single Point of Control, Vulnerability to Attacks, Operational Delays, Trust Dependencies, and Decentralization Erosion.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": [
+                "executeRaffle",
+                "setRaffleTicketCost",
+                "setPotLimit"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "EFI - External Fee Inconsistency",
+            "description": "The contract fetches `raffleTradeFee` from an external contract and uses a constant divider (`HUNDRED_PERCENT`) to calculate `raffleDelta`. This may lead to discrepancies or calculation errors if the external contract's fee structure changes.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "URS - Unoptimized Random Selection",
+            "description": "The contract utilizes the `fulfillRandomWords` function to generate random winners for a raffle, which includes a potentially gas-intensive process in the `_incrementRandomValueUntilUnique` method that can consume a significant amount of gas, especially if there are many duplicates.",
+            "severity": "Critical",
+            "contract": "RPS Network",
+            "function": "fulfillRandomWords",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "MEM - Missing Error Messages",
+            "description": "The contract is missing error messages. The lack of error messages makes it difficult to identify and fix the issue.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1076"
+                ],
+                "3": [
+                    "CWE-1078"
+                ],
+                "4": [
+                    "CWE-1099"
+                ]
+            },
+            "title": "L04 - Conformance to Solidity Naming Conventions",
+            "description": "Non-conformance to Solidity naming conventions can lead to decreased readability and maintainability of the code.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "L16 - Validate Variable Setters",
+            "description": "The contract performs operations on variables configured with user-supplied input without proper checks for zero values, leading to potential problems during execution.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "L19 - Stable Compiler Version",
+            "description": "The `^` symbol indicates that any version of Solidity that is compatible with the specified version (i.e., any version that is a higher minor or patch version) can be used to compile the contract. The version lock is a mechanism that allows the author to specify a minimum version of the Solidity compiler that must be used to compile the contract code.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

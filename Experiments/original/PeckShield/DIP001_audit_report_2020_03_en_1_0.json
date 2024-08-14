@@ -1,1 +1,143 @@
-{"path": "./Audit_Reports_2024/PeckShield/DIP001_audit_report_2020_03_en_1_0.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Misleading Return Code in Dispatcher", "description": "The `trigger()` function in Dispatcher.sol always returns `true` whether `internalDeposit()` or `withdrawPrinciple()` are triggered or not, making the return code meaningless.", "severity": "Informational", "contract": "Dispatcher.sol", "function": "trigger()", "lineNumber": "62-71"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Missing Check before Withdrawing Principle", "description": "The `withdrawPrinciple()` function does not validate the amount to be withdrew before calling the underlying `withdraw()`.", "severity": "Informational", "contract": "Dispatcher.sol", "function": "withdrawPrinciple()", "lineNumber": "116-142"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Wrong Proportion After Adding/Removing Target Handlers", "description": "The current implementation of removeTargetHandler()/addTargetHandle() does not validate the proportion after adding/removing a target handler, leading to invalid proportion settings.", "severity": "Medium", "contract": "Dispatcher.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Excessive Owner Privileges", "description": "The current version of DIP001 does not implement the management contract which applies DAO management scheme. With that being said, all privileged functions in `Dispatcher` and `DispatcherEntrance` are controlled by the user having the auth key. That powerful auth key can be used to change the aimed proportion, set the beneficiary address, etc. It would be a single point of failure if the privileged user is compromised, leading to security risks to users\u2019 assets.", "severity": "Informational", "contract": "Dispatcher, DispatcherEntrance", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Gas Consumption Optimization", "description": "In `CompoundHandler`, the `deposit()` does not validate the `_amounts`, which is a waste of gas.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Wrong Proportion After Setting Aimed Proportion", "description": "When setAimedPropotion() is used to set a new aimed proportion, the amount of principle may not be compatible with the new settings, leading to an incompatible proportion until the next deposit or withdrawal.", "severity": "Informational", "contract": "Dispatcher.sol", "function": "setAimedPropotion()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Insufficient Validation to Target Handler", "description": "While adding a new target handler, DIP001 validates the `_targetHandlerAddr` by calling `getTargetAddress()` to ensure that the contract has the corresponding interface implemented. However, the validation is insufficient here.", "severity": "Informational", "contract": "Dispatcher.sol", "function": "addTargetHandler", "lineNumber": "329"}, {"id": 7, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Redundant Code in Dispatcher", "description": "The `DSMath` library is redundant in `Dispatcher` contract since `DSLibrary/DSMath.sol` could be included and used directly.", "severity": "Informational", "contract": "Dispatcher.sol", "function": "N/A", "lineNumber": "12-22"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/DIP001_audit_report_2020_03_en_1_0.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Misleading Return Code in Dispatcher",
+            "description": "The `trigger()` function in Dispatcher.sol always returns `true` whether `internalDeposit()` or `withdrawPrinciple()` are triggered or not, making the return code meaningless.",
+            "severity": "Informational",
+            "contract": "Dispatcher.sol",
+            "function": "trigger()",
+            "lineNumber": "62-71"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Missing Check before Withdrawing Principle",
+            "description": "The `withdrawPrinciple()` function does not validate the amount to be withdrew before calling the underlying `withdraw()`.",
+            "severity": "Informational",
+            "contract": "Dispatcher.sol",
+            "function": "withdrawPrinciple()",
+            "lineNumber": "116-142"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Wrong Proportion After Adding/Removing Target Handlers",
+            "description": "The current implementation of removeTargetHandler()/addTargetHandle() does not validate the proportion after adding/removing a target handler, leading to invalid proportion settings.",
+            "severity": "Medium",
+            "contract": "Dispatcher.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Excessive Owner Privileges",
+            "description": "The current version of DIP001 does not implement the management contract which applies DAO management scheme. With that being said, all privileged functions in `Dispatcher` and `DispatcherEntrance` are controlled by the user having the auth key. That powerful auth key can be used to change the aimed proportion, set the beneficiary address, etc. It would be a single point of failure if the privileged user is compromised, leading to security risks to users\u2019 assets.",
+            "severity": "Informational",
+            "contract": "Dispatcher, DispatcherEntrance",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Gas Consumption Optimization",
+            "description": "In `CompoundHandler`, the `deposit()` does not validate the `_amounts`, which is a waste of gas.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Wrong Proportion After Setting Aimed Proportion",
+            "description": "When setAimedPropotion() is used to set a new aimed proportion, the amount of principle may not be compatible with the new settings, leading to an incompatible proportion until the next deposit or withdrawal.",
+            "severity": "Informational",
+            "contract": "Dispatcher.sol",
+            "function": "setAimedPropotion()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Insufficient Validation to Target Handler",
+            "description": "While adding a new target handler, DIP001 validates the `_targetHandlerAddr` by calling `getTargetAddress()` to ensure that the contract has the corresponding interface implemented. However, the validation is insufficient here.",
+            "severity": "Informational",
+            "contract": "Dispatcher.sol",
+            "function": "addTargetHandler",
+            "lineNumber": "329"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Redundant Code in Dispatcher",
+            "description": "The `DSMath` library is redundant in `Dispatcher` contract since `DSLibrary/DSMath.sol` could be included and used directly.",
+            "severity": "Informational",
+            "contract": "Dispatcher.sol",
+            "function": "N/A",
+            "lineNumber": "12-22"
+        }
+    ]
+}

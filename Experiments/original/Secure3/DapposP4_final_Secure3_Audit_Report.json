@@ -1,1 +1,241 @@
-{"path": "./Audit_Reports_2024/Secure3/DapposP4_final_Secure3_Audit_Report.pdf", "project_info": {"url": "https://github.com/DappOSDao/contracts-core", "commit_hash": "bd0eadeddcba3b86c469c35df131819da0a71ba8", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Order ExpiryTime should be less than node withdrawal time PayDB::createSrcOrder() function", "description": "Order expiry time as included in each cross-chain transfer in PayDB functions that perform interchain transfers should be validated to be less than the node request withdrawal pending time.", "severity": "Critical", "contract": "PayDB", "function": "createSrcOrder()", "lineNumber": "415"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Node evades punishment when valid token disabled PayLock::punish() function", "description": "The punish function allows a node to evade punishment after a previously valid token becomes invalid while still having orders assigned to the node.", "severity": "Medium", "contract": "PayLock", "function": "punish()", "lineNumber": "141"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Node Block Stuff Chain to steal user funds PayLock::claim() function", "description": "A node can block stuff the difference in time between order expiry time and withdrawPendingTime, allowing it to avoid punishment for not executing an order and abscond with user funds and locked deposits in PayLock.", "severity": "Medium", "contract": "PayLock", "function": "claim()", "lineNumber": "115"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-393"]}, "title": "Return value not used", "description": "The execute function has a return value resCode that is not being used in the _executeIsolateOrder and executeDstOrderETH functions.", "severity": "Low", "contract": "PayDB.sol", "function": "_executeIsolateOrder, executeDstOrderETH", "lineNumber": "146, 379"}, {"id": 4, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Lack of input validation", "description": "The function `requestConfigSrcChain` from contract `VWManager` does not check if the input address `_verifyingContract` is a contract address, which may bring unexpected errors.", "severity": "Low", "contract": "VWManager", "function": "requestConfigSrcChain()", "lineNumber": "L135"}, {"id": 5, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-770"]}, "title": "Unnecessary storage consumption due to claimed withdrawRequests remaining in the contract's state.", "description": "Completed withdrawRequests remain permanently in the `withdrawRequests` mapping, leading to inefficiencies and potential state bloat. Over time, as more requests are completed, this could contribute to a continuous growth in the contract's storage size, leading to increased costs and potential state bloat.", "severity": "Low", "contract": "PayLock", "function": "N/A", "lineNumber": "32-33"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "Return inaccurate error message", "description": "Inaccurate error messages are used in VWManager.sol contract, specifically in configSrcChain() and verifyProof() functions.", "severity": "Informational", "contract": "VWManager", "function": ["configSrcChain()", "verifyProof()"], "lineNumber": ["82", "122"]}, {"id": 7, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Remove unused imports", "description": "The contracts SignLibrary, VirtualWallet, and VWManager include unnecessary import statements.", "severity": "Informational", "contract": ["SignLibrary", "VirtualWallet", "VWManager"], "function": "N/A", "lineNumber": ["L5", "L10", "L5"]}, {"id": 8, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Gas optimization: simplified expression", "description": "In the _createSrcOrder function of the PayDB contract, a memory variable _order is declared with the value of the storage variable order, however, the memory variable _order is only used once.", "severity": "Informational", "contract": "PayDB", "function": "_createSrcOrder()", "lineNumber": "436-438"}, {"id": 9, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-354"]}, "title": "Unlocked Pragma Version", "description": "Solidity files in packages have a pragma version `^0.8.19` which means the compiler will use the specified version or above.", "severity": "Informational", "contract": "WalletDeployer", "function": "N/A", "lineNumber": "3"}, {"id": 10, "category": {"1": ["CWE-664"], "2": ["CWE-400"]}, "title": "Gas Optimization: Revert early in verifyProof()", "description": "In the function verifyProof(), reverting early when domainSeparator[srcChain] is zero can save gas by avoiding unnecessary MerkleProof calculation and signature verification.", "severity": "Informational", "contract": "VWManager", "function": "verifyProof(uint resCode, address wallet, VWExecuteParam calldata vweParam)", "lineNumber": "76-108"}, {"id": 11, "category": {"1": ["CWE-710"], "2": ["CWE-1164"], "3": ["CWE-561"]}, "title": "Remove unused function in transferHelper", "description": "Unused functions safeTransferFrom2() and safeTransferFrom3() from library TransferHelper are not used even though a logic is found.", "severity": "Informational", "contract": "TransferHelper", "function": "safeTransferFrom2() and safeTransferFrom3()", "lineNumber": "L18-L19, L33-L34"}]}
+{
+    "path": "./Audit_Reports_2024/Secure3/DapposP4_final_Secure3_Audit_Report.pdf",
+    "project_info": {
+        "url": "https://github.com/DappOSDao/contracts-core",
+        "commit_hash": "bd0eadeddcba3b86c469c35df131819da0a71ba8",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Order ExpiryTime should be less than node withdrawal time PayDB::createSrcOrder() function",
+            "description": "Order expiry time as included in each cross-chain transfer in PayDB functions that perform interchain transfers should be validated to be less than the node request withdrawal pending time.",
+            "severity": "Critical",
+            "contract": "PayDB",
+            "function": "createSrcOrder()",
+            "lineNumber": "415"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Node evades punishment when valid token disabled PayLock::punish() function",
+            "description": "The punish function allows a node to evade punishment after a previously valid token becomes invalid while still having orders assigned to the node.",
+            "severity": "Medium",
+            "contract": "PayLock",
+            "function": "punish()",
+            "lineNumber": "141"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Node Block Stuff Chain to steal user funds PayLock::claim() function",
+            "description": "A node can block stuff the difference in time between order expiry time and withdrawPendingTime, allowing it to avoid punishment for not executing an order and abscond with user funds and locked deposits in PayLock.",
+            "severity": "Medium",
+            "contract": "PayLock",
+            "function": "claim()",
+            "lineNumber": "115"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-393"
+                ]
+            },
+            "title": "Return value not used",
+            "description": "The execute function has a return value resCode that is not being used in the _executeIsolateOrder and executeDstOrderETH functions.",
+            "severity": "Low",
+            "contract": "PayDB.sol",
+            "function": "_executeIsolateOrder, executeDstOrderETH",
+            "lineNumber": "146, 379"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Lack of input validation",
+            "description": "The function `requestConfigSrcChain` from contract `VWManager` does not check if the input address `_verifyingContract` is a contract address, which may bring unexpected errors.",
+            "severity": "Low",
+            "contract": "VWManager",
+            "function": "requestConfigSrcChain()",
+            "lineNumber": "L135"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "Unnecessary storage consumption due to claimed withdrawRequests remaining in the contract's state.",
+            "description": "Completed withdrawRequests remain permanently in the `withdrawRequests` mapping, leading to inefficiencies and potential state bloat. Over time, as more requests are completed, this could contribute to a continuous growth in the contract's storage size, leading to increased costs and potential state bloat.",
+            "severity": "Low",
+            "contract": "PayLock",
+            "function": "N/A",
+            "lineNumber": "32-33"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Return inaccurate error message",
+            "description": "Inaccurate error messages are used in VWManager.sol contract, specifically in configSrcChain() and verifyProof() functions.",
+            "severity": "Informational",
+            "contract": "VWManager",
+            "function": [
+                "configSrcChain()",
+                "verifyProof()"
+            ],
+            "lineNumber": [
+                "82",
+                "122"
+            ]
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Remove unused imports",
+            "description": "The contracts SignLibrary, VirtualWallet, and VWManager include unnecessary import statements.",
+            "severity": "Informational",
+            "contract": [
+                "SignLibrary",
+                "VirtualWallet",
+                "VWManager"
+            ],
+            "function": "N/A",
+            "lineNumber": [
+                "L5",
+                "L10",
+                "L5"
+            ]
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Gas optimization: simplified expression",
+            "description": "In the _createSrcOrder function of the PayDB contract, a memory variable _order is declared with the value of the storage variable order, however, the memory variable _order is only used once.",
+            "severity": "Informational",
+            "contract": "PayDB",
+            "function": "_createSrcOrder()",
+            "lineNumber": "436-438"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-354"
+                ]
+            },
+            "title": "Unlocked Pragma Version",
+            "description": "Solidity files in packages have a pragma version `^0.8.19` which means the compiler will use the specified version or above.",
+            "severity": "Informational",
+            "contract": "WalletDeployer",
+            "function": "N/A",
+            "lineNumber": "3"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ]
+            },
+            "title": "Gas Optimization: Revert early in verifyProof()",
+            "description": "In the function verifyProof(), reverting early when domainSeparator[srcChain] is zero can save gas by avoiding unnecessary MerkleProof calculation and signature verification.",
+            "severity": "Informational",
+            "contract": "VWManager",
+            "function": "verifyProof(uint resCode, address wallet, VWExecuteParam calldata vweParam)",
+            "lineNumber": "76-108"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ],
+                "3": [
+                    "CWE-561"
+                ]
+            },
+            "title": "Remove unused function in transferHelper",
+            "description": "Unused functions safeTransferFrom2() and safeTransferFrom3() from library TransferHelper are not used even though a logic is found.",
+            "severity": "Informational",
+            "contract": "TransferHelper",
+            "function": "safeTransferFrom2() and safeTransferFrom3()",
+            "lineNumber": "L18-L19, L33-L34"
+        }
+    ]
+}

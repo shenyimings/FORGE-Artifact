@@ -1,1 +1,110 @@
-{"path": "./Audit_Reports_2024/Trail_of_Bits/renvm.pdf", "project_info": {"url": "https://github.com/renproject/secp256k1", "commit_hash": "43cb0b3fed2736abd84020b0517e42716e5bdac5", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Index of zero is allowed for secret shares", "description": "The RenVM protocol integrates Pedersen verifiable secret shares, but currently, there are no checks in any of the components that ensure all of the indices are non-zero, which can reveal the secret value.", "severity": "High", "contract": "shamir/brng/rng/rkpg/open", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Sanity checks missing for second secret sharing generator", "description": "The RenVM protocol integrates Pedersen verifiable secret shares, but there are no checks to ensure that the second secret sharing generator 'h' does not take unsafe values, such as the point at infinity.", "severity": "Informational", "contract": "shamir, brng, rng, rkpg, open", "function": "New", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "NewPointFromXY does not verify the point is on the curve", "description": "The NewPointFromXY function initializes new curve points from x and y inputs but does not verify if those coordinates actually correspond to a point on the curve.", "severity": "Informational", "contract": "secp256k1/point.go", "function": "NewPointFromXY", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "NegateUnsafe assumes field element representation is normalized", "description": "The NegateUnsafe function takes an input field element and calls the underlying C library with the assumption that the input field element is normalized, which is not stated in the comments surrounding Negate.", "severity": "N/A", "contract": "secp256k1", "function": "NegateUnsafe", "lineNumber": "L335-357"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "IsZero and Eq assume leading zeros have been removed", "description": "The IsZero and Eq functions do not handle leading zeros properly, assuming they have been removed from input polynomials. This can lead to incorrect results if removeLeadingZeros function is not called beforehand.", "severity": "Informational", "contract": "shamir/poly/poly.go", "function": ["IsZero", "Eq"], "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"], "2": ["CWE-369"]}, "title": "XY returns the wrong result for the point at infinity", "description": "The XY function may return incorrect results or produce runtime exceptions when called on the point at infinity due to improper handling of division by zero.", "severity": "Informational", "contract": "N/A", "function": "XY", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/renvm.pdf",
+    "project_info": {
+        "url": "https://github.com/renproject/secp256k1",
+        "commit_hash": "43cb0b3fed2736abd84020b0517e42716e5bdac5",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Index of zero is allowed for secret shares",
+            "description": "The RenVM protocol integrates Pedersen verifiable secret shares, but currently, there are no checks in any of the components that ensure all of the indices are non-zero, which can reveal the secret value.",
+            "severity": "High",
+            "contract": "shamir/brng/rng/rkpg/open",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Sanity checks missing for second secret sharing generator",
+            "description": "The RenVM protocol integrates Pedersen verifiable secret shares, but there are no checks to ensure that the second secret sharing generator 'h' does not take unsafe values, such as the point at infinity.",
+            "severity": "Informational",
+            "contract": "shamir, brng, rng, rkpg, open",
+            "function": "New",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "NewPointFromXY does not verify the point is on the curve",
+            "description": "The NewPointFromXY function initializes new curve points from x and y inputs but does not verify if those coordinates actually correspond to a point on the curve.",
+            "severity": "Informational",
+            "contract": "secp256k1/point.go",
+            "function": "NewPointFromXY",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "NegateUnsafe assumes field element representation is normalized",
+            "description": "The NegateUnsafe function takes an input field element and calls the underlying C library with the assumption that the input field element is normalized, which is not stated in the comments surrounding Negate.",
+            "severity": "N/A",
+            "contract": "secp256k1",
+            "function": "NegateUnsafe",
+            "lineNumber": "L335-357"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "IsZero and Eq assume leading zeros have been removed",
+            "description": "The IsZero and Eq functions do not handle leading zeros properly, assuming they have been removed from input polynomials. This can lead to incorrect results if removeLeadingZeros function is not called beforehand.",
+            "severity": "Informational",
+            "contract": "shamir/poly/poly.go",
+            "function": [
+                "IsZero",
+                "Eq"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-369"
+                ]
+            },
+            "title": "XY returns the wrong result for the point at infinity",
+            "description": "The XY function may return incorrect results or produce runtime exceptions when called on the point at infinity due to improper handling of division by zero.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "XY",
+            "lineNumber": "N/A"
+        }
+    ]
+}

@@ -1,1 +1,212 @@
-{"path": "./Audit_Reports_2024/Secure3/SO3_final_Secure3_Audit_Report.pdf", "project_info": {"url": "https://github.com/0xso3/so3-v1", "commit_hash": "52815780442624d86936972fed23d38d8b540821", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Centralization Risk - Owner Has Unlimited Mint Authority, and Can Set Total Fee to close to 100%", "description": "The Owner role has significant privileges across the code base, including unlimited mint authority of `SO3` token and no cap on fees in the `setFeeBP()` function. This can lead to financial loss of 100% of the contract balance if the Owner address is compromised.", "severity": "Critical", "contract": "Multiple (SO3.sol, SO3Chef.sol, SO3Market.sol)", "function": ["mint()", "setFeeBP()", "setTreasury()"], "lineNumber": ["12-15", "120-142", "179-182"]}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Wrong power calculation in SO3Market contract getPower function", "description": "With low values of `giff` and `vol`, it's possible that an user's power gets rounded down to 0 when it should not due to how Solidity division works.", "severity": "Medium", "contract": "SO3Market", "function": "getPower()", "lineNumber": "158-160"}, {"id": 2, "category": {"1": ["CWE-693"]}, "title": "Potential Reentrancy from Miner Address", "description": "The `Miner` address can potentially reenter the `_grab()` function via the `buy()` function and receive ETH that otherwise would belong to the `host` address.", "severity": "Medium", "contract": "SO3Market", "function": "_transferETH()", "lineNumber": "L105-L111, L221-L227"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Basic computing power mismatch", "description": "The documents stated a basic computing power of 100 but the implementation of the Vars contract had a basic computing power of 10.", "severity": "Low", "contract": "Vars.sol", "function": "N/A", "lineNumber": "7"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "Gift cost mismatch with the document in SO3Market contract like function", "description": "The implementation of the 'like' function costs 1000 SO3, but the documentation states it should cost 100 SO3.", "severity": "Low", "contract": "SO3Market", "function": "like()", "lineNumber": "126"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Insufficient EOA Check could Allow Miner to be a Contract Address", "description": "The check intends to enforce that the `miner` can only be an EOA address. However, the code length check is insufficient because it returns 0 for contracts in construction.", "severity": "Low", "contract": "SO3Market", "function": "N/A", "lineNumber": "71"}, {"id": 6, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Missing Storage Gap in Upgradeable Contracts", "description": "There is no storage gap in the implementation contracts. Best practice is to include storage gap in logic contracts to allow for inheritance and the inclusion of additional variables in contract storage in future upgrades.", "severity": "Low", "contract": "UUPSUpgradeableExp.sol", "function": "_init()", "lineNumber": "19-21"}, {"id": 7, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1173"]}, "title": "Upgradeable Contract Inherits Non Upgradeable Contract", "description": "The UUPSUpgradeableExp contract inherits OpenZeppelin's Ownable contract, which is not upgradeable. It should inherit the OwnableUpgradeable contract instead.", "severity": "Low", "contract": "UUPSUpgradeableExp", "function": "N/A", "lineNumber": "6-8"}, {"id": 8, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Missing Event Emit", "description": "Critical state changing operations do not emit events, especially admin functions.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-710"], "2": ["CWE-1164"], "3": ["CWE-561"]}, "title": "Unused code", "description": "**yosriady :** The following errors are unused anywhere in the system and can be removed: error GIFF_OVERFLOW (); **Atlas :** The `Deposit` event in SO3Chef is declared but was never used.", "severity": "Informational", "contract": "Vars.sol,SO3Chef.sol", "function": "N/A", "lineNumber": "22,71-85"}, {"id": 10, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1286"]}, "title": "withrawETH() Function should be withdrawETH()", "description": "Typo in function name `withrawETH()`", "severity": "Informational", "contract": "SO3Market", "function": "withrawETH()", "lineNumber": "149"}]}
+{
+    "path": "./Audit_Reports_2024/Secure3/SO3_final_Secure3_Audit_Report.pdf",
+    "project_info": {
+        "url": "https://github.com/0xso3/so3-v1",
+        "commit_hash": "52815780442624d86936972fed23d38d8b540821",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Centralization Risk - Owner Has Unlimited Mint Authority, and Can Set Total Fee to close to 100%",
+            "description": "The Owner role has significant privileges across the code base, including unlimited mint authority of `SO3` token and no cap on fees in the `setFeeBP()` function. This can lead to financial loss of 100% of the contract balance if the Owner address is compromised.",
+            "severity": "Critical",
+            "contract": "Multiple (SO3.sol, SO3Chef.sol, SO3Market.sol)",
+            "function": [
+                "mint()",
+                "setFeeBP()",
+                "setTreasury()"
+            ],
+            "lineNumber": [
+                "12-15",
+                "120-142",
+                "179-182"
+            ]
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Wrong power calculation in SO3Market contract getPower function",
+            "description": "With low values of `giff` and `vol`, it's possible that an user's power gets rounded down to 0 when it should not due to how Solidity division works.",
+            "severity": "Medium",
+            "contract": "SO3Market",
+            "function": "getPower()",
+            "lineNumber": "158-160"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "Potential Reentrancy from Miner Address",
+            "description": "The `Miner` address can potentially reenter the `_grab()` function via the `buy()` function and receive ETH that otherwise would belong to the `host` address.",
+            "severity": "Medium",
+            "contract": "SO3Market",
+            "function": "_transferETH()",
+            "lineNumber": "L105-L111, L221-L227"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Basic computing power mismatch",
+            "description": "The documents stated a basic computing power of 100 but the implementation of the Vars contract had a basic computing power of 10.",
+            "severity": "Low",
+            "contract": "Vars.sol",
+            "function": "N/A",
+            "lineNumber": "7"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Gift cost mismatch with the document in SO3Market contract like function",
+            "description": "The implementation of the 'like' function costs 1000 SO3, but the documentation states it should cost 100 SO3.",
+            "severity": "Low",
+            "contract": "SO3Market",
+            "function": "like()",
+            "lineNumber": "126"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Insufficient EOA Check could Allow Miner to be a Contract Address",
+            "description": "The check intends to enforce that the `miner` can only be an EOA address. However, the code length check is insufficient because it returns 0 for contracts in construction.",
+            "severity": "Low",
+            "contract": "SO3Market",
+            "function": "N/A",
+            "lineNumber": "71"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Missing Storage Gap in Upgradeable Contracts",
+            "description": "There is no storage gap in the implementation contracts. Best practice is to include storage gap in logic contracts to allow for inheritance and the inclusion of additional variables in contract storage in future upgrades.",
+            "severity": "Low",
+            "contract": "UUPSUpgradeableExp.sol",
+            "function": "_init()",
+            "lineNumber": "19-21"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1173"
+                ]
+            },
+            "title": "Upgradeable Contract Inherits Non Upgradeable Contract",
+            "description": "The UUPSUpgradeableExp contract inherits OpenZeppelin's Ownable contract, which is not upgradeable. It should inherit the OwnableUpgradeable contract instead.",
+            "severity": "Low",
+            "contract": "UUPSUpgradeableExp",
+            "function": "N/A",
+            "lineNumber": "6-8"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Missing Event Emit",
+            "description": "Critical state changing operations do not emit events, especially admin functions.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ],
+                "3": [
+                    "CWE-561"
+                ]
+            },
+            "title": "Unused code",
+            "description": "**yosriady :** The following errors are unused anywhere in the system and can be removed: error GIFF_OVERFLOW (); **Atlas :** The `Deposit` event in SO3Chef is declared but was never used.",
+            "severity": "Informational",
+            "contract": "Vars.sol,SO3Chef.sol",
+            "function": "N/A",
+            "lineNumber": "22,71-85"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1286"
+                ]
+            },
+            "title": "withrawETH() Function should be withdrawETH()",
+            "description": "Typo in function name `withrawETH()`",
+            "severity": "Informational",
+            "contract": "SO3Market",
+            "function": "withrawETH()",
+            "lineNumber": "149"
+        }
+    ]
+}

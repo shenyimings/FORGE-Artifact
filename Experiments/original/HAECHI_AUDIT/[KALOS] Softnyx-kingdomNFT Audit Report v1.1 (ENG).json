@@ -1,1 +1,290 @@
-{"path": "./Audit_Reports_2024/HAECHI_AUDIT/[KALOS] Softnyx-kingdomNFT Audit Report v1.1 (ENG).pdf", "project_info": {"url": "https://github.com/softnyx/kingdomNFT.solidity", "commit_hash": "f120792a94e0d4bf1eeda8f261b99c2838822197", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Incorrect implementation due to mixing of token value and native-coin value in multiTransferEther function", "description": "The multiTransferEther function incorrectly validates the amount of native coins transferred, which could lead to the theft of the native coins in the NyxMultiSend (MultiTransferEtherToken) contract.", "severity": "Critical", "contract": "MultiTransferEtherToken", "function": "multiTransferEther()", "lineNumber": "L13-L26"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-287"]}, "title": "KingdomStoryMarket design issue", "description": "Three design issues in the Market: 1) No validation of signature messages used in TRADE, allowing reuse and unauthorized trades; 2) No validation of msg.value when trading with a NATIVE_TOKEN.", "severity": "High", "contract": "KingdomStoryMarket", "function": "TradeNFT", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Insufficient data in sign messages leads to potential signature issues", "description": "The lack of information in the signature messages used in kingdomNFT contracts can lead to three potential security issues: unintended function usage, unintended contract usage, and reuse across chains.", "severity": "Low", "contract": "kingdomNFT", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-697"]}, "title": "KingdomStoryMysteryBox unsafe random value", "description": "The random value used by the KingdomStoryMysteryBox contract can be predictable.", "severity": "Low", "contract": "KingdomStoryMysteryBox", "function": "_random()", "lineNumber": "L274-L286"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-287"], "3": ["CWE-306"]}, "title": "UnlockAndBurn function without owner authentication implemented", "description": "Owner authentication does not exist in the UnlockAndBurn function, so anyone can burn another user's locked KingdomStoryHeroNFT.", "severity": "High", "contract": "KingdomS\u00adtoryHeroNFT", "function": "UnlockAndBurn(uint tokenId)", "lineNumber": "L146-L156"}, {"id": 5, "category": {"1": ["CWE-691"], "2": ["CWE-1265"]}, "title": "KingdomStoryHeroNFT contract reentrancy", "description": "A reentrancy issue in the MsSafeMint, MsSafeMintMulti, SafeMintBoxResult, and MintHero functions of the KingdomStoryHero NFT contract leads to several possible attacks.", "severity": "High", "contract": "KingdomStoryHeroNFT", "function": "MsSafeMint, MsSafeMintMulti, SafeMintBoxResult, MintHero", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-287"]}, "title": "KingdomStoryHeroNFT signature reuse issue 1", "description": "An attacker can reuse a signature issued to another user in the UnlockAndSetTokenURI/MintHero function because there is no information (address) in the signature data that can identify an Account.", "severity": "Medium", "contract": "KingdomStoryHeroNFT", "function": ["UnlockAndSetTokenURI", "MintHero"], "lineNumber": "121-138"}, {"id": 7, "category": {"1": ["CWE-284"], "2": ["CWE-287"]}, "title": "KingdomStoryHeroNFT signature reuse issue 2", "description": "An attacker can reuse the signature in different functions of UnlockAndSetTokenURI / MintHero.", "severity": "Medium", "contract": "KingdomStoryHeroNFT", "function": "UnlockAndSetTokenURI/MintHero", "lineNumber": "121-138"}, {"id": 8, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "KingdomStoryHeroNFT-UnlockAndSetTokenURI insufficient tokenId validation", "description": "An attacker can overwrite arbitrary token URI information in the KingdomStoryHeroNFT contract due to lack of tokenId validation in the UnlockAndSetTokenURI function.", "severity": "Low", "contract": "KingdomStoryHeroNFT", "function": "UnlockAndSetTokenURI()", "lineNumber": "L121-L138"}, {"id": 9, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Upgradeable issue", "description": "The KingdomStoryBKT, KingdomStoryHeroNFT, KingdomStoryKID, KingdomStoryMarket, and KingdomStoryMysteryBox contracts use the OpenZeppelin Initializable module but do not call the _disableInitializers function in the constructor of the Implementation contract.", "severity": "Tips", "contract": "KingdomStoryBKT, KingdomStoryHeroNFT, KingdomStoryKID, KingdomStoryMarket, KingdomStoryMysteryBox", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-710"], "2": ["CWE-1076"], "3": ["CWE-1078"], "4": ["CWE-1099"]}, "title": "Function/Variables Naming Style", "description": "The kingdomNFT contracts have function names and variable names that violate solidity's naming style.", "severity": "Tips", "contract": "kingdomNFT", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1288"]}, "title": "Unused Functions", "description": "An unused mint function exists for the KingdomStoryHeroNFT and KingdomStoryMysteryBox contracts.", "severity": "Tips", "contract": ["KingdomStoryHeroNFT", "KingdomStoryMysteryBox"], "function": "mint(uint tokenid)", "lineNumber": ["L179-L182", "L151-L154"]}, {"id": 12, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Non-Implemented Pausable Functions", "description": "The KingdomStoryMysteryBox contract inherited the PausableUpgradeable contract and uses the whenNotPaused modifier in the _beforeTokenTransfer function, but the pause/unpause function is not implemented.", "severity": "Tips", "contract": "KingdomStoryMysteryBox", "function": "_beforeTokenTransfer", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Missing event logging in several functions", "description": "Important functions that set and modify master and contracts{nft/box/market} information do not emit events, making transaction auditing and incident response more difficult.", "severity": "Tips", "contract": "*.initialize, KingdomStoryBKT, KingdomStoryMarket, KingdomStoryKID, KingdomStoryMysteryBox", "function": "*.initialize, *.MsSetMasterAddr, MsSetMarketAddr, MsSetNftAddress, MsSetBoxAddress", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-693"]}, "title": "KingdomStoryMysteryBox contract reentrancy", "description": "The BuyBox function of the KingdomStoryMysteryBox contract has a reentrancy issue due to an external call occurring when the callback function (onERC721Received) is called, allowing the function of the KingdomStoryHeroNFT contract to be executed again inside the external call.", "severity": "High", "contract": "KingdomStoryMysteryBox", "function": "BuyBox(BoxType boxType)", "lineNumber": "156-185"}]}
+{
+    "path": "./Audit_Reports_2024/HAECHI_AUDIT/[KALOS] Softnyx-kingdomNFT Audit Report v1.1 (ENG).pdf",
+    "project_info": {
+        "url": "https://github.com/softnyx/kingdomNFT.solidity",
+        "commit_hash": "f120792a94e0d4bf1eeda8f261b99c2838822197",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect implementation due to mixing of token value and native-coin value in multiTransferEther function",
+            "description": "The multiTransferEther function incorrectly validates the amount of native coins transferred, which could lead to the theft of the native coins in the NyxMultiSend (MultiTransferEtherToken) contract.",
+            "severity": "Critical",
+            "contract": "MultiTransferEtherToken",
+            "function": "multiTransferEther()",
+            "lineNumber": "L13-L26"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-287"
+                ]
+            },
+            "title": "KingdomStoryMarket design issue",
+            "description": "Three design issues in the Market: 1) No validation of signature messages used in TRADE, allowing reuse and unauthorized trades; 2) No validation of msg.value when trading with a NATIVE_TOKEN.",
+            "severity": "High",
+            "contract": "KingdomStoryMarket",
+            "function": "TradeNFT",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Insufficient data in sign messages leads to potential signature issues",
+            "description": "The lack of information in the signature messages used in kingdomNFT contracts can lead to three potential security issues: unintended function usage, unintended contract usage, and reuse across chains.",
+            "severity": "Low",
+            "contract": "kingdomNFT",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ]
+            },
+            "title": "KingdomStoryMysteryBox unsafe random value",
+            "description": "The random value used by the KingdomStoryMysteryBox contract can be predictable.",
+            "severity": "Low",
+            "contract": "KingdomStoryMysteryBox",
+            "function": "_random()",
+            "lineNumber": "L274-L286"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-287"
+                ],
+                "3": [
+                    "CWE-306"
+                ]
+            },
+            "title": "UnlockAndBurn function without owner authentication implemented",
+            "description": "Owner authentication does not exist in the UnlockAndBurn function, so anyone can burn another user's locked KingdomStoryHeroNFT.",
+            "severity": "High",
+            "contract": "KingdomS\u00adtoryHeroNFT",
+            "function": "UnlockAndBurn(uint tokenId)",
+            "lineNumber": "L146-L156"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "KingdomStoryHeroNFT contract reentrancy",
+            "description": "A reentrancy issue in the MsSafeMint, MsSafeMintMulti, SafeMintBoxResult, and MintHero functions of the KingdomStoryHero NFT contract leads to several possible attacks.",
+            "severity": "High",
+            "contract": "KingdomStoryHeroNFT",
+            "function": "MsSafeMint, MsSafeMintMulti, SafeMintBoxResult, MintHero",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-287"
+                ]
+            },
+            "title": "KingdomStoryHeroNFT signature reuse issue 1",
+            "description": "An attacker can reuse a signature issued to another user in the UnlockAndSetTokenURI/MintHero function because there is no information (address) in the signature data that can identify an Account.",
+            "severity": "Medium",
+            "contract": "KingdomStoryHeroNFT",
+            "function": [
+                "UnlockAndSetTokenURI",
+                "MintHero"
+            ],
+            "lineNumber": "121-138"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-287"
+                ]
+            },
+            "title": "KingdomStoryHeroNFT signature reuse issue 2",
+            "description": "An attacker can reuse the signature in different functions of UnlockAndSetTokenURI / MintHero.",
+            "severity": "Medium",
+            "contract": "KingdomStoryHeroNFT",
+            "function": "UnlockAndSetTokenURI/MintHero",
+            "lineNumber": "121-138"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "KingdomStoryHeroNFT-UnlockAndSetTokenURI insufficient tokenId validation",
+            "description": "An attacker can overwrite arbitrary token URI information in the KingdomStoryHeroNFT contract due to lack of tokenId validation in the UnlockAndSetTokenURI function.",
+            "severity": "Low",
+            "contract": "KingdomStoryHeroNFT",
+            "function": "UnlockAndSetTokenURI()",
+            "lineNumber": "L121-L138"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Upgradeable issue",
+            "description": "The KingdomStoryBKT, KingdomStoryHeroNFT, KingdomStoryKID, KingdomStoryMarket, and KingdomStoryMysteryBox contracts use the OpenZeppelin Initializable module but do not call the _disableInitializers function in the constructor of the Implementation contract.",
+            "severity": "Tips",
+            "contract": "KingdomStoryBKT, KingdomStoryHeroNFT, KingdomStoryKID, KingdomStoryMarket, KingdomStoryMysteryBox",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1076"
+                ],
+                "3": [
+                    "CWE-1078"
+                ],
+                "4": [
+                    "CWE-1099"
+                ]
+            },
+            "title": "Function/Variables Naming Style",
+            "description": "The kingdomNFT contracts have function names and variable names that violate solidity's naming style.",
+            "severity": "Tips",
+            "contract": "kingdomNFT",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1288"
+                ]
+            },
+            "title": "Unused Functions",
+            "description": "An unused mint function exists for the KingdomStoryHeroNFT and KingdomStoryMysteryBox contracts.",
+            "severity": "Tips",
+            "contract": [
+                "KingdomStoryHeroNFT",
+                "KingdomStoryMysteryBox"
+            ],
+            "function": "mint(uint tokenid)",
+            "lineNumber": [
+                "L179-L182",
+                "L151-L154"
+            ]
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Non-Implemented Pausable Functions",
+            "description": "The KingdomStoryMysteryBox contract inherited the PausableUpgradeable contract and uses the whenNotPaused modifier in the _beforeTokenTransfer function, but the pause/unpause function is not implemented.",
+            "severity": "Tips",
+            "contract": "KingdomStoryMysteryBox",
+            "function": "_beforeTokenTransfer",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Missing event logging in several functions",
+            "description": "Important functions that set and modify master and contracts{nft/box/market} information do not emit events, making transaction auditing and incident response more difficult.",
+            "severity": "Tips",
+            "contract": "*.initialize, KingdomStoryBKT, KingdomStoryMarket, KingdomStoryKID, KingdomStoryMysteryBox",
+            "function": "*.initialize, *.MsSetMasterAddr, MsSetMarketAddr, MsSetNftAddress, MsSetBoxAddress",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "KingdomStoryMysteryBox contract reentrancy",
+            "description": "The BuyBox function of the KingdomStoryMysteryBox contract has a reentrancy issue due to an external call occurring when the callback function (onERC721Received) is called, allowing the function of the KingdomStoryHeroNFT contract to be executed again inside the external call.",
+            "severity": "High",
+            "contract": "KingdomStoryMysteryBox",
+            "function": "BuyBox(BoxType boxType)",
+            "lineNumber": "156-185"
+        }
+    ]
+}

@@ -1,1 +1,85 @@
-{"path": "./Audit_Reports_2024/Trail_of_Bits/SimpleXChat.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1287"]}, "title": "X3DH does not apply HKDF to generate secrets", "description": "The extended triple Diffie-Hellman (X3DH) key agreement protocol does not apply HKDF to generate secrets.", "severity": "Medium", "contract": "Simplex/ Messaging/Crypto/Ratchet.hs", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "The pad function is incorrect for long messages", "description": "The `pad` function from the `Simplex.Messaging.Crypto` module uses the `fromIntegral` function, resulting in an integer overflow bug that leads to incorrect length encoding for messages longer than 65535 bytes.", "severity": "Low", "contract": "N/A", "function": "pad", "lineNumber": "L805-811"}, {"id": 2, "category": {"1": ["CWE-703"]}, "title": "The unPad function throws exception for short messages", "description": "The `unPad` function throws an undocumented exception when the input is empty or a single byte due to the `decodeWord16` function which throws an `IOException` if the input is not exactly two bytes.", "severity": "Low", "contract": "simplexmq/src/Simplex/Messaging/Crypto.hs", "function": "unPad", "lineNumber": "L805-811"}, {"id": 3, "category": {"1": ["CWE-664"], "2": ["CWE-404"], "3": ["CWE-772"], "4": ["CWE-401"]}, "title": "Key material resides in unpinned memory and is not cleared after its lifetime", "description": "The key material generated and processed by the SimpleXMQ library resides in unpinned memory, and the data is not cleared out from the memory as soon as it is no longer used.", "severity": "Medium", "contract": "SimplexMQ", "function": "N/A", "lineNumber": "L813-819"}]}
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/SimpleXChat.pdf",
+    "project_info": {
+        "url": "https://github.com/simplex-chat/simplexmq/tree/413aad5139acee28033404aed2e5516fc71c337c",
+        "commit_hash": "413aad5139acee28033404aed2e5516fc71c337c",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1287"
+                ]
+            },
+            "title": "X3DH does not apply HKDF to generate secrets",
+            "description": "The extended triple Diffie-Hellman (X3DH) key agreement protocol does not apply HKDF to generate secrets.",
+            "severity": "Medium",
+            "contract": "Simplex/ Messaging/Crypto/Ratchet.hs",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "The pad function is incorrect for long messages",
+            "description": "The `pad` function from the `Simplex.Messaging.Crypto` module uses the `fromIntegral` function, resulting in an integer overflow bug that leads to incorrect length encoding for messages longer than 65535 bytes.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "pad",
+            "lineNumber": "L805-811"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "The unPad function throws exception for short messages",
+            "description": "The `unPad` function throws an undocumented exception when the input is empty or a single byte due to the `decodeWord16` function which throws an `IOException` if the input is not exactly two bytes.",
+            "severity": "Low",
+            "contract": "simplexmq/src/Simplex/Messaging/Crypto.hs",
+            "function": "unPad",
+            "lineNumber": "L805-811"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-401"
+                ]
+            },
+            "title": "Key material resides in unpinned memory and is not cleared after its lifetime",
+            "description": "The key material generated and processed by the SimpleXMQ library resides in unpinned memory, and the data is not cleared out from the memory as soon as it is no longer used.",
+            "severity": "Medium",
+            "contract": "SimplexMQ",
+            "function": "N/A",
+            "lineNumber": "L813-819"
+        }
+    ]
+}

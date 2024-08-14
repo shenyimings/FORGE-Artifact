@@ -1,1 +1,296 @@
-{"path": "./Audit_Reports_2024/Quantstamp/pine.pdf", "project_info": {"url": "https://github.com/[lending-borrowing-smart-contracts]", "commit_hash": "fea59e1", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-693"], "2": ["CWE-807"], "3": ["CWE-302"]}, "title": "Replay Attack On Signature In `Borrow` Function", "description": "In the `borrow` function, nothing prevents from double submitting the signature, making a replay attack possible.", "severity": "High Risk", "contract": "ERC721LendingPool02.sol", "function": "borrow()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-923"], "3": ["CWE-300"]}, "title": "Front Run on Signature in The `Borrow` Function", "description": "In the `borrow` function, nothing prevents from viewing the signature in the mempools and re-using them.", "severity": "High Risk", "contract": "ERC721LendingPool02.sol", "function": "borrow", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Fees Can Be Bypassed", "description": "At every `flashLoan` executed in the contract, a percentage is taken from the amount as `amountFee`. In the case where the `_amount*lenderFeeBips` variable is lower than 10000000000, the fee variable will be equal to 0 due to the type conversion.", "severity": "High Risk", "contract": "ERC721LendingPool02.sol", "function": "flashLoan() and borrow()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-693"], "2": ["CWE-327"]}, "title": "Signature Malleability", "description": "The given implementation of signature verification in `VerifySignaturePool02.recoverSigner()` using `ecrecover` directly is prone to signature malleability.", "severity": "High Risk", "contract": "VerifySignaturePool02", "function": "recoverSigner()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Pool Owner Can Steal NFTs", "description": "The owner of a pool (ERC721LendingPool) can call ControlPlane01.withdrawNFT(...) and transfer the NFT to their wallet when PineLendingLibrary.nftHasLoan(...) returns false for an NFT.", "severity": "High Risk", "contract": "ControlPlane01.sol", "function": "withdrawNFT(...)", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Usage Of `transfer` Instead Of `safeTransfer`", "description": "The ERC20 standard token implementation functions return the transaction status as a Boolean. It's good practice to check for the return status of the function call to ensure that the transaction was successful.", "severity": "Medium Risk", "contract": "ERC721LendingPool02.sol, ERC1155LendingPool02.sol, Router01.sol, PineFinancing01.sol, LoanRollover01.sol, ControlPlane01.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-703"]}, "title": "N/A", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "Missing Value Verification Can Lead To A Denial Of Service", "description": "In the `setBlockLoanLimit` function located in the `ERC721LendingPool02` contract, the `blockLoanLimit` can be changed, and if this is updated to the value 0, the `borrow` function will always revert due to the verification done in the `updateBlockLoanAmount`.", "severity": "Low Risk", "contract": "ERC721LendingPool02", "function": "setBlockLoanLimit", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Missing Address Verification", "description": "Certain functions lack a safety check on the address. The address-type argument should include a zero-address test, otherwise, the contract's functionality may become inaccessible or tokens may be burned in perpetuity.", "severity": "Low Risk", "contract": ["ERC721LendingPool02", "PineFinancing01"], "function": "N/A", "lineNumber": ["70-73", "15"]}, {"id": 9, "category": {"1": ["CWE-710"], "2": ["CWE-1164"], "3": ["CWE-561"]}, "title": "Dead Code", "description": "In the ControlPlane01 contract, we have a code comment of the function callLoan.", "severity": "Low Risk", "contract": "ControlPlane01, PineFinancing01, Router01", "function": "N/A", "lineNumber": "L58-60, L32, L19-32"}, {"id": 10, "category": {"1": ["CWE-284"], "2": ["CWE-282"], "3": ["CWE-708"]}, "title": "Privileged roles and ownership", "description": "Certain contracts have state variables, e.g. `owner`, which provide certain addresses with privileged roles. Such roles may pose a risk to end-users.", "severity": "Low Risk", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Events not emitted on state change", "description": "An event should always be emitted when a state change is performed in order to facilitate smart contract monitoring by other systems which want to integrate with the smart contract.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-710"], "2": ["CWE-1061"], "3": ["CWE-766"]}, "title": "Declare Variable as Constant", "description": "Variable `_baseURIextended` in `PineWallet01.sol` is only written to once with a constant string and should therefore be declared a constant and initialized state variable instead.", "severity": "N/A", "contract": "PineWallet01.sol", "function": "N/A", "lineNumber": "34"}, {"id": 13, "category": {"1": ["CWE-707"], "2": ["CWE-240"]}, "title": "Duplicate Functions Across Contracts", "description": "Contracts `ERC721LendingPool02.sol` and `ERC1155LendingPool02.sol` share many identical and many near identical functions. To improve readability and maintainability, consider unifying those into a shared library.", "severity": "Medium Risk", "contract": ["ERC721LendingPool02", "ERC1155LendingPool02"], "function": "N/A", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-710"], "2": ["CWE-1164"], "3": ["CWE-561"]}, "title": "Multiple Public Functions with No Internal Calls", "description": "Declaring public functions with no internal calls as external may result in gas savings.", "severity": "Optimization", "contract": "ERC721LendingPool02.sol, ERC1155LendingPool02.sol", "function": "onERC721Received, initialize, setBlockLoanLimit, setDurationParam, pause, unpause", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Quantstamp/pine.pdf",
+    "project_info": {
+        "url": "https://github.com/pinedefi/lending-borrowing-smart-contracts/tree/fea59e18a4a712c844e52cecdc97b875c61563ed",
+        "commit_hash": "fea59e18a4a712c844e52cecdc97b875c61563ed",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ],
+                "3": [
+                    "CWE-302"
+                ]
+            },
+            "title": "Replay Attack On Signature In `Borrow` Function",
+            "description": "In the `borrow` function, nothing prevents from double submitting the signature, making a replay attack possible.",
+            "severity": "High Risk",
+            "contract": "ERC721LendingPool02.sol",
+            "function": "borrow()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-923"
+                ],
+                "3": [
+                    "CWE-300"
+                ]
+            },
+            "title": "Front Run on Signature in The `Borrow` Function",
+            "description": "In the `borrow` function, nothing prevents from viewing the signature in the mempools and re-using them.",
+            "severity": "High Risk",
+            "contract": "ERC721LendingPool02.sol",
+            "function": "borrow",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Fees Can Be Bypassed",
+            "description": "At every `flashLoan` executed in the contract, a percentage is taken from the amount as `amountFee`. In the case where the `_amount*lenderFeeBips` variable is lower than 10000000000, the fee variable will be equal to 0 due to the type conversion.",
+            "severity": "High Risk",
+            "contract": "ERC721LendingPool02.sol",
+            "function": "flashLoan() and borrow()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-327"
+                ]
+            },
+            "title": "Signature Malleability",
+            "description": "The given implementation of signature verification in `VerifySignaturePool02.recoverSigner()` using `ecrecover` directly is prone to signature malleability.",
+            "severity": "High Risk",
+            "contract": "VerifySignaturePool02",
+            "function": "recoverSigner()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Pool Owner Can Steal NFTs",
+            "description": "The owner of a pool (ERC721LendingPool) can call ControlPlane01.withdrawNFT(...) and transfer the NFT to their wallet when PineLendingLibrary.nftHasLoan(...) returns false for an NFT.",
+            "severity": "High Risk",
+            "contract": "ControlPlane01.sol",
+            "function": "withdrawNFT(...)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Usage Of `transfer` Instead Of `safeTransfer`",
+            "description": "The ERC20 standard token implementation functions return the transaction status as a Boolean. It's good practice to check for the return status of the function call to ensure that the transaction was successful.",
+            "severity": "Medium Risk",
+            "contract": "ERC721LendingPool02.sol, ERC1155LendingPool02.sol, Router01.sol, PineFinancing01.sol, LoanRollover01.sol, ControlPlane01.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "N/A",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Missing Value Verification Can Lead To A Denial Of Service",
+            "description": "In the `setBlockLoanLimit` function located in the `ERC721LendingPool02` contract, the `blockLoanLimit` can be changed, and if this is updated to the value 0, the `borrow` function will always revert due to the verification done in the `updateBlockLoanAmount`.",
+            "severity": "Low Risk",
+            "contract": "ERC721LendingPool02",
+            "function": "setBlockLoanLimit",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Missing Address Verification",
+            "description": "Certain functions lack a safety check on the address. The address-type argument should include a zero-address test, otherwise, the contract's functionality may become inaccessible or tokens may be burned in perpetuity.",
+            "severity": "Low Risk",
+            "contract": [
+                "ERC721LendingPool02",
+                "PineFinancing01"
+            ],
+            "function": "N/A",
+            "lineNumber": [
+                "70-73",
+                "15"
+            ]
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ],
+                "3": [
+                    "CWE-561"
+                ]
+            },
+            "title": "Dead Code",
+            "description": "In the ControlPlane01 contract, we have a code comment of the function callLoan.",
+            "severity": "Low Risk",
+            "contract": "ControlPlane01, PineFinancing01, Router01",
+            "function": "N/A",
+            "lineNumber": "L58-60, L32, L19-32"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-282"
+                ],
+                "3": [
+                    "CWE-708"
+                ]
+            },
+            "title": "Privileged roles and ownership",
+            "description": "Certain contracts have state variables, e.g. `owner`, which provide certain addresses with privileged roles. Such roles may pose a risk to end-users.",
+            "severity": "Low Risk",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Events not emitted on state change",
+            "description": "An event should always be emitted when a state change is performed in order to facilitate smart contract monitoring by other systems which want to integrate with the smart contract.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1061"
+                ],
+                "3": [
+                    "CWE-766"
+                ]
+            },
+            "title": "Declare Variable as Constant",
+            "description": "Variable `_baseURIextended` in `PineWallet01.sol` is only written to once with a constant string and should therefore be declared a constant and initialized state variable instead.",
+            "severity": "N/A",
+            "contract": "PineWallet01.sol",
+            "function": "N/A",
+            "lineNumber": "34"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-240"
+                ]
+            },
+            "title": "Duplicate Functions Across Contracts",
+            "description": "Contracts `ERC721LendingPool02.sol` and `ERC1155LendingPool02.sol` share many identical and many near identical functions. To improve readability and maintainability, consider unifying those into a shared library.",
+            "severity": "Medium Risk",
+            "contract": [
+                "ERC721LendingPool02",
+                "ERC1155LendingPool02"
+            ],
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ],
+                "3": [
+                    "CWE-561"
+                ]
+            },
+            "title": "Multiple Public Functions with No Internal Calls",
+            "description": "Declaring public functions with no internal calls as external may result in gas savings.",
+            "severity": "Optimization",
+            "contract": "ERC721LendingPool02.sol, ERC1155LendingPool02.sol",
+            "function": "onERC721Received, initialize, setBlockLoanLimit, setDurationParam, pause, unpause",
+            "lineNumber": "N/A"
+        }
+    ]
+}

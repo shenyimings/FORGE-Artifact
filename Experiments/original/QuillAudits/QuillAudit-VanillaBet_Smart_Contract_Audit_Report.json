@@ -1,1 +1,275 @@
-{"path": "./Audit_Reports_2024/QuillAudits/QuillAudit-VanillaBet_Smart_Contract_Audit_Report.pdf", "project_info": {"url": "https://audits.quillhash.com", "commit_hash": "02", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-710"], "2": ["CWE-684"], "3": ["CWE-440"]}, "title": "The Vanilla token is not compliant with BEP-20", "description": "The contract does not implement the getOwner() function as per the BEP-20 standard, which is required to support the movement of the token from BSC to the Binance chain.", "severity": "High", "contract": "Vanilla Token", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Liquidity funds would be sold at a discounted rate or...", "description": "The contract allows liquidity funds to be sold at a discounted rate or accumulated incorrectly due to improper handling of fees and token transfers.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-664"], "2": ["CWE-404"], "3": ["CWE-772"], "4": ["CWE-775"]}, "title": "Funds can remain locked for perpetuity.", "description": "Contract receives funds externally but lacks a function to extract them, potentially locking funds forever.", "severity": "Medium", "contract": "N/A", "function": "receive()", "lineNumber": "#L231"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Unnecessary removes/restore operations lead to more gas..", "description": "Excessive gas was used during the calculation of the fee.", "severity": "Medium", "contract": "N/A", "function": "calculateTaxFee()", "lineNumber": "#L267 - #L270"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "High gas usage in the transfer of assets.", "description": "Unnecessary removes/restore operations lead to more gas consumption during asset transfers.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "Possibility of trade freely without any fee deduction.", "description": "The owner can reset previous and current fees to zero by calling disableAllFees() twice, allowing token holders to trade tokens without any fee deduction until the owner re-sets the fees.", "severity": "High", "contract": "N/A", "function": "disableAllFees(), enableAllFees()", "lineNumber": "#L322 - #L330"}, {"id": 6, "category": {"1": ["CWE-435"], "2": ["CWE-436"], "3": ["CWE-437"]}, "title": "Inconsistency in events emissions.", "description": "There are some ownable functions that are emitting the events and some are not.", "severity": "Medium", "contract": "N/A", "function": ["setTaxFee", "setBurnFee", "setLiquidityFee", "setMarketFee", "setNumTokensSellToAddToLiquidity", "setMarketingWallet", "setMaxTxPercent", "excludeFromFee", "includeInFee"], "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "Excessive gas was used during the calculation of the fee.", "description": "The contract calculates different fees by using respective functions and has a common statement (isSell ? _sellFeeMultiplier : SELLFEEDENOM) that can be optimized to reduce gas usage.", "severity": "Medium", "contract": "N/A", "function": "calculateTaxFee(), calculateBurnFee() etc.", "lineNumber": "#L267 - #L270"}, {"id": 8, "category": {"1": ["CWE-710"], "2": ["CWE-1126"]}, "title": "The Non-mutable variable should be declared as constant.", "description": "SELLFEEDENOM should be declared as a constant type instead of a variable to save gas by avoiding sload operations.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "#L76"}, {"id": 9, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "The owner can frontrun the transactions to charge more fees.", "description": "The contract owner can front-run transactions and charge more fees by submitting a transaction to change various fee types and tipping it to get included first, resulting in users paying more fees.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-693"]}, "title": "Ambiguity in naming convention.", "description": "The contract uses IUniswapRouterV2 and IUniswapV2Factory interfaces which can create confusion as BSC chain doesn't have Uniswap protocol deployed, it's better to rename them to IPancakeRouter and IPancakeFactory respectively.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "#L100"}, {"id": 11, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Inconsistency in using router address.", "description": "Using a hardcoded address of the pancake router, which is incorrect for the testnet.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "#L209"}, {"id": 12, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Multiple pragma directives have been used.", "description": "Contracts should be deployed using the same compiler version/flags with which they have been tested. Locking the pragma ensures that contracts do not accidentally get deployed using an older compiler version with unfixed bugs.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-682"]}, "title": "Unnecessary code complexity.", "description": "Using ~uint256(0) to calculate the maximum value of uint256 type variable instead of using the method provided by solidity to get the maximum range of the uint256.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "#L57"}, {"id": 14, "category": {"1": ["CWE-710"], "2": ["CWE-1120"]}, "title": "Unnecessary complexity in struct declaration.", "description": "ValuesStruct has unnecessary complexity and can be rewritten as a combination of RValuesStruct and TValuesStruct.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "#L31"}]}
+{
+    "path": "./Audit_Reports_2024/QuillAudits/QuillAudit-VanillaBet_Smart_Contract_Audit_Report.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0x2438ac6c2dfc9c00013960eb5e04b9bdc133f317"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-684"
+                ],
+                "3": [
+                    "CWE-440"
+                ]
+            },
+            "title": "The Vanilla token is not compliant with BEP-20",
+            "description": "The contract does not implement the getOwner() function as per the BEP-20 standard, which is required to support the movement of the token from BSC to the Binance chain.",
+            "severity": "High",
+            "contract": "Vanilla Token",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Liquidity funds would be sold at a discounted rate or...",
+            "description": "The contract allows liquidity funds to be sold at a discounted rate or accumulated incorrectly due to improper handling of fees and token transfers.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-775"
+                ]
+            },
+            "title": "Funds can remain locked for perpetuity.",
+            "description": "Contract receives funds externally but lacks a function to extract them, potentially locking funds forever.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "receive()",
+            "lineNumber": "#L231"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Unnecessary removes/restore operations lead to more gas..",
+            "description": "Excessive gas was used during the calculation of the fee.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "calculateTaxFee()",
+            "lineNumber": "#L267 - #L270"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "High gas usage in the transfer of assets.",
+            "description": "Unnecessary removes/restore operations lead to more gas consumption during asset transfers.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Possibility of trade freely without any fee deduction.",
+            "description": "The owner can reset previous and current fees to zero by calling disableAllFees() twice, allowing token holders to trade tokens without any fee deduction until the owner re-sets the fees.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "disableAllFees(), enableAllFees()",
+            "lineNumber": "#L322 - #L330"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-437"
+                ]
+            },
+            "title": "Inconsistency in events emissions.",
+            "description": "There are some ownable functions that are emitting the events and some are not.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": [
+                "setTaxFee",
+                "setBurnFee",
+                "setLiquidityFee",
+                "setMarketFee",
+                "setNumTokensSellToAddToLiquidity",
+                "setMarketingWallet",
+                "setMaxTxPercent",
+                "excludeFromFee",
+                "includeInFee"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Excessive gas was used during the calculation of the fee.",
+            "description": "The contract calculates different fees by using respective functions and has a common statement (isSell ? _sellFeeMultiplier : SELLFEEDENOM) that can be optimized to reduce gas usage.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "calculateTaxFee(), calculateBurnFee() etc.",
+            "lineNumber": "#L267 - #L270"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1126"
+                ]
+            },
+            "title": "The Non-mutable variable should be declared as constant.",
+            "description": "SELLFEEDENOM should be declared as a constant type instead of a variable to save gas by avoiding sload operations.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "#L76"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "The owner can frontrun the transactions to charge more fees.",
+            "description": "The contract owner can front-run transactions and charge more fees by submitting a transaction to change various fee types and tipping it to get included first, resulting in users paying more fees.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "Ambiguity in naming convention.",
+            "description": "The contract uses IUniswapRouterV2 and IUniswapV2Factory interfaces which can create confusion as BSC chain doesn't have Uniswap protocol deployed, it's better to rename them to IPancakeRouter and IPancakeFactory respectively.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "#L100"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Inconsistency in using router address.",
+            "description": "Using a hardcoded address of the pancake router, which is incorrect for the testnet.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "#L209"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Multiple pragma directives have been used.",
+            "description": "Contracts should be deployed using the same compiler version/flags with which they have been tested. Locking the pragma ensures that contracts do not accidentally get deployed using an older compiler version with unfixed bugs.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Unnecessary code complexity.",
+            "description": "Using ~uint256(0) to calculate the maximum value of uint256 type variable instead of using the method provided by solidity to get the maximum range of the uint256.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "#L57"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1120"
+                ]
+            },
+            "title": "Unnecessary complexity in struct declaration.",
+            "description": "ValuesStruct has unnecessary complexity and can be rewritten as a combination of RValuesStruct and TValuesStruct.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "#L31"
+        }
+    ]
+}

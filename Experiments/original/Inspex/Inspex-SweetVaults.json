@@ -1,1 +1,133 @@
-{"path": "./Audit_Reports_2024/Inspex/Inspex-SweetVaults.pdf", "project_info": {"url": "https://github.com/Pacoca-io/contracts", "commit_hash": "a8de2ee5b0f1df8a2ab12b2f26bf1c6584f9515a", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Reward Token Draining by Owner", "description": "The contract owner can drain the reward from the SweetVault contract by manipulating the router and stealing the reward tokens without any restriction.", "severity": "High", "contract": "SweetVault", "function": "_convertBalanceToPacoca, setRouter", "lineNumber": "339-354, 357-362"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "Improper Usage of SafeERC20.safeApprove()", "description": "Using safeApprove() function can lead to an unfulfilled condition making some functions unusable due to depletion of approval amount.", "severity": "Medium", "contract": "SweetVault", "function": "_approveTokenIfNeeded", "lineNumber": "300-308"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Unchecked Swapping Path Setting", "description": "The unchecked path can cause the reward token to be incorrectly swapped, causing the pool to have no reward.", "severity": "Low", "contract": "SweetVault", "function": "setPath() and constructor", "lineNumber": "365-372, 85-112"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Improper Reward Transfer Amount Calculation", "description": "The users may gain a higher amount of $PACOCA than the actual amount of reward claimed due to improper calculation of transfer amount.", "severity": "Low", "contract": "SweetVault", "function": "_safePACOCATransfer()", "lineNumber": "329-337"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-749"]}, "title": "Dangerous Approval to External Contract", "description": "The external contracts can steal all approved tokens from the SweetVault contract; however, for normal usage, no token will be left unattended in the SweetVault contract.", "severity": "Low", "contract": "SweetVault", "function": "_approveTokenIfNeeded()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Potential Centralized Control of State Variable", "description": "The controlling authorities can change the critical state variables to gain additional profit, which is unfair to users.", "severity": "Low", "contract": "SweetVault", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-749"]}, "title": "Improper Function Visibility", "description": "Functions' visibility should be changed to external if they are not called from any internal function.", "severity": "Info", "contract": "SweetVault", "function": "claimRewards(uint256 _shares)", "lineNumber": "241-243"}]}
+{
+    "path": "./Audit_Reports_2024/Inspex/Inspex-SweetVaults.pdf",
+    "project_info": {
+        "url": "https://github.com/Pacoca-io/contracts",
+        "commit_hash": "a8de2ee5b0f1df8a2ab12b2f26bf1c6584f9515a",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Reward Token Draining by Owner",
+            "description": "The contract owner can drain the reward from the SweetVault contract by manipulating the router and stealing the reward tokens without any restriction.",
+            "severity": "High",
+            "contract": "SweetVault",
+            "function": "_convertBalanceToPacoca, setRouter",
+            "lineNumber": "339-354, 357-362"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Improper Usage of SafeERC20.safeApprove()",
+            "description": "Using safeApprove() function can lead to an unfulfilled condition making some functions unusable due to depletion of approval amount.",
+            "severity": "Medium",
+            "contract": "SweetVault",
+            "function": "_approveTokenIfNeeded",
+            "lineNumber": "300-308"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Unchecked Swapping Path Setting",
+            "description": "The unchecked path can cause the reward token to be incorrectly swapped, causing the pool to have no reward.",
+            "severity": "Low",
+            "contract": "SweetVault",
+            "function": "setPath() and constructor",
+            "lineNumber": "365-372, 85-112"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improper Reward Transfer Amount Calculation",
+            "description": "The users may gain a higher amount of $PACOCA than the actual amount of reward claimed due to improper calculation of transfer amount.",
+            "severity": "Low",
+            "contract": "SweetVault",
+            "function": "_safePACOCATransfer()",
+            "lineNumber": "329-337"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-749"
+                ]
+            },
+            "title": "Dangerous Approval to External Contract",
+            "description": "The external contracts can steal all approved tokens from the SweetVault contract; however, for normal usage, no token will be left unattended in the SweetVault contract.",
+            "severity": "Low",
+            "contract": "SweetVault",
+            "function": "_approveTokenIfNeeded()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Potential Centralized Control of State Variable",
+            "description": "The controlling authorities can change the critical state variables to gain additional profit, which is unfair to users.",
+            "severity": "Low",
+            "contract": "SweetVault",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-749"
+                ]
+            },
+            "title": "Improper Function Visibility",
+            "description": "Functions' visibility should be changed to external if they are not called from any internal function.",
+            "severity": "Info",
+            "contract": "SweetVault",
+            "function": "claimRewards(uint256 _shares)",
+            "lineNumber": "241-243"
+        }
+    ]
+}

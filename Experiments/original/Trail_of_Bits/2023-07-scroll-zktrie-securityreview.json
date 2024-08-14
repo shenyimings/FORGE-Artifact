@@ -1,1 +1,346 @@
-{"path": "./Audit_Reports_2024/Trail_of_Bits/2023-07-scroll-zktrie-securityreview.pdf", "project_info": {"url": "https://github.com/scroll-tech/zktrie", "commit_hash": "90179c19281670f41c54bd80ab01e4d64c860521", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Lack of domain separation allows proof forgery", "description": "Merkle trees are nested tree data structures in which the hash of each branch node depends upon the hashes of its children. The hash of each node is then assumed to uniquely represent the subtree of which that node is a root. However, that assumption may be false if a leaf node can have the same hash as a branch node.", "severity": "High", "contract": "trie/zk_trie_node.go", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-229"]}, "title": "Lack of proof validation causes denial of service on the verifier", "description": "The Merkle tree proof verifier assumes several well-formedness properties about the received proof and node arguments. If at least one of these properties is violated, the", "severity": "Medium", "contract": "trie/zk_trie_impl.go", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-435"], "2": ["CWE-436"]}, "title": "Two incompatible ways to generate proofs", "description": "The zktrie implementation has two different ways to generate proofs, which can cause inconsistencies and potential security issues.", "severity": "N/A", "contract": "zktrie", "function": "N/A", "lineNumber": "531-551"}, {"id": 3, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-909"], "4": ["CWE-456"]}, "title": "BuildZkTrieProof does not populate NodeAux.Value", "description": "The BuildZkTrieProof function does not properly initialize the NodeAux.Value field, leading to potential issues with proof verification.", "severity": "Undetermined", "contract": "zktrie/trie/zk_trie_impl.go", "function": "BuildZkTrieProof", "lineNumber": "560-574"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "Leaf nodes with different values may have the same hash", "description": "The `HashElems` function does not include the number of elements being hashed, resulting in leaf nodes with different values having the same hash.", "severity": "High", "contract": "zktrie/types/util.go", "function": "N/A", "lineNumber": "9-36"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-755"]}, "title": "6. Empty UpdatePreimage function body", "description": "The `UpdatePreimage` function implementation for the `Database` receiver type is empty. Instead of an empty function body, the function should either panic with an `unimplemented` message or a message that is logged.", "severity": "Informational", "contract": "trie/zk_trie_database.go", "function": "UpdatePreimage", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "CanonicalValue is not canonical", "description": "The `CanonicalValue` function does not uniquely generate a representation of `Node` structures, allowing different `Nodes` with the same `CanonicalValue`, and two nodes with the same `NodeHash` but different `CanonicalValues`. ", "severity": "Informational", "contract": "trie/zk_trie_node.go", "function": "CanonicalValue()", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "ToSecureKey and ToSecureKeyBytes implicitly truncate the key", "description": "The functions ToSecureKey and ToSecureKeyBytes implicitly truncate keys to 32 bytes without proper error handling.", "severity": "Critical", "contract": "zktrie", "function": "ToSecureKey and ToSecureKeyBytes", "lineNumber": "35-40,99-107"}, {"id": 8, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Unused key argument on the bridge_prove_write function", "description": "The `bridge_prove_write` function implementation does not use the `key` argument.", "severity": "Informational", "contract": "N/A", "function": "bridge_prove_write", "lineNumber": "zktrie/c.go#17\u201319"}, {"id": 9, "category": {"1": ["CWE-703"]}, "title": "PreHandlingElems Function Panics with Empty elems Array", "description": "The PreHandlingElems function panics when called with an empty elems array, causing a runtime error.", "severity": "Critical", "contract": "N/A", "function": "PreHandlingElems", "lineNumber": "40-57"}, {"id": 10, "category": {"1": ["CWE-124"]}, "title": "The hash_external function panics with integers larger than 32 bytes", "description": "The `hash_external` function will cause a runtime error due to an out-of-bounds access if the input integers are larger than 32 bytes.", "severity": "Low", "contract": "N/A", "function": "hash_external", "lineNumber": "types/util.go"}, {"id": 11, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Mishandling of cgo.Handles causes runtime errors", "description": "The interaction between the Rust and Go codebases relies on the use of `cgo.Handles`. However, the implementation does not properly handle invalid handles, which can cause runtime errors.", "severity": "Medium", "contract": "N/A", "function": "NewTrieNode", "lineNumber": "lib.go#31-39"}, {"id": 12, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Unnecessary unsafe pointer manipulation in Node.Data()", "description": "Manual construction of slices and unsafe casting between pointer types are error-prone and potentially very dangerous.", "severity": "N/A", "contract": "trie/Node", "function": "Data()", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-229"]}, "title": "NewNodeFromBytes does not fully validate its input", "description": "The function NewNodeFromBytes does not properly validate its input.", "severity": "Undetermined", "contract": "N/A", "function": "NewNodeFromBytes", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-691"], "2": ["CWE-362"]}, "title": "init_hash_scheme is not thread-safe", "description": "The init_hash_scheme function is not thread-safe and requires synchronization to prevent data races.", "severity": "High", "contract": "N/A", "function": "C.init_hash_scheme", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-691"], "2": ["CWE-362"]}, "title": "Safe-Rust ZkMemoryDb interface is not thread-safe", "description": "The Safe-Rust ZkMemoryDb interface is prone to data races when used in a multi-threaded scenario, leading to system crashes.", "severity": "High", "contract": "ZkTrie", "function": "add_node_bytes and Database.Get()", "lineNumber": "56-72"}, {"id": 16, "category": {"1": ["CWE-703"], "2": ["CWE-393"]}, "title": "Some Node functions return the zero hash instead of errors", "description": "Node functions such as ValueHash and NewTrieNode may return a zero hash or 0 instead of propagating error conditions, potentially leading to unexpected behavior.", "severity": "Medium", "contract": "N/A", "function": ["NewTrieNode", "ValueHash"], "lineNumber": ["149-155", "N/A"]}, {"id": 17, "category": {"1": ["CWE-707"], "2": ["CWE-170"]}, "title": "get_account can read past the buffer", "description": "The get_account function can read past the buffer by 96 or 128 bytes.", "severity": "High", "contract": "N/A", "function": "get_account", "lineNumber": "N/A"}, {"id": 18, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Unchecked usize to c_int casts allow hash collisions by length misinterpretation", "description": "Unchecked usize to c_int casts can cause hash collisions due to length misinterpretation.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/2023-07-scroll-zktrie-securityreview.pdf",
+    "project_info": {
+        "url": "https://github.com/scroll-tech/zktrie",
+        "commit_hash": "90179c19281670f41c54bd80ab01e4d64c860521",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Lack of domain separation allows proof forgery",
+            "description": "Merkle trees are nested tree data structures in which the hash of each branch node depends upon the hashes of its children. The hash of each node is then assumed to uniquely represent the subtree of which that node is a root. However, that assumption may be false if a leaf node can have the same hash as a branch node.",
+            "severity": "High",
+            "contract": "trie/zk_trie_node.go",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ]
+            },
+            "title": "Lack of proof validation causes denial of service on the verifier",
+            "description": "The Merkle tree proof verifier assumes several well-formedness properties about the received proof and node arguments. If at least one of these properties is violated, the",
+            "severity": "Medium",
+            "contract": "trie/zk_trie_impl.go",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ]
+            },
+            "title": "Two incompatible ways to generate proofs",
+            "description": "The zktrie implementation has two different ways to generate proofs, which can cause inconsistencies and potential security issues.",
+            "severity": "N/A",
+            "contract": "zktrie",
+            "function": "N/A",
+            "lineNumber": "531-551"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "BuildZkTrieProof does not populate NodeAux.Value",
+            "description": "The BuildZkTrieProof function does not properly initialize the NodeAux.Value field, leading to potential issues with proof verification.",
+            "severity": "Undetermined",
+            "contract": "zktrie/trie/zk_trie_impl.go",
+            "function": "BuildZkTrieProof",
+            "lineNumber": "560-574"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Leaf nodes with different values may have the same hash",
+            "description": "The `HashElems` function does not include the number of elements being hashed, resulting in leaf nodes with different values having the same hash.",
+            "severity": "High",
+            "contract": "zktrie/types/util.go",
+            "function": "N/A",
+            "lineNumber": "9-36"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-755"
+                ]
+            },
+            "title": "6. Empty UpdatePreimage function body",
+            "description": "The `UpdatePreimage` function implementation for the `Database` receiver type is empty. Instead of an empty function body, the function should either panic with an `unimplemented` message or a message that is logged.",
+            "severity": "Informational",
+            "contract": "trie/zk_trie_database.go",
+            "function": "UpdatePreimage",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "CanonicalValue is not canonical",
+            "description": "The `CanonicalValue` function does not uniquely generate a representation of `Node` structures, allowing different `Nodes` with the same `CanonicalValue`, and two nodes with the same `NodeHash` but different `CanonicalValues`. ",
+            "severity": "Informational",
+            "contract": "trie/zk_trie_node.go",
+            "function": "CanonicalValue()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "ToSecureKey and ToSecureKeyBytes implicitly truncate the key",
+            "description": "The functions ToSecureKey and ToSecureKeyBytes implicitly truncate keys to 32 bytes without proper error handling.",
+            "severity": "Critical",
+            "contract": "zktrie",
+            "function": "ToSecureKey and ToSecureKeyBytes",
+            "lineNumber": "35-40,99-107"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Unused key argument on the bridge_prove_write function",
+            "description": "The `bridge_prove_write` function implementation does not use the `key` argument.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "bridge_prove_write",
+            "lineNumber": "zktrie/c.go#17\u201319"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "PreHandlingElems Function Panics with Empty elems Array",
+            "description": "The PreHandlingElems function panics when called with an empty elems array, causing a runtime error.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "PreHandlingElems",
+            "lineNumber": "40-57"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-124"
+                ]
+            },
+            "title": "The hash_external function panics with integers larger than 32 bytes",
+            "description": "The `hash_external` function will cause a runtime error due to an out-of-bounds access if the input integers are larger than 32 bytes.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "hash_external",
+            "lineNumber": "types/util.go"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Mishandling of cgo.Handles causes runtime errors",
+            "description": "The interaction between the Rust and Go codebases relies on the use of `cgo.Handles`. However, the implementation does not properly handle invalid handles, which can cause runtime errors.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "NewTrieNode",
+            "lineNumber": "lib.go#31-39"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Unnecessary unsafe pointer manipulation in Node.Data()",
+            "description": "Manual construction of slices and unsafe casting between pointer types are error-prone and potentially very dangerous.",
+            "severity": "N/A",
+            "contract": "trie/Node",
+            "function": "Data()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ]
+            },
+            "title": "NewNodeFromBytes does not fully validate its input",
+            "description": "The function NewNodeFromBytes does not properly validate its input.",
+            "severity": "Undetermined",
+            "contract": "N/A",
+            "function": "NewNodeFromBytes",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-362"
+                ]
+            },
+            "title": "init_hash_scheme is not thread-safe",
+            "description": "The init_hash_scheme function is not thread-safe and requires synchronization to prevent data races.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "C.init_hash_scheme",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-362"
+                ]
+            },
+            "title": "Safe-Rust ZkMemoryDb interface is not thread-safe",
+            "description": "The Safe-Rust ZkMemoryDb interface is prone to data races when used in a multi-threaded scenario, leading to system crashes.",
+            "severity": "High",
+            "contract": "ZkTrie",
+            "function": "add_node_bytes and Database.Get()",
+            "lineNumber": "56-72"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-393"
+                ]
+            },
+            "title": "Some Node functions return the zero hash instead of errors",
+            "description": "Node functions such as ValueHash and NewTrieNode may return a zero hash or 0 instead of propagating error conditions, potentially leading to unexpected behavior.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": [
+                "NewTrieNode",
+                "ValueHash"
+            ],
+            "lineNumber": [
+                "149-155",
+                "N/A"
+            ]
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-170"
+                ]
+            },
+            "title": "get_account can read past the buffer",
+            "description": "The get_account function can read past the buffer by 96 or 128 bytes.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "get_account",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Unchecked usize to c_int casts allow hash collisions by length misinterpretation",
+            "description": "Unchecked usize to c_int casts can cause hash collisions due to length misinterpretation.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

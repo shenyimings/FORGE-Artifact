@@ -1,1 +1,204 @@
-{"path": "./Audit_Reports_2024/Runtime_V\u0435rification/Runtime_V\u0435rification-yieldly_multi_pool_audit_report.pdf", "project_info": {"url": "https://github.com/yieldly-finance/yieldly-pools", "commit_hash": "99b5f89babbfb5bf4709523f480c94112e08ad8c", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "A1. Unchecked transaction in `stacking` allows shadow staking", "description": "The `check_bail` subroutine call on line 568 is supplied with argument `int 3`, whereas it should be function checks the transactions starting from the `int 2`. This allows a user to place an asset transfer transaction, effectively allowing them to shadow stake any amount or type of tokens, including zero, bypassing the rewards calculation logic.", "severity": "High", "contract": "N/A", "function": "stacking", "lineNumber": "568"}, {"id": 1, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "A2. Unchecked transaction in `withdraw` allows shadow staking", "description": "The `withdraw` subroutine has an off-by-one error in the call to `check_bail` subroutine on line 657.", "severity": "High", "contract": "N/A", "function": "withdraw", "lineNumber": "657"}, {"id": 2, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "A3. Unchecked transaction in `close`", "description": "The `close` subroutine has an off-by-one error in the call to `check_bail` subroutine on line 929.", "severity": "N/A", "contract": "Yieldly Finance Multi-token Staking Pool", "function": "`close`", "lineNumber": "929"}, {"id": 3, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-826"]}, "title": "A4. Accidentally deleting the application can leave assets locked indefinitely", "description": "The code handling the `DeleteApplication` transaction approves the request for deletion of an application signed by an authorised administrator account but does not transfer the application assets upon deletion and does not handle the local state of accounts who opted in.", "severity": "Critical", "contract": "N/A", "function": "DeleteApplication", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "A5. Inconsistent reward amounts unlocked upon changing parameters of live pools", "description": "The contracts provides endpoints for prolonging a pool\u2019s lifespan after its creation and providing additional rewards. The rewards unlocking logic can behave inconsistently, i.e. unlocking large or very small portions of rewards if these endpoints are used carelessly.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "A6. Emergency withdrawal admin subroutines pose a significant centralised risk", "description": "The contract contains emergency withdrawal admin subroutines (`emerg_withdraw` and `emerg_withdraw_algo`) that can be executed by the smart contract's administrator, allowing them to transfer tokens (ASA or Algos) from the pool. If an attacker gains control of the administrator account, they can withdraw all funds.", "severity": "Critical", "contract": "N/A", "function": "emerg_withdraw and emerg_withdraw_algo", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "B1. Unnecessary re-computation of pool lifespan", "description": "The `update_rewards` subroutine computes the pool lifespan on every call, which can be precomputed to save computation costs.", "severity": "Medium", "contract": "N/A", "function": "update_rewards()", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "B2. Possible delay in reward unlocking close to pool\u2019s creation time", "description": "Fixed-point rounding errors in the logic could cause delay rewards unlocking at close to pool\u2019s creation time.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-707"], "2": ["CWE-240"], "3": ["CWE-130"]}, "title": "txn / gtxn opcodes used to access array fields", "description": "Some instances of `txn` and `gtxn` opcodes are used to access the array fields, which is inconsistent with other places where proper opcodes `txna` and `gtxna` are used.", "severity": "Medium", "contract": "staking.teal", "function": "N/A", "lineNumber": "117, 121, 125, 130, 1187, 1312, 1316, 1360, 1392, 1397, 1423, 1512"}, {"id": 9, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "B4. Unnecessary update of user\u2019s stake on close out", "description": "The `close` subroutine sets the variable `User_Stake` in the sender's local state allocated to the application to zero, which is unnecessary since the sender will have their local state deleted on `CloseOut`.", "severity": "Low", "contract": "N/A", "function": "close()", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "B5. Unreachable code in `staking.teal`", "description": "The very end of the file contains subroutines `failed` and `finished` which are not called anywhere in the code.", "severity": "N/A", "contract": "staking.teal", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Runtime_V\u0435rification/Runtime_V\u0435rification-yieldly_multi_pool_audit_report.pdf",
+    "project_info": {
+        "url": "https://github.com/yieldly-finance/yieldly-pools",
+        "commit_hash": "99b5f89babbfb5bf4709523f480c94112e08ad8c",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "A1. Unchecked transaction in `stacking` allows shadow staking",
+            "description": "The `check_bail` subroutine call on line 568 is supplied with argument `int 3`, whereas it should be function checks the transactions starting from the `int 2`. This allows a user to place an asset transfer transaction, effectively allowing them to shadow stake any amount or type of tokens, including zero, bypassing the rewards calculation logic.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "stacking",
+            "lineNumber": "568"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "A2. Unchecked transaction in `withdraw` allows shadow staking",
+            "description": "The `withdraw` subroutine has an off-by-one error in the call to `check_bail` subroutine on line 657.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "withdraw",
+            "lineNumber": "657"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "A3. Unchecked transaction in `close`",
+            "description": "The `close` subroutine has an off-by-one error in the call to `check_bail` subroutine on line 929.",
+            "severity": "N/A",
+            "contract": "Yieldly Finance Multi-token Staking Pool",
+            "function": "`close`",
+            "lineNumber": "929"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-826"
+                ]
+            },
+            "title": "A4. Accidentally deleting the application can leave assets locked indefinitely",
+            "description": "The code handling the `DeleteApplication` transaction approves the request for deletion of an application signed by an authorised administrator account but does not transfer the application assets upon deletion and does not handle the local state of accounts who opted in.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "DeleteApplication",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "A5. Inconsistent reward amounts unlocked upon changing parameters of live pools",
+            "description": "The contracts provides endpoints for prolonging a pool\u2019s lifespan after its creation and providing additional rewards. The rewards unlocking logic can behave inconsistently, i.e. unlocking large or very small portions of rewards if these endpoints are used carelessly.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "A6. Emergency withdrawal admin subroutines pose a significant centralised risk",
+            "description": "The contract contains emergency withdrawal admin subroutines (`emerg_withdraw` and `emerg_withdraw_algo`) that can be executed by the smart contract's administrator, allowing them to transfer tokens (ASA or Algos) from the pool. If an attacker gains control of the administrator account, they can withdraw all funds.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "emerg_withdraw and emerg_withdraw_algo",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "B1. Unnecessary re-computation of pool lifespan",
+            "description": "The `update_rewards` subroutine computes the pool lifespan on every call, which can be precomputed to save computation costs.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "update_rewards()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "B2. Possible delay in reward unlocking close to pool\u2019s creation time",
+            "description": "Fixed-point rounding errors in the logic could cause delay rewards unlocking at close to pool\u2019s creation time.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-240"
+                ],
+                "3": [
+                    "CWE-130"
+                ]
+            },
+            "title": "txn / gtxn opcodes used to access array fields",
+            "description": "Some instances of `txn` and `gtxn` opcodes are used to access the array fields, which is inconsistent with other places where proper opcodes `txna` and `gtxna` are used.",
+            "severity": "Medium",
+            "contract": "staking.teal",
+            "function": "N/A",
+            "lineNumber": "117, 121, 125, 130, 1187, 1312, 1316, 1360, 1392, 1397, 1423, 1512"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "B4. Unnecessary update of user\u2019s stake on close out",
+            "description": "The `close` subroutine sets the variable `User_Stake` in the sender's local state allocated to the application to zero, which is unnecessary since the sender will have their local state deleted on `CloseOut`.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "close()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "B5. Unreachable code in `staking.teal`",
+            "description": "The very end of the file contains subroutines `failed` and `finished` which are not called anywhere in the code.",
+            "severity": "N/A",
+            "contract": "staking.teal",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

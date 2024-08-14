@@ -1,1 +1,422 @@
-{"path": "./Audit_Reports_2024/Hacken/VeChain_SC-Audit-Report_15112023_SA-2020_final.pdf", "project_info": {"url": "https://github.com/vechainfoundation/nft-maas-sc", "commit_hash": "ab09639829a", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"]}, "title": "N/A", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-703"]}, "title": "Denial of Service - Broken Functionality of the Auction", "description": "N/A", "severity": "High", "contract": "WorldOfBidAuction.sol", "function": "cancelAdminAuction(), executeSale()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "H03. Requirements Violation, Admin Cannot Cancel Users\u2019 Auctions", "description": "Admin cannot cancel users' auctions due to possible reversion of transfer execution by seller contracts in nonERC721Received callback function.", "severity": "High", "contract": "WorldOfBidAuction", "function": "cancelAdminAuction()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "M01. Redundant receive() functionality", "description": "A receive() function which reverts and ERC721TokenReceiver\u2019s onERC721Received() function to be able to receive the NFT", "severity": "Medium", "contract": "WorldOfBidAuction", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-691"], "2": ["CWE-1265"]}, "title": "L01. Check-Effect-Interaction Pattern Violation", "description": "The Checks-Effects-Interactions pattern is violated during the bid function call, which may lead to reentrancies, race conditions, and denial of service vulnerabilities.", "severity": "Low", "contract": "WorldOfVBidAuction", "function": "createTokenAuction(), bid()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "L02. Funds Collected By Operators Instead Of By Admins", "description": "Operators can withdraw VTHO tokens from marketplace contracts, but the collected funds should be sent to an address controlled by the administrators instead of operators.", "severity": "Medium", "contract": "BaseMarketplaceContract.sol", "function": "adminWithdrawEnergy()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "L03. Redundant SafeMath Library", "description": "The marketplace contracts adopt SafeMath library for math operations while using solc version 0.8.22, which is redundant since Solidity version 0.8.0 introduced native arithmetic overflow and underflow protection features.", "severity": "Medium", "contract": ["OfferContractVIP180", "WorldOfVBidAuction", "WorldOfVFixedPriceNonCustodial"], "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "L04. Unclear Require Statement Error Strings", "description": "Error strings in require statements are unclear and confusing, making it difficult for users to understand what happened and how to prevent errors from happening again.", "severity": "Medium", "contract": ["OfferContractVIP180", "WorldOfVBidAuction", "WorldOfVFixedPriceNonCustodial"], "function": "N/A", "lineNumber": ["200", "202", "253", "142", "189", "107", "163", "164", "165", "227", "228", "252"]}, {"id": 8, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "L05. Unvalidated Parameters", "description": "Unvalidated parameters were found in the contracts.", "severity": "Medium", "contract": "Multiple Contracts (OfferContractVIP180, WorldOfVBidAuction, WorldOfVFixedPriceNonCustodial)", "function": "N/A", "lineNumber": "200, 202, 253, 142, 189, 107, 163, 164, 165, 227, 228, 252"}, {"id": 9, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "L06. Missing Event Emitting", "description": "The contracts within the system do not emit events during important state changes such as fees changes, tokens withdrawals by the admin and tokens whitelisting/de-whitelisting.", "severity": "Medium", "contract": "BaseMarketplaceContract", "function": "rotate(), adminModifyFoundationFee(), adminModifyEnterpriseFee(), adminModifyVIP180(), adminModifyVIP181(), adminWithdrawEnergy()", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "L07. Unfinalized Code", "description": "The contracts have multiple commented lines and TODO comments, qualifying the provided contracts as drafts.", "severity": "Low", "contract": "Multiple Contracts (OfferContractVIP180, WorldOfVBidAuction, WorldOfVFixedPriceNonCustodial)", "function": "N/A", "lineNumber": "150, 192, 203, 39, 33, 156, 246"}, {"id": 11, "category": {"1": ["CWE-710"], "2": ["CWE-1126"]}, "title": "I01. Usage of Magic Numbers Instead Of Constants", "description": "The contracts make large use of numeric literals, which should be defined as constant variables to improve readability and code clarity.", "severity": "Low", "contract": ["BaseMarketplaceContract", "OfferContractVIP180", "WorldOfVBidAuction", "WorldOfVFixedPriceNonCustodial"], "function": ["init()", "adminModifyFoundationFee()", "adminModifyEnterpriseFee()", "initialize()", "handleTransfer()", "executeSale()", "handleProjectRoyaltySplit()"], "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "I02. Redundant Mapping Keys", "description": "The contract has redundant mapping keys.", "severity": "Informational", "contract": "Multiple contracts (OfferContractVIP180, WorldOfVBidAuction, WorldOfVFixedPriceNonCustodial)", "function": "N/A", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-664"], "2": ["CWE-496"]}, "title": "I03. Unindexed offerType Events Parameter", "description": "The marketplace contract OfferContractVIP180 allows for two type of offers: offers to specific tokens and offers to any token of a specific collection. The events are being shared between the two offers, and the offerType parameter is not indexed because the maximum number of indexed parameters has been reached.", "severity": "Informational", "contract": "OfferContractVIP180", "function": "N/A", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "I04. Code Duplication", "description": "Code duplication within the contract leads to increased deployment gas costs and decreased code quality.", "severity": "Informational", "contract": "OfferContractVIP180", "function": ["acceptCollectionBuyOffer()", "acceptTokenBuyOffer()", "cancelAuction()", "cancelAdminAuction()"], "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "I05. Redundant _msgSender(), Meta-Transactions Not Implemented", "description": "The _msgSender() function is redundant as it does not support meta transactions and affects code clarity.", "severity": "Medium", "contract": "N/A", "function": "_msgSender()", "lineNumber": "N/A"}, {"id": 16, "category": {"1": ["CWE-693"], "2": ["CWE-358"]}, "title": "I06. Default State Variable Visibility", "description": "The lack of variable visibility may cause unexpected variable visibility in derived contracts.", "severity": "Low", "contract": "BaseMarketplaceContract", "function": "N/A", "lineNumber": "N/A"}, {"id": 17, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "I07. Redundant Conditional Statement", "description": "The BaseMarketplaceContract contract has the function adminModifyVIP180 which allows to whitelist tokens which might be accepted within the marketplace, but it is required to transfer one token to the contract before whitelisting it.", "severity": "Informational", "contract": "BaseMarketplaceContract", "function": "adminModifyVIP180()", "lineNumber": "N/A"}, {"id": 18, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "I08. Redundant Structure Declaration", "description": "The contract declares a redundant structure.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 19, "category": {"1": ["CWE-707"], "2": ["CWE-228"], "3": ["CWE-237"], "4": ["CWE-238"]}, "title": "I09. Redundant Structure Field", "description": "The OfferContractVIP180 contract declares the TokenOfferDetails and GlobalCollectionDetails structure, which have the seller field that is redundant.", "severity": "Informational", "contract": "OfferContractVIP180", "function": "N/A", "lineNumber": "N/A"}, {"id": 20, "category": {"1": ["CWE-710"], "2": ["CWE-1061"]}, "title": "I10. Use of uint256 Instead of Enums", "description": "The OfferContractVIP180 contract has multiple structures with the offerType field; the field has 3 possible values such as: 0, 1, 3, which affects code readability and supportability.", "severity": "N/A", "contract": "OfferContractVIP180", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Hacken/VeChain_SC-Audit-Report_15112023_SA-2020_final.pdf",
+    "project_info": {
+        "url": "https://github.com/vechainfoundation/nft-maas-sc",
+        "commit_hash": "ab09639829a",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "N/A",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Denial of Service - Broken Functionality of the Auction",
+            "description": "N/A",
+            "severity": "High",
+            "contract": "WorldOfBidAuction.sol",
+            "function": "cancelAdminAuction(), executeSale()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "H03. Requirements Violation, Admin Cannot Cancel Users\u2019 Auctions",
+            "description": "Admin cannot cancel users' auctions due to possible reversion of transfer execution by seller contracts in nonERC721Received callback function.",
+            "severity": "High",
+            "contract": "WorldOfBidAuction",
+            "function": "cancelAdminAuction()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "M01. Redundant receive() functionality",
+            "description": "A receive() function which reverts and ERC721TokenReceiver\u2019s onERC721Received() function to be able to receive the NFT",
+            "severity": "Medium",
+            "contract": "WorldOfBidAuction",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "L01. Check-Effect-Interaction Pattern Violation",
+            "description": "The Checks-Effects-Interactions pattern is violated during the bid function call, which may lead to reentrancies, race conditions, and denial of service vulnerabilities.",
+            "severity": "Low",
+            "contract": "WorldOfVBidAuction",
+            "function": "createTokenAuction(), bid()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "L02. Funds Collected By Operators Instead Of By Admins",
+            "description": "Operators can withdraw VTHO tokens from marketplace contracts, but the collected funds should be sent to an address controlled by the administrators instead of operators.",
+            "severity": "Medium",
+            "contract": "BaseMarketplaceContract.sol",
+            "function": "adminWithdrawEnergy()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "L03. Redundant SafeMath Library",
+            "description": "The marketplace contracts adopt SafeMath library for math operations while using solc version 0.8.22, which is redundant since Solidity version 0.8.0 introduced native arithmetic overflow and underflow protection features.",
+            "severity": "Medium",
+            "contract": [
+                "OfferContractVIP180",
+                "WorldOfVBidAuction",
+                "WorldOfVFixedPriceNonCustodial"
+            ],
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "L04. Unclear Require Statement Error Strings",
+            "description": "Error strings in require statements are unclear and confusing, making it difficult for users to understand what happened and how to prevent errors from happening again.",
+            "severity": "Medium",
+            "contract": [
+                "OfferContractVIP180",
+                "WorldOfVBidAuction",
+                "WorldOfVFixedPriceNonCustodial"
+            ],
+            "function": "N/A",
+            "lineNumber": [
+                "200",
+                "202",
+                "253",
+                "142",
+                "189",
+                "107",
+                "163",
+                "164",
+                "165",
+                "227",
+                "228",
+                "252"
+            ]
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "L05. Unvalidated Parameters",
+            "description": "Unvalidated parameters were found in the contracts.",
+            "severity": "Medium",
+            "contract": "Multiple Contracts (OfferContractVIP180, WorldOfVBidAuction, WorldOfVFixedPriceNonCustodial)",
+            "function": "N/A",
+            "lineNumber": "200, 202, 253, 142, 189, 107, 163, 164, 165, 227, 228, 252"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "L06. Missing Event Emitting",
+            "description": "The contracts within the system do not emit events during important state changes such as fees changes, tokens withdrawals by the admin and tokens whitelisting/de-whitelisting.",
+            "severity": "Medium",
+            "contract": "BaseMarketplaceContract",
+            "function": "rotate(), adminModifyFoundationFee(), adminModifyEnterpriseFee(), adminModifyVIP180(), adminModifyVIP181(), adminWithdrawEnergy()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "L07. Unfinalized Code",
+            "description": "The contracts have multiple commented lines and TODO comments, qualifying the provided contracts as drafts.",
+            "severity": "Low",
+            "contract": "Multiple Contracts (OfferContractVIP180, WorldOfVBidAuction, WorldOfVFixedPriceNonCustodial)",
+            "function": "N/A",
+            "lineNumber": "150, 192, 203, 39, 33, 156, 246"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1126"
+                ]
+            },
+            "title": "I01. Usage of Magic Numbers Instead Of Constants",
+            "description": "The contracts make large use of numeric literals, which should be defined as constant variables to improve readability and code clarity.",
+            "severity": "Low",
+            "contract": [
+                "BaseMarketplaceContract",
+                "OfferContractVIP180",
+                "WorldOfVBidAuction",
+                "WorldOfVFixedPriceNonCustodial"
+            ],
+            "function": [
+                "init()",
+                "adminModifyFoundationFee()",
+                "adminModifyEnterpriseFee()",
+                "initialize()",
+                "handleTransfer()",
+                "executeSale()",
+                "handleProjectRoyaltySplit()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "I02. Redundant Mapping Keys",
+            "description": "The contract has redundant mapping keys.",
+            "severity": "Informational",
+            "contract": "Multiple contracts (OfferContractVIP180, WorldOfVBidAuction, WorldOfVFixedPriceNonCustodial)",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-496"
+                ]
+            },
+            "title": "I03. Unindexed offerType Events Parameter",
+            "description": "The marketplace contract OfferContractVIP180 allows for two type of offers: offers to specific tokens and offers to any token of a specific collection. The events are being shared between the two offers, and the offerType parameter is not indexed because the maximum number of indexed parameters has been reached.",
+            "severity": "Informational",
+            "contract": "OfferContractVIP180",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "I04. Code Duplication",
+            "description": "Code duplication within the contract leads to increased deployment gas costs and decreased code quality.",
+            "severity": "Informational",
+            "contract": "OfferContractVIP180",
+            "function": [
+                "acceptCollectionBuyOffer()",
+                "acceptTokenBuyOffer()",
+                "cancelAuction()",
+                "cancelAdminAuction()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "I05. Redundant _msgSender(), Meta-Transactions Not Implemented",
+            "description": "The _msgSender() function is redundant as it does not support meta transactions and affects code clarity.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "_msgSender()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-358"
+                ]
+            },
+            "title": "I06. Default State Variable Visibility",
+            "description": "The lack of variable visibility may cause unexpected variable visibility in derived contracts.",
+            "severity": "Low",
+            "contract": "BaseMarketplaceContract",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "I07. Redundant Conditional Statement",
+            "description": "The BaseMarketplaceContract contract has the function adminModifyVIP180 which allows to whitelist tokens which might be accepted within the marketplace, but it is required to transfer one token to the contract before whitelisting it.",
+            "severity": "Informational",
+            "contract": "BaseMarketplaceContract",
+            "function": "adminModifyVIP180()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "I08. Redundant Structure Declaration",
+            "description": "The contract declares a redundant structure.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 19,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-237"
+                ],
+                "4": [
+                    "CWE-238"
+                ]
+            },
+            "title": "I09. Redundant Structure Field",
+            "description": "The OfferContractVIP180 contract declares the TokenOfferDetails and GlobalCollectionDetails structure, which have the seller field that is redundant.",
+            "severity": "Informational",
+            "contract": "OfferContractVIP180",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 20,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1061"
+                ]
+            },
+            "title": "I10. Use of uint256 Instead of Enums",
+            "description": "The OfferContractVIP180 contract has multiple structures with the offerType field; the field has 3 possible values such as: 0, 1, 3, which affects code readability and supportability.",
+            "severity": "N/A",
+            "contract": "OfferContractVIP180",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

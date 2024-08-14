@@ -1,1 +1,104 @@
-{"path": "./Audit_Reports_2024/QuillAudits/QuillAudit-StackOS_Smart_Contract_Audit_Report.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Calculating FixedFee for Same Resource Twice", "description": "_getFixedFee function calculates fixedFees for resourceOneUnits twice, as a result a user will be paying more fees than intended.", "severity": "High", "contract": "BaseEscrow & StackEscrow", "function": "_getFixedFee", "lineNumber": "#L310-362"}, {"id": 1, "category": {"1": ["CWE-682"], "2": ["CWE-191"]}, "title": "Underflow leading to Unoperational Withdrawal for Depositor", "description": "The settleAccounts function subtracts utilisedFunds from notWithdrawable balance, which can lead to integer underflow if utilisedFunds is more than notWithdrawable. This causes the withdrawal of withdrawable balance to fail.", "severity": "High", "contract": "N/A", "function": "settleAccounts", "lineNumber": "#L159-218"}, {"id": 2, "category": {"1": ["CWE-697"], "2": ["CWE-1025"]}, "title": "block.timestamp has been used for comparison", "description": "Avoid using block.timestamp, as it can be manipulated by miners.", "severity": "Low", "contract": "BaseEscrow & StackEscrow", "function": "N/A", "lineNumber": "#L183"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Missing Zero Address Validation", "description": "The constructor() and setFeeAddress() functions are missing zero address checks for certain addresses.", "severity": "Low", "contract": "BaseEscrow & StackEscrow", "function": ["constructor()", "setFeeAddress()"], "lineNumber": ["50-74", "122-128"]}, {"id": 4, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-909"], "4": ["CWE-456"]}, "title": "Hardcoded strings for resource names", "description": "Cluster owners can add resources with any name in the ResourceFeed contract. In the DnsClusterMetadataStore contract, getTotalVotes() function expects resources with some specific names to be present. If the clusterOwner never adds these resources then, upvoteCluster() will always revert.", "severity": "Low", "contract": "DnsClusterMetadataStore", "function": "getTotalVotes()", "lineNumber": "198-207"}]}
+{
+    "path": "./Audit_Reports_2024/QuillAudits/QuillAudit-StackOS_Smart_Contract_Audit_Report.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Calculating FixedFee for Same Resource Twice",
+            "description": "_getFixedFee function calculates fixedFees for resourceOneUnits twice, as a result a user will be paying more fees than intended.",
+            "severity": "High",
+            "contract": "BaseEscrow & StackEscrow",
+            "function": "_getFixedFee",
+            "lineNumber": "#L310-362"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-191"
+                ]
+            },
+            "title": "Underflow leading to Unoperational Withdrawal for Depositor",
+            "description": "The settleAccounts function subtracts utilisedFunds from notWithdrawable balance, which can lead to integer underflow if utilisedFunds is more than notWithdrawable. This causes the withdrawal of withdrawable balance to fail.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "settleAccounts",
+            "lineNumber": "#L159-218"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ],
+                "2": [
+                    "CWE-1025"
+                ]
+            },
+            "title": "block.timestamp has been used for comparison",
+            "description": "Avoid using block.timestamp, as it can be manipulated by miners.",
+            "severity": "Low",
+            "contract": "BaseEscrow & StackEscrow",
+            "function": "N/A",
+            "lineNumber": "#L183"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Missing Zero Address Validation",
+            "description": "The constructor() and setFeeAddress() functions are missing zero address checks for certain addresses.",
+            "severity": "Low",
+            "contract": "BaseEscrow & StackEscrow",
+            "function": [
+                "constructor()",
+                "setFeeAddress()"
+            ],
+            "lineNumber": [
+                "50-74",
+                "122-128"
+            ]
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "Hardcoded strings for resource names",
+            "description": "Cluster owners can add resources with any name in the ResourceFeed contract. In the DnsClusterMetadataStore contract, getTotalVotes() function expects resources with some specific names to be present. If the clusterOwner never adds these resources then, upvoteCluster() will always revert.",
+            "severity": "Low",
+            "contract": "DnsClusterMetadataStore",
+            "function": "getTotalVotes()",
+            "lineNumber": "198-207"
+        }
+    ]
+}

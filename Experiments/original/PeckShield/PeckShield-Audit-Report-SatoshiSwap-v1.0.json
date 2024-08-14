@@ -1,1 +1,181 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-SatoshiSwap-v1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Force Investment Risk in MarginPool::openPosition()", "description": "The openPosition() function in MarginPool allows a bad actor to add a fake token and manipulate an imbalanced pool to force the MarginPool to open a position at an unfavorable exchange rate, leading to potential financial losses.", "severity": "Critical", "contract": "MarginPool", "function": "openPosition()", "lineNumber": "208-219"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Inconsistent Fee Calculation Between MarginPool And PositionStorage", "description": "The fee calculation in `MarginPool` and `PositionStorage` is inconsistent, which may revert `MarginPool::closePosition()` when transferring the leftover tokens to `msg.sender`.", "severity": "Medium", "contract": "MarginPool, PositionStorage", "function": "closePosition()", "lineNumber": "231-251"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Several Business Logic Errors in VaultStrategy::prepareReturn()", "description": "The `VaultStrategy::prepareReturn()` routine has several business logic errors which can cause issues with the vault's accounting.", "severity": "High", "contract": "VaultStrategy", "function": "prepareReturn()", "lineNumber": "52-73"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Possible Costly LPs From Improper Vault Initialization", "description": "The `Vault` contract may cause extremely expensive shares or even losses for later depositors due to improper initialization, affecting the `_issueSharesForAmount` function.", "severity": "Medium", "contract": "Vault", "function": "_issueSharesForAmount()", "lineNumber": "525"}, {"id": 4, "category": {"1": ["CWE-691"], "2": ["CWE-1265"]}, "title": "Potential Reentrancy in emergencyWithdraw()", "description": "The `emergencyWithdraw()` function violates the `checks-effects-interactions` principle, making it vulnerable to reentrancy attacks.", "severity": "Medium", "contract": "MasterChef, MasterChefByProxy", "function": "emergencyWithdraw()", "lineNumber": "218, 220-221"}, {"id": 5, "category": {"1": ["CWE-710"], "2": ["CWE-1068"]}, "title": "Inconsistency Between Document and Implementation", "description": "There is a misleading comment embedded in the `SatoshiPair` contract, which brings unnecessary hurdles to understand and/or maintain the software.", "severity": "Informational", "contract": "SatoshiPair", "function": "_mintFee", "lineNumber": "113-116"}, {"id": 6, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Duplicate Pool Detection and Prevention", "description": "The addition of a new pool in `add()` function does not perform necessary sanity checks to prevent a new pool with a duplicate token from being added.", "severity": "Low", "contract": "MasterChef, MasterChefByProxy", "function": "add()", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Timely massUpdatePools During Pool Weight Changes", "description": "The reward pools can be dynamically added via `add()` and the weights of supported pools can be adjusted via `set()`. When analyzing the pool weight update routine `set()`, we notice the need of timely invoking `massUpdatePools()` to update the reward distribution before the new pool weight becomes effective.", "severity": "Low", "contract": "MasterChef, MasterChefByProxy", "function": "set()", "lineNumber": "104-112"}, {"id": 8, "category": {"1": ["CWE-284"], "2": ["CWE-923"], "3": ["CWE-300"]}, "title": "Voting Amplification With Sybil Attacks", "description": "The `SAS` tokens can be used for governance in allowing for users to cast and record the votes. The current governance functionality is vulnerable to a new type of so-called `Sybil` attacks.", "severity": "High", "contract": "SASToken, SASTokenByProxy", "function": "_delegate()", "lineNumber": "155-157"}, {"id": 9, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Incompatibility with Deflationary Tokens", "description": "The `Masterchef` contract uses `safeTransferFrom()` or `safeTransfer()` routine to transfer assets into or out of its pool, which may not work as expected with deflationary tokens.", "severity": "Low", "contract": "Masterchef", "function": "deposit() and withdraw()", "lineNumber": "185-191"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-SatoshiSwap-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/SatoshiSwap/satoshiswap-protocol/tree/e5ee34caeec7766b64d8ff98e22e74cbf741e858",
+        "commit_hash": "e5ee34caeec7766b64d8ff98e22e74cbf741e858",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Force Investment Risk in MarginPool::openPosition()",
+            "description": "The openPosition() function in MarginPool allows a bad actor to add a fake token and manipulate an imbalanced pool to force the MarginPool to open a position at an unfavorable exchange rate, leading to potential financial losses.",
+            "severity": "Critical",
+            "contract": "MarginPool",
+            "function": "openPosition()",
+            "lineNumber": "208-219"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Inconsistent Fee Calculation Between MarginPool And PositionStorage",
+            "description": "The fee calculation in `MarginPool` and `PositionStorage` is inconsistent, which may revert `MarginPool::closePosition()` when transferring the leftover tokens to `msg.sender`.",
+            "severity": "Medium",
+            "contract": "MarginPool, PositionStorage",
+            "function": "closePosition()",
+            "lineNumber": "231-251"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Several Business Logic Errors in VaultStrategy::prepareReturn()",
+            "description": "The `VaultStrategy::prepareReturn()` routine has several business logic errors which can cause issues with the vault's accounting.",
+            "severity": "High",
+            "contract": "VaultStrategy",
+            "function": "prepareReturn()",
+            "lineNumber": "52-73"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Possible Costly LPs From Improper Vault Initialization",
+            "description": "The `Vault` contract may cause extremely expensive shares or even losses for later depositors due to improper initialization, affecting the `_issueSharesForAmount` function.",
+            "severity": "Medium",
+            "contract": "Vault",
+            "function": "_issueSharesForAmount()",
+            "lineNumber": "525"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "Potential Reentrancy in emergencyWithdraw()",
+            "description": "The `emergencyWithdraw()` function violates the `checks-effects-interactions` principle, making it vulnerable to reentrancy attacks.",
+            "severity": "Medium",
+            "contract": "MasterChef, MasterChefByProxy",
+            "function": "emergencyWithdraw()",
+            "lineNumber": "218, 220-221"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1068"
+                ]
+            },
+            "title": "Inconsistency Between Document and Implementation",
+            "description": "There is a misleading comment embedded in the `SatoshiPair` contract, which brings unnecessary hurdles to understand and/or maintain the software.",
+            "severity": "Informational",
+            "contract": "SatoshiPair",
+            "function": "_mintFee",
+            "lineNumber": "113-116"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Duplicate Pool Detection and Prevention",
+            "description": "The addition of a new pool in `add()` function does not perform necessary sanity checks to prevent a new pool with a duplicate token from being added.",
+            "severity": "Low",
+            "contract": "MasterChef, MasterChefByProxy",
+            "function": "add()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Timely massUpdatePools During Pool Weight Changes",
+            "description": "The reward pools can be dynamically added via `add()` and the weights of supported pools can be adjusted via `set()`. When analyzing the pool weight update routine `set()`, we notice the need of timely invoking `massUpdatePools()` to update the reward distribution before the new pool weight becomes effective.",
+            "severity": "Low",
+            "contract": "MasterChef, MasterChefByProxy",
+            "function": "set()",
+            "lineNumber": "104-112"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-923"
+                ],
+                "3": [
+                    "CWE-300"
+                ]
+            },
+            "title": "Voting Amplification With Sybil Attacks",
+            "description": "The `SAS` tokens can be used for governance in allowing for users to cast and record the votes. The current governance functionality is vulnerable to a new type of so-called `Sybil` attacks.",
+            "severity": "High",
+            "contract": "SASToken, SASTokenByProxy",
+            "function": "_delegate()",
+            "lineNumber": "155-157"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Incompatibility with Deflationary Tokens",
+            "description": "The `Masterchef` contract uses `safeTransferFrom()` or `safeTransfer()` routine to transfer assets into or out of its pool, which may not work as expected with deflationary tokens.",
+            "severity": "Low",
+            "contract": "Masterchef",
+            "function": "deposit() and withdraw()",
+            "lineNumber": "185-191"
+        }
+    ]
+}

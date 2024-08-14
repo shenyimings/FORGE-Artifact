@@ -1,1 +1,362 @@
-{"path": "./Audit_Reports_2024/Runtime_V\u0435rification/atlendis-audit-report.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-770"]}, "title": "Risk of infinite approvals", "description": "The implementation of granting Aave an infinite approval during pool creation can lead to security risks, specifically with tokens like USDC and WBTC that decrement the approved amount on every transferFrom call.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "A01: Unsafe transfer of ERC20 tokens", "description": "Some tokens, e.g., USDT, do not conform to the ERC20 standard. In particular, the `transfer` and `transferFrom` functions do not return boolean values. Consequently, all transfers of USDT tokens initiated by the contract will eventually revert because the surrounding success checks will fail.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Discrepancy between getRepayAmount() and repay()", "description": "There is a discrepancy between how `normalizedRepayAmount` is calculated in `BorrowerPools.getRepayAmount()` and `BorrowerPools.repay()`. Specifically, the `LATE_REPAY_FEE` and `PLATFORM_FEE` are added in different orders.", "severity": "Mid", "contract": "BorrowerPools", "function": "getRepayAmount() and repay()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "A03: Unfair repayments due to maximum rate change", "description": "There is a possibility that lenders will not get paid back their total amount if the lender deposited into the highest tick and the max rate is changed during an ongoing loan.", "severity": "High", "contract": "N/A", "function": "BorrowerPools.repay()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "A04: Possible DoS due to unbounded loops", "description": "The `borrow()` and `repay()` methods in BorrowerPools contract suffer from a potential Denial of Service (DoS) vulnerability due to unbounded loops, which can exceed the block gas limit.", "severity": "High", "contract": "BorrowerPools", "function": "borrow() and repay()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "A05: Non-Borrowable deposits after rate changes", "description": "The governance can change some pool parameters, including the maximum rate of the pool. If lenders already deposited into high rate ticks, and the government reduces the maximum rate later, the deposits cannot be loaned out.", "severity": "Mid", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-435"], "2": ["CWE-436"], "3": ["CWE-437"]}, "title": "A06: Incompatibility with fee-charging tokens", "description": "Some ERC20 tokens, e.g., USDT, can charge fees on token transfers. This may cause reverts or unexpected transferred amounts in Position.deposit and BorrowerPools.repay methods.", "severity": "High", "contract": "N/A", "function": ["Position.deposit", "BorrowerPools.repay", "Position.withdraw", "BorrowerPools.borrow"], "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-691"], "2": ["CWE-1265"]}, "title": "A07: Re-entrancy vulnerability in Position.withdraw", "description": "The Position.withdraw() function is vulnerable to re-entrancy attacks and can be exploited by a malicious lender to withdraw deposits that are currently actively loaned out to a borrower.", "severity": "High", "contract": "Position", "function": "withdraw()", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-697"], "2": ["CWE-1023"], "3": ["CWE-184"]}, "title": "A08: Missing sanity checks for borrowerHash", "description": "Pools are not directly identified by their borrower\u2019s addresses but by some borrower hash that is assigned to a borrower address by the governance. Consequently, to lookup the pool corresponding to a specific borrower address, two steps are performed: First, the borrower hash is looked up in mapping (address => borrowerHash). Second, the pool is looked up in a mapping (borrowerHash => Pool). If two borrowers are given the same hash, they will access the same pool.", "severity": "High", "contract": "N/A", "function": "PoolsSettingsManager.allow", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-682"]}, "title": "A09: Borrowable amounts may be too high", "description": "Under certain circumstances, it is possible that a borrower can borrow amounts that are too high, i.e., the borrowable amount is higher than the available deposits of the pool. The amounts are then effectively taken from other pools with the same underlying asset.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-435"]}, "title": "B01: Duplicate function getTickBondPrice()", "description": "The PoolLogic library and BorrowerPools contract implement the same getTickBondPrice() function.", "severity": "Low", "contract": "BorrowerPools", "function": "getTickBondPrice()", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-682"]}, "title": "B02: Simplify expressions", "description": "The expression in `PoolLogic.includePendingDepositsForTick` can be simplified to enhance readability and save some gas costs.", "severity": "Low", "contract": "PoolLogic", "function": "includePendingDepositsForTick", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "B03: Add a timelock to deposits", "description": "It should never be profitable for a lender to deposit and withdraw within the same transaction. Any profits would stem from some miscalculation, e.g., from rounding errors.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "B04: Invariant breaks of rate spacings", "description": "The sanity checks of the setters are not performed during pool creation, making it possible to create pools that cannot accept any deposits.", "severity": "Mid", "contract": "PoolsSettingsManager", "function": "createNewPool", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1288"]}, "title": "B05: Unnecessary strong invariants", "description": "The PoolsSettingsManager maintains unnecessary strong invariants of minimum rate, maximum rate and rate spacing parameters, prohibiting some feasible pool parameter combinations.", "severity": "Low", "contract": "PoolsSettingsManager", "function": "N/A", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-710"], "2": ["CWE-1120"], "3": ["CWE-1060"]}, "title": "B06: Move tick-fields to the pool state to save gas costs", "description": "Moving two fields of the Tick-struct (currentBondsIssuanceIndex and yieldProviderLiquidityRatio) to the PoolState-struct can save a considerable amount of storage (hence gas costs) depending on the rate spacing and bounds of the pool.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 16, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "Add sanity checks to Position.deposit", "description": "Deposits of 0 tokens are not useful and should be considered a mistake by the lender. Add a sanity check to `Position.deposit()` and revert if the normalized deposited amount is `0`.", "severity": "Low", "contract": "Position", "function": "deposit()", "lineNumber": "N/A"}, {"id": 17, "category": {"1": ["CWE-682"]}, "title": "B08: WAD and RAY math rounding errors", "description": "The contracts make heavy use of an arithmetic library developed by Aave which simulates fixed-point arithmetic on the Solidity level. It is recommended to convert between precision values explicitly, although no severe rounding error was identified.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 18, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "B09: Risk of freezing the contract", "description": "The protocol's emergency feature allows governance to freeze the contract, but some time-critical functions may still incur penalties despite being unable to operate during the frozen state.", "severity": "Informative", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 19, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "B10: Missing intializer-calls", "description": "Some contracts, e.g., `PoolsSettingsManager` inherit from third-party library contracts, e.g., `AccessControlUpgradeable` and `PausableUpgradeable`. These library contracts come with their own initialization-methods. However, the initializers are currently not executed by the child-contracts.", "severity": "Low", "contract": "PoolsSettingsManager", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Runtime_V\u0435rification/atlendis-audit-report.pdf",
+    "project_info": {
+        "url": "https://github.com/Jelly-Fi/jellyfi-beta-contracts",
+        "commit_hash": "N/A",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "Risk of infinite approvals",
+            "description": "The implementation of granting Aave an infinite approval during pool creation can lead to security risks, specifically with tokens like USDC and WBTC that decrement the approved amount on every transferFrom call.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "A01: Unsafe transfer of ERC20 tokens",
+            "description": "Some tokens, e.g., USDT, do not conform to the ERC20 standard. In particular, the `transfer` and `transferFrom` functions do not return boolean values. Consequently, all transfers of USDT tokens initiated by the contract will eventually revert because the surrounding success checks will fail.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Discrepancy between getRepayAmount() and repay()",
+            "description": "There is a discrepancy between how `normalizedRepayAmount` is calculated in `BorrowerPools.getRepayAmount()` and `BorrowerPools.repay()`. Specifically, the `LATE_REPAY_FEE` and `PLATFORM_FEE` are added in different orders.",
+            "severity": "Mid",
+            "contract": "BorrowerPools",
+            "function": "getRepayAmount() and repay()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "A03: Unfair repayments due to maximum rate change",
+            "description": "There is a possibility that lenders will not get paid back their total amount if the lender deposited into the highest tick and the max rate is changed during an ongoing loan.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "BorrowerPools.repay()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "A04: Possible DoS due to unbounded loops",
+            "description": "The `borrow()` and `repay()` methods in BorrowerPools contract suffer from a potential Denial of Service (DoS) vulnerability due to unbounded loops, which can exceed the block gas limit.",
+            "severity": "High",
+            "contract": "BorrowerPools",
+            "function": "borrow() and repay()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "A05: Non-Borrowable deposits after rate changes",
+            "description": "The governance can change some pool parameters, including the maximum rate of the pool. If lenders already deposited into high rate ticks, and the government reduces the maximum rate later, the deposits cannot be loaned out.",
+            "severity": "Mid",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-437"
+                ]
+            },
+            "title": "A06: Incompatibility with fee-charging tokens",
+            "description": "Some ERC20 tokens, e.g., USDT, can charge fees on token transfers. This may cause reverts or unexpected transferred amounts in Position.deposit and BorrowerPools.repay methods.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": [
+                "Position.deposit",
+                "BorrowerPools.repay",
+                "Position.withdraw",
+                "BorrowerPools.borrow"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "A07: Re-entrancy vulnerability in Position.withdraw",
+            "description": "The Position.withdraw() function is vulnerable to re-entrancy attacks and can be exploited by a malicious lender to withdraw deposits that are currently actively loaned out to a borrower.",
+            "severity": "High",
+            "contract": "Position",
+            "function": "withdraw()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ],
+                "2": [
+                    "CWE-1023"
+                ],
+                "3": [
+                    "CWE-184"
+                ]
+            },
+            "title": "A08: Missing sanity checks for borrowerHash",
+            "description": "Pools are not directly identified by their borrower\u2019s addresses but by some borrower hash that is assigned to a borrower address by the governance. Consequently, to lookup the pool corresponding to a specific borrower address, two steps are performed: First, the borrower hash is looked up in mapping (address => borrowerHash). Second, the pool is looked up in a mapping (borrowerHash => Pool). If two borrowers are given the same hash, they will access the same pool.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "PoolsSettingsManager.allow",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "A09: Borrowable amounts may be too high",
+            "description": "Under certain circumstances, it is possible that a borrower can borrow amounts that are too high, i.e., the borrowable amount is higher than the available deposits of the pool. The amounts are then effectively taken from other pools with the same underlying asset.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ]
+            },
+            "title": "B01: Duplicate function getTickBondPrice()",
+            "description": "The PoolLogic library and BorrowerPools contract implement the same getTickBondPrice() function.",
+            "severity": "Low",
+            "contract": "BorrowerPools",
+            "function": "getTickBondPrice()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "B02: Simplify expressions",
+            "description": "The expression in `PoolLogic.includePendingDepositsForTick` can be simplified to enhance readability and save some gas costs.",
+            "severity": "Low",
+            "contract": "PoolLogic",
+            "function": "includePendingDepositsForTick",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "B03: Add a timelock to deposits",
+            "description": "It should never be profitable for a lender to deposit and withdraw within the same transaction. Any profits would stem from some miscalculation, e.g., from rounding errors.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "B04: Invariant breaks of rate spacings",
+            "description": "The sanity checks of the setters are not performed during pool creation, making it possible to create pools that cannot accept any deposits.",
+            "severity": "Mid",
+            "contract": "PoolsSettingsManager",
+            "function": "createNewPool",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1288"
+                ]
+            },
+            "title": "B05: Unnecessary strong invariants",
+            "description": "The PoolsSettingsManager maintains unnecessary strong invariants of minimum rate, maximum rate and rate spacing parameters, prohibiting some feasible pool parameter combinations.",
+            "severity": "Low",
+            "contract": "PoolsSettingsManager",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1120"
+                ],
+                "3": [
+                    "CWE-1060"
+                ]
+            },
+            "title": "B06: Move tick-fields to the pool state to save gas costs",
+            "description": "Moving two fields of the Tick-struct (currentBondsIssuanceIndex and yieldProviderLiquidityRatio) to the PoolState-struct can save a considerable amount of storage (hence gas costs) depending on the rate spacing and bounds of the pool.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Add sanity checks to Position.deposit",
+            "description": "Deposits of 0 tokens are not useful and should be considered a mistake by the lender. Add a sanity check to `Position.deposit()` and revert if the normalized deposited amount is `0`.",
+            "severity": "Low",
+            "contract": "Position",
+            "function": "deposit()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "B08: WAD and RAY math rounding errors",
+            "description": "The contracts make heavy use of an arithmetic library developed by Aave which simulates fixed-point arithmetic on the Solidity level. It is recommended to convert between precision values explicitly, although no severe rounding error was identified.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "B09: Risk of freezing the contract",
+            "description": "The protocol's emergency feature allows governance to freeze the contract, but some time-critical functions may still incur penalties despite being unable to operate during the frozen state.",
+            "severity": "Informative",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 19,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "B10: Missing intializer-calls",
+            "description": "Some contracts, e.g., `PoolsSettingsManager` inherit from third-party library contracts, e.g., `AccessControlUpgradeable` and `PausableUpgradeable`. These library contracts come with their own initialization-methods. However, the initializers are currently not executed by the child-contracts.",
+            "severity": "Low",
+            "contract": "PoolsSettingsManager",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

@@ -1,1 +1,232 @@
-{"path": "./Audit_Reports_2024/Spearbit/Brahma-Spearbit-Security-Review.pdf", "project_info": {"url": "https://github.com/Brahma-fi/console-core-v2", "commit_hash": "85c675001ff988a56b551f9ccc67c04b87ec4c87", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-435"]}, "title": "Frontrunning or sandwiching", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "Transaction reverts due to insufficient tokens", "description": "If too few tokens are available the transaction reverts.", "severity": "Low Risk", "contract": "TransactionValidator.sol", "function": "validatePostTransaction() and validatePostTransactionOverridable()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Addresses retrieved twice in executeTransaction()", "description": "Both functions validatePostExecutorTransaction() and _checkSubAccountSecurityConfig() retrieve the WalletRegistry address. This could be combined and the address could be supplied to _checkSubAccountSecurityConfig(), to save some gas.", "severity": "Gas Optimization", "contract": "N/A", "function": ["validatePostExecutorTransaction()", "_checkSubAccountSecurityConfig()"], "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Keccak256 result can be cached", "description": "The current implementation redundantly recalculates keccak256(_data) on each execution.", "severity": "Gas Optimization", "contract": "TransactionValidator.sol", "function": "N/A", "lineNumber": "L182"}, {"id": 4, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Function updatePolicy can be optimized", "description": "Accessing msg.sender is cheaper than accessing a memory variable.", "severity": "Gas Optimization", "contract": "PolicyRegistry.sol", "function": "updatePolicy()", "lineNumber": "L35-L59"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Suggestions for the deployment script ConsoleFactory", "description": "- In ConsoleFactory.s.sol#L75, 2 extra addresses are provided to create3Deploy(...) since AddressProvider's constructor only takes one argument. - In ConsoleFactory.s.sol#L166, logic check for consoleFallbackHandler has been skipped since _overrideCheck is true.", "severity": "Informational", "contract": "ConsoleFactory", "function": "N/A", "lineNumber": "75, 166"}, {"id": 6, "category": {"1": ["CWE-710"], "2": ["CWE-1061"]}, "title": "Initialization of hashes in Constants", "description": "The contract Constants contains several constants that are initialized via a hex string. They could also be initialized via a keccak256 expression, which would make the code easier to maintain and verify.", "severity": "Informational", "contract": "Constants.sol", "function": "N/A", "lineNumber": "13-20"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "Enum conversion in _packMultisendTxns() not obvious", "description": "The logic to convert from Enum Operation to Enum CallType is fragile to future changes in the enum.", "severity": "Informational", "contract": "N/A", "function": "_packMultisendTxns()", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "How to recover from a bug in ExecutorPlugin", "description": "In case a bug is found in ExecutorPlugin it will be difficult to replace this: All Safes would have to remove the old ExecutorPlugin from the list of modules and install a new one; The AddressProviderService._getAuthorizedAddress(_EXECUTOR_PLUGIN_HASH) old ExecutorPlugin doesn't work is updated, anymore due once to the isModuleEnabled() check in validatePostExecutorTransaction(), which refers to the new ExecutorPlugin.", "severity": "Informational", "contract": "ConsoleOpBuilder.sol, TransactionValidator.sol", "function": "N/A", "lineNumber": "L96-L189, L134-L150"}, {"id": 9, "category": {"1": ["CWE-710"], "2": ["CWE-1177"], "3": ["CWE-676"]}, "title": "Re-implementation of Ownership with 2-step transfer pattern", "description": "The AddressProvider contract implements ownership with a 2-step ownership transfers pattern, but it's recommended to use OpenZeppelin's Ownable2Step mixin instead of re-implementing it from scratch.", "severity": "Informational", "contract": "AddressProvider", "function": "N/A", "lineNumber": "L48-L69"}, {"id": 10, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Type hash is not aligned with ValidationParams struct", "description": "The type hash is derived from a different ValidationParams struct than the one used within the codebase, which may cause EIP712 compatibility issues.", "severity": "Informational", "contract": "TypeHashHelper.sol", "function": "N/A", "lineNumber": "L56"}, {"id": 11, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Trusted validator weakens Safe access control via ExecutorPlugin", "description": "The trusted validator can take over complete control of the safe by colluding with the executor, removing even the parent console account's ability to override. This is because the ExecutorPlugin has no on-chain limits or checks on what signatures can be executed through it.", "severity": "N/A", "contract": "ExecutorPlugin", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-682"]}, "title": "Use builtin functions to compute constant values", "description": "The contract ConsoleFallbackHandler.sol uses keccak256 expression to initialize a constant value instead of using builtin functions.", "severity": "Informational", "contract": "ConsoleFallbackHandler", "function": "N/A", "lineNumber": "L27"}]}
+{
+    "path": "./Audit_Reports_2024/Spearbit/Brahma-Spearbit-Security-Review.pdf",
+    "project_info": {
+        "url": "https://github.com/Brahma-fi/console-core-v2",
+        "commit_hash": "85c675001ff988a56b551f9ccc67c04b87ec4c87",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ]
+            },
+            "title": "Frontrunning or sandwiching",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Transaction reverts due to insufficient tokens",
+            "description": "If too few tokens are available the transaction reverts.",
+            "severity": "Low Risk",
+            "contract": "TransactionValidator.sol",
+            "function": "validatePostTransaction() and validatePostTransactionOverridable()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Addresses retrieved twice in executeTransaction()",
+            "description": "Both functions validatePostExecutorTransaction() and _checkSubAccountSecurityConfig() retrieve the WalletRegistry address. This could be combined and the address could be supplied to _checkSubAccountSecurityConfig(), to save some gas.",
+            "severity": "Gas Optimization",
+            "contract": "N/A",
+            "function": [
+                "validatePostExecutorTransaction()",
+                "_checkSubAccountSecurityConfig()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Keccak256 result can be cached",
+            "description": "The current implementation redundantly recalculates keccak256(_data) on each execution.",
+            "severity": "Gas Optimization",
+            "contract": "TransactionValidator.sol",
+            "function": "N/A",
+            "lineNumber": "L182"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Function updatePolicy can be optimized",
+            "description": "Accessing msg.sender is cheaper than accessing a memory variable.",
+            "severity": "Gas Optimization",
+            "contract": "PolicyRegistry.sol",
+            "function": "updatePolicy()",
+            "lineNumber": "L35-L59"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Suggestions for the deployment script ConsoleFactory",
+            "description": "- In ConsoleFactory.s.sol#L75, 2 extra addresses are provided to create3Deploy(...) since AddressProvider's constructor only takes one argument. - In ConsoleFactory.s.sol#L166, logic check for consoleFallbackHandler has been skipped since _overrideCheck is true.",
+            "severity": "Informational",
+            "contract": "ConsoleFactory",
+            "function": "N/A",
+            "lineNumber": "75, 166"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1061"
+                ]
+            },
+            "title": "Initialization of hashes in Constants",
+            "description": "The contract Constants contains several constants that are initialized via a hex string. They could also be initialized via a keccak256 expression, which would make the code easier to maintain and verify.",
+            "severity": "Informational",
+            "contract": "Constants.sol",
+            "function": "N/A",
+            "lineNumber": "13-20"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Enum conversion in _packMultisendTxns() not obvious",
+            "description": "The logic to convert from Enum Operation to Enum CallType is fragile to future changes in the enum.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "_packMultisendTxns()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "How to recover from a bug in ExecutorPlugin",
+            "description": "In case a bug is found in ExecutorPlugin it will be difficult to replace this: All Safes would have to remove the old ExecutorPlugin from the list of modules and install a new one; The AddressProviderService._getAuthorizedAddress(_EXECUTOR_PLUGIN_HASH) old ExecutorPlugin doesn't work is updated, anymore due once to the isModuleEnabled() check in validatePostExecutorTransaction(), which refers to the new ExecutorPlugin.",
+            "severity": "Informational",
+            "contract": "ConsoleOpBuilder.sol, TransactionValidator.sol",
+            "function": "N/A",
+            "lineNumber": "L96-L189, L134-L150"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1177"
+                ],
+                "3": [
+                    "CWE-676"
+                ]
+            },
+            "title": "Re-implementation of Ownership with 2-step transfer pattern",
+            "description": "The AddressProvider contract implements ownership with a 2-step ownership transfers pattern, but it's recommended to use OpenZeppelin's Ownable2Step mixin instead of re-implementing it from scratch.",
+            "severity": "Informational",
+            "contract": "AddressProvider",
+            "function": "N/A",
+            "lineNumber": "L48-L69"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Type hash is not aligned with ValidationParams struct",
+            "description": "The type hash is derived from a different ValidationParams struct than the one used within the codebase, which may cause EIP712 compatibility issues.",
+            "severity": "Informational",
+            "contract": "TypeHashHelper.sol",
+            "function": "N/A",
+            "lineNumber": "L56"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Trusted validator weakens Safe access control via ExecutorPlugin",
+            "description": "The trusted validator can take over complete control of the safe by colluding with the executor, removing even the parent console account's ability to override. This is because the ExecutorPlugin has no on-chain limits or checks on what signatures can be executed through it.",
+            "severity": "N/A",
+            "contract": "ExecutorPlugin",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Use builtin functions to compute constant values",
+            "description": "The contract ConsoleFallbackHandler.sol uses keccak256 expression to initialize a constant value instead of using builtin functions.",
+            "severity": "Informational",
+            "contract": "ConsoleFallbackHandler",
+            "function": "N/A",
+            "lineNumber": "L27"
+        }
+    ]
+}

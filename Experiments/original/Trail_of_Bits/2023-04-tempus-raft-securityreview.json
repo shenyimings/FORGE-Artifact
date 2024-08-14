@@ -1,1 +1,141 @@
-{"path": "./Audit_Reports_2024/Trail_of_Bits/2023-04-tempus-raft-securityreview.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Solidity compiler optimizations can be problematic", "description": "The Raft Finance contracts have enabled compiler optimizations which can lead to security implications due to optimization bugs.", "severity": "Informational", "contract": "foundry.toml", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Issues with Chainlink oracle\u2019s return data validation", "description": "The validation logic still assumes `roundID` always increment by 1 between valid rounds which is not guaranteed to be true, especially when the underlying aggregator is updated.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Incorrect constant for 1000-year periods", "description": "The `_MINUTES_IN_1000_YEARS` constant is currently incorrect and needs to be changed to `1000 * 365 days / 1 minutes`.", "severity": "N/A", "contract": "MathUtils", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-435"], "2": ["CWE-436"], "3": ["CWE-115"]}, "title": "Inconsistent use of safeTransfer for collateralToken", "description": "The `PositionManager` contract has been updated to use the `safeERC20` library\u2019s `safeTransfer` function for `collateralToken` transfers, but calls to `stETH.transferFrom` were not updated.", "severity": "Informational", "contract": "PositionManager", "function": "managePosition", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Tokens may be trapped in an invalid position", "description": "The Raft finance contracts allow users to take out positions by depositing collateral and minting a corresponding amount of R tokens as debt. In order to exit a position, a user must pay back their debt, which allows them to receive their collateral back. However, if the position's debt is zero but there is still some collateral present even after adjustment, then the position is considered invalid and cannot be closed.", "severity": "Informational", "contract": "PositionManager.sol", "function": "_managePosition", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Price deviations between stETH and ETH may cause Tellor oracle to return an incorrect price", "description": "The Tellor oracle returns an incorrect price due to price deviations between stETH and ETH, which can prevent positions from being liquidated despite being eligible for liquidation.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "Incorrect constant value for MAX_REDEMPTION_SPREAD", "description": "The `MAX_REDEMPTION_SPREAD` variable is set to 2% instead of 100%, which can cause significant volatility in the stablecoin.", "severity": "Critical", "contract": "PositionManager", "function": "constructor", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "Liquidation rewards are calculated incorrectly", "description": "The calculation performed in the split function is incorrect and does not reward the liquidator with the `matchingCollateral` amount of tokens", "severity": "Medium", "contract": "SplitLiquidationCollateral.sol", "function": "split()", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/2023-04-tempus-raft-securityreview.pdf",
+    "project_info": {
+        "url": "https://github.com/pappas999/historical-price-feed-data/tree/37d6ee1245dae871ab7a96bd9b70ffd20f57086e",
+        "commit_hash": "37d6ee1245dae871ab7a96bd9b70ffd20f57086e",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Solidity compiler optimizations can be problematic",
+            "description": "The Raft Finance contracts have enabled compiler optimizations which can lead to security implications due to optimization bugs.",
+            "severity": "Informational",
+            "contract": "foundry.toml",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Issues with Chainlink oracle\u2019s return data validation",
+            "description": "The validation logic still assumes `roundID` always increment by 1 between valid rounds which is not guaranteed to be true, especially when the underlying aggregator is updated.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect constant for 1000-year periods",
+            "description": "The `_MINUTES_IN_1000_YEARS` constant is currently incorrect and needs to be changed to `1000 * 365 days / 1 minutes`.",
+            "severity": "N/A",
+            "contract": "MathUtils",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-115"
+                ]
+            },
+            "title": "Inconsistent use of safeTransfer for collateralToken",
+            "description": "The `PositionManager` contract has been updated to use the `safeERC20` library\u2019s `safeTransfer` function for `collateralToken` transfers, but calls to `stETH.transferFrom` were not updated.",
+            "severity": "Informational",
+            "contract": "PositionManager",
+            "function": "managePosition",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Tokens may be trapped in an invalid position",
+            "description": "The Raft finance contracts allow users to take out positions by depositing collateral and minting a corresponding amount of R tokens as debt. In order to exit a position, a user must pay back their debt, which allows them to receive their collateral back. However, if the position's debt is zero but there is still some collateral present even after adjustment, then the position is considered invalid and cannot be closed.",
+            "severity": "Informational",
+            "contract": "PositionManager.sol",
+            "function": "_managePosition",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Price deviations between stETH and ETH may cause Tellor oracle to return an incorrect price",
+            "description": "The Tellor oracle returns an incorrect price due to price deviations between stETH and ETH, which can prevent positions from being liquidated despite being eligible for liquidation.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect constant value for MAX_REDEMPTION_SPREAD",
+            "description": "The `MAX_REDEMPTION_SPREAD` variable is set to 2% instead of 100%, which can cause significant volatility in the stablecoin.",
+            "severity": "Critical",
+            "contract": "PositionManager",
+            "function": "constructor",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Liquidation rewards are calculated incorrectly",
+            "description": "The calculation performed in the split function is incorrect and does not reward the liquidator with the `matchingCollateral` amount of tokens",
+            "severity": "Medium",
+            "contract": "SplitLiquidationCollateral.sol",
+            "function": "split()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

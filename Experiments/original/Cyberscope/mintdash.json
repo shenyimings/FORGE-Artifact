@@ -1,1 +1,215 @@
-{"path": "./Audit_Reports_2024/Cyberscope/mintdash.pdf", "project_info": {"url": "https://github.com/blank-development/mintdash-contracts/tree/master", "commit_hash": "01f3042bf60f08185f3865cc78cda7601d07877a", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "CR - Centralization Risk", "description": "The contract poses a centralization risk due to the `onlyOwnerOrAdministrator` modifier granting excessive authority to the owner and administrators.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "LMF - Limited Minting Flexibility", "description": "The contract restricts the same user from minting more than once with the same parameters due to the `_getDigest` function calculating a digest based on the `minter` address, `mintParams`, and `salt`. If none of these three parameters change, the calculated signature will remain the same.", "severity": "N/A", "contract": "N/A", "function": "mintSigned()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "RSW - Redundant Storage Writes", "description": "The contract updates the state of PayoutAddress addresses or the value of Royalties even if their current state is the same as the one passed as an argument. As a result, the contract performs redundant storage writes.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "CI - Code Inconsistency", "description": "The contract lacks a check for whether totalSupply is zero in the _updateTokenURI function, unlike its counterpart in _updateBaseURI function. Additionally, the _updateProvenanceHash function does not ensure that minting has started, unlike its counterpart in ERC721DropMetadata.", "severity": "Medium", "contract": "N/A", "function": "_updateTokenURI and _updateProvenanceHash", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "MEE - Missing Events Emission", "description": "The contract performs actions and state mutations from external methods that do not result in the emission of events.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "ILM - Inefficient Looping Mechanism", "description": "The contract uses two separate `for` loops within the `airdrop` function to iterate through the `recipients.length` and `tokenId.length`, adding unnecessary complexity and being gas-inefficient.", "severity": "Medium", "contract": "N/A", "function": "airdrop()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "MU - Modifiers Usage", "description": "The contract is using repetitive statements on some methods to validate some preconditions instead of using modifiers which can reduce code duplication and improve readability.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "MPC - Merkle Proof Centralization", "description": "The contract uses a Merkle Proof mechanism based on an off-chain configuration, which could potentially be compromised and affect the on-chain state unexpectedly.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "MSV - Missing Supply Validation", "description": "The contract does not verify if the newMaxSupply being set is greater than or equal to the current total supply of tokens, leading to inconsistencies and potential issues in token management.", "severity": "High", "contract": "N/A", "function": "_updateMaxSupply", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-682"]}, "title": "DTO - Data Type Optimization", "description": "The contract uses an `if` statement to check if `newMaxSupply` exceeds `2 ** 64 - 1`, which introduces unnecessary computational overhead and complexity. Using a `uint64` data type for `newMaxSupply` would inherently enforce this constraint without the need for an explicit `if` statement.", "severity": "Optimization", "contract": "N/A", "function": "_updateMaxSupply", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-710"]}, "title": "L04 - Conformance to Solidity Naming Conventions", "description": "The Solidity style guide is a set of guidelines for writing clean and consistent Solidity code. Adhering to a style guide can help improve the readability and maintainability of the Solidity code, making it easier for others to understand and work with.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1288"]}, "title": "L05 - Unused State Variable", "description": "An unused state variable is a state variable that is declared in the contract, but is never used in any of the contract's functions.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Cyberscope/mintdash.pdf",
+    "project_info": {
+        "url": "https://github.com/blank-development/mintdash-contracts/tree/master",
+        "commit_hash": "01f3042bf60f08185f3865cc78cda7601d07877a",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "CR - Centralization Risk",
+            "description": "The contract poses a centralization risk due to the `onlyOwnerOrAdministrator` modifier granting excessive authority to the owner and administrators.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "LMF - Limited Minting Flexibility",
+            "description": "The contract restricts the same user from minting more than once with the same parameters due to the `_getDigest` function calculating a digest based on the `minter` address, `mintParams`, and `salt`. If none of these three parameters change, the calculated signature will remain the same.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "mintSigned()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "RSW - Redundant Storage Writes",
+            "description": "The contract updates the state of PayoutAddress addresses or the value of Royalties even if their current state is the same as the one passed as an argument. As a result, the contract performs redundant storage writes.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "CI - Code Inconsistency",
+            "description": "The contract lacks a check for whether totalSupply is zero in the _updateTokenURI function, unlike its counterpart in _updateBaseURI function. Additionally, the _updateProvenanceHash function does not ensure that minting has started, unlike its counterpart in ERC721DropMetadata.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "_updateTokenURI and _updateProvenanceHash",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "MEE - Missing Events Emission",
+            "description": "The contract performs actions and state mutations from external methods that do not result in the emission of events.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "ILM - Inefficient Looping Mechanism",
+            "description": "The contract uses two separate `for` loops within the `airdrop` function to iterate through the `recipients.length` and `tokenId.length`, adding unnecessary complexity and being gas-inefficient.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "airdrop()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "MU - Modifiers Usage",
+            "description": "The contract is using repetitive statements on some methods to validate some preconditions instead of using modifiers which can reduce code duplication and improve readability.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "MPC - Merkle Proof Centralization",
+            "description": "The contract uses a Merkle Proof mechanism based on an off-chain configuration, which could potentially be compromised and affect the on-chain state unexpectedly.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "MSV - Missing Supply Validation",
+            "description": "The contract does not verify if the newMaxSupply being set is greater than or equal to the current total supply of tokens, leading to inconsistencies and potential issues in token management.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "_updateMaxSupply",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "DTO - Data Type Optimization",
+            "description": "The contract uses an `if` statement to check if `newMaxSupply` exceeds `2 ** 64 - 1`, which introduces unnecessary computational overhead and complexity. Using a `uint64` data type for `newMaxSupply` would inherently enforce this constraint without the need for an explicit `if` statement.",
+            "severity": "Optimization",
+            "contract": "N/A",
+            "function": "_updateMaxSupply",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ]
+            },
+            "title": "L04 - Conformance to Solidity Naming Conventions",
+            "description": "The Solidity style guide is a set of guidelines for writing clean and consistent Solidity code. Adhering to a style guide can help improve the readability and maintainability of the Solidity code, making it easier for others to understand and work with.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1288"
+                ]
+            },
+            "title": "L05 - Unused State Variable",
+            "description": "An unused state variable is a state variable that is declared in the contract, but is never used in any of the contract's functions.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

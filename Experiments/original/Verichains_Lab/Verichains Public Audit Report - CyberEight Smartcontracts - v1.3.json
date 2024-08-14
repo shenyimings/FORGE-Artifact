@@ -1,1 +1,170 @@
-{"path": "./Audit_Reports_2024/Verichains_Lab/Verichains Public Audit Report - CyberEight Smartcontracts - v1.3.pdf", "project_info": {"url": "https://github.com/CyberEight/smart-contracts", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Wrong formula for depositAmounts", "description": "In the addVestingInformationMultiple function of the Vesting contract, the depositAmounts variable is miscalculated.", "severity": "N/A", "contract": "Vesting", "function": "addVestingInformationMultiple()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"]}, "title": "Contract blocking in buyGachaBox can be circumvented", "description": "The requirement checking if the caller is a contract can be bypassed by calling from a constructing contract (calling from the constructor function)", "severity": "High", "contract": "GachaContract", "function": "buyGachaBox()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-697"], "2": ["CWE-183"]}, "title": "Unsafe random function", "description": "The _random function uses a predictable seed generated from block properties, which can lead to unsafe randomness.", "severity": "High", "contract": "N/A", "function": "_random", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Missing startTime check in buyGachaBox", "description": "In the buyGachaBox function, when a user buys a gacha box, the block.timestamp is checked to ensure it's not greater than gachaEvent.endTime. However, the gachaEvent.startTime is not checked here.", "severity": "N/A", "contract": "GachaContract.sol", "function": "buyGachaBox()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "durationTime must be divisible by periodTime", "description": "When adding a new vesting by using addVestingInformation function, the vesting.durationTime should be divisible by vesting.periodTime. If this condition is not met, the vestingCount_ will be round down so that the value of vesting.periodVestingAmount will be higher than it should be.", "severity": "N/A", "contract": "Vesting.sol", "function": "addVestingInformation()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-664"], "2": ["CWE-404"], "3": ["CWE-772"], "4": ["CWE-775"]}, "title": "Storage data of the token should be deleted when burning", "description": "In the Cue and Box contracts, storage data attached to a token's id is not deleted when the token is burnt.", "severity": "Medium", "contract": "Box, Cue", "function": "burn()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Wrong index upper bound check in array", "description": "The remove functions in the ArrayLib contract have an off-by-one bug in their upper bound index checks.", "severity": "N/A", "contract": "ArrayLib", "function": ["remove(address[] storage list, uint256 index)", "remove(uint256[] storage list, uint256 index)", "remove(string[] storage list, uint256 index)", "remove(bytes32[] storage list, uint256 index)", "removeUnchangedPosition(address[] storage list, uint256 index)", "removeUnchangedPosition(uint256[] storage list, uint256 index)", "removeUnchangedPosition(string[] storage list, uint256 index)", "removeUnchangedPosition(bytes32[] storage list, uint256 index)"], "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-693"]}, "title": "Wrong function name getVestingParticipants", "description": "The name of the getVestingParticipants function of the Vesting contract is wrong and misleading.", "severity": "Medium", "contract": "Vesting.sol", "function": "getVestingParticipants(address wallet)", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "availableAmount should only be calculated when the vesting is claimable", "description": "In the _claim function of the Vesting contract, the statement which calculates the availableAmount should not be run if the vesting is not claimable.", "severity": "Medium", "contract": "Vesting", "function": "_claim()", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Verichains_Lab/Verichains Public Audit Report - CyberEight Smartcontracts - v1.3.pdf",
+    "project_info": {
+        "url": "https://github.com/CyberEight/smart-contracts",
+        "commit_hash": "N/A",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Wrong formula for depositAmounts",
+            "description": "In the addVestingInformationMultiple function of the Vesting contract, the depositAmounts variable is miscalculated.",
+            "severity": "N/A",
+            "contract": "Vesting",
+            "function": "addVestingInformationMultiple()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Contract blocking in buyGachaBox can be circumvented",
+            "description": "The requirement checking if the caller is a contract can be bypassed by calling from a constructing contract (calling from the constructor function)",
+            "severity": "High",
+            "contract": "GachaContract",
+            "function": "buyGachaBox()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ],
+                "2": [
+                    "CWE-183"
+                ]
+            },
+            "title": "Unsafe random function",
+            "description": "The _random function uses a predictable seed generated from block properties, which can lead to unsafe randomness.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "_random",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Missing startTime check in buyGachaBox",
+            "description": "In the buyGachaBox function, when a user buys a gacha box, the block.timestamp is checked to ensure it's not greater than gachaEvent.endTime. However, the gachaEvent.startTime is not checked here.",
+            "severity": "N/A",
+            "contract": "GachaContract.sol",
+            "function": "buyGachaBox()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "durationTime must be divisible by periodTime",
+            "description": "When adding a new vesting by using addVestingInformation function, the vesting.durationTime should be divisible by vesting.periodTime. If this condition is not met, the vestingCount_ will be round down so that the value of vesting.periodVestingAmount will be higher than it should be.",
+            "severity": "N/A",
+            "contract": "Vesting.sol",
+            "function": "addVestingInformation()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-775"
+                ]
+            },
+            "title": "Storage data of the token should be deleted when burning",
+            "description": "In the Cue and Box contracts, storage data attached to a token's id is not deleted when the token is burnt.",
+            "severity": "Medium",
+            "contract": "Box, Cue",
+            "function": "burn()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Wrong index upper bound check in array",
+            "description": "The remove functions in the ArrayLib contract have an off-by-one bug in their upper bound index checks.",
+            "severity": "N/A",
+            "contract": "ArrayLib",
+            "function": [
+                "remove(address[] storage list, uint256 index)",
+                "remove(uint256[] storage list, uint256 index)",
+                "remove(string[] storage list, uint256 index)",
+                "remove(bytes32[] storage list, uint256 index)",
+                "removeUnchangedPosition(address[] storage list, uint256 index)",
+                "removeUnchangedPosition(uint256[] storage list, uint256 index)",
+                "removeUnchangedPosition(string[] storage list, uint256 index)",
+                "removeUnchangedPosition(bytes32[] storage list, uint256 index)"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "Wrong function name getVestingParticipants",
+            "description": "The name of the getVestingParticipants function of the Vesting contract is wrong and misleading.",
+            "severity": "Medium",
+            "contract": "Vesting.sol",
+            "function": "getVestingParticipants(address wallet)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "availableAmount should only be calculated when the vesting is claimable",
+            "description": "In the _claim function of the Vesting contract, the statement which calculates the availableAmount should not be run if the vesting is not claimable.",
+            "severity": "Medium",
+            "contract": "Vesting",
+            "function": "_claim()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

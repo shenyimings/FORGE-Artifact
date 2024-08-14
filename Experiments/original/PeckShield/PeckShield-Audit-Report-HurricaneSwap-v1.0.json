@@ -1,1 +1,167 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-HurricaneSwap-v1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Timely massUpdatePools During Pool Weight Changes", "description": "The reward pools can be dynamically added via `add()` and the weights of supported pools can be adjusted via `set()`. When analyzing the pool weight update routine `set()`, we notice the need of timely invoking `massUpdatePools()` to update the reward distribution before the new pool weight becomes effective.", "severity": "Medium", "contract": "AvaxPool", "function": "set()", "lineNumber": "162-169"}, {"id": 1, "category": {"1": ["CWE-710"], "2": ["CWE-684"], "3": ["CWE-440"]}, "title": "Potential Reentrancy Risk in AvaxPool::deposit()/withdraw()", "description": "The deposit() and withdraw() functions in the AvaxPool contract have potential reentrancy risk due to non-adherence to the 'checks-effects-interactions' principle, which can lead to a malicious contract re-entering the vulnerable contract in a nested manner.", "severity": "Medium", "contract": "AvaxPool", "function": "deposit()/withdraw()", "lineNumber": "325, 329"}, {"id": 2, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Accommodation of Non-ERC20-Compliant Tokens", "description": "The approve() routine may not work correctly with non-ERC20-compliant tokens due to idiosyncrasies from current widely-used token contracts, requiring a specific requirement to mitigate the known approve()/transferFrom() race condition.", "severity": "Low", "contract": "AvaxPool", "function": "approve()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Recommended Explicit Pool Validity Checks", "description": "The reward mechanism in HurricaneSwap has a central contract, i.e., AvaxPool, that has been tasked with the reward distribution to various pools and stakers.", "severity": "Informational", "contract": "AvaxPool", "function": "N/A", "lineNumber": "35-39"}, {"id": 4, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Logic Error Of addLiquidityAVAX()", "description": "The `addLiquidityAVAX()` function does not have the same logic as the `addLiquidity()` function to check for restricted tokens, which may cause inconsistency between the two functions.", "severity": "Medium", "contract": "AvaxHurricaneRouter", "function": "addLiquidityAVAX()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Redundant State/Code Removal", "description": "The AvaxHurricaneRouter contract has unused code or unnecessary redundancies that can be safely removed, such as the local 'pair' variable storing the pool address is not used throughout the removeLiquidity() function.", "severity": "Informational", "contract": "AvaxHurricaneRouter/HecoHurricaneRouter", "function": "removeLiquidity()", "lineNumber": "156-164"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Trust Issue Of Admin Keys", "description": "Privileged `owner` account has critical role in governing and regulating protocol-wide operations in HurricaneSwap protocol, potentially allowing a compromised owner to modify sensitive system parameters.", "severity": "Low", "contract": "HurricaneSwap", "function": "transferToken()", "lineNumber": "241-252"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "Proper Event Usage In HurricaneSwap Implementation", "description": "The emitted ERC20ChangeUser event contains incorrect information.", "severity": "Low", "contract": "ERC20Factory", "function": "N/A", "lineNumber": "48"}, {"id": 8, "category": {"1": ["CWE-682"]}, "title": "Logic Error Of Swaps For Deflationary Tokens", "description": "Incorrect logic in the `swapExactTokensForTokensSupportingFeeOnTransferTokens()` function for swapping deflationary tokens.", "severity": "High", "contract": "HecoHurricaneRouterPart", "function": "swapExactTokensForTokensSupportingFeeOnTransferTokens()", "lineNumber": "56"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-HurricaneSwap-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/Caijiawen/HurricaneSwap-contract/tree/99def47",
+        "commit_hash": "99def47",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Timely massUpdatePools During Pool Weight Changes",
+            "description": "The reward pools can be dynamically added via `add()` and the weights of supported pools can be adjusted via `set()`. When analyzing the pool weight update routine `set()`, we notice the need of timely invoking `massUpdatePools()` to update the reward distribution before the new pool weight becomes effective.",
+            "severity": "Medium",
+            "contract": "AvaxPool",
+            "function": "set()",
+            "lineNumber": "162-169"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-684"
+                ],
+                "3": [
+                    "CWE-440"
+                ]
+            },
+            "title": "Potential Reentrancy Risk in AvaxPool::deposit()/withdraw()",
+            "description": "The deposit() and withdraw() functions in the AvaxPool contract have potential reentrancy risk due to non-adherence to the 'checks-effects-interactions' principle, which can lead to a malicious contract re-entering the vulnerable contract in a nested manner.",
+            "severity": "Medium",
+            "contract": "AvaxPool",
+            "function": "deposit()/withdraw()",
+            "lineNumber": "325, 329"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Accommodation of Non-ERC20-Compliant Tokens",
+            "description": "The approve() routine may not work correctly with non-ERC20-compliant tokens due to idiosyncrasies from current widely-used token contracts, requiring a specific requirement to mitigate the known approve()/transferFrom() race condition.",
+            "severity": "Low",
+            "contract": "AvaxPool",
+            "function": "approve()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Recommended Explicit Pool Validity Checks",
+            "description": "The reward mechanism in HurricaneSwap has a central contract, i.e., AvaxPool, that has been tasked with the reward distribution to various pools and stakers.",
+            "severity": "Informational",
+            "contract": "AvaxPool",
+            "function": "N/A",
+            "lineNumber": "35-39"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Logic Error Of addLiquidityAVAX()",
+            "description": "The `addLiquidityAVAX()` function does not have the same logic as the `addLiquidity()` function to check for restricted tokens, which may cause inconsistency between the two functions.",
+            "severity": "Medium",
+            "contract": "AvaxHurricaneRouter",
+            "function": "addLiquidityAVAX()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Redundant State/Code Removal",
+            "description": "The AvaxHurricaneRouter contract has unused code or unnecessary redundancies that can be safely removed, such as the local 'pair' variable storing the pool address is not used throughout the removeLiquidity() function.",
+            "severity": "Informational",
+            "contract": "AvaxHurricaneRouter/HecoHurricaneRouter",
+            "function": "removeLiquidity()",
+            "lineNumber": "156-164"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue Of Admin Keys",
+            "description": "Privileged `owner` account has critical role in governing and regulating protocol-wide operations in HurricaneSwap protocol, potentially allowing a compromised owner to modify sensitive system parameters.",
+            "severity": "Low",
+            "contract": "HurricaneSwap",
+            "function": "transferToken()",
+            "lineNumber": "241-252"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Proper Event Usage In HurricaneSwap Implementation",
+            "description": "The emitted ERC20ChangeUser event contains incorrect information.",
+            "severity": "Low",
+            "contract": "ERC20Factory",
+            "function": "N/A",
+            "lineNumber": "48"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Logic Error Of Swaps For Deflationary Tokens",
+            "description": "Incorrect logic in the `swapExactTokensForTokensSupportingFeeOnTransferTokens()` function for swapping deflationary tokens.",
+            "severity": "High",
+            "contract": "HecoHurricaneRouterPart",
+            "function": "swapExactTokensForTokensSupportingFeeOnTransferTokens()",
+            "lineNumber": "56"
+        }
+    ]
+}

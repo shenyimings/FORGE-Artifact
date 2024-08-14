@@ -1,1 +1,167 @@
-{"path": "./Audit_Reports_2024/BlockSec/BlockSec-blocksec_ferro_v1.0_signed.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "The unnecessary check in SwapUtils.sol and MetaSwapUtils.sol", "description": "The function calculateWithdrawOneTokenDY calculates the number of tokens that could be withdrawn, but the code requires tokenAmount to be less or equal than xp[tokenIndex] which seems to be a mistake.", "severity": "Low", "contract": "SwapUtils.sol and MetaSwapUtils.sol", "function": "_calculateWithdrawOneTokenDY", "lineNumber": "211, 263"}, {"id": 1, "category": {"1": ["CWE-691"], "2": ["CWE-1265"]}, "title": "Reentrancy issues", "description": "There are a few functions that update critical variables after calling an untrusted token and use these variables before the untrusted call, which may be susceptible to the Re-entrancy attack.", "severity": "Medium", "contract": ["FerroVesting.sol", "FerroFarm.sol"], "function": ["N/A", "emergencyWithdraw()"], "lineNumber": ["104, 106", "210, 226, 238"]}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Deflation token issue", "description": "If the pool.lpToken is a deflation token that charges fees for each transfer, then the code in line 208 can not record the correct users\u2019 deposits.", "severity": "Medium", "contract": "FerroFarm", "function": "deposit() and withdraw()", "lineNumber": "208"}, {"id": 3, "category": {"1": ["CWE-693"], "2": ["CWE-358"]}, "title": "UUPS vulnerability", "description": "The _FerroBoost_ contract inherits the _UUPSUpgradeable_ contract of OpenZeppelin, which has a vulnerability that can cause the _FerroBoost_ contract to self-destruct itself if the version of OZ library is less than 4.3.2.", "severity": "Low", "contract": "_FerroBoost_", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-710"], "2": ["CWE-1068"]}, "title": "Fix incorrect comments", "description": "Incorrect comments in codes need to be corrected.", "severity": "NA", "contract": ["MetaSwap.sol", "MetaSwapUtils.sol", "Swap.sol", "SwapUtils.sol"], "function": "N/A", "lineNumber": ["367", "171", "227", "440", "139", "190"]}, {"id": 5, "category": {"1": ["CWE-710"], "2": ["CWE-1120"], "3": ["CWE-1060"]}, "title": "Save gas", "description": "There are recommendations that can save the gas usage.", "severity": "N/A", "contract": "_FerroVesting_, _FerroFarm_, _FerroBoost_", "function": "getMultiplier()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "Address the concern of the centralization design", "description": "No description provided", "severity": "Recommendation", "contract": "Ferro Contracts", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Add a check for the functions add and set", "description": "The variable pool.multiplier must be greater than zero.", "severity": "N/A", "contract": "_FerroBoost_", "function": "add and set", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/BlockSec/BlockSec-blocksec_ferro_v1.0_signed.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "The unnecessary check in SwapUtils.sol and MetaSwapUtils.sol",
+            "description": "The function calculateWithdrawOneTokenDY calculates the number of tokens that could be withdrawn, but the code requires tokenAmount to be less or equal than xp[tokenIndex] which seems to be a mistake.",
+            "severity": "Low",
+            "contract": "SwapUtils.sol and MetaSwapUtils.sol",
+            "function": "_calculateWithdrawOneTokenDY",
+            "lineNumber": "211, 263"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "Reentrancy issues",
+            "description": "There are a few functions that update critical variables after calling an untrusted token and use these variables before the untrusted call, which may be susceptible to the Re-entrancy attack.",
+            "severity": "Medium",
+            "contract": [
+                "FerroVesting.sol",
+                "FerroFarm.sol"
+            ],
+            "function": [
+                "N/A",
+                "emergencyWithdraw()"
+            ],
+            "lineNumber": [
+                "104, 106",
+                "210, 226, 238"
+            ]
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Deflation token issue",
+            "description": "If the pool.lpToken is a deflation token that charges fees for each transfer, then the code in line 208 can not record the correct users\u2019 deposits.",
+            "severity": "Medium",
+            "contract": "FerroFarm",
+            "function": "deposit() and withdraw()",
+            "lineNumber": "208"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-358"
+                ]
+            },
+            "title": "UUPS vulnerability",
+            "description": "The _FerroBoost_ contract inherits the _UUPSUpgradeable_ contract of OpenZeppelin, which has a vulnerability that can cause the _FerroBoost_ contract to self-destruct itself if the version of OZ library is less than 4.3.2.",
+            "severity": "Low",
+            "contract": "_FerroBoost_",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1068"
+                ]
+            },
+            "title": "Fix incorrect comments",
+            "description": "Incorrect comments in codes need to be corrected.",
+            "severity": "NA",
+            "contract": [
+                "MetaSwap.sol",
+                "MetaSwapUtils.sol",
+                "Swap.sol",
+                "SwapUtils.sol"
+            ],
+            "function": "N/A",
+            "lineNumber": [
+                "367",
+                "171",
+                "227",
+                "440",
+                "139",
+                "190"
+            ]
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1120"
+                ],
+                "3": [
+                    "CWE-1060"
+                ]
+            },
+            "title": "Save gas",
+            "description": "There are recommendations that can save the gas usage.",
+            "severity": "N/A",
+            "contract": "_FerroVesting_, _FerroFarm_, _FerroBoost_",
+            "function": "getMultiplier()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Address the concern of the centralization design",
+            "description": "No description provided",
+            "severity": "Recommendation",
+            "contract": "Ferro Contracts",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Add a check for the functions add and set",
+            "description": "The variable pool.multiplier must be greater than zero.",
+            "severity": "N/A",
+            "contract": "_FerroBoost_",
+            "function": "add and set",
+            "lineNumber": "N/A"
+        }
+    ]
+}

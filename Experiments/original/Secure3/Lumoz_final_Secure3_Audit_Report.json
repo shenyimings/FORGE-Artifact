@@ -1,1 +1,221 @@
-{"path": "./Audit_Reports_2024/Secure3/Lumoz_final_Secure3_Audit_Report.pdf", "project_info": {"url": "https://github.com/ZKFair/zkfair-transaction-mining-contract, https://github.com/ZKFair/zkfair-staking-contracts, https://github.com/ZKFair/zkfair-cdk-validium-contracts, https://github.com/ZKFair/zkfair-cdk-validium-bridge-service", "commit_hash": "bde8bbe769229e9cc3956b639e4082165f61ee22, c9c657a26b91db80ab41846faf7257a29ad68c75, 64c6072f9c660f789e838dea4bc7c2c078d6bf1d, c017866f1c713968d12e8040431e740881b79ee8, cecd53e0b1e39cd9df1a79215eedbbb636b4e0a7, 7d3d3bbe7d0c72bffdb19a129e4d6ec817d62819", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "proposewMerkleRoot can only be called once", "description": "The proposewMerkleRoot function can only be called once due to the requirement of merkleRoot being empty at proposal, and there is no delete functionality attached to the contract that allows for the deletion of a root value.", "severity": "Critical", "contract": "RewardDistribution", "function": "proposewMerkleRoot(bytes32 _merkleRoot)", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Flawed Weight Update Mechanism in StakingContract's Deposit and Withdrawal Functions", "description": "The StakingContract smart contract has a logical vulnerability in its deposit and withdraw functions, specifically in the way it updates the Weight structure for users. This flaw stems from the contract's failure to accurately adjust the total weight when users make new deposits or withdrawals.", "severity": "Medium", "contract": "ZKFStaking", "function": ["deposit()", "withdraw()"], "lineNumber": "118"}, {"id": 2, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Second PreImage Attack", "description": "When using MerkleProof, it should avoid using leaf values that are 64 bytes long prior to hashing.", "severity": "Medium", "contract": "RewardDistribution", "function": "N/A", "lineNumber": "118"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Vulnerability in Withdraw Function Leading to Potential Over-withdrawal", "description": "The smart contract contains a logical vulnerability in the withdraw function, allowing users to potentially withdraw more funds than they deposited by exploiting the incorrect correlation between total deposit amounts and specific duration-based deposits.", "severity": "Medium", "contract": "ZKFStaking", "function": "withdraw(uint256 _duration)", "lineNumber": "116-134"}, {"id": 4, "category": {"1": ["CWE-693"], "2": ["CWE-358"]}, "title": "Detection of Duplicate Signature Vulnerability in Smart Contract Multi-Signature Verification", "description": "The smart contract code provided for the `verifySignatures` function contains a critical vulnerability related to the handling of signatures in a multi-signature verification process. The original implementation does not incorporate a mechanism to check for duplicate signers.", "severity": "Medium", "contract": "CDKDataCommittee", "function": "verifySignatures()", "lineNumber": "103-149"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Risk with Proposal and Review Authority Management in RewardDistribution Contract", "description": "The design of proposalAuthority and reviewAuthority management presents a security risk if either authority is compromised, allowing malicious actors to manipulate the reward distribution by approving fraudulent merkle roots.", "severity": "Medium", "contract": "RewardDistribution", "function": "N/A", "lineNumber": "L7-L74"}, {"id": 6, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Inconsistency in Merkle Tree State due to Post-Increment in Deposit Count", "description": "The post-increment of depositCount in the _deposit function leads to an inconsistency in the Merkle tree state when the maximum deposit count is reached, causing the Merkle tree branch update even after reaching its intended capacity.", "severity": "Medium", "contract": "DepositContract", "function": "_deposit(bytes32)", "lineNumber": "74"}, {"id": 7, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Calling deleted Values", "description": "The deleted values/structs are still called from storage, leading to storing false event values on the blockchain log and thus providing invalid data to offchain systems.", "severity": "Low", "contract": "ZKFStaking", "function": "withdraw(uint256)", "lineNumber": "116"}, {"id": 8, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Vulnerability in Merkle Root Update Mechanism", "description": "The identified vulnerability exists in the Merkle root update mechanism, which can lead to inconsistency in the tree's state and potentially disrupt the contract's operations.", "severity": "Low", "contract": "RewardDistribution", "function": "reviewPendingMerkleRoot() and claim()", "lineNumber": "89-97, 113-137"}, {"id": 9, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1287"]}, "title": "Incompatible with defliationary token", "description": "N/A", "severity": "Low", "contract": "PolygonZkEVMBridge", "function": "bridgeAsset()", "lineNumber": "175-301"}, {"id": 10, "category": {"1": ["CWE-682"]}, "title": "Vulnerability in ERC20 Token Handling in bridgeAsset Function", "description": "The contract calculates the amount of ERC20 tokens received by measuring the balance difference before and after the safeTransferFrom call. This approach does not account for ERC20 tokens that deduct a fee or burn a percentage of the tokens during transfer.", "severity": "Low", "contract": "PolygonZkEVMBridge", "function": "bridgeAsset()", "lineNumber": "175-301"}, {"id": 11, "category": {"1": ["CWE-435"]}, "title": "Users loose claim due to poor timing of sent rewards", "description": "Due to the two-step process of updating proof and adding rewards to the contract, users may lose their claims if they execute a claim transaction between the root update and reward sending.", "severity": "Low", "contract": "ZKFRewardContract.sol", "function": "claimReward", "lineNumber": "80-94"}]}
+{
+    "path": "./Audit_Reports_2024/Secure3/Lumoz_final_Secure3_Audit_Report.pdf",
+    "project_info": {
+        "url": "https://github.com/ZKFair/zkfair-transaction-mining-contract, https://github.com/ZKFair/zkfair-staking-contracts, https://github.com/ZKFair/zkfair-cdk-validium-contracts, https://github.com/ZKFair/zkfair-cdk-validium-bridge-service",
+        "commit_hash": "bde8bbe769229e9cc3956b639e4082165f61ee22, c9c657a26b91db80ab41846faf7257a29ad68c75, 64c6072f9c660f789e838dea4bc7c2c078d6bf1d, c017866f1c713968d12e8040431e740881b79ee8, cecd53e0b1e39cd9df1a79215eedbbb636b4e0a7, 7d3d3bbe7d0c72bffdb19a129e4d6ec817d62819",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "proposewMerkleRoot can only be called once",
+            "description": "The proposewMerkleRoot function can only be called once due to the requirement of merkleRoot being empty at proposal, and there is no delete functionality attached to the contract that allows for the deletion of a root value.",
+            "severity": "Critical",
+            "contract": "RewardDistribution",
+            "function": "proposewMerkleRoot(bytes32 _merkleRoot)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Flawed Weight Update Mechanism in StakingContract's Deposit and Withdrawal Functions",
+            "description": "The StakingContract smart contract has a logical vulnerability in its deposit and withdraw functions, specifically in the way it updates the Weight structure for users. This flaw stems from the contract's failure to accurately adjust the total weight when users make new deposits or withdrawals.",
+            "severity": "Medium",
+            "contract": "ZKFStaking",
+            "function": [
+                "deposit()",
+                "withdraw()"
+            ],
+            "lineNumber": "118"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Second PreImage Attack",
+            "description": "When using MerkleProof, it should avoid using leaf values that are 64 bytes long prior to hashing.",
+            "severity": "Medium",
+            "contract": "RewardDistribution",
+            "function": "N/A",
+            "lineNumber": "118"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Vulnerability in Withdraw Function Leading to Potential Over-withdrawal",
+            "description": "The smart contract contains a logical vulnerability in the withdraw function, allowing users to potentially withdraw more funds than they deposited by exploiting the incorrect correlation between total deposit amounts and specific duration-based deposits.",
+            "severity": "Medium",
+            "contract": "ZKFStaking",
+            "function": "withdraw(uint256 _duration)",
+            "lineNumber": "116-134"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-358"
+                ]
+            },
+            "title": "Detection of Duplicate Signature Vulnerability in Smart Contract Multi-Signature Verification",
+            "description": "The smart contract code provided for the `verifySignatures` function contains a critical vulnerability related to the handling of signatures in a multi-signature verification process. The original implementation does not incorporate a mechanism to check for duplicate signers.",
+            "severity": "Medium",
+            "contract": "CDKDataCommittee",
+            "function": "verifySignatures()",
+            "lineNumber": "103-149"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Risk with Proposal and Review Authority Management in RewardDistribution Contract",
+            "description": "The design of proposalAuthority and reviewAuthority management presents a security risk if either authority is compromised, allowing malicious actors to manipulate the reward distribution by approving fraudulent merkle roots.",
+            "severity": "Medium",
+            "contract": "RewardDistribution",
+            "function": "N/A",
+            "lineNumber": "L7-L74"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Inconsistency in Merkle Tree State due to Post-Increment in Deposit Count",
+            "description": "The post-increment of depositCount in the _deposit function leads to an inconsistency in the Merkle tree state when the maximum deposit count is reached, causing the Merkle tree branch update even after reaching its intended capacity.",
+            "severity": "Medium",
+            "contract": "DepositContract",
+            "function": "_deposit(bytes32)",
+            "lineNumber": "74"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Calling deleted Values",
+            "description": "The deleted values/structs are still called from storage, leading to storing false event values on the blockchain log and thus providing invalid data to offchain systems.",
+            "severity": "Low",
+            "contract": "ZKFStaking",
+            "function": "withdraw(uint256)",
+            "lineNumber": "116"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Vulnerability in Merkle Root Update Mechanism",
+            "description": "The identified vulnerability exists in the Merkle root update mechanism, which can lead to inconsistency in the tree's state and potentially disrupt the contract's operations.",
+            "severity": "Low",
+            "contract": "RewardDistribution",
+            "function": "reviewPendingMerkleRoot() and claim()",
+            "lineNumber": "89-97, 113-137"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1287"
+                ]
+            },
+            "title": "Incompatible with defliationary token",
+            "description": "N/A",
+            "severity": "Low",
+            "contract": "PolygonZkEVMBridge",
+            "function": "bridgeAsset()",
+            "lineNumber": "175-301"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Vulnerability in ERC20 Token Handling in bridgeAsset Function",
+            "description": "The contract calculates the amount of ERC20 tokens received by measuring the balance difference before and after the safeTransferFrom call. This approach does not account for ERC20 tokens that deduct a fee or burn a percentage of the tokens during transfer.",
+            "severity": "Low",
+            "contract": "PolygonZkEVMBridge",
+            "function": "bridgeAsset()",
+            "lineNumber": "175-301"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ]
+            },
+            "title": "Users loose claim due to poor timing of sent rewards",
+            "description": "Due to the two-step process of updating proof and adding rewards to the contract, users may lose their claims if they execute a claim transaction between the root update and reward sending.",
+            "severity": "Low",
+            "contract": "ZKFRewardContract.sol",
+            "function": "claimReward",
+            "lineNumber": "80-94"
+        }
+    ]
+}

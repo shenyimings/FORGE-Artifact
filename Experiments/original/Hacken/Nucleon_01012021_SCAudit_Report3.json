@@ -1,1 +1,232 @@
-{"path": "./Audit_Reports_2024/Hacken/Nucleon_01012021_SCAudit_Report3.pdf", "project_info": {"url": "https://github.com/article-i/espace/tree/in-test", "commit_hash": "c70be17a0bfebbe4a4456892b1f14a55b81356c2", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Duplicate Array Items", "description": "It is possible to add the same addresses to the list again which may lead to unnecessary Gas consumption.", "severity": "Medium", "contract": "CoreBridge_multipool", "function": "_addPoolAddress()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-354"]}, "title": "Floating Pragma", "description": "The project uses floating pragma ^0.8.0", "severity": "Medium", "contract": ["VotePowerQueue", "UnstakeQueueCFX", "Exchangeroom", "PoolAPY", "PoolContext", "PoSPoolmini", "CoreBridge_multipool"], "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "State Variable Default Visibility", "description": "Functions and state variables visibility should be set explicitly. Visibility levels should be specified consciously.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-710"], "2": ["CWE-1164"], "3": ["CWE-563"]}, "title": "Redundant Variable", "description": "The usage of zero_addr is unnecessary for the contract.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "Flashloan Attack", "description": "When working with exchange rates, they should be received from a trusted source and not be vulnerable to short-term rate changes that can be achieved by using flash loans. Oracles should be used.", "severity": "Custom", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Token Supply manipulation", "description": "The function has the onlyBridge modifier, so this function can be executed from the _bridgeAddress address. If _bridgeAddress executes this function, since the receiver address is _bridgeAddress itself, _bridgeAddress will be sent the CFX token to itself. The balance of the _bridgeAddress will not change because it sends the CFX token to itself. Thus, this contract will be able to mint XCFX without sending any CFX tokens.", "severity": "Critical", "contract": "Exchangeroom", "function": "handleCFXexchangeXCFX()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Gas Limit and Loops", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-710"]}, "title": "Style Guide Violation", "description": "The contract names and functions do not follow the official Solidity guidelines.", "severity": "N/A", "contract": "Multiple contracts (PoSPoolmini, storagesbridge, systemstorages, Exchangeroom, CoreExchange, CoreBridge_multipool)", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Requirements Compliance", "description": "The code does not fully comply with the functional requirements provided in the whitepaper.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Environment Consistency", "description": "The project uses floating pragma ^0.8.0", "severity": "N/A", "contract": "Multiple contracts (see paths)", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "Secure Oracles Usage", "description": "The code should have the ability to pause specific data feeds that it relies on. This should be done to protect a contract from compromised oracles.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Tests Coverage", "description": "Test coverage of the project is 78.86%. Unit tests are provided, but several contracts are not covered at all.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Hacken/Nucleon_01012021_SCAudit_Report3.pdf",
+    "project_info": {
+        "url": "https://github.com/article-i/espace/tree/in-test",
+        "commit_hash": "c70be17a0bfebbe4a4456892b1f14a55b81356c2",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Duplicate Array Items",
+            "description": "It is possible to add the same addresses to the list again which may lead to unnecessary Gas consumption.",
+            "severity": "Medium",
+            "contract": "CoreBridge_multipool",
+            "function": "_addPoolAddress()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-354"
+                ]
+            },
+            "title": "Floating Pragma",
+            "description": "The project uses floating pragma ^0.8.0",
+            "severity": "Medium",
+            "contract": [
+                "VotePowerQueue",
+                "UnstakeQueueCFX",
+                "Exchangeroom",
+                "PoolAPY",
+                "PoolContext",
+                "PoSPoolmini",
+                "CoreBridge_multipool"
+            ],
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "State Variable Default Visibility",
+            "description": "Functions and state variables visibility should be set explicitly. Visibility levels should be specified consciously.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ],
+                "3": [
+                    "CWE-563"
+                ]
+            },
+            "title": "Redundant Variable",
+            "description": "The usage of zero_addr is unnecessary for the contract.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Flashloan Attack",
+            "description": "When working with exchange rates, they should be received from a trusted source and not be vulnerable to short-term rate changes that can be achieved by using flash loans. Oracles should be used.",
+            "severity": "Custom",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Token Supply manipulation",
+            "description": "The function has the onlyBridge modifier, so this function can be executed from the _bridgeAddress address. If _bridgeAddress executes this function, since the receiver address is _bridgeAddress itself, _bridgeAddress will be sent the CFX token to itself. The balance of the _bridgeAddress will not change because it sends the CFX token to itself. Thus, this contract will be able to mint XCFX without sending any CFX tokens.",
+            "severity": "Critical",
+            "contract": "Exchangeroom",
+            "function": "handleCFXexchangeXCFX()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Gas Limit and Loops",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ]
+            },
+            "title": "Style Guide Violation",
+            "description": "The contract names and functions do not follow the official Solidity guidelines.",
+            "severity": "N/A",
+            "contract": "Multiple contracts (PoSPoolmini, storagesbridge, systemstorages, Exchangeroom, CoreExchange, CoreBridge_multipool)",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Requirements Compliance",
+            "description": "The code does not fully comply with the functional requirements provided in the whitepaper.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Environment Consistency",
+            "description": "The project uses floating pragma ^0.8.0",
+            "severity": "N/A",
+            "contract": "Multiple contracts (see paths)",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Secure Oracles Usage",
+            "description": "The code should have the ability to pause specific data feeds that it relies on. This should be done to protect a contract from compromised oracles.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Tests Coverage",
+            "description": "Test coverage of the project is 78.86%. Unit tests are provided, but several contracts are not covered at all.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

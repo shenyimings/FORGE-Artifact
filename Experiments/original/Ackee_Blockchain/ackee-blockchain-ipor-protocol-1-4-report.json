@@ -1,1 +1,321 @@
-{"path": "./Audit_Reports_2024/Ackee_Blockchain/ackee-blockchain-ipor-protocol-1-4-report.pdf", "project_info": {"url": "https://github.com/Ackee-Blockchain/woke", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "C1: Profit & loss accounted twice when unwinding", "description": "A buyer can always close his swap. Swaps closed before maturity or when 100% profit or loss is not reached are subject to swap unwinding. Unwinding is when a swap in the opposite direction is closed and accounted into the final profit & loss.", "severity": "Critical", "contract": "IporSwapLogic", "function": "calculateSwapUnwindValue", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "H1: Unwinding formula", "description": "The difference between interest from the virtual swap and the swap being closed is computed for the remaining time period (until the swap maturity is reached). The difference is then added to the final profit & loss value. In the difference formula, the pay fixed swap interest should always come with the minus sign, while the receive fixed interest should always be with the plus sign.", "severity": "High", "contract": "IporSwapLogic", "function": "calculateSwapUnwindValue", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-691"], "2": ["CWE-1265"]}, "title": "H2: Broken reentrancy lock", "description": "The contract IporProtocolRouter has a logic error where the `_nonReentrantBefore` function is called without brackets, resulting in no reentrancy protection and potential denial of service.", "severity": "High", "contract": "IporProtocolRouter", "function": "getRouterImplementation", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"], "2": ["CWE-191"]}, "title": "M1: INTEREST_FROM_STRATEGY_BELOW_ZERO reverts", "description": "The functions `updateStorageWhenWithdrawFromAssetManagement` and `updateStorageWhenDepositToAssetManagement` in the `AmmStorage` contract have a check that the interest earned since the last update is non-negative, which can cause a denial of service if the interest is below zero.", "severity": "Medium", "contract": "AmmStorage", "function": "updateStorageWhenWithdrawFromAssetManagement, updateStorageWhenDepositToAssetManagement", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "M2: Inaccurate hypothetical interest formula", "description": "In SoapIndicatorRebalanceLogic, an inaccurate hypothetical interest formula leads to a medium severity issue causing underflow transaction reverts when closing swaps.", "severity": "Medium", "contract": "SoapIndicatorRebalanceLogic", "function": "rebalanceWhenCloseSwap", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-664"], "2": ["CWE-404"], "3": ["CWE-772"], "4": ["CWE-775"]}, "title": "M3: Pool contribution is not updated when liquidity is redeemed", "description": "When providing liquidity in AmmPoolService by calling the function provideLiquidityDai (Dai/Usdt/Usdc), the function addLiquidityInternal is called to update amm storage, but the mapping is not updated when liquidity is withdrawn by calling the redeem functions.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "M4: Incorrect event data", "description": "The event ProvideLiquidity is emitted with incorrect data, where the address beneficiary is not the address that provides liquidity but receives ipToken, and the liquidity is provided from msg.sender.", "severity": "Medium", "contract": "AmmPoolService", "function": "_provideLiquidity", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-682"], "2": ["CWE-1339"]}, "title": "L1: Value in incorrect decimals", "description": "The variable `wadAmmTreasuryErc20BalanceBeforeRedeem` is acquired using `IERC20.balanceOf`, resulting in asset-specific decimals, but its name implies wads. This mismatch causes issues when used as an argument of the `calculateRebalanceAmountBeforeWithdraw` function.", "severity": "Low", "contract": "AmmCloseSwapService", "function": "_transferDerivativeAmount", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-682"]}, "title": "L2: Liquidation deposit accounted twice in rebalancing logic", "description": "The liquidation deposit is added to the final transfer value when the swap buyer closes the swap, but it's also passed as an argument to calculateRebalanceAmountBeforeWithdraw function, resulting in accounting for it twice.", "severity": "Low", "contract": "AmmCloseSwapService", "function": "_transferDerivativeAmount and calculateRebalanceAmountBeforeWithdraw", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-682"]}, "title": "L3: Aave incorrect APY formula", "description": "The `StrategyAave` contract does not take into account interest compounding when computing the estimated APY, making it incomparable with the APY computed by `StrategyCompound`. This can cause assets to be deposited into Compound instead of Aave, even if Aave has a higher APY.", "severity": "Low", "contract": "StrategyAave", "function": "getApr()", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-664"], "2": ["CWE-410"]}, "title": "M5: Close swap and redeem transaction reverts", "description": "Multiple edge case scenarios can cause a close swap or liquidity redeem transactions to revert due to insufficient liquidity in the AMM treasury and a rebalance must be performed.", "severity": "Medium", "contract": "AmmCloseSwapService, AmmPoolsService, AssetManagement", "function": "_transferDerivativeAmount", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "W1: Usage of solc optimizer", "description": "The project uses `solc` optimizer which may lead to unexpected bugs and vulnerabilities.", "severity": "Warning", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-682"], "2": ["CWE-191"]}, "title": "W2: SoapIndicatorRebalanceLogic underflow", "description": "The `SoapIndicatorRebalanceLogic` re-calculates the average interest rate when opening and closing a swap, which may lead to an underflow if there were previously opened swaps with zero interest rates.", "severity": "Warning", "contract": "SoapIndicatorRebalanceLogic", "function": "calculateAverageInterestRateWhenOpenSwap", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-233"]}, "title": "W3: Insufficient data validation in the constructor", "description": "The constructor of the contract AmmPoolService lacks data validation for parameters such as decimals, redeemFeeRate, and redeemLpMaxCollateralRatio.", "severity": "Warning", "contract": "AmmPoolService", "function": "constructor", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "W4: Missing array length check in the initialize function", "description": "The `initialize` function is not checking if `assets` and `updatedTimestamp` arrays have equal lengths.", "severity": "Warning", "contract": "IporOracle", "function": "initialize()", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-682"], "2": ["CWE-191"]}, "title": "W5: _calculateRedeemedCollateralRatio underflow", "description": "The `_calculateRedeemedCollateralRatio` function is vulnerable to underflow due to incorrect computation of the denominator value, leading to potential errors in calculating the ratio of total collateral balance and total liquidity balance after a liquidity redemption.", "severity": "Warning", "contract": "AmmPoolsService", "function": "_calculateRedeemedCollateralRatio()", "lineNumber": "N/A"}, {"id": 16, "category": {"1": ["CWE-682"]}, "title": "W6: Constant block production relied on", "description": "The `StrategyCompound` contract uses the `getApr` function to estimate the current APY (annual percentage yield) of the Compound protocol, but it computes the APY using the number of days with a configurable parameter defining the number of blocks mined per day.", "severity": "Warning", "contract": "StrategyCompound", "function": "getApr()", "lineNumber": "N/A"}, {"id": 17, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "W7: Github secrets leak", "description": "Private keys were found in the repository using `gitleaks -v detect`, which is a security risk as sensitive data should not be stored in the repository.", "severity": "Warning", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 18, "category": {"1": ["CWE-284"]}, "title": "W8: Infinite approval", "description": "In the `initialize` function, unlimited approval is performed to the `lendingPoolAddress`. This approach saves some gas and has better UX, but for the cost of the security.", "severity": "Warning", "contract": "StrategyAave, StrategyCompound", "function": "initialize()", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Ackee_Blockchain/ackee-blockchain-ipor-protocol-1-4-report.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "C1: Profit & loss accounted twice when unwinding",
+            "description": "A buyer can always close his swap. Swaps closed before maturity or when 100% profit or loss is not reached are subject to swap unwinding. Unwinding is when a swap in the opposite direction is closed and accounted into the final profit & loss.",
+            "severity": "Critical",
+            "contract": "IporSwapLogic",
+            "function": "calculateSwapUnwindValue",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "H1: Unwinding formula",
+            "description": "The difference between interest from the virtual swap and the swap being closed is computed for the remaining time period (until the swap maturity is reached). The difference is then added to the final profit & loss value. In the difference formula, the pay fixed swap interest should always come with the minus sign, while the receive fixed interest should always be with the plus sign.",
+            "severity": "High",
+            "contract": "IporSwapLogic",
+            "function": "calculateSwapUnwindValue",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "H2: Broken reentrancy lock",
+            "description": "The contract IporProtocolRouter has a logic error where the `_nonReentrantBefore` function is called without brackets, resulting in no reentrancy protection and potential denial of service.",
+            "severity": "High",
+            "contract": "IporProtocolRouter",
+            "function": "getRouterImplementation",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-191"
+                ]
+            },
+            "title": "M1: INTEREST_FROM_STRATEGY_BELOW_ZERO reverts",
+            "description": "The functions `updateStorageWhenWithdrawFromAssetManagement` and `updateStorageWhenDepositToAssetManagement` in the `AmmStorage` contract have a check that the interest earned since the last update is non-negative, which can cause a denial of service if the interest is below zero.",
+            "severity": "Medium",
+            "contract": "AmmStorage",
+            "function": "updateStorageWhenWithdrawFromAssetManagement, updateStorageWhenDepositToAssetManagement",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "M2: Inaccurate hypothetical interest formula",
+            "description": "In SoapIndicatorRebalanceLogic, an inaccurate hypothetical interest formula leads to a medium severity issue causing underflow transaction reverts when closing swaps.",
+            "severity": "Medium",
+            "contract": "SoapIndicatorRebalanceLogic",
+            "function": "rebalanceWhenCloseSwap",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-775"
+                ]
+            },
+            "title": "M3: Pool contribution is not updated when liquidity is redeemed",
+            "description": "When providing liquidity in AmmPoolService by calling the function provideLiquidityDai (Dai/Usdt/Usdc), the function addLiquidityInternal is called to update amm storage, but the mapping is not updated when liquidity is withdrawn by calling the redeem functions.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "M4: Incorrect event data",
+            "description": "The event ProvideLiquidity is emitted with incorrect data, where the address beneficiary is not the address that provides liquidity but receives ipToken, and the liquidity is provided from msg.sender.",
+            "severity": "Medium",
+            "contract": "AmmPoolService",
+            "function": "_provideLiquidity",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "L1: Value in incorrect decimals",
+            "description": "The variable `wadAmmTreasuryErc20BalanceBeforeRedeem` is acquired using `IERC20.balanceOf`, resulting in asset-specific decimals, but its name implies wads. This mismatch causes issues when used as an argument of the `calculateRebalanceAmountBeforeWithdraw` function.",
+            "severity": "Low",
+            "contract": "AmmCloseSwapService",
+            "function": "_transferDerivativeAmount",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "L2: Liquidation deposit accounted twice in rebalancing logic",
+            "description": "The liquidation deposit is added to the final transfer value when the swap buyer closes the swap, but it's also passed as an argument to calculateRebalanceAmountBeforeWithdraw function, resulting in accounting for it twice.",
+            "severity": "Low",
+            "contract": "AmmCloseSwapService",
+            "function": "_transferDerivativeAmount and calculateRebalanceAmountBeforeWithdraw",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "L3: Aave incorrect APY formula",
+            "description": "The `StrategyAave` contract does not take into account interest compounding when computing the estimated APY, making it incomparable with the APY computed by `StrategyCompound`. This can cause assets to be deposited into Compound instead of Aave, even if Aave has a higher APY.",
+            "severity": "Low",
+            "contract": "StrategyAave",
+            "function": "getApr()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-410"
+                ]
+            },
+            "title": "M5: Close swap and redeem transaction reverts",
+            "description": "Multiple edge case scenarios can cause a close swap or liquidity redeem transactions to revert due to insufficient liquidity in the AMM treasury and a rebalance must be performed.",
+            "severity": "Medium",
+            "contract": "AmmCloseSwapService, AmmPoolsService, AssetManagement",
+            "function": "_transferDerivativeAmount",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "W1: Usage of solc optimizer",
+            "description": "The project uses `solc` optimizer which may lead to unexpected bugs and vulnerabilities.",
+            "severity": "Warning",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-191"
+                ]
+            },
+            "title": "W2: SoapIndicatorRebalanceLogic underflow",
+            "description": "The `SoapIndicatorRebalanceLogic` re-calculates the average interest rate when opening and closing a swap, which may lead to an underflow if there were previously opened swaps with zero interest rates.",
+            "severity": "Warning",
+            "contract": "SoapIndicatorRebalanceLogic",
+            "function": "calculateAverageInterestRateWhenOpenSwap",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-233"
+                ]
+            },
+            "title": "W3: Insufficient data validation in the constructor",
+            "description": "The constructor of the contract AmmPoolService lacks data validation for parameters such as decimals, redeemFeeRate, and redeemLpMaxCollateralRatio.",
+            "severity": "Warning",
+            "contract": "AmmPoolService",
+            "function": "constructor",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "W4: Missing array length check in the initialize function",
+            "description": "The `initialize` function is not checking if `assets` and `updatedTimestamp` arrays have equal lengths.",
+            "severity": "Warning",
+            "contract": "IporOracle",
+            "function": "initialize()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-191"
+                ]
+            },
+            "title": "W5: _calculateRedeemedCollateralRatio underflow",
+            "description": "The `_calculateRedeemedCollateralRatio` function is vulnerable to underflow due to incorrect computation of the denominator value, leading to potential errors in calculating the ratio of total collateral balance and total liquidity balance after a liquidity redemption.",
+            "severity": "Warning",
+            "contract": "AmmPoolsService",
+            "function": "_calculateRedeemedCollateralRatio()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "W6: Constant block production relied on",
+            "description": "The `StrategyCompound` contract uses the `getApr` function to estimate the current APY (annual percentage yield) of the Compound protocol, but it computes the APY using the number of days with a configurable parameter defining the number of blocks mined per day.",
+            "severity": "Warning",
+            "contract": "StrategyCompound",
+            "function": "getApr()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "W7: Github secrets leak",
+            "description": "Private keys were found in the repository using `gitleaks -v detect`, which is a security risk as sensitive data should not be stored in the repository.",
+            "severity": "Warning",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "W8: Infinite approval",
+            "description": "In the `initialize` function, unlimited approval is performed to the `lendingPoolAddress`. This approach saves some gas and has better UX, but for the cost of the security.",
+            "severity": "Warning",
+            "contract": "StrategyAave, StrategyCompound",
+            "function": "initialize()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

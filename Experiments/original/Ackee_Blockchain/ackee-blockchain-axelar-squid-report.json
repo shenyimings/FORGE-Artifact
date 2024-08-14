@@ -1,1 +1,261 @@
-{"path": "./Audit_Reports_2024/Ackee_Blockchain/ackee-blockchain-axelar-squid-report.pdf", "project_info": {"url": "https://github.com/ackee-blockchain", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1286"], "4": ["CWE-112"]}, "title": "W1: Missing validation of the `0x` prefix in string addresses", "description": "It is not checked whether the string passed to the `toAddress` function starts with the `0x` prefix.", "severity": "Warning", "contract": "Axelar Utils/contracts/StringAddressUtils.sol", "function": "StringToAddress.toAddress()", "lineNumber": "L6-L11"}, {"id": 1, "category": {"1": ["CWE-691"], "2": ["CWE-841"]}, "title": "H1: fundAndRunMulticall is not pausable", "description": "The function fundAndRunMulticall is not pausable which can lead to a serious vulnerability where anyone can call this function before it's fixed.", "severity": "High", "contract": "SquidRouter", "function": "fundAndRunMulticall()", "lineNumber": "L100-L104"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "M1: Missing Call.callType validation", "description": "The run function does not handle the case where call.callType is not one of the expected values.", "severity": "Medium", "contract": "SquidMulticall", "function": "run()", "lineNumber": "21-31"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "M2: Missing `isContract` check in `SquidMulticall`", "description": "Missing `isContract` check in `SquidMulticall` contract can lead to potential issues.", "severity": "Medium", "contract": "SquidMulticall", "function": "run()", "lineNumber": "33-34"}, {"id": 4, "category": {"1": ["CWE-707"], "2": ["CWE-170"]}, "title": "M3: Memory address overflow in _setCallDataParameter", "description": "The `_setCallDataParameter` function allows overwriting the `callData` variable at a given position with a 256-bit value without checking if the given position is within the bounds of the `callData` variable, leading to a memory address overflow and overwrite arbitrary memory locations.", "severity": "Medium", "contract": "SquidMulticall", "function": "_setCallDataParameter", "lineNumber": "56-65"}, {"id": 5, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "M4: Multicall implementation being too generic", "description": "Multicall implementation is too generic which can cause data validation issues.", "severity": "Medium", "contract": "SquidMulticall", "function": "run()", "lineNumber": "12-42"}, {"id": 6, "category": {"1": ["CWE-664"], "2": ["CWE-662"], "3": ["CWE-663"]}, "title": "M5: Re-entrancy in SquidRouter", "description": "Re-entrancy in the SquidRouter contract opens up the possibility to extract Ether (or the native currency) that would be otherwise used as an Axelar gateway fee.", "severity": "Medium", "contract": "SquidRouter", "function": ["callBridgeCall", "bridgeCall", "fundAndRunMulticall"], "lineNumber": ["L72-L82", "L41-L51", "L100-L114"]}, {"id": 7, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-229"], "4": ["CWE-230"]}, "title": "M6: Missing refundRecipient validation", "description": "Functions bridgeCall and callBridgeCall accept refundRecipient as a parameter but do not validate its value, which may lead to loss of funds if set to the zero address.", "severity": "Medium", "contract": "/packages/squidswap-contracts/contracts/SquidRouter.sol", "function": "bridgeCall and callBridgeCall", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-354"]}, "title": "M7: Missing destinationChain validation", "description": "Missing validation of destinationChain", "severity": "Medium", "contract": "/packages/squidswap-contracts/contracts/SquidRouter.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "W2: Use of solc optimizer", "description": "Warning related to the use of solc optimizer", "severity": "Warning", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "W5: Integrator specific fee validation", "description": "Specific fee of an integrator being set in the constructor and `setSpecificFee` function is not validated, but it certainly cannot be higher than 10 000 (100%).", "severity": "Warning", "contract": "SquidFeeCollector", "function": ["constructor", "setSpecificFee"], "lineNumber": "L18-L23, L57-L62"}, {"id": 11, "category": {"1": ["CWE-682"], "2": ["CWE-369"]}, "title": "W6: Integrator specific fee cannot be zero", "description": "An integrator specific fee cannot be set to zero as it is used as an indicator for default fee usage.", "severity": "Warning", "contract": "SquidFeeCollector", "function": "collectFee", "lineNumber": "L27-L36"}, {"id": 12, "category": {"1": ["CWE-682"]}, "title": "W7: Maximum integrator fee check can be bypassed", "description": "Logic error in SquidFeeCollector contract allowing maximum integrator fee check to be bypassed", "severity": "Warning", "contract": "SquidFeeCollector", "function": "collectFee", "lineNumber": "L27-L38"}]}
+{
+    "path": "./Audit_Reports_2024/Ackee_Blockchain/ackee-blockchain-axelar-squid-report.pdf",
+    "project_info": {
+        "url": "https://github.com/axelarnetwork/axelar-utils-solidity/tree/726020fd893059f9a469ca049f3cf5dd4b3d11c6",
+        "commit_hash": "726020fd893059f9a469ca049f3cf5dd4b3d11c6",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1286"
+                ],
+                "4": [
+                    "CWE-112"
+                ]
+            },
+            "title": "W1: Missing validation of the `0x` prefix in string addresses",
+            "description": "It is not checked whether the string passed to the `toAddress` function starts with the `0x` prefix.",
+            "severity": "Warning",
+            "contract": "Axelar Utils/contracts/StringAddressUtils.sol",
+            "function": "StringToAddress.toAddress()",
+            "lineNumber": "L6-L11"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "H1: fundAndRunMulticall is not pausable",
+            "description": "The function fundAndRunMulticall is not pausable which can lead to a serious vulnerability where anyone can call this function before it's fixed.",
+            "severity": "High",
+            "contract": "SquidRouter",
+            "function": "fundAndRunMulticall()",
+            "lineNumber": "L100-L104"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "M1: Missing Call.callType validation",
+            "description": "The run function does not handle the case where call.callType is not one of the expected values.",
+            "severity": "Medium",
+            "contract": "SquidMulticall",
+            "function": "run()",
+            "lineNumber": "21-31"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "M2: Missing `isContract` check in `SquidMulticall`",
+            "description": "Missing `isContract` check in `SquidMulticall` contract can lead to potential issues.",
+            "severity": "Medium",
+            "contract": "SquidMulticall",
+            "function": "run()",
+            "lineNumber": "33-34"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-170"
+                ]
+            },
+            "title": "M3: Memory address overflow in _setCallDataParameter",
+            "description": "The `_setCallDataParameter` function allows overwriting the `callData` variable at a given position with a 256-bit value without checking if the given position is within the bounds of the `callData` variable, leading to a memory address overflow and overwrite arbitrary memory locations.",
+            "severity": "Medium",
+            "contract": "SquidMulticall",
+            "function": "_setCallDataParameter",
+            "lineNumber": "56-65"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "M4: Multicall implementation being too generic",
+            "description": "Multicall implementation is too generic which can cause data validation issues.",
+            "severity": "Medium",
+            "contract": "SquidMulticall",
+            "function": "run()",
+            "lineNumber": "12-42"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-662"
+                ],
+                "3": [
+                    "CWE-663"
+                ]
+            },
+            "title": "M5: Re-entrancy in SquidRouter",
+            "description": "Re-entrancy in the SquidRouter contract opens up the possibility to extract Ether (or the native currency) that would be otherwise used as an Axelar gateway fee.",
+            "severity": "Medium",
+            "contract": "SquidRouter",
+            "function": [
+                "callBridgeCall",
+                "bridgeCall",
+                "fundAndRunMulticall"
+            ],
+            "lineNumber": [
+                "L72-L82",
+                "L41-L51",
+                "L100-L114"
+            ]
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ],
+                "4": [
+                    "CWE-230"
+                ]
+            },
+            "title": "M6: Missing refundRecipient validation",
+            "description": "Functions bridgeCall and callBridgeCall accept refundRecipient as a parameter but do not validate its value, which may lead to loss of funds if set to the zero address.",
+            "severity": "Medium",
+            "contract": "/packages/squidswap-contracts/contracts/SquidRouter.sol",
+            "function": "bridgeCall and callBridgeCall",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-354"
+                ]
+            },
+            "title": "M7: Missing destinationChain validation",
+            "description": "Missing validation of destinationChain",
+            "severity": "Medium",
+            "contract": "/packages/squidswap-contracts/contracts/SquidRouter.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "W2: Use of solc optimizer",
+            "description": "Warning related to the use of solc optimizer",
+            "severity": "Warning",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "W5: Integrator specific fee validation",
+            "description": "Specific fee of an integrator being set in the constructor and `setSpecificFee` function is not validated, but it certainly cannot be higher than 10 000 (100%).",
+            "severity": "Warning",
+            "contract": "SquidFeeCollector",
+            "function": [
+                "constructor",
+                "setSpecificFee"
+            ],
+            "lineNumber": "L18-L23, L57-L62"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-369"
+                ]
+            },
+            "title": "W6: Integrator specific fee cannot be zero",
+            "description": "An integrator specific fee cannot be set to zero as it is used as an indicator for default fee usage.",
+            "severity": "Warning",
+            "contract": "SquidFeeCollector",
+            "function": "collectFee",
+            "lineNumber": "L27-L36"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "W7: Maximum integrator fee check can be bypassed",
+            "description": "Logic error in SquidFeeCollector contract allowing maximum integrator fee check to be bypassed",
+            "severity": "Warning",
+            "contract": "SquidFeeCollector",
+            "function": "collectFee",
+            "lineNumber": "L27-L38"
+        }
+    ]
+}

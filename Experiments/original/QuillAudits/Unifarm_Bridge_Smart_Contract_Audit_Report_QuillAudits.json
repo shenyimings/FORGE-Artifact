@@ -1,1 +1,283 @@
-{"path": "./Audit_Reports_2024/QuillAudits/Unifarm_Bridge_Smart_Contract_Audit_Report_QuillAudits.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Centralization of burnTokens() allows burning tokens from any account", "description": "The burnTokens() function can be called by the owner to burn tokens from any account, even from accounts that it currently does not own. This can be exploited by a malicious admin if they call renounceOwnership() and transfer ownership of the contract to themselves.", "severity": "Medium", "contract": "TokenUpgradeable", "function": "burnTokens()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "A.2 Missing usage of pausable modifier", "description": "Missing usage of pausable modifier from the inherited PausableUpgradeable contract where necessary.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "B.4 ChildToken cannot be upgraded by owner", "description": "Although the childToken is an upgradeableToken, it can never be upgraded by the owner of the Registry Contract. It can only be upgraded by the proxyAdmin.", "severity": "High", "contract": "Registry Contract", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-691"], "2": ["CWE-841"]}, "title": "B.5 Possibility of revert after _deploySetuToken()", "description": "If _deploySetuToken is called externally without adding any bridge via addBridge(), the function disableBridge() will revert always for the setuToken's primary token.", "severity": "High", "contract": "N/A", "function": "_deploySetuToken()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "B.6 Missing zero address check", "description": "The contract does not validate against zero addresses, which can lead to unexpected behavior or security vulnerabilities.", "severity": "Low", "contract": "TokenUpgradeable", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Missing require check for feeType", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-703"]}, "title": "Possibility of Out of Gas errors", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "B.9 Possibility of User paying more fees", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "B.10 Missing events for critical functions", "description": "Missing events for critical functions like addTokenMetadata(), _deploySetuToken(), updateFeeConfig(), updateEpochLength(), disableBridgeToken(), enableBridgeToken() and updateNoOfDepositors(). This would be a best practice for offchain monitoring.", "severity": "Informational", "contract": "N/A", "function": ["addTokenMetadata()", "_deploySetuToken()", "updateFeeConfig()", "updateEpochLength()", "disableBridgeToken()", "enableBridgeToken()", "updateNoOfDepositors()"], "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-691"], "2": ["CWE-1265"]}, "title": "C.7 Reentrancy in transferOut()", "description": "The function transferOut() is vulnerable to reentrancy attacks due to shared variables which cannot be mitigated by using non-Reentrant modifier from Openzeppelin.", "severity": "High", "contract": "N/A", "function": "transferOut()", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1287"]}, "title": "C.8 Possibility of mismatch of contract addresses", "description": "In the BridgeUtilsUpgradeable contract, there is a possibility of mismatch between the feePoolUpgradeable and the most current FeePoolUpgradeable contract in usage as well as bridgeUpgradeable and the most current BridgeUpgradeable in usage.", "severity": "High", "contract": "BridgeUtilsUpgradeable", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "C.9 Redundant code", "description": "N/A", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-682"]}, "title": "D.2 getUserConfirmedRewards() shows incorrect rewards", "description": "getUserConfirmedRewards() shows zero rewards even when there are non-zero rewards claimable by liquidity providers because the fee calculation and distribution depends on addPassedEpochs() that gets updated only when claimFeeShare, addLiquidity, etc. is called.", "severity": "Low", "contract": "N/A", "function": "getUserConfirmedRewards()", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-710"], "2": ["CWE-1164"], "3": ["CWE-561"]}, "title": "D.3 Unused internal function", "description": "Unused internal function found in the contract.", "severity": "Low", "contract": "FeePoolUpgradeable", "function": "N/A", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "E.1 Insufficient test coverage", "description": "Insufficient test coverage was found in the contract.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/QuillAudits/Unifarm_Bridge_Smart_Contract_Audit_Report_QuillAudits.pdf",
+    "project_info": {
+        "url": "https://github.com/myunifarm/unifarm-bridge/tree/dev-2",
+        "commit_hash": "dev-2",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Centralization of burnTokens() allows burning tokens from any account",
+            "description": "The burnTokens() function can be called by the owner to burn tokens from any account, even from accounts that it currently does not own. This can be exploited by a malicious admin if they call renounceOwnership() and transfer ownership of the contract to themselves.",
+            "severity": "Medium",
+            "contract": "TokenUpgradeable",
+            "function": "burnTokens()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "A.2 Missing usage of pausable modifier",
+            "description": "Missing usage of pausable modifier from the inherited PausableUpgradeable contract where necessary.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "B.4 ChildToken cannot be upgraded by owner",
+            "description": "Although the childToken is an upgradeableToken, it can never be upgraded by the owner of the Registry Contract. It can only be upgraded by the proxyAdmin.",
+            "severity": "High",
+            "contract": "Registry Contract",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "B.5 Possibility of revert after _deploySetuToken()",
+            "description": "If _deploySetuToken is called externally without adding any bridge via addBridge(), the function disableBridge() will revert always for the setuToken's primary token.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "_deploySetuToken()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "B.6 Missing zero address check",
+            "description": "The contract does not validate against zero addresses, which can lead to unexpected behavior or security vulnerabilities.",
+            "severity": "Low",
+            "contract": "TokenUpgradeable",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Missing require check for feeType",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Possibility of Out of Gas errors",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "B.9 Possibility of User paying more fees",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "B.10 Missing events for critical functions",
+            "description": "Missing events for critical functions like addTokenMetadata(), _deploySetuToken(), updateFeeConfig(), updateEpochLength(), disableBridgeToken(), enableBridgeToken() and updateNoOfDepositors(). This would be a best practice for offchain monitoring.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": [
+                "addTokenMetadata()",
+                "_deploySetuToken()",
+                "updateFeeConfig()",
+                "updateEpochLength()",
+                "disableBridgeToken()",
+                "enableBridgeToken()",
+                "updateNoOfDepositors()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "C.7 Reentrancy in transferOut()",
+            "description": "The function transferOut() is vulnerable to reentrancy attacks due to shared variables which cannot be mitigated by using non-Reentrant modifier from Openzeppelin.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "transferOut()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1287"
+                ]
+            },
+            "title": "C.8 Possibility of mismatch of contract addresses",
+            "description": "In the BridgeUtilsUpgradeable contract, there is a possibility of mismatch between the feePoolUpgradeable and the most current FeePoolUpgradeable contract in usage as well as bridgeUpgradeable and the most current BridgeUpgradeable in usage.",
+            "severity": "High",
+            "contract": "BridgeUtilsUpgradeable",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "C.9 Redundant code",
+            "description": "N/A",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "D.2 getUserConfirmedRewards() shows incorrect rewards",
+            "description": "getUserConfirmedRewards() shows zero rewards even when there are non-zero rewards claimable by liquidity providers because the fee calculation and distribution depends on addPassedEpochs() that gets updated only when claimFeeShare, addLiquidity, etc. is called.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "getUserConfirmedRewards()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ],
+                "3": [
+                    "CWE-561"
+                ]
+            },
+            "title": "D.3 Unused internal function",
+            "description": "Unused internal function found in the contract.",
+            "severity": "Low",
+            "contract": "FeePoolUpgradeable",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "E.1 Insufficient test coverage",
+            "description": "Insufficient test coverage was found in the contract.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

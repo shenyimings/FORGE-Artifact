@@ -1,1 +1,175 @@
-{"path": "./Audit_Reports_2024/Verichains_Lab/Verichains Public Audit Report - HoldStation Defutures - v1.3.pdf", "project_info": {"url": "https://gitlab.com/hspublic/contract-holdstation-dex", "commit_hash": "6fb1151dd05395a94a00bd73fb8c6095d5cd055d", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "Centralized risk with upgradable contracts", "description": "Many contracts in Holdstation Defutures are upgradable, but there is no mechanism to protect upgrading (such as Multi-sig or DAO). The contract deployer has permission to upgrade the contract to modify any logic code, so there is a risk that the contract deployer's wallet could be compromised and the current contracts could be upgraded to withdraw users' money from the vault or other contracts.", "severity": "HIGH", "contract": "Holdstation Defutures", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Not enough USDC to pay NFT reward fee", "description": "In `unregisterTrade` function, if `usdcSentToTrader` <= `usdcLeftInStorage` and `usdcLeftInStorage` < `usdcSentToTrader + usdcKeepInStorage`, contract will send `usdcLeftInStorage - usdcSentToTrader` to vault and send `usdcSentToTrader` to trader, which may result in not enough `usdcKeepInStorage` to pay for NFT bots.", "severity": "HIGH", "contract": "HSTradingCallbacks", "function": "unregisterTrade()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "`gov` address can withdraw USDC from storage", "description": "The `gov` address can set any addresses to be the `tradingContract` and update the `token` to any contract, allowing them to use `transferUsdc` to withdraw `USDC` from storage, leaving a centralized risk that the owner of the project can withdraw users' money.", "severity": "HIGH", "contract": "HSTradingStorage", "function": "initialize()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-697"], "2": ["CWE-1024"]}, "title": "Incompatible function parameter HIGH", "description": "There is an incompatible struct 'OpenLimitOrder' between 'HSTrading' and 'HSTradingStorage'. In 'openTrade' function in 'HSTrading', it calls 'storeOpenLimitOrder' function in 'HSTradingStorage' contract but the passed in parameter 'OpenLimitOrder' (from 'StorageInterfaceV5') is incompatible with 'OpenLimitOrder' in 'HSTradingStorage' so this function call will be reverted.", "severity": "HIGH", "contract": "HSTrading", "function": "openTrade()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Test functions must be removed", "description": "There are many places that are using `aggregator.emptyNodeFulFill` to test without oracle nodes in testnet. This test function must be removed before deploying in mainnet or `gov` can control `fakeFeedPrice` to manipulate users' positions through fake price.", "severity": "HIGH", "contract": "HSTrading, HSPriceAggregatorV1", "function": "openTrade, N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Wrong USDC decimal on Ethereum chain", "description": "The functions `getReferrerFeeP` and `getPercentOfOpenFeeP_calc` in the `HSReferrals` contract calculate fees based on the volume of `USDC` tokens, but they assume 18 decimal places whereas `USDC` tokens on Ethereum blockchain use 6 decimal places.", "severity": "HIGH", "contract": "HSReferrals", "function": "getReferrerFeeP and getPercentOfOpenFeeP_calc", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"], "2": ["CWE-369"]}, "title": "Zero reward HIGH", "description": "In `_distributeReward` function, `currentRewardValue` will be added by an amount of `delta time` `PRECISION` / `totalStake`. If `totalStake` (with decimals) is higher than `delta time` `PRECISION`, the next added rewards will be rounded down to zero.", "severity": "HIGH", "contract": "HSTokenCredit", "function": "_distributeReward()", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "High gas cost with larger number of pending orders", "description": "The contract is using an array to store pending orders and the pending order array is looped to remove pending order while using `currentPendingOrderIds.indexOf(_id)`. The more the number of pending orders are, the more gas will cost for running this function.", "severity": "MEDIUM", "contract": "HSTokenCredit", "function": "unregisterPendingMarketOrder", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-682"]}, "title": "High gas cost with larger number of pending orders", "description": "The contract uses an array to store pending orders and loops through it to remove pending orders, which can lead to high gas costs as the number of pending orders increases.", "severity": "MEDIUM", "contract": "HSTokenCredit", "function": "unregisterPendingMarketOrder", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "`checkIndex` logic was not implemented", "description": "Modifier `checks` receiver `checkIndex` parameter but does not implement any logic with it.", "severity": "MEDIUM", "contract": "HSTradingVault", "function": "checks", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Verichains_Lab/Verichains Public Audit Report - HoldStation Defutures - v1.3.pdf",
+    "project_info": {
+        "url": "https://gitlab.com/hspublic/contract-holdstation-dex",
+        "commit_hash": "6fb1151dd05395a94a00bd73fb8c6095d5cd055d",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Centralized risk with upgradable contracts",
+            "description": "Many contracts in Holdstation Defutures are upgradable, but there is no mechanism to protect upgrading (such as Multi-sig or DAO). The contract deployer has permission to upgrade the contract to modify any logic code, so there is a risk that the contract deployer's wallet could be compromised and the current contracts could be upgraded to withdraw users' money from the vault or other contracts.",
+            "severity": "HIGH",
+            "contract": "Holdstation Defutures",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Not enough USDC to pay NFT reward fee",
+            "description": "In `unregisterTrade` function, if `usdcSentToTrader` <= `usdcLeftInStorage` and `usdcLeftInStorage` < `usdcSentToTrader + usdcKeepInStorage`, contract will send `usdcLeftInStorage - usdcSentToTrader` to vault and send `usdcSentToTrader` to trader, which may result in not enough `usdcKeepInStorage` to pay for NFT bots.",
+            "severity": "HIGH",
+            "contract": "HSTradingCallbacks",
+            "function": "unregisterTrade()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "`gov` address can withdraw USDC from storage",
+            "description": "The `gov` address can set any addresses to be the `tradingContract` and update the `token` to any contract, allowing them to use `transferUsdc` to withdraw `USDC` from storage, leaving a centralized risk that the owner of the project can withdraw users' money.",
+            "severity": "HIGH",
+            "contract": "HSTradingStorage",
+            "function": "initialize()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ],
+                "2": [
+                    "CWE-1024"
+                ]
+            },
+            "title": "Incompatible function parameter HIGH",
+            "description": "There is an incompatible struct 'OpenLimitOrder' between 'HSTrading' and 'HSTradingStorage'. In 'openTrade' function in 'HSTrading', it calls 'storeOpenLimitOrder' function in 'HSTradingStorage' contract but the passed in parameter 'OpenLimitOrder' (from 'StorageInterfaceV5') is incompatible with 'OpenLimitOrder' in 'HSTradingStorage' so this function call will be reverted.",
+            "severity": "HIGH",
+            "contract": "HSTrading",
+            "function": "openTrade()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Test functions must be removed",
+            "description": "There are many places that are using `aggregator.emptyNodeFulFill` to test without oracle nodes in testnet. This test function must be removed before deploying in mainnet or `gov` can control `fakeFeedPrice` to manipulate users' positions through fake price.",
+            "severity": "HIGH",
+            "contract": "HSTrading, HSPriceAggregatorV1",
+            "function": "openTrade, N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Wrong USDC decimal on Ethereum chain",
+            "description": "The functions `getReferrerFeeP` and `getPercentOfOpenFeeP_calc` in the `HSReferrals` contract calculate fees based on the volume of `USDC` tokens, but they assume 18 decimal places whereas `USDC` tokens on Ethereum blockchain use 6 decimal places.",
+            "severity": "HIGH",
+            "contract": "HSReferrals",
+            "function": "getReferrerFeeP and getPercentOfOpenFeeP_calc",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-369"
+                ]
+            },
+            "title": "Zero reward HIGH",
+            "description": "In `_distributeReward` function, `currentRewardValue` will be added by an amount of `delta time` `PRECISION` / `totalStake`. If `totalStake` (with decimals) is higher than `delta time` `PRECISION`, the next added rewards will be rounded down to zero.",
+            "severity": "HIGH",
+            "contract": "HSTokenCredit",
+            "function": "_distributeReward()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "High gas cost with larger number of pending orders",
+            "description": "The contract is using an array to store pending orders and the pending order array is looped to remove pending order while using `currentPendingOrderIds.indexOf(_id)`. The more the number of pending orders are, the more gas will cost for running this function.",
+            "severity": "MEDIUM",
+            "contract": "HSTokenCredit",
+            "function": "unregisterPendingMarketOrder",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "High gas cost with larger number of pending orders",
+            "description": "The contract uses an array to store pending orders and loops through it to remove pending orders, which can lead to high gas costs as the number of pending orders increases.",
+            "severity": "MEDIUM",
+            "contract": "HSTokenCredit",
+            "function": "unregisterPendingMarketOrder",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "`checkIndex` logic was not implemented",
+            "description": "Modifier `checks` receiver `checkIndex` parameter but does not implement any logic with it.",
+            "severity": "MEDIUM",
+            "contract": "HSTradingVault",
+            "function": "checks",
+            "lineNumber": "N/A"
+        }
+    ]
+}

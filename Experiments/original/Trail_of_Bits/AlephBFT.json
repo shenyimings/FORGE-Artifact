@@ -1,1 +1,145 @@
-{"path": "./Audit_Reports_2024/Trail_of_Bits/AlephBFT.pdf", "project_info": {"url": "https://github.com/Cardinal-Cryptography/AlephBFT", "commit_hash": "b73a6cafa29d9bef78857ec817f078fe677bd6d6", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-229"]}, "title": "TOB-ALEPH-001: Code documentation does not reference the paper", "description": "The AlephBFT Rust code implements the consensus protocol outlined in the Aleph Zero paper; however, it does not reference specific sections of the paper, which makes it more difficult to audit the code.", "severity": "Informational", "contract": "AlephBFT", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1287"]}, "title": "Use of different types to represent rounds", "description": "The code uses different types to represent rounds in the protocol. It primarily uses the `Round` type, which is defined as a `usize` type. However, parts of the protocol code do not use this type, which is non-ideal.", "severity": "Informational", "contract": "AlephBFT", "function": "N/A", "lineNumber": "76-77"}, {"id": 2, "category": {"1": ["CWE-691"], "2": ["CWE-670"], "3": ["CWE-483"]}, "title": "Use of incorrect loop break to handle add_to_store and handle_events failures", "description": "The Terminal code uses a break to stop the processing of events when an error occurs, but it stops the inner for loop instead of the outer loop, leading to undesirable node state.", "severity": "Informational", "contract": "AlephBFT Terminal", "function": "run()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "TOB-ALEPH-004: Incorrect state rollback upon removal of forker\u2019s units", "description": "In the `mark_forker` function, any of the forker\u2019s units with round numbers larger than that of the round in progress are removed from the store but the number of units in the `self.n_units_per_round` state is incremented as units are added, but it is not decremented by `mark_forker`.", "severity": "Informational", "contract": "AlephBFT Unit Store", "function": "mark_forker()", "lineNumber": "L115-119,L146-149"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "TOB-ALEPH-005: Lack of error handling in Terminal\u2019s post-insert hooks", "description": "The Terminal allows users to register post-insert hooks that will be executed when a unit is added to the DAG, but the handler type does not include a means of dealing with a failure, and the program will continue regardless of the outcome of running a handler.", "severity": "Informational", "contract": "AlephBFT", "function": "update_\u2019on_dag_add", "lineNumber": "233-255"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Different byte representations decode to the same data", "description": "Data structures in AlephBFT use Parity SCALE Codec for serialization. The BoolNodeMap structure has custom Encode and Decode trait implementations, allowing for different byte representations since the trait does not check whether the decoded capacity reflects the number of bytes.", "severity": "Informational", "contract": "AlephBFT", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Incorrect state rollback upon removal of forker\u2019s units", "description": "In the `mark_forker` function, removing a forker's units with round numbers larger than that of the round in progress does not revert the store's state correctly.", "severity": "Informational", "contract": "AlephBFT Unit Store", "function": "mark_forker", "lineNumber": "L115-L119,L146-L149"}]}
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/AlephBFT.pdf",
+    "project_info": {
+        "url": "https://github.com/Cardinal-Cryptography/AlephBFT",
+        "commit_hash": "b73a6cafa29d9bef78857ec817f078fe677bd6d6",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ]
+            },
+            "title": "TOB-ALEPH-001: Code documentation does not reference the paper",
+            "description": "The AlephBFT Rust code implements the consensus protocol outlined in the Aleph Zero paper; however, it does not reference specific sections of the paper, which makes it more difficult to audit the code.",
+            "severity": "Informational",
+            "contract": "AlephBFT",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1287"
+                ]
+            },
+            "title": "Use of different types to represent rounds",
+            "description": "The code uses different types to represent rounds in the protocol. It primarily uses the `Round` type, which is defined as a `usize` type. However, parts of the protocol code do not use this type, which is non-ideal.",
+            "severity": "Informational",
+            "contract": "AlephBFT",
+            "function": "N/A",
+            "lineNumber": "76-77"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-670"
+                ],
+                "3": [
+                    "CWE-483"
+                ]
+            },
+            "title": "Use of incorrect loop break to handle add_to_store and handle_events failures",
+            "description": "The Terminal code uses a break to stop the processing of events when an error occurs, but it stops the inner for loop instead of the outer loop, leading to undesirable node state.",
+            "severity": "Informational",
+            "contract": "AlephBFT Terminal",
+            "function": "run()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "TOB-ALEPH-004: Incorrect state rollback upon removal of forker\u2019s units",
+            "description": "In the `mark_forker` function, any of the forker\u2019s units with round numbers larger than that of the round in progress are removed from the store but the number of units in the `self.n_units_per_round` state is incremented as units are added, but it is not decremented by `mark_forker`.",
+            "severity": "Informational",
+            "contract": "AlephBFT Unit Store",
+            "function": "mark_forker()",
+            "lineNumber": "L115-119,L146-149"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "TOB-ALEPH-005: Lack of error handling in Terminal\u2019s post-insert hooks",
+            "description": "The Terminal allows users to register post-insert hooks that will be executed when a unit is added to the DAG, but the handler type does not include a means of dealing with a failure, and the program will continue regardless of the outcome of running a handler.",
+            "severity": "Informational",
+            "contract": "AlephBFT",
+            "function": "update_\u2019on_dag_add",
+            "lineNumber": "233-255"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Different byte representations decode to the same data",
+            "description": "Data structures in AlephBFT use Parity SCALE Codec for serialization. The BoolNodeMap structure has custom Encode and Decode trait implementations, allowing for different byte representations since the trait does not check whether the decoded capacity reflects the number of bytes.",
+            "severity": "Informational",
+            "contract": "AlephBFT",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Incorrect state rollback upon removal of forker\u2019s units",
+            "description": "In the `mark_forker` function, removing a forker's units with round numbers larger than that of the round in progress does not revert the store's state correctly.",
+            "severity": "Informational",
+            "contract": "AlephBFT Unit Store",
+            "function": "mark_forker",
+            "lineNumber": "L115-L119,L146-L149"
+        }
+    ]
+}

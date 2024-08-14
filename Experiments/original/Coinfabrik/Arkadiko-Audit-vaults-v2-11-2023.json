@@ -1,1 +1,133 @@
-{"path": "./Audit_Reports_2024/Coinfabrik/Arkadiko-Audit-vaults-v2-11-2023.pdf", "project_info": {"url": "https://github.com/arkadiko-dao/arkadiko/", "commit_hash": "cbb0ed52fd06780f3d167e94138a6ad51b44cc44", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-435"]}, "title": "Rewards Lost because of Race Condition", "description": "The interaction between the burning of `USDA` tokens and the subsequent adjustment of the `fragments-per-token` variable in the liquidity contract results in lost rewards for the users.", "severity": "Medium", "contract": "arkadiko-vaults-pool-liq-v1-1.clar", "function": "N/A", "lineNumber": "240"}, {"id": 1, "category": {"1": ["CWE-703"]}, "title": "Panicking on Possible Error", "description": "Using `unwrap-panic` results in the transaction being finished because of a runtime error when the provided value is an error or a `none`. The runtime error does not allow the caller to handle that error and act in response.", "severity": "Minor", "contract": "arkadiko-vaults-tokens-v1-1", "function": "N/A", "lineNumber": "85"}, {"id": 2, "category": {"1": ["CWE-693"], "2": ["CWE-807"], "3": ["CWE-302"]}, "title": "Signature Replay in Price Oracle", "description": "Oracle prices are updated with a multi-signature scheme. However, besides validating the signature's content and verifying the signer, the function does not check whether the signatures were already used.", "severity": "Critical", "contract": "arkadiko-oracle-v2-2.clar", "function": "N/A", "lineNumber": "96-113"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Update Codebase for Mainnet", "description": "The codebase has many instances of comments with the text \u201cTODO: update for mainnet\u201d, referring to hardcoded addresses and other environment variables. These instances should be resolved before deploying to mainnet.", "severity": "High", "contract": "arkadiko-vaults-tokens-v1-1", "function": "N/A", "lineNumber": "137, 146, 165, 184, 203"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Lost Funds due to Fee Front-Running", "description": "Fees are charged when minting `USDA` through `open-vault()` or `update-vault()`, if the user adds collateral to the vault. The minting fee is set in the function `set-mint-fee()`. The owner can front-run users to change the fee percentage to 100% and charge users for the total of the value to be minted.", "severity": "Medium", "contract": "arkadiko-vaults-operations-v1-1.clar", "function": "N/A", "lineNumber": "73, 146"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-287"]}, "title": "Authentication via tx-sender", "description": "The system utilizes `tx-sender` for its authentication processes, which presents latent vulnerabilities, particularly exposing actors within the system to threats known as phishing. Actors could inadvertently activate a malicious contract.", "severity": "Medium", "contract": ["wstx-token", "arkadiko-vaults-data-v1-1", "arkadiko-vaults-tokens-v1-1", "arkadiko-vaults-pool-active-v1-1", "arkadiko-vaults-pool-fees-v1-1", "arkadiko-vaults-pool-liq-v1-1", "arkadiko-vaults-migration-v1-1.clar", "arkadiko-vaults-manager-v1-1.clar", "arkadiko-vaults-operations-v1-1.clar"], "function": "N/A", "lineNumber": ["55, 122, 130", "81", "82, 116", "22", "20", "148, 388, 412, 421, 431", "32, 81", "261", "215, 225"]}]}
+{
+    "path": "./Audit_Reports_2024/Coinfabrik/Arkadiko-Audit-vaults-v2-11-2023.pdf",
+    "project_info": {
+        "url": "https://github.com/arkadiko-dao/arkadiko/",
+        "commit_hash": "cbb0ed52fd06780f3d167e94138a6ad51b44cc44",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ]
+            },
+            "title": "Rewards Lost because of Race Condition",
+            "description": "The interaction between the burning of `USDA` tokens and the subsequent adjustment of the `fragments-per-token` variable in the liquidity contract results in lost rewards for the users.",
+            "severity": "Medium",
+            "contract": "arkadiko-vaults-pool-liq-v1-1.clar",
+            "function": "N/A",
+            "lineNumber": "240"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Panicking on Possible Error",
+            "description": "Using `unwrap-panic` results in the transaction being finished because of a runtime error when the provided value is an error or a `none`. The runtime error does not allow the caller to handle that error and act in response.",
+            "severity": "Minor",
+            "contract": "arkadiko-vaults-tokens-v1-1",
+            "function": "N/A",
+            "lineNumber": "85"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ],
+                "3": [
+                    "CWE-302"
+                ]
+            },
+            "title": "Signature Replay in Price Oracle",
+            "description": "Oracle prices are updated with a multi-signature scheme. However, besides validating the signature's content and verifying the signer, the function does not check whether the signatures were already used.",
+            "severity": "Critical",
+            "contract": "arkadiko-oracle-v2-2.clar",
+            "function": "N/A",
+            "lineNumber": "96-113"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Update Codebase for Mainnet",
+            "description": "The codebase has many instances of comments with the text \u201cTODO: update for mainnet\u201d, referring to hardcoded addresses and other environment variables. These instances should be resolved before deploying to mainnet.",
+            "severity": "High",
+            "contract": "arkadiko-vaults-tokens-v1-1",
+            "function": "N/A",
+            "lineNumber": "137, 146, 165, 184, 203"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Lost Funds due to Fee Front-Running",
+            "description": "Fees are charged when minting `USDA` through `open-vault()` or `update-vault()`, if the user adds collateral to the vault. The minting fee is set in the function `set-mint-fee()`. The owner can front-run users to change the fee percentage to 100% and charge users for the total of the value to be minted.",
+            "severity": "Medium",
+            "contract": "arkadiko-vaults-operations-v1-1.clar",
+            "function": "N/A",
+            "lineNumber": "73, 146"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-287"
+                ]
+            },
+            "title": "Authentication via tx-sender",
+            "description": "The system utilizes `tx-sender` for its authentication processes, which presents latent vulnerabilities, particularly exposing actors within the system to threats known as phishing. Actors could inadvertently activate a malicious contract.",
+            "severity": "Medium",
+            "contract": [
+                "wstx-token",
+                "arkadiko-vaults-data-v1-1",
+                "arkadiko-vaults-tokens-v1-1",
+                "arkadiko-vaults-pool-active-v1-1",
+                "arkadiko-vaults-pool-fees-v1-1",
+                "arkadiko-vaults-pool-liq-v1-1",
+                "arkadiko-vaults-migration-v1-1.clar",
+                "arkadiko-vaults-manager-v1-1.clar",
+                "arkadiko-vaults-operations-v1-1.clar"
+            ],
+            "function": "N/A",
+            "lineNumber": [
+                "55, 122, 130",
+                "81",
+                "82, 116",
+                "22",
+                "20",
+                "148, 388, 412, 421, 431",
+                "32, 81",
+                "261",
+                "215, 225"
+            ]
+        }
+    ]
+}

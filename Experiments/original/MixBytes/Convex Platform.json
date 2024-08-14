@@ -1,1 +1,56 @@
-{"path": "./Audit_Reports_2024/MixBytes/Convex Platform.md", "project_info": {"url": "https://github.com/convex-eth/platform", "commit_hash": "754d9e700693246275b613e895b4044b63ce9ed5", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Inconsistent minted and deposited LP tokens amount", "description": "Function `deposit` in `Booster` allows to deposit curve pools LP token and mint wrapped convex tokens with 1:1 proportions. However minted tokens amount for user can be different from deposited LP tokens amount.", "severity": "Warning", "contract": "Booster", "function": "deposit()", "lineNumber": "L275, L278, L265"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Wrong logic in `withdrawAll`", "description": "The `withdrawAll` method has incorrect logic, counting balance as `balanceOfPool(_gauge)` instead of `balanceOfPool(_gauge).add(IERC20(_token).balanceOf(address(this)))`, potentially causing tokens to remain in the contract.", "severity": "MAJOR", "contract": "VoterProxy", "function": "withdrawAll()", "lineNumber": "92"}, {"id": 2, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Cache `poolInfo` in memory to save gas", "description": "In function `deposit` of `Booster` contract, cache `poolInfo` structure in memory to save some gas on reading.", "severity": "N/A", "contract": "Booster", "function": "deposit()", "lineNumber": "275"}]}
+{
+    "path": "./Audit_Reports_2024/MixBytes/Convex Platform.md",
+    "project_info": {
+        "url": "https://github.com/convex-eth/platform",
+        "commit_hash": "754d9e700693246275b613e895b4044b63ce9ed5",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Inconsistent minted and deposited LP tokens amount",
+            "description": "Function `deposit` in `Booster` allows to deposit curve pools LP token and mint wrapped convex tokens with 1:1 proportions. However minted tokens amount for user can be different from deposited LP tokens amount.",
+            "severity": "Warning",
+            "contract": "Booster",
+            "function": "deposit()",
+            "lineNumber": "L275, L278, L265"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Wrong logic in `withdrawAll`",
+            "description": "The `withdrawAll` method has incorrect logic, counting balance as `balanceOfPool(_gauge)` instead of `balanceOfPool(_gauge).add(IERC20(_token).balanceOf(address(this)))`, potentially causing tokens to remain in the contract.",
+            "severity": "MAJOR",
+            "contract": "VoterProxy",
+            "function": "withdrawAll()",
+            "lineNumber": "92"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Cache `poolInfo` in memory to save gas",
+            "description": "In function `deposit` of `Booster` contract, cache `poolInfo` structure in memory to save some gas on reading.",
+            "severity": "N/A",
+            "contract": "Booster",
+            "function": "deposit()",
+            "lineNumber": "275"
+        }
+    ]
+}

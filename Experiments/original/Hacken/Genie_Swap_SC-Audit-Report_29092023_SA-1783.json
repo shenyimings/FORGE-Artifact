@@ -1,1 +1,481 @@
-{"path": "./Audit_Reports_2024/Hacken/Genie_Swap_SC-Audit-Report_29092023_SA-1783.pdf", "project_info": {"url": "https://github.com/PROJECT-ONRAMP/launchpad-contracts", "commit_hash": "358803d6e92c45dda120ca87efefe7bcb23f1af0", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "Flashloan Attack", "description": "When working with exchange rates, they should be received from a trusted source and not be vulnerable to short-term rate changes that can be achieved by using flash loans. Oracles should be used. Contracts shouldn\u2019t rely on values that can be changed in the same transaction.", "severity": "Not Relevant", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Token Supply Manipulation", "description": "Tokens can be minted only according to rules specified in a whitepaper or any other documentation provided by the Customer.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Inefficient Gas Model", "description": "Loops iterating over storage variables cause higher Gas usage.", "severity": "Low", "contract": "Manager", "function": "removePartner(), removeDesignatedAddress(), manageDesignatedAddress(), managePartnerAddress()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-710"]}, "title": "Solidity Style Guide Violation", "description": "N/A", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Requirements Compliance", "description": "Requirements Violation: Incomplete Pause Mechanism Implementation", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "12"}, {"id": 5, "category": {"1": ["CWE-710"]}, "title": "Environment Consistency", "description": "guidelines help to maintain a consistent structure across different contracts, libraries, or interfaces, making it easier for developers and auditors to understand and interact with the code.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "Secure Oracles Usage", "description": "The code should have the ability to pause specific data feeds that it relies on. This should be done to protect a contract from compromised oracles.", "severity": "Not Relevant", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-703"]}, "title": "Tests Coverage", "description": "Deployment and basic user interactions are covered with tests. Negative cases coverage is present. Interactions by several users are tested thoroughly.", "severity": "Passed", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-691"], "2": ["CWE-841"]}, "title": "M01. Checks-Effects-Interactions Pattern Violation", "description": "Some of the state variables are updated after the external calls, violating the checks-effects-interactions pattern.", "severity": "Medium", "contract": "LaunchpadFactory", "function": "deployLaunchpad()", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-682"]}, "title": "M02. Requirements Violation: Contradicting NatSpec", "description": "In some functions of the Manager.sol contract, the implementations are contradicting their NatSpec descriptions.", "severity": "Low", "contract": "Manager", "function": "managePartnerAddress(), getDesignatedAddresses(), getPartners()", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "M03. Requirements Violation: Incomplete Pause Mechanism Implementation", "description": "The contract Manager extends the Pausable contract from OpenZeppelin but lacks an unpause() function, causing isActive() to return false and blocking functionalities of the Launchpad contract.", "severity": "High", "contract": "Manager", "function": "pause()", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-682"]}, "title": "M04. Requirements Violation: Insufficient Balance", "description": "In the _release() function of Escrow contract, insufficient balance to pay out launchpad participants may occur due to mixed balances and invalid calculations.", "severity": "High", "contract": "Escrow", "function": "_release()", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-682"]}, "title": "L01. Inefficient Gas Model", "description": "In some functions, there are loops that iterate over storage variables, causing Gas usage to be higher.", "severity": "Low", "contract": "Manager", "function": "removePartner(), removeDesignatedAddress(), manageDesignatedAddress(), managePartnerAddress()", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "L02. Redundant Check", "description": "The first check 'if (da == address(0))' is useless as the second check asserts that the address is set.", "severity": "Low", "contract": "Manager", "function": "removeDesignatedAddress()", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-703"]}, "title": "L03. Ambiguous Error Message", "description": "N/A", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "I01. Floating Pragma", "description": "Contracts should be deployed with the same compiler version and flags that they have been tested thoroughly.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 16, "category": {"1": ["CWE-710"]}, "title": "I02. Solidity Style Guide Violation", "description": "Solidity Style Guide Violation", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 17, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"], "4": ["CWE-766"]}, "title": "I03. Missing Variable Explicit Visibility", "description": "Functions and state variables visibility should be set explicitly. Visibility levels should be specified consciously.", "severity": "Medium", "contract": ["LaunchpadFactory", "Manager"], "function": "N/A", "lineNumber": "N/A"}, {"id": 18, "category": {"1": ["CWE-710"], "2": ["CWE-1061"]}, "title": "I04. Missing Variable Explicit uint Size", "description": "Some uint variable sizes are not explicitly set, resulting in harder code maintenance and readability.", "severity": "Medium", "contract": ["Escrow", "Launchpad", "Manager"], "function": ["Released", "_holdings", "releasable()", "_release()", "_release.amount", "TokensMinted.amount", "TokensMinted.tokenExchangeRate", "mint(amountPaymentToken)(amountLaunchpadToken)", "_mint(amountPaymentToken)(amountLaunchpadToken)", "mint().totalPaymentTokenCommission", "_mint().paymentTokenCommission", "_mint().launchpadTokenCommission", "_mint().remainingPaymentToken", "getPrice()(price)", "getPrice().answer", "getPrice().timeStamp", "quota( amountPaymentToken )( payout )", "quota().usdValuePaymentToken", "quota().launchpadTokenDecimals", "quota().base", "topUpLaunchpadTokens(topUpAmount)", "recoverLaunchpadToken().amount", "release()(uint)", "PartnerChanged.share", "DesignatedAddressChanged.share", "StartChanged.start", "EndChanged.end", "MlmLevelsChanged.levels", "BASIS", "MAX_LAUNCHPAD_TIME", "MAX_TOKEN_EXCHANGE_RATE", "MAX_MLM_LEVELS", "MAX_NUM_PARTNERS", "MAX_NUM_DESIGNATED_ADDRESSES", "MAX_MLM_TREE_DEPTH"], "lineNumber": "N/A"}, {"id": 19, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "I05. Redundant Modifier Usage", "description": "In some occurrences of the nonReentrant modifier, the usage is redundant, as the functions do not perform state updates.", "severity": "Medium", "contract": "./contracts/lib/Launchpad.sol", "function": ["topUpLaunchpadTokens()", "recoverLaunchpadToken()"], "lineNumber": "N/A"}, {"id": 20, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "I06. Unindexed Events Emissions", "description": "Some events emitted in the system are not using indexed variables. Having indexed parameters in the events makes it easier to search for these events using indexed parameters as filters.", "severity": "Informational", "contract": ["Escrow", "MLM", "Types"], "function": ["Released", "UserOnboarded", "CommissionPaid"], "lineNumber": "N/A"}, {"id": 21, "category": {"1": ["CWE-284"], "2": ["CWE-749"]}, "title": "I07. Public Functions That Should Be External", "description": "Public functions should be declared as external.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 22, "category": {"1": ["CWE-710"], "2": ["CWE-1061"]}, "title": "I08. Contracts That Should Be Interface", "description": "Contracts without any logic and only type definition should be interfaces.", "severity": "N/A", "contract": "Error", "function": "N/A", "lineNumber": "./contracts/lib/Error.sol"}, {"id": 23, "category": {"1": ["CWE-664"], "2": ["CWE-221"], "3": ["CWE-223"], "4": ["CWE-778"]}, "title": "I09. Missing Events for Critical Value Updates", "description": "Missing events for critical value updates may lead to a lack of transparency and make it difficult for users to track changes.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 24, "category": {"1": ["CWE-703"]}, "title": "N/A", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Hacken/Genie_Swap_SC-Audit-Report_29092023_SA-1783.pdf",
+    "project_info": {
+        "url": "https://github.com/PROJECT-ONRAMP/launchpad-contracts",
+        "commit_hash": "358803d6e92c45dda120ca87efefe7bcb23f1af0",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Flashloan Attack",
+            "description": "When working with exchange rates, they should be received from a trusted source and not be vulnerable to short-term rate changes that can be achieved by using flash loans. Oracles should be used. Contracts shouldn\u2019t rely on values that can be changed in the same transaction.",
+            "severity": "Not Relevant",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Token Supply Manipulation",
+            "description": "Tokens can be minted only according to rules specified in a whitepaper or any other documentation provided by the Customer.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Inefficient Gas Model",
+            "description": "Loops iterating over storage variables cause higher Gas usage.",
+            "severity": "Low",
+            "contract": "Manager",
+            "function": "removePartner(), removeDesignatedAddress(), manageDesignatedAddress(), managePartnerAddress()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ]
+            },
+            "title": "Solidity Style Guide Violation",
+            "description": "N/A",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Requirements Compliance",
+            "description": "Requirements Violation: Incomplete Pause Mechanism Implementation",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "12"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ]
+            },
+            "title": "Environment Consistency",
+            "description": "guidelines help to maintain a consistent structure across different contracts, libraries, or interfaces, making it easier for developers and auditors to understand and interact with the code.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Secure Oracles Usage",
+            "description": "The code should have the ability to pause specific data feeds that it relies on. This should be done to protect a contract from compromised oracles.",
+            "severity": "Not Relevant",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Tests Coverage",
+            "description": "Deployment and basic user interactions are covered with tests. Negative cases coverage is present. Interactions by several users are tested thoroughly.",
+            "severity": "Passed",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "M01. Checks-Effects-Interactions Pattern Violation",
+            "description": "Some of the state variables are updated after the external calls, violating the checks-effects-interactions pattern.",
+            "severity": "Medium",
+            "contract": "LaunchpadFactory",
+            "function": "deployLaunchpad()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "M02. Requirements Violation: Contradicting NatSpec",
+            "description": "In some functions of the Manager.sol contract, the implementations are contradicting their NatSpec descriptions.",
+            "severity": "Low",
+            "contract": "Manager",
+            "function": "managePartnerAddress(), getDesignatedAddresses(), getPartners()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "M03. Requirements Violation: Incomplete Pause Mechanism Implementation",
+            "description": "The contract Manager extends the Pausable contract from OpenZeppelin but lacks an unpause() function, causing isActive() to return false and blocking functionalities of the Launchpad contract.",
+            "severity": "High",
+            "contract": "Manager",
+            "function": "pause()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "M04. Requirements Violation: Insufficient Balance",
+            "description": "In the _release() function of Escrow contract, insufficient balance to pay out launchpad participants may occur due to mixed balances and invalid calculations.",
+            "severity": "High",
+            "contract": "Escrow",
+            "function": "_release()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "L01. Inefficient Gas Model",
+            "description": "In some functions, there are loops that iterate over storage variables, causing Gas usage to be higher.",
+            "severity": "Low",
+            "contract": "Manager",
+            "function": "removePartner(), removeDesignatedAddress(), manageDesignatedAddress(), managePartnerAddress()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "L02. Redundant Check",
+            "description": "The first check 'if (da == address(0))' is useless as the second check asserts that the address is set.",
+            "severity": "Low",
+            "contract": "Manager",
+            "function": "removeDesignatedAddress()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "L03. Ambiguous Error Message",
+            "description": "N/A",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "I01. Floating Pragma",
+            "description": "Contracts should be deployed with the same compiler version and flags that they have been tested thoroughly.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ]
+            },
+            "title": "I02. Solidity Style Guide Violation",
+            "description": "Solidity Style Guide Violation",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ],
+                "4": [
+                    "CWE-766"
+                ]
+            },
+            "title": "I03. Missing Variable Explicit Visibility",
+            "description": "Functions and state variables visibility should be set explicitly. Visibility levels should be specified consciously.",
+            "severity": "Medium",
+            "contract": [
+                "LaunchpadFactory",
+                "Manager"
+            ],
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1061"
+                ]
+            },
+            "title": "I04. Missing Variable Explicit uint Size",
+            "description": "Some uint variable sizes are not explicitly set, resulting in harder code maintenance and readability.",
+            "severity": "Medium",
+            "contract": [
+                "Escrow",
+                "Launchpad",
+                "Manager"
+            ],
+            "function": [
+                "Released",
+                "_holdings",
+                "releasable()",
+                "_release()",
+                "_release.amount",
+                "TokensMinted.amount",
+                "TokensMinted.tokenExchangeRate",
+                "mint(amountPaymentToken)(amountLaunchpadToken)",
+                "_mint(amountPaymentToken)(amountLaunchpadToken)",
+                "mint().totalPaymentTokenCommission",
+                "_mint().paymentTokenCommission",
+                "_mint().launchpadTokenCommission",
+                "_mint().remainingPaymentToken",
+                "getPrice()(price)",
+                "getPrice().answer",
+                "getPrice().timeStamp",
+                "quota( amountPaymentToken )( payout )",
+                "quota().usdValuePaymentToken",
+                "quota().launchpadTokenDecimals",
+                "quota().base",
+                "topUpLaunchpadTokens(topUpAmount)",
+                "recoverLaunchpadToken().amount",
+                "release()(uint)",
+                "PartnerChanged.share",
+                "DesignatedAddressChanged.share",
+                "StartChanged.start",
+                "EndChanged.end",
+                "MlmLevelsChanged.levels",
+                "BASIS",
+                "MAX_LAUNCHPAD_TIME",
+                "MAX_TOKEN_EXCHANGE_RATE",
+                "MAX_MLM_LEVELS",
+                "MAX_NUM_PARTNERS",
+                "MAX_NUM_DESIGNATED_ADDRESSES",
+                "MAX_MLM_TREE_DEPTH"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 19,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "I05. Redundant Modifier Usage",
+            "description": "In some occurrences of the nonReentrant modifier, the usage is redundant, as the functions do not perform state updates.",
+            "severity": "Medium",
+            "contract": "./contracts/lib/Launchpad.sol",
+            "function": [
+                "topUpLaunchpadTokens()",
+                "recoverLaunchpadToken()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 20,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "I06. Unindexed Events Emissions",
+            "description": "Some events emitted in the system are not using indexed variables. Having indexed parameters in the events makes it easier to search for these events using indexed parameters as filters.",
+            "severity": "Informational",
+            "contract": [
+                "Escrow",
+                "MLM",
+                "Types"
+            ],
+            "function": [
+                "Released",
+                "UserOnboarded",
+                "CommissionPaid"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 21,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-749"
+                ]
+            },
+            "title": "I07. Public Functions That Should Be External",
+            "description": "Public functions should be declared as external.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 22,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1061"
+                ]
+            },
+            "title": "I08. Contracts That Should Be Interface",
+            "description": "Contracts without any logic and only type definition should be interfaces.",
+            "severity": "N/A",
+            "contract": "Error",
+            "function": "N/A",
+            "lineNumber": "./contracts/lib/Error.sol"
+        },
+        {
+            "id": 23,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-221"
+                ],
+                "3": [
+                    "CWE-223"
+                ],
+                "4": [
+                    "CWE-778"
+                ]
+            },
+            "title": "I09. Missing Events for Critical Value Updates",
+            "description": "Missing events for critical value updates may lead to a lack of transparency and make it difficult for users to track changes.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 24,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "N/A",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

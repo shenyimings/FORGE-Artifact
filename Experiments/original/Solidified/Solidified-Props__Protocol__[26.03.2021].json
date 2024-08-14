@@ -1,1 +1,159 @@
-{"path": "./Audit_Reports_2024/Solidified/Solidified-Props__Protocol__[26.03.2021].pdf", "project_info": {"url": "https://github.com/propsproject/props-protocol", "commit_hash": "ce4b8e872fd1975a664128e71c106c2c6a5d59ac", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Permissioned roles concentrate a lot of privileges", "description": "The Props protocol implementation assigns key privileges to certain roles, including `controller`, `admin`, and `guardian`. This introduces a certain degree of centralization, which may be a security risk in the case of key compromise.", "severity": "Major", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"], "2": ["CWE-1339"]}, "title": "Divisions before multiplication lead to decreased precision", "description": "Performing integer divisions before multiplications in calculations can lead to decreased precision.", "severity": "Minor", "contract": "Staking.sol", "function": "N/A", "lineNumber": "54, 334"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "PropsProtocol.sol: stakeAsDelegate() will always fail for unstaking", "description": "The `stakeAsDelegate()` function will always revert in `_stake()` when unstaking, due to the check `require(_msgSender() == _from, \"Unauthorized\");`.", "severity": "Minor", "contract": "PropsProtocol.sol", "function": "_stake()", "lineNumber": "720"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "PropsProtocol.sol: transferGuardianship() and transferControl() lag zero checks", "description": "The `transferGuardianship()` and `transferControl()` functions allow `address(0)` as parameters. However, renouncing these roles in the current implementation would break the protocol.", "severity": "Minor", "contract": "PropsProtocol.sol", "function": "transferGuardianship() and transferControl()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Timelock.sol: Pausing of contract cannot be undone", "description": "The `TimeLock` contract can only be stopped by the pause function and there is no `unpause()` equivalent to enable the contract again, which means that once paused the time locking functionality will be disabled forever.", "severity": "Minor", "contract": "Timelock.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Staking.sol: Not all parameter changes are covered by events", "description": "In some cases, key protocol parameters can be changed without an event being emitted. It is best practice to emit events in such cases consistently to allow off-chain protocol monitoring.", "severity": "Minor", "contract": "Staking.sol", "function": "changeDailyRewardEmission() and changeRewardsDistribution()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "SPropsToken.sol: Domain separator could be precalculated to safe gas", "description": "The `domainSeparator` used in `delegateBySig()` could be precalculated in the initializer to reduce gas costs.", "severity": "Minor", "contract": "SPropsToken.sol", "function": "delegateBySig()", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "SPropsToken.sol: approve() should revert if transfers are not allowed", "description": "The `approve()` function is implemented despite transfers not being allowed, which is inconsistent with expected behavior.", "severity": "Minor", "contract": "SPropsToken.sol", "function": "approve()", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Solidified/Solidified-Props__Protocol__[26.03.2021].pdf",
+    "project_info": {
+        "url": "https://github.com/propsproject/props-protocol",
+        "commit_hash": "ce4b8e872fd1975a664128e71c106c2c6a5d59ac",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Permissioned roles concentrate a lot of privileges",
+            "description": "The Props protocol implementation assigns key privileges to certain roles, including `controller`, `admin`, and `guardian`. This introduces a certain degree of centralization, which may be a security risk in the case of key compromise.",
+            "severity": "Major",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "Divisions before multiplication lead to decreased precision",
+            "description": "Performing integer divisions before multiplications in calculations can lead to decreased precision.",
+            "severity": "Minor",
+            "contract": "Staking.sol",
+            "function": "N/A",
+            "lineNumber": "54, 334"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "PropsProtocol.sol: stakeAsDelegate() will always fail for unstaking",
+            "description": "The `stakeAsDelegate()` function will always revert in `_stake()` when unstaking, due to the check `require(_msgSender() == _from, \"Unauthorized\");`.",
+            "severity": "Minor",
+            "contract": "PropsProtocol.sol",
+            "function": "_stake()",
+            "lineNumber": "720"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "PropsProtocol.sol: transferGuardianship() and transferControl() lag zero checks",
+            "description": "The `transferGuardianship()` and `transferControl()` functions allow `address(0)` as parameters. However, renouncing these roles in the current implementation would break the protocol.",
+            "severity": "Minor",
+            "contract": "PropsProtocol.sol",
+            "function": "transferGuardianship() and transferControl()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Timelock.sol: Pausing of contract cannot be undone",
+            "description": "The `TimeLock` contract can only be stopped by the pause function and there is no `unpause()` equivalent to enable the contract again, which means that once paused the time locking functionality will be disabled forever.",
+            "severity": "Minor",
+            "contract": "Timelock.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Staking.sol: Not all parameter changes are covered by events",
+            "description": "In some cases, key protocol parameters can be changed without an event being emitted. It is best practice to emit events in such cases consistently to allow off-chain protocol monitoring.",
+            "severity": "Minor",
+            "contract": "Staking.sol",
+            "function": "changeDailyRewardEmission() and changeRewardsDistribution()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "SPropsToken.sol: Domain separator could be precalculated to safe gas",
+            "description": "The `domainSeparator` used in `delegateBySig()` could be precalculated in the initializer to reduce gas costs.",
+            "severity": "Minor",
+            "contract": "SPropsToken.sol",
+            "function": "delegateBySig()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "SPropsToken.sol: approve() should revert if transfers are not allowed",
+            "description": "The `approve()` function is implemented despite transfers not being allowed, which is inconsistent with expected behavior.",
+            "severity": "Minor",
+            "contract": "SPropsToken.sol",
+            "function": "approve()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

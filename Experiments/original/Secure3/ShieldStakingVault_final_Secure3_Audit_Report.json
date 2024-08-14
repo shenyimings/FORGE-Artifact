@@ -1,1 +1,259 @@
-{"path": "./Audit_Reports_2024/Secure3/ShieldStakingVault_final_Secure3_Audit_Report.pdf", "project_info": {"url": "https://secure3.io", "commit_hash": "2a6bdc4a9de461b1e467788b6772b397b1fdaa56", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Minting of unlimited number of sundae tokens", "description": "In settlement, shares are minted based on the amount of ETH deposited by the user in this round (totalPendingAmount). However, because totalPendingAmount is added to soldByLDO, the totalPendingAmount is inflated, resulting in too many shares being minted.", "severity": "Medium", "contract": "StakingVault.sol", "function": "_mint()", "lineNumber": "452-457"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Dust LP will be left in the StakingVault contrat", "description": "In the terminate function of StakingVault, remove_liquidity_imbalance is called but its return value is not checked, so there will be dust LP left in the contract.", "severity": "Low", "contract": "StakingVault", "function": "terminate()", "lineNumber": "648-651"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Malicious collectShares operations on other users", "description": "Arbitrary users can collect shares for other users through the collectShares function, which may confuse users who are forced to collect in unexpected roundPricePerShare situations.", "severity": "Medium", "contract": "StakingVault", "function": "collectShares(address _user)", "lineNumber": "331"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Risk of inability to modify Gov role leading to excessive authority", "description": "The governance role is set in the constructor and there are no other functions in the contract that can modify it, resulting in the risk of excessive governance role authority.", "severity": "Informational", "contract": "VaultManager", "function": "N/A", "lineNumber": "54, 56"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Users can get StakingVault shares for free", "description": "In StakingVault, users can deposit ETH via deposit or depositFor. The deposit function has a volume limit of maxVolume, but the depositFor function does not have this limit, allowing users to deposit ETH over maxVolume and get shares for free.", "severity": "High", "contract": "StakingVault", "function": "depositFor", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-909"], "4": ["CWE-456"]}, "title": "OptionsTrading.latestRoundID should be updated", "description": "The latestRoundID variable in OptionsTrading contract remains default 0 value and is never updated, causing functions tradeOptions, payOptionYield, getBalance, and refreshBalance to fail to work properly.", "severity": "Medium", "contract": "OptionsTrading", "function": "roll()", "lineNumber": "17"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "OptionsTrading::onlyGovernance Wrong caller check", "description": "The onlyGovernance modifier incorrectly checks if the caller is a vault contract instead of checking if the caller is the governance role.", "severity": "Critical", "contract": "OptionsTrading", "function": "N/A", "lineNumber": "47"}, {"id": 7, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "OptionsTrading::payOptionYield redundant msg.value check", "description": "Redundant check for `msg.value >` in `OptionsTrading.payOptionYield` function.", "severity": "Informational", "contract": "OptionsTrading", "function": "payOptionYield()", "lineNumber": "79-81"}, {"id": 8, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "StakingVault.SERIAL_NUMBER is not guaranteed to be unique", "description": "SERIAL_NUMBER is derived from msg.sender and block.timestamp, but it isn't guaranteed to be unique when creating StakingVault using VaultManager.batchCreate function, because msg.sender and block.timestamp are the same within the same transaction.", "severity": "Informational", "contract": "StakingVault", "function": "N/A", "lineNumber": "69"}, {"id": 9, "category": {"1": ["CWE-697"]}, "title": "StakingVault._minEtherReceived Incorrect slippage control", "description": "The _minEtherReceived parameter is used to apply slippage control, but due to a coding error, >= is used instead of <= to check the slippage, resulting in an invalid slippage check.", "severity": "Critical", "contract": "StakingVault", "function": ["terminate", "settlement"], "lineNumber": "432-435, 653-656"}, {"id": 10, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "StakingVault.curveEnabled is redundant", "description": "The StakingVault contract does not work when curveEnabled is false because references to CURVE_GAUGE don't check this precondition in settlement and terminate functions.", "severity": "Medium", "contract": "StakingVault", "function": ["settlement", "terminate", "initialize"], "lineNumber": "411-413, 426, 645-647"}, {"id": 11, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "StakingVault.minDeposit is not initialized", "description": "The minDeposit parameter in StakingVault's initialize function is not properly checked or initialized, leading to potential vulnerabilities.", "severity": "High", "contract": "StakingVault", "function": "initialize()", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-682"]}, "title": "StakingVault.withdrawableAmount InRound is not used correctly", "description": "withdrawableAmountInRound is never updated and always 0, resulting in a large result in currentSharePrice() and thus a large roundPricePerShare.", "severity": "Critical", "contract": "StakingVault", "function": "currentSharePrice()", "lineNumber": "L 514-L528"}]}
+{
+    "path": "./Audit_Reports_2024/Secure3/ShieldStakingVault_final_Secure3_Audit_Report.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "2a6bdc4a9de461b1e467788b6772b397b1fdaa56",
+        "address": "0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Minting of unlimited number of sundae tokens",
+            "description": "In settlement, shares are minted based on the amount of ETH deposited by the user in this round (totalPendingAmount). However, because totalPendingAmount is added to soldByLDO, the totalPendingAmount is inflated, resulting in too many shares being minted.",
+            "severity": "Medium",
+            "contract": "StakingVault.sol",
+            "function": "_mint()",
+            "lineNumber": "452-457"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Dust LP will be left in the StakingVault contrat",
+            "description": "In the terminate function of StakingVault, remove_liquidity_imbalance is called but its return value is not checked, so there will be dust LP left in the contract.",
+            "severity": "Low",
+            "contract": "StakingVault",
+            "function": "terminate()",
+            "lineNumber": "648-651"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Malicious collectShares operations on other users",
+            "description": "Arbitrary users can collect shares for other users through the collectShares function, which may confuse users who are forced to collect in unexpected roundPricePerShare situations.",
+            "severity": "Medium",
+            "contract": "StakingVault",
+            "function": "collectShares(address _user)",
+            "lineNumber": "331"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Risk of inability to modify Gov role leading to excessive authority",
+            "description": "The governance role is set in the constructor and there are no other functions in the contract that can modify it, resulting in the risk of excessive governance role authority.",
+            "severity": "Informational",
+            "contract": "VaultManager",
+            "function": "N/A",
+            "lineNumber": "54, 56"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Users can get StakingVault shares for free",
+            "description": "In StakingVault, users can deposit ETH via deposit or depositFor. The deposit function has a volume limit of maxVolume, but the depositFor function does not have this limit, allowing users to deposit ETH over maxVolume and get shares for free.",
+            "severity": "High",
+            "contract": "StakingVault",
+            "function": "depositFor",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "OptionsTrading.latestRoundID should be updated",
+            "description": "The latestRoundID variable in OptionsTrading contract remains default 0 value and is never updated, causing functions tradeOptions, payOptionYield, getBalance, and refreshBalance to fail to work properly.",
+            "severity": "Medium",
+            "contract": "OptionsTrading",
+            "function": "roll()",
+            "lineNumber": "17"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "OptionsTrading::onlyGovernance Wrong caller check",
+            "description": "The onlyGovernance modifier incorrectly checks if the caller is a vault contract instead of checking if the caller is the governance role.",
+            "severity": "Critical",
+            "contract": "OptionsTrading",
+            "function": "N/A",
+            "lineNumber": "47"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "OptionsTrading::payOptionYield redundant msg.value check",
+            "description": "Redundant check for `msg.value >` in `OptionsTrading.payOptionYield` function.",
+            "severity": "Informational",
+            "contract": "OptionsTrading",
+            "function": "payOptionYield()",
+            "lineNumber": "79-81"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "StakingVault.SERIAL_NUMBER is not guaranteed to be unique",
+            "description": "SERIAL_NUMBER is derived from msg.sender and block.timestamp, but it isn't guaranteed to be unique when creating StakingVault using VaultManager.batchCreate function, because msg.sender and block.timestamp are the same within the same transaction.",
+            "severity": "Informational",
+            "contract": "StakingVault",
+            "function": "N/A",
+            "lineNumber": "69"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ]
+            },
+            "title": "StakingVault._minEtherReceived Incorrect slippage control",
+            "description": "The _minEtherReceived parameter is used to apply slippage control, but due to a coding error, >= is used instead of <= to check the slippage, resulting in an invalid slippage check.",
+            "severity": "Critical",
+            "contract": "StakingVault",
+            "function": [
+                "terminate",
+                "settlement"
+            ],
+            "lineNumber": "432-435, 653-656"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "StakingVault.curveEnabled is redundant",
+            "description": "The StakingVault contract does not work when curveEnabled is false because references to CURVE_GAUGE don't check this precondition in settlement and terminate functions.",
+            "severity": "Medium",
+            "contract": "StakingVault",
+            "function": [
+                "settlement",
+                "terminate",
+                "initialize"
+            ],
+            "lineNumber": "411-413, 426, 645-647"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "StakingVault.minDeposit is not initialized",
+            "description": "The minDeposit parameter in StakingVault's initialize function is not properly checked or initialized, leading to potential vulnerabilities.",
+            "severity": "High",
+            "contract": "StakingVault",
+            "function": "initialize()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "StakingVault.withdrawableAmount InRound is not used correctly",
+            "description": "withdrawableAmountInRound is never updated and always 0, resulting in a large result in currentSharePrice() and thus a large roundPricePerShare.",
+            "severity": "Critical",
+            "contract": "StakingVault",
+            "function": "currentSharePrice()",
+            "lineNumber": "L 514-L528"
+        }
+    ]
+}

@@ -1,1 +1,322 @@
-{"path": "./Audit_Reports_2024/Cyberscope/aipx.pdf", "project_info": {"url": "https://github.com/", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "CR - Code Repetition", "description": "The contract contains repetitive code segments which can lead to issues like gas efficiency, complexity, readability, security, and maintainability of the source code.", "severity": "N/A", "contract": "N/A", "function": ["pendingReward", "updatePool", "withdraw", "_deposit"], "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-923"], "3": ["CWE-300"]}, "title": "CCR - Contract Centralization Risk", "description": "The contract's functionality and behavior are heavily dependent on external parameters or configurations, posing centralization risks such as Single Point of Control, Vulnerability to Attacks, Operational Delays, Trust Dependencies, and Decentralization Erosion.", "severity": "High", "contract": "LyAipx", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "DTI - Data Type Inconsistency", "description": "The contract utilizes different data types for the `allocPoint` parameter in various parts of its code, which can lead to potential issues such as data overflow or underflow.", "severity": "High", "contract": "N/A", "function": "add()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "DSM - Documentation Supply Mismatch", "description": "The contract's maximum supply of AipxToken is set to 50,000,000 ether, but the project's official documentation states it should be 10,000,000. This inconsistency can lead to confusion and undermine user trust.", "severity": "Medium", "contract": "AipxToken", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-710"], "2": ["CWE-1126"]}, "title": "IDI - Immutable Declaration Improvement", "description": "The contract declares state variables that their value is initialized once in the constructor and are not modified afterwards. The `immutable` declaration can save gas by allowing certain optimizations.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "ISV - Insufficient Stake Validation", "description": "The contract lacks validation to ensure that msg.sender actually has a staked balance before proceeding with the unstaking operation in the `unstake` function.", "severity": "High", "contract": "N/A", "function": "unstake()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "MC - Missing Check", "description": "The contract is processing variables that have not been properly sanitized and checked that they form the proper shape in the calculation of `_taxAmount` using the `stakingTax` variable. The contract currently allows `stakingTax` to be set to any value, including those greater than `STAKING_TAX_PRECISION`, which could lead to incorrect or unexpected tax calculations.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "MPV - Missing Parameter Validation", "description": "The contract lacks a crucial check in its set function to verify the existence of the `_pid` value within the `poolInfo` struct, leading to potential risks such as referencing an uninitialized or non-existent pool.", "severity": "High", "contract": "N/A", "function": "set()", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "MU - Modifiers Usage", "description": "The contract is using repetitive statements on some methods to validate some preconditions instead of using modifiers which can reduce code duplication and improve readability.", "severity": "N/A", "contract": "Multiple contracts (AgoStaking, AIPXStake, AIPXOracle)", "function": "Various functions (initialize, permit, _beforeTokenTransfer, etc.)", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-703"]}, "title": "OEH - Optimize Error Handling", "description": "The contract utilizes if statements followed by revert for error handling in its transfer function, which is less efficient compared to using require statements.", "severity": "Medium", "contract": "N/A", "function": "transfer()", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "RCS - Redundant Code Segments", "description": "The contract contains code segments, specifically the `cooldown` and `deactivateCooldown` functions, that do not provide any actual functionality.", "severity": "Medium", "contract": "N/A", "function": "`cooldown` and `deactivateCooldown`", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "RFP - Redundant Function Parameter", "description": "The contract uses the `overwrite` parameter in the `set` function to determine whether the `_rewarder` should be set, introducing unnecessary complexity and an additional parameter that could be avoided.", "severity": "N/A", "contract": "N/A", "function": "set()", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "RRC - Redundant Require Check", "description": "The contract has a redundant require check in the `_safeTransferAGO` function to ensure the AGO address is not zero, which is already validated during contract initialization.", "severity": "Low", "contract": "N/A", "function": "_safeTransferAGO", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-682"]}, "title": "RC - Repetitive Calculations", "description": "The contract contains methods with multiple occurrences of the same calculation being performed without utilizing a variable to store its result, leading to redundant code, hindering code readability, and increasing gas consumption.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-682"]}, "title": "RTI - Reward Transfer Inconsistency", "description": "The contract's `rewardDebt` update does not accurately reflect the actual reward transferred due to insufficient funds, leading to inaccurate accounting and potential user dissatisfaction.", "severity": "Critical", "contract": "AIPXStake", "function": "_safeTransferAGO, claimRewards", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "TSI - Tokens Sufficiency Insurance", "description": "The `rewardToken` are not held within the contract itself, instead relying on an external administrator, which introduces dependency and centralization risks.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 16, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-909"], "4": ["CWE-456"]}, "title": "L02 - State Variables could be Declared Constant", "description": "State variables can be declared as constant using the constant keyword to ensure they cannot be changed after being set and decrease gas consumption.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 17, "category": {"1": ["CWE-710"]}, "title": "L04 - Conformance to Solidity Naming Conventions", "description": "The code does not adhere to the Solidity naming conventions, which can affect readability and maintainability.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Cyberscope/aipx.pdf",
+    "project_info": {
+        "url": "https://github.com/0xytocinOfficial/aipx-flare-core-contracts",
+        "commit_hash": "main",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "CR - Code Repetition",
+            "description": "The contract contains repetitive code segments which can lead to issues like gas efficiency, complexity, readability, security, and maintainability of the source code.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": [
+                "pendingReward",
+                "updatePool",
+                "withdraw",
+                "_deposit"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-923"
+                ],
+                "3": [
+                    "CWE-300"
+                ]
+            },
+            "title": "CCR - Contract Centralization Risk",
+            "description": "The contract's functionality and behavior are heavily dependent on external parameters or configurations, posing centralization risks such as Single Point of Control, Vulnerability to Attacks, Operational Delays, Trust Dependencies, and Decentralization Erosion.",
+            "severity": "High",
+            "contract": "LyAipx",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "DTI - Data Type Inconsistency",
+            "description": "The contract utilizes different data types for the `allocPoint` parameter in various parts of its code, which can lead to potential issues such as data overflow or underflow.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "add()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "DSM - Documentation Supply Mismatch",
+            "description": "The contract's maximum supply of AipxToken is set to 50,000,000 ether, but the project's official documentation states it should be 10,000,000. This inconsistency can lead to confusion and undermine user trust.",
+            "severity": "Medium",
+            "contract": "AipxToken",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1126"
+                ]
+            },
+            "title": "IDI - Immutable Declaration Improvement",
+            "description": "The contract declares state variables that their value is initialized once in the constructor and are not modified afterwards. The `immutable` declaration can save gas by allowing certain optimizations.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "ISV - Insufficient Stake Validation",
+            "description": "The contract lacks validation to ensure that msg.sender actually has a staked balance before proceeding with the unstaking operation in the `unstake` function.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "unstake()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "MC - Missing Check",
+            "description": "The contract is processing variables that have not been properly sanitized and checked that they form the proper shape in the calculation of `_taxAmount` using the `stakingTax` variable. The contract currently allows `stakingTax` to be set to any value, including those greater than `STAKING_TAX_PRECISION`, which could lead to incorrect or unexpected tax calculations.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "MPV - Missing Parameter Validation",
+            "description": "The contract lacks a crucial check in its set function to verify the existence of the `_pid` value within the `poolInfo` struct, leading to potential risks such as referencing an uninitialized or non-existent pool.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "set()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "MU - Modifiers Usage",
+            "description": "The contract is using repetitive statements on some methods to validate some preconditions instead of using modifiers which can reduce code duplication and improve readability.",
+            "severity": "N/A",
+            "contract": "Multiple contracts (AgoStaking, AIPXStake, AIPXOracle)",
+            "function": "Various functions (initialize, permit, _beforeTokenTransfer, etc.)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "OEH - Optimize Error Handling",
+            "description": "The contract utilizes if statements followed by revert for error handling in its transfer function, which is less efficient compared to using require statements.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "transfer()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "RCS - Redundant Code Segments",
+            "description": "The contract contains code segments, specifically the `cooldown` and `deactivateCooldown` functions, that do not provide any actual functionality.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "`cooldown` and `deactivateCooldown`",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "RFP - Redundant Function Parameter",
+            "description": "The contract uses the `overwrite` parameter in the `set` function to determine whether the `_rewarder` should be set, introducing unnecessary complexity and an additional parameter that could be avoided.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "set()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "RRC - Redundant Require Check",
+            "description": "The contract has a redundant require check in the `_safeTransferAGO` function to ensure the AGO address is not zero, which is already validated during contract initialization.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "_safeTransferAGO",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "RC - Repetitive Calculations",
+            "description": "The contract contains methods with multiple occurrences of the same calculation being performed without utilizing a variable to store its result, leading to redundant code, hindering code readability, and increasing gas consumption.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "RTI - Reward Transfer Inconsistency",
+            "description": "The contract's `rewardDebt` update does not accurately reflect the actual reward transferred due to insufficient funds, leading to inaccurate accounting and potential user dissatisfaction.",
+            "severity": "Critical",
+            "contract": "AIPXStake",
+            "function": "_safeTransferAGO, claimRewards",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "TSI - Tokens Sufficiency Insurance",
+            "description": "The `rewardToken` are not held within the contract itself, instead relying on an external administrator, which introduces dependency and centralization risks.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "L02 - State Variables could be Declared Constant",
+            "description": "State variables can be declared as constant using the constant keyword to ensure they cannot be changed after being set and decrease gas consumption.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ]
+            },
+            "title": "L04 - Conformance to Solidity Naming Conventions",
+            "description": "The code does not adhere to the Solidity naming conventions, which can affect readability and maintainability.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

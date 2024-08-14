@@ -1,1 +1,168 @@
-{"path": "./Audit_Reports_2024/Ackee_Blockchain/ackee-blockchain-layerzero-3-report.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "W1F: totalSupply() not guaranteed to be accurate", "description": "The code logic has been adjusted so that the `totalSupply` is tracked accurately, but there are cases where ether can exist in the contract without having executed the `deposit()` function, making `totalSupply()` return a larger number than the actual sum of `SGETH` balances.", "severity": "Warning", "contract": "StargateEthVault", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "M1: Usage of `solc` optimizer", "description": "The project uses `solc` optimizer which may lead to unexpected bugs.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-241"]}, "title": "L1: Insufficient data validation in RouterETH", "description": "RouterETH does not perform any data validation of the following passed addresses in its constructor: `_stargateEthVault` and `_stargateRouter`. An incorrect or malicious `_stargateEthVault` is passed to the constructor, instead of reverting, the call succeeds.", "severity": "High", "contract": "RouterETH", "function": "constructor", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-282"], "3": ["CWE-708"]}, "title": "W2: Renounce ownership", "description": "The renounceOwnership() function can be accidentally called by the owner of the contract, resulting in loss of ownership.", "severity": "Warning", "contract": "StargateEthVault", "function": "renounceOwnership()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "I1: Public functions", "description": "Public functions declared unnecessarily, affecting gas optimization.", "severity": "Informational", "contract": "StargateEthVault", "function": ["withdraw()", "totalSupply()", "approve()", "transfer()"], "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-710"], "2": ["CWE-1126"]}, "title": "I2: Variables should be declared `constant`", "description": "Declare state variables as `constant` to reduce gas costs.", "severity": "Informational", "contract": "StargateEthVault", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "I3: Unused imports", "description": "In RouterETH, the following imports are unnecessary: import \"./openzeppelin/Ownable.sol\"; import \"./openzeppelin/IERC20.sol\";", "severity": "Informational", "contract": "RouterETH", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-710"], "2": ["CWE-1059"]}, "title": "I4: Comments quality", "description": "There are a few minor things in the comments that should be fixed.", "severity": "Informational", "contract": "StargateEthVault", "function": ["setNoUnwrapTo()", "transferFrom()"], "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-710"]}, "title": "I5: Code quality", "description": "The interface `IStargateEthVault` is now declared in an external file and imported in both `StargateEthVault` and `RouterETH`. `StargateEthVault` implements the interface, as was recommended.", "severity": "Informational", "contract": "StargateEthVault", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Ackee_Blockchain/ackee-blockchain-layerzero-3-report.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "W1F: totalSupply() not guaranteed to be accurate",
+            "description": "The code logic has been adjusted so that the `totalSupply` is tracked accurately, but there are cases where ether can exist in the contract without having executed the `deposit()` function, making `totalSupply()` return a larger number than the actual sum of `SGETH` balances.",
+            "severity": "Warning",
+            "contract": "StargateEthVault",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "M1: Usage of `solc` optimizer",
+            "description": "The project uses `solc` optimizer which may lead to unexpected bugs.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-241"
+                ]
+            },
+            "title": "L1: Insufficient data validation in RouterETH",
+            "description": "RouterETH does not perform any data validation of the following passed addresses in its constructor: `_stargateEthVault` and `_stargateRouter`. An incorrect or malicious `_stargateEthVault` is passed to the constructor, instead of reverting, the call succeeds.",
+            "severity": "High",
+            "contract": "RouterETH",
+            "function": "constructor",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-282"
+                ],
+                "3": [
+                    "CWE-708"
+                ]
+            },
+            "title": "W2: Renounce ownership",
+            "description": "The renounceOwnership() function can be accidentally called by the owner of the contract, resulting in loss of ownership.",
+            "severity": "Warning",
+            "contract": "StargateEthVault",
+            "function": "renounceOwnership()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "I1: Public functions",
+            "description": "Public functions declared unnecessarily, affecting gas optimization.",
+            "severity": "Informational",
+            "contract": "StargateEthVault",
+            "function": [
+                "withdraw()",
+                "totalSupply()",
+                "approve()",
+                "transfer()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1126"
+                ]
+            },
+            "title": "I2: Variables should be declared `constant`",
+            "description": "Declare state variables as `constant` to reduce gas costs.",
+            "severity": "Informational",
+            "contract": "StargateEthVault",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "I3: Unused imports",
+            "description": "In RouterETH, the following imports are unnecessary: import \"./openzeppelin/Ownable.sol\"; import \"./openzeppelin/IERC20.sol\";",
+            "severity": "Informational",
+            "contract": "RouterETH",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1059"
+                ]
+            },
+            "title": "I4: Comments quality",
+            "description": "There are a few minor things in the comments that should be fixed.",
+            "severity": "Informational",
+            "contract": "StargateEthVault",
+            "function": [
+                "setNoUnwrapTo()",
+                "transferFrom()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ]
+            },
+            "title": "I5: Code quality",
+            "description": "The interface `IStargateEthVault` is now declared in an external file and imported in both `StargateEthVault` and `RouterETH`. `StargateEthVault` implements the interface, as was recommended.",
+            "severity": "Informational",
+            "contract": "StargateEthVault",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

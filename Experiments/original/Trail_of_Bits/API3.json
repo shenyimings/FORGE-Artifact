@@ -1,1 +1,164 @@
-{"path": "./Audit_Reports_2024/Trail_of_Bits/API3.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1285"], "4": ["CWE-129"]}, "title": "Publish-subscribe protocol users are vulnerable to a denial of service", "description": "In the publish-subscribe protocol, `subscriptionId` values represent positions of certain data structures in a mapping. Each `subscriptionId` is computed as a hash of a data structure\u2019s field values. Because the system uses `abi.encodePacked` with more than one dynamic type, it is possible to craft a `subscriptionId` collision by providing invalid field values, causing the requester using the `subscriptionId` to experience a denial of service (DoS).", "severity": "High", "contract": "StorageUtils", "function": "storeSubscription", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Solidity compiler optimizations can be problematic", "description": "The API3 contracts have enabled optional compiler optimizations in Solidity which may lead to security implications due to optimization bugs.", "severity": "Informational", "contract": "airnode-protocol-v1/hardhat.config.ts", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Decisions to opt out of a monetization scheme are irreversible", "description": "The API3 protocol implements two on-chain monetization schemes. If an Airnode owner decides to opt out of a scheme, the Airnode will not receive additional token payments or deposits (depending on the scheme). Although the documentation states that Airnodes can opt back in to a scheme, the current implementation does not allow it.", "severity": "Medium", "contract": "RequesterAuthorizerWhitelisterWithToken.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Depositors can front-run request-blocking transactions", "description": "A depositor could monitor the transactions and call `withdrawTokens` to front-run a blocking transaction, allowing them to withdraw tokens despite being blacklisted.", "severity": "N/A", "contract": "RequesterAuthorizerWhitelisterWithTokenDeposit", "function": "withdrawTokens()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "Incompatibility with non-standard ERC20 tokens", "description": "The contract does not handle non-standard ERC20 tokens correctly, which may cause calls to transfer or transferFrom functions to fail due to incorrect return values.", "severity": "High", "contract": "RequesterAuthorizerWhitelisterWithTokenPayment", "function": "payTokens()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Compromise of a single oracle enables limited control of the dAPI value", "description": "An attacker could skew the median by compromising one oracle, allowing them to set the dAPI value within a certain range, potentially leading to profit manipulation.", "severity": "Undetermined", "contract": "DapiServer", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Project dependencies contain vulnerabilities", "description": "The project's JavaScript dependencies have known vulnerabilities (CVE-2022-0536 and CVE-2021-23555) that can expose sensitive information or allow sandbox bypass.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-284"]}, "title": "DapiServer beacon data is accessible to all users", "description": "An attacker could abuse this function to deduce one bit of data per call and extract a larger amount of information by using a mechanism such as a dichotomic search, allowing them to infer the value of `dataPoint` directly on-chain.", "severity": "N/A", "contract": "DapiServer", "function": "conditionPspDapiUpdate()", "lineNumber": "L468-502"}, {"id": 8, "category": {"1": ["CWE-682"]}, "title": "Misleading function name", "description": "The function 'conditionPspDapiUpdate' returns a boolean value indicating whether the respective dAPI needs to be updated based on condition parameters, but its behavior contradicts the code comment and the name of the function.", "severity": "Medium", "contract": "N/A", "function": "conditionPspDapiUpdate", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/API3.pdf",
+    "project_info": {
+        "url": "https://github.com/api3dao/airnode/tree/v1-protocol",
+        "commit_hash": "v1-protocol",
+        "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1285"
+                ],
+                "4": [
+                    "CWE-129"
+                ]
+            },
+            "title": "Publish-subscribe protocol users are vulnerable to a denial of service",
+            "description": "In the publish-subscribe protocol, `subscriptionId` values represent positions of certain data structures in a mapping. Each `subscriptionId` is computed as a hash of a data structure\u2019s field values. Because the system uses `abi.encodePacked` with more than one dynamic type, it is possible to craft a `subscriptionId` collision by providing invalid field values, causing the requester using the `subscriptionId` to experience a denial of service (DoS).",
+            "severity": "High",
+            "contract": "StorageUtils",
+            "function": "storeSubscription",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Solidity compiler optimizations can be problematic",
+            "description": "The API3 contracts have enabled optional compiler optimizations in Solidity which may lead to security implications due to optimization bugs.",
+            "severity": "Informational",
+            "contract": "airnode-protocol-v1/hardhat.config.ts",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Decisions to opt out of a monetization scheme are irreversible",
+            "description": "The API3 protocol implements two on-chain monetization schemes. If an Airnode owner decides to opt out of a scheme, the Airnode will not receive additional token payments or deposits (depending on the scheme). Although the documentation states that Airnodes can opt back in to a scheme, the current implementation does not allow it.",
+            "severity": "Medium",
+            "contract": "RequesterAuthorizerWhitelisterWithToken.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Depositors can front-run request-blocking transactions",
+            "description": "A depositor could monitor the transactions and call `withdrawTokens` to front-run a blocking transaction, allowing them to withdraw tokens despite being blacklisted.",
+            "severity": "N/A",
+            "contract": "RequesterAuthorizerWhitelisterWithTokenDeposit",
+            "function": "withdrawTokens()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incompatibility with non-standard ERC20 tokens",
+            "description": "The contract does not handle non-standard ERC20 tokens correctly, which may cause calls to transfer or transferFrom functions to fail due to incorrect return values.",
+            "severity": "High",
+            "contract": "RequesterAuthorizerWhitelisterWithTokenPayment",
+            "function": "payTokens()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Compromise of a single oracle enables limited control of the dAPI value",
+            "description": "An attacker could skew the median by compromising one oracle, allowing them to set the dAPI value within a certain range, potentially leading to profit manipulation.",
+            "severity": "Undetermined",
+            "contract": "DapiServer",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Project dependencies contain vulnerabilities",
+            "description": "The project's JavaScript dependencies have known vulnerabilities (CVE-2022-0536 and CVE-2021-23555) that can expose sensitive information or allow sandbox bypass.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "DapiServer beacon data is accessible to all users",
+            "description": "An attacker could abuse this function to deduce one bit of data per call and extract a larger amount of information by using a mechanism such as a dichotomic search, allowing them to infer the value of `dataPoint` directly on-chain.",
+            "severity": "N/A",
+            "contract": "DapiServer",
+            "function": "conditionPspDapiUpdate()",
+            "lineNumber": "L468-502"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Misleading function name",
+            "description": "The function 'conditionPspDapiUpdate' returns a boolean value indicating whether the respective dAPI needs to be updated based on condition parameters, but its behavior contradicts the code comment and the name of the function.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "conditionPspDapiUpdate",
+            "lineNumber": "N/A"
+        }
+    ]
+}

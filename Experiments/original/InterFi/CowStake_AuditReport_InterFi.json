@@ -1,1 +1,314 @@
-{"path": "./Audit_Reports_2024/InterFi/CowStake_AuditReport_InterFi.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Minting of unlimited number of sundae tokens", "description": "The contract allows minting of unlimited number of sundae tokens, which can lead to inflation and devaluation of the token.", "severity": "Critical", "contract": "CowBondDepository", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Potential unauthorized script upgrade", "description": "N/A", "severity": "Low", "contract": "CowStake.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-909"], "4": ["CWE-456"]}, "title": "Unprotected initialize function", "description": "The constructor of a contract can be called multiple times, potentially leading to unintended behavior.", "severity": "High", "contract": "AbstractScow", "function": "<Constructor>", "lineNumber": "1"}, {"id": 3, "category": {"1": ["CWE-284"]}, "title": "Unprotected setSCowCalculator function", "description": "The setSCowCalculator function is unprotected and can be exploited by unauthorized users.", "severity": "High", "contract": "COW STAKE", "function": "setSCowCalculator()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "Unprotected addRecipient function", "description": "The addRecipient function lacks protection, making it vulnerable to potential attacks.", "severity": "High", "contract": "N/A", "function": "addRecipient", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"]}, "title": "Unprotected setRecipientRation function", "description": "The setRecipientRation function is unprotected and can be exploited by an attacker.", "severity": "High", "contract": "N/A", "function": "setRecipientRation()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-284"]}, "title": "Unprotected rebase function", "description": "The rebase function is unprotected and can be called by anyone, potentially leading to unauthorized state changes.", "severity": "High", "contract": "CowStaking", "function": "rebaseForCal", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-284"]}, "title": "Unprotected _storeRebase function", "description": "The _storeRebase function is unprotected and can be exploited by an attacker.", "severity": "High", "contract": "CowStaking", "function": "_storeRebase", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "Unprotected transfer function", "description": "N/A", "severity": "Low", "contract": "CowStake.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "Unprotected transferFrom function", "description": "The approve function allows a spender to withdraw a set number of tokens from a specified account without proper protection.", "severity": "Low", "contract": "CowStake.sol", "function": "approve()", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-284"]}, "title": "Unprotected approve function", "description": "The approve function does not have any access control, allowing anyone to call it.", "severity": "High", "contract": "ERC20Permit", "function": "approve()", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "Unprotected _approve function", "description": "The _approve function is unprotected and can be exploited.", "severity": "High", "contract": "ERC20", "function": "_approve", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "Unprotected increaseAllowance function", "description": "The safeIncreaseAllowance function in the SafeERC20 library is unprotected and can lead to unauthorized allowance changes.", "severity": "High", "contract": "SafeERC20", "function": "safeIncreaseAllowance()", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "Unprotected decreaseAllowance function", "description": "The safeDecreaseAllowance function in SafeERC20 library is unprotected and can cause unintended consequences.", "severity": "High", "contract": "SafeERC20", "function": "safeDecreaseAllowance()", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-691"], "2": ["CWE-1265"]}, "title": "Potential reentrancy in burnFrom function", "description": "Reentrancy vulnerability found in burnFrom function", "severity": "High", "contract": "N/A", "function": "burnFrom()", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-710"], "2": ["CWE-684"], "3": ["CWE-440"]}, "title": "Potential reentrancy in calculateBondPrice function", "description": "The calculateBondPrice function has a potential reentrancy vulnerability.", "severity": "High", "contract": "N/A", "function": "calculateBondPrice", "lineNumber": "N/A"}, {"id": 16, "category": {"1": ["CWE-691"], "2": ["CWE-1265"]}, "title": "Potential reentrancy in inviteUser function", "description": "The inviteUser function may be vulnerable to reentrancy attacks.", "severity": "High", "contract": "IRouter", "function": "inviteUser", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/InterFi/CowStake_AuditReport_InterFi.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Minting of unlimited number of sundae tokens",
+            "description": "The contract allows minting of unlimited number of sundae tokens, which can lead to inflation and devaluation of the token.",
+            "severity": "Critical",
+            "contract": "CowBondDepository",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Potential unauthorized script upgrade",
+            "description": "N/A",
+            "severity": "Low",
+            "contract": "CowStake.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "Unprotected initialize function",
+            "description": "The constructor of a contract can be called multiple times, potentially leading to unintended behavior.",
+            "severity": "High",
+            "contract": "AbstractScow",
+            "function": "<Constructor>",
+            "lineNumber": "1"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected setSCowCalculator function",
+            "description": "The setSCowCalculator function is unprotected and can be exploited by unauthorized users.",
+            "severity": "High",
+            "contract": "COW STAKE",
+            "function": "setSCowCalculator()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Unprotected addRecipient function",
+            "description": "The addRecipient function lacks protection, making it vulnerable to potential attacks.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "addRecipient",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected setRecipientRation function",
+            "description": "The setRecipientRation function is unprotected and can be exploited by an attacker.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "setRecipientRation()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected rebase function",
+            "description": "The rebase function is unprotected and can be called by anyone, potentially leading to unauthorized state changes.",
+            "severity": "High",
+            "contract": "CowStaking",
+            "function": "rebaseForCal",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected _storeRebase function",
+            "description": "The _storeRebase function is unprotected and can be exploited by an attacker.",
+            "severity": "High",
+            "contract": "CowStaking",
+            "function": "_storeRebase",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Unprotected transfer function",
+            "description": "N/A",
+            "severity": "Low",
+            "contract": "CowStake.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Unprotected transferFrom function",
+            "description": "The approve function allows a spender to withdraw a set number of tokens from a specified account without proper protection.",
+            "severity": "Low",
+            "contract": "CowStake.sol",
+            "function": "approve()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected approve function",
+            "description": "The approve function does not have any access control, allowing anyone to call it.",
+            "severity": "High",
+            "contract": "ERC20Permit",
+            "function": "approve()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Unprotected _approve function",
+            "description": "The _approve function is unprotected and can be exploited.",
+            "severity": "High",
+            "contract": "ERC20",
+            "function": "_approve",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Unprotected increaseAllowance function",
+            "description": "The safeIncreaseAllowance function in the SafeERC20 library is unprotected and can lead to unauthorized allowance changes.",
+            "severity": "High",
+            "contract": "SafeERC20",
+            "function": "safeIncreaseAllowance()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Unprotected decreaseAllowance function",
+            "description": "The safeDecreaseAllowance function in SafeERC20 library is unprotected and can cause unintended consequences.",
+            "severity": "High",
+            "contract": "SafeERC20",
+            "function": "safeDecreaseAllowance()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "Potential reentrancy in burnFrom function",
+            "description": "Reentrancy vulnerability found in burnFrom function",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "burnFrom()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-684"
+                ],
+                "3": [
+                    "CWE-440"
+                ]
+            },
+            "title": "Potential reentrancy in calculateBondPrice function",
+            "description": "The calculateBondPrice function has a potential reentrancy vulnerability.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "calculateBondPrice",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "Potential reentrancy in inviteUser function",
+            "description": "The inviteUser function may be vulnerable to reentrancy attacks.",
+            "severity": "High",
+            "contract": "IRouter",
+            "function": "inviteUser",
+            "lineNumber": "N/A"
+        }
+    ]
+}

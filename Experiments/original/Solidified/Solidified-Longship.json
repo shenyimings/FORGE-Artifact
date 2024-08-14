@@ -1,1 +1,156 @@
-{"path": "./Audit_Reports_2024/Solidified/Solidified-Longship.pdf", "project_info": {"url": "https://github.com/shipyard-software/hydrofoil", "commit_hash": "7facd7ce92b694cd3c07989274f10a938089d2e2", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "bankruptcyLiquidateLong() can be called several times on a long position", "description": "In bankruptcyLiquidateLong(), only removeLong() is called and the long entry in the data-structure is not actually deleted, leading to a long being liquidated several times.", "severity": "Critical", "contract": "Hydrofoil.sol", "function": "bankruptcyLiquidateLong()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-693"]}, "title": "Reentrancy may cause exploitable issues with ERC-777 tokens or other ERC-20 tokens with receive hooks", "description": "The function `unifiedTransmit()` is used to send out ERC20 tokens or ETH, which may lead to reentrancy vulnerabilities with ERC-20 compatible tokens that allow users to register receive hooks.", "severity": "Major", "contract": "Hydrofoil.sol", "function": "unifiedTransmit()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Hydrofoil.sol: Excess ETH sent to contract is not refunded and will be stuck in the contract", "description": "In the unifiedTransmit() function of Hydrofoil.sol, excess ETH sent by users will be stuck in the contract because it assumes the underlying asset to be wrapped ETH and forwards the amount specified in the howMuch argument without refunding the excess.", "severity": "Minor", "contract": "Hydrofoil.sol", "function": "unifiedTransmit()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Wide pragma range may cause integer overflows and compilation issues", "description": "The codebase allows a wide range of Solidity compiler versions, including versions below 0.8.0, which did not include automatic overflow protection and may lead to uncaught arithmetic errors.", "severity": "Minor", "contract": "SimpleDatabase.sol", "function": "_mint()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "HydrofoilParent.sol: Missing zero check", "description": "The function `adjustAddressChecker()` lacks a zero check on the address argument, which may lead to accidental misconfiguration.", "severity": "Informational", "contract": "HydrofoilParent.sol", "function": "adjustAddressChecker()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1288"]}, "title": "HydrofoilParent.sol: Unused function", "description": "The function `checkAddress()` is not used in the codebase anymore since whitelisting has been replaced by admin-controlled deployment.", "severity": "Informational", "contract": "HydrofoilParent.sol", "function": "checkAddress()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "Hydrofoil.sol: Wrong message", "description": "In bankruptcyLiquidateLong(), the revert message 'Bankrupt' is incorrect as it reverts when the system is NOT bankrupt.", "severity": "Critical", "contract": "Hydrofoil", "function": "bankruptcyLiquidateLong()", "lineNumber": "663"}, {"id": 7, "category": {"1": ["CWE-710"], "2": ["CWE-1120"], "3": ["CWE-1060"]}, "title": "Gas optimizations", "description": "Optimizations can be made to reduce gas usage by reordering conversions and declaring some functions as external.", "severity": "Note", "contract": "N/A", "function": ["setMultsForVolatility", "HydrofoilUtils.exp", "InvariantCalcs.getInvariant", "InvariantCalcs.getInvariantsLP", "InvariantCalcs.getInvariantsRepo"], "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Solidified/Solidified-Longship.pdf",
+    "project_info": {
+        "url": "https://github.com/shipyard-software/hydrofoil",
+        "commit_hash": "7facd7ce92b694cd3c07989274f10a938089d2e2",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "bankruptcyLiquidateLong() can be called several times on a long position",
+            "description": "In bankruptcyLiquidateLong(), only removeLong() is called and the long entry in the data-structure is not actually deleted, leading to a long being liquidated several times.",
+            "severity": "Critical",
+            "contract": "Hydrofoil.sol",
+            "function": "bankruptcyLiquidateLong()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "Reentrancy may cause exploitable issues with ERC-777 tokens or other ERC-20 tokens with receive hooks",
+            "description": "The function `unifiedTransmit()` is used to send out ERC20 tokens or ETH, which may lead to reentrancy vulnerabilities with ERC-20 compatible tokens that allow users to register receive hooks.",
+            "severity": "Major",
+            "contract": "Hydrofoil.sol",
+            "function": "unifiedTransmit()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Hydrofoil.sol: Excess ETH sent to contract is not refunded and will be stuck in the contract",
+            "description": "In the unifiedTransmit() function of Hydrofoil.sol, excess ETH sent by users will be stuck in the contract because it assumes the underlying asset to be wrapped ETH and forwards the amount specified in the howMuch argument without refunding the excess.",
+            "severity": "Minor",
+            "contract": "Hydrofoil.sol",
+            "function": "unifiedTransmit()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Wide pragma range may cause integer overflows and compilation issues",
+            "description": "The codebase allows a wide range of Solidity compiler versions, including versions below 0.8.0, which did not include automatic overflow protection and may lead to uncaught arithmetic errors.",
+            "severity": "Minor",
+            "contract": "SimpleDatabase.sol",
+            "function": "_mint()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "HydrofoilParent.sol: Missing zero check",
+            "description": "The function `adjustAddressChecker()` lacks a zero check on the address argument, which may lead to accidental misconfiguration.",
+            "severity": "Informational",
+            "contract": "HydrofoilParent.sol",
+            "function": "adjustAddressChecker()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1288"
+                ]
+            },
+            "title": "HydrofoilParent.sol: Unused function",
+            "description": "The function `checkAddress()` is not used in the codebase anymore since whitelisting has been replaced by admin-controlled deployment.",
+            "severity": "Informational",
+            "contract": "HydrofoilParent.sol",
+            "function": "checkAddress()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Hydrofoil.sol: Wrong message",
+            "description": "In bankruptcyLiquidateLong(), the revert message 'Bankrupt' is incorrect as it reverts when the system is NOT bankrupt.",
+            "severity": "Critical",
+            "contract": "Hydrofoil",
+            "function": "bankruptcyLiquidateLong()",
+            "lineNumber": "663"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1120"
+                ],
+                "3": [
+                    "CWE-1060"
+                ]
+            },
+            "title": "Gas optimizations",
+            "description": "Optimizations can be made to reduce gas usage by reordering conversions and declaring some functions as external.",
+            "severity": "Note",
+            "contract": "N/A",
+            "function": [
+                "setMultsForVolatility",
+                "HydrofoilUtils.exp",
+                "InvariantCalcs.getInvariant",
+                "InvariantCalcs.getInvariantsLP",
+                "InvariantCalcs.getInvariantsRepo"
+            ],
+            "lineNumber": "N/A"
+        }
+    ]
+}

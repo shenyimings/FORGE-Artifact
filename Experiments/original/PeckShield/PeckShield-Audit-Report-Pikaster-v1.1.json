@@ -1,1 +1,79 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Pikaster-v1.1.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Incorrect Logic Of ERC721Template::remint()", "description": "The `remint()` function in `ERC721Template` can be improved by adding `_burn(tokenId)` before `_mint(to, tokenId)` to avoid reversion if the `tokenId` was not burned before.", "severity": "Low", "contract": "ERC721Template", "function": "remint()", "lineNumber": "158-161"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "5.2 Safe-Version Replacement With safeTransfer()", "description": "The transfer() function does not have a return value, which may cause reversion when called, and it is suggested to use the safe version, i.e., safeTransfer(), which is a wrapper around ERC20 operations that may either throw on failure or return false without reverts.", "severity": "Low", "contract": "ERC20Template, ERC721Template", "function": "transfer()", "lineNumber": "126-137"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Trust Issue Of Admin Keys", "description": "In the Pikaster protocol, there are privileged DEFAULT_ADMIN_ROLE/MINTER/BURNER accounts that play a critical role in governing and regulating the system-wide operations (e.g., mint/burn token, pause the contract, blacklist account, withdraw tokens, etc). Our analysis shows that the privileged accounts need to be scrutinized.", "severity": "Medium", "contract": "ERC20Template, ERC721Template", "function": "mint, pause, unpause, blacklistAccount, unblackListAccount", "lineNumber": "70-81,83-86"}, {"id": 3, "category": {"1": ["CWE-703"]}, "title": "N/A", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Pikaster-v1.1.pdf",
+    "project_info": {
+        "url": "https://github.com/pikasterdev/pikaster/tree/a6088fe",
+        "commit_hash": "a6088fe",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect Logic Of ERC721Template::remint()",
+            "description": "The `remint()` function in `ERC721Template` can be improved by adding `_burn(tokenId)` before `_mint(to, tokenId)` to avoid reversion if the `tokenId` was not burned before.",
+            "severity": "Low",
+            "contract": "ERC721Template",
+            "function": "remint()",
+            "lineNumber": "158-161"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "5.2 Safe-Version Replacement With safeTransfer()",
+            "description": "The transfer() function does not have a return value, which may cause reversion when called, and it is suggested to use the safe version, i.e., safeTransfer(), which is a wrapper around ERC20 operations that may either throw on failure or return false without reverts.",
+            "severity": "Low",
+            "contract": "ERC20Template, ERC721Template",
+            "function": "transfer()",
+            "lineNumber": "126-137"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue Of Admin Keys",
+            "description": "In the Pikaster protocol, there are privileged DEFAULT_ADMIN_ROLE/MINTER/BURNER accounts that play a critical role in governing and regulating the system-wide operations (e.g., mint/burn token, pause the contract, blacklist account, withdraw tokens, etc). Our analysis shows that the privileged accounts need to be scrutinized.",
+            "severity": "Medium",
+            "contract": "ERC20Template, ERC721Template",
+            "function": "mint, pause, unpause, blacklistAccount, unblackListAccount",
+            "lineNumber": "70-81,83-86"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "N/A",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

@@ -1,1 +1,272 @@
-{"path": "./Audit_Reports_2024/Ackee_Blockchain/ackee-blockchain-everstake-staking-report.pdf", "project_info": {"url": "https://github.com/Ackee-Blockchain/woke", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "_simulateAutocompound can revert", "description": "High severity issue with invalid logic in Accounting.sol contract.", "severity": "High", "contract": "Accounting.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "H2: DoS due to 0 pending deposits", "description": "High severity issue causing Denial of Service (DoS)", "severity": "High", "contract": "Pool.sol, Accounting.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "H3: Partial DoS due to interchange", "description": "High severity issue", "severity": "High", "contract": "Pool.sol, Accounting.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"], "2": ["CWE-191"]}, "title": "H4: DoS due to underflow", "description": "High severity issue", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "M1: Missing whenWithdrawActive modifier", "description": "The unstake function does not use the whenWithdrawActive modifier, allowing withdrawals even when they are restricted by privileged roles.", "severity": "Medium", "contract": "Pool", "function": "unstake()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "M2: Call to depositedBalanceOf reverts", "description": "N/A", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-770"]}, "title": "L1: Withdraw request array monotonically grows", "description": "The withdrawal request array grows monotonically due to uncleared requests, leading to increased gas consumption as the `add` and `claim` functions traverse the entire array.", "severity": "Low", "contract": "WithdrawRequests.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-691"], "2": ["CWE-841"]}, "title": "L2: Lack of 2-phase role transfers", "description": "Low severity issue related to lack of 2-phase role transfers", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "L3: Exiting validators can revert", "description": "Exiting validators can cause concerns about the validity of validator management due to mixing pending and deposited validators.", "severity": "Low", "contract": "Pool.sol", "function": "markValidatorsAsExited()", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-229"], "4": ["CWE-230"]}, "title": "L4: Replacing validators lacks validation", "description": "The `replacePendingValidator` function in the `Pool` contract lacks data validation of the new validator's properties.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-229"], "4": ["CWE-230"]}, "title": "L5: Validation of owner in treasuries", "description": "Both WithdrawTreasury and RewardsTreasury receive the owner addresses as an argument in their constructor without performing data validation.", "severity": "Low", "contract": "WithdrawTreasury.sol, RewardsTreasury.sol", "function": "constructor", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-229"]}, "title": "L6: Data validation in initialize functions", "description": "The `Pool` and `Accounting` contracts lack proper data validation in their `initialize` functions.", "severity": "Low", "contract": ["Pool", "Accounting"], "function": "initialize()", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-682"]}, "title": "L7: Incorrect return value of _simulateAutocompound", "description": "The `_simulateAutocompound` function returns an incorrect value in certain protocol states due to an erroneous assignment of `unclaimedReward = 0;`, leading to potential invalid calculations by consumers.", "severity": "Low", "contract": "Accounting.sol", "function": "_simulateAutocompound()", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "L8: Upgradeable contract constructor without intializer", "description": "The implementation contracts use the unstructured storage pattern and have `initialize` functions but do not disable initialization of the implementation contracts via a constructor with `initializer` or with a call to `disableInitializers()`.", "severity": "Low", "contract": "Pool.sol, Accounting.sol", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Ackee_Blockchain/ackee-blockchain-everstake-staking-report.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "_simulateAutocompound can revert",
+            "description": "High severity issue with invalid logic in Accounting.sol contract.",
+            "severity": "High",
+            "contract": "Accounting.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "H2: DoS due to 0 pending deposits",
+            "description": "High severity issue causing Denial of Service (DoS)",
+            "severity": "High",
+            "contract": "Pool.sol, Accounting.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "H3: Partial DoS due to interchange",
+            "description": "High severity issue",
+            "severity": "High",
+            "contract": "Pool.sol, Accounting.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-191"
+                ]
+            },
+            "title": "H4: DoS due to underflow",
+            "description": "High severity issue",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "M1: Missing whenWithdrawActive modifier",
+            "description": "The unstake function does not use the whenWithdrawActive modifier, allowing withdrawals even when they are restricted by privileged roles.",
+            "severity": "Medium",
+            "contract": "Pool",
+            "function": "unstake()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "M2: Call to depositedBalanceOf reverts",
+            "description": "N/A",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "L1: Withdraw request array monotonically grows",
+            "description": "The withdrawal request array grows monotonically due to uncleared requests, leading to increased gas consumption as the `add` and `claim` functions traverse the entire array.",
+            "severity": "Low",
+            "contract": "WithdrawRequests.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "L2: Lack of 2-phase role transfers",
+            "description": "Low severity issue related to lack of 2-phase role transfers",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "L3: Exiting validators can revert",
+            "description": "Exiting validators can cause concerns about the validity of validator management due to mixing pending and deposited validators.",
+            "severity": "Low",
+            "contract": "Pool.sol",
+            "function": "markValidatorsAsExited()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ],
+                "4": [
+                    "CWE-230"
+                ]
+            },
+            "title": "L4: Replacing validators lacks validation",
+            "description": "The `replacePendingValidator` function in the `Pool` contract lacks data validation of the new validator's properties.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ],
+                "4": [
+                    "CWE-230"
+                ]
+            },
+            "title": "L5: Validation of owner in treasuries",
+            "description": "Both WithdrawTreasury and RewardsTreasury receive the owner addresses as an argument in their constructor without performing data validation.",
+            "severity": "Low",
+            "contract": "WithdrawTreasury.sol, RewardsTreasury.sol",
+            "function": "constructor",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ]
+            },
+            "title": "L6: Data validation in initialize functions",
+            "description": "The `Pool` and `Accounting` contracts lack proper data validation in their `initialize` functions.",
+            "severity": "Low",
+            "contract": [
+                "Pool",
+                "Accounting"
+            ],
+            "function": "initialize()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "L7: Incorrect return value of _simulateAutocompound",
+            "description": "The `_simulateAutocompound` function returns an incorrect value in certain protocol states due to an erroneous assignment of `unclaimedReward = 0;`, leading to potential invalid calculations by consumers.",
+            "severity": "Low",
+            "contract": "Accounting.sol",
+            "function": "_simulateAutocompound()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "L8: Upgradeable contract constructor without intializer",
+            "description": "The implementation contracts use the unstructured storage pattern and have `initialize` functions but do not disable initialization of the implementation contracts via a constructor with `initializer` or with a call to `disableInitializers()`.",
+            "severity": "Low",
+            "contract": "Pool.sol, Accounting.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

@@ -1,1 +1,178 @@
-{"path": "./Audit_Reports_2024/BlockSec/BlockSec-blocksec_aloe_1.1_signed.pdf", "project_info": {"url": "https://github.com/aloelabs/aloe-blend", "commit_hash": "fd1635d8928c74ed24550d3f0d9a63f284a7f872", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Accumulated maintenance fees can be claimed by invoking rebalance twice in a single transaction.", "description": "An attacker can claim all accumulated maintenance fees by invoking the function 'rebalance' twice in a single transaction, as it sets 'cache.urgency' to zero and allows the user to receive all maintenance fees.", "severity": "High", "contract": "AloeBlend", "function": "rebalance()", "lineNumber": "329, 332"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "The estimate of cToken may be inaccurate", "description": "In the `withdraw` function of CompoundCEtherSilo contract, using `cEther.exchangeRateStored()` to estimate the amount of cEther to be redeemed may lead to an inaccurate estimation because Compound updates the `exchangeRate` at the beginning when executing the `redeem` function.", "severity": "High", "contract": "CompoundCEtherSilo", "function": "withdraw()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Remove duplicated external call to save gas", "description": "There is a duplicated function call in the contract AloeBlend. The function deposit observes the price from Uniswap twice.", "severity": "N/A", "contract": "AloeBlend", "function": "deposit", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Claim governance tokens from other Dapps", "description": "The protocol invests assets to other Dapps, such as Compound, Olympus, and Fuse, but does not claim the governance tokens from them.", "severity": "Medium", "contract": "AloeBlend", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-710"], "2": ["CWE-1068"]}, "title": "Update the interface IOlympusStaking to match the latest version", "description": "In the contract OlympusStakingSilo.sol, the functions invoked in the function OlympusStaking including unstake() or claim() do not match the latest version of the Interfaces committed in the Github.", "severity": "N/A", "contract": "OlympusStakingSilo.sol", "function": "OlympusStaking", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Support deflationary/inflationary tokens", "description": "The deflationary and inflationary tokens are not supported in the current implementation. Specifically, the actual transferred amount to the pool may be different from the value specified in the transfer function.", "severity": "N/A", "contract": "AloeBlend.sol", "function": "transfer()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Add the contract factory into the audit range", "description": "In the constructor function of the AloeBlend contract, there exists an external function call from the function of msg.sender. However, only the interface is provided. The specified implementation is not included in the AloeBlend project, thus is not audited.", "severity": "N/A", "contract": "AloeBlend", "function": "constructor()", "lineNumber": "119"}, {"id": 7, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Sort silo0 and silo1 when creating vaults", "description": "The order of `silo0` and `silo1` is not forced to be the same as the corresponding UniswapV3 pool, which may make some functions act unexpectedly.", "severity": "Medium", "contract": "Factory", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-682"]}, "title": "The potential opportunity to manipulate Uniswap V3 pools", "description": "The function 'deposit' uses real-time price of Uniswap V3 pools to calculate token0 and token1 inventory, which can be manipulated via Flash Loan, allowing an attacker to deposit less tokens but get more shares.", "severity": "High", "contract": "AloeBlend", "function": "deposit()", "lineNumber": "179"}, {"id": 9, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "ClaimComp Function Can Be Called on Another Address's Behalf", "description": "The 'claimComp' function can be called on another address's behalf, so no updates to the silo are required.", "severity": "N/A", "contract": "OlympusStakingSilo.sol", "function": "claimComp()", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/BlockSec/BlockSec-blocksec_aloe_1.1_signed.pdf",
+    "project_info": {
+        "url": "https://github.com/aloelabs/aloe-blend",
+        "commit_hash": "fd1635d8928c74ed24550d3f0d9a63f284a7f872",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Accumulated maintenance fees can be claimed by invoking rebalance twice in a single transaction.",
+            "description": "An attacker can claim all accumulated maintenance fees by invoking the function 'rebalance' twice in a single transaction, as it sets 'cache.urgency' to zero and allows the user to receive all maintenance fees.",
+            "severity": "High",
+            "contract": "AloeBlend",
+            "function": "rebalance()",
+            "lineNumber": "329, 332"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "The estimate of cToken may be inaccurate",
+            "description": "In the `withdraw` function of CompoundCEtherSilo contract, using `cEther.exchangeRateStored()` to estimate the amount of cEther to be redeemed may lead to an inaccurate estimation because Compound updates the `exchangeRate` at the beginning when executing the `redeem` function.",
+            "severity": "High",
+            "contract": "CompoundCEtherSilo",
+            "function": "withdraw()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Remove duplicated external call to save gas",
+            "description": "There is a duplicated function call in the contract AloeBlend. The function deposit observes the price from Uniswap twice.",
+            "severity": "N/A",
+            "contract": "AloeBlend",
+            "function": "deposit",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Claim governance tokens from other Dapps",
+            "description": "The protocol invests assets to other Dapps, such as Compound, Olympus, and Fuse, but does not claim the governance tokens from them.",
+            "severity": "Medium",
+            "contract": "AloeBlend",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1068"
+                ]
+            },
+            "title": "Update the interface IOlympusStaking to match the latest version",
+            "description": "In the contract OlympusStakingSilo.sol, the functions invoked in the function OlympusStaking including unstake() or claim() do not match the latest version of the Interfaces committed in the Github.",
+            "severity": "N/A",
+            "contract": "OlympusStakingSilo.sol",
+            "function": "OlympusStaking",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Support deflationary/inflationary tokens",
+            "description": "The deflationary and inflationary tokens are not supported in the current implementation. Specifically, the actual transferred amount to the pool may be different from the value specified in the transfer function.",
+            "severity": "N/A",
+            "contract": "AloeBlend.sol",
+            "function": "transfer()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Add the contract factory into the audit range",
+            "description": "In the constructor function of the AloeBlend contract, there exists an external function call from the function of msg.sender. However, only the interface is provided. The specified implementation is not included in the AloeBlend project, thus is not audited.",
+            "severity": "N/A",
+            "contract": "AloeBlend",
+            "function": "constructor()",
+            "lineNumber": "119"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Sort silo0 and silo1 when creating vaults",
+            "description": "The order of `silo0` and `silo1` is not forced to be the same as the corresponding UniswapV3 pool, which may make some functions act unexpectedly.",
+            "severity": "Medium",
+            "contract": "Factory",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "The potential opportunity to manipulate Uniswap V3 pools",
+            "description": "The function 'deposit' uses real-time price of Uniswap V3 pools to calculate token0 and token1 inventory, which can be manipulated via Flash Loan, allowing an attacker to deposit less tokens but get more shares.",
+            "severity": "High",
+            "contract": "AloeBlend",
+            "function": "deposit()",
+            "lineNumber": "179"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "ClaimComp Function Can Be Called on Another Address's Behalf",
+            "description": "The 'claimComp' function can be called on another address's behalf, so no updates to the silo are required.",
+            "severity": "N/A",
+            "contract": "OlympusStakingSilo.sol",
+            "function": "claimComp()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

@@ -1,1 +1,199 @@
-{"path": "./Audit_Reports_2024/Solidified/Solidified-InsureDAO_[13.08.2021].pdf", "project_info": {"url": "https://github.com/insureDAO/pool-contracts", "commit_hash": "13000d2bb8ad5b46625e4351616aa37c0bb61881", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"], "2": ["CWE-191"]}, "title": "_divFloor() Implementation Incorrect", "description": "The function `_divFloor()` incorrectly subtracts `1` from `c`. Also, in case `a < b`, the `c-1` will result in an arithmetic underflow. Subsequently, the function `withdraw()` function is incorrectly calculating `attribution` to be sent to the user.", "severity": "Critical", "contract": "PoolTemplate.sol", "function": "_divFloor() and withdraw()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "CDS.sol: Function initialize() can be called after contract initialization", "description": "The `initialize()` function can be called multiple times after initial contract initialization, thus compromising the immutability of all initialized variables.", "severity": "Critical", "contract": "CDS.sol", "function": "initialize()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"], "2": ["CWE-369"]}, "title": "Vault.sol: An attacker can compromise attribution calculations by directly depositing tokens to the vault", "description": "An attacker can compromise attribution calculations by directly sending enough tokens to the vault, causing the calculation `_attributions = _amount.mul(totalAttributions).div(_pool)` to be equal to zero.", "severity": "Major", "contract": "Vault.sol", "function": "addValue()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "IndexTemplate.sol: Function setLeverage() does not adjust credit allocation", "description": "Function `setLeverage()` does not call `adjustAlloc()` after setting the new leverage, thus leaving the credit allocation out of sync.", "severity": "Minor", "contract": "IndexTemplate.sol", "function": "setLeverage()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-703"]}, "title": "Providers can potentially be locked out of withdrawing their collateral from the pool", "description": "The function `withdraw()` iterates over the `poolList` array which may grow to exceed the current block gas limit, causing the function to always fail.", "severity": "Minor", "contract": "IndexTemplate.sol", "function": "withdraw()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "PoolTemplate.sol: Users can allocate credit while the pool is paused", "description": "Function `allocateCredit()` allows users to allocate credit even when the pool is `paused`.", "severity": "Minor", "contract": "PoolTemplate.sol", "function": "allocateCredit()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "IndexTemplate.sol: The owner can add any contract to pools by calling the set() function", "description": "The function `set()` does not check if the `_pool` parameter is a whitelisted `market` contract in the `Registry.sol`, allowing the owner of the `IndexTemplate.sol` to drain funds from the contract.", "severity": "Minor", "contract": "IndexTemplate.sol", "function": "set()", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1288"]}, "title": "Duplicate ownership logic", "description": "The same ownership logic is duplicated across multiple contracts.", "severity": "Note", "contract": "Factory, FeeModel, Parameters, Registry, Vault, BondingPremium, PremiumModel", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "MinterRole.sol: Any minter can add new minters. Minters cannot be removed - they can only renounce the role themselves", "description": "Any minter can add new minters and minters cannot be removed, they can only renounce the role themselves, which poses a risk if any of them becomes malicious/compromised.", "severity": "Minor", "contract": "MinterRole.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-693"], "2": ["CWE-807"], "3": ["CWE-302"]}, "title": "There are no means to deal with an insurance fraud", "description": "InsureDAO provides extra financial incentives to exploit insured contracts, allowing malicious actors to maximize profits by buying insurance before exploiting the contract.", "severity": "High", "contract": "InsureDAO", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Solidified/Solidified-InsureDAO_[13.08.2021].pdf",
+    "project_info": {
+        "url": "https://github.com/insureDAO/pool-contracts",
+        "commit_hash": "13000d2bb8ad5b46625e4351616aa37c0bb61881",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-191"
+                ]
+            },
+            "title": "_divFloor() Implementation Incorrect",
+            "description": "The function `_divFloor()` incorrectly subtracts `1` from `c`. Also, in case `a < b`, the `c-1` will result in an arithmetic underflow. Subsequently, the function `withdraw()` function is incorrectly calculating `attribution` to be sent to the user.",
+            "severity": "Critical",
+            "contract": "PoolTemplate.sol",
+            "function": "_divFloor() and withdraw()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "CDS.sol: Function initialize() can be called after contract initialization",
+            "description": "The `initialize()` function can be called multiple times after initial contract initialization, thus compromising the immutability of all initialized variables.",
+            "severity": "Critical",
+            "contract": "CDS.sol",
+            "function": "initialize()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-369"
+                ]
+            },
+            "title": "Vault.sol: An attacker can compromise attribution calculations by directly depositing tokens to the vault",
+            "description": "An attacker can compromise attribution calculations by directly sending enough tokens to the vault, causing the calculation `_attributions = _amount.mul(totalAttributions).div(_pool)` to be equal to zero.",
+            "severity": "Major",
+            "contract": "Vault.sol",
+            "function": "addValue()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "IndexTemplate.sol: Function setLeverage() does not adjust credit allocation",
+            "description": "Function `setLeverage()` does not call `adjustAlloc()` after setting the new leverage, thus leaving the credit allocation out of sync.",
+            "severity": "Minor",
+            "contract": "IndexTemplate.sol",
+            "function": "setLeverage()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Providers can potentially be locked out of withdrawing their collateral from the pool",
+            "description": "The function `withdraw()` iterates over the `poolList` array which may grow to exceed the current block gas limit, causing the function to always fail.",
+            "severity": "Minor",
+            "contract": "IndexTemplate.sol",
+            "function": "withdraw()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "PoolTemplate.sol: Users can allocate credit while the pool is paused",
+            "description": "Function `allocateCredit()` allows users to allocate credit even when the pool is `paused`.",
+            "severity": "Minor",
+            "contract": "PoolTemplate.sol",
+            "function": "allocateCredit()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "IndexTemplate.sol: The owner can add any contract to pools by calling the set() function",
+            "description": "The function `set()` does not check if the `_pool` parameter is a whitelisted `market` contract in the `Registry.sol`, allowing the owner of the `IndexTemplate.sol` to drain funds from the contract.",
+            "severity": "Minor",
+            "contract": "IndexTemplate.sol",
+            "function": "set()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1288"
+                ]
+            },
+            "title": "Duplicate ownership logic",
+            "description": "The same ownership logic is duplicated across multiple contracts.",
+            "severity": "Note",
+            "contract": "Factory, FeeModel, Parameters, Registry, Vault, BondingPremium, PremiumModel",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "MinterRole.sol: Any minter can add new minters. Minters cannot be removed - they can only renounce the role themselves",
+            "description": "Any minter can add new minters and minters cannot be removed, they can only renounce the role themselves, which poses a risk if any of them becomes malicious/compromised.",
+            "severity": "Minor",
+            "contract": "MinterRole.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ],
+                "3": [
+                    "CWE-302"
+                ]
+            },
+            "title": "There are no means to deal with an insurance fraud",
+            "description": "InsureDAO provides extra financial incentives to exploit insured contracts, allowing malicious actors to maximize profits by buying insurance before exploiting the contract.",
+            "severity": "High",
+            "contract": "InsureDAO",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

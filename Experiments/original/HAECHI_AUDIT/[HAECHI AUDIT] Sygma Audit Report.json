@@ -1,1 +1,199 @@
-{"path": "./Audit_Reports_2024/HAECHI_AUDIT/[HAECHI AUDIT] Sygma Audit Report.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-354"]}, "title": "DoS occurs because relayer does not verify event data", "description": "Arbitrary users can stop the Sygma bridge system by causing DoS to the relayers.", "severity": "Major", "contract": "sygma-core/chains/evm/listener/deposit-handler.go", "function": "deposit(uint8, bytes32, bytes, bytes)", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Relayer mishandles the execution of an event, causing panic", "description": "The relayer cannot function if a deposit event is processed while the relayer is not working, leading to panic due to out of range error.", "severity": "Major", "contract": "N/A", "function": "Execute", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "RetryEventHandler does not verify the event address, leads to arbitrary deposit", "description": "The RetryEventHandler function does not validate the event address, allowing an attacker to deploy a contract that emits a fake Deposit event and perform arbitrary deposits of assets.", "severity": "Critical", "contract": "N/A", "function": "RetryEventHandler", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "blockConfirmations can be bypassed", "description": "An attacker may force the deposit call to be relayed without waiting for the confirmation of enough blocks, which makes the system prone to double spending.", "severity": "Critical", "contract": "Bridge", "function": "retry()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Attacker may always become the coordinator in bully mode", "description": "The attacker can manipulate the coordinator selection process in bully mode by delaying messages, allowing them to become the coordinator.", "severity": "Major", "contract": "sygma/tss/coordinator.go", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "Retry function can be spammed to exhaust relayer\u2019s balance", "description": "The retry function can be spammed to exhaust the relayer's balance by repeatedly calling it without paying additional gas cost for failed proposals, leading to inability to execute proposals.", "severity": "Major", "contract": "N/A", "function": "retry(txhash)", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "DoS in Key Resharing via malicious startParams", "description": "The coordinator can cause a panic in the key resharing process by modifying the `startParams` maliciously, leading to DoS.", "severity": "Major", "contract": "sygma/tss/resharing/resharing.go", "function": "StartParams() and Start()", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "Documentation does not match implementation in setResource() functions", "description": "The documentation of setResource() function in GenericHandler claims to verify whether resourceID and contract address are not already set, but this check is missing. This issue also exists in HandlerHelpers.sol.", "severity": "Tips", "contract": "GenericHandler", "function": "setResource()", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "ERC721Handler can be used to steal other's bridged NFTs", "description": "Any attacker can steal other's bridged (burnable) NFTs if the user has approved the NFT to the ERC721Handler.", "severity": "Critical", "contract": "ERC721Handler", "function": "deposit()", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-693"], "2": ["CWE-807"], "3": ["CWE-302"]}, "title": "Contracts should use EIP712 for hashing structures", "description": "Malicious attackers may be able to replay signatures if some additional modification is made to the code. In `Bridge.sol`, there are two functions, `executeProposal()` and `executeProposals()` that take a signature from the MPC networks to process deposits.", "severity": "Minor", "contract": "Bridge.sol", "function": "executeProposal() and executeProposals()", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/HAECHI_AUDIT/[HAECHI AUDIT] Sygma Audit Report.pdf",
+    "project_info": {
+        "url": "https://github.com/sygmaprotocol/sygma-solidity/tree/aa22b0cd57b60044972e9e2596b6e115b440bbc3",
+        "commit_hash": "aa22b0cd57b60044972e9e2596b6e115b440bbc3",
+        "address": "0xda8556c2485048eee3de91085347c3210785323c",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-354"
+                ]
+            },
+            "title": "DoS occurs because relayer does not verify event data",
+            "description": "Arbitrary users can stop the Sygma bridge system by causing DoS to the relayers.",
+            "severity": "Major",
+            "contract": "sygma-core/chains/evm/listener/deposit-handler.go",
+            "function": "deposit(uint8, bytes32, bytes, bytes)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Relayer mishandles the execution of an event, causing panic",
+            "description": "The relayer cannot function if a deposit event is processed while the relayer is not working, leading to panic due to out of range error.",
+            "severity": "Major",
+            "contract": "N/A",
+            "function": "Execute",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "RetryEventHandler does not verify the event address, leads to arbitrary deposit",
+            "description": "The RetryEventHandler function does not validate the event address, allowing an attacker to deploy a contract that emits a fake Deposit event and perform arbitrary deposits of assets.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "RetryEventHandler",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "blockConfirmations can be bypassed",
+            "description": "An attacker may force the deposit call to be relayed without waiting for the confirmation of enough blocks, which makes the system prone to double spending.",
+            "severity": "Critical",
+            "contract": "Bridge",
+            "function": "retry()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Attacker may always become the coordinator in bully mode",
+            "description": "The attacker can manipulate the coordinator selection process in bully mode by delaying messages, allowing them to become the coordinator.",
+            "severity": "Major",
+            "contract": "sygma/tss/coordinator.go",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Retry function can be spammed to exhaust relayer\u2019s balance",
+            "description": "The retry function can be spammed to exhaust the relayer's balance by repeatedly calling it without paying additional gas cost for failed proposals, leading to inability to execute proposals.",
+            "severity": "Major",
+            "contract": "N/A",
+            "function": "retry(txhash)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "DoS in Key Resharing via malicious startParams",
+            "description": "The coordinator can cause a panic in the key resharing process by modifying the `startParams` maliciously, leading to DoS.",
+            "severity": "Major",
+            "contract": "sygma/tss/resharing/resharing.go",
+            "function": "StartParams() and Start()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Documentation does not match implementation in setResource() functions",
+            "description": "The documentation of setResource() function in GenericHandler claims to verify whether resourceID and contract address are not already set, but this check is missing. This issue also exists in HandlerHelpers.sol.",
+            "severity": "Tips",
+            "contract": "GenericHandler",
+            "function": "setResource()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "ERC721Handler can be used to steal other's bridged NFTs",
+            "description": "Any attacker can steal other's bridged (burnable) NFTs if the user has approved the NFT to the ERC721Handler.",
+            "severity": "Critical",
+            "contract": "ERC721Handler",
+            "function": "deposit()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ],
+                "3": [
+                    "CWE-302"
+                ]
+            },
+            "title": "Contracts should use EIP712 for hashing structures",
+            "description": "Malicious attackers may be able to replay signatures if some additional modification is made to the code. In `Bridge.sol`, there are two functions, `executeProposal()` and `executeProposals()` that take a signature from the MPC networks to process deposits.",
+            "severity": "Minor",
+            "contract": "Bridge.sol",
+            "function": "executeProposal() and executeProposals()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

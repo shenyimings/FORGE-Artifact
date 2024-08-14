@@ -1,1 +1,394 @@
-{"path": "./Audit_Reports_2024/Trail_of_Bits/argo-securityreview.pdf", "project_info": {"url": "https://github.com/argoproj", "commit_hash": "c6d37289c0ce2c5e94c33d917ad3b94ae6b4b706", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Weak token generation", "description": "The getToken function parses multiple tokens instead of using the first valid one.", "severity": "N/A", "contract": "Argo CD", "function": "getToken()", "lineNumber": "L932-955"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Custom wrapping of JWT token in Argo CD for resource exhaustion attacks", "description": "The custom implementation of JWT token wrapping in Argo CD is vulnerable to resource exhaustion attacks.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "L82-L114"}, {"id": 2, "category": {"1": ["CWE-693"], "2": ["CWE-330"], "3": ["CWE-338"]}, "title": "Weak configurations of encryption such as TLS and insufficient random number generators used in cryptographic operations", "description": "The audit report highlights two findings related to weak encryption configurations: 1) Non-cryptographically secure random function documented as CSPRNG, and 2) Weak TLS version/cipher mode configurations. The first finding indicates the use of a non-secure random function, which can compromise the security of cryptographic operations. The second finding reveals that Argo Workflows serves requests for TLS v1.0, v1.1, and TLS v1.2 with discouraged cipher modes when using the '--secure' application argument.", "severity": "Informational", "contract": "argocd-redis", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-287"]}, "title": "Lack of Redis passphrases", "description": "Argo CD does not leverage passphrases for authentication to its Redis instances. This means that any attacker which gains access to a component within the cluster which hosts Argo CD will be able to authenticate to Redis.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "L15-25"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-250"]}, "title": "Lack of container security options", "description": "The default deployment configuration for Argo containers lacks certain security options that mitigate privilege escalation risks.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-250"]}, "title": "Containers running as root", "description": "The root user inside a container has the same privileges as the host's root user unless user namespaces are used, and it is recommended to run containers with non-root users for security reasons.", "severity": "Critical", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Redis is outdated", "description": "The Redis version used is outdated and may contain known vulnerabilities.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-693"], "2": ["CWE-311"], "3": ["CWE-319"]}, "title": "Redis does not leverage TLS encryption", "description": "Argo CD currently leverages version 5.x of Redis which doesn't support encrypting communications with TLS, making it vulnerable to man-in-the-middle attacks.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-703"]}, "title": "Rollouts: Unhandled error when reconciling Istio Virtual Service", "description": "There is an unhandled error when reconciling Istio Virtual Service in Argo Rollouts.", "severity": "N/A", "contract": "argo-rollouts", "function": "N/A", "lineNumber": "148"}, {"id": 9, "category": {"1": ["CWE-703"]}, "title": "Unhandled deferred file close operations", "description": "The code contains unhandled deferred file close operations which may lead to undefined behavior in rare circumstances such as a full or failing disk.", "severity": "N/A", "contract": "gcs", "function": "N/A", "lineNumber": "L123-L132"}, {"id": 10, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-250"]}, "title": "MinIO container runs as root", "description": "The MinIO container has been found to run with root privileges, increasing the attack surface available to an attacker in case of a Linux kernel bug exploitation.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-697"], "2": ["CWE-1024"]}, "title": "File extension comparisons are case sensitive", "description": "Throughout Argo codebases, there are various operations which rely on filepath.Ext() calls to obtain a file extension, prior to performing a string comparison on the extension. However, this string comparison is case sensitive and does not consider files of the same extension which utilize different casing.", "severity": "N/A", "contract": "agent", "function": "multiple code paths", "lineNumber": "L64-86"}, {"id": 12, "category": {"1": ["CWE-693"], "2": ["CWE-311"], "3": ["CWE-319"]}, "title": "Workflows: HTTP used by default for Web UI", "description": "Although TLS is supported and recommended to be enabled, it is not enabled by default within Argo Workflows as it is with Argo CD, and the initial setup guides do not encourage operators to configure it.", "severity": "Low", "contract": "Argo Workflows", "function": "N/A", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-693"], "2": ["CWE-326"]}, "title": "Weak TLS version/cipher mode configurations", "description": "Argo Workflows serves requests with weak TLS versions (v1.0, v1.1) and discouraged cipher modes when using the '--secure' application argument.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Workflows: HTTP artifact fetcher will fail on self-signed certificates", "description": "When using the HTTP artifact fetcher in Argo Workflows, an artifact will fail to be fetched if the server is using self-signed certificates for TLS.", "severity": "Informational", "contract": "argo-workflows/workflow/artifacts/http/http.go", "function": "N/A", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-693"], "2": ["CWE-326"]}, "title": "Workflows: HTTP artifact fetcher will not use TLS by default", "description": "When using the HTTP artifact fetcher in Argo Workflows, if a provided URL does not contain an HTTP or HTTPS prefix, `curl` will fetch a URL using HTTP by default. This can result in downloading artifacts using an insecure channel when a secure channel was intended.", "severity": "Low", "contract": "argo-workflows/workflow/artifacts/http/http.go", "function": "N/A", "lineNumber": "N/A"}, {"id": 16, "category": {"1": ["CWE-693"], "2": ["CWE-311"], "3": ["CWE-319"]}, "title": "Prometheus metrics endpoints do not use TLS", "description": "The Prometheus metrics endpoints exposed by all of the Argo services under review are served using HTTP only, making it possible for an attacker to observe or manipulate metrics data.", "severity": "Low", "contract": "Argo CD, Argo Workflows, Argo Events, Argo Rollouts", "function": "N/A", "lineNumber": "N/A"}, {"id": 17, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Workflows: Git artifact fetcher does not validate revision names", "description": "When using the Git artifact fetcher with an optional revision name, no validation of the revision name is done before it is passed to `git checkout`. This may lead to unexpected behaviour on checkout as the input is otherwise not validated prior to use.", "severity": "Informational", "contract": "argo-workflow/workflow/artifacts/git/git.go", "function": "N/A", "lineNumber": "N/A"}, {"id": 18, "category": {"1": ["CWE-682"]}, "title": "Rollouts: Use of strconv.Atoi when a fixed-width integer is desired", "description": "In the Argo Rollouts code, there are occurrences of string-to-integer conversion that use strconv.Atoi but subsequently re-cast the result to a fixed-width integer, such as int32.", "severity": "Informational", "contract": "argo-rollouts/utils/annotations/annotations.go", "function": "getIntFromAnnotation", "lineNumber": "N/A"}, {"id": 19, "category": {"1": ["CWE-284"], "2": ["CWE-923"], "3": ["CWE-300"]}, "title": "The zJWT auth tokens allow for denial of service in Argo CD", "description": "Unauthenticated attackers can cause a denial of service by sending malicious requests to the Argo CD server using headers and cookies in its getToken function.", "severity": "High", "contract": "Argo CD", "function": "getToken()", "lineNumber": "N/A"}, {"id": 20, "category": {"1": ["CWE-697"]}, "title": "Non-cryptographically secure random function documented as CSPRNG", "description": "The RandString function uses a non-cryptographically secure random function (time.Now().UnixNano()) and is documented as a cryptographically-secure pseudo-random number generator.", "severity": "High", "contract": "N/A", "function": "RandString()", "lineNumber": "N/A"}, {"id": 21, "category": {"1": ["CWE-284"]}, "title": "Symlink in a Git repository allows including files outside of the Git repository path on the Argo CD repo server", "description": "Allows including files outside of the Git repository path by creating a symlink in one repository that points to a manifest file in another repository's cloned path.", "severity": "N/A", "contract": "N/A", "function": "findManifests()", "lineNumber": "L860-L952"}]}
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/argo-securityreview.pdf",
+    "project_info": {
+        "url": "https://github.com/argoproj/argo-cd/tree/c6d37289c0ce2c5e94c33d917ad3b94ae6b4b706",
+        "commit_hash": "c6d37289c0ce2c5e94c33d917ad3b94ae6b4b706",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Weak token generation",
+            "description": "The getToken function parses multiple tokens instead of using the first valid one.",
+            "severity": "N/A",
+            "contract": "Argo CD",
+            "function": "getToken()",
+            "lineNumber": "L932-955"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Custom wrapping of JWT token in Argo CD for resource exhaustion attacks",
+            "description": "The custom implementation of JWT token wrapping in Argo CD is vulnerable to resource exhaustion attacks.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "L82-L114"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-330"
+                ],
+                "3": [
+                    "CWE-338"
+                ]
+            },
+            "title": "Weak configurations of encryption such as TLS and insufficient random number generators used in cryptographic operations",
+            "description": "The audit report highlights two findings related to weak encryption configurations: 1) Non-cryptographically secure random function documented as CSPRNG, and 2) Weak TLS version/cipher mode configurations. The first finding indicates the use of a non-secure random function, which can compromise the security of cryptographic operations. The second finding reveals that Argo Workflows serves requests for TLS v1.0, v1.1, and TLS v1.2 with discouraged cipher modes when using the '--secure' application argument.",
+            "severity": "Informational",
+            "contract": "argocd-redis",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-287"
+                ]
+            },
+            "title": "Lack of Redis passphrases",
+            "description": "Argo CD does not leverage passphrases for authentication to its Redis instances. This means that any attacker which gains access to a component within the cluster which hosts Argo CD will be able to authenticate to Redis.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "L15-25"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-250"
+                ]
+            },
+            "title": "Lack of container security options",
+            "description": "The default deployment configuration for Argo containers lacks certain security options that mitigate privilege escalation risks.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-250"
+                ]
+            },
+            "title": "Containers running as root",
+            "description": "The root user inside a container has the same privileges as the host's root user unless user namespaces are used, and it is recommended to run containers with non-root users for security reasons.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Redis is outdated",
+            "description": "The Redis version used is outdated and may contain known vulnerabilities.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-311"
+                ],
+                "3": [
+                    "CWE-319"
+                ]
+            },
+            "title": "Redis does not leverage TLS encryption",
+            "description": "Argo CD currently leverages version 5.x of Redis which doesn't support encrypting communications with TLS, making it vulnerable to man-in-the-middle attacks.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Rollouts: Unhandled error when reconciling Istio Virtual Service",
+            "description": "There is an unhandled error when reconciling Istio Virtual Service in Argo Rollouts.",
+            "severity": "N/A",
+            "contract": "argo-rollouts",
+            "function": "N/A",
+            "lineNumber": "148"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Unhandled deferred file close operations",
+            "description": "The code contains unhandled deferred file close operations which may lead to undefined behavior in rare circumstances such as a full or failing disk.",
+            "severity": "N/A",
+            "contract": "gcs",
+            "function": "N/A",
+            "lineNumber": "L123-L132"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-250"
+                ]
+            },
+            "title": "MinIO container runs as root",
+            "description": "The MinIO container has been found to run with root privileges, increasing the attack surface available to an attacker in case of a Linux kernel bug exploitation.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ],
+                "2": [
+                    "CWE-1024"
+                ]
+            },
+            "title": "File extension comparisons are case sensitive",
+            "description": "Throughout Argo codebases, there are various operations which rely on filepath.Ext() calls to obtain a file extension, prior to performing a string comparison on the extension. However, this string comparison is case sensitive and does not consider files of the same extension which utilize different casing.",
+            "severity": "N/A",
+            "contract": "agent",
+            "function": "multiple code paths",
+            "lineNumber": "L64-86"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-311"
+                ],
+                "3": [
+                    "CWE-319"
+                ]
+            },
+            "title": "Workflows: HTTP used by default for Web UI",
+            "description": "Although TLS is supported and recommended to be enabled, it is not enabled by default within Argo Workflows as it is with Argo CD, and the initial setup guides do not encourage operators to configure it.",
+            "severity": "Low",
+            "contract": "Argo Workflows",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-326"
+                ]
+            },
+            "title": "Weak TLS version/cipher mode configurations",
+            "description": "Argo Workflows serves requests with weak TLS versions (v1.0, v1.1) and discouraged cipher modes when using the '--secure' application argument.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Workflows: HTTP artifact fetcher will fail on self-signed certificates",
+            "description": "When using the HTTP artifact fetcher in Argo Workflows, an artifact will fail to be fetched if the server is using self-signed certificates for TLS.",
+            "severity": "Informational",
+            "contract": "argo-workflows/workflow/artifacts/http/http.go",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-326"
+                ]
+            },
+            "title": "Workflows: HTTP artifact fetcher will not use TLS by default",
+            "description": "When using the HTTP artifact fetcher in Argo Workflows, if a provided URL does not contain an HTTP or HTTPS prefix, `curl` will fetch a URL using HTTP by default. This can result in downloading artifacts using an insecure channel when a secure channel was intended.",
+            "severity": "Low",
+            "contract": "argo-workflows/workflow/artifacts/http/http.go",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-311"
+                ],
+                "3": [
+                    "CWE-319"
+                ]
+            },
+            "title": "Prometheus metrics endpoints do not use TLS",
+            "description": "The Prometheus metrics endpoints exposed by all of the Argo services under review are served using HTTP only, making it possible for an attacker to observe or manipulate metrics data.",
+            "severity": "Low",
+            "contract": "Argo CD, Argo Workflows, Argo Events, Argo Rollouts",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Workflows: Git artifact fetcher does not validate revision names",
+            "description": "When using the Git artifact fetcher with an optional revision name, no validation of the revision name is done before it is passed to `git checkout`. This may lead to unexpected behaviour on checkout as the input is otherwise not validated prior to use.",
+            "severity": "Informational",
+            "contract": "argo-workflow/workflow/artifacts/git/git.go",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Rollouts: Use of strconv.Atoi when a fixed-width integer is desired",
+            "description": "In the Argo Rollouts code, there are occurrences of string-to-integer conversion that use strconv.Atoi but subsequently re-cast the result to a fixed-width integer, such as int32.",
+            "severity": "Informational",
+            "contract": "argo-rollouts/utils/annotations/annotations.go",
+            "function": "getIntFromAnnotation",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 19,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-923"
+                ],
+                "3": [
+                    "CWE-300"
+                ]
+            },
+            "title": "The zJWT auth tokens allow for denial of service in Argo CD",
+            "description": "Unauthenticated attackers can cause a denial of service by sending malicious requests to the Argo CD server using headers and cookies in its getToken function.",
+            "severity": "High",
+            "contract": "Argo CD",
+            "function": "getToken()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 20,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ]
+            },
+            "title": "Non-cryptographically secure random function documented as CSPRNG",
+            "description": "The RandString function uses a non-cryptographically secure random function (time.Now().UnixNano()) and is documented as a cryptographically-secure pseudo-random number generator.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "RandString()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 21,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Symlink in a Git repository allows including files outside of the Git repository path on the Argo CD repo server",
+            "description": "Allows including files outside of the Git repository path by creating a symlink in one repository that points to a manifest file in another repository's cloned path.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "findManifests()",
+            "lineNumber": "L860-L952"
+        }
+    ]
+}

@@ -1,1 +1,212 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Shield-v1.0.1.pdf", "project_info": {"url": "https://github.com/ShieldDAODev/shield-contracts-audit.git", "commit_hash": "a9abdcb", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Improper Logic In SLDBroker::calcBrokerAmount()", "description": "The `calcBrokerAmount()` function mistakenly uses the entire trading volume as the reward without taking into account the proper level-specific `RewardNumerator`, resulting in current brokers at the ranking level B receiving more rewards than expected, at the potential loss of other protocol brokers!", "severity": "Medium", "contract": "SLDBroker", "function": "calcBrokerAmount()", "lineNumber": "183-187"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Implicit Assumption Of Shared Decimals Among Stable Coins", "description": "The implicit assumption of sharing the same decimals among the supported stable coins may need to strictly enforced, which is currently missing.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-664"], "2": ["CWE-487"]}, "title": "Declaration of Variable with Unnecessarily Wide Scope", "description": "Declaring a variable with unnecessarily wide scope can lead to unintended consequences and potential security vulnerabilities.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Integer Overflow or Wraparound", "description": "The initial value of `_\ud467_` to the iteration was given as `_\ud467_ = ( _\ud465_ + 1)\u22152`, which results in an integer overflow when `_\ud465_` equals `uint256(-1)`. This essentially sets `_\ud467_` to zero, leading to a division by zero in the calculation of `_\ud467_ = ( _\ud465_ \u2215 _\ud467_ + _\ud467_ )\u22152`.", "severity": "Low", "contract": "SLDFraction", "function": "sqrt()", "lineNumber": "314-319"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Trust Issue of Admin Keys", "description": "In the Shield protocol, there is a special administrative account, i.e., owner . This owner account plays a critical role in governing and regulating the system-wide operations.", "severity": "Medium", "contract": "Multiple Contracts", "function": "setPriAndPubPool,setRiskFundAddr", "lineNumber": "990-1001, 1007"}, {"id": 5, "category": {"1": ["CWE-710"], "2": ["CWE-1164"], "3": ["CWE-561"]}, "title": "Dead Code", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-691"], "2": ["CWE-1265"]}, "title": "Use of a Non-reentrant Function in a Concurrent Context", "description": "The deposit() function in SLDOption contract violates the checks-effects-interactions principle, making it vulnerable to re-entrancy attacks.", "severity": "Low", "contract": "SLDOption", "function": "deposit()", "lineNumber": "106"}, {"id": 7, "category": {"1": ["CWE-691"], "2": ["CWE-841"]}, "title": "Improper Enforcement of Behavioral Workflow", "description": "Weaknesses in this category are related to unexpected behaviors from code that an application uses.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Trust Issue of Admin Keys", "description": "Trust issue with admin keys", "severity": "Medium", "contract": "SLDOption", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-710"]}, "title": "Bad Coding Practices", "description": "Weaknesses in this category are related to coding practices that are deemed unsafe and increase the chances that an exploitable vulnerability will be present in the application.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-682"]}, "title": "Business Logic Errors", "description": "Errors in business logic can be devastating to an entire application.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-691"], "2": ["CWE-362"]}, "title": "Concurrency", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Shield-v1.0.1.pdf",
+    "project_info": {
+        "url": "https://github.com/ShieldDAODev/shield-contracts-audit.git",
+        "commit_hash": "a9abdcb",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improper Logic In SLDBroker::calcBrokerAmount()",
+            "description": "The `calcBrokerAmount()` function mistakenly uses the entire trading volume as the reward without taking into account the proper level-specific `RewardNumerator`, resulting in current brokers at the ranking level B receiving more rewards than expected, at the potential loss of other protocol brokers!",
+            "severity": "Medium",
+            "contract": "SLDBroker",
+            "function": "calcBrokerAmount()",
+            "lineNumber": "183-187"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Implicit Assumption Of Shared Decimals Among Stable Coins",
+            "description": "The implicit assumption of sharing the same decimals among the supported stable coins may need to strictly enforced, which is currently missing.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-487"
+                ]
+            },
+            "title": "Declaration of Variable with Unnecessarily Wide Scope",
+            "description": "Declaring a variable with unnecessarily wide scope can lead to unintended consequences and potential security vulnerabilities.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Integer Overflow or Wraparound",
+            "description": "The initial value of `_\ud467_` to the iteration was given as `_\ud467_ = ( _\ud465_ + 1)\u22152`, which results in an integer overflow when `_\ud465_` equals `uint256(-1)`. This essentially sets `_\ud467_` to zero, leading to a division by zero in the calculation of `_\ud467_ = ( _\ud465_ \u2215 _\ud467_ + _\ud467_ )\u22152`.",
+            "severity": "Low",
+            "contract": "SLDFraction",
+            "function": "sqrt()",
+            "lineNumber": "314-319"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "In the Shield protocol, there is a special administrative account, i.e., owner . This owner account plays a critical role in governing and regulating the system-wide operations.",
+            "severity": "Medium",
+            "contract": "Multiple Contracts",
+            "function": "setPriAndPubPool,setRiskFundAddr",
+            "lineNumber": "990-1001, 1007"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ],
+                "3": [
+                    "CWE-561"
+                ]
+            },
+            "title": "Dead Code",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "Use of a Non-reentrant Function in a Concurrent Context",
+            "description": "The deposit() function in SLDOption contract violates the checks-effects-interactions principle, making it vulnerable to re-entrancy attacks.",
+            "severity": "Low",
+            "contract": "SLDOption",
+            "function": "deposit()",
+            "lineNumber": "106"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "Improper Enforcement of Behavioral Workflow",
+            "description": "Weaknesses in this category are related to unexpected behaviors from code that an application uses.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "Trust issue with admin keys",
+            "severity": "Medium",
+            "contract": "SLDOption",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ]
+            },
+            "title": "Bad Coding Practices",
+            "description": "Weaknesses in this category are related to coding practices that are deemed unsafe and increase the chances that an exploitable vulnerability will be present in the application.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Business Logic Errors",
+            "description": "Errors in business logic can be devastating to an entire application.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-362"
+                ]
+            },
+            "title": "Concurrency",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

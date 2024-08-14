@@ -1,1 +1,225 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-LogX-v1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Revisited Position Liquidation Validation Logic in Utils", "description": "The validation logic related to position liquidation may wrongfully liquidate a profitable position with small collateral but high margin fee due to not crediting the position with profit when comparing with margin fee.", "severity": "Low", "contract": "Utils", "function": "validateLiquidation()", "lineNumber": "160-167"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Inconsistent Vault Token Config Update Logic in TimeLock", "description": "The `signalVaultSetTokenConfig` and `vaultSetTokenConfig` routines compute configuration hash values differently, making the intended update of vault token configuration non-functional.", "severity": "Low", "contract": "TimeLock", "function": "signalVaultSetTokenConfig() and vaultSetTokenConfig()", "lineNumber": "326-335"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Accommodation of Non-ERC20-Compliant Tokens", "description": "The transfer() routine does not have a return value defined and implemented, which may cause calls to revert due to the lack of return value.", "severity": "Low", "contract": "Multiple Contracts", "function": ["transfer()", "withdrawToken()"], "lineNumber": ["126-132", "65"]}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "LLP CooldownDuration Bypass in Liquidity Removal", "description": "The cooldown duration enforcement after minting LLP can be bypassed by transferring the LLP to another new account and instructing the new account to perform the liquidity removal without being constrained by the cooldown duration.", "severity": "Low", "contract": "LLPManager", "function": "_removeLiquidity()", "lineNumber": "217-223"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Trust Issue of Admin Keys", "description": "In the `LogX` protocol, there is a privileged administrative account `owner`. The administrative account plays a critical role in governing and regulating the protocol-wide operations.", "severity": "Medium", "contract": "TimeLock", "function": ["setKeeper(address _keeper, bool _isActive)", "setBuffer(uint256 _buffer)", "setMaxLeverage(address _vault, uint256 _maxLeverage, address _token)"], "lineNumber": ["113-115", "117-121", "123"]}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-749"]}, "title": "Public Exposure of Privileged Functions", "description": "The audited `LogX` protocol has a number of privileged functions that are publicly exposed without caller verification, which can corrupt the protocol integrity or cripple the entire protocol functionality.", "severity": "High", "contract": "PriceFeed", "function": "_setPrice(address _tokenAddress, PriceArgs memory _darkOraclePrice)", "lineNumber": "119"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "Incorrect TP/SL Order Creation/Update in OrderManager", "description": "The `OrderManager` contract has an improper implementation of creating and updating orders, specifically with regards to `_isIncreaseOrder` and `_collateralDelta` arguments.", "severity": "High", "contract": "OrderManager", "function": "createOrders() and updateOrder()", "lineNumber": "971, 964-965"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "Improper MaxTP Increase Position Creation in OrderManager", "description": "The current implementation of computing associated take-profit price in getTPPrice() routine is incorrect and should be improved.", "severity": "Medium", "contract": "OrderManager/Utils", "function": "getTPPrice()", "lineNumber": "828"}, {"id": 8, "category": {"1": ["CWE-682"]}, "title": "Improper Increase Position Cancellation in OrderManager", "description": "The cancellation of maxTP order may always refund the order creator with the minExecutionFeeLimitOrder fee.", "severity": "High", "contract": "OrderManager", "function": "createIncreasePosition()", "lineNumber": "348-354"}, {"id": 9, "category": {"1": ["CWE-691"], "2": ["CWE-841"]}, "title": "Improper Increase Position Execution Logic in OrderManager", "description": "The created increase order requests may be executed by authorized entities, i.e., `onlyPositionKeeper`. In the process of reviewing the execution of these increase position requests, we notice the current execution logic should be improved.", "severity": "Medium", "contract": "OrderManager", "function": "executeIncreasePositions()", "lineNumber": "444-447"}, {"id": 10, "category": {"1": ["CWE-682"]}, "title": "Improper Pool Amount Accounting in Vault", "description": "The position liquidation functionality in the `Vault` contract does not properly update the pool amount, causing incorrect accounting of pool funds for LLP pricing.", "severity": "Medium", "contract": "Vault", "function": "liquidatePosition()", "lineNumber": "729-739"}, {"id": 11, "category": {"1": ["CWE-682"]}, "title": "Improper Position Increase Validation in Utils", "description": "The `validateIncreasePosition()` routine in the `Utils` contract does not take into account the token's decimals when calculating available liquidity, affecting the validation of `maxLiquidityPerUser`. ", "severity": "Low", "contract": "Utils", "function": "validateIncreasePosition()", "lineNumber": "61-67"}, {"id": 12, "category": {"1": ["CWE-682"]}, "title": "Revisited Position Decrease Logic in Vault", "description": "The current execution logic of `Vault`'s `_decreasePosition()` routine needs improvement to properly return funds to users once their position is decreased with realized profit and loss.", "severity": "Low", "contract": "Vault", "function": "_decreasePosition()", "lineNumber": "1114"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-LogX-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/eugenix-io/logX-LP",
+        "commit_hash": "N/A",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Revisited Position Liquidation Validation Logic in Utils",
+            "description": "The validation logic related to position liquidation may wrongfully liquidate a profitable position with small collateral but high margin fee due to not crediting the position with profit when comparing with margin fee.",
+            "severity": "Low",
+            "contract": "Utils",
+            "function": "validateLiquidation()",
+            "lineNumber": "160-167"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Inconsistent Vault Token Config Update Logic in TimeLock",
+            "description": "The `signalVaultSetTokenConfig` and `vaultSetTokenConfig` routines compute configuration hash values differently, making the intended update of vault token configuration non-functional.",
+            "severity": "Low",
+            "contract": "TimeLock",
+            "function": "signalVaultSetTokenConfig() and vaultSetTokenConfig()",
+            "lineNumber": "326-335"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Accommodation of Non-ERC20-Compliant Tokens",
+            "description": "The transfer() routine does not have a return value defined and implemented, which may cause calls to revert due to the lack of return value.",
+            "severity": "Low",
+            "contract": "Multiple Contracts",
+            "function": [
+                "transfer()",
+                "withdrawToken()"
+            ],
+            "lineNumber": [
+                "126-132",
+                "65"
+            ]
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "LLP CooldownDuration Bypass in Liquidity Removal",
+            "description": "The cooldown duration enforcement after minting LLP can be bypassed by transferring the LLP to another new account and instructing the new account to perform the liquidity removal without being constrained by the cooldown duration.",
+            "severity": "Low",
+            "contract": "LLPManager",
+            "function": "_removeLiquidity()",
+            "lineNumber": "217-223"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "In the `LogX` protocol, there is a privileged administrative account `owner`. The administrative account plays a critical role in governing and regulating the protocol-wide operations.",
+            "severity": "Medium",
+            "contract": "TimeLock",
+            "function": [
+                "setKeeper(address _keeper, bool _isActive)",
+                "setBuffer(uint256 _buffer)",
+                "setMaxLeverage(address _vault, uint256 _maxLeverage, address _token)"
+            ],
+            "lineNumber": [
+                "113-115",
+                "117-121",
+                "123"
+            ]
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-749"
+                ]
+            },
+            "title": "Public Exposure of Privileged Functions",
+            "description": "The audited `LogX` protocol has a number of privileged functions that are publicly exposed without caller verification, which can corrupt the protocol integrity or cripple the entire protocol functionality.",
+            "severity": "High",
+            "contract": "PriceFeed",
+            "function": "_setPrice(address _tokenAddress, PriceArgs memory _darkOraclePrice)",
+            "lineNumber": "119"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect TP/SL Order Creation/Update in OrderManager",
+            "description": "The `OrderManager` contract has an improper implementation of creating and updating orders, specifically with regards to `_isIncreaseOrder` and `_collateralDelta` arguments.",
+            "severity": "High",
+            "contract": "OrderManager",
+            "function": "createOrders() and updateOrder()",
+            "lineNumber": "971, 964-965"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improper MaxTP Increase Position Creation in OrderManager",
+            "description": "The current implementation of computing associated take-profit price in getTPPrice() routine is incorrect and should be improved.",
+            "severity": "Medium",
+            "contract": "OrderManager/Utils",
+            "function": "getTPPrice()",
+            "lineNumber": "828"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improper Increase Position Cancellation in OrderManager",
+            "description": "The cancellation of maxTP order may always refund the order creator with the minExecutionFeeLimitOrder fee.",
+            "severity": "High",
+            "contract": "OrderManager",
+            "function": "createIncreasePosition()",
+            "lineNumber": "348-354"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "Improper Increase Position Execution Logic in OrderManager",
+            "description": "The created increase order requests may be executed by authorized entities, i.e., `onlyPositionKeeper`. In the process of reviewing the execution of these increase position requests, we notice the current execution logic should be improved.",
+            "severity": "Medium",
+            "contract": "OrderManager",
+            "function": "executeIncreasePositions()",
+            "lineNumber": "444-447"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improper Pool Amount Accounting in Vault",
+            "description": "The position liquidation functionality in the `Vault` contract does not properly update the pool amount, causing incorrect accounting of pool funds for LLP pricing.",
+            "severity": "Medium",
+            "contract": "Vault",
+            "function": "liquidatePosition()",
+            "lineNumber": "729-739"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improper Position Increase Validation in Utils",
+            "description": "The `validateIncreasePosition()` routine in the `Utils` contract does not take into account the token's decimals when calculating available liquidity, affecting the validation of `maxLiquidityPerUser`. ",
+            "severity": "Low",
+            "contract": "Utils",
+            "function": "validateIncreasePosition()",
+            "lineNumber": "61-67"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Revisited Position Decrease Logic in Vault",
+            "description": "The current execution logic of `Vault`'s `_decreasePosition()` routine needs improvement to properly return funds to users once their position is decreased with realized profit and loss.",
+            "severity": "Low",
+            "contract": "Vault",
+            "function": "_decreasePosition()",
+            "lineNumber": "1114"
+        }
+    ]
+}

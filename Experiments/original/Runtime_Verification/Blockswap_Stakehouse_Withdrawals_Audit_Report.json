@@ -1,1 +1,214 @@
-{"path": "./Audit_Reports_2024/Runtime_V\u0435rification/Blockswap_Stakehouse_Withdrawals_Audit_Report.pdf", "project_info": {"url": "https://github.com/bswap-eng/Stakehouse-V2", "commit_hash": "3e68bb7cecf256cfc7efd43bad4dfb339b270fd8", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "A01: savETHRegistry::burnDETHRewards does not decrease knotDETHBalanceInIndex", "description": "The function burnDETHRewards() in savETHRegistry contract does not decrease knotDETHBalanceInIndex[index][validator] by the input _amount when the KNOT is in a private index, causing imbalance in the ragequitting process.", "severity": "High", "contract": "savETHRegistry", "function": "burnDETHRewards()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "A02: BalanceReporter::_addTopUpToQueue can try to deposit less than 1 ETH", "description": "The `_addTopUpToQueue` function may attempt to make a deposit with insufficient ETH due to double-counting of `_amountOfSLOTPurchased` when checking for excess ETH.", "severity": "Low", "contract": "BalanceReporter", "function": "_addTopUpToQueue", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "FullWithdrawals::reportFinalSweepAndWithdraw sets withdrawalAmount too high", "description": "The final amount of ETH sent to a user is computed incorrectly, leading to double-spending of deposits made for a validator.", "severity": "High", "contract": "FullWithdrawals", "function": "reportFinalSweepAndWithdraw", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-691"], "2": ["CWE-362"]}, "title": "A04: BalanceReporter::multipartyRageQuit deadlock if SLOT is owned by a contract", "description": "If a contract that is not the original SLOT owner is used to buy slashed SLOT, the multipartyRageQuit function cannot be used since a signature is required from SLOT owners different from the original one.", "severity": "High", "contract": "BalanceReporter", "function": "multipartyRageQuit", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "A05: Queue flush ETH (or, potentially, rewards) can be unclaimable", "description": "It is possible that a call to `QueueFlushETHClaim::claim` may not always work when there is some unclaimed excess ETH due to incorrect handling of validator slashing and top-up slot transactions.", "severity": "High", "contract": "QueueFlushETHClaim", "function": "claim", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "A06: QueueFlushETHClaim::claim insufficient wait period check", "description": "The `QueueFlushETHClaim::claim` function enforces a delay between claims to ensure enough time has passed for the flushed ETH to arrive from the consensus layer to the protocol. However, the waiting period is computed as `lastClaim[msg.sender][_blsPublicKey] + flushClaimDelay < block.timestamp`, which may not prevent a user from claiming flushed ETH immediately after flushing the queue since the only requirement is that enough time has passed since the last claim of flushed ETH, not since the last time the queue was flushed.", "severity": "Medium", "contract": "QueueFlushETHClaim", "function": "claim", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "A07: TransactionManager::totalExcessETHSentForSlotTopUpsForUser can be withdrawn twice", "description": "The amount corresponding to `TransactionManager::totalExcessETHSentForSlotTopUpsForUser` can be withdrawn twice from the protocol due to not being deducted from `_totalUnknownTopUps` in `FullWithdrawals::reportFinalSweepAndWithdraw` function and allowing users to claim flushed ETH after final withdrawal.", "severity": "High", "contract": "TransactionManager", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "A08: Protocol deposits are double-deducted from the amount of rewards reported", "description": "The function `shanghaiSweepReporting::_adjustSumOfSweepsAgainstTopUps` double-subtracts protocol deposits to the reported sweep amount, leading to incorrect inflation rewards.", "severity": "High", "contract": "shanghaiSweepReporting", "function": "_adjustSumOfSweepsAgainstTopUps()", "lineNumber": "387-392, 399"}, {"id": 8, "category": {"1": ["CWE-435"]}, "title": "A09: Ragequitting can be adversely deadlocked", "description": "The `BalanceReporter::multipartyRageQuit` function requires signatures from all subsequent SLOT owners to perform ragequit. If a SLOT owner does not sign, the KNOT would be in a deadlock, and a malicious actor could exploit this by buying tiny amounts of SLOT and demanding ransom for their signature.", "severity": "High", "contract": "BalanceReporter", "function": "multipartyRageQuit", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "B01: FullWithdrawals::reportFinalSweepAndWithdraw check to identify final sweep", "description": "The function `reportFinalSweepAndWithdraw` doesn't currently make a check to have a higher assurance that the reported final sweep is indeed the sweep that contains the initial 32ETH deposit.", "severity": "High", "contract": "FullWithdrawals", "function": "reportFinalSweepAndWithdraw()", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "B02: Not every penalty can be reported", "description": "There are two states where a validator incurs a leakage penalty but it won't be slashable due to adjusted active balance being capped at 32 ETH or less than 32 ETH acknowledged by the protocol.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Arbitrary Increase of totalExcessETHSentForSlotTopUps", "description": "A user can arbitrarily increase TransactionRouter::totalExcessETHSentForSlotTopUps and TransactionRouter::totalExcessETHSentForSlotTopUpsForUser by calling BalanceReporter::topUpKNOT at any point, which serves no purpose to the protocol.", "severity": "N/A", "contract": "TransactionRouter", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1288"]}, "title": "B04: FullWithdrawals::reportFinalSweepAndWithdraw duplicated userWithdrawn check", "description": "The `universe.slotRegistry().userWithdrawn(msg.sender, _blsPublicKey)` check is duplicated during `FullWithdrawals::reportFinalSweepAndWithdraw`.", "severity": "-", "contract": "FullWithdrawals", "function": "reportFinalSweepAndWithdraw()", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Runtime_V\u0435rification/Blockswap_Stakehouse_Withdrawals_Audit_Report.pdf",
+    "project_info": {
+        "url": "https://github.com/bswap-eng/Stakehouse-V2",
+        "commit_hash": "3e68bb7cecf256cfc7efd43bad4dfb339b270fd8",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "A01: savETHRegistry::burnDETHRewards does not decrease knotDETHBalanceInIndex",
+            "description": "The function burnDETHRewards() in savETHRegistry contract does not decrease knotDETHBalanceInIndex[index][validator] by the input _amount when the KNOT is in a private index, causing imbalance in the ragequitting process.",
+            "severity": "High",
+            "contract": "savETHRegistry",
+            "function": "burnDETHRewards()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "A02: BalanceReporter::_addTopUpToQueue can try to deposit less than 1 ETH",
+            "description": "The `_addTopUpToQueue` function may attempt to make a deposit with insufficient ETH due to double-counting of `_amountOfSLOTPurchased` when checking for excess ETH.",
+            "severity": "Low",
+            "contract": "BalanceReporter",
+            "function": "_addTopUpToQueue",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "FullWithdrawals::reportFinalSweepAndWithdraw sets withdrawalAmount too high",
+            "description": "The final amount of ETH sent to a user is computed incorrectly, leading to double-spending of deposits made for a validator.",
+            "severity": "High",
+            "contract": "FullWithdrawals",
+            "function": "reportFinalSweepAndWithdraw",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-362"
+                ]
+            },
+            "title": "A04: BalanceReporter::multipartyRageQuit deadlock if SLOT is owned by a contract",
+            "description": "If a contract that is not the original SLOT owner is used to buy slashed SLOT, the multipartyRageQuit function cannot be used since a signature is required from SLOT owners different from the original one.",
+            "severity": "High",
+            "contract": "BalanceReporter",
+            "function": "multipartyRageQuit",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "A05: Queue flush ETH (or, potentially, rewards) can be unclaimable",
+            "description": "It is possible that a call to `QueueFlushETHClaim::claim` may not always work when there is some unclaimed excess ETH due to incorrect handling of validator slashing and top-up slot transactions.",
+            "severity": "High",
+            "contract": "QueueFlushETHClaim",
+            "function": "claim",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "A06: QueueFlushETHClaim::claim insufficient wait period check",
+            "description": "The `QueueFlushETHClaim::claim` function enforces a delay between claims to ensure enough time has passed for the flushed ETH to arrive from the consensus layer to the protocol. However, the waiting period is computed as `lastClaim[msg.sender][_blsPublicKey] + flushClaimDelay < block.timestamp`, which may not prevent a user from claiming flushed ETH immediately after flushing the queue since the only requirement is that enough time has passed since the last claim of flushed ETH, not since the last time the queue was flushed.",
+            "severity": "Medium",
+            "contract": "QueueFlushETHClaim",
+            "function": "claim",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "A07: TransactionManager::totalExcessETHSentForSlotTopUpsForUser can be withdrawn twice",
+            "description": "The amount corresponding to `TransactionManager::totalExcessETHSentForSlotTopUpsForUser` can be withdrawn twice from the protocol due to not being deducted from `_totalUnknownTopUps` in `FullWithdrawals::reportFinalSweepAndWithdraw` function and allowing users to claim flushed ETH after final withdrawal.",
+            "severity": "High",
+            "contract": "TransactionManager",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "A08: Protocol deposits are double-deducted from the amount of rewards reported",
+            "description": "The function `shanghaiSweepReporting::_adjustSumOfSweepsAgainstTopUps` double-subtracts protocol deposits to the reported sweep amount, leading to incorrect inflation rewards.",
+            "severity": "High",
+            "contract": "shanghaiSweepReporting",
+            "function": "_adjustSumOfSweepsAgainstTopUps()",
+            "lineNumber": "387-392, 399"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ]
+            },
+            "title": "A09: Ragequitting can be adversely deadlocked",
+            "description": "The `BalanceReporter::multipartyRageQuit` function requires signatures from all subsequent SLOT owners to perform ragequit. If a SLOT owner does not sign, the KNOT would be in a deadlock, and a malicious actor could exploit this by buying tiny amounts of SLOT and demanding ransom for their signature.",
+            "severity": "High",
+            "contract": "BalanceReporter",
+            "function": "multipartyRageQuit",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "B01: FullWithdrawals::reportFinalSweepAndWithdraw check to identify final sweep",
+            "description": "The function `reportFinalSweepAndWithdraw` doesn't currently make a check to have a higher assurance that the reported final sweep is indeed the sweep that contains the initial 32ETH deposit.",
+            "severity": "High",
+            "contract": "FullWithdrawals",
+            "function": "reportFinalSweepAndWithdraw()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "B02: Not every penalty can be reported",
+            "description": "There are two states where a validator incurs a leakage penalty but it won't be slashable due to adjusted active balance being capped at 32 ETH or less than 32 ETH acknowledged by the protocol.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Arbitrary Increase of totalExcessETHSentForSlotTopUps",
+            "description": "A user can arbitrarily increase TransactionRouter::totalExcessETHSentForSlotTopUps and TransactionRouter::totalExcessETHSentForSlotTopUpsForUser by calling BalanceReporter::topUpKNOT at any point, which serves no purpose to the protocol.",
+            "severity": "N/A",
+            "contract": "TransactionRouter",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1288"
+                ]
+            },
+            "title": "B04: FullWithdrawals::reportFinalSweepAndWithdraw duplicated userWithdrawn check",
+            "description": "The `universe.slotRegistry().userWithdrawn(msg.sender, _blsPublicKey)` check is duplicated during `FullWithdrawals::reportFinalSweepAndWithdraw`.",
+            "severity": "-",
+            "contract": "FullWithdrawals",
+            "function": "reportFinalSweepAndWithdraw()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

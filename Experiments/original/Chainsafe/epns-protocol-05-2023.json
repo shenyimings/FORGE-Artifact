@@ -1,1 +1,332 @@
-{"path": "./Audit_Reports_2024/Chainsafe/epns-protocol-05-2023.pdf", "project_info": {"url": "N/A", "commit_hash": "0c62b7a377dbb010cd19288f6d8974773e51326f", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Draining of All Rewards", "description": "Allows setting lastClaimedBlock to a value that would drain all rewards from the contract", "severity": "Critical", "contract": "EPNSCoreV2", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Draining of All Rewards", "description": "Allows setting lastClaimedBlock to value that would allow draining of all rewards.", "severity": "Critical", "contract": "EPNSCoreV2", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Draining of All Rewards", "description": "Allows setting lastClaimedBlock to value that would allow draining of all rewards", "severity": "Critical", "contract": "EPNSCoreV2", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Overwriting `chatData.requestSender` Variable", "description": "The `createIncentivizeChatRequest()` function will overwrite `chatData.requestSender` variable with the same value on every call after the first one.", "severity": "Optimization", "contract": "EPNSCommV2", "function": "createIncentivizeChatRequest()", "lineNumber": "791"}, {"id": 4, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Overwriting `chatData.requestReceiver`", "description": "The `createIncentivizeChatRequest()` function will overwrite `chatData.requestReceiver`.", "severity": "Note", "contract": "EPNSCommV2", "function": "createIncentivizeChatRequest()", "lineNumber": "792"}, {"id": 5, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Typo in Require Condition Reason", "description": "The `lastEpochRelative()` function has a typo in the require condition reason, it should be `Blocknumber` instead of `Blocnumber`.", "severity": "Low", "contract": "EPNSCoreV2", "function": "lastEpochRelative()", "lineNumber": "988"}, {"id": 6, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Potential Overwriting of lastClaimedBlock", "description": "The `_stake()` function could rewrite `userFeesInfo[_staker].lastClaimedBlock` with the same value if it is already set.", "severity": "Optimization", "contract": "EPNSCoreV2", "function": "_stake()", "lineNumber": "1064"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "Inconsistent Harvesting Logic", "description": "The `harvestTill()` logic differs significantly from `harvestPaginated` and `daoHarvestPaginated` even when considering the full range of epochs.", "severity": "Medium", "contract": "EPNSCoreV2", "function": "harvestTill()", "lineNumber": "1123"}, {"id": 8, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Draining of All Rewards through harvestTill()", "description": "The harvestTill() function allows setting lastClaimedBlock to a value that would allow draining of all the rewards.", "severity": "Critical", "contract": "EPNSCoreV2", "function": "harvestTill()", "lineNumber": "1129"}, {"id": 9, "category": {"1": ["CWE-682"]}, "title": "Misleading Comment about `lastClaimedBlock` Update", "description": "The `harvestPaginated()` function has a misleading comment about the `lastClaimedBlock` value update. It sets it at the beginning of an `_endepoch`, not the end.", "severity": "Note", "contract": "EPNSCoreV2", "function": "harvestPaginated()", "lineNumber": "1162"}, {"id": 10, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Draining of Rewards through harvestPaginated()", "description": "The `harvestPaginated()` function allows setting `lastClaimedBlock` to a value that would allow draining of all the rewards.", "severity": "Critical", "contract": "EPNSCoreV2", "function": "harvestPaginated()", "lineNumber": "1166"}, {"id": 11, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Draining of All Rewards through daoHarvestPaginated()", "description": "The daoHarvestPaginated() function allows setting lastClaimedBlock to a value that would allow draining of all the rewards.", "severity": "Critical", "contract": "EPNSCoreV2", "function": "daoHarvestPaginated()", "lineNumber": "1216"}, {"id": 12, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-770"]}, "title": "Unnecessary Storage Reads", "description": "_adjustUserAndTotalStake() function reads userFeesInfo[_user].stakedWeight multiple times from storage.", "severity": "Optimization", "contract": "EPNSCoreV2", "function": "_adjustUserAndTotalStake()", "lineNumber": "1247"}, {"id": 13, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Duplicated Code in `_adjustUserAndTotalStake()` Function", "description": "The `_adjustUserAndTotalStake()` function has duplicated code in 'if' and 'else' cases. It can be optimized by checking 'i == currentEpoch - 1' in the if statement and updating 'userFeesInfo[_user].stakedWeight' accordingly.", "severity": "Optimization", "contract": "EPNSCoreV2", "function": "_adjustUserAndTotalStake()", "lineNumber": "1269"}, {"id": 14, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Unemitted Event in setRelayerAddress() Function", "description": "The `setRelayerAddress()` function could emit an event.", "severity": "Note", "contract": "EPNSCoreV2", "function": "setRelayerAddress()", "lineNumber": "1358"}, {"id": 15, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Missing Event Emission", "description": "The `setBridgeAddress()` function could emit an event.", "severity": "Note", "contract": "EPNSCoreV2", "function": "setBridgeAddress()", "lineNumber": "1362"}, {"id": 16, "category": {"1": ["CWE-710"], "2": ["CWE-1164"], "3": ["CWE-563"]}, "title": "Unnecessary Variable Reassignment", "description": "The `epochDuration` variable could be made constant as it is set only once to a fixed value.", "severity": "Optimization", "contract": "EPNSCoreStorageV2", "function": "N/A", "lineNumber": "31"}]}
+{
+    "path": "./Audit_Reports_2024/Chainsafe/epns-protocol-05-2023.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "0c62b7a377dbb010cd19288f6d8974773e51326f",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Draining of All Rewards",
+            "description": "Allows setting lastClaimedBlock to a value that would drain all rewards from the contract",
+            "severity": "Critical",
+            "contract": "EPNSCoreV2",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Draining of All Rewards",
+            "description": "Allows setting lastClaimedBlock to value that would allow draining of all rewards.",
+            "severity": "Critical",
+            "contract": "EPNSCoreV2",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Draining of All Rewards",
+            "description": "Allows setting lastClaimedBlock to value that would allow draining of all rewards",
+            "severity": "Critical",
+            "contract": "EPNSCoreV2",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Overwriting `chatData.requestSender` Variable",
+            "description": "The `createIncentivizeChatRequest()` function will overwrite `chatData.requestSender` variable with the same value on every call after the first one.",
+            "severity": "Optimization",
+            "contract": "EPNSCommV2",
+            "function": "createIncentivizeChatRequest()",
+            "lineNumber": "791"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Overwriting `chatData.requestReceiver`",
+            "description": "The `createIncentivizeChatRequest()` function will overwrite `chatData.requestReceiver`.",
+            "severity": "Note",
+            "contract": "EPNSCommV2",
+            "function": "createIncentivizeChatRequest()",
+            "lineNumber": "792"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Typo in Require Condition Reason",
+            "description": "The `lastEpochRelative()` function has a typo in the require condition reason, it should be `Blocknumber` instead of `Blocnumber`.",
+            "severity": "Low",
+            "contract": "EPNSCoreV2",
+            "function": "lastEpochRelative()",
+            "lineNumber": "988"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Potential Overwriting of lastClaimedBlock",
+            "description": "The `_stake()` function could rewrite `userFeesInfo[_staker].lastClaimedBlock` with the same value if it is already set.",
+            "severity": "Optimization",
+            "contract": "EPNSCoreV2",
+            "function": "_stake()",
+            "lineNumber": "1064"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Inconsistent Harvesting Logic",
+            "description": "The `harvestTill()` logic differs significantly from `harvestPaginated` and `daoHarvestPaginated` even when considering the full range of epochs.",
+            "severity": "Medium",
+            "contract": "EPNSCoreV2",
+            "function": "harvestTill()",
+            "lineNumber": "1123"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Draining of All Rewards through harvestTill()",
+            "description": "The harvestTill() function allows setting lastClaimedBlock to a value that would allow draining of all the rewards.",
+            "severity": "Critical",
+            "contract": "EPNSCoreV2",
+            "function": "harvestTill()",
+            "lineNumber": "1129"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Misleading Comment about `lastClaimedBlock` Update",
+            "description": "The `harvestPaginated()` function has a misleading comment about the `lastClaimedBlock` value update. It sets it at the beginning of an `_endepoch`, not the end.",
+            "severity": "Note",
+            "contract": "EPNSCoreV2",
+            "function": "harvestPaginated()",
+            "lineNumber": "1162"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Draining of Rewards through harvestPaginated()",
+            "description": "The `harvestPaginated()` function allows setting `lastClaimedBlock` to a value that would allow draining of all the rewards.",
+            "severity": "Critical",
+            "contract": "EPNSCoreV2",
+            "function": "harvestPaginated()",
+            "lineNumber": "1166"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Draining of All Rewards through daoHarvestPaginated()",
+            "description": "The daoHarvestPaginated() function allows setting lastClaimedBlock to a value that would allow draining of all the rewards.",
+            "severity": "Critical",
+            "contract": "EPNSCoreV2",
+            "function": "daoHarvestPaginated()",
+            "lineNumber": "1216"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "Unnecessary Storage Reads",
+            "description": "_adjustUserAndTotalStake() function reads userFeesInfo[_user].stakedWeight multiple times from storage.",
+            "severity": "Optimization",
+            "contract": "EPNSCoreV2",
+            "function": "_adjustUserAndTotalStake()",
+            "lineNumber": "1247"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Duplicated Code in `_adjustUserAndTotalStake()` Function",
+            "description": "The `_adjustUserAndTotalStake()` function has duplicated code in 'if' and 'else' cases. It can be optimized by checking 'i == currentEpoch - 1' in the if statement and updating 'userFeesInfo[_user].stakedWeight' accordingly.",
+            "severity": "Optimization",
+            "contract": "EPNSCoreV2",
+            "function": "_adjustUserAndTotalStake()",
+            "lineNumber": "1269"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Unemitted Event in setRelayerAddress() Function",
+            "description": "The `setRelayerAddress()` function could emit an event.",
+            "severity": "Note",
+            "contract": "EPNSCoreV2",
+            "function": "setRelayerAddress()",
+            "lineNumber": "1358"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Missing Event Emission",
+            "description": "The `setBridgeAddress()` function could emit an event.",
+            "severity": "Note",
+            "contract": "EPNSCoreV2",
+            "function": "setBridgeAddress()",
+            "lineNumber": "1362"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ],
+                "3": [
+                    "CWE-563"
+                ]
+            },
+            "title": "Unnecessary Variable Reassignment",
+            "description": "The `epochDuration` variable could be made constant as it is set only once to a fixed value.",
+            "severity": "Optimization",
+            "contract": "EPNSCoreStorageV2",
+            "function": "N/A",
+            "lineNumber": "31"
+        }
+    ]
+}

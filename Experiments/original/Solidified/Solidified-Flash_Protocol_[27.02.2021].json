@@ -1,1 +1,142 @@
-{"path": "./Audit_Reports_2024/Solidified/Solidified-Flash_Protocol_[27.02.2021].pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-691"], "2": ["CWE-1265"]}, "title": "Reentrancy issues in pool contract allow malicious tokens or ERC777 tokens to manipulate balances", "description": "The pool code does not implement a locking mechanism that prevents tokens to call back into the pool functions on transfer() or transferFrom() calls, making it vulnerable to malicious token implementations or ERC-777 tokens.", "severity": "Major", "contract": "Pool.sol", "function": "burn()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "ERC-20 Return Values Ignored", "description": "Return values of ERC-20 calls are not checked, which could lead to problems with external tokens managed in liquidity pools.", "severity": "Minor", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Incorrect check of balance in flashMint", "description": "In the function `flashMint()` there\u2019s a requirement to check whether the flash minted amount plus the current balance is larger than the max `uint112`. However, this operation is adding the ETH balance of the contract with the `flashAmount` in tokens.", "severity": "Minor", "contract": "FlashToken.sol", "function": "flashMint()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-435"], "2": ["CWE-436"], "3": ["CWE-437"]}, "title": "Potential problems with some ERC tokens", "description": "The protocol is designed to be used with any compliant ERC20 tokens, but tokens come in multiple implementations and some of them could cause unintended behaviours.", "severity": "Minor", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-435"], "2": ["CWE-436"], "3": ["CWE-437"]}, "title": "Token susceptible to approve attack", "description": "Changing an allowance through the `approve()` method brings the risk that someone may use both the old and the new allowance by unfortunate transaction ordering.", "severity": "Minor", "contract": "N/A", "function": "approve()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "FlashToken.sol: minter role unnecessary", "description": "In FlashToken.sol a MinterRole is maintained but cannot be used since there is no provision for adding or removing minters, which are set in the constructor.", "severity": "Note", "contract": "FlashToken.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Tautology in precondition check", "description": "The parameter `_newMatchRatio` of type `uint256` is checked to be greater than or equal to 0, which is unnecessary since it's always true by definition.", "severity": "Minor", "contract": "FlashProtocol.sol", "function": "N/A", "lineNumber": "95"}]}
+{
+    "path": "./Audit_Reports_2024/Solidified/Solidified-Flash_Protocol_[27.02.2021].pdf",
+    "project_info": {
+        "url": "https://github.com/XIO-Network/xio-flash-token",
+        "commit_hash": "N/A",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "Reentrancy issues in pool contract allow malicious tokens or ERC777 tokens to manipulate balances",
+            "description": "The pool code does not implement a locking mechanism that prevents tokens to call back into the pool functions on transfer() or transferFrom() calls, making it vulnerable to malicious token implementations or ERC-777 tokens.",
+            "severity": "Major",
+            "contract": "Pool.sol",
+            "function": "burn()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "ERC-20 Return Values Ignored",
+            "description": "Return values of ERC-20 calls are not checked, which could lead to problems with external tokens managed in liquidity pools.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Incorrect check of balance in flashMint",
+            "description": "In the function `flashMint()` there\u2019s a requirement to check whether the flash minted amount plus the current balance is larger than the max `uint112`. However, this operation is adding the ETH balance of the contract with the `flashAmount` in tokens.",
+            "severity": "Minor",
+            "contract": "FlashToken.sol",
+            "function": "flashMint()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-437"
+                ]
+            },
+            "title": "Potential problems with some ERC tokens",
+            "description": "The protocol is designed to be used with any compliant ERC20 tokens, but tokens come in multiple implementations and some of them could cause unintended behaviours.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-437"
+                ]
+            },
+            "title": "Token susceptible to approve attack",
+            "description": "Changing an allowance through the `approve()` method brings the risk that someone may use both the old and the new allowance by unfortunate transaction ordering.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "approve()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "FlashToken.sol: minter role unnecessary",
+            "description": "In FlashToken.sol a MinterRole is maintained but cannot be used since there is no provision for adding or removing minters, which are set in the constructor.",
+            "severity": "Note",
+            "contract": "FlashToken.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Tautology in precondition check",
+            "description": "The parameter `_newMatchRatio` of type `uint256` is checked to be greater than or equal to 0, which is unnecessary since it's always true by definition.",
+            "severity": "Minor",
+            "contract": "FlashProtocol.sol",
+            "function": "N/A",
+            "lineNumber": "95"
+        }
+    ]
+}

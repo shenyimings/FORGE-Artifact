@@ -1,1 +1,87 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-PancakeSwap-CakePool-v1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"]}, "title": "Possibly Open Repeated Pool Initialization", "description": "In `CakePool`, it initializes the protocol by depositing a dummy token into the `MasterChefV2` contract, but there is no access control for the `init()` routine, and it could be called more than once.", "severity": "Low", "contract": "CakePool", "function": "init()", "lineNumber": "112-119"}, {"id": 1, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Removal of Unused State And Code", "description": "The `CakePool` contract has unused state or unnecessary redundancies that can be safely removed, such as `lastHarvestedTime` and `MAX_ CALL_FEE` states.", "severity": "Informational", "contract": "CakePool", "function": "N/A", "lineNumber": "34-45"}, {"id": 2, "category": {"1": ["CWE-691"], "2": ["CWE-1265"]}, "title": "Suggested Reentrancy Protection in Deposit and Withdraw", "description": "The 'checks-effects-interactions' principle is violated in the withdrawOperation() function of CakePool contract, which can lead to re-entrancy attacks.", "severity": "Low", "contract": "CakePool", "function": "withdrawOperation()", "lineNumber": "424, 428"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Trust Issue Of Admin Keys", "description": "In `CakePool` contract, there are privileged accounts (including `owner` and `admin`) that play critical roles in governing and regulating the protocol-related operations.", "severity": "Medium", "contract": "CakePool", "function": ["setOperator", "setBoostContract", "setFreeFeeUser"], "lineNumber": ["486-489", "495-498", "506-509"]}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-PancakeSwap-CakePool-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/ChefSnoopy/pancake-contracts/tree/1c629bf",
+        "commit_hash": "1c629bf",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Possibly Open Repeated Pool Initialization",
+            "description": "In `CakePool`, it initializes the protocol by depositing a dummy token into the `MasterChefV2` contract, but there is no access control for the `init()` routine, and it could be called more than once.",
+            "severity": "Low",
+            "contract": "CakePool",
+            "function": "init()",
+            "lineNumber": "112-119"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Removal of Unused State And Code",
+            "description": "The `CakePool` contract has unused state or unnecessary redundancies that can be safely removed, such as `lastHarvestedTime` and `MAX_ CALL_FEE` states.",
+            "severity": "Informational",
+            "contract": "CakePool",
+            "function": "N/A",
+            "lineNumber": "34-45"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "Suggested Reentrancy Protection in Deposit and Withdraw",
+            "description": "The 'checks-effects-interactions' principle is violated in the withdrawOperation() function of CakePool contract, which can lead to re-entrancy attacks.",
+            "severity": "Low",
+            "contract": "CakePool",
+            "function": "withdrawOperation()",
+            "lineNumber": "424, 428"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue Of Admin Keys",
+            "description": "In `CakePool` contract, there are privileged accounts (including `owner` and `admin`) that play critical roles in governing and regulating the protocol-related operations.",
+            "severity": "Medium",
+            "contract": "CakePool",
+            "function": [
+                "setOperator",
+                "setBoostContract",
+                "setFreeFeeUser"
+            ],
+            "lineNumber": [
+                "486-489",
+                "495-498",
+                "506-509"
+            ]
+        }
+    ]
+}

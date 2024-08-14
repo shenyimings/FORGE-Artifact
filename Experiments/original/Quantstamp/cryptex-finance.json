@@ -1,1 +1,434 @@
-{"path": "./Audit_Reports_2024/Quantstamp/cryptex-finance.pdf", "project_info": {"url": "N/A", "commit_hash": "9bd0481\u2026755d32e", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Wrong token being transferred on claimVest()", "description": "The `claimVest()` function transfers the staking token as opposed to the reward token.", "severity": "High Risk", "contract": "LiquidityReward.sol", "function": "claimVest()", "lineNumber": "183"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Staking token can be withdrawn from the rewards contract", "description": "The `LiquidityReward.recoverERC20()` function contains a check at the start, which only checks that the `_tokenAddress` of the ERC20 token to withdraw is not equal to the `rewardsToken`. However, there is no check to prevent withdrawing the staking token.", "severity": "Medium Risk", "contract": "LiquidityReward.sol", "function": "recoverERC20()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "TCAP Token can be withdrawn from the vault", "description": "The owner can recover both TCAP Token and any ERC20 collateral using `recoverERC20()` (unless TCAP Token is the collateral).", "severity": "Medium Risk", "contract": "IVaultHandler.sol", "function": "recoverERC20()", "lineNumber": "541"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Oracle price could be stale", "description": "The ChainlinkOracle.getLatestAnswer() function returns the price from AggregatorV3Interface.latestRoundData(), ignoring other return values, which may lead to stale prices.", "severity": "Low Risk", "contract": "ChainlinkOracle.sol", "function": "getLatestAnswer()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Loss of rewards due to truncation", "description": "The `LiquidityReward.getReward()` function splits the `reward` into `vestingReward` and `transferReward` inefficiently and imprecisely, leading to small reward losses due to integer division truncation.", "severity": "Low Risk", "contract": "LiquidityReward.sol", "function": "getReward()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"]}, "title": "Ratio can be set to any value", "description": "The IVaultHandler.setRatio() function does not contain any constraints on the value of the _ratio input parameter, allowing the owner to set it to any unsigned integer.", "severity": "Low Risk", "contract": "IVaultHandler.sol", "function": "setRatio()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Burn fee can be set to any value", "description": "The IVaultHandler.setBurnFee() function does not contain any constraints on the value of the _burnFee input parameter, allowing the owner to set it to any unsigned integer.", "severity": "Low Risk", "contract": "IVaultHandler.sol", "function": "setBurnFee()", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Treasury can be set to any address", "description": "The IVaultHandler.setTreasury() function does not contain any constraints on the value of the _treasury input parameter, allowing the owner to set the treasury value to any address including an EOA.", "severity": "Low Risk", "contract": "IVaultHandler.sol", "function": "setTreasury()", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-664"], "2": ["CWE-404"], "3": ["CWE-772"], "4": ["CWE-401"]}, "title": "Burn fee not paid to the treasury", "description": "The burn fee is not paid to the treasury in the liquidateVault() function.", "severity": "Low Risk", "contract": "IVaultHandler.sol", "function": "liquidateVault()", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-682"]}, "title": "Median is more robust than average for aggregated oracles", "description": "Using median price aggregation instead of average price aggregation can prevent irregular prices from compromised data sources to affect the overall price.", "severity": "Low Risk", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-697"]}, "title": "Dangerous use of strict equality", "description": "The IVaultHandler.withBurnFee() modifier makes use of strict equality between the msg.value and the fee, putting an unnecessary burden on the caller of the burn() function to compute the exact fee amount.", "severity": "Low Risk", "contract": "IVaultHandler.sol", "function": "withBurnFee()", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "Allowance Double-Spend Exploit", "description": "The contract is vulnerable to the allowance double-spend exploit as with other ERC20 tokens.", "severity": "Informational", "contract": "Ctx.sol", "function": "approve()", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-697"]}, "title": "Misleading error message", "description": "The IVaultHandler.recoverERC20() function has a misleading error message that includes 'rewards tokens' which is unclear and does not match the actual checked token addresses.", "severity": "Informational", "contract": "IVaultHandler", "function": "recoverERC20()", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-693"], "2": ["CWE-654"]}, "title": "Single point of failure for price feeds", "description": "The price feeds rely on a single oracle, namely the Chainlink Aggregator V3, which is indeed robust. However, in the event of any large scale attack/disruption of the Chainlink network, the Cryptex vault handlers would be severely impacted.", "severity": "Informational", "contract": "IVaultHandler.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Clone-and-Own", "description": "The clone-and-own approach involves copying and adjusting open source code at one's own discretion, which may involve risks such as not following best practices, containing security vulnerabilities, or including modified upstream libraries.", "severity": "Informational", "contract": "SafeMath.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-908"], "4": ["CWE-457"]}, "title": "Receipts with value zero for invalid proposals", "description": "The `getReceipt()` function can return receipts with value zero for invalid proposals because `mapping(address => Receipt) receipts` got moved out of the `Proposal` struct.", "severity": "Informational", "contract": "GovernorAlpha.sol", "function": "getReceipt()", "lineNumber": "N/A"}, {"id": 16, "category": {"1": ["CWE-682"], "2": ["CWE-1339"]}, "title": "Loss of precision due to multiplication after division", "description": "Division in Solidity leads to truncation and loss of precision. The effect of truncation is exacerbated if multiplication is performed on the result of a division.", "severity": "Informational", "contract": "IVaultHandler.sol", "function": "liquidationReward", "lineNumber": "684-685"}, {"id": 17, "category": {"1": ["CWE-703"], "2": ["CWE-393"]}, "title": "Unchecked Return Value", "description": "The `claimVest()` function ignores return value by `stakingToken.transfer()`. If the `transfer()` function of the staking token does not fail on an unsuccessful transfer, then the `claimVest()` function would return successfully without the sender having received the claim amount.", "severity": "Informational", "contract": "LiquidityReward.sol", "function": "claimVest()", "lineNumber": "L176-184"}, {"id": 18, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-229"], "4": ["CWE-230"]}, "title": "Missing input address validation", "description": "Input parameters of type `address` should always be checked to be different from `address(0)` to avoid sending funds to such an address by mistake.", "severity": "Informational", "contract": "Orchestrator.sol, RewardHandler.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 19, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Incorrect amount may be withdrawn from the reward handler", "description": "The liquidateVault() function withdraws _requiredTCAP from the rewardHandler for the vault.Owner account, which may be larger than the amount staked when the owner of the vault minted TCAP.", "severity": "Undetermined", "contract": "IVaultHandler", "function": "liquidateVault()", "lineNumber": "L489"}, {"id": 20, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-908"], "4": ["CWE-457"]}, "title": "VestingBegin state variable not read in the LiquidityReward contract", "description": "The `vestingBegin` state variable is never read in the `LiquidityReward` contract, which may indicate that it is not actually needed. The code allows setting the `vestingBegin` and `vestingEnd` arbitrarily, hence the vesting period could be different than 6 months.", "severity": "Undetermined", "contract": "LiquidityReward", "function": "N/A", "lineNumber": "N/A"}, {"id": 21, "category": {"1": ["CWE-682"]}, "title": "Unclear vesting period interpretation", "description": "The whitepaper indicates a 6-month vesting period with 1/3rd of the reward immediately available and 2/3rds accessible after 6 months, but this can be interpreted in two ways.", "severity": "Undetermined", "contract": "LiquidityReward.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 22, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Typo on L543 in IVaultHandler.sol", "description": "Typo in code comment: 'rewards tokens' -> 'reward tokens'", "severity": "Unresolved", "contract": "IVaultHandler", "function": "N/A", "lineNumber": "L543"}, {"id": 23, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Typo on L300 in LiquidityRewards.sol", "description": "Typo inmediate transfered -> immediately transferred", "severity": "Informational", "contract": "LiquidityRewards.sol", "function": "N/A", "lineNumber": "300"}]}
+{
+    "path": "./Audit_Reports_2024/Quantstamp/cryptex-finance.pdf",
+    "project_info": {
+        "url": "https://github.com/cryptexglobal/contracts",
+        "commit_hash": "9bd0481\u2026755d32e",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Wrong token being transferred on claimVest()",
+            "description": "The `claimVest()` function transfers the staking token as opposed to the reward token.",
+            "severity": "High Risk",
+            "contract": "LiquidityReward.sol",
+            "function": "claimVest()",
+            "lineNumber": "183"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Staking token can be withdrawn from the rewards contract",
+            "description": "The `LiquidityReward.recoverERC20()` function contains a check at the start, which only checks that the `_tokenAddress` of the ERC20 token to withdraw is not equal to the `rewardsToken`. However, there is no check to prevent withdrawing the staking token.",
+            "severity": "Medium Risk",
+            "contract": "LiquidityReward.sol",
+            "function": "recoverERC20()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "TCAP Token can be withdrawn from the vault",
+            "description": "The owner can recover both TCAP Token and any ERC20 collateral using `recoverERC20()` (unless TCAP Token is the collateral).",
+            "severity": "Medium Risk",
+            "contract": "IVaultHandler.sol",
+            "function": "recoverERC20()",
+            "lineNumber": "541"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Oracle price could be stale",
+            "description": "The ChainlinkOracle.getLatestAnswer() function returns the price from AggregatorV3Interface.latestRoundData(), ignoring other return values, which may lead to stale prices.",
+            "severity": "Low Risk",
+            "contract": "ChainlinkOracle.sol",
+            "function": "getLatestAnswer()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Loss of rewards due to truncation",
+            "description": "The `LiquidityReward.getReward()` function splits the `reward` into `vestingReward` and `transferReward` inefficiently and imprecisely, leading to small reward losses due to integer division truncation.",
+            "severity": "Low Risk",
+            "contract": "LiquidityReward.sol",
+            "function": "getReward()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Ratio can be set to any value",
+            "description": "The IVaultHandler.setRatio() function does not contain any constraints on the value of the _ratio input parameter, allowing the owner to set it to any unsigned integer.",
+            "severity": "Low Risk",
+            "contract": "IVaultHandler.sol",
+            "function": "setRatio()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Burn fee can be set to any value",
+            "description": "The IVaultHandler.setBurnFee() function does not contain any constraints on the value of the _burnFee input parameter, allowing the owner to set it to any unsigned integer.",
+            "severity": "Low Risk",
+            "contract": "IVaultHandler.sol",
+            "function": "setBurnFee()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Treasury can be set to any address",
+            "description": "The IVaultHandler.setTreasury() function does not contain any constraints on the value of the _treasury input parameter, allowing the owner to set the treasury value to any address including an EOA.",
+            "severity": "Low Risk",
+            "contract": "IVaultHandler.sol",
+            "function": "setTreasury()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-401"
+                ]
+            },
+            "title": "Burn fee not paid to the treasury",
+            "description": "The burn fee is not paid to the treasury in the liquidateVault() function.",
+            "severity": "Low Risk",
+            "contract": "IVaultHandler.sol",
+            "function": "liquidateVault()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Median is more robust than average for aggregated oracles",
+            "description": "Using median price aggregation instead of average price aggregation can prevent irregular prices from compromised data sources to affect the overall price.",
+            "severity": "Low Risk",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ]
+            },
+            "title": "Dangerous use of strict equality",
+            "description": "The IVaultHandler.withBurnFee() modifier makes use of strict equality between the msg.value and the fee, putting an unnecessary burden on the caller of the burn() function to compute the exact fee amount.",
+            "severity": "Low Risk",
+            "contract": "IVaultHandler.sol",
+            "function": "withBurnFee()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Allowance Double-Spend Exploit",
+            "description": "The contract is vulnerable to the allowance double-spend exploit as with other ERC20 tokens.",
+            "severity": "Informational",
+            "contract": "Ctx.sol",
+            "function": "approve()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ]
+            },
+            "title": "Misleading error message",
+            "description": "The IVaultHandler.recoverERC20() function has a misleading error message that includes 'rewards tokens' which is unclear and does not match the actual checked token addresses.",
+            "severity": "Informational",
+            "contract": "IVaultHandler",
+            "function": "recoverERC20()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-654"
+                ]
+            },
+            "title": "Single point of failure for price feeds",
+            "description": "The price feeds rely on a single oracle, namely the Chainlink Aggregator V3, which is indeed robust. However, in the event of any large scale attack/disruption of the Chainlink network, the Cryptex vault handlers would be severely impacted.",
+            "severity": "Informational",
+            "contract": "IVaultHandler.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Clone-and-Own",
+            "description": "The clone-and-own approach involves copying and adjusting open source code at one's own discretion, which may involve risks such as not following best practices, containing security vulnerabilities, or including modified upstream libraries.",
+            "severity": "Informational",
+            "contract": "SafeMath.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-908"
+                ],
+                "4": [
+                    "CWE-457"
+                ]
+            },
+            "title": "Receipts with value zero for invalid proposals",
+            "description": "The `getReceipt()` function can return receipts with value zero for invalid proposals because `mapping(address => Receipt) receipts` got moved out of the `Proposal` struct.",
+            "severity": "Informational",
+            "contract": "GovernorAlpha.sol",
+            "function": "getReceipt()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "Loss of precision due to multiplication after division",
+            "description": "Division in Solidity leads to truncation and loss of precision. The effect of truncation is exacerbated if multiplication is performed on the result of a division.",
+            "severity": "Informational",
+            "contract": "IVaultHandler.sol",
+            "function": "liquidationReward",
+            "lineNumber": "684-685"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-393"
+                ]
+            },
+            "title": "Unchecked Return Value",
+            "description": "The `claimVest()` function ignores return value by `stakingToken.transfer()`. If the `transfer()` function of the staking token does not fail on an unsuccessful transfer, then the `claimVest()` function would return successfully without the sender having received the claim amount.",
+            "severity": "Informational",
+            "contract": "LiquidityReward.sol",
+            "function": "claimVest()",
+            "lineNumber": "L176-184"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ],
+                "4": [
+                    "CWE-230"
+                ]
+            },
+            "title": "Missing input address validation",
+            "description": "Input parameters of type `address` should always be checked to be different from `address(0)` to avoid sending funds to such an address by mistake.",
+            "severity": "Informational",
+            "contract": "Orchestrator.sol, RewardHandler.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 19,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Incorrect amount may be withdrawn from the reward handler",
+            "description": "The liquidateVault() function withdraws _requiredTCAP from the rewardHandler for the vault.Owner account, which may be larger than the amount staked when the owner of the vault minted TCAP.",
+            "severity": "Undetermined",
+            "contract": "IVaultHandler",
+            "function": "liquidateVault()",
+            "lineNumber": "L489"
+        },
+        {
+            "id": 20,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-908"
+                ],
+                "4": [
+                    "CWE-457"
+                ]
+            },
+            "title": "VestingBegin state variable not read in the LiquidityReward contract",
+            "description": "The `vestingBegin` state variable is never read in the `LiquidityReward` contract, which may indicate that it is not actually needed. The code allows setting the `vestingBegin` and `vestingEnd` arbitrarily, hence the vesting period could be different than 6 months.",
+            "severity": "Undetermined",
+            "contract": "LiquidityReward",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 21,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Unclear vesting period interpretation",
+            "description": "The whitepaper indicates a 6-month vesting period with 1/3rd of the reward immediately available and 2/3rds accessible after 6 months, but this can be interpreted in two ways.",
+            "severity": "Undetermined",
+            "contract": "LiquidityReward.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 22,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Typo on L543 in IVaultHandler.sol",
+            "description": "Typo in code comment: 'rewards tokens' -> 'reward tokens'",
+            "severity": "Unresolved",
+            "contract": "IVaultHandler",
+            "function": "N/A",
+            "lineNumber": "L543"
+        },
+        {
+            "id": 23,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Typo on L300 in LiquidityRewards.sol",
+            "description": "Typo inmediate transfered -> immediately transferred",
+            "severity": "Informational",
+            "contract": "LiquidityRewards.sol",
+            "function": "N/A",
+            "lineNumber": "300"
+        }
+    ]
+}

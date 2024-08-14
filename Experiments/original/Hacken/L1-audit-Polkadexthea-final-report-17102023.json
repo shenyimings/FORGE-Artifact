@@ -1,1 +1,318 @@
-{"path": "./Audit_Reports_2024/Hacken/L1-audit-Polkadexthea-final-report-17102023.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"]}, "title": "Unhandled Error in FeesCollected Insertion Leading to Potential Node Crash", "description": "The pallet-ocex-lmp pallet experiences a node crash due to an unhandled error resulting from an unchecked conversion from an unlimited vec to a limited BoundedVec.", "severity": "HIGH", "contract": "pallet-ocex-lmp", "function": "submit_snapshot", "lineNumber": "1382, 1043"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Inaccurate Signature Threshold Calculation", "description": "The signature threshold calculation in the submit_snapshot function uses a 'round down' approach, which can lead to a lower signature threshold than intended.", "severity": "MEDIUM", "contract": "pallet-ocex-lmp", "function": "submit_snapshot", "lineNumber": "_pallets/ocex/src/lib.rs:999"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Vector of unlimited size in thea-executor", "description": "The `ApprovedDeposits` storage value uses a `Vec` data structure without a limit on its size, which can lead to memory exhaustion and DoS attacks.", "severity": "MEDIUM", "contract": "thea-executor", "function": "do_deposit", "lineNumber": "313"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Polkadex Node Fails to Execute", "description": "The Polkadex node cannot execute with the current Rust toolchain configuration due to misconfiguration.", "severity": "LOW", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-233"]}, "title": "Compilation and Linter Warnings", "description": "Polkadex L1 Substrate chain has a clean build with a minor single dependency warning related to nalgebra within linregress dependency of benchmarking FRAME pallet.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Employment of Sudo Pallet", "description": "The sudo FRAME pallet is currently leveraged as an alternative to the governance mechanism, which raises potential centralization concerns and is a less desirable design choice.", "severity": "Medium", "contract": "_runtime/src/lib.rs", "function": "N/A", "lineNumber": "1441"}, {"id": 6, "category": {"1": ["CWE-710"], "2": ["CWE-1068"]}, "title": "Inconsistent and Misleading Comments and Logs in Thea Codebase", "description": "The codebase for Thea contains misleading comments and logs copied from Orderbook client codebase, which can lead to confusion and misinterpretation.", "severity": "N/A", "contract": "Thea", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Incorrect Use of Bitwise OR Operator", "description": "Using bitwise OR operator instead of logical OR operator can lead to confusion and potential issues when the code is modified in the future.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-710"], "2": ["CWE-1126"]}, "title": "Magic Numbers As Constants in pallets", "description": "Usage of magic numbers as constant, directly hardcoded in pallets code, can lead to maintainability, readability, and potential security issues.", "severity": "Code Quality", "contract": "_pallets/asset-handler/src/lib.rs", "function": ["impl Get < u32 > for WithdrawalLimit", "impl Get < u32 > for AllowlistedTokenLimit"], "lineNumber": ["98", "106", "193"]}, {"id": 9, "category": {"1": ["CWE-682"]}, "title": "Missing Benchmark Calculations", "description": "The project lacks benchmark calculations for extrinsic weights of several pallets, and some hooks return incorrect weights, leading to inaccurate transaction fee calculations, imbalanced resource consumption, and potential vulnerabilities.", "severity": "Critical", "contract": "_liquidity_, _pdex-migration_, _router_, _thea_, _thea-executor_, _thea-message-handler_", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-703"]}, "title": "Non-Idiomatic Error Handling in `collect_fees` Function of `pallet-ocex-lmp` Pallet", "description": "The error handling approach in the `collect_fees` function of the `pallet-ocex-lmp` pallet is not idiomatic in Rust, which may ignore potential errors in the event of a failure and could complicate debugging.", "severity": "N/A", "contract": "pallet-ocex-lmp", "function": "collect_fees()", "lineNumber": "_pallets/ocex/src/lib.rs:786-791_"}, {"id": 11, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Redundant declaration of AllowlistedTokenLimit struct", "description": "Duplicating the get methods for the `AllowlistedTokenLimit` structure in multiple pallets is considered a bad practice, as it can lead to readability and maintainability issues.", "severity": "Code Quality", "contract": "pallet-ocex-lmp", "function": "N/A", "lineNumber": "_pallets/ocex/src/lib.rs:127_, _pallets/thea-executor/src/lib.rs:247_"}, {"id": 12, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Superfluous Else Clause", "description": "The bitwise OR operator (|) is used instead of the logical OR operator (||), which can lead to confusion and potential issues when the code is modified in the future.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-710"], "2": ["CWE-1164"]}, "title": "Superfluous Implementation of Hooks Trait", "description": "The utilization of the `Hooks` trait without implementing any of its methods does not lead to any immediate detrimental effects. However, it is superfluous and can potentially reduce code readability while increasing complexity.", "severity": "Low", "contract": "liquidity pallet", "function": "N/A", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Typographical Errors in the Project", "description": "Correct `PendingWithdrawals` getter name from `get_pending_withdrawls` to `get__pending_withdrawals`", "severity": "N/A", "contract": "_pallets/asset-_handler/src/lib.rs", "function": "get_pending_withdrawals", "lineNumber": "178"}, {"id": 15, "category": {"1": ["CWE-664"], "2": ["CWE-1329"]}, "title": "Unmaintained ChainBridge pallet", "description": "The ChainBridge Substrate pallet is no longer maintained by its creators, ChainSafe, and the official GitHub repository has been archived.", "severity": "N/A", "contract": "ChainBridge", "function": "N/A", "lineNumber": "N/A"}, {"id": 16, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Unnecessary 'hashing.rs' File in Polkadex Chainbridge Pallet", "description": "The Polkadex `chainbridge` pallet includes an unnecessary file named `_hashing.rs`, which is not utilized in the pallet's implementation and contains redundant functions.", "severity": "Code Quality", "contract": "ChainBridge", "function": "N/A", "lineNumber": "N/A"}, {"id": 17, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Unsafe arithmetics", "description": "Some calculations were performed without considering the possibility of overflows.", "severity": "Acknowledged", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Hacken/L1-audit-Polkadexthea-final-report-17102023.pdf",
+    "project_info": {
+        "url": "https://github.com/Polkadex-Substrate/Polkadex/tree/1dd8eed88b5a5181d33b4d83f16ed5bcf559528e",
+        "commit_hash": "1dd8eed88b5a5181d33b4d83f16ed5bcf559528e",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Unhandled Error in FeesCollected Insertion Leading to Potential Node Crash",
+            "description": "The pallet-ocex-lmp pallet experiences a node crash due to an unhandled error resulting from an unchecked conversion from an unlimited vec to a limited BoundedVec.",
+            "severity": "HIGH",
+            "contract": "pallet-ocex-lmp",
+            "function": "submit_snapshot",
+            "lineNumber": "1382, 1043"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Inaccurate Signature Threshold Calculation",
+            "description": "The signature threshold calculation in the submit_snapshot function uses a 'round down' approach, which can lead to a lower signature threshold than intended.",
+            "severity": "MEDIUM",
+            "contract": "pallet-ocex-lmp",
+            "function": "submit_snapshot",
+            "lineNumber": "_pallets/ocex/src/lib.rs:999"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Vector of unlimited size in thea-executor",
+            "description": "The `ApprovedDeposits` storage value uses a `Vec` data structure without a limit on its size, which can lead to memory exhaustion and DoS attacks.",
+            "severity": "MEDIUM",
+            "contract": "thea-executor",
+            "function": "do_deposit",
+            "lineNumber": "313"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Polkadex Node Fails to Execute",
+            "description": "The Polkadex node cannot execute with the current Rust toolchain configuration due to misconfiguration.",
+            "severity": "LOW",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-233"
+                ]
+            },
+            "title": "Compilation and Linter Warnings",
+            "description": "Polkadex L1 Substrate chain has a clean build with a minor single dependency warning related to nalgebra within linregress dependency of benchmarking FRAME pallet.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Employment of Sudo Pallet",
+            "description": "The sudo FRAME pallet is currently leveraged as an alternative to the governance mechanism, which raises potential centralization concerns and is a less desirable design choice.",
+            "severity": "Medium",
+            "contract": "_runtime/src/lib.rs",
+            "function": "N/A",
+            "lineNumber": "1441"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1068"
+                ]
+            },
+            "title": "Inconsistent and Misleading Comments and Logs in Thea Codebase",
+            "description": "The codebase for Thea contains misleading comments and logs copied from Orderbook client codebase, which can lead to confusion and misinterpretation.",
+            "severity": "N/A",
+            "contract": "Thea",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Incorrect Use of Bitwise OR Operator",
+            "description": "Using bitwise OR operator instead of logical OR operator can lead to confusion and potential issues when the code is modified in the future.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1126"
+                ]
+            },
+            "title": "Magic Numbers As Constants in pallets",
+            "description": "Usage of magic numbers as constant, directly hardcoded in pallets code, can lead to maintainability, readability, and potential security issues.",
+            "severity": "Code Quality",
+            "contract": "_pallets/asset-handler/src/lib.rs",
+            "function": [
+                "impl Get < u32 > for WithdrawalLimit",
+                "impl Get < u32 > for AllowlistedTokenLimit"
+            ],
+            "lineNumber": [
+                "98",
+                "106",
+                "193"
+            ]
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Missing Benchmark Calculations",
+            "description": "The project lacks benchmark calculations for extrinsic weights of several pallets, and some hooks return incorrect weights, leading to inaccurate transaction fee calculations, imbalanced resource consumption, and potential vulnerabilities.",
+            "severity": "Critical",
+            "contract": "_liquidity_, _pdex-migration_, _router_, _thea_, _thea-executor_, _thea-message-handler_",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Non-Idiomatic Error Handling in `collect_fees` Function of `pallet-ocex-lmp` Pallet",
+            "description": "The error handling approach in the `collect_fees` function of the `pallet-ocex-lmp` pallet is not idiomatic in Rust, which may ignore potential errors in the event of a failure and could complicate debugging.",
+            "severity": "N/A",
+            "contract": "pallet-ocex-lmp",
+            "function": "collect_fees()",
+            "lineNumber": "_pallets/ocex/src/lib.rs:786-791_"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Redundant declaration of AllowlistedTokenLimit struct",
+            "description": "Duplicating the get methods for the `AllowlistedTokenLimit` structure in multiple pallets is considered a bad practice, as it can lead to readability and maintainability issues.",
+            "severity": "Code Quality",
+            "contract": "pallet-ocex-lmp",
+            "function": "N/A",
+            "lineNumber": "_pallets/ocex/src/lib.rs:127_, _pallets/thea-executor/src/lib.rs:247_"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Superfluous Else Clause",
+            "description": "The bitwise OR operator (|) is used instead of the logical OR operator (||), which can lead to confusion and potential issues when the code is modified in the future.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ]
+            },
+            "title": "Superfluous Implementation of Hooks Trait",
+            "description": "The utilization of the `Hooks` trait without implementing any of its methods does not lead to any immediate detrimental effects. However, it is superfluous and can potentially reduce code readability while increasing complexity.",
+            "severity": "Low",
+            "contract": "liquidity pallet",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Typographical Errors in the Project",
+            "description": "Correct `PendingWithdrawals` getter name from `get_pending_withdrawls` to `get__pending_withdrawals`",
+            "severity": "N/A",
+            "contract": "_pallets/asset-_handler/src/lib.rs",
+            "function": "get_pending_withdrawals",
+            "lineNumber": "178"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-1329"
+                ]
+            },
+            "title": "Unmaintained ChainBridge pallet",
+            "description": "The ChainBridge Substrate pallet is no longer maintained by its creators, ChainSafe, and the official GitHub repository has been archived.",
+            "severity": "N/A",
+            "contract": "ChainBridge",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Unnecessary 'hashing.rs' File in Polkadex Chainbridge Pallet",
+            "description": "The Polkadex `chainbridge` pallet includes an unnecessary file named `_hashing.rs`, which is not utilized in the pallet's implementation and contains redundant functions.",
+            "severity": "Code Quality",
+            "contract": "ChainBridge",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Unsafe arithmetics",
+            "description": "Some calculations were performed without considering the possibility of overflows.",
+            "severity": "Acknowledged",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

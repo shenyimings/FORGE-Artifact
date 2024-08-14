@@ -1,1 +1,253 @@
-{"path": "./Audit_Reports_2024/Hacken/Hacken_DragonX_Final-Report-_-Jan2024.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "F-2024-0475 - Missing Checks For `Address(0)`", "description": "The contract does not properly check or prevent interactions with the zero address, leading to unintended behavior.", "severity": "Info", "contract": "DragonX", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Use `Ownable2Step` Rather Than `Ownable`", "description": "Using `Ownable2Step` or `Ownable2StepUpgradeable` instead of `Ownable` or `OwnableUpgradeable` can prevent the accidental transfer of ownership to an address that cannot handle it, such as due to a typo.", "severity": "Info", "contract": ["DragonX", "DragonBuyAndBurn", "TitanBuy", "DragonStake"], "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "F-2024-0479 - Custom Errors In Solidity For Gas Efficiency", "description": "Custom errors provide a way to define more descriptive and semantically meaningful error conditions without relying on string messages. Using custom errors instead of `require` statements with string messages can significantly reduce gas consumption, leading to more gas-efficient contracts.", "severity": "Info", "contract": "./contracts/DragonBuyAndBurn.sol, ./contracts/DragonX.sol, ./contracts/TitanBuy.sol, ./contracts/lib/DragonStake.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1288"]}, "title": "F-2024-0480 - Unused Error Definition", "description": "The errors `error NoStakesToEnd();`, `error TitanTransferFailed();` and `error NoTitanPriceTwaData();` are declared, but never used. This leaves redundant logic in code.", "severity": "Info", "contract": "./contracts/DragonX.sol, ./contracts/TitanBuy.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "F-2024-0481 - Owner Can Renounce Ownership", "description": "The smart contract under inspection inherits from the `Ownable` library, which provides basic authorization control functions. However, it also retains the default `renounceOwnership` function from `Ownable`, allowing the owner to renounce ownership and making the contract's adjustable parameters immutable.", "severity": "Info", "contract": "Multiple (DragonX, DragonBuyAndBurn, TitanBuy, DragonStake)", "function": "renounceOwnership()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"], "4": ["CWE-766"]}, "title": "F-2024-0482 - Public Functions That Should Be External", "description": "Functions meant to be exclusively invoked from external sources should be designated as `external` rather than `public` to enhance gas efficiency and overall security of the contract.", "severity": "Info", "contract": "DragonBuyAndBurn", "function": "collectFees()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-710"], "2": ["CWE-1164"]}, "title": "Remove `Hardhat` Import", "description": "Imports from `hardhat` in Solidity code, such as those used for testing or local development, should not make their way into the final production version of the contract.", "severity": "Info", "contract": "DragonBuyAndBurn", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-909"], "4": ["CWE-456"]}, "title": "F-2024-0484 - Event Is Not Properly `Indexed", "description": "Index event fields make the field more quickly accessible to off-chain tools that parse events, especially useful when it comes to filtering based on an address.", "severity": "Info", "contract": "DragonX.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "F-2024-0485 - Use `Private` Rather Than `Public` For Constants", "description": "Declare constants with `private` visibility rather than `public` when possible to optimize gas usage by preventing the automatic generation of a getter function.", "severity": "Info", "contract": "DragonX.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "F-2024-0487 - Cache State Variables", "description": "Cache state variables issues in Solidity refer to situations where developers fail to efficiently manage and update state variables in smart contracts. These issues can lead to suboptimal gas usage, decreased contract performance, and even vulnerabilities that can be exploited by malicious actors.", "severity": "Info", "contract": ["DragonX", "DragonBuyAndBurn"], "function": "N/A", "lineNumber": ["404", "475", "566", "569", "630", "645", "883", "914", "295", "362", "386", "631", "208", "456"]}, {"id": 10, "category": {"1": ["CWE-710"]}, "title": "F-2024-0489 - Style Guide Violation", "description": "Contract readability and code quality are influenced significantly by adherence to established style guidelines.", "severity": "Info", "contract": "DragonX.sol, DragonBuyAndBurn.sol, TitanBuy", "function": "stakeReachedMaturity, updateVault, createInitialLiquidity, collectFees", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-435"], "2": ["CWE-436"], "3": ["CWE-437"]}, "title": "Risks: Implementation of `if (msg.sender != tx.origin)` introduces a significant limitation", "description": "The implementation of `if (msg.sender != tx.origin)` in the `buyAndBurnDragonX`, `claim` and `buyTitanX` functions prevents these functions from being executed through any multisig wallet, leading to reduced flexibility and potential operational inefficiencies for users relying on multisig wallets for enhanced security.", "severity": "Medium", "contract": "Multiple (DragonBuyAndBurn, DragonX, TitanBuy)", "function": "buyAndBurnDragonX, claim, buyTitanX", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Hacken/Hacken_DragonX_Final-Report-_-Jan2024.pdf",
+    "project_info": {
+        "url": "https://github.com/hknio/severity-formula/tree/main",
+        "commit_hash": "main",
+        "address": "0x0000000000000000000000000000000000000000",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "F-2024-0475 - Missing Checks For `Address(0)`",
+            "description": "The contract does not properly check or prevent interactions with the zero address, leading to unintended behavior.",
+            "severity": "Info",
+            "contract": "DragonX",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Use `Ownable2Step` Rather Than `Ownable`",
+            "description": "Using `Ownable2Step` or `Ownable2StepUpgradeable` instead of `Ownable` or `OwnableUpgradeable` can prevent the accidental transfer of ownership to an address that cannot handle it, such as due to a typo.",
+            "severity": "Info",
+            "contract": [
+                "DragonX",
+                "DragonBuyAndBurn",
+                "TitanBuy",
+                "DragonStake"
+            ],
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "F-2024-0479 - Custom Errors In Solidity For Gas Efficiency",
+            "description": "Custom errors provide a way to define more descriptive and semantically meaningful error conditions without relying on string messages. Using custom errors instead of `require` statements with string messages can significantly reduce gas consumption, leading to more gas-efficient contracts.",
+            "severity": "Info",
+            "contract": "./contracts/DragonBuyAndBurn.sol, ./contracts/DragonX.sol, ./contracts/TitanBuy.sol, ./contracts/lib/DragonStake.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1288"
+                ]
+            },
+            "title": "F-2024-0480 - Unused Error Definition",
+            "description": "The errors `error NoStakesToEnd();`, `error TitanTransferFailed();` and `error NoTitanPriceTwaData();` are declared, but never used. This leaves redundant logic in code.",
+            "severity": "Info",
+            "contract": "./contracts/DragonX.sol, ./contracts/TitanBuy.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "F-2024-0481 - Owner Can Renounce Ownership",
+            "description": "The smart contract under inspection inherits from the `Ownable` library, which provides basic authorization control functions. However, it also retains the default `renounceOwnership` function from `Ownable`, allowing the owner to renounce ownership and making the contract's adjustable parameters immutable.",
+            "severity": "Info",
+            "contract": "Multiple (DragonX, DragonBuyAndBurn, TitanBuy, DragonStake)",
+            "function": "renounceOwnership()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ],
+                "4": [
+                    "CWE-766"
+                ]
+            },
+            "title": "F-2024-0482 - Public Functions That Should Be External",
+            "description": "Functions meant to be exclusively invoked from external sources should be designated as `external` rather than `public` to enhance gas efficiency and overall security of the contract.",
+            "severity": "Info",
+            "contract": "DragonBuyAndBurn",
+            "function": "collectFees()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ]
+            },
+            "title": "Remove `Hardhat` Import",
+            "description": "Imports from `hardhat` in Solidity code, such as those used for testing or local development, should not make their way into the final production version of the contract.",
+            "severity": "Info",
+            "contract": "DragonBuyAndBurn",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "F-2024-0484 - Event Is Not Properly `Indexed",
+            "description": "Index event fields make the field more quickly accessible to off-chain tools that parse events, especially useful when it comes to filtering based on an address.",
+            "severity": "Info",
+            "contract": "DragonX.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "F-2024-0485 - Use `Private` Rather Than `Public` For Constants",
+            "description": "Declare constants with `private` visibility rather than `public` when possible to optimize gas usage by preventing the automatic generation of a getter function.",
+            "severity": "Info",
+            "contract": "DragonX.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "F-2024-0487 - Cache State Variables",
+            "description": "Cache state variables issues in Solidity refer to situations where developers fail to efficiently manage and update state variables in smart contracts. These issues can lead to suboptimal gas usage, decreased contract performance, and even vulnerabilities that can be exploited by malicious actors.",
+            "severity": "Info",
+            "contract": [
+                "DragonX",
+                "DragonBuyAndBurn"
+            ],
+            "function": "N/A",
+            "lineNumber": [
+                "404",
+                "475",
+                "566",
+                "569",
+                "630",
+                "645",
+                "883",
+                "914",
+                "295",
+                "362",
+                "386",
+                "631",
+                "208",
+                "456"
+            ]
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ]
+            },
+            "title": "F-2024-0489 - Style Guide Violation",
+            "description": "Contract readability and code quality are influenced significantly by adherence to established style guidelines.",
+            "severity": "Info",
+            "contract": "DragonX.sol, DragonBuyAndBurn.sol, TitanBuy",
+            "function": "stakeReachedMaturity, updateVault, createInitialLiquidity, collectFees",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-437"
+                ]
+            },
+            "title": "Risks: Implementation of `if (msg.sender != tx.origin)` introduces a significant limitation",
+            "description": "The implementation of `if (msg.sender != tx.origin)` in the `buyAndBurnDragonX`, `claim` and `buyTitanX` functions prevents these functions from being executed through any multisig wallet, leading to reduced flexibility and potential operational inefficiencies for users relying on multisig wallets for enhanced security.",
+            "severity": "Medium",
+            "contract": "Multiple (DragonBuyAndBurn, DragonX, TitanBuy)",
+            "function": "buyAndBurnDragonX, claim, buyTitanX",
+            "lineNumber": "N/A"
+        }
+    ]
+}

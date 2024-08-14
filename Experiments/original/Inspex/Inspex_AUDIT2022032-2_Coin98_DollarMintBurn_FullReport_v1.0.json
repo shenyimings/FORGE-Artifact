@@ -1,1 +1,156 @@
-{"path": "./Audit_Reports_2024/Inspex/Inspex_AUDIT2022032-2_Coin98_DollarMintBurn_FullReport_v1.0.pdf", "project_info": {"url": "https://github.com/coin98/coin98-dollar-mint-burn", "commit_hash": "303cc426c82dea83892b51a68d1bab09022bf754", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-770"]}, "title": "Design Flaw in cUSD Token", "description": "When the reserve in the Coin98DollarMintBurn contract is insufficient, users cannot burn $cUSD to swap the asset token back.", "severity": "High", "contract": "Coin98DollarMintBurn", "function": "burn()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Centralized Control of State Variable", "description": "The controlling authorities can change critical state variables to gain additional profit, which is unfair to other users.", "severity": "High", "contract": "Coin98DollarMintBurn", "function": ["setLimitTime()", "setExchangeFee()", "setExchangeFeeBurner()", "setMinter()", "setBurner()", "setMinterSupply()", "setBurnerSupply()", "withdrawMultiple()"], "lineNumber": ["836", "848", "864", "879", "963", "1017", "1037", "1232"]}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Incorrect Daily Total Mint and Burn Amount Update", "description": "The currentTotalMintedToday or currentTotalBurnedToday value does not reset to zero due to incorrect total mint / burn amount updates when the time has passed for LIMIT_TIME hours (24 hours by default) since the first mint / burn of the day, preventing users from minting / burning $cUSD for the expected amount.", "severity": "Medium", "contract": "Coin98DollarMintBurn", "function": ["checkTotalMinted", "checkTotalBurned"], "lineNumber": "1057-1097"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Division Before Multiplication", "description": "The rounding error can cause the amountToBurn to be slightly miscalculated due to division before multiplication.", "severity": "Low", "contract": "Coin98DollarMintBurn", "function": "mint(uint256, uint256)", "lineNumber": "1168-1203"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-273"]}, "title": "Insufficient Logging for Privileged Functions", "description": "Privileged functions that are executable by the controlling parties are not logged properly by emitting events.", "severity": "Very Low", "contract": "Coin98DollarMintBurn", "function": "withdrawMultiple()", "lineNumber": "1232-1245"}, {"id": 5, "category": {"1": ["CWE-710"], "2": ["CWE-1061"], "3": ["CWE-766"]}, "title": "Improper Function Visibility", "description": "Public functions that are never called internally by the contract itself should have external visibility to improve readability and allow clear distinction between externally used and internally called functions.", "severity": "Info", "contract": "Coin98DollarMintBurn", "function": ["setLimitTime()", "setExchangeFee()", "setExchangeFeeBurner()", "setMinter()", "setBurner()", "setMinterSupply()", "setBurnerSupply()"], "lineNumber": ["836", "848", "864", "879", "963", "1017", "1037"]}]}
+{
+    "path": "./Audit_Reports_2024/Inspex/Inspex_AUDIT2022032-2_Coin98_DollarMintBurn_FullReport_v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/coin98/coin98-dollar-mint-burn",
+        "commit_hash": "303cc426c82dea83892b51a68d1bab09022bf754",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "Design Flaw in cUSD Token",
+            "description": "When the reserve in the Coin98DollarMintBurn contract is insufficient, users cannot burn $cUSD to swap the asset token back.",
+            "severity": "High",
+            "contract": "Coin98DollarMintBurn",
+            "function": "burn()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Centralized Control of State Variable",
+            "description": "The controlling authorities can change critical state variables to gain additional profit, which is unfair to other users.",
+            "severity": "High",
+            "contract": "Coin98DollarMintBurn",
+            "function": [
+                "setLimitTime()",
+                "setExchangeFee()",
+                "setExchangeFeeBurner()",
+                "setMinter()",
+                "setBurner()",
+                "setMinterSupply()",
+                "setBurnerSupply()",
+                "withdrawMultiple()"
+            ],
+            "lineNumber": [
+                "836",
+                "848",
+                "864",
+                "879",
+                "963",
+                "1017",
+                "1037",
+                "1232"
+            ]
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect Daily Total Mint and Burn Amount Update",
+            "description": "The currentTotalMintedToday or currentTotalBurnedToday value does not reset to zero due to incorrect total mint / burn amount updates when the time has passed for LIMIT_TIME hours (24 hours by default) since the first mint / burn of the day, preventing users from minting / burning $cUSD for the expected amount.",
+            "severity": "Medium",
+            "contract": "Coin98DollarMintBurn",
+            "function": [
+                "checkTotalMinted",
+                "checkTotalBurned"
+            ],
+            "lineNumber": "1057-1097"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Division Before Multiplication",
+            "description": "The rounding error can cause the amountToBurn to be slightly miscalculated due to division before multiplication.",
+            "severity": "Low",
+            "contract": "Coin98DollarMintBurn",
+            "function": "mint(uint256, uint256)",
+            "lineNumber": "1168-1203"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-273"
+                ]
+            },
+            "title": "Insufficient Logging for Privileged Functions",
+            "description": "Privileged functions that are executable by the controlling parties are not logged properly by emitting events.",
+            "severity": "Very Low",
+            "contract": "Coin98DollarMintBurn",
+            "function": "withdrawMultiple()",
+            "lineNumber": "1232-1245"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1061"
+                ],
+                "3": [
+                    "CWE-766"
+                ]
+            },
+            "title": "Improper Function Visibility",
+            "description": "Public functions that are never called internally by the contract itself should have external visibility to improve readability and allow clear distinction between externally used and internally called functions.",
+            "severity": "Info",
+            "contract": "Coin98DollarMintBurn",
+            "function": [
+                "setLimitTime()",
+                "setExchangeFee()",
+                "setExchangeFeeBurner()",
+                "setMinter()",
+                "setBurner()",
+                "setMinterSupply()",
+                "setBurnerSupply()"
+            ],
+            "lineNumber": [
+                "836",
+                "848",
+                "864",
+                "879",
+                "963",
+                "1017",
+                "1037"
+            ]
+        }
+    ]
+}

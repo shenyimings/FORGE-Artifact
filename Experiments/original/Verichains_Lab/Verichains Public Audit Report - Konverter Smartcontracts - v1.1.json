@@ -1,1 +1,117 @@
-{"path": "./Audit_Reports_2024/Verichains_Lab/Verichains Public Audit Report - Konverter Smartcontracts - v1.1.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-697"]}, "title": "Incorrect condition checking", "description": "In the `migrate` function of the `MigratorKSP` contract, there is an incorrect checking condition between two variables (`tokenA` and `tokenB`) that leads to incorrect program execution flow.", "severity": "CRITICAL", "contract": "MigratorKSP", "function": "migrate()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Incorrect Update of `_userVoted` in `vote` Function", "description": "The state variable `_userVoted[user][lp]` is incorrectly updated in the `vote` function, which may cause votes of that user for the specified pool to be lower than the actual amount if the `vote` function is called multiple times.", "severity": "N/A", "contract": "KonverterVote", "function": "vote()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Incorrect Approval of `feeToken` for Contract Deployer", "description": "In the `initialize` function of the `MoneyMakerKonverter` contract, the `feeToken` is approved for the contract deployer which is incorrect.", "severity": "MEDIUM", "contract": "MoneyMakerKonverter", "function": "initialize()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-691"], "2": ["CWE-1265"]}, "title": "LP token that follows the ERC777 standard can cause reentrancy problems", "description": "If the lpToken follows the ERC777 standard, an attacker can deploy a smart contract with tokensToSend and tokensReceived hooks to perform a reentrancy attack that calls back to this contract in the same transaction.", "severity": "LOW", "contract": "MasterChefKonverter", "function": "withdraw()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-693"]}, "title": "Missing front-running protection for the `approve` function", "description": "The `approve` functions for both `KonverterERC20` and `StableSwapPoolToken` do not have any mechanism to protect the logic against front-running attacks.", "severity": "LOW", "contract": "KonverterERC20, StableSwapPoolToken", "function": "approve()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Wrong timestamp checking lead to be inconsistent code", "description": "The function 'isPhase2EventPeriod' has incorrect timestamp checking, leading to inconsistent code and potential issues with phase transitions.", "severity": "N/A", "contract": "KonverterLockDropFarm", "function": "isPhase2EventPeriod()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "Incorrect order of arithmetic operations", "description": "The calculation of `amount0Out` and `amount1Out` are incorrect due to the use of `*=` operators. In this context, multiplications must be performed before divisions.", "severity": "CRITICAL", "contract": "KonverterPair", "function": "swap()", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Verichains_Lab/Verichains Public Audit Report - Konverter Smartcontracts - v1.1.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ]
+            },
+            "title": "Incorrect condition checking",
+            "description": "In the `migrate` function of the `MigratorKSP` contract, there is an incorrect checking condition between two variables (`tokenA` and `tokenB`) that leads to incorrect program execution flow.",
+            "severity": "CRITICAL",
+            "contract": "MigratorKSP",
+            "function": "migrate()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect Update of `_userVoted` in `vote` Function",
+            "description": "The state variable `_userVoted[user][lp]` is incorrectly updated in the `vote` function, which may cause votes of that user for the specified pool to be lower than the actual amount if the `vote` function is called multiple times.",
+            "severity": "N/A",
+            "contract": "KonverterVote",
+            "function": "vote()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Incorrect Approval of `feeToken` for Contract Deployer",
+            "description": "In the `initialize` function of the `MoneyMakerKonverter` contract, the `feeToken` is approved for the contract deployer which is incorrect.",
+            "severity": "MEDIUM",
+            "contract": "MoneyMakerKonverter",
+            "function": "initialize()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "LP token that follows the ERC777 standard can cause reentrancy problems",
+            "description": "If the lpToken follows the ERC777 standard, an attacker can deploy a smart contract with tokensToSend and tokensReceived hooks to perform a reentrancy attack that calls back to this contract in the same transaction.",
+            "severity": "LOW",
+            "contract": "MasterChefKonverter",
+            "function": "withdraw()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "Missing front-running protection for the `approve` function",
+            "description": "The `approve` functions for both `KonverterERC20` and `StableSwapPoolToken` do not have any mechanism to protect the logic against front-running attacks.",
+            "severity": "LOW",
+            "contract": "KonverterERC20, StableSwapPoolToken",
+            "function": "approve()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Wrong timestamp checking lead to be inconsistent code",
+            "description": "The function 'isPhase2EventPeriod' has incorrect timestamp checking, leading to inconsistent code and potential issues with phase transitions.",
+            "severity": "N/A",
+            "contract": "KonverterLockDropFarm",
+            "function": "isPhase2EventPeriod()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect order of arithmetic operations",
+            "description": "The calculation of `amount0Out` and `amount1Out` are incorrect due to the use of `*=` operators. In this context, multiplications must be performed before divisions.",
+            "severity": "CRITICAL",
+            "contract": "KonverterPair",
+            "function": "swap()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

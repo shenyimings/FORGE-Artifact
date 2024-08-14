@@ -1,1 +1,172 @@
-{"path": "./Audit_Reports_2024/Techrate/RiseUp Full Smart Contract Security Audit.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "0x61c911b6d1b46dcadbb61bfa7100290a6faad53d"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Owner privileges (In the period when the owner is not renounced)", "description": "The contract owner has excessive privileges even after ownership renouncement, allowing them to change various fees, transaction amounts, and other settings.", "severity": "High", "contract": "N/A", "function": "Multiple functions with onlyOwner modifier", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"]}, "title": "Modifiers lockTheSwap", "description": "The 'lockTheSwap' modifier is used in multiple functions without proper access control, potentially leading to unauthorized state changes.", "severity": "High", "contract": "RiseUp", "function": "Multiple functions", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Modifiers onlyOwner", "description": "The owner has excessive privileges to modify critical contract settings and functions.", "severity": "High", "contract": "N/A", "function": ["setSwapAndLiquifyEnabled", "setIgnoreBuybackEligibilityCheck", "setBuyBackEnabled", "buyBackAndBurnTokens", "prepareForPreSale", "prepareForLaunch", "transferToAddressETH", "includeInFee", "blacklistAddress", "setTotalFeePercent", "setMarketingFeePercent", "setDevFeePercent", "setNumTokensSellToAddToLiquidity", "setBuybackLimit", "setMarketingAddress", "setDevAddress"], "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Potential unauthorized script upgrade", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-749"]}, "title": "Unprotected functions", "description": "The functions buyBackTokens, swapTokensForEth, swapETHForTokens, _tokenTransfer, _transferStandard, _transferToExcluded, _transferFromExcluded, _transferBothExcluded, _getValues, _getTValues, _getRValues, _getRate, _getCurrentSupply, _takeLiquidity, calculateFee, removeAllFee, and restoreAllFee are unprotected.", "severity": "High", "contract": "N/A", "function": ["buyBackTokens", "swapTokensForEth", "swapETHForTokens", "_tokenTransfer", "_transferStandard", "_transferToExcluded", "_transferFromExcluded", "_transferBothExcluded", "_getValues", "_getTValues", "_getRValues", "_getRate", "_getCurrentSupply", "_takeLiquidity", "calculateFee", "removeAllFee", "restoreAllFee"], "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"]}, "title": "Unprotected functions: isExcludedFromFee, excludeFromFee, includeInFee, blacklistAddress", "description": "The functions isExcludedFromFee, excludeFromFee, includeInFee, and blacklistAddress are unprotected and can be accessed by anyone.", "severity": "High", "contract": "RiseUp", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-284"]}, "title": "Unprotected functions", "description": "The functions setTotalFeePercent, setMarketingFeePercent, setDevFeePercent, setNumTokensSellToAddToLiquidity, setBuybackLimit, setMarketingAddress, and setDevAddress are unprotected and can be modified by anyone.", "severity": "High", "contract": "N/A", "function": ["setTotalFeePercent", "setMarketingFeePercent", "setDevFeePercent", "setNumTokensSellToAddToLiquidity", "setBuybackLimit", "setMarketingAddress", "setDevAddress"], "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Techrate/RiseUp Full Smart Contract Security Audit.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0x61c911b6d1b46dcadbb61bfa7100290a6faad53d"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Owner privileges (In the period when the owner is not renounced)",
+            "description": "The contract owner has excessive privileges even after ownership renouncement, allowing them to change various fees, transaction amounts, and other settings.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "Multiple functions with onlyOwner modifier",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Modifiers lockTheSwap",
+            "description": "The 'lockTheSwap' modifier is used in multiple functions without proper access control, potentially leading to unauthorized state changes.",
+            "severity": "High",
+            "contract": "RiseUp",
+            "function": "Multiple functions",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Modifiers onlyOwner",
+            "description": "The owner has excessive privileges to modify critical contract settings and functions.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": [
+                "setSwapAndLiquifyEnabled",
+                "setIgnoreBuybackEligibilityCheck",
+                "setBuyBackEnabled",
+                "buyBackAndBurnTokens",
+                "prepareForPreSale",
+                "prepareForLaunch",
+                "transferToAddressETH",
+                "includeInFee",
+                "blacklistAddress",
+                "setTotalFeePercent",
+                "setMarketingFeePercent",
+                "setDevFeePercent",
+                "setNumTokensSellToAddToLiquidity",
+                "setBuybackLimit",
+                "setMarketingAddress",
+                "setDevAddress"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Potential unauthorized script upgrade",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-749"
+                ]
+            },
+            "title": "Unprotected functions",
+            "description": "The functions buyBackTokens, swapTokensForEth, swapETHForTokens, _tokenTransfer, _transferStandard, _transferToExcluded, _transferFromExcluded, _transferBothExcluded, _getValues, _getTValues, _getRValues, _getRate, _getCurrentSupply, _takeLiquidity, calculateFee, removeAllFee, and restoreAllFee are unprotected.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": [
+                "buyBackTokens",
+                "swapTokensForEth",
+                "swapETHForTokens",
+                "_tokenTransfer",
+                "_transferStandard",
+                "_transferToExcluded",
+                "_transferFromExcluded",
+                "_transferBothExcluded",
+                "_getValues",
+                "_getTValues",
+                "_getRValues",
+                "_getRate",
+                "_getCurrentSupply",
+                "_takeLiquidity",
+                "calculateFee",
+                "removeAllFee",
+                "restoreAllFee"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected functions: isExcludedFromFee, excludeFromFee, includeInFee, blacklistAddress",
+            "description": "The functions isExcludedFromFee, excludeFromFee, includeInFee, and blacklistAddress are unprotected and can be accessed by anyone.",
+            "severity": "High",
+            "contract": "RiseUp",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected functions",
+            "description": "The functions setTotalFeePercent, setMarketingFeePercent, setDevFeePercent, setNumTokensSellToAddToLiquidity, setBuybackLimit, setMarketingAddress, and setDevAddress are unprotected and can be modified by anyone.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": [
+                "setTotalFeePercent",
+                "setMarketingFeePercent",
+                "setDevFeePercent",
+                "setNumTokensSellToAddToLiquidity",
+                "setBuybackLimit",
+                "setMarketingAddress",
+                "setDevAddress"
+            ],
+            "lineNumber": "N/A"
+        }
+    ]
+}

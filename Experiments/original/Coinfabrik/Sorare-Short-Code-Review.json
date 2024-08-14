@@ -1,1 +1,292 @@
-{"path": "./Audit_Reports_2024/Coinfabrik/Sorare-Short-Code-Review.pdf", "project_info": {"url": "https://gitlab.com/sorare/blockchain/-/tree/master/src/contracts", "commit_hash": "a76b43282e630dcc56198fd37ca453756c4b818d", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-697"], "2": ["CWE-1025"], "3": ["CWE-595"], "4": ["CWE-597"]}, "title": "Invalid signature verification for token transfer", "description": "A sender could offer a deal where the token tokenId=0 is the first token, followed by his other tokens. Then a bidder would sign the deal expecting to receive the offered tokens and naively ignoring the first **tokenIds[0] = 0** and settle it. But none of the tokens offered by the sender would be transferred to the receiver.", "severity": "Critical", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-693"], "2": ["CWE-807"], "3": ["CWE-302"]}, "title": "Sender\u2019s Replay Attack", "description": "A malicious sender can listen to the transaction mempool for a DEALID settle execution, move just enough funds or assets, and pay a higher gas price to make the deal unable to be settled. The attacker can then replay the settlement at a future moment when the token is devalued.", "severity": "Critical", "contract": "N/A", "function": "cancelDeal", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Misuse of the different call methods: call.value(), send() and transfer()", "description": "The misuse of call methods can lead to security vulnerabilities.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Integer rounding errors, overflow, underflow and related usage of SafeMath functions", "description": "The depositETH function uses a 'for' statement to add all amountInWei from the integer array used as parameter in the requiredAmount variable without using SafeMath library, allowing sending different possible combination of integer values that adding them to the requiredAmount variable one after the other in each iteration will make the variable overflow consequently causing the validation (in the 'require') to fail.", "severity": "Critical", "contract": "N/A", "function": "depositETH()", "lineNumber": "317-319"}, {"id": 4, "category": {"1": ["CWE-710"], "2": ["CWE-477"]}, "title": "Old compiler version pragmas", "description": "Using old compiler version pragmas can lead to security vulnerabilities and compatibility issues.", "severity": "Minor", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-693"]}, "title": "Race conditions such as reentrancy attacks or front running", "description": "Vulnerability to race conditions including reentrancy attacks and front running.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "Misuse of block timestamps", "description": "Assuming anything other than them being strictly increasing", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-691"], "2": ["CWE-362"]}, "title": "Contract softlocking attacks (DoS)", "description": "A variant of this attack consists of a denial of service of the RelayBatchCall function by calling the purgeBatchNonces in the middle of its execution preventing it from finishing.", "severity": "N/A", "contract": "RelayBatchCall", "function": "purgeBatchNonces", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Potential gas cost of functions being over the gas limit", "description": "Functions have a higher gas cost than the one that a transfer or send call allows.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Missing function qualifiers and their misuse", "description": "Misuse of different call methods: call.value(), send() and transfer().", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Fallback functions with a higher gas cost than the one that a transfer or send call allows", "description": "The fallback function has a higher gas cost than what is allowed by a transfer or send call.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-710"], "2": ["CWE-1177"]}, "title": "Fraudulent or erroneous code", "description": "The audit report mentions fraudulent or erroneous code as a finding but does not provide specific details about this issue.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-435"]}, "title": "Code and contract interaction complexity", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-703"], "2": ["CWE-755"], "3": ["CWE-544"]}, "title": "Wrong or missing error handling", "description": "Missing or incorrect implementation of error handling mechanisms.", "severity": "Minor", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-770"]}, "title": "Overuse of transfers in a single transaction instead of using withdrawal patterns", "description": "Using multiple transfers in a single transaction can lead to issues instead of implementing withdrawal patterns.", "severity": "Minor", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-229"]}, "title": "Insufficient analysis of the function input requirements", "description": "The contract does not properly analyze the input requirements of a function, which can lead to potential security vulnerabilities.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Coinfabrik/Sorare-Short-Code-Review.pdf",
+    "project_info": {
+        "url": "https://gitlab.com/sorare/blockchain/-/tree/master/src/contracts",
+        "commit_hash": "a76b43282e630dcc56198fd37ca453756c4b818d",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ],
+                "2": [
+                    "CWE-1025"
+                ],
+                "3": [
+                    "CWE-595"
+                ],
+                "4": [
+                    "CWE-597"
+                ]
+            },
+            "title": "Invalid signature verification for token transfer",
+            "description": "A sender could offer a deal where the token tokenId=0 is the first token, followed by his other tokens. Then a bidder would sign the deal expecting to receive the offered tokens and naively ignoring the first **tokenIds[0] = 0** and settle it. But none of the tokens offered by the sender would be transferred to the receiver.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ],
+                "3": [
+                    "CWE-302"
+                ]
+            },
+            "title": "Sender\u2019s Replay Attack",
+            "description": "A malicious sender can listen to the transaction mempool for a DEALID settle execution, move just enough funds or assets, and pay a higher gas price to make the deal unable to be settled. The attacker can then replay the settlement at a future moment when the token is devalued.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "cancelDeal",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Misuse of the different call methods: call.value(), send() and transfer()",
+            "description": "The misuse of call methods can lead to security vulnerabilities.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Integer rounding errors, overflow, underflow and related usage of SafeMath functions",
+            "description": "The depositETH function uses a 'for' statement to add all amountInWei from the integer array used as parameter in the requiredAmount variable without using SafeMath library, allowing sending different possible combination of integer values that adding them to the requiredAmount variable one after the other in each iteration will make the variable overflow consequently causing the validation (in the 'require') to fail.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "depositETH()",
+            "lineNumber": "317-319"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-477"
+                ]
+            },
+            "title": "Old compiler version pragmas",
+            "description": "Using old compiler version pragmas can lead to security vulnerabilities and compatibility issues.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "Race conditions such as reentrancy attacks or front running",
+            "description": "Vulnerability to race conditions including reentrancy attacks and front running.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Misuse of block timestamps",
+            "description": "Assuming anything other than them being strictly increasing",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-362"
+                ]
+            },
+            "title": "Contract softlocking attacks (DoS)",
+            "description": "A variant of this attack consists of a denial of service of the RelayBatchCall function by calling the purgeBatchNonces in the middle of its execution preventing it from finishing.",
+            "severity": "N/A",
+            "contract": "RelayBatchCall",
+            "function": "purgeBatchNonces",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Potential gas cost of functions being over the gas limit",
+            "description": "Functions have a higher gas cost than the one that a transfer or send call allows.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Missing function qualifiers and their misuse",
+            "description": "Misuse of different call methods: call.value(), send() and transfer().",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Fallback functions with a higher gas cost than the one that a transfer or send call allows",
+            "description": "The fallback function has a higher gas cost than what is allowed by a transfer or send call.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1177"
+                ]
+            },
+            "title": "Fraudulent or erroneous code",
+            "description": "The audit report mentions fraudulent or erroneous code as a finding but does not provide specific details about this issue.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ]
+            },
+            "title": "Code and contract interaction complexity",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-755"
+                ],
+                "3": [
+                    "CWE-544"
+                ]
+            },
+            "title": "Wrong or missing error handling",
+            "description": "Missing or incorrect implementation of error handling mechanisms.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "Overuse of transfers in a single transaction instead of using withdrawal patterns",
+            "description": "Using multiple transfers in a single transaction can lead to issues instead of implementing withdrawal patterns.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ]
+            },
+            "title": "Insufficient analysis of the function input requirements",
+            "description": "The contract does not properly analyze the input requirements of a function, which can lead to potential security vulnerabilities.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

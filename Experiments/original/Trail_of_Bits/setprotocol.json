@@ -1,1 +1,346 @@
-{"path": "./Audit_Reports_2024/Trail_of_Bits/setprotocol.pdf", "project_info": {"url": "https://github.com/SetProtocol/set-protocol-contracts", "commit_hash": "d7ab276464b2cff163db55a9d4c5408e80e5594a", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1173"]}, "title": "Inline assembly is used to validate external contract calls", "description": "In the ERC20Wrapper library, a checkSuccess function is defined and used to validate external function calls to an arbitrary address implementing the standard ERC20 interface.", "severity": "Medium", "contract": "ERC20Wrapper", "function": "checkSuccess()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-435"], "2": ["CWE-436"], "3": ["CWE-437"]}, "title": "SetToken can reference itself as a component", "description": "Due to SetToken's implementation of ERC20 interface methods, a SetToken can be included as a component of another SetToken. While this is expected behavior, a SetToken may be included as a component of itself due to the predictable nature of Ethereum addresses.", "severity": "Informational", "contract": "contracts/core/tokens/{Rebalancing}SetToken.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "SetToken components have limited upgradability", "description": "When SetTokens are issued, component addresses are provided during the construction of the SetToken. After a SetToken is issued, the component addresses cannot be changed. Because of this, a balance could be rendered unclaimable if a component of a Set is upgraded in a way that orphans the original address.", "severity": "Medium", "contract": "SetToken", "function": "constructor()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-909"], "4": ["CWE-456"]}, "title": "TimeLockUpgrade\u2019s timeLockPeriod remains default post-deployment", "description": "The setTimeLock function is never invoked after a contract is deployed by 2_core.js, resulting in a default timeLockPeriod value of 0 and all methods using the timeLockUpgrade modifier being invokable at any time.", "severity": "High", "contract": "TimeLockUpgrade", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-693"]}, "title": "Race condition in the ERC20 approve function may lead to token theft", "description": "A known race condition in the ERC20 standard's approve function could lead to token theft.", "severity": "Medium", "contract": "ERC20 Tokens", "function": "approve()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-703"]}, "title": "Deployments and migrations require further testing", "description": "During the engagement, the Set Protocol Truffle migrations were tested for functionality, resulting in errors regarding a newly added whitelist contract which was a dependency for another contract.", "severity": "High", "contract": "Truffle Migration", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Whitelist validations are not consistently used", "description": "Managers can start proposals for a RebalancingSetToken. During the proposal period, new components can be proposed for the token. However, when validating a newly proposed component, validation occurs in several places without clear purpose. This could lead to permissions issues when permissions are intended to be managed by whitelists, but are in fact hard coded within a function\u2019s definition.", "severity": "Medium", "contract": "StandardProposeLibrary, RebalancingSetToken", "function": "propose()", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Inadequate data validation in price libraries could result in unexpected reverts", "description": "The validation of parameters in the price libraries is insufficient.", "severity": "Medium", "contract": "LinearAuctionPriceCurve", "function": "validateAuctionPriceParameters", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "0x exchange wrapper cannot increase approval for relay fees", "description": "The ZeroExExchangeWrapper constructor approves of the _zeroExProxy address to transfer the _zeroExToken on behalf of the ZeroExExchangeWrapper contract, allowing balance transfers in the event of 0x exchange order relay fees. However, there is no method to later increase this approval, resulting in a finite amount of transfers which could eventually be depleted by system use and result in trapped funds.", "severity": "Medium", "contract": "ZeroExExchangeWrapper", "function": "constructor()", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "Current governance structure introduces counterparty risk", "description": "The current governance structure of Set Protocol introduces counterparty risk as all privileged activities are carried out by the Set Protocol team, which may lead to trust violations.", "severity": "Informational", "contract": "Set Protocol Governance", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-691"], "2": ["CWE-841"]}, "title": "Component rebalance effectively pauses parent issuance", "description": "Since Sets, including Rebalancing Sets, conform to the ERC20 specification, they can contain other Sets as components. Issuance of parent Sets in this case will rely on the issuance of child Sets. However, during a rebalance issuance is paused.", "severity": "Medium", "contract": "RebalancingSetToken", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Solidity compiler optimizations can be dangerous", "description": "Set Protocol has enabled optional compiler optimizations in Solidity which have been related to several security implication bugs and are unclear how well they are being tested and exercised.", "severity": "Undetermined", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-703"]}, "title": "Insufficient validation of the rebalanceInterval parameter could produce a revert in the propose function", "description": "The propose function does not properly validate the rebalanceInterval parameter, which can cause a revert if the RebalancingSetToken was created with a very large rebalanceInterval. This can result in the token being stuck in the Default state and unable to be rebalanced.", "severity": "High", "contract": "RebalancingSetToken", "function": "propose()", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-682"]}, "title": "The ether quantity in the LogPayableExchangeRedeem event cannot be trusted", "description": "The ether quantity in the LogPayableExchangeRedeem event can be manipulated in the context of a rebalancing set redemption into a wrapped ether token.", "severity": "Undetermined", "contract": "PayableExchangeIssuance", "function": "redeemRebalancingSetIntoEther", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Insufficient input validation in ExchangeIssuanceModule functions", "description": "The functions in the ExchangeIssuanceModule contract fail to properly validate their parameters.", "severity": "Medium", "contract": "ExchangeIssuanceModule", "function": ["exchangeIssue", "exchangeRedeem"], "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-703"]}, "title": "hasDuplicate runs out of gas when the input list is empty", "description": "The hasDuplicate function may run out of gas when provided with an empty input list.", "severity": "N/A", "contract": "N/A", "function": "hasDuplicate", "lineNumber": "N/A"}, {"id": 16, "category": {"1": ["CWE-435"], "2": ["CWE-436"], "3": ["CWE-437"]}, "title": "**Consider redesigning the rebalancing process.**", "description": "Deeply nested cyclic components of both Set and RebalancingSet could pose issues during a rebalance.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 17, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "**Continuously reassess the need for Solidity compiler optimizations.**", "description": "Set Protocol has enabled optional compiler optimizations in Solidity, which can be dangerous due to past high-severity security issues and unclear testing.", "severity": "Undetermined", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 18, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "**Carefully validate the values in the LogPayableExchangeRedeem event**", "description": "The ether quantity in the LogPayableExchangeRedeem event cannot be trusted", "severity": "N/A", "contract": "N/A", "function": "LogPayableExchangeRedeem", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/setprotocol.pdf",
+    "project_info": {
+        "url": "https://github.com/SetProtocol/set-protocol-contracts",
+        "commit_hash": "d7ab276464b2cff163db55a9d4c5408e80e5594a",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1173"
+                ]
+            },
+            "title": "Inline assembly is used to validate external contract calls",
+            "description": "In the ERC20Wrapper library, a checkSuccess function is defined and used to validate external function calls to an arbitrary address implementing the standard ERC20 interface.",
+            "severity": "Medium",
+            "contract": "ERC20Wrapper",
+            "function": "checkSuccess()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-437"
+                ]
+            },
+            "title": "SetToken can reference itself as a component",
+            "description": "Due to SetToken's implementation of ERC20 interface methods, a SetToken can be included as a component of another SetToken. While this is expected behavior, a SetToken may be included as a component of itself due to the predictable nature of Ethereum addresses.",
+            "severity": "Informational",
+            "contract": "contracts/core/tokens/{Rebalancing}SetToken.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "SetToken components have limited upgradability",
+            "description": "When SetTokens are issued, component addresses are provided during the construction of the SetToken. After a SetToken is issued, the component addresses cannot be changed. Because of this, a balance could be rendered unclaimable if a component of a Set is upgraded in a way that orphans the original address.",
+            "severity": "Medium",
+            "contract": "SetToken",
+            "function": "constructor()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "TimeLockUpgrade\u2019s timeLockPeriod remains default post-deployment",
+            "description": "The setTimeLock function is never invoked after a contract is deployed by 2_core.js, resulting in a default timeLockPeriod value of 0 and all methods using the timeLockUpgrade modifier being invokable at any time.",
+            "severity": "High",
+            "contract": "TimeLockUpgrade",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "Race condition in the ERC20 approve function may lead to token theft",
+            "description": "A known race condition in the ERC20 standard's approve function could lead to token theft.",
+            "severity": "Medium",
+            "contract": "ERC20 Tokens",
+            "function": "approve()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Deployments and migrations require further testing",
+            "description": "During the engagement, the Set Protocol Truffle migrations were tested for functionality, resulting in errors regarding a newly added whitelist contract which was a dependency for another contract.",
+            "severity": "High",
+            "contract": "Truffle Migration",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Whitelist validations are not consistently used",
+            "description": "Managers can start proposals for a RebalancingSetToken. During the proposal period, new components can be proposed for the token. However, when validating a newly proposed component, validation occurs in several places without clear purpose. This could lead to permissions issues when permissions are intended to be managed by whitelists, but are in fact hard coded within a function\u2019s definition.",
+            "severity": "Medium",
+            "contract": "StandardProposeLibrary, RebalancingSetToken",
+            "function": "propose()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Inadequate data validation in price libraries could result in unexpected reverts",
+            "description": "The validation of parameters in the price libraries is insufficient.",
+            "severity": "Medium",
+            "contract": "LinearAuctionPriceCurve",
+            "function": "validateAuctionPriceParameters",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "0x exchange wrapper cannot increase approval for relay fees",
+            "description": "The ZeroExExchangeWrapper constructor approves of the _zeroExProxy address to transfer the _zeroExToken on behalf of the ZeroExExchangeWrapper contract, allowing balance transfers in the event of 0x exchange order relay fees. However, there is no method to later increase this approval, resulting in a finite amount of transfers which could eventually be depleted by system use and result in trapped funds.",
+            "severity": "Medium",
+            "contract": "ZeroExExchangeWrapper",
+            "function": "constructor()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Current governance structure introduces counterparty risk",
+            "description": "The current governance structure of Set Protocol introduces counterparty risk as all privileged activities are carried out by the Set Protocol team, which may lead to trust violations.",
+            "severity": "Informational",
+            "contract": "Set Protocol Governance",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "Component rebalance effectively pauses parent issuance",
+            "description": "Since Sets, including Rebalancing Sets, conform to the ERC20 specification, they can contain other Sets as components. Issuance of parent Sets in this case will rely on the issuance of child Sets. However, during a rebalance issuance is paused.",
+            "severity": "Medium",
+            "contract": "RebalancingSetToken",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Solidity compiler optimizations can be dangerous",
+            "description": "Set Protocol has enabled optional compiler optimizations in Solidity which have been related to several security implication bugs and are unclear how well they are being tested and exercised.",
+            "severity": "Undetermined",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Insufficient validation of the rebalanceInterval parameter could produce a revert in the propose function",
+            "description": "The propose function does not properly validate the rebalanceInterval parameter, which can cause a revert if the RebalancingSetToken was created with a very large rebalanceInterval. This can result in the token being stuck in the Default state and unable to be rebalanced.",
+            "severity": "High",
+            "contract": "RebalancingSetToken",
+            "function": "propose()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "The ether quantity in the LogPayableExchangeRedeem event cannot be trusted",
+            "description": "The ether quantity in the LogPayableExchangeRedeem event can be manipulated in the context of a rebalancing set redemption into a wrapped ether token.",
+            "severity": "Undetermined",
+            "contract": "PayableExchangeIssuance",
+            "function": "redeemRebalancingSetIntoEther",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Insufficient input validation in ExchangeIssuanceModule functions",
+            "description": "The functions in the ExchangeIssuanceModule contract fail to properly validate their parameters.",
+            "severity": "Medium",
+            "contract": "ExchangeIssuanceModule",
+            "function": [
+                "exchangeIssue",
+                "exchangeRedeem"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "hasDuplicate runs out of gas when the input list is empty",
+            "description": "The hasDuplicate function may run out of gas when provided with an empty input list.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "hasDuplicate",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-437"
+                ]
+            },
+            "title": "**Consider redesigning the rebalancing process.**",
+            "description": "Deeply nested cyclic components of both Set and RebalancingSet could pose issues during a rebalance.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "**Continuously reassess the need for Solidity compiler optimizations.**",
+            "description": "Set Protocol has enabled optional compiler optimizations in Solidity, which can be dangerous due to past high-severity security issues and unclear testing.",
+            "severity": "Undetermined",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "**Carefully validate the values in the LogPayableExchangeRedeem event**",
+            "description": "The ether quantity in the LogPayableExchangeRedeem event cannot be trusted",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "LogPayableExchangeRedeem",
+            "lineNumber": "N/A"
+        }
+    ]
+}

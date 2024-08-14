@@ -1,1 +1,85 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-AmpleForth-Spot-v1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Possible Costly Perp Tokens From Improper Initialization", "description": "An issue occurs when the `PerpetualTranche` is being initialized under the assumption that it is empty, which may unnecessarily make the perps extremely expensive and bring hurdles (or even causes loss) for later depositors.", "severity": "Low", "contract": "PerpetualTranche", "function": "deposit()", "lineNumber": "404-407"}, {"id": 1, "category": {"1": ["CWE-691"], "2": ["CWE-1265"]}, "title": "Improved Reentrancy Protection in PerpetualTranche", "description": "The principle of checks-effects-interactions is violated in the redeem() function of PerpetualTranche contract, which may lead to re-entrancy attack.", "severity": "Low", "contract": "PerpetualTranche", "function": "redeem()", "lineNumber": "442"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-229"], "4": ["CWE-230"]}, "title": "Improved Validations on Tranche Ratios in BondIssue", "description": "DeFi protocols typically have a number of system- wide parameters that can be dynamically configured on demand. The `BondIssue` contract has defined a number of protocol-wide risk parameters, such as `minIssueTimeIntervalSec` and `trancheRatios`. In the following, we show the corresponding constructor that initializes these parameters.", "severity": "Informational", "contract": "BondIssue", "function": "constructor()", "lineNumber": "56-73"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Trust Issue of Admin Keys", "description": "In the `Spot` protocol, there is a special administrative account, i.e., `owner`. This `owner` account plays a critical role in governing and regulating the system-wide operations.", "severity": "Low", "contract": "Multiple Contracts", "function": "updateBondIssuer(), updateFeeStrategy()", "lineNumber": "304-313, 317-318"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-AmpleForth-Spot-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/ampleforth/spot",
+        "commit_hash": "N/A",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Possible Costly Perp Tokens From Improper Initialization",
+            "description": "An issue occurs when the `PerpetualTranche` is being initialized under the assumption that it is empty, which may unnecessarily make the perps extremely expensive and bring hurdles (or even causes loss) for later depositors.",
+            "severity": "Low",
+            "contract": "PerpetualTranche",
+            "function": "deposit()",
+            "lineNumber": "404-407"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "Improved Reentrancy Protection in PerpetualTranche",
+            "description": "The principle of checks-effects-interactions is violated in the redeem() function of PerpetualTranche contract, which may lead to re-entrancy attack.",
+            "severity": "Low",
+            "contract": "PerpetualTranche",
+            "function": "redeem()",
+            "lineNumber": "442"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ],
+                "4": [
+                    "CWE-230"
+                ]
+            },
+            "title": "Improved Validations on Tranche Ratios in BondIssue",
+            "description": "DeFi protocols typically have a number of system- wide parameters that can be dynamically configured on demand. The `BondIssue` contract has defined a number of protocol-wide risk parameters, such as `minIssueTimeIntervalSec` and `trancheRatios`. In the following, we show the corresponding constructor that initializes these parameters.",
+            "severity": "Informational",
+            "contract": "BondIssue",
+            "function": "constructor()",
+            "lineNumber": "56-73"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "In the `Spot` protocol, there is a special administrative account, i.e., `owner`. This `owner` account plays a critical role in governing and regulating the system-wide operations.",
+            "severity": "Low",
+            "contract": "Multiple Contracts",
+            "function": "updateBondIssuer(), updateFeeStrategy()",
+            "lineNumber": "304-313, 317-318"
+        }
+    ]
+}

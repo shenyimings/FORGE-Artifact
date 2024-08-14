@@ -1,1 +1,106 @@
-{"path": "./Audit_Reports_2024/Solidified/Solidified-Ivy-Cash_[29.08.2021].pdf", "project_info": {"url": "https://github.com/Waly-Cash/hawk/tree/audit-updates", "commit_hash": "b50ecb3b6782dfa528810e58b0af5671ef557056", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "GSN integration allows malicious actors to waste Paymaster GSN Relay balance on failing transactions", "description": "A malicious actor can cause the `Paymaster.postRelayedCall()` hook to revert by not having enough Service Fee Tokens to cover for the gas costs, resulting in the GSN Relay charging the `Paymaster` for the failed transaction.", "severity": "Major", "contract": "Paymaster.sol", "function": "postRelayedCall()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "Paymaster.sol: function sellTokenForGas() can be called by anyone", "description": "A malicious caller could invoke the `Paymaster.sellTokenForGas()` function to change the `latestFee` value in `Paymaster`, allowing them to pay for transactions using a non-whitelisted `_serviceFeeToken` and cause `Paymaster.postRelayedCall()` to revert, incurring failed transaction costs on `Paymaster`.", "severity": "Major", "contract": "Paymaster.sol", "function": "sellTokenForGas()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Tokens with optional return values are not supported", "description": "The contracts EscrowManager and DEXManager expects token transfer and transferFrom methods to always return a value or revert on failure. This implementation will always fail with tokens where these methods return nothing, resulting in locked funds.", "severity": "Minor", "contract": "EscrowManager, DEXManager", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "ERC20 tokens which charge transfer fees are not supported", "description": "The contracts EscrowManager and DEXManager do not check if the amount received is the same as the amount accounted for. This will work in almost all cases without any issues, except with some rare tokens which change a transfer fee.", "severity": "Informational", "contract": "EscrowManager, DEXManager", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Miscellaneous notes", "description": "Improving code quality and readability by removing unused imports, avoiding unnecessary SafeMath usage, correcting misspelled function names, and updating method mutability.", "severity": "Note", "contract": ["EscrowManager.sol", "DEXManager.sol", "PriceManager.sol", "EscrowAdmin.sol", "Paymaster.sol"], "function": ["N/A", "isAcceptedServieFeeToken()", "convertAmountOutToAmountInMaximum"], "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Solidified/Solidified-Ivy-Cash_[29.08.2021].pdf",
+    "project_info": {
+        "url": "https://github.com/Waly-Cash/hawk/tree/audit-updates",
+        "commit_hash": "b50ecb3b6782dfa528810e58b0af5671ef557056",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "GSN integration allows malicious actors to waste Paymaster GSN Relay balance on failing transactions",
+            "description": "A malicious actor can cause the `Paymaster.postRelayedCall()` hook to revert by not having enough Service Fee Tokens to cover for the gas costs, resulting in the GSN Relay charging the `Paymaster` for the failed transaction.",
+            "severity": "Major",
+            "contract": "Paymaster.sol",
+            "function": "postRelayedCall()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Paymaster.sol: function sellTokenForGas() can be called by anyone",
+            "description": "A malicious caller could invoke the `Paymaster.sellTokenForGas()` function to change the `latestFee` value in `Paymaster`, allowing them to pay for transactions using a non-whitelisted `_serviceFeeToken` and cause `Paymaster.postRelayedCall()` to revert, incurring failed transaction costs on `Paymaster`.",
+            "severity": "Major",
+            "contract": "Paymaster.sol",
+            "function": "sellTokenForGas()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Tokens with optional return values are not supported",
+            "description": "The contracts EscrowManager and DEXManager expects token transfer and transferFrom methods to always return a value or revert on failure. This implementation will always fail with tokens where these methods return nothing, resulting in locked funds.",
+            "severity": "Minor",
+            "contract": "EscrowManager, DEXManager",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "ERC20 tokens which charge transfer fees are not supported",
+            "description": "The contracts EscrowManager and DEXManager do not check if the amount received is the same as the amount accounted for. This will work in almost all cases without any issues, except with some rare tokens which change a transfer fee.",
+            "severity": "Informational",
+            "contract": "EscrowManager, DEXManager",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Miscellaneous notes",
+            "description": "Improving code quality and readability by removing unused imports, avoiding unnecessary SafeMath usage, correcting misspelled function names, and updating method mutability.",
+            "severity": "Note",
+            "contract": [
+                "EscrowManager.sol",
+                "DEXManager.sol",
+                "PriceManager.sol",
+                "EscrowAdmin.sol",
+                "Paymaster.sol"
+            ],
+            "function": [
+                "N/A",
+                "isAcceptedServieFeeToken()",
+                "convertAmountOutToAmountInMaximum"
+            ],
+            "lineNumber": "N/A"
+        }
+    ]
+}

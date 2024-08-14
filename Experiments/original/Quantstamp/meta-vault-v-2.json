@@ -1,1 +1,316 @@
-{"path": "./Audit_Reports_2024/Quantstamp/meta-vault-v-2.pdf", "project_info": {"url": "https://github.com/metavault", "commit_hash": "3538b8a", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "Curve 3pool Imbalance Attack", "description": "The yAxis Metavalut allows deposits of DAI, USDC, USDT into the Curve 3pool in any proportion, making it vulnerable to large variation of the Curve 3pool imbalance attack.", "severity": "High Risk", "contract": "StableSwap3PoolConverter.sol, yAxisMetaVault.sol", "function": "convert", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-703"]}, "title": "N/A", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-703"]}, "title": "Strategy caps are not always enforced", "description": "The `StrategyControllerV2.getBestStrategyEarn` function does not revert if there is no strategy found which would satisfy the cap requirement. This function returns the last strategy for the given token in that case.", "severity": "Medium Risk", "contract": "StrategyControllerV2.sol", "function": "getBestStrategyEarn", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "High slippage possible", "description": "The `StableSwap3PoolConverter.convert` function uses a magic number `1` to specify the minimum amount of tokens expected back when performing trades, which could lead to high slippage if the pool is not properly balanced. This affects functions such as `yAxisMetavault.withdraw`, `yAxisMetabult.earnExtra`, and strategies that employ the converter contract.", "severity": "Low Risk", "contract": "StableSwap3PoolConverter, BaseStrategy", "function": "convert, add_liquidity, remove_liquidity_one_coin, _swapTokens, withdraw, earnExtra", "lineNumber": "L87, L98, L257-264"}, {"id": 4, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Epochs can overlap affecting getMultiplier", "description": "The yAxisMetaVault.setEpochEndBlock function doesn't check if the _epochEndBlock for the given _index is higher than the epoch end block for the following index, which could lead to setting the end block for _index higher than the end block for _index + 1, affecting the value of the multiplier returned by the yAxisMetaVault.getMultiplier function.", "severity": "Low Risk", "contract": "yAxisMetaVault.sol", "function": "setEpochEndBlock", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-697"], "2": ["CWE-1025"], "3": ["CWE-595"], "4": ["CWE-597"]}, "title": "Wrong address could be used instead of stable-coin", "description": "The `StrategyPickle3Crv.setStableForLiquidity` function does not check if the provided input parameter is the address of a stable-coin, which could lead to unexpected results when harvesting funds from that strategy.", "severity": "Low Risk", "contract": "StrategyPickle3Crv.sol", "function": "setStableForLiquidity()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Adding and removing strategies is error prone", "description": "If a strategy can be harvested, it should be added to the yAxisMetaVaultHarvester contract as well as the StrategyControllerV2. However, this is done by calling 2 separate functions manually, which may lead to human-error.", "severity": "Low Risk", "contract": "StrategyControllerV2.sol", "function": "addStrategy/removeStrategy", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Gas Usage / for Loop Concerns", "description": "The `StrategyControllerV2` contract has no hard cap on the maximum number of strategies allowed, which could lead to high gas costs and potentially prevent the contract from functioning correctly due to `for` loops reaching the block gas limit.", "severity": "Low Risk", "contract": "StrategyControllerV2", "function": "balanceOf(), withdraw(), getBestStrategyEarn(), getBestStrategyWithdraw()", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Missing input validation", "description": "The following functions are missing input parameter validations.", "severity": "Low Risk", "contract": ["yAxisMetaVault.sol", "StrategyControllerV2.sol", "BaseStrategy.sol", "StrategyCurve3Crv.sol", "StrategyDforce.sol", "StrategyPickle3Crv.sol"], "function": ["deposit", "depositAll", "stakeShares", "unstake", "earnExtra", "N/A"], "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-693"], "2": ["CWE-778"]}, "title": "Sensitive functions do not emit any events", "description": "There are several sensitive functions in contracts which do not emit any events, even though the functions perform changes that could have significant implications for end-users.", "severity": "Low Risk", "contract": ["StrategyControllerV2", "BaseStrategy", "yAxisMetaVault", "StrategyPickle3Crv"], "function": ["setVaultManager", "setConverter", "setGovernance", "setController", "setStableForLiquidity", "setPickleMasterChef", "setPoolId"], "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-682"]}, "title": "Block Timestamp Manipulation", "description": "Projects may rely on block timestamps for various purposes. However, it's important to realize that miners individually set the timestamp of a block, and attackers may be able to manipulate timestamps for their own purposes by up to 900 seconds.", "severity": "Informational", "contract": ["yAxisMetaVaultHarvester.sol", "StrategyStabilize.sol"], "function": ["canHarvest()", "calculateZPATokenWithdrawFee()"], "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Implicit assumptions", "description": "The following implicit assumptions were observed while auditing the code:", "severity": "Informational", "contract": "All contracts", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-284"], "2": ["CWE-282"], "3": ["CWE-708"]}, "title": "Privileged Roles and Ownership", "description": "Smart contracts have `owner` variables to designate the address with special privileges to make modifications to the smart contract. The `governance` address has many privileges in the `yAxisMetaVault`, `yAxisMetaVaultManager`, and `yAxisMetaVaultHavester` contracts.", "severity": "Informational", "contract": "yAxisMetaVault, BaseStrategy, StrategyControllerV2", "function": "N/A", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-703"], "2": ["CWE-393"]}, "title": "Unchecked Return Value", "description": "Most functions will return a `true` or `false` value upon success. Some functions, like `send()` , are more crucial to check than others.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Unlocked Pragma", "description": "Every Solidity file specifies in the header a version number of the format `pragma solidity (^)0.6.*` . The caret ( `^` ) before the version number implies an unlocked pragma, meaning that the compiler will use the specified version _and above_ , hence the term \"unlocked\".", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "Defense in depth to avoid reentrancy", "description": "Due to the high amount of external dependencies and interactions with other DeFi platforms and tokens, there is a non-negligible risk of complex re-entrancy attacks.", "severity": "Undetermined", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Quantstamp/meta-vault-v-2.pdf",
+    "project_info": {
+        "url": "https://github.com/yaxis-project/metavault/tree/3538b8a8c1ea4ec2b68a635c48b938aa1acfbc26",
+        "commit_hash": "3538b8a8c1ea4ec2b68a635c48b938aa1acfbc26",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Curve 3pool Imbalance Attack",
+            "description": "The yAxis Metavalut allows deposits of DAI, USDC, USDT into the Curve 3pool in any proportion, making it vulnerable to large variation of the Curve 3pool imbalance attack.",
+            "severity": "High Risk",
+            "contract": "StableSwap3PoolConverter.sol, yAxisMetaVault.sol",
+            "function": "convert",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "N/A",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Strategy caps are not always enforced",
+            "description": "The `StrategyControllerV2.getBestStrategyEarn` function does not revert if there is no strategy found which would satisfy the cap requirement. This function returns the last strategy for the given token in that case.",
+            "severity": "Medium Risk",
+            "contract": "StrategyControllerV2.sol",
+            "function": "getBestStrategyEarn",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "High slippage possible",
+            "description": "The `StableSwap3PoolConverter.convert` function uses a magic number `1` to specify the minimum amount of tokens expected back when performing trades, which could lead to high slippage if the pool is not properly balanced. This affects functions such as `yAxisMetavault.withdraw`, `yAxisMetabult.earnExtra`, and strategies that employ the converter contract.",
+            "severity": "Low Risk",
+            "contract": "StableSwap3PoolConverter, BaseStrategy",
+            "function": "convert, add_liquidity, remove_liquidity_one_coin, _swapTokens, withdraw, earnExtra",
+            "lineNumber": "L87, L98, L257-264"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Epochs can overlap affecting getMultiplier",
+            "description": "The yAxisMetaVault.setEpochEndBlock function doesn't check if the _epochEndBlock for the given _index is higher than the epoch end block for the following index, which could lead to setting the end block for _index higher than the end block for _index + 1, affecting the value of the multiplier returned by the yAxisMetaVault.getMultiplier function.",
+            "severity": "Low Risk",
+            "contract": "yAxisMetaVault.sol",
+            "function": "setEpochEndBlock",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ],
+                "2": [
+                    "CWE-1025"
+                ],
+                "3": [
+                    "CWE-595"
+                ],
+                "4": [
+                    "CWE-597"
+                ]
+            },
+            "title": "Wrong address could be used instead of stable-coin",
+            "description": "The `StrategyPickle3Crv.setStableForLiquidity` function does not check if the provided input parameter is the address of a stable-coin, which could lead to unexpected results when harvesting funds from that strategy.",
+            "severity": "Low Risk",
+            "contract": "StrategyPickle3Crv.sol",
+            "function": "setStableForLiquidity()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Adding and removing strategies is error prone",
+            "description": "If a strategy can be harvested, it should be added to the yAxisMetaVaultHarvester contract as well as the StrategyControllerV2. However, this is done by calling 2 separate functions manually, which may lead to human-error.",
+            "severity": "Low Risk",
+            "contract": "StrategyControllerV2.sol",
+            "function": "addStrategy/removeStrategy",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Gas Usage / for Loop Concerns",
+            "description": "The `StrategyControllerV2` contract has no hard cap on the maximum number of strategies allowed, which could lead to high gas costs and potentially prevent the contract from functioning correctly due to `for` loops reaching the block gas limit.",
+            "severity": "Low Risk",
+            "contract": "StrategyControllerV2",
+            "function": "balanceOf(), withdraw(), getBestStrategyEarn(), getBestStrategyWithdraw()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Missing input validation",
+            "description": "The following functions are missing input parameter validations.",
+            "severity": "Low Risk",
+            "contract": [
+                "yAxisMetaVault.sol",
+                "StrategyControllerV2.sol",
+                "BaseStrategy.sol",
+                "StrategyCurve3Crv.sol",
+                "StrategyDforce.sol",
+                "StrategyPickle3Crv.sol"
+            ],
+            "function": [
+                "deposit",
+                "depositAll",
+                "stakeShares",
+                "unstake",
+                "earnExtra",
+                "N/A"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-778"
+                ]
+            },
+            "title": "Sensitive functions do not emit any events",
+            "description": "There are several sensitive functions in contracts which do not emit any events, even though the functions perform changes that could have significant implications for end-users.",
+            "severity": "Low Risk",
+            "contract": [
+                "StrategyControllerV2",
+                "BaseStrategy",
+                "yAxisMetaVault",
+                "StrategyPickle3Crv"
+            ],
+            "function": [
+                "setVaultManager",
+                "setConverter",
+                "setGovernance",
+                "setController",
+                "setStableForLiquidity",
+                "setPickleMasterChef",
+                "setPoolId"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Block Timestamp Manipulation",
+            "description": "Projects may rely on block timestamps for various purposes. However, it's important to realize that miners individually set the timestamp of a block, and attackers may be able to manipulate timestamps for their own purposes by up to 900 seconds.",
+            "severity": "Informational",
+            "contract": [
+                "yAxisMetaVaultHarvester.sol",
+                "StrategyStabilize.sol"
+            ],
+            "function": [
+                "canHarvest()",
+                "calculateZPATokenWithdrawFee()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Implicit assumptions",
+            "description": "The following implicit assumptions were observed while auditing the code:",
+            "severity": "Informational",
+            "contract": "All contracts",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-282"
+                ],
+                "3": [
+                    "CWE-708"
+                ]
+            },
+            "title": "Privileged Roles and Ownership",
+            "description": "Smart contracts have `owner` variables to designate the address with special privileges to make modifications to the smart contract. The `governance` address has many privileges in the `yAxisMetaVault`, `yAxisMetaVaultManager`, and `yAxisMetaVaultHavester` contracts.",
+            "severity": "Informational",
+            "contract": "yAxisMetaVault, BaseStrategy, StrategyControllerV2",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-393"
+                ]
+            },
+            "title": "Unchecked Return Value",
+            "description": "Most functions will return a `true` or `false` value upon success. Some functions, like `send()` , are more crucial to check than others.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Unlocked Pragma",
+            "description": "Every Solidity file specifies in the header a version number of the format `pragma solidity (^)0.6.*` . The caret ( `^` ) before the version number implies an unlocked pragma, meaning that the compiler will use the specified version _and above_ , hence the term \"unlocked\".",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Defense in depth to avoid reentrancy",
+            "description": "Due to the high amount of external dependencies and interactions with other DeFi platforms and tokens, there is a non-negligible risk of complex re-entrancy attacks.",
+            "severity": "Undetermined",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

@@ -1,1 +1,142 @@
-{"path": "./Audit_Reports_2024/Trail_of_Bits/Flexa.pdf", "project_info": {"url": "N/A", "commit_hash": "6128af62da3923d007e44637bfb2676c23e7ab54", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Initial configuration may allow an attacker to refund an unconfirmed deposit early on", "description": "Integer overflow allows users to refund deposits during the initial Staking configuration.", "severity": "Low", "contract": "Staking.sol", "function": "refundPendingDeposit(uint256)", "lineNumber": "L327-L336, L41"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Front-running fallback root update might lead to additional withdrawal", "description": "A front-running attack might allow an attacker to withdraw a deposit one additional time if the system is not updated before the fallback withdrawal period is reached.", "severity": "High", "contract": "Staking.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Missing nonce on PendingDepositRefund event might lead to a double spend", "description": "A lack of nonce information on the deposit refund event might allow a third-party tool to confound which deposit was refunded.", "severity": "High", "contract": "Staking.sol", "function": "N/A", "lineNumber": "L160-162, L351"}, {"id": 3, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "A withdrawal root could be added again after removal", "description": "A deleted withdrawal root can be added again, leading to unexpected behavior for users.", "severity": "Informational", "contract": "Staking", "function": "addWithdrawalRoot", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-233"], "4": ["CWE-236"]}, "title": "Missing validations on administration functions", "description": "Staking relies on correct parametrization from the owner. Several administration functions lack proper input validation, which might lead to a misconfigured system or loss of privileged access.", "severity": "Medium", "contract": "Staking.sol", "function": "setOwner(address newOwnerAddress)", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-282"], "3": ["CWE-708"]}, "title": "setOwner should be split into two separate functions", "description": "The setOwner function changes ownership of the contract in a single transaction, which can lead to accidental transfer of ownership to an uncontrolled address if an incorrect newOwnerAddress is provided. It's recommended to split this functionality into two functions: transferOwnership and acceptOwnership.", "severity": "Informational", "contract": "Staking.sol", "function": "setOwner(address)", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "Reentrancy could cause incorrect information to be emitted", "description": "Reentrancies on token transfer might trigger the incorrect order of events.", "severity": "Informational", "contract": "Staking.sol", "function": ["withdraw()", "refundPendingDeposit()"], "lineNumber": ["L251-L263", "L345-L351"]}]}
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/Flexa.pdf",
+    "project_info": {
+        "url": "https://github.com/trufflesuite/truffle",
+        "commit_hash": "6128af62da3923d007e44637bfb2676c23e7ab54",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Initial configuration may allow an attacker to refund an unconfirmed deposit early on",
+            "description": "Integer overflow allows users to refund deposits during the initial Staking configuration.",
+            "severity": "Low",
+            "contract": "Staking.sol",
+            "function": "refundPendingDeposit(uint256)",
+            "lineNumber": "L327-L336, L41"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Front-running fallback root update might lead to additional withdrawal",
+            "description": "A front-running attack might allow an attacker to withdraw a deposit one additional time if the system is not updated before the fallback withdrawal period is reached.",
+            "severity": "High",
+            "contract": "Staking.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Missing nonce on PendingDepositRefund event might lead to a double spend",
+            "description": "A lack of nonce information on the deposit refund event might allow a third-party tool to confound which deposit was refunded.",
+            "severity": "High",
+            "contract": "Staking.sol",
+            "function": "N/A",
+            "lineNumber": "L160-162, L351"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "A withdrawal root could be added again after removal",
+            "description": "A deleted withdrawal root can be added again, leading to unexpected behavior for users.",
+            "severity": "Informational",
+            "contract": "Staking",
+            "function": "addWithdrawalRoot",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-233"
+                ],
+                "4": [
+                    "CWE-236"
+                ]
+            },
+            "title": "Missing validations on administration functions",
+            "description": "Staking relies on correct parametrization from the owner. Several administration functions lack proper input validation, which might lead to a misconfigured system or loss of privileged access.",
+            "severity": "Medium",
+            "contract": "Staking.sol",
+            "function": "setOwner(address newOwnerAddress)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-282"
+                ],
+                "3": [
+                    "CWE-708"
+                ]
+            },
+            "title": "setOwner should be split into two separate functions",
+            "description": "The setOwner function changes ownership of the contract in a single transaction, which can lead to accidental transfer of ownership to an uncontrolled address if an incorrect newOwnerAddress is provided. It's recommended to split this functionality into two functions: transferOwnership and acceptOwnership.",
+            "severity": "Informational",
+            "contract": "Staking.sol",
+            "function": "setOwner(address)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Reentrancy could cause incorrect information to be emitted",
+            "description": "Reentrancies on token transfer might trigger the incorrect order of events.",
+            "severity": "Informational",
+            "contract": "Staking.sol",
+            "function": [
+                "withdraw()",
+                "refundPendingDeposit()"
+            ],
+            "lineNumber": [
+                "L251-L263",
+                "L345-L351"
+            ]
+        }
+    ]
+}

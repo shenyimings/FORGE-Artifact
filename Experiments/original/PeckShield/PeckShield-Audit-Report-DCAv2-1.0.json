@@ -1,1 +1,98 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-DCAv2-1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-909"], "4": ["CWE-456"]}, "title": "Properly keep track of lastOwnershipChange timestamp for each minted tokenID", "description": "The DCAPermissionsManager contract does not properly keep track of the lastOwnershipChange timestamp for each minted tokenID, which can lead to issues with permission accounting.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-253"]}, "title": "Improved Logic For Permission Accounting", "description": "The `DCAv2` protocol has a key `DCAPermissionsManager` contract that is designed to manage various token-related permissions. The protocol can precisely revoke the stale permissions that were assigned by the previous owner(s). To elaborate, it is helpful to improve the `_beforeTokenTransfer()` routine by replacing the `if (_from != address(0))` with `if (_from != to)`. ", "severity": "Low", "contract": "DCAPermissionsManager", "function": "_beforeTokenTransfer()", "lineNumber": "198"}, {"id": 2, "category": {"1": ["CWE-435"], "2": ["CWE-436"]}, "title": "Consistency in reconfigureSupportForPair()", "description": "Inconsistency in the exposed functions of oracle contracts regarding permissionless vs perimssioned `reconfigureSupportForPair()` function.", "severity": "Informational", "contract": "Multiple Contracts (ChainlinkOracle, UniswapV3Oracle, OracleAggregator)", "function": "reconfigureSupportForPair()", "lineNumber": "78-81, 57-58"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Trust Issue of Admin Keys", "description": "In the DCAv2 protocol, there is a privileged admin account with the role of TIME_LOCKED_ROLE that plays a critical role in governing and regulating the protocol-wide operations.", "severity": "Medium", "contract": "Multiple Contracts", "function": ["setSwapFee", "setLoanFee", "setPlatformFeeRatio"], "lineNumber": ["56-61", "63-68", "69-71"]}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-DCAv2-1.0.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "Properly keep track of lastOwnershipChange timestamp for each minted tokenID",
+            "description": "The DCAPermissionsManager contract does not properly keep track of the lastOwnershipChange timestamp for each minted tokenID, which can lead to issues with permission accounting.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-253"
+                ]
+            },
+            "title": "Improved Logic For Permission Accounting",
+            "description": "The `DCAv2` protocol has a key `DCAPermissionsManager` contract that is designed to manage various token-related permissions. The protocol can precisely revoke the stale permissions that were assigned by the previous owner(s). To elaborate, it is helpful to improve the `_beforeTokenTransfer()` routine by replacing the `if (_from != address(0))` with `if (_from != to)`. ",
+            "severity": "Low",
+            "contract": "DCAPermissionsManager",
+            "function": "_beforeTokenTransfer()",
+            "lineNumber": "198"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ]
+            },
+            "title": "Consistency in reconfigureSupportForPair()",
+            "description": "Inconsistency in the exposed functions of oracle contracts regarding permissionless vs perimssioned `reconfigureSupportForPair()` function.",
+            "severity": "Informational",
+            "contract": "Multiple Contracts (ChainlinkOracle, UniswapV3Oracle, OracleAggregator)",
+            "function": "reconfigureSupportForPair()",
+            "lineNumber": "78-81, 57-58"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "In the DCAv2 protocol, there is a privileged admin account with the role of TIME_LOCKED_ROLE that plays a critical role in governing and regulating the protocol-wide operations.",
+            "severity": "Medium",
+            "contract": "Multiple Contracts",
+            "function": [
+                "setSwapFee",
+                "setLoanFee",
+                "setPlatformFeeRatio"
+            ],
+            "lineNumber": [
+                "56-61",
+                "63-68",
+                "69-71"
+            ]
+        }
+    ]
+}

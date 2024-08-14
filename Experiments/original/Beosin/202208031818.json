@@ -1,1 +1,120 @@
-{"path": "./Audit_Reports_2024/Beosin/202208031818.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "The reward calculation is unreasonable", "description": "In the StakeReward contract, because the reward calculation is based on \"balance - totalStaking\", if no user in the contract receives the reward, then another user can use an unsecured user and keep calling the _withdraw_ function to update accTokenPerShare.", "severity": "High", "contract": "StakeReward", "function": "_withdraw", "lineNumber": "L207-211"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "The _updatePool function is improperly designed", "description": "In the __updatePool_ function, if the first user stakes when \"block.timestamp - lastReleaseTime > 1 days\", the contract will be unavailable, because the totalStaking at this time is zero, and an exception will be thrown when calculating accTokenPerShare.", "severity": "Medium", "contract": "StakeReward", "function": "_updatePool", "lineNumber": "L196-210"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "Centralization Risk", "description": "elephant pool StakingEarn-3 is not fixed and user funds may not be withdrawn.", "severity": "Medium", "contract": "StakeReward", "function": "_withdraw", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "The pendingReward function is improperly designed", "description": "In the _pendingReward_ function of the StakeReward contract, since the accTokenPerShare is not up to date, the reward queried by the user may be inaccurate.", "severity": "Low", "contract": "StakeReward", "function": "_pendingReward_", "lineNumber": "L182-187"}, {"id": 4, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Redundant codes", "description": "Delete redundant code in StakingEarn contract.", "severity": "Info", "contract": "StakingEarn", "function": "N/A", "lineNumber": "40-66"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Lack of event triggering", "description": "In the StakingEarn contract, since the _enterStaking_ and _leaveStaking_ functions lack event triggering, it is recommended to trigger the event.", "severity": "Info", "contract": "StakingEarn", "function": "_enterStaking_, _leaveStaking_", "lineNumber": "StakingEarn.sol#40-66"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "Rewards not updated when withdrawing", "description": "Rewards may not be updated when users withdraw their funds.", "severity": "Info", "contract": "StakeReward", "function": "_withdraw", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Beosin/202208031818.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0x0af000dbd339147EC7800b8e582c02c529f20a15"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "The reward calculation is unreasonable",
+            "description": "In the StakeReward contract, because the reward calculation is based on \"balance - totalStaking\", if no user in the contract receives the reward, then another user can use an unsecured user and keep calling the _withdraw_ function to update accTokenPerShare.",
+            "severity": "High",
+            "contract": "StakeReward",
+            "function": "_withdraw",
+            "lineNumber": "L207-211"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "The _updatePool function is improperly designed",
+            "description": "In the __updatePool_ function, if the first user stakes when \"block.timestamp - lastReleaseTime > 1 days\", the contract will be unavailable, because the totalStaking at this time is zero, and an exception will be thrown when calculating accTokenPerShare.",
+            "severity": "Medium",
+            "contract": "StakeReward",
+            "function": "_updatePool",
+            "lineNumber": "L196-210"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Centralization Risk",
+            "description": "elephant pool StakingEarn-3 is not fixed and user funds may not be withdrawn.",
+            "severity": "Medium",
+            "contract": "StakeReward",
+            "function": "_withdraw",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "The pendingReward function is improperly designed",
+            "description": "In the _pendingReward_ function of the StakeReward contract, since the accTokenPerShare is not up to date, the reward queried by the user may be inaccurate.",
+            "severity": "Low",
+            "contract": "StakeReward",
+            "function": "_pendingReward_",
+            "lineNumber": "L182-187"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Redundant codes",
+            "description": "Delete redundant code in StakingEarn contract.",
+            "severity": "Info",
+            "contract": "StakingEarn",
+            "function": "N/A",
+            "lineNumber": "40-66"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Lack of event triggering",
+            "description": "In the StakingEarn contract, since the _enterStaking_ and _leaveStaking_ functions lack event triggering, it is recommended to trigger the event.",
+            "severity": "Info",
+            "contract": "StakingEarn",
+            "function": "_enterStaking_, _leaveStaking_",
+            "lineNumber": "StakingEarn.sol#40-66"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Rewards not updated when withdrawing",
+            "description": "Rewards may not be updated when users withdraw their funds.",
+            "severity": "Info",
+            "contract": "StakeReward",
+            "function": "_withdraw",
+            "lineNumber": "N/A"
+        }
+    ]
+}

@@ -1,1 +1,105 @@
-{"path": "./Audit_Reports_2024/HAECHI_AUDIT/[HAECHI AUDIT] Intella X Launchpad Audit Report.pdf", "project_info": {"url": "https://github.com/ModoriLabs/neowiz-nft-marketplace-hardhat/tree/main/contracts/launchpad", "commit_hash": "611dd35bdf750245f56e7a1f1555a235dc19f899", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Minted Token URI can be duplicated when a user burns the NFT on the LaunchPad.", "description": "The _NeowizERC721.tokenURI()_ function returns a distinct token URI per token ID. However, because the _burn()_ function is available, this condition can be broken, allowing duplicated token URIs.", "severity": "HIGH", "contract": "NeowizERC721", "function": "tokenURI()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "The allocated token for the project team should be minted before open the minting round.", "description": "If the project team does not mint the allocated NFT tokens, users can mint an excessive amount of tokens, leading to duplicated token URIs.", "severity": "Medium", "contract": "NeowizERC721", "function": "_mintInRound()", "lineNumber": "430"}, {"id": 2, "category": {"1": ["CWE-693"]}, "title": "The check-effect-interaction pattern on the minting process is imperfect.", "description": "The _mintInRound() function has 2 external calls and follows the Check-Effect-Interaction pattern, which can lead to reentrancy issues.", "severity": "Medium", "contract": "NeowizERC721.sol", "function": "_mintInRound()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Migration of NFT from launchpad should be conducted after the reveal is confirmed.", "description": "A user can accidentally approve the LaunchPad NFT to _NeowizGameItem_ contract before revealing the token URI, resulting in a purchased NFT being useless.", "severity": "Low", "contract": "NeowizGameItem", "function": "migrate(address,uint256)", "lineNumber": "109"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Several important variable changes have no event emissions.", "description": "Emitting events on critical variable changes can enhance the visibility of the project.", "severity": "Tips", "contract": "NeowizGameItem, NeowizERC721", "function": "allowLaunchpad(), denyLaunchpad(), setTrustedForwarder(), setPayment(), setUnRevealedURI(), addRound(), updateState(), updateMaxMint(), updateMaxMintPerAccount(), updatePrice(), updateMerkleRoot(), updateRoundTimestamp(), setBaseURI(), setRoyaltyInfo()", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/HAECHI_AUDIT/[HAECHI AUDIT] Intella X Launchpad Audit Report.pdf",
+    "project_info": {
+        "url": "https://github.com/ModoriLabs/neowiz-nft-marketplace-hardhat/tree/main/contracts/launchpad",
+        "commit_hash": "611dd35bdf750245f56e7a1f1555a235dc19f899",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Minted Token URI can be duplicated when a user burns the NFT on the LaunchPad.",
+            "description": "The _NeowizERC721.tokenURI()_ function returns a distinct token URI per token ID. However, because the _burn()_ function is available, this condition can be broken, allowing duplicated token URIs.",
+            "severity": "HIGH",
+            "contract": "NeowizERC721",
+            "function": "tokenURI()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "The allocated token for the project team should be minted before open the minting round.",
+            "description": "If the project team does not mint the allocated NFT tokens, users can mint an excessive amount of tokens, leading to duplicated token URIs.",
+            "severity": "Medium",
+            "contract": "NeowizERC721",
+            "function": "_mintInRound()",
+            "lineNumber": "430"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "The check-effect-interaction pattern on the minting process is imperfect.",
+            "description": "The _mintInRound() function has 2 external calls and follows the Check-Effect-Interaction pattern, which can lead to reentrancy issues.",
+            "severity": "Medium",
+            "contract": "NeowizERC721.sol",
+            "function": "_mintInRound()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Migration of NFT from launchpad should be conducted after the reveal is confirmed.",
+            "description": "A user can accidentally approve the LaunchPad NFT to _NeowizGameItem_ contract before revealing the token URI, resulting in a purchased NFT being useless.",
+            "severity": "Low",
+            "contract": "NeowizGameItem",
+            "function": "migrate(address,uint256)",
+            "lineNumber": "109"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Several important variable changes have no event emissions.",
+            "description": "Emitting events on critical variable changes can enhance the visibility of the project.",
+            "severity": "Tips",
+            "contract": "NeowizGameItem, NeowizERC721",
+            "function": "allowLaunchpad(), denyLaunchpad(), setTrustedForwarder(), setPayment(), setUnRevealedURI(), addRound(), updateState(), updateMaxMint(), updateMaxMintPerAccount(), updatePrice(), updateMerkleRoot(), updateRoundTimestamp(), setBaseURI(), setRoyaltyInfo()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

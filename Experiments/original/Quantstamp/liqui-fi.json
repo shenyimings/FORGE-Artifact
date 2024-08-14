@@ -1,1 +1,416 @@
-{"path": "./Audit_Reports_2024/Quantstamp/liqui-fi.pdf", "project_info": {"url": "N/A", "commit_hash": "13498fb", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Vesting Cannot Be Cancelled", "description": "The contract does not have any functionality to allow a company to stop vesting a former employee.", "severity": "High Risk", "contract": "Vesting.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "LinearModule.createPlan Missing Input Validation", "description": "The function makes implicit assumptions on the input parameters that are not enforced by the contract, which can lead to mistakes.", "severity": "High Risk", "contract": "contracts/modules/LinearModule.sol", "function": "createPlan", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Use of Unsafe ERC20 Interface", "description": "Functions `Escrow.deposit()` and `Escrow.withdraw()` are using the _unsafe_ ERC20 interface functions of OpenZeppelin (`transferFrom()` and `transfer()`). Since some ERC20 tokens do not return a value for these functions, these calls might revert.", "severity": "Medium Risk", "contract": "Escrow", "function": ["deposit()", "withdraw()"], "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-282"], "3": ["CWE-708"]}, "title": "Privileged Roles and Ownership", "description": "Certain contracts have state variables, e.g. `owner`, which provide certain addresses with privileged roles. Such roles may pose a risk to end-users.", "severity": "Medium Risk", "contract": ["CliffModule.sol", "LinearModule.sol", "StreamModule.sol", "EmployeeRegistry.sol"], "function": ["initialize()", "transferOwnership()", "renounceOwnership()"], "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "createVestPlan Missing Input Validation", "description": "The `createVestPlan` function makes implicit assumptions on the input parameters that are not enforced by the contract, which can lead to mistakes such as accidentally sending additional funds.", "severity": "Low Risk", "contract": "Vesting.sol", "function": "createVestPlan", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "EmployeeRegistry.isOwner() Mishandling address(0)", "description": "The function `EmployeeRegistry.isOwner()` does not check the `exists` return value of `EnumerableMap.tryGet(companyOwners, _companyId)` and returns `true` when provided with `address(0)`, violating the comments assumption.", "severity": "Low", "contract": "EmployeeRegistry", "function": "isOwner()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "EmployeeRegistry.transferOwner Might Lead to Unexpected State", "description": "The function transferOwner does not check if _newOwner is an employee of the _companyId and does not check if _newOwner is not equal to 0x0, which could lead to a disastrous result.", "severity": "Low Risk", "contract": "EmployeeRegistry.sol", "function": "transferOwner()", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "Gas For Loop Concerns", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-691"], "2": ["CWE-1265"]}, "title": "Escrow.deposit() and Escrow.withdraw() Prone to Reentrancy", "description": "The functions deposit() and withdraw() do not comply with the 'Checks-Effects-Interactions' pattern, performing state variable changes after external function calls and not before.", "severity": "Low Risk", "contract": "Escrow.sol", "function": ["deposit()", "withdraw()"], "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-710"], "2": ["CWE-684"], "3": ["CWE-440"]}, "title": "Functions Should Not be Payable", "description": "The functions `createVestPlan` and `vest` are declared `payable`, allowing ether to be sent along the function calls. Since there is no function to retrieve the ether, it will lead to locked funds.", "severity": "Low Risk", "contract": "Vesting.sol", "function": "createVestPlan, vest", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-707"], "2": ["CWE-228"], "3": ["CWE-237"], "4": ["CWE-238"]}, "title": "Mismatched Interface Signatures", "description": "Some contracts implement the `IVest` or `IModule` interface without explicitly inheriting from them, leading to mismatched function signatures.", "severity": "Low Risk", "contract": "Vesting.sol, CliffModule.sol, LinearModule.sol, StreamModule.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "createPlan Allows Overwriting Plans", "description": "The `createPlan` function in the modules contracts does not check whether a plan with the provided ID already exists, allowing the owner to overwrite any existing plan.", "severity": "Low Risk", "contract": "CliffModule.sol, LinearModule.sol, StreamModule.sol", "function": "createPlan", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Events Not Emitted on State Change", "description": "An event should always be emitted when a state change is performed in order to facilitate smart contract monitoring by other systems which want to integrate with the smart contract.", "severity": "Informational", "contract": ["CliffModule", "LinearModule", "StreamModule", "EmployeeRegistry", "Escrow"], "function": "N/A", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Missing Initializer Calls", "description": "Not all of the initializers from the inherited contracts are called. While this might not lead to issues with the current version, this can change in the future.", "severity": "Informational", "contract": "EmployeeRegistry, Escrow, Vesting", "function": "N/A", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "SafeMath Library Redundant", "description": "The SafeMath library is redundant and can be removed since solidity version 0.8 reverts overflows and underflows by default.", "severity": "Informational", "contract": ["Escrow", "Vesting", "CliffModule", "LinearModule", "StreamModule"], "function": "N/A", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Unnecessary onlyOwner Modifier", "description": "The `getVestingControllerAddress` view function has the `onlyOwner` modifier which serves no purpose since the `vestingControllerAddress` variable is public.", "severity": "Informational", "contract": "N/A", "function": "getVestingControllerAddress", "lineNumber": "N/A"}, {"id": 16, "category": {"1": ["CWE-435"], "2": ["CWE-436"]}, "title": "Name Clashes with Ownable", "description": "The `EmployeeRegistry` contract has several functions related to company ownership that are simply referred to as `owner`. Since the contract also inherits from `Ownable`, this might lead to confusion.", "severity": "Informational", "contract": "EmployeeRegistry", "function": "N/A", "lineNumber": "N/A"}, {"id": 17, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1288"]}, "title": "Redundant Storage Variables", "description": "There are several member variables that contain identical values, one typed and one `address`. This is redundant since the address can be accessed by casting it like this: `address(cliffModule)`.", "severity": "Informational", "contract": "Vesting.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 18, "category": {"1": ["CWE-703"]}, "title": "N/A", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 19, "category": {"1": ["CWE-284"]}, "title": "No Access Control on EmployeeRegistry.addEmployee() and EmployeeRegistry.archiveEmployee()", "description": "The `EmployeeRegistry` contract does not employ any access control for adding or archiving employees, enabling anyone to add arbitrary addresses as active employees to arbitrary company ids or mark them as inactive.", "severity": "Undetermined", "contract": "EmployeeRegistry", "function": "addEmployee() and archiveEmployee()", "lineNumber": "N/A"}, {"id": 20, "category": {"1": ["CWE-682"]}, "title": "Incorrect Accounting for EmployeeRegistry.employeeToCompanyIds", "description": "The function `EmployeeRegistry.addEmployee()` does not check the return value of the call `EnumerableSet.add(companyIdToEmployees[_companyId].activeEmployees, _employee);`, which would indicate whether the added employee was already in the set. Therefore, calling the function multiple times would lead to duplicate company id entries in `employeeToCompanyIds` after executing `employeeToCompanyIds[_employee].push(_companyId);`.", "severity": "Undetermined", "contract": "EmployeeRegistry", "function": "addEmployee()", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Quantstamp/liqui-fi.pdf",
+    "project_info": {
+        "url": "https://github.com/LiquiFi/vesting-contracts/tree/13498fbcd45a3903d0d62782650aebea631ec016",
+        "commit_hash": "13498fbcd45a3903d0d62782650aebea631ec016",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Vesting Cannot Be Cancelled",
+            "description": "The contract does not have any functionality to allow a company to stop vesting a former employee.",
+            "severity": "High Risk",
+            "contract": "Vesting.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "LinearModule.createPlan Missing Input Validation",
+            "description": "The function makes implicit assumptions on the input parameters that are not enforced by the contract, which can lead to mistakes.",
+            "severity": "High Risk",
+            "contract": "contracts/modules/LinearModule.sol",
+            "function": "createPlan",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Use of Unsafe ERC20 Interface",
+            "description": "Functions `Escrow.deposit()` and `Escrow.withdraw()` are using the _unsafe_ ERC20 interface functions of OpenZeppelin (`transferFrom()` and `transfer()`). Since some ERC20 tokens do not return a value for these functions, these calls might revert.",
+            "severity": "Medium Risk",
+            "contract": "Escrow",
+            "function": [
+                "deposit()",
+                "withdraw()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-282"
+                ],
+                "3": [
+                    "CWE-708"
+                ]
+            },
+            "title": "Privileged Roles and Ownership",
+            "description": "Certain contracts have state variables, e.g. `owner`, which provide certain addresses with privileged roles. Such roles may pose a risk to end-users.",
+            "severity": "Medium Risk",
+            "contract": [
+                "CliffModule.sol",
+                "LinearModule.sol",
+                "StreamModule.sol",
+                "EmployeeRegistry.sol"
+            ],
+            "function": [
+                "initialize()",
+                "transferOwnership()",
+                "renounceOwnership()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "createVestPlan Missing Input Validation",
+            "description": "The `createVestPlan` function makes implicit assumptions on the input parameters that are not enforced by the contract, which can lead to mistakes such as accidentally sending additional funds.",
+            "severity": "Low Risk",
+            "contract": "Vesting.sol",
+            "function": "createVestPlan",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "EmployeeRegistry.isOwner() Mishandling address(0)",
+            "description": "The function `EmployeeRegistry.isOwner()` does not check the `exists` return value of `EnumerableMap.tryGet(companyOwners, _companyId)` and returns `true` when provided with `address(0)`, violating the comments assumption.",
+            "severity": "Low",
+            "contract": "EmployeeRegistry",
+            "function": "isOwner()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "EmployeeRegistry.transferOwner Might Lead to Unexpected State",
+            "description": "The function transferOwner does not check if _newOwner is an employee of the _companyId and does not check if _newOwner is not equal to 0x0, which could lead to a disastrous result.",
+            "severity": "Low Risk",
+            "contract": "EmployeeRegistry.sol",
+            "function": "transferOwner()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Gas For Loop Concerns",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "Escrow.deposit() and Escrow.withdraw() Prone to Reentrancy",
+            "description": "The functions deposit() and withdraw() do not comply with the 'Checks-Effects-Interactions' pattern, performing state variable changes after external function calls and not before.",
+            "severity": "Low Risk",
+            "contract": "Escrow.sol",
+            "function": [
+                "deposit()",
+                "withdraw()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-684"
+                ],
+                "3": [
+                    "CWE-440"
+                ]
+            },
+            "title": "Functions Should Not be Payable",
+            "description": "The functions `createVestPlan` and `vest` are declared `payable`, allowing ether to be sent along the function calls. Since there is no function to retrieve the ether, it will lead to locked funds.",
+            "severity": "Low Risk",
+            "contract": "Vesting.sol",
+            "function": "createVestPlan, vest",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-237"
+                ],
+                "4": [
+                    "CWE-238"
+                ]
+            },
+            "title": "Mismatched Interface Signatures",
+            "description": "Some contracts implement the `IVest` or `IModule` interface without explicitly inheriting from them, leading to mismatched function signatures.",
+            "severity": "Low Risk",
+            "contract": "Vesting.sol, CliffModule.sol, LinearModule.sol, StreamModule.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "createPlan Allows Overwriting Plans",
+            "description": "The `createPlan` function in the modules contracts does not check whether a plan with the provided ID already exists, allowing the owner to overwrite any existing plan.",
+            "severity": "Low Risk",
+            "contract": "CliffModule.sol, LinearModule.sol, StreamModule.sol",
+            "function": "createPlan",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Events Not Emitted on State Change",
+            "description": "An event should always be emitted when a state change is performed in order to facilitate smart contract monitoring by other systems which want to integrate with the smart contract.",
+            "severity": "Informational",
+            "contract": [
+                "CliffModule",
+                "LinearModule",
+                "StreamModule",
+                "EmployeeRegistry",
+                "Escrow"
+            ],
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Missing Initializer Calls",
+            "description": "Not all of the initializers from the inherited contracts are called. While this might not lead to issues with the current version, this can change in the future.",
+            "severity": "Informational",
+            "contract": "EmployeeRegistry, Escrow, Vesting",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "SafeMath Library Redundant",
+            "description": "The SafeMath library is redundant and can be removed since solidity version 0.8 reverts overflows and underflows by default.",
+            "severity": "Informational",
+            "contract": [
+                "Escrow",
+                "Vesting",
+                "CliffModule",
+                "LinearModule",
+                "StreamModule"
+            ],
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Unnecessary onlyOwner Modifier",
+            "description": "The `getVestingControllerAddress` view function has the `onlyOwner` modifier which serves no purpose since the `vestingControllerAddress` variable is public.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "getVestingControllerAddress",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ]
+            },
+            "title": "Name Clashes with Ownable",
+            "description": "The `EmployeeRegistry` contract has several functions related to company ownership that are simply referred to as `owner`. Since the contract also inherits from `Ownable`, this might lead to confusion.",
+            "severity": "Informational",
+            "contract": "EmployeeRegistry",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1288"
+                ]
+            },
+            "title": "Redundant Storage Variables",
+            "description": "There are several member variables that contain identical values, one typed and one `address`. This is redundant since the address can be accessed by casting it like this: `address(cliffModule)`.",
+            "severity": "Informational",
+            "contract": "Vesting.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "N/A",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 19,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "No Access Control on EmployeeRegistry.addEmployee() and EmployeeRegistry.archiveEmployee()",
+            "description": "The `EmployeeRegistry` contract does not employ any access control for adding or archiving employees, enabling anyone to add arbitrary addresses as active employees to arbitrary company ids or mark them as inactive.",
+            "severity": "Undetermined",
+            "contract": "EmployeeRegistry",
+            "function": "addEmployee() and archiveEmployee()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 20,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect Accounting for EmployeeRegistry.employeeToCompanyIds",
+            "description": "The function `EmployeeRegistry.addEmployee()` does not check the return value of the call `EnumerableSet.add(companyIdToEmployees[_companyId].activeEmployees, _employee);`, which would indicate whether the added employee was already in the set. Therefore, calling the function multiple times would lead to duplicate company id entries in `employeeToCompanyIds` after executing `employeeToCompanyIds[_employee].push(_companyId);`.",
+            "severity": "Undetermined",
+            "contract": "EmployeeRegistry",
+            "function": "addEmployee()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

@@ -1,1 +1,150 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-OT-Future-v1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-770"]}, "title": "Lack of Slippage Control in _decreasePosition()", "description": "In the `Perpetual` protocol, the `FutureRouter` contract lacks an effective slippage control in the `_decreasePosition()` function.", "severity": "Low", "contract": "FutureRouter", "function": "_decreasePosition()", "lineNumber": "655, 675"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "Revisited Validation of maxLeverage in decreaseMargin()", "description": "The `decreaseMargin()` routine does not properly check if the new leverage has exceeded the maximum leverage or not.", "severity": "High", "contract": "Future", "function": "decreaseMargin()", "lineNumber": "412-418, 423, 428"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Proper Validation of Size Delta in increasePosition()", "description": "The `Future` contract's `increasePosition()` function lacks validation to ensure the size delta cannot be 0, allowing traders to keep the position size unchanged while increasing the open notional.", "severity": "High", "contract": "Future", "function": "increasePosition()", "lineNumber": "484,509-510"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Improved Calculation of New Margin in validateLiquidate()", "description": "In the `Future` contract, wrong parameters values are used to calculate the remain margin and the margin ratio of the position in the `validateLiquidate()` routine.", "severity": "Medium", "contract": "Future", "function": "validateLiquidate()", "lineNumber": "1086, 1091-1092"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "Revisited Validation of Pair Status in liquidatePosition()", "description": "The `Future` contract does not properly validate the pair status to ensure the pair is not unlisted before allowing liquidation.", "severity": "Low", "contract": "Future", "function": "liquidatePosition()", "lineNumber": "928,939"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Revised Withdrawal of ETH in cancelIncreaseOrder()", "description": "In the `FutureRouter` contract, the `cancelIncreaseOrder()` function mistakenly uses `futureLimit` as `WETH`, causing it to withdraw `ETH` incorrectly.", "severity": "Medium", "contract": "FutureRouter", "function": "cancelIncreaseOrder()", "lineNumber": "304"}, {"id": 6, "category": {"1": ["CWE-703"]}, "title": "Revised Logic in decreasePositionETH()", "description": "Possible denial-of-service issue within current implementation of `decreasePositionETH()` routine in `FutureRouter` contract, where validation of `_receiver` will fail and the transaction reverts.", "severity": "Medium", "contract": "FutureRouter", "function": "decreasePositionETH()/_decreasePosition()", "lineNumber": "498, 499, 655"}, {"id": 7, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Trust Issue on Admin Keys", "description": "In the Perpetual protocol, there is a privileged account, i.e., owner, that plays a critical role in regulating the protocol-wide operations and has the ability to update specific pairs, set trading fee rates, set max leverage, etc.", "severity": "Medium", "contract": "Future", "function": "setMaxTotalSize()", "lineNumber": "271-282"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-OT-Future-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/1kxexchange/1kx-v1/tree/bfbb515",
+        "commit_hash": "bfbb515",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "Lack of Slippage Control in _decreasePosition()",
+            "description": "In the `Perpetual` protocol, the `FutureRouter` contract lacks an effective slippage control in the `_decreasePosition()` function.",
+            "severity": "Low",
+            "contract": "FutureRouter",
+            "function": "_decreasePosition()",
+            "lineNumber": "655, 675"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Revisited Validation of maxLeverage in decreaseMargin()",
+            "description": "The `decreaseMargin()` routine does not properly check if the new leverage has exceeded the maximum leverage or not.",
+            "severity": "High",
+            "contract": "Future",
+            "function": "decreaseMargin()",
+            "lineNumber": "412-418, 423, 428"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Proper Validation of Size Delta in increasePosition()",
+            "description": "The `Future` contract's `increasePosition()` function lacks validation to ensure the size delta cannot be 0, allowing traders to keep the position size unchanged while increasing the open notional.",
+            "severity": "High",
+            "contract": "Future",
+            "function": "increasePosition()",
+            "lineNumber": "484,509-510"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improved Calculation of New Margin in validateLiquidate()",
+            "description": "In the `Future` contract, wrong parameters values are used to calculate the remain margin and the margin ratio of the position in the `validateLiquidate()` routine.",
+            "severity": "Medium",
+            "contract": "Future",
+            "function": "validateLiquidate()",
+            "lineNumber": "1086, 1091-1092"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Revisited Validation of Pair Status in liquidatePosition()",
+            "description": "The `Future` contract does not properly validate the pair status to ensure the pair is not unlisted before allowing liquidation.",
+            "severity": "Low",
+            "contract": "Future",
+            "function": "liquidatePosition()",
+            "lineNumber": "928,939"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Revised Withdrawal of ETH in cancelIncreaseOrder()",
+            "description": "In the `FutureRouter` contract, the `cancelIncreaseOrder()` function mistakenly uses `futureLimit` as `WETH`, causing it to withdraw `ETH` incorrectly.",
+            "severity": "Medium",
+            "contract": "FutureRouter",
+            "function": "cancelIncreaseOrder()",
+            "lineNumber": "304"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Revised Logic in decreasePositionETH()",
+            "description": "Possible denial-of-service issue within current implementation of `decreasePositionETH()` routine in `FutureRouter` contract, where validation of `_receiver` will fail and the transaction reverts.",
+            "severity": "Medium",
+            "contract": "FutureRouter",
+            "function": "decreasePositionETH()/_decreasePosition()",
+            "lineNumber": "498, 499, 655"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue on Admin Keys",
+            "description": "In the Perpetual protocol, there is a privileged account, i.e., owner, that plays a critical role in regulating the protocol-wide operations and has the ability to update specific pairs, set trading fee rates, set max leverage, etc.",
+            "severity": "Medium",
+            "contract": "Future",
+            "function": "setMaxTotalSize()",
+            "lineNumber": "271-282"
+        }
+    ]
+}

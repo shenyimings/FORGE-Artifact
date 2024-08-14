@@ -1,1 +1,153 @@
-{"path": "./Audit_Reports_2024/QuillAudits/Formation.fi Smart Contract Audit Report - QuillAudits.pdf", "project_info": {"url": "audits.quillhash.com", "commit_hash": "01", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "same LP token added more than once", "description": "Rewards will be messed up if you do. The code does not have a check for the same LP token added as recommended by the code comment.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Missing range check for Input Variable", "description": "The owner can set the BONUS_MULTIPLIER state variable arbitrarily large or small via calling setBonusMultiplier() function, this might cause potential risks in rewarding and anti whale.", "severity": "Low", "contract": "N/A", "function": "setBonusMultiplier()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Lack of event emissions", "description": "The missing event makes it difficult to track off-chain liquidity fee changes. An event should be emitted for significant transactions calling the following functions: setBonusEndBlock(), setBonusMultiplier(), set(), add().", "severity": "Low", "contract": "N/A", "function": "setBonusEndBlock(), setBonusMultiplier(), set(), add()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Lack of Input Validation", "description": "The following variables are not sanitized: The \u201cform\u201d token balance of the LPFarmV3 contract is not checked against empty balance in an if statement at line 185 and the user.amount is not checked against empty balance before transferring in the emergencyWithdraw() function.", "severity": "Informational", "contract": "LPFarmV3", "function": "emergencyWithdraw()", "lineNumber": "185"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Uncheck transfer", "description": "The return value of an external transfer/transferFrom call is not checked since the external tokens do not revert in case of failure and return false.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "229, 231"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Inconsistent with code comments", "description": "Code logic does not match the provided comments.", "severity": "Medium", "contract": "staking.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-710"], "2": ["CWE-1076"]}, "title": "Conformance to Solidity naming conventions", "description": "Non-compliance with Solidity naming conventions may lead to code readability and maintainability issues.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-710"], "2": ["CWE-1120"], "3": ["CWE-1060"]}, "title": "Public function that could be declared external", "description": "The following public functions that are never called by the contract should be declared external to save gas.", "severity": "Informational", "contract": "N/A", "function": "add(), set(), deposit(), withdraw(), emergencyWithdraw()", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/QuillAudits/Formation.fi Smart Contract Audit Report - QuillAudits.pdf",
+    "project_info": {
+        "url": "https://github.com/Formation-Finance/form-staking",
+        "commit_hash": "01",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "same LP token added more than once",
+            "description": "Rewards will be messed up if you do. The code does not have a check for the same LP token added as recommended by the code comment.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Missing range check for Input Variable",
+            "description": "The owner can set the BONUS_MULTIPLIER state variable arbitrarily large or small via calling setBonusMultiplier() function, this might cause potential risks in rewarding and anti whale.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "setBonusMultiplier()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Lack of event emissions",
+            "description": "The missing event makes it difficult to track off-chain liquidity fee changes. An event should be emitted for significant transactions calling the following functions: setBonusEndBlock(), setBonusMultiplier(), set(), add().",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "setBonusEndBlock(), setBonusMultiplier(), set(), add()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Lack of Input Validation",
+            "description": "The following variables are not sanitized: The \u201cform\u201d token balance of the LPFarmV3 contract is not checked against empty balance in an if statement at line 185 and the user.amount is not checked against empty balance before transferring in the emergencyWithdraw() function.",
+            "severity": "Informational",
+            "contract": "LPFarmV3",
+            "function": "emergencyWithdraw()",
+            "lineNumber": "185"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Uncheck transfer",
+            "description": "The return value of an external transfer/transferFrom call is not checked since the external tokens do not revert in case of failure and return false.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "229, 231"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Inconsistent with code comments",
+            "description": "Code logic does not match the provided comments.",
+            "severity": "Medium",
+            "contract": "staking.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1076"
+                ]
+            },
+            "title": "Conformance to Solidity naming conventions",
+            "description": "Non-compliance with Solidity naming conventions may lead to code readability and maintainability issues.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1120"
+                ],
+                "3": [
+                    "CWE-1060"
+                ]
+            },
+            "title": "Public function that could be declared external",
+            "description": "The following public functions that are never called by the contract should be declared external to save gas.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "add(), set(), deposit(), withdraw(), emergencyWithdraw()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

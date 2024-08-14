@@ -1,1 +1,195 @@
-{"path": "./Audit_Reports_2024/BlockSec/BlockSec-blocksec_alpaca_v1.0_signed.pdf", "project_info": {"url": "https://github.com/alpaca-finance/bsc-alpaca-contract/tree/feat/delta-neutral-vault/contracts/8.10", "commit_hash": "e7c3899416e86a045011febec7a5cc986176e406", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Avoiding Duplicated Calculations", "description": "In the positionInfo() function of the DeltaNeutralVault contract, the _positionDebtValue() function is invoked multiple times with the same parameters. As the _positionDebtValue() function has several external calls, the duplicated calls may lead to unnecessary gas consumption.", "severity": "Medium", "contract": "DeltaNeutralVault", "function": "positionInfo()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Avoiding Inconsistency Checks in the Worker Contracts", "description": "In the work() function of the DeltaNeutralPancakeWorker02 contract, there is a guard in the _reinvest() call to check whether treasuryAccount and treasuryBountyBps are set. However, there is no corresponding check in the DeltaNeutralMdexWorker02 contract.", "severity": "N/A", "contract": "DeltaNeutralPancakeWorker02 and DeltaNeutralMdexWorker02", "function": "work()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Considering the Impact of Transaction Ordering Dependency", "description": "The calculation based on the state may be affected by the order of transactions inside one block, causing transaction failure.", "severity": "N/A", "contract": "Alpaca Delta", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Economic impact", "description": "The calculation of economic impact may be affected by the order of transactions inside one block, causing transaction failure.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "Batch transfer", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "NFT Security", "description": "Duplicated item, verification of the token receiver, off-chain metadata security", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "Duplicated Calculations", "description": "In the positionInfo() function of the DeltaNeutralVault contract, the _positionDebtValue() function is invoked multiple times with the same parameters, leading to unnecessary gas consumption.", "severity": "Medium", "contract": "DeltaNeutralVault", "function": "positionInfo()", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-284"], "2": ["CWE-287"]}, "title": "Verification of the token receiver", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-1230"]}, "title": "Off-chain metadata security", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-710"], "2": ["CWE-1120"], "3": ["CWE-1060"]}, "title": "Gas optimization", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-710"]}, "title": "Code quality and style", "description": "The audit report recommends good programming practices including gas optimization, code style, etc.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/BlockSec/BlockSec-blocksec_alpaca_v1.0_signed.pdf",
+    "project_info": {
+        "url": "https://github.com/alpaca-finance/bsc-alpaca-contract/tree/feat/delta-neutral-vault/contracts/8.10",
+        "commit_hash": "e7c3899416e86a045011febec7a5cc986176e406",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Avoiding Duplicated Calculations",
+            "description": "In the positionInfo() function of the DeltaNeutralVault contract, the _positionDebtValue() function is invoked multiple times with the same parameters. As the _positionDebtValue() function has several external calls, the duplicated calls may lead to unnecessary gas consumption.",
+            "severity": "Medium",
+            "contract": "DeltaNeutralVault",
+            "function": "positionInfo()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Avoiding Inconsistency Checks in the Worker Contracts",
+            "description": "In the work() function of the DeltaNeutralPancakeWorker02 contract, there is a guard in the _reinvest() call to check whether treasuryAccount and treasuryBountyBps are set. However, there is no corresponding check in the DeltaNeutralMdexWorker02 contract.",
+            "severity": "N/A",
+            "contract": "DeltaNeutralPancakeWorker02 and DeltaNeutralMdexWorker02",
+            "function": "work()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Considering the Impact of Transaction Ordering Dependency",
+            "description": "The calculation based on the state may be affected by the order of transactions inside one block, causing transaction failure.",
+            "severity": "N/A",
+            "contract": "Alpaca Delta",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Economic impact",
+            "description": "The calculation of economic impact may be affected by the order of transactions inside one block, causing transaction failure.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Batch transfer",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "NFT Security",
+            "description": "Duplicated item, verification of the token receiver, off-chain metadata security",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Duplicated Calculations",
+            "description": "In the positionInfo() function of the DeltaNeutralVault contract, the _positionDebtValue() function is invoked multiple times with the same parameters, leading to unnecessary gas consumption.",
+            "severity": "Medium",
+            "contract": "DeltaNeutralVault",
+            "function": "positionInfo()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-287"
+                ]
+            },
+            "title": "Verification of the token receiver",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-1230"
+                ]
+            },
+            "title": "Off-chain metadata security",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1120"
+                ],
+                "3": [
+                    "CWE-1060"
+                ]
+            },
+            "title": "Gas optimization",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ]
+            },
+            "title": "Code quality and style",
+            "description": "The audit report recommends good programming practices including gas optimization, code style, etc.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

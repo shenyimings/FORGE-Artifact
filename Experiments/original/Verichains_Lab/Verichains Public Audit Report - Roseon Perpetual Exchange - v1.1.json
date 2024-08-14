@@ -1,1 +1,266 @@
-{"path": "./Audit_Reports_2024/Verichains_Lab/Verichains Public Audit Report - Roseon Perpetual Exchange - v1.1.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Always reverts when adding a trailing stop if the input path requires a swap", "description": "The transaction will revert if the input path requires a swap and the `_isVerifyAmountOutMin` variable is set to false within the `_prevalidateAndCheckSwap()` function.", "severity": "CRITICAL", "contract": "PositionRouterV2", "function": "_prevalidateAndCheckSwap()", "lineNumber": "#L824"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Abuse transfer LP token to bypass cooldown duration check", "description": "In the vault contract, when a user stakes the LP tokens will be minted. If the user wants to unstake, the user must wait for a cooldown duration passed. Unfortunately, the LP token is transferable so users can transfer token to another address and unstake within passed duration check.", "severity": "CRITICAL", "contract": "Vault", "function": ["stake(address,address,uint256)", "unstake(address,uint256,address)"], "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Decrease pool amount must be in USD unit", "description": "When increase or decrease pool amount in Vault contract, the token must be calculated in USD unit.", "severity": "CRITICAL", "contract": "PositionHandler", "function": "_addOrRemoveCollateral", "lineNumber": "411"}, {"id": 3, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Users will lose their assets if the swap fails in opening a new position", "description": "Whenever a user opens a new position, their assets will be transferred to the Vault through the `_transferAssetToVault()` function. The `_processSwap()` function will return false if the swap fails, but only transactions other than opening a new position with specific parameters for that purpose will be logged as reverted transactions.", "severity": "CRITICAL", "contract": "PositionRouter.sol", "function": "openNewPosition()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Arbitrary swap for any account without permission", "description": "In the `swap()` function, users pass `_account` param without approval check, allowing potential execution of arbitrary swaps on any account and enabling price manipulation attacks.", "severity": "CRITICAL", "contract": "SwapRouter", "function": "swap()", "lineNumber": "#L171"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Must update token balance after transfer in Vault", "description": "When the contract directly transfers an asset into the vault, the tokenBalances state is not updated, leading to wrong price calculations in the future.", "severity": "CRITICAL", "contract": "SwapRouter", "function": "_vaultSwap", "lineNumber": "#L294"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "The vault swap logic cannot execute because of permission restricted", "description": "In the swap router, vault swap takes asset out at the end of the function. The contract calls `takeAssetOut()` function in the vault, but `takeAssetOut()` is restricted to be called only by `PositionHandler`, causing a break in the business logic execution of the contract.", "severity": "CRITICAL", "contract": "SwapRouter", "function": "N/A", "lineNumber": "408"}, {"id": 7, "category": {"1": ["CWE-284"], "2": ["CWE-287"]}, "title": "Use tx.origin for authentication is vulnerable to phishing", "description": "Smart contracts that use tx.origin for authorization are vulnerable to phishing attacks, in which a malicious contract can fool the \"Has Access User\" into running a function and bypass the limitAccess modifier check.", "severity": "HIGH", "contract": "BaseAccess", "function": "N/A", "lineNumber": "#L13"}, {"id": 8, "category": {"1": ["CWE-682"], "2": ["CWE-190"], "3": ["CWE-680"]}, "title": "The executor's fund will be drained if there are too many \"take profit/stop lost\" orders placed", "description": "When calling the updateTriggerOrders() function, If user sets to many _tpPrices or _slPrices , the Executor trigger too many times. As a result of the fee being less than what was charged for gas execution, the executor's money will be drained.", "severity": "HIGH", "contract": "TriggerOrderManagerV2", "function": "updateTriggerOrders()", "lineNumber": "#L232"}, {"id": 9, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Get first index of path at index 0 instead of index 1", "description": "In the swap() function, the contract extracts the path to get tokenIn and tokenOut. However, the contract makes a mistake and gets the first index of the path at index 1. As a result, the function cannot be executed when the user swaps a path token.", "severity": "HIGH", "contract": "SwapRouter", "function": "swap()", "lineNumber": "183"}, {"id": 10, "category": {"1": ["CWE-284"]}, "title": "_isFastExecute is always true in triggerPosition() function", "description": "The value of the _isFastExecute parameter is always true because only the triggerOrderManager may invoke the triggerPosition() function.", "severity": "MEDIUM", "contract": "TriggerOrderManagerV2 and PositionRouterV2", "function": "triggerPosition()", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "No Storage Gap for Upgradeable Contract Might Lead to Storage Slot Collision", "description": "For upgradeable contracts, there must be storage gap to allow developers to freely add new state variables in the future without compromising the storage compatibility with existing deployments.", "severity": "MEDIUM", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-664"], "2": ["CWE-662"], "3": ["CWE-663"]}, "title": "Possible reentrancy in all external function", "description": "The issue arises from state updating after transferring in claim and withdraw action, allowing an attacker to execute a reentrancy attack if the token used is ERC1155.", "severity": "MEDIUM", "contract": "StakeRolp.sol, StakeDualToken.sol", "function": "compound(), deposit(), claim(), withdraw()", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-697"], "2": ["CWE-1025"], "3": ["CWE-595"], "4": ["CWE-597"]}, "title": "Incorrect position data validation", "description": "The validation function uses the same block to validate both long and short positions. Additionally, the validation process does not check the prices of limit, stop, or stop-limit orders corresponding to long or short positions.", "severity": "MEDIUM", "contract": "VaultUtilsV2.sol", "function": "validatePositionData()", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Verichains_Lab/Verichains Public Audit Report - Roseon Perpetual Exchange - v1.1.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Always reverts when adding a trailing stop if the input path requires a swap",
+            "description": "The transaction will revert if the input path requires a swap and the `_isVerifyAmountOutMin` variable is set to false within the `_prevalidateAndCheckSwap()` function.",
+            "severity": "CRITICAL",
+            "contract": "PositionRouterV2",
+            "function": "_prevalidateAndCheckSwap()",
+            "lineNumber": "#L824"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Abuse transfer LP token to bypass cooldown duration check",
+            "description": "In the vault contract, when a user stakes the LP tokens will be minted. If the user wants to unstake, the user must wait for a cooldown duration passed. Unfortunately, the LP token is transferable so users can transfer token to another address and unstake within passed duration check.",
+            "severity": "CRITICAL",
+            "contract": "Vault",
+            "function": [
+                "stake(address,address,uint256)",
+                "unstake(address,uint256,address)"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Decrease pool amount must be in USD unit",
+            "description": "When increase or decrease pool amount in Vault contract, the token must be calculated in USD unit.",
+            "severity": "CRITICAL",
+            "contract": "PositionHandler",
+            "function": "_addOrRemoveCollateral",
+            "lineNumber": "411"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Users will lose their assets if the swap fails in opening a new position",
+            "description": "Whenever a user opens a new position, their assets will be transferred to the Vault through the `_transferAssetToVault()` function. The `_processSwap()` function will return false if the swap fails, but only transactions other than opening a new position with specific parameters for that purpose will be logged as reverted transactions.",
+            "severity": "CRITICAL",
+            "contract": "PositionRouter.sol",
+            "function": "openNewPosition()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Arbitrary swap for any account without permission",
+            "description": "In the `swap()` function, users pass `_account` param without approval check, allowing potential execution of arbitrary swaps on any account and enabling price manipulation attacks.",
+            "severity": "CRITICAL",
+            "contract": "SwapRouter",
+            "function": "swap()",
+            "lineNumber": "#L171"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Must update token balance after transfer in Vault",
+            "description": "When the contract directly transfers an asset into the vault, the tokenBalances state is not updated, leading to wrong price calculations in the future.",
+            "severity": "CRITICAL",
+            "contract": "SwapRouter",
+            "function": "_vaultSwap",
+            "lineNumber": "#L294"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "The vault swap logic cannot execute because of permission restricted",
+            "description": "In the swap router, vault swap takes asset out at the end of the function. The contract calls `takeAssetOut()` function in the vault, but `takeAssetOut()` is restricted to be called only by `PositionHandler`, causing a break in the business logic execution of the contract.",
+            "severity": "CRITICAL",
+            "contract": "SwapRouter",
+            "function": "N/A",
+            "lineNumber": "408"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-287"
+                ]
+            },
+            "title": "Use tx.origin for authentication is vulnerable to phishing",
+            "description": "Smart contracts that use tx.origin for authorization are vulnerable to phishing attacks, in which a malicious contract can fool the \"Has Access User\" into running a function and bypass the limitAccess modifier check.",
+            "severity": "HIGH",
+            "contract": "BaseAccess",
+            "function": "N/A",
+            "lineNumber": "#L13"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ],
+                "3": [
+                    "CWE-680"
+                ]
+            },
+            "title": "The executor's fund will be drained if there are too many \"take profit/stop lost\" orders placed",
+            "description": "When calling the updateTriggerOrders() function, If user sets to many _tpPrices or _slPrices , the Executor trigger too many times. As a result of the fee being less than what was charged for gas execution, the executor's money will be drained.",
+            "severity": "HIGH",
+            "contract": "TriggerOrderManagerV2",
+            "function": "updateTriggerOrders()",
+            "lineNumber": "#L232"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Get first index of path at index 0 instead of index 1",
+            "description": "In the swap() function, the contract extracts the path to get tokenIn and tokenOut. However, the contract makes a mistake and gets the first index of the path at index 1. As a result, the function cannot be executed when the user swaps a path token.",
+            "severity": "HIGH",
+            "contract": "SwapRouter",
+            "function": "swap()",
+            "lineNumber": "183"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "_isFastExecute is always true in triggerPosition() function",
+            "description": "The value of the _isFastExecute parameter is always true because only the triggerOrderManager may invoke the triggerPosition() function.",
+            "severity": "MEDIUM",
+            "contract": "TriggerOrderManagerV2 and PositionRouterV2",
+            "function": "triggerPosition()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "No Storage Gap for Upgradeable Contract Might Lead to Storage Slot Collision",
+            "description": "For upgradeable contracts, there must be storage gap to allow developers to freely add new state variables in the future without compromising the storage compatibility with existing deployments.",
+            "severity": "MEDIUM",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-662"
+                ],
+                "3": [
+                    "CWE-663"
+                ]
+            },
+            "title": "Possible reentrancy in all external function",
+            "description": "The issue arises from state updating after transferring in claim and withdraw action, allowing an attacker to execute a reentrancy attack if the token used is ERC1155.",
+            "severity": "MEDIUM",
+            "contract": "StakeRolp.sol, StakeDualToken.sol",
+            "function": "compound(), deposit(), claim(), withdraw()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ],
+                "2": [
+                    "CWE-1025"
+                ],
+                "3": [
+                    "CWE-595"
+                ],
+                "4": [
+                    "CWE-597"
+                ]
+            },
+            "title": "Incorrect position data validation",
+            "description": "The validation function uses the same block to validate both long and short positions. Additionally, the validation process does not check the prices of limit, stop, or stop-limit orders corresponding to long or short positions.",
+            "severity": "MEDIUM",
+            "contract": "VaultUtilsV2.sol",
+            "function": "validatePositionData()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

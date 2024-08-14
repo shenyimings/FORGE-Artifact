@@ -1,1 +1,179 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Demeter-v1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-909"], "4": ["CWE-456"]}, "title": "3.1 Proper StakingEIP20::deposit() Logic", "description": "The `deposit()` function in `StakingEIP20` does not properly initialize the user-specific reward accrual height in the `accountHeights` state when making the first global deposit.", "severity": "Low", "contract": "StakingEIP20", "function": "deposit()", "lineNumber": "156"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Suggested Adherence Of Checks-Effects-Interactions Pattern", "description": "A common coding best practice in Solidity is the adherence of `checks-effects-interactions` principle to mitigate re-entrancy attacks.", "severity": "Low", "contract": "VBep20Delegate0", "function": "_borrowFresh()", "lineNumber": "487, 490-492"}, {"id": 2, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Proper totalWithdrawQuantity Accounting in StakingDAO::withdraw()", "description": "The withdraw logic in StakingDAO does not properly update the global state 'totalWithdrawQuantity' when staked assets are withdrawn from the first lock pool.", "severity": "Low", "contract": "StakingDAO", "function": "withdraw()", "lineNumber": "255-269"}, {"id": 3, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "3.4 Redundant State/Code Removal", "description": "The `Demeter` protocol has unused code or unnecessary redundancies that can be safely removed, such as local variables defined but not used in `VAIController` contract.", "severity": "Low", "contract": "MdexSwapProxy", "function": "N/A", "lineNumber": "47-57"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "Lack Of Payment Source In executeTransaction()", "description": "The `executeTransaction()` function does not have a payment source, making it inconvenient to transfer native tokens due to lack of payable modifier.", "severity": "Low", "contract": "MasterMultiSig", "function": "executeTransaction()", "lineNumber": "224-225"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Trust Issue of Admin Keys", "description": "In the Demeter protocol, there is a privileged `owner` account that plays a critical role in governing and regulating the system-wide operations, but it needs to be scrutinized.", "severity": "Medium", "contract": "Multiple Contracts", "function": "setMember(), setValue(), setUserPermit()", "lineNumber": "52-58"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "Accommodation of Non-ERC20-Compliant Tokens", "description": "The transfer function does not comply with ERC20 standard, it does not revert transaction when the sender's balance is insufficient and does not fire the Transfer event.", "severity": "Low", "contract": "Multiple Contracts", "function": "transfer()", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "3.8 Non ERC20-Compliance Of VToken", "description": "The `vToken` contract does not comply with the ERC20 specification, specifically in its `transfer()` function which returns an error code if the sender does not have sufficient balance to spend.", "severity": "Medium", "contract": "VToken", "function": "transfer()", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-710"], "2": ["CWE-1068"]}, "title": "Inconsistency Between Document and Implementation", "description": "There is a misleading comment embedded among lines of solidity code, which brings unnecessary hurdles to understand and/or maintain the software.", "severity": "Informational", "contract": "Multiple Contracts", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Demeter-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/Demetervip/demeter_contract/tree/70cbb6e",
+        "commit_hash": "70cbb6e",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "3.1 Proper StakingEIP20::deposit() Logic",
+            "description": "The `deposit()` function in `StakingEIP20` does not properly initialize the user-specific reward accrual height in the `accountHeights` state when making the first global deposit.",
+            "severity": "Low",
+            "contract": "StakingEIP20",
+            "function": "deposit()",
+            "lineNumber": "156"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Suggested Adherence Of Checks-Effects-Interactions Pattern",
+            "description": "A common coding best practice in Solidity is the adherence of `checks-effects-interactions` principle to mitigate re-entrancy attacks.",
+            "severity": "Low",
+            "contract": "VBep20Delegate0",
+            "function": "_borrowFresh()",
+            "lineNumber": "487, 490-492"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Proper totalWithdrawQuantity Accounting in StakingDAO::withdraw()",
+            "description": "The withdraw logic in StakingDAO does not properly update the global state 'totalWithdrawQuantity' when staked assets are withdrawn from the first lock pool.",
+            "severity": "Low",
+            "contract": "StakingDAO",
+            "function": "withdraw()",
+            "lineNumber": "255-269"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "3.4 Redundant State/Code Removal",
+            "description": "The `Demeter` protocol has unused code or unnecessary redundancies that can be safely removed, such as local variables defined but not used in `VAIController` contract.",
+            "severity": "Low",
+            "contract": "MdexSwapProxy",
+            "function": "N/A",
+            "lineNumber": "47-57"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Lack Of Payment Source In executeTransaction()",
+            "description": "The `executeTransaction()` function does not have a payment source, making it inconvenient to transfer native tokens due to lack of payable modifier.",
+            "severity": "Low",
+            "contract": "MasterMultiSig",
+            "function": "executeTransaction()",
+            "lineNumber": "224-225"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "In the Demeter protocol, there is a privileged `owner` account that plays a critical role in governing and regulating the system-wide operations, but it needs to be scrutinized.",
+            "severity": "Medium",
+            "contract": "Multiple Contracts",
+            "function": "setMember(), setValue(), setUserPermit()",
+            "lineNumber": "52-58"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Accommodation of Non-ERC20-Compliant Tokens",
+            "description": "The transfer function does not comply with ERC20 standard, it does not revert transaction when the sender's balance is insufficient and does not fire the Transfer event.",
+            "severity": "Low",
+            "contract": "Multiple Contracts",
+            "function": "transfer()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "3.8 Non ERC20-Compliance Of VToken",
+            "description": "The `vToken` contract does not comply with the ERC20 specification, specifically in its `transfer()` function which returns an error code if the sender does not have sufficient balance to spend.",
+            "severity": "Medium",
+            "contract": "VToken",
+            "function": "transfer()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1068"
+                ]
+            },
+            "title": "Inconsistency Between Document and Implementation",
+            "description": "There is a misleading comment embedded among lines of solidity code, which brings unnecessary hurdles to understand and/or maintain the software.",
+            "severity": "Informational",
+            "contract": "Multiple Contracts",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

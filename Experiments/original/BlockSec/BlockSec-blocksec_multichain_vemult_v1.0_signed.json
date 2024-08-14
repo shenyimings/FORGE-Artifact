@@ -1,1 +1,263 @@
-{"path": "./Audit_Reports_2024/BlockSec/BlockSec-blocksec_multichain_vemult_v1.0_signed.pdf", "project_info": {"url": "https://github.com/anyswap/veMULTI", "commit_hash": "bac804399d1ea280e5bd8cdc9488b6fa6a0a7fcc", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"]}, "title": "Unchecked ERC-721 Callback Result", "description": "In the implementation of the safeTransferFrom function, according to the ERC-721 standard, the caller should check the return value of the callback, and revert if the returned signature is incorrect. This check is not implemented in the safeTransferFrom function.", "severity": "Medium", "contract": "ve", "function": "safeTransferFrom()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-253"]}, "title": "Improper Check for the Return Values of the transferFrom Function", "description": "The _deposit_for function in the ve contract transfers the deposit token to the contract and checks the result of this transfer. This can fail due to improperly implemented tokens (for example, the USDT token) that does not return value in the transferFrom function.", "severity": "Low", "contract": "ve", "function": "_deposit_for", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-693"], "2": ["CWE-358"]}, "title": "Inconsistent Implementation of the Burn Logic", "description": "The ve contract has a custom implementation of the ERC-721 standard. The _burn function implemented in this contract is inconsistent with the standard OpenZeppelin\u2019s implementation.", "severity": "Low", "contract": "ve", "function": "_burn", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-124"]}, "title": "Access Out Of Bounds in the getBlockByTime Function", "description": "The function does not properly handle edge cases of the binary search, leading to an access out of bounds if the target _time parameter exceeds all historical records in the point_history.", "severity": "Low", "contract": "VEReward", "function": "getBlockByTime()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-233"]}, "title": "Unchecked Arrays in the claimRewardMany Function", "description": "The VEReward contract provides a claimRewardMany function so that users can withdraw rewards in many epochs for many token IDs. However, the function does not check the lengths of the parameters.", "severity": "Low", "contract": "VEReward", "function": "claimRewardMany()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Inconsistent Implementation of the Burn Logic", "description": "N/A", "severity": "Low", "contract": "N/A", "function": "_burn", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "Inconsistent Handling of Epoch Time", "description": "The VEReward contract provides token rewards to NFTs created in the ve contract. The rewards are distributed in different epochs, while the project admin is allowed to create epochs, setting the start time, end time and total rewards in this epoch. However, the addEpoch function checks the end time of the epoch to ensure that the end time has not passed (i.e., less than block.timestamp), whereas the addEpochBatch function does not check the end time for intermediate epochs.", "severity": "Medium", "contract": "VEReward", "function": "addEpoch, addEpochBatch", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "Inconsistent End Time in the addEpochBatch Function", "description": "The implementation of the addEpochBatch function may cause the inconsistency between the calculated end time of the final period and the endTime parameter.", "severity": "Low", "contract": "VEReward", "function": "addEpochBatch()", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-682"]}, "title": "Inconsistent Implementation of the Reward Calculation", "description": "The reward token in the VEReward contract is directly transferred from the project admin to the contract without explicit logic requiring the project admin to transfer reward tokens when adding an epoch through invoking the addEpoch function.", "severity": "N/A", "contract": "VEReward", "function": "addEpoch()", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Check Zero Address In the ve.ownerOf Function", "description": "In the standard OpenZeppelin\u2019s implementation of the ERC-721 token, the ownerOf function will check whether the owner address is zero, to prevent returning owners of non-existent tokens (which is a zero address). It is recommended to implemented the same logic in the ve contract.", "severity": "N/A", "contract": "ve.sol", "function": "ownerOf()", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Implement Secure Logic for the transferAdmin Function", "description": "The current implementation of the transferAdmin function directly changes the admin address. It is suggested that the admin transfer follows the _Transfer-Accept_ pattern as used in the Compound project.", "severity": "N/A", "contract": "ve.sol", "function": "transferAdmin()", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-682"], "2": ["CWE-1339"]}, "title": "Avoid Continuous Divisions in the _pendingRewardSingle Function", "description": "Potential precision loss due to continuous divisions.", "severity": "Low", "contract": "VEReward.sol", "function": "_pendingRewardSingle", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "Alleviate the Concern of Potential Centrality", "description": "The reward token in the VEReward contract is directly transferred from the project admin to the contract without explicit logic that requires the project admin to transfer reward tokens when adding an epoch, leading to potential centrality problem.", "severity": "Low", "contract": "VEReward", "function": "addEpoch", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-691"], "2": ["CWE-841"]}, "title": "Follow the Checks-Effects-Interactions Pattern", "description": "The contract does not follow the Checks-Effects-Interactions pattern.", "severity": "Recommendation", "contract": "ve", "function": "withdraw()", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1287"]}, "title": "Non-standard token is used as the deposit token in the ve contract", "description": "Deposits may fail due to this check if non-standard token is used as the deposit token in the ve contract.", "severity": "Medium", "contract": "ve", "function": "_deposit_for", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/BlockSec/BlockSec-blocksec_multichain_vemult_v1.0_signed.pdf",
+    "project_info": {
+        "url": "https://github.com/anyswap/veMULTI",
+        "commit_hash": "bac804399d1ea280e5bd8cdc9488b6fa6a0a7fcc",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Unchecked ERC-721 Callback Result",
+            "description": "In the implementation of the safeTransferFrom function, according to the ERC-721 standard, the caller should check the return value of the callback, and revert if the returned signature is incorrect. This check is not implemented in the safeTransferFrom function.",
+            "severity": "Medium",
+            "contract": "ve",
+            "function": "safeTransferFrom()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-253"
+                ]
+            },
+            "title": "Improper Check for the Return Values of the transferFrom Function",
+            "description": "The _deposit_for function in the ve contract transfers the deposit token to the contract and checks the result of this transfer. This can fail due to improperly implemented tokens (for example, the USDT token) that does not return value in the transferFrom function.",
+            "severity": "Low",
+            "contract": "ve",
+            "function": "_deposit_for",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-358"
+                ]
+            },
+            "title": "Inconsistent Implementation of the Burn Logic",
+            "description": "The ve contract has a custom implementation of the ERC-721 standard. The _burn function implemented in this contract is inconsistent with the standard OpenZeppelin\u2019s implementation.",
+            "severity": "Low",
+            "contract": "ve",
+            "function": "_burn",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-124"
+                ]
+            },
+            "title": "Access Out Of Bounds in the getBlockByTime Function",
+            "description": "The function does not properly handle edge cases of the binary search, leading to an access out of bounds if the target _time parameter exceeds all historical records in the point_history.",
+            "severity": "Low",
+            "contract": "VEReward",
+            "function": "getBlockByTime()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-233"
+                ]
+            },
+            "title": "Unchecked Arrays in the claimRewardMany Function",
+            "description": "The VEReward contract provides a claimRewardMany function so that users can withdraw rewards in many epochs for many token IDs. However, the function does not check the lengths of the parameters.",
+            "severity": "Low",
+            "contract": "VEReward",
+            "function": "claimRewardMany()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Inconsistent Implementation of the Burn Logic",
+            "description": "N/A",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "_burn",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Inconsistent Handling of Epoch Time",
+            "description": "The VEReward contract provides token rewards to NFTs created in the ve contract. The rewards are distributed in different epochs, while the project admin is allowed to create epochs, setting the start time, end time and total rewards in this epoch. However, the addEpoch function checks the end time of the epoch to ensure that the end time has not passed (i.e., less than block.timestamp), whereas the addEpochBatch function does not check the end time for intermediate epochs.",
+            "severity": "Medium",
+            "contract": "VEReward",
+            "function": "addEpoch, addEpochBatch",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Inconsistent End Time in the addEpochBatch Function",
+            "description": "The implementation of the addEpochBatch function may cause the inconsistency between the calculated end time of the final period and the endTime parameter.",
+            "severity": "Low",
+            "contract": "VEReward",
+            "function": "addEpochBatch()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Inconsistent Implementation of the Reward Calculation",
+            "description": "The reward token in the VEReward contract is directly transferred from the project admin to the contract without explicit logic requiring the project admin to transfer reward tokens when adding an epoch through invoking the addEpoch function.",
+            "severity": "N/A",
+            "contract": "VEReward",
+            "function": "addEpoch()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Check Zero Address In the ve.ownerOf Function",
+            "description": "In the standard OpenZeppelin\u2019s implementation of the ERC-721 token, the ownerOf function will check whether the owner address is zero, to prevent returning owners of non-existent tokens (which is a zero address). It is recommended to implemented the same logic in the ve contract.",
+            "severity": "N/A",
+            "contract": "ve.sol",
+            "function": "ownerOf()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Implement Secure Logic for the transferAdmin Function",
+            "description": "The current implementation of the transferAdmin function directly changes the admin address. It is suggested that the admin transfer follows the _Transfer-Accept_ pattern as used in the Compound project.",
+            "severity": "N/A",
+            "contract": "ve.sol",
+            "function": "transferAdmin()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "Avoid Continuous Divisions in the _pendingRewardSingle Function",
+            "description": "Potential precision loss due to continuous divisions.",
+            "severity": "Low",
+            "contract": "VEReward.sol",
+            "function": "_pendingRewardSingle",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Alleviate the Concern of Potential Centrality",
+            "description": "The reward token in the VEReward contract is directly transferred from the project admin to the contract without explicit logic that requires the project admin to transfer reward tokens when adding an epoch, leading to potential centrality problem.",
+            "severity": "Low",
+            "contract": "VEReward",
+            "function": "addEpoch",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "Follow the Checks-Effects-Interactions Pattern",
+            "description": "The contract does not follow the Checks-Effects-Interactions pattern.",
+            "severity": "Recommendation",
+            "contract": "ve",
+            "function": "withdraw()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1287"
+                ]
+            },
+            "title": "Non-standard token is used as the deposit token in the ve contract",
+            "description": "Deposits may fail due to this check if non-standard token is used as the deposit token in the ve contract.",
+            "severity": "Medium",
+            "contract": "ve",
+            "function": "_deposit_for",
+            "lineNumber": "N/A"
+        }
+    ]
+}

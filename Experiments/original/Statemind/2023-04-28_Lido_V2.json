@@ -1,1 +1,436 @@
-{"path": "./Audit_Reports_2024/Statemind/2023-04-28_Lido_V2.pdf", "project_info": {"url": "https://github.com/lidofinance/lido-dao", "commit_hash": "e45c4d6fb8120fd29426b8d969c19d8a798ca974", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Missing zero check when reporting minted rewards", "description": "_totalShares[i] can be 0 if the staking module is stopped and no shares were minted for it.", "severity": "Informational", "contract": "StakingRouter", "function": "reportRewardsMinted()", "lineNumber": "266"}, {"id": 1, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "Reentrancy in depositing buffered ether", "description": "Funds stealing by malicious staking module", "severity": "Critical", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Funds stealing by malicious staking module", "description": "Malicious staking modules can put their own controlled withdrawal credentials for deposits upcoming from Lido.", "severity": "Critical", "contract": "StakingRouter", "function": "deposit()", "lineNumber": "959"}, {"id": 3, "category": {"1": ["CWE-435"], "2": ["CWE-436"], "3": ["CWE-437"]}, "title": "Not matching interface", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "Wrong NFT balance", "description": "In the WithdrawalRequestNFT contract, the function balanceOf returns a user's balance, including claimed NFTs that the contract has already burned. This error may need to be clarified for users or, in some cases, break third-party contracts.", "severity": "HIGH", "contract": "WithdrawalRequestNFT", "function": "balanceOf(address _owner)", "lineNumber": "L112-L115"}, {"id": 5, "category": {"1": ["CWE-691"], "2": ["CWE-841"]}, "title": "Staking module can block withdrawal credential changing and oracle", "description": "A single staking module (malicious or broken) can stop the whole deposit flow by reverting the _loadStakingModulesCacheItem function used in the deposit() call.", "severity": "Medium", "contract": "StakingRouter", "function": "_loadStakingModulesCacheItem", "lineNumber": "1067"}, {"id": 6, "category": {"1": ["CWE-682"], "2": ["CWE-191"]}, "title": "Zero deposits allocation after the pause of one of staking modules", "description": "A single staking module (malicious or broken) can stop the whole deposit flow by causing an underflow in the activeValidatorsCount calculation, leading to a revert and making deposits impossible while StakingRouter is paused.", "severity": "Medium", "contract": "StakingRouter", "function": "_loadStakingModulesCacheItem()", "lineNumber": "1067"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "Withdrawal NFT burning after transfer to self", "description": "Each withdrawal request is an NFT token, this NFT can be transferred to another address by the owner. However, if the owner transfers NFT to self the **balanceOf** function will return **0** due to incorrect handling of self-transfers in the _transfer function.", "severity": "High", "contract": "WithdrawalRequestNFT", "function": "_transfer", "lineNumber": "L179-L180"}, {"id": 8, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Incorrect require leads to DOS", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "A Node Operator can circumvent DAO validator key approval", "description": "The finding suggests that a node operator can bypass the approval of DAO validator keys.", "severity": "N/A", "contract": "NodeOperatorsRegistry", "function": "_updateRefundValidatorsKeysCount", "lineNumber": "643"}, {"id": 10, "category": {"1": ["CWE-284"], "2": ["CWE-923"], "3": ["CWE-300"]}, "title": "The parameter depositCalldata can be hijacked by a front-run", "description": "In the function depositBufferedEther, the depositCalldata parameter can be hijacked by a malicious actor by front-running the initial transaction.", "severity": "High", "contract": "DepositSecurityModule", "function": "depositBufferedEther()", "lineNumber": "L413"}, {"id": 11, "category": {"1": ["CWE-691"]}, "title": "Blocking rewards distribution", "description": "In function reportRewardsMinted(), a callback to StakingModule can block and reward distribution to all modules, affecting the whole AccountingOracle.", "severity": "Medium", "contract": "StakingRouter.sol", "function": "reportRewardsMinted()", "lineNumber": "260"}, {"id": 12, "category": {"1": ["CWE-682"]}, "title": "Wrong Burnt shares calculation", "description": "The _burnSharesLimited() function does not include postponed burnt shares when calculating the number of burnt shares.", "severity": "Medium", "contract": "Lido", "function": "_burnSharesLimited()", "lineNumber": "1385"}, {"id": 13, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "reportProcessor can have a report that doesn't reach a consensus", "description": "In HashConsensus contract, submitted reports have a floating number of supports which can increase and decrease, but the contract doesn't handle an edge case when the support of a report decreases, leading to reports being processed without reaching quorum.", "severity": "Medium", "contract": "HashConsensus", "function": "_submitReport", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-682"]}, "title": "Wrong burntWithdrawalsShares calculation", "description": "The simulated share rate is calculated by simulating an eth_call with no finalization of withdrawals. The burner contract can have postponed shares to burn from previous oracle reports, leading to burning of postponed shares in the real call which was not predicted in the simulated call.", "severity": "Medium", "contract": "Lido", "function": "_burnSharesLimited()", "lineNumber": "1359"}, {"id": 15, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Possible to set stuck/exited validators count to be bigger than deposited", "description": "The oracle extra data report sets the stuck validators for staking module before setting exited validators count, leading to a situation where it is possible to set stuck and exited validators count to be bigger than deposited for a staking module due to a wrong check.", "severity": "Medium", "contract": "AccountingOracle.sol, NodeOperatorsRegistry.sol", "function": "_updateStuckValidatorsCount(), _updateExitedValidatorsCount()", "lineNumber": "L854-L860, L615-L618, L568"}, {"id": 16, "category": {"1": ["CWE-682"]}, "title": "Wrong offsets for stuck and refunded validators", "description": "Incorrect usage of STUCK_VALIDATORS_COUNT_OFFSET and REFUNDED_VALIDATORS_COUNT_OFFSET at lines 614 and 623 respectively in NodeOperatorsRegistry.sol.", "severity": "Medium", "contract": "NodeOperatorsRegistry", "function": "N/A", "lineNumber": "614, 623"}, {"id": 17, "category": {"1": ["CWE-691"], "2": ["CWE-841"]}, "title": "Possible to submit report extra data in the next frame after the report", "description": "It is possible to submit report extra data in the next frame after the main report in a certain scenario where the main report data is submitted for the current frame, the extra data is not submitted for the current frame, and then the consensus contract submits a report which updates the _storageConsensusReport() value and emits the event WarnExtraDataIncompleteProcessing.", "severity": "Medium", "contract": "AccountingOracle", "function": "_checkCanSubmitExtraData", "lineNumber": "695"}, {"id": 18, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "No check for return value size in isValidSignature()", "description": "The function isValidSignature() returns true if the first 4 bytes of the return value equal ERC1271_IS_VALID_SIGNATURE_SELECTOR without checking the size of the return value, which can lead to incorrect validation.", "severity": "Medium", "contract": "SignatureUtils.sol", "function": "isValidSignature()", "lineNumber": "41-53"}, {"id": 19, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-908"], "4": ["CWE-457"]}, "title": "NodeOperatorsRegistry keys nonce doesn't change", "description": "The NodeOperatorsRegistry keys nonce does not change.", "severity": "Unknown", "contract": "NodeOperatorsRegistry", "function": "N/A", "lineNumber": "N/A"}, {"id": 20, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Restriction of total fee", "description": "The restriction on **totalFee** is insufficient as it only checks if it's less than 100 percent, allowing it to be set to 99,999% and giving almost all profit to node operators and treasury.", "severity": "Medium", "contract": "StakingRouter.sol", "function": "N/A", "lineNumber": "904"}, {"id": 21, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Manipulating active validators count", "description": "A malicious StakingModule can falsify values to get more shares in allocations and rewards distributions by manipulating the number of active validators.", "severity": "Medium", "contract": "StakingRouter", "function": "_loadStakingModulesCacheItem()", "lineNumber": "1067"}, {"id": 22, "category": {"1": ["CWE-682"]}, "title": "Withdrawn stETH is not fully burnt", "description": "Due to consuming limits of positive rebase and discount of locked ether, it is possible that the limit of burnt shares will be lower than the amount of shares to be burnt.", "severity": "Medium", "contract": "OracleReportSanityChecker.sol", "function": "smoothenTokenRebase()", "lineNumber": "306"}, {"id": 23, "category": {"1": ["CWE-682"]}, "title": "FastLane length change leads to the disruption of the voting logic", "description": "In the contract HashConsensus, there is no appropriate processing of the edge case when the FastLane has ended, some non-FastLane members submitted their reports, and the new fastLaneLengthSlots variable enables FastLane again.", "severity": "Medium", "contract": "HashConsensus", "function": "_setFastLaneLengthSlots, _setFrameConfig", "lineNumber": "L665, L500"}, {"id": 24, "category": {"1": ["CWE-682"]}, "title": "Quorum change leads to the disruption of the voting logic", "description": "In the HashConsensus contract, a quorum change can lead to disruption of the voting logic when FastLane members have submitted reports and the quorum variable decreases.", "severity": "Medium", "contract": "HashConsensus", "function": "_setQuorumAndCheckConsensus", "lineNumber": "833"}]}
+{
+    "path": "./Audit_Reports_2024/Statemind/2023-04-28_Lido_V2.pdf",
+    "project_info": {
+        "url": "https://github.com/lidofinance/lido-dao",
+        "commit_hash": "e45c4d6fb8120fd29426b8d969c19d8a798ca974",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Missing zero check when reporting minted rewards",
+            "description": "_totalShares[i] can be 0 if the staking module is stopped and no shares were minted for it.",
+            "severity": "Informational",
+            "contract": "StakingRouter",
+            "function": "reportRewardsMinted()",
+            "lineNumber": "266"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Reentrancy in depositing buffered ether",
+            "description": "Funds stealing by malicious staking module",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Funds stealing by malicious staking module",
+            "description": "Malicious staking modules can put their own controlled withdrawal credentials for deposits upcoming from Lido.",
+            "severity": "Critical",
+            "contract": "StakingRouter",
+            "function": "deposit()",
+            "lineNumber": "959"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-437"
+                ]
+            },
+            "title": "Not matching interface",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Wrong NFT balance",
+            "description": "In the WithdrawalRequestNFT contract, the function balanceOf returns a user's balance, including claimed NFTs that the contract has already burned. This error may need to be clarified for users or, in some cases, break third-party contracts.",
+            "severity": "HIGH",
+            "contract": "WithdrawalRequestNFT",
+            "function": "balanceOf(address _owner)",
+            "lineNumber": "L112-L115"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "Staking module can block withdrawal credential changing and oracle",
+            "description": "A single staking module (malicious or broken) can stop the whole deposit flow by reverting the _loadStakingModulesCacheItem function used in the deposit() call.",
+            "severity": "Medium",
+            "contract": "StakingRouter",
+            "function": "_loadStakingModulesCacheItem",
+            "lineNumber": "1067"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-191"
+                ]
+            },
+            "title": "Zero deposits allocation after the pause of one of staking modules",
+            "description": "A single staking module (malicious or broken) can stop the whole deposit flow by causing an underflow in the activeValidatorsCount calculation, leading to a revert and making deposits impossible while StakingRouter is paused.",
+            "severity": "Medium",
+            "contract": "StakingRouter",
+            "function": "_loadStakingModulesCacheItem()",
+            "lineNumber": "1067"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Withdrawal NFT burning after transfer to self",
+            "description": "Each withdrawal request is an NFT token, this NFT can be transferred to another address by the owner. However, if the owner transfers NFT to self the **balanceOf** function will return **0** due to incorrect handling of self-transfers in the _transfer function.",
+            "severity": "High",
+            "contract": "WithdrawalRequestNFT",
+            "function": "_transfer",
+            "lineNumber": "L179-L180"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Incorrect require leads to DOS",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "A Node Operator can circumvent DAO validator key approval",
+            "description": "The finding suggests that a node operator can bypass the approval of DAO validator keys.",
+            "severity": "N/A",
+            "contract": "NodeOperatorsRegistry",
+            "function": "_updateRefundValidatorsKeysCount",
+            "lineNumber": "643"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-923"
+                ],
+                "3": [
+                    "CWE-300"
+                ]
+            },
+            "title": "The parameter depositCalldata can be hijacked by a front-run",
+            "description": "In the function depositBufferedEther, the depositCalldata parameter can be hijacked by a malicious actor by front-running the initial transaction.",
+            "severity": "High",
+            "contract": "DepositSecurityModule",
+            "function": "depositBufferedEther()",
+            "lineNumber": "L413"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ]
+            },
+            "title": "Blocking rewards distribution",
+            "description": "In function reportRewardsMinted(), a callback to StakingModule can block and reward distribution to all modules, affecting the whole AccountingOracle.",
+            "severity": "Medium",
+            "contract": "StakingRouter.sol",
+            "function": "reportRewardsMinted()",
+            "lineNumber": "260"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Wrong Burnt shares calculation",
+            "description": "The _burnSharesLimited() function does not include postponed burnt shares when calculating the number of burnt shares.",
+            "severity": "Medium",
+            "contract": "Lido",
+            "function": "_burnSharesLimited()",
+            "lineNumber": "1385"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "reportProcessor can have a report that doesn't reach a consensus",
+            "description": "In HashConsensus contract, submitted reports have a floating number of supports which can increase and decrease, but the contract doesn't handle an edge case when the support of a report decreases, leading to reports being processed without reaching quorum.",
+            "severity": "Medium",
+            "contract": "HashConsensus",
+            "function": "_submitReport",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Wrong burntWithdrawalsShares calculation",
+            "description": "The simulated share rate is calculated by simulating an eth_call with no finalization of withdrawals. The burner contract can have postponed shares to burn from previous oracle reports, leading to burning of postponed shares in the real call which was not predicted in the simulated call.",
+            "severity": "Medium",
+            "contract": "Lido",
+            "function": "_burnSharesLimited()",
+            "lineNumber": "1359"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Possible to set stuck/exited validators count to be bigger than deposited",
+            "description": "The oracle extra data report sets the stuck validators for staking module before setting exited validators count, leading to a situation where it is possible to set stuck and exited validators count to be bigger than deposited for a staking module due to a wrong check.",
+            "severity": "Medium",
+            "contract": "AccountingOracle.sol, NodeOperatorsRegistry.sol",
+            "function": "_updateStuckValidatorsCount(), _updateExitedValidatorsCount()",
+            "lineNumber": "L854-L860, L615-L618, L568"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Wrong offsets for stuck and refunded validators",
+            "description": "Incorrect usage of STUCK_VALIDATORS_COUNT_OFFSET and REFUNDED_VALIDATORS_COUNT_OFFSET at lines 614 and 623 respectively in NodeOperatorsRegistry.sol.",
+            "severity": "Medium",
+            "contract": "NodeOperatorsRegistry",
+            "function": "N/A",
+            "lineNumber": "614, 623"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "Possible to submit report extra data in the next frame after the report",
+            "description": "It is possible to submit report extra data in the next frame after the main report in a certain scenario where the main report data is submitted for the current frame, the extra data is not submitted for the current frame, and then the consensus contract submits a report which updates the _storageConsensusReport() value and emits the event WarnExtraDataIncompleteProcessing.",
+            "severity": "Medium",
+            "contract": "AccountingOracle",
+            "function": "_checkCanSubmitExtraData",
+            "lineNumber": "695"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "No check for return value size in isValidSignature()",
+            "description": "The function isValidSignature() returns true if the first 4 bytes of the return value equal ERC1271_IS_VALID_SIGNATURE_SELECTOR without checking the size of the return value, which can lead to incorrect validation.",
+            "severity": "Medium",
+            "contract": "SignatureUtils.sol",
+            "function": "isValidSignature()",
+            "lineNumber": "41-53"
+        },
+        {
+            "id": 19,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-908"
+                ],
+                "4": [
+                    "CWE-457"
+                ]
+            },
+            "title": "NodeOperatorsRegistry keys nonce doesn't change",
+            "description": "The NodeOperatorsRegistry keys nonce does not change.",
+            "severity": "Unknown",
+            "contract": "NodeOperatorsRegistry",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 20,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Restriction of total fee",
+            "description": "The restriction on **totalFee** is insufficient as it only checks if it's less than 100 percent, allowing it to be set to 99,999% and giving almost all profit to node operators and treasury.",
+            "severity": "Medium",
+            "contract": "StakingRouter.sol",
+            "function": "N/A",
+            "lineNumber": "904"
+        },
+        {
+            "id": 21,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Manipulating active validators count",
+            "description": "A malicious StakingModule can falsify values to get more shares in allocations and rewards distributions by manipulating the number of active validators.",
+            "severity": "Medium",
+            "contract": "StakingRouter",
+            "function": "_loadStakingModulesCacheItem()",
+            "lineNumber": "1067"
+        },
+        {
+            "id": 22,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Withdrawn stETH is not fully burnt",
+            "description": "Due to consuming limits of positive rebase and discount of locked ether, it is possible that the limit of burnt shares will be lower than the amount of shares to be burnt.",
+            "severity": "Medium",
+            "contract": "OracleReportSanityChecker.sol",
+            "function": "smoothenTokenRebase()",
+            "lineNumber": "306"
+        },
+        {
+            "id": 23,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "FastLane length change leads to the disruption of the voting logic",
+            "description": "In the contract HashConsensus, there is no appropriate processing of the edge case when the FastLane has ended, some non-FastLane members submitted their reports, and the new fastLaneLengthSlots variable enables FastLane again.",
+            "severity": "Medium",
+            "contract": "HashConsensus",
+            "function": "_setFastLaneLengthSlots, _setFrameConfig",
+            "lineNumber": "L665, L500"
+        },
+        {
+            "id": 24,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Quorum change leads to the disruption of the voting logic",
+            "description": "In the HashConsensus contract, a quorum change can lead to disruption of the voting logic when FastLane members have submitted reports and the quorum variable decreases.",
+            "severity": "Medium",
+            "contract": "HashConsensus",
+            "function": "_setQuorumAndCheckConsensus",
+            "lineNumber": "833"
+        }
+    ]
+}

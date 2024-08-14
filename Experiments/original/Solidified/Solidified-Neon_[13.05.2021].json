@@ -1,1 +1,156 @@
-{"path": "./Audit_Reports_2024/Solidified/Solidified-Neon_[13.05.2021].pdf", "project_info": {"url": "https://github.com/kdzapp/neon-contracts", "commit_hash": "006018583e4a6a65536081399098d0a994794842", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Auction.sol: Anyone can steal Neon tokens held by the contract.", "description": "By calling the function `onERC1155Received()` anyone can create a new auction and become a seller for any token which is already owned by the contract (has another auction going on). The malicious actor can then `cancelAuction()` and get the token sent to him.", "severity": "Critical", "contract": "Auction.sol", "function": "onERC1155Received()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "A bidder can block all subsequent bids and win the auction by default", "description": "A bidder can prevent subsequent bids from being accepted by reverting a refund operation, allowing them to win the auction by default.", "severity": "Critical", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-693"]}, "title": "Auction.sol: Reentrancy with calls to payout() and refund() can cause contract to be drained", "description": "Reentrancy vulnerabilities in Auction.sol contract due to external calls to payout() and refund() functions, allowing a malicious seller to steal Ethereum by recursively calling cancelAuction() function.", "severity": "Critical", "contract": "Auction.sol", "function": "cancelAuction()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-664"], "2": ["CWE-404"], "3": ["CWE-772"], "4": ["CWE-401"]}, "title": "Funds are lost if an auction is not ended by the seller or the contract owner", "description": "Funds are only paid out or refunded if an auction holder decides to cancel the auction or accept a bid. Alternatively, the contract owner can call `expireBid()`. Bidders have to rely on this and have no way to recover their funds by other means.", "severity": "Major", "contract": "Auction.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Tokens transferred to the contract using ERC1155 safeBatchTransferFrom() function will be lost/locked", "description": "The Auction.sol contract silently accepts batch transfers but does not register new auctions for them. Thus, the tokens received by batch transfers will be locked in the contract with no way to retrieve them back.", "severity": "Major", "contract": "Auction.sol", "function": "onERC1155BatchReceived()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "A bidder can block auctions to be canceled or his bid to be expired", "description": "A bidder can prevent an auction from being canceled by calling `cancelAuction()` or the contract owner from expiring a bid with `expireBid()`. This is due to the same DoS scenario described in the previous issue.", "severity": "Minor", "contract": "Auction.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-435"]}, "title": "IPFS URL could be stored in OpenZeppelin base", "description": "The contract provides a mapping to store URLs but ERC-1155 OpenZeppelin contracts used as a base for this contract already support this.", "severity": "Informational", "contract": "NeonERC1155.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "Unintended Token Creator Assignment", "description": "The mintTokens() function assigns the recipient as the token creator instead of msg.sender, which may be unintentional.", "severity": "Minor", "contract": "NeonERC1155.sol", "function": "mintTokens()", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Solidified/Solidified-Neon_[13.05.2021].pdf",
+    "project_info": {
+        "url": "https://github.com/kdzapp/neon-contracts",
+        "commit_hash": "006018583e4a6a65536081399098d0a994794842",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Auction.sol: Anyone can steal Neon tokens held by the contract.",
+            "description": "By calling the function `onERC1155Received()` anyone can create a new auction and become a seller for any token which is already owned by the contract (has another auction going on). The malicious actor can then `cancelAuction()` and get the token sent to him.",
+            "severity": "Critical",
+            "contract": "Auction.sol",
+            "function": "onERC1155Received()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "A bidder can block all subsequent bids and win the auction by default",
+            "description": "A bidder can prevent subsequent bids from being accepted by reverting a refund operation, allowing them to win the auction by default.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "Auction.sol: Reentrancy with calls to payout() and refund() can cause contract to be drained",
+            "description": "Reentrancy vulnerabilities in Auction.sol contract due to external calls to payout() and refund() functions, allowing a malicious seller to steal Ethereum by recursively calling cancelAuction() function.",
+            "severity": "Critical",
+            "contract": "Auction.sol",
+            "function": "cancelAuction()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-401"
+                ]
+            },
+            "title": "Funds are lost if an auction is not ended by the seller or the contract owner",
+            "description": "Funds are only paid out or refunded if an auction holder decides to cancel the auction or accept a bid. Alternatively, the contract owner can call `expireBid()`. Bidders have to rely on this and have no way to recover their funds by other means.",
+            "severity": "Major",
+            "contract": "Auction.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Tokens transferred to the contract using ERC1155 safeBatchTransferFrom() function will be lost/locked",
+            "description": "The Auction.sol contract silently accepts batch transfers but does not register new auctions for them. Thus, the tokens received by batch transfers will be locked in the contract with no way to retrieve them back.",
+            "severity": "Major",
+            "contract": "Auction.sol",
+            "function": "onERC1155BatchReceived()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "A bidder can block auctions to be canceled or his bid to be expired",
+            "description": "A bidder can prevent an auction from being canceled by calling `cancelAuction()` or the contract owner from expiring a bid with `expireBid()`. This is due to the same DoS scenario described in the previous issue.",
+            "severity": "Minor",
+            "contract": "Auction.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ]
+            },
+            "title": "IPFS URL could be stored in OpenZeppelin base",
+            "description": "The contract provides a mapping to store URLs but ERC-1155 OpenZeppelin contracts used as a base for this contract already support this.",
+            "severity": "Informational",
+            "contract": "NeonERC1155.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Unintended Token Creator Assignment",
+            "description": "The mintTokens() function assigns the recipient as the token creator instead of msg.sender, which may be unintentional.",
+            "severity": "Minor",
+            "contract": "NeonERC1155.sol",
+            "function": "mintTokens()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

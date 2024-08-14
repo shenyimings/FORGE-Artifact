@@ -1,1 +1,108 @@
-{"path": "./Audit_Reports_2024/BlockSec/BlockSec-blocksec_glorifinance_v1.0-signed.pdf", "project_info": {"url": "https://github.com/Glori-Finance/", "commit_hash": "edbc4dc12a5aebe6d8504ec67eca0b5bf961e888", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Potential problems when setting reward token addresses", "description": "The RewardDistributor contract has several issues related to handling reward token addresses, including redundant function getRewardAddress, inconsistent parameter type for rewardType, and lack of check for maximum number of reward addresses.", "severity": "Low", "contract": "RewardDistributor", "function": "getRewardAddress, addRewardAddress", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Remove unused payable modifier", "description": "In the claimReward functions, there are unused payable modifiers which are recommended to be removed for more clean code logic.", "severity": "Recommendation", "contract": "RewardDistributor.sol", "function": "claimReward()", "lineNumber": "365"}, {"id": 2, "category": {"1": ["CWE-664"], "2": ["CWE-404"], "3": ["CWE-772"], "4": ["CWE-775"]}, "title": "Remove the unused fallback function", "description": "The RewardDistributor contract implements a fallback function which enables the contract to receive native tokens. However, there is no way to withdraw native tokens from the contract.", "severity": "Recommendation", "contract": "RewardDistributor", "function": "()", "lineNumber": "481"}, {"id": 3, "category": {"1": ["CWE-707"], "2": ["CWE-228"], "3": ["CWE-168"]}, "title": "Use the SafeERC20 library", "description": "Reward token transfer can silently fail due to inconsistent ERC-20 token implementations.", "severity": "Low", "contract": "RewardDistributor.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Centralization risk", "description": "In the RewardDistributor contract, there are potential centralization risks: Existing reward token addresses can be modified through setRewardAddress privileged function. If a reward token is changed to another token with lower price (or less value), users that has not claimed can suffer from losses. The project admin is able to withdraw any token inside the contract through the _grantReward privileged function.", "severity": "Note", "contract": "RewardDistributor", "function": "_grantReward, setRewardAddress", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/BlockSec/BlockSec-blocksec_glorifinance_v1.0-signed.pdf",
+    "project_info": {
+        "url": "https://github.com/GloriFinance/glorifinance",
+        "commit_hash": "edbc4dc12a5aebe6d8504ec67eca0b5bf961e888",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Potential problems when setting reward token addresses",
+            "description": "The RewardDistributor contract has several issues related to handling reward token addresses, including redundant function getRewardAddress, inconsistent parameter type for rewardType, and lack of check for maximum number of reward addresses.",
+            "severity": "Low",
+            "contract": "RewardDistributor",
+            "function": "getRewardAddress, addRewardAddress",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Remove unused payable modifier",
+            "description": "In the claimReward functions, there are unused payable modifiers which are recommended to be removed for more clean code logic.",
+            "severity": "Recommendation",
+            "contract": "RewardDistributor.sol",
+            "function": "claimReward()",
+            "lineNumber": "365"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-775"
+                ]
+            },
+            "title": "Remove the unused fallback function",
+            "description": "The RewardDistributor contract implements a fallback function which enables the contract to receive native tokens. However, there is no way to withdraw native tokens from the contract.",
+            "severity": "Recommendation",
+            "contract": "RewardDistributor",
+            "function": "()",
+            "lineNumber": "481"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-168"
+                ]
+            },
+            "title": "Use the SafeERC20 library",
+            "description": "Reward token transfer can silently fail due to inconsistent ERC-20 token implementations.",
+            "severity": "Low",
+            "contract": "RewardDistributor.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Centralization risk",
+            "description": "In the RewardDistributor contract, there are potential centralization risks: Existing reward token addresses can be modified through setRewardAddress privileged function. If a reward token is changed to another token with lower price (or less value), users that has not claimed can suffer from losses. The project admin is able to withdraw any token inside the contract through the _grantReward privileged function.",
+            "severity": "Note",
+            "contract": "RewardDistributor",
+            "function": "_grantReward, setRewardAddress",
+            "lineNumber": "N/A"
+        }
+    ]
+}

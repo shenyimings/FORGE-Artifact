@@ -1,1 +1,181 @@
-{"path": "./Audit_Reports_2024/Inspex/Inspex-Revenue_Sharing_Pool_&_Shield.pdf", "project_info": {"url": "https://github.com/LuckyLionIO/LuckyLion-RevenueSharing", "commit_hash": "342db925e80c9e62fce7505d24431e3d82199b87", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Centralized Control of State Variable", "description": "Critical state variables can be updated any time by the controlling authorities without notifying users.", "severity": "Critical", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Design Flaw in Reward Calculation", "description": "The reward distribution for users will be improperly modified, leading to an unfair reward distribution and reputation damage to the platform.", "severity": "Medium", "contract": "RevenueSharingPool", "function": "updateMaxDate()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Loop Over Unbounded Data Structure", "description": "When the number of rounds grows to a certain number, the gas required will exceed the block gas limit, causing the transactions that call the calculateTotalLuckyReward() function to be reverted.", "severity": "Low", "contract": "RevenueSharingPool", "function": "calculateTotalLuckyReward()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Unchecked Swapping Path For Reward Token", "description": "Incorrectly specified path results in less amount of reward ($LUCKY) for the users.", "severity": "Very Low", "contract": "RevenueSharingPool", "function": "_swapBUSDForToken() and _swapTokensForBUSD()", "lineNumber": "409-427, 395-407"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-273"]}, "title": "Insufficient Logging for Privileged Functions", "description": "Privileged functions that are executable by the controlling parties are not logged properly by emitting events.", "severity": "Very Low", "contract": "RevenueSharingPool", "function": ["updateMaxDate()", "addWhitelist()", "removeWhitelist()"], "lineNumber": ["157", "161", "165"]}, {"id": 5, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Unused Function Parameter", "description": "There are parameters defined in multiple functions of the smart contracts that are not used anywhere, causing unnecessary gas usage.", "severity": "N/A", "contract": "MasterchefShield.sol", "function": ["add()", "set()"], "lineNumber": "14-20"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-749"]}, "title": "Improper Function Visibility", "description": "The getStakeAmount() function's visibility can be changed to external if it is not called from any internal function to optimize gas usage.", "severity": "Info", "contract": "RevenueSharingPool", "function": "getStakeAmount(uint256, uint256)", "lineNumber": "254-257"}, {"id": 7, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"], "4": ["CWE-766"]}, "title": "Inexplicit State Variable Visibility", "description": "A state variable with an inexplicit visibility is set to `internal` by default, causing inconveniences for platform users on data retrieval if designed to be publicly accessible.", "severity": "Info", "contract": "RevenueSharingPool", "function": "N/A", "lineNumber": "33"}, {"id": 8, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Inexplicit Solidity Compiler Version", "description": "The solidity compiler version was not explicitly specified, which can lead to potential security risks due to unmaintained third-party components.", "severity": "Info", "contract": "RevenueSharingPool", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Inspex/Inspex-Revenue_Sharing_Pool_&_Shield.pdf",
+    "project_info": {
+        "url": "https://github.com/LuckyLionIO/LuckyLion-RevenueSharing",
+        "commit_hash": "342db925e80c9e62fce7505d24431e3d82199b87",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Centralized Control of State Variable",
+            "description": "Critical state variables can be updated any time by the controlling authorities without notifying users.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Design Flaw in Reward Calculation",
+            "description": "The reward distribution for users will be improperly modified, leading to an unfair reward distribution and reputation damage to the platform.",
+            "severity": "Medium",
+            "contract": "RevenueSharingPool",
+            "function": "updateMaxDate()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Loop Over Unbounded Data Structure",
+            "description": "When the number of rounds grows to a certain number, the gas required will exceed the block gas limit, causing the transactions that call the calculateTotalLuckyReward() function to be reverted.",
+            "severity": "Low",
+            "contract": "RevenueSharingPool",
+            "function": "calculateTotalLuckyReward()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Unchecked Swapping Path For Reward Token",
+            "description": "Incorrectly specified path results in less amount of reward ($LUCKY) for the users.",
+            "severity": "Very Low",
+            "contract": "RevenueSharingPool",
+            "function": "_swapBUSDForToken() and _swapTokensForBUSD()",
+            "lineNumber": "409-427, 395-407"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-273"
+                ]
+            },
+            "title": "Insufficient Logging for Privileged Functions",
+            "description": "Privileged functions that are executable by the controlling parties are not logged properly by emitting events.",
+            "severity": "Very Low",
+            "contract": "RevenueSharingPool",
+            "function": [
+                "updateMaxDate()",
+                "addWhitelist()",
+                "removeWhitelist()"
+            ],
+            "lineNumber": [
+                "157",
+                "161",
+                "165"
+            ]
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Unused Function Parameter",
+            "description": "There are parameters defined in multiple functions of the smart contracts that are not used anywhere, causing unnecessary gas usage.",
+            "severity": "N/A",
+            "contract": "MasterchefShield.sol",
+            "function": [
+                "add()",
+                "set()"
+            ],
+            "lineNumber": "14-20"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-749"
+                ]
+            },
+            "title": "Improper Function Visibility",
+            "description": "The getStakeAmount() function's visibility can be changed to external if it is not called from any internal function to optimize gas usage.",
+            "severity": "Info",
+            "contract": "RevenueSharingPool",
+            "function": "getStakeAmount(uint256, uint256)",
+            "lineNumber": "254-257"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ],
+                "4": [
+                    "CWE-766"
+                ]
+            },
+            "title": "Inexplicit State Variable Visibility",
+            "description": "A state variable with an inexplicit visibility is set to `internal` by default, causing inconveniences for platform users on data retrieval if designed to be publicly accessible.",
+            "severity": "Info",
+            "contract": "RevenueSharingPool",
+            "function": "N/A",
+            "lineNumber": "33"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Inexplicit Solidity Compiler Version",
+            "description": "The solidity compiler version was not explicitly specified, which can lead to potential security risks due to unmaintained third-party components.",
+            "severity": "Info",
+            "contract": "RevenueSharingPool",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

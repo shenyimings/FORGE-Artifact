@@ -1,1 +1,256 @@
-{"path": "./Audit_Reports_2024/Quantstamp/casper-signer-phase-1.pdf", "project_info": {"url": "signer (v0.3.9)", "commit_hash": "d5fc914", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"]}, "title": "Encrypted Vault and Password Salt Are Easily Accessible", "description": "The Casper Signer extension stores the encrypted vault (containing serialized public and private keys) and password salt (for unlocking the Casper Signer) directly in the browser's local storage. This data persists in the browser extension page and is easily accessible.", "severity": "High Risk", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-923"], "3": ["CWE-300"]}, "title": "Signer Connection Is Established Globally to Multiple Sites", "description": "Casper Signer establishes connections to multiple sites with a single approval, allowing malicious sites to track users by public key or generate unwanted signature requests.", "severity": "High Risk", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-287"]}, "title": "Lack of Strong Password Policy Enforcement", "description": "There are no restrictions on the password that is used to unlock the extension. Simple passwords, such as \"pass\", \"a\", \"123\", and \"[empty spaces]\", are all considered valid passwords when setting up a vault.", "severity": "Medium Risk", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-287"], "3": ["CWE-306"]}, "title": "Lack of Session Managaement", "description": "The browser extension does not lock automatically after a period of inactivity or OS screen lock, making it vulnerable if the user forgets to manually lock the extension and leaves the computer unattended.", "severity": "Medium Risk", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "Account Removal Does Not Require the Vault Password", "description": "The user can remove an account (inadvertently or not) without being prompted for the vault password. An attacker can remove accounts easily if the user leaves the browser extension unlocked.", "severity": "Medium Risk", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "Private Key Can Be Revealed Without the Vault Password", "description": "The user can generate files containing an account's private key without being prompted for the vault password. An attacker can easily access an account's private key if the user leaves the browser extension unlocked.", "severity": "Medium Risk", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-287"], "3": ["CWE-306"]}, "title": "Unlimited Retry Attempts for Unlocking the Extension", "description": "An attacker has unlimited number of attempts to try and unlock the Casper Signer manually. Combined with the lack of strong password policy enforcement, some users may have Vaults that are vulnerable to simple brute-force attacks.", "severity": "Low Risk", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Extremely Easy to Reset the Vault", "description": "The user can reset the entire Vault while Casper Signer is locked by clicking on the 'Reset Vault' button, deleting all accounts currently associated with the Casper Signer extension.", "severity": "Low Risk", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "No Requirements on Valid Account Name", "description": "There are no restrictions on the account name associated with a signing key pair.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1284"]}, "title": "Lack of Validation When Importing an Account", "description": "There is no file extension or size validation when importing an account from a downloaded private key file.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-693"], "2": ["CWE-357"]}, "title": "The Signer Connection Prompt Is Not Informative Enough", "description": "Whenever a user attempts to establish a connection to a site using Casper Signer, the prompt only asks 'Connect Signer to site?' without specifying which site.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-703"]}, "title": "Signer May Get Stuck on Vault Creation Screen after Declining Signature", "description": "If a signing request is declined, the Casper Signer may get stuck on the initial setup screen that prompts the user to create a new vault. The browser session must be restarted to fix.", "severity": "Undetermined", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-284"], "2": ["CWE-287"], "3": ["CWE-295"], "4": ["CWE-297"]}, "title": "Downloaded Key Files Rely on Users for Secure Storage", "description": "Casper Signer allows users to generate and download files containing private and public keys of an account in plaintext, making it vulnerable to attackers gaining access to the private key if the user has little security awareness or bad security practices.", "severity": "Undetermined", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Quantstamp/casper-signer-phase-1.pdf",
+    "project_info": {
+        "url": "https://github.com/casper-ecosystem/signer/tree/v0.3.9",
+        "commit_hash": "v0.3.9",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Encrypted Vault and Password Salt Are Easily Accessible",
+            "description": "The Casper Signer extension stores the encrypted vault (containing serialized public and private keys) and password salt (for unlocking the Casper Signer) directly in the browser's local storage. This data persists in the browser extension page and is easily accessible.",
+            "severity": "High Risk",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-923"
+                ],
+                "3": [
+                    "CWE-300"
+                ]
+            },
+            "title": "Signer Connection Is Established Globally to Multiple Sites",
+            "description": "Casper Signer establishes connections to multiple sites with a single approval, allowing malicious sites to track users by public key or generate unwanted signature requests.",
+            "severity": "High Risk",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-287"
+                ]
+            },
+            "title": "Lack of Strong Password Policy Enforcement",
+            "description": "There are no restrictions on the password that is used to unlock the extension. Simple passwords, such as \"pass\", \"a\", \"123\", and \"[empty spaces]\", are all considered valid passwords when setting up a vault.",
+            "severity": "Medium Risk",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-287"
+                ],
+                "3": [
+                    "CWE-306"
+                ]
+            },
+            "title": "Lack of Session Managaement",
+            "description": "The browser extension does not lock automatically after a period of inactivity or OS screen lock, making it vulnerable if the user forgets to manually lock the extension and leaves the computer unattended.",
+            "severity": "Medium Risk",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Account Removal Does Not Require the Vault Password",
+            "description": "The user can remove an account (inadvertently or not) without being prompted for the vault password. An attacker can remove accounts easily if the user leaves the browser extension unlocked.",
+            "severity": "Medium Risk",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Private Key Can Be Revealed Without the Vault Password",
+            "description": "The user can generate files containing an account's private key without being prompted for the vault password. An attacker can easily access an account's private key if the user leaves the browser extension unlocked.",
+            "severity": "Medium Risk",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-287"
+                ],
+                "3": [
+                    "CWE-306"
+                ]
+            },
+            "title": "Unlimited Retry Attempts for Unlocking the Extension",
+            "description": "An attacker has unlimited number of attempts to try and unlock the Casper Signer manually. Combined with the lack of strong password policy enforcement, some users may have Vaults that are vulnerable to simple brute-force attacks.",
+            "severity": "Low Risk",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Extremely Easy to Reset the Vault",
+            "description": "The user can reset the entire Vault while Casper Signer is locked by clicking on the 'Reset Vault' button, deleting all accounts currently associated with the Casper Signer extension.",
+            "severity": "Low Risk",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "No Requirements on Valid Account Name",
+            "description": "There are no restrictions on the account name associated with a signing key pair.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1284"
+                ]
+            },
+            "title": "Lack of Validation When Importing an Account",
+            "description": "There is no file extension or size validation when importing an account from a downloaded private key file.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-357"
+                ]
+            },
+            "title": "The Signer Connection Prompt Is Not Informative Enough",
+            "description": "Whenever a user attempts to establish a connection to a site using Casper Signer, the prompt only asks 'Connect Signer to site?' without specifying which site.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Signer May Get Stuck on Vault Creation Screen after Declining Signature",
+            "description": "If a signing request is declined, the Casper Signer may get stuck on the initial setup screen that prompts the user to create a new vault. The browser session must be restarted to fix.",
+            "severity": "Undetermined",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-287"
+                ],
+                "3": [
+                    "CWE-295"
+                ],
+                "4": [
+                    "CWE-297"
+                ]
+            },
+            "title": "Downloaded Key Files Rely on Users for Secure Storage",
+            "description": "Casper Signer allows users to generate and download files containing private and public keys of an account in plaintext, making it vulnerable to attackers gaining access to the private key if the user has little security awareness or bad security practices.",
+            "severity": "Undetermined",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

@@ -1,1 +1,313 @@
-{"path": "./Audit_Reports_2024/Inspex/Inspex-MasterBarista_&_NFT.pdf", "project_info": {"url": "https://github.com/latteswap-official/latteswap-contract", "commit_hash": "bed0ee0998a6181233f576c4061948856139e45f", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-770"]}, "title": "Improper Cap Deduction", "description": "More NFTs can be minted and bought than the cap limit and may cause reputation damage and financial damage if those NFTs can be used in the Booster contract.", "severity": "High", "contract": "LatteMarket", "function": "_buyNFTTo()", "lineNumber": "273-299"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Use of Upgradable Contract", "description": "The logic of affected contracts can be arbitrarily changed, allowing the proxy owner to perform malicious actions, e.g., stealing user funds anytime they want.", "severity": "High", "contract": "MasterBarista Booster, BoosterConfig, LatteNFT, LatteMarket, OGNFT, OGOwnerToken", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"]}, "title": "Unrestricted $LATTE Minting", "description": "The contract owner can mint an unlimited amount of $LATTE due to improper access control.", "severity": "High", "contract": "MasterBarista", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Unrestricted Boosted $LATTE Minting", "description": "The contract owner can set the boostBps and the currentEnergy states of any NFT to an arbitrary value, allowing the owner to gain profit from the boosted $LATTE reward.", "severity": "High", "contract": "BoosterConfig", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "Improper NFT Burning", "description": "The contract owner can burn any user's NFT at any time, which can cause financial damage to the user.", "severity": "High", "contract": "LatteNFT.sol", "function": "burn()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Division Before Multiplication", "description": "The allocation point of pools with allocBps will be lower than the expected amount, causing the users of these pools to gain less reward due to incorrect calculation.", "severity": "High", "contract": "MasterBarista", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Centralized Control of State Variable", "description": "The controlling authorities can change critical state variables to gain additional profit, which is unfair to other users.", "severity": "Medium", "contract": "MasterBarista BoosterConfig LatteMarket", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-664"], "2": ["CWE-404"], "3": ["CWE-772"], "4": ["CWE-775"]}, "title": "Improper Token Burning", "description": "The users will not be able to use the emergencyWithdraw() function through the funder contracts in an emergency situation.", "severity": "Medium", "contract": "MasterBarista", "function": "emergencyWithdraw()", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Unchecked Max Value", "description": "The energy level of the booster NFT can be set to a value exceeding the max energy defined, allowing the caller to use that NFT to gain unfair profit.", "severity": "Medium", "contract": "BoosterConfig", "function": "updateCurrentEnergy", "lineNumber": "167-177"}, {"id": 9, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Auction Cancellation", "description": "The governance can cancel the auction even after the user has bid for the NFT, preventing the user from getting the NFT that the user should be eligible for, making it unfair for the bidding user and resulting in a loss of reputation for the platform.", "severity": "Low", "contract": "LatteMarket", "function": "cancelBiddingNFT", "lineNumber": "439-455"}, {"id": 10, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-770"]}, "title": "Improper Minimum allocBps Condition", "description": "A pool with allocBps set to a value more than zero cannot be set back to zero, preventing the pool reward from being paused without removing the pool.", "severity": "Low", "contract": "MasterBarista", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-682"]}, "title": "Improper Maximum accumAllocBps Condition", "description": "The accumulated allocBps is incorrectly validated and may prevent the pool allocation from being updated properly.", "severity": "Low", "contract": "MasterBarista", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Improper Selling and Auction Starting Condition Checking", "description": "A sale and auction of an NFT can be replaced by a new entry, overwriting the sale or auction metadata of the original entry. This can result in unfair sales or auctions for LatteMarket contract's users.", "severity": "Very Low", "contract": "LatteMarket", "function": "N/A", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-273"]}, "title": "Insufficient Logging for Privileged Functions", "description": "Privileged functions are not logged properly by emitting events, making it difficult for users to monitor their execution.", "severity": "Very Low", "contract": ["MasterBarista", "OGOwnerToken"], "function": ["setLattePerBlock()", "setOkHolders()"], "lineNumber": ["207", "31"]}, {"id": 14, "category": {"1": ["CWE-284"], "2": ["CWE-749"]}, "title": "Improper Function Visibility", "description": "Functions with improper visibility can lead to security issues if they are not correctly set as internal or external.", "severity": "Info", "contract": "LatteNFT OGNFT OGOwnerToken", "function": "initialize()", "lineNumber": "14-23, 56"}, {"id": 15, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "Potential Economic Attack", "description": "The LatteMarket can be under a potential economic attack by attackers with a large amount of funds, allowing them to buy all NFTs available and control the market price.", "severity": "Info", "contract": "LatteMarket", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Inspex/Inspex-MasterBarista_&_NFT.pdf",
+    "project_info": {
+        "url": "https://github.com/latteswap-official/latteswap-contract",
+        "commit_hash": "bed0ee0998a6181233f576c4061948856139e45f",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "Improper Cap Deduction",
+            "description": "More NFTs can be minted and bought than the cap limit and may cause reputation damage and financial damage if those NFTs can be used in the Booster contract.",
+            "severity": "High",
+            "contract": "LatteMarket",
+            "function": "_buyNFTTo()",
+            "lineNumber": "273-299"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Use of Upgradable Contract",
+            "description": "The logic of affected contracts can be arbitrarily changed, allowing the proxy owner to perform malicious actions, e.g., stealing user funds anytime they want.",
+            "severity": "High",
+            "contract": "MasterBarista Booster, BoosterConfig, LatteNFT, LatteMarket, OGNFT, OGOwnerToken",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unrestricted $LATTE Minting",
+            "description": "The contract owner can mint an unlimited amount of $LATTE due to improper access control.",
+            "severity": "High",
+            "contract": "MasterBarista",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Unrestricted Boosted $LATTE Minting",
+            "description": "The contract owner can set the boostBps and the currentEnergy states of any NFT to an arbitrary value, allowing the owner to gain profit from the boosted $LATTE reward.",
+            "severity": "High",
+            "contract": "BoosterConfig",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Improper NFT Burning",
+            "description": "The contract owner can burn any user's NFT at any time, which can cause financial damage to the user.",
+            "severity": "High",
+            "contract": "LatteNFT.sol",
+            "function": "burn()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Division Before Multiplication",
+            "description": "The allocation point of pools with allocBps will be lower than the expected amount, causing the users of these pools to gain less reward due to incorrect calculation.",
+            "severity": "High",
+            "contract": "MasterBarista",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Centralized Control of State Variable",
+            "description": "The controlling authorities can change critical state variables to gain additional profit, which is unfair to other users.",
+            "severity": "Medium",
+            "contract": "MasterBarista BoosterConfig LatteMarket",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-775"
+                ]
+            },
+            "title": "Improper Token Burning",
+            "description": "The users will not be able to use the emergencyWithdraw() function through the funder contracts in an emergency situation.",
+            "severity": "Medium",
+            "contract": "MasterBarista",
+            "function": "emergencyWithdraw()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Unchecked Max Value",
+            "description": "The energy level of the booster NFT can be set to a value exceeding the max energy defined, allowing the caller to use that NFT to gain unfair profit.",
+            "severity": "Medium",
+            "contract": "BoosterConfig",
+            "function": "updateCurrentEnergy",
+            "lineNumber": "167-177"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Auction Cancellation",
+            "description": "The governance can cancel the auction even after the user has bid for the NFT, preventing the user from getting the NFT that the user should be eligible for, making it unfair for the bidding user and resulting in a loss of reputation for the platform.",
+            "severity": "Low",
+            "contract": "LatteMarket",
+            "function": "cancelBiddingNFT",
+            "lineNumber": "439-455"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "Improper Minimum allocBps Condition",
+            "description": "A pool with allocBps set to a value more than zero cannot be set back to zero, preventing the pool reward from being paused without removing the pool.",
+            "severity": "Low",
+            "contract": "MasterBarista",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improper Maximum accumAllocBps Condition",
+            "description": "The accumulated allocBps is incorrectly validated and may prevent the pool allocation from being updated properly.",
+            "severity": "Low",
+            "contract": "MasterBarista",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Improper Selling and Auction Starting Condition Checking",
+            "description": "A sale and auction of an NFT can be replaced by a new entry, overwriting the sale or auction metadata of the original entry. This can result in unfair sales or auctions for LatteMarket contract's users.",
+            "severity": "Very Low",
+            "contract": "LatteMarket",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-273"
+                ]
+            },
+            "title": "Insufficient Logging for Privileged Functions",
+            "description": "Privileged functions are not logged properly by emitting events, making it difficult for users to monitor their execution.",
+            "severity": "Very Low",
+            "contract": [
+                "MasterBarista",
+                "OGOwnerToken"
+            ],
+            "function": [
+                "setLattePerBlock()",
+                "setOkHolders()"
+            ],
+            "lineNumber": [
+                "207",
+                "31"
+            ]
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-749"
+                ]
+            },
+            "title": "Improper Function Visibility",
+            "description": "Functions with improper visibility can lead to security issues if they are not correctly set as internal or external.",
+            "severity": "Info",
+            "contract": "LatteNFT OGNFT OGOwnerToken",
+            "function": "initialize()",
+            "lineNumber": "14-23, 56"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Potential Economic Attack",
+            "description": "The LatteMarket can be under a potential economic attack by attackers with a large amount of funds, allowing them to buy all NFTs available and control the market price.",
+            "severity": "Info",
+            "contract": "LatteMarket",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

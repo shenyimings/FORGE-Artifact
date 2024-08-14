@@ -1,1 +1,297 @@
-{"path": "./Audit_Reports_2024/PepperSec/POA-Network-Wizard-audit-report.pdf", "project_info": {"url": "N/A", "commit_hash": "#2840b97dea33c8cf455a67b2b9c7229e2cda1843", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"]}, "title": "No access control", "description": "There is no onlyOwner modifier at the configure function, allowing an attacker to reconfigure the app.", "severity": "Critical", "contract": "ScriptExec", "function": "configure()", "lineNumber": "L55"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "Contract does not prevent accidental Ether transferring", "description": "DutchProxy contract has a payable fallback function that allows anyone to send Ether and lose it as the buy function will not be called.", "severity": "Major", "contract": "DutchProxy", "function": "fallback()", "lineNumber": "L26"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Math improvement", "description": "N/A", "severity": "N/A", "contract": "Auth-os: Contract", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-703"]}, "title": "N/A", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Redundant code", "description": "Code reuse by copy-pasting function body instead of calling onlyAdmin func.", "severity": "Minor", "contract": "Admin.sol", "function": "N/A", "lineNumber": "322-323, 331-332"}, {"id": 5, "category": {"1": ["CWE-703"]}, "title": "N/A", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "No 'isWhitelisted' Check During Purchase", "description": "The purchase function does not perform an 'isWhitelisted' check.", "severity": "Minor", "contract": "DutchCrowdsale", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-703"]}, "title": "N/A", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-229"], "4": ["CWE-230"]}, "title": "Unvalidated Input: _min_token_purchase and _max_token_purchase", "description": "There is no check to ensure _min_token_purchase is less than or equal to _max_token_purchase, allowing arbitrary values.", "severity": "Minor", "contract": "Admin", "function": "whitelistMulti", "lineNumber": "L63"}, {"id": 9, "category": {"1": ["CWE-703"]}, "title": "N/A", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "There are overflow checks", "description": "No overflow checks exist in the contract.", "severity": "Minor", "contract": "DutchCrowdsaleIdx", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Whitelist can be added to a non-existent tier", "description": "The whitelistMultiForTier function does not check _tier_index, so it can be any.", "severity": "Minor", "contract": "SaleManager", "function": "whitelistMultiForTier", "lineNumber": "L145"}, {"id": 12, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Unnecessary functionality", "description": "No description provided.", "severity": "Minor", "contract": "ProxiesRegistry", "function": "N/A", "lineNumber": "19"}, {"id": 13, "category": {"1": ["CWE-693"], "2": ["CWE-358"]}, "title": "Payment can be delivered via transfer only", "description": "The doPay function implements payments via transfer only and does not consider adding send functionality.", "severity": "None", "contract": "AbstractStorage.sol", "function": "doPay", "lineNumber": "L392"}, {"id": 14, "category": {"1": ["CWE-284"], "2": ["CWE-287"]}, "title": "Contract.Sender() can be spoofed (exec func)", "description": "The Contract.sender() function can be spoofed as it uses an arbitrary value sent by the caller, which is not properly validated.", "severity": "None", "contract": "Token", "function": "transfer", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "No input validation", "description": "The configure function does not check provider address.", "severity": "Critical", "contract": "ScriptExec", "function": "configure()", "lineNumber": "L55"}, {"id": 16, "category": {"1": ["CWE-693"], "2": ["CWE-358"]}, "title": "Token wizard app does not use authos killer feature", "description": "The Token Wizard app fails to utilize the Authos Killer feature, which may compromise security.", "severity": "Addressed", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/PepperSec/POA-Network-Wizard-audit-report.pdf",
+    "project_info": {
+        "url": "https://github.com/poanetwork/auth-os-applications/tree/2840b97dea33c8cf455a67b2b9c7229e2cda1843",
+        "commit_hash": "2840b97dea33c8cf455a67b2b9c7229e2cda1843",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "No access control",
+            "description": "There is no onlyOwner modifier at the configure function, allowing an attacker to reconfigure the app.",
+            "severity": "Critical",
+            "contract": "ScriptExec",
+            "function": "configure()",
+            "lineNumber": "L55"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Contract does not prevent accidental Ether transferring",
+            "description": "DutchProxy contract has a payable fallback function that allows anyone to send Ether and lose it as the buy function will not be called.",
+            "severity": "Major",
+            "contract": "DutchProxy",
+            "function": "fallback()",
+            "lineNumber": "L26"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Math improvement",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "Auth-os: Contract",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "N/A",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Redundant code",
+            "description": "Code reuse by copy-pasting function body instead of calling onlyAdmin func.",
+            "severity": "Minor",
+            "contract": "Admin.sol",
+            "function": "N/A",
+            "lineNumber": "322-323, 331-332"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "N/A",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "No 'isWhitelisted' Check During Purchase",
+            "description": "The purchase function does not perform an 'isWhitelisted' check.",
+            "severity": "Minor",
+            "contract": "DutchCrowdsale",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "N/A",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ],
+                "4": [
+                    "CWE-230"
+                ]
+            },
+            "title": "Unvalidated Input: _min_token_purchase and _max_token_purchase",
+            "description": "There is no check to ensure _min_token_purchase is less than or equal to _max_token_purchase, allowing arbitrary values.",
+            "severity": "Minor",
+            "contract": "Admin",
+            "function": "whitelistMulti",
+            "lineNumber": "L63"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "N/A",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "There are overflow checks",
+            "description": "No overflow checks exist in the contract.",
+            "severity": "Minor",
+            "contract": "DutchCrowdsaleIdx",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Whitelist can be added to a non-existent tier",
+            "description": "The whitelistMultiForTier function does not check _tier_index, so it can be any.",
+            "severity": "Minor",
+            "contract": "SaleManager",
+            "function": "whitelistMultiForTier",
+            "lineNumber": "L145"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Unnecessary functionality",
+            "description": "No description provided.",
+            "severity": "Minor",
+            "contract": "ProxiesRegistry",
+            "function": "N/A",
+            "lineNumber": "19"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-358"
+                ]
+            },
+            "title": "Payment can be delivered via transfer only",
+            "description": "The doPay function implements payments via transfer only and does not consider adding send functionality.",
+            "severity": "None",
+            "contract": "AbstractStorage.sol",
+            "function": "doPay",
+            "lineNumber": "L392"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-287"
+                ]
+            },
+            "title": "Contract.Sender() can be spoofed (exec func)",
+            "description": "The Contract.sender() function can be spoofed as it uses an arbitrary value sent by the caller, which is not properly validated.",
+            "severity": "None",
+            "contract": "Token",
+            "function": "transfer",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "No input validation",
+            "description": "The configure function does not check provider address.",
+            "severity": "Critical",
+            "contract": "ScriptExec",
+            "function": "configure()",
+            "lineNumber": "L55"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-358"
+                ]
+            },
+            "title": "Token wizard app does not use authos killer feature",
+            "description": "The Token Wizard app fails to utilize the Authos Killer feature, which may compromise security.",
+            "severity": "Addressed",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

@@ -1,1 +1,210 @@
-{"path": "./Audit_Reports_2024/Secure3/Aark_final_Secure3_Audit_Report.pdf", "project_info": {"url": "https://github.com/Aark-Digital/aark-contracts", "commit_hash": "b6f601a2c22a58e2bbc327afac7596e4eaf914b5", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Incorrect assetId and marketId Upper Boundary Check", "description": "The upper boundary check for assetId and marketId is incorrect, which can cause issues with collateral value and account value retrieval, leading to liquidation or settlement problems.", "severity": "Critical", "contract": "Multiple contracts (UserStatus, CommonManager, ReserveConfig, FuturesOrderParser)", "function": "setOwnsPosition, setUsingAsCollateral", "lineNumber": "11-19, 21-29, 172, 239"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Malicious user can send 1 wei ETH to bad debt accounts", "description": "A malicious user can prevent a bad debt account from being subrogated by sending 1 wei ETH collateral, allowing shareholders of InsuranceManager to avoid losses while still enjoying benefits.", "severity": "Critical", "contract": "InsuranceManager", "function": "subrogation", "lineNumber": "143-176"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "The price will be wrong when the token's USD price feed's decimals != Oracle Manipulation", "description": "When the price feed with decimals != 8 is set, the attacker can deposit a small amount of the asset and drain all the funds from the protocol. The current implementation assumes basePriceDecimals == quotePriceDecimals, but there are tokens with USD price feed's decimals != 8.", "severity": "Critical", "contract": "PriceOracle", "function": ["getIndexPrice", "_getPriceFeed", "setDefaultOracle"], "lineNumber": ["36-44", "140-166", "75-86", "188-189"]}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "The first depositor of LpManager can have exclusive access to all awards from FuturesManager", "description": "If the first depositor opens and closes a limit order in FuturesManager before depositing in LpManager, then lpPoolValue is not 0, but the trading fee, and the depositor can control the scale of the limit order to make lpPoolValue very small (e.g. 1), then when the depositor deposits lpPoolValue == 1 and openInterest.d == 0, the calculated _price == 1/1e10 = 0. This allows the first depositor to mint a large amount of LP.", "severity": "Critical", "contract": "LpManager", "function": "getLpPositionPrice()", "lineNumber": "407-424"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Lack of order settlement fee checking in openFuturesLimitOrder function of FuturesRouter", "description": "The openFuturesLimitOrder function does not check for order settlement fees, unlike the requestFuturesMarketOrder function, which may lead to issues with gas fees at order finalization.", "severity": "Critical", "contract": "FuturesRouter", "function": "openFuturesLimitOrder()", "lineNumber": "189-226"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Critical Logic Flaw in the Return of FeeDistribution in Solidity Code", "description": "A severe logic error has been identified in the file contracts/libraries/logics/FeeDistributionLogic.sol. The functions atFuturesOrder and atLpOrder are both supposed to return values of type DataTypes.FeeDistribution in _feeDistribution.", "severity": "Critical", "contract": "FeeDistributionLogic", "function": ["atFuturesOrder", "atLpOrder"], "lineNumber": "18-53"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "Incorrect accounting if fee-on-transfer/inflationary/deflationary/rebasing tokens are used", "description": "The accounting logic assumes the `amount` used in `safeTransferFrom` is the received balance. However, if fee-on-transfer/inflationary/deflationary/rebasing tokens are used, that is incorrect.", "severity": "Critical", "contract": "Vault.sol", "function": "depositRequest() and _addCollateral()", "lineNumber": "89"}, {"id": 7, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Malicious users can delete users' limit orders, thus causing them to suffer losses", "description": "When users fulfill a limit order, it will delete the order even if it fails to fulfill. A malicious user can observe and use MEV to delete another user's order, causing them to suffer losses.", "severity": "Critical", "contract": "FuturesRouter", "function": "settleLimitOrder()", "lineNumber": "433-470"}, {"id": 8, "category": {"1": ["CWE-682"]}, "title": "Arbitrary order request can manipulate oldestPendingTimestamp leading to loss of funds", "description": "An attacker can manipulate oldestPendingTimestamp by sending an arbitrary order request, allowing creation of new requests regardless of settlement status, leading to a big queue of requests that need to be settled and potential loss of funds.", "severity": "Critical", "contract": "FuturesRouter", "function": "_beforeRequest()/_afterRequest()", "lineNumber": "484, 512"}, {"id": 9, "category": {"1": ["CWE-682"]}, "title": "Potential Logic Flaw in the liquidateCollateral", "description": "A potential logic flaw has been identified in the `liquidateCollateral` function involving calls to `_addCollateral` and `_removeCollateral` functions, which may lead to a loss in the `user` account even after liquidation.", "severity": "Low", "contract": "FuturesManager", "function": "liquidateCollateral()", "lineNumber": "305-374"}, {"id": 10, "category": {"1": ["CWE-710"], "2": ["CWE-1120"], "3": ["CWE-1060"]}, "title": "Gas Optimization: Using private instead of public", "description": "Using private instead of public for constants can save gas.", "severity": "Informational", "contract": "AccessController", "function": "N/A", "lineNumber": "14-15, 16-17, 18-19, 20-21, 22-23"}]}
+{
+    "path": "./Audit_Reports_2024/Secure3/Aark_final_Secure3_Audit_Report.pdf",
+    "project_info": {
+        "url": "https://github.com/Aark-Digital/aark-contracts",
+        "commit_hash": "b6f601a2c22a58e2bbc327afac7596e4eaf914b5",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Incorrect assetId and marketId Upper Boundary Check",
+            "description": "The upper boundary check for assetId and marketId is incorrect, which can cause issues with collateral value and account value retrieval, leading to liquidation or settlement problems.",
+            "severity": "Critical",
+            "contract": "Multiple contracts (UserStatus, CommonManager, ReserveConfig, FuturesOrderParser)",
+            "function": "setOwnsPosition, setUsingAsCollateral",
+            "lineNumber": "11-19, 21-29, 172, 239"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Malicious user can send 1 wei ETH to bad debt accounts",
+            "description": "A malicious user can prevent a bad debt account from being subrogated by sending 1 wei ETH collateral, allowing shareholders of InsuranceManager to avoid losses while still enjoying benefits.",
+            "severity": "Critical",
+            "contract": "InsuranceManager",
+            "function": "subrogation",
+            "lineNumber": "143-176"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "The price will be wrong when the token's USD price feed's decimals != Oracle Manipulation",
+            "description": "When the price feed with decimals != 8 is set, the attacker can deposit a small amount of the asset and drain all the funds from the protocol. The current implementation assumes basePriceDecimals == quotePriceDecimals, but there are tokens with USD price feed's decimals != 8.",
+            "severity": "Critical",
+            "contract": "PriceOracle",
+            "function": [
+                "getIndexPrice",
+                "_getPriceFeed",
+                "setDefaultOracle"
+            ],
+            "lineNumber": [
+                "36-44",
+                "140-166",
+                "75-86",
+                "188-189"
+            ]
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "The first depositor of LpManager can have exclusive access to all awards from FuturesManager",
+            "description": "If the first depositor opens and closes a limit order in FuturesManager before depositing in LpManager, then lpPoolValue is not 0, but the trading fee, and the depositor can control the scale of the limit order to make lpPoolValue very small (e.g. 1), then when the depositor deposits lpPoolValue == 1 and openInterest.d == 0, the calculated _price == 1/1e10 = 0. This allows the first depositor to mint a large amount of LP.",
+            "severity": "Critical",
+            "contract": "LpManager",
+            "function": "getLpPositionPrice()",
+            "lineNumber": "407-424"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Lack of order settlement fee checking in openFuturesLimitOrder function of FuturesRouter",
+            "description": "The openFuturesLimitOrder function does not check for order settlement fees, unlike the requestFuturesMarketOrder function, which may lead to issues with gas fees at order finalization.",
+            "severity": "Critical",
+            "contract": "FuturesRouter",
+            "function": "openFuturesLimitOrder()",
+            "lineNumber": "189-226"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Critical Logic Flaw in the Return of FeeDistribution in Solidity Code",
+            "description": "A severe logic error has been identified in the file contracts/libraries/logics/FeeDistributionLogic.sol. The functions atFuturesOrder and atLpOrder are both supposed to return values of type DataTypes.FeeDistribution in _feeDistribution.",
+            "severity": "Critical",
+            "contract": "FeeDistributionLogic",
+            "function": [
+                "atFuturesOrder",
+                "atLpOrder"
+            ],
+            "lineNumber": "18-53"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect accounting if fee-on-transfer/inflationary/deflationary/rebasing tokens are used",
+            "description": "The accounting logic assumes the `amount` used in `safeTransferFrom` is the received balance. However, if fee-on-transfer/inflationary/deflationary/rebasing tokens are used, that is incorrect.",
+            "severity": "Critical",
+            "contract": "Vault.sol",
+            "function": "depositRequest() and _addCollateral()",
+            "lineNumber": "89"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Malicious users can delete users' limit orders, thus causing them to suffer losses",
+            "description": "When users fulfill a limit order, it will delete the order even if it fails to fulfill. A malicious user can observe and use MEV to delete another user's order, causing them to suffer losses.",
+            "severity": "Critical",
+            "contract": "FuturesRouter",
+            "function": "settleLimitOrder()",
+            "lineNumber": "433-470"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Arbitrary order request can manipulate oldestPendingTimestamp leading to loss of funds",
+            "description": "An attacker can manipulate oldestPendingTimestamp by sending an arbitrary order request, allowing creation of new requests regardless of settlement status, leading to a big queue of requests that need to be settled and potential loss of funds.",
+            "severity": "Critical",
+            "contract": "FuturesRouter",
+            "function": "_beforeRequest()/_afterRequest()",
+            "lineNumber": "484, 512"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Potential Logic Flaw in the liquidateCollateral",
+            "description": "A potential logic flaw has been identified in the `liquidateCollateral` function involving calls to `_addCollateral` and `_removeCollateral` functions, which may lead to a loss in the `user` account even after liquidation.",
+            "severity": "Low",
+            "contract": "FuturesManager",
+            "function": "liquidateCollateral()",
+            "lineNumber": "305-374"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1120"
+                ],
+                "3": [
+                    "CWE-1060"
+                ]
+            },
+            "title": "Gas Optimization: Using private instead of public",
+            "description": "Using private instead of public for constants can save gas.",
+            "severity": "Informational",
+            "contract": "AccessController",
+            "function": "N/A",
+            "lineNumber": "14-15, 16-17, 18-19, 20-21, 22-23"
+        }
+    ]
+}

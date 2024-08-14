@@ -1,1 +1,464 @@
-{"path": "./Audit_Reports_2024/Trail_of_Bits/2023-04-scroll-zkEVM-wave1-securityreview.pdf", "project_info": {"url": "https://github.com/scroll-tech/halo2-lib", "commit_hash": "d24871338ade7dd56362de517b718ba14f3e7b90", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "ModGadget Underconstraint Allows Incorrect MULMOD Operations", "description": "The ModGadget circuit computes the modulo operation, a mod n, with the caveat that the result should be 0 whenever n is 0. However, an incorrect constraint allows a proof that a mod 0 == a.", "severity": "High", "contract": "zkevm-circuits/evm_circuit/util/math_gadget/modulo.rs", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "The RlpU64Gadget is underconstrained when is_lt_128 is false", "description": "The RlpU64Gadget allows incorrect operations to be proven when is_lt_128 is false, which can lead to security vulnerabilities.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "The BLOCKHASH opcode is underconstrained and allows the hash of any block to be computed", "description": "The implementation of the BLOCKHASH opcode does not properly constrain the current_block_number variable, allowing it to take any value and enabling the computation of the hash of any block.", "severity": "Critical", "contract": "BlockHashGadget", "function": "configure", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-710"], "2": ["CWE-477"]}, "title": "zkevm-circuits crate depends on an outdated version of halo2-ecc", "description": "The codebase depends upon an outdated version of the halo2-ecc library, which has had several updates made to its cryptographic primitives.", "severity": "Moderate", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Unchecked N_BYTES Parameters", "description": "The N_BYTES parameters are not checked to prevent overflow, which may lead to incorrect allowance of extremely large values and potential security issues.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "Figure E.1 in constant_division.rs"}, {"id": 5, "category": {"1": ["CWE-710"], "2": ["CWE-477"]}, "title": "Differences in shared code between zkevm-circuits and halo2-lib", "description": "Outdated version of halo2-ecc used in zkevm-circuits crate leading to differences in shared code.", "severity": "Resolved", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "Underconstrained warm status on CALL opcodes allows gas cost forgery", "description": "An underconstrained variable in the CallOpGadget allows an attacker to prove the execution of a transaction with incorrect gas costs by setting an address as cold when it should become warm.", "severity": "High", "contract": "zkevm-circuits/evm_circuit/execution/callop.rs", "function": "N/A", "lineNumber": "129-138"}, {"id": 7, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "RW table constants must match exactly when the verification key is created", "description": "The RW table constants must match exactly to ensure correct initialization and coherency of read and write operations for addressable parts of the state, including the stack, memory, and account storage.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "The CREATE and CREATE2 opcodes can be called within a static context", "description": "The `CREATE` and `CREATE2` opcodes are missing a constraint that prevents them from being called in the context of a static call, allowing for state-changing operations not allowed by the EVM specification.", "severity": "High", "contract": "zkevm-circuits/evm_circuit/execution/create.rs", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-682"]}, "title": "ResponsibleOpcode table incorrectly handles CREATE and CREATE2", "description": "The `ResponsibleOpcode` table is used to attribute different execution states to particular sets of opcodes but incorrectly reports both `CREATE` and `CREATE2` as the responsible opcodes for the `CREATE` state.", "severity": "Informational", "contract": "zkevm-circuits/step.rs", "function": "N/A", "lineNumber": "48\u201358"}, {"id": 10, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Elliptic curve parameters omitted from Fiat-Shamir", "description": "The Fiat-Shamir code in the `snark-verifier` patch does not incorporate the elliptic curve parameters into the transcript.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-682"]}, "title": "The gas cost for the CALL opcode is underconstrained", "description": "When calling an empty address or a precompile, the unconstrained cell `step_gas_cost` was used to determine the gas cost of the `CALL` opcode.", "severity": "Critical", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-691"]}, "title": "Unconstrained opcodes allow nondeterministic execution", "description": "The gadget that implements the successful execution of certain opcodes is underconstrained, allowing a malicious prover to successfully execute the opcode when it is in an error condition for particular opcode inputs. This allows the prover to cause state divergence from a correct EVM execution.", "severity": "High", "contract": "zkevm-circuits/src/evm_circuit/execution/returndatacopy.rs", "function": "N/A", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-682"], "2": ["CWE-190"], "3": ["CWE-680"]}, "title": "Nondeterministic execution of ReturnDataCopyGadget and ErrorReturnDataOutOfBoundGadget", "description": "The overflow-related validation logic of `ReturnDataCopyGadget` and `ErrorReturnDataOutOfBoundGadget` has been factored out into a common component, `CommonReturnDataCopyGadget`. This common gadget forces the validation to succeed or fail based on the `is_overflow` parameter.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-682"]}, "title": "Many RW counter updates are magic numbers", "description": "RW counter updates are manually specified instead of being computed using ConstraintBuilder::rw_counter_ffset, making it prone to errors.", "severity": "Medium", "contract": "N/A", "function": ["RestoreContextGadget", "CallOpGadget"], "lineNumber": ["185-202", "440-458"]}, {"id": 15, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-229"], "4": ["CWE-230"]}, "title": "Native PCS accumulation deciders accept an empty vector", "description": "Both the KZG and IPA native `decide_all` implementations accept an empty vector of accumulators. This can allow an attacker to bypass verification by submitting an empty vector.", "severity": "Medium", "contract": "snark-verifier/pcs/{kzg, ipa}/decider.rs", "function": "decide_all()", "lineNumber": "L54-69"}, {"id": 16, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "The ErrorOOGSloadSstore and the ErrorOOGLog gadgets have redundant table lookups", "description": "Both the `ErrorOOGSloadSstore` and the `ErrorOOGLog` gadgets do an RW table lookup to check whether the current call is within a static context. However, the lookup result is not used in any subsequent constraint, making the lookup redundant.", "severity": "Informational", "contract": "zkevm-circuits", "function": "execution/{error_oog_sload_sstore, error_oog_log}", "lineNumber": "N/A"}, {"id": 17, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "The State circuit does not enforce transaction receipt constraints", "description": "The implementation of the `State` circuit does not enforce transaction receipt constraints due to an unsatisfiable constraint (`1 == 0`) and the function that implements them, `build_tx_receipt_constraints`, is not called in the `ConstraintBuilder::build` function.", "severity": "Informational", "contract": "zkevm-circuits", "function": "build_tx_receipt_constraints", "lineNumber": "L511-L524"}, {"id": 18, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "The EXP opcode has an unused witness", "description": "The EXP opcode contains an unused witness.", "severity": "Undetermined", "contract": "N/A", "function": "N/A", "lineNumber": "62"}, {"id": 19, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Truncation of Big Integers in bn_to_field Function", "description": "The bn_to_field function silently truncates big integers if their byte representation exceeds 64 bytes, leading to identical field elements for different integers with the same least significant bits.", "severity": "Low", "contract": "misc-precompiled-circuit", "function": "bn_to_field", "lineNumber": "src/utils/mod.rs#L10-15"}, {"id": 20, "category": {"1": ["CWE-697"], "2": ["CWE-1024"]}, "title": "Implementation-Specific Details Dependency in field_to_bn Function", "description": "The field_to_bn function relies on implementation-specific details of the underlying field, which may lead to inconsistent results due to varying endianness returned by PrimeField::to_repr.", "severity": "High", "contract": "N/A", "function": "field_to_bn", "lineNumber": "5-8"}, {"id": 21, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1287"]}, "title": "Unconstrained Bytecode Table Tag Column", "description": "The bytecode table tag column values are not constrained to be HEADER or BYTE, allowing a malicious prover to break transition constraints by inserting a row with a tag value different from HEADER or BYTE.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 22, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Unconstrained columns on the bytecode HEADER rows", "description": "The bytecode table `HEADER` rows have two unconstrained columns, `is_code` and `field_input`, on the Poseidon bytecode extended columns.", "severity": "Informational", "contract": "zkevm-circuits/bytecode_circuit", "function": "N/A", "lineNumber": "N/A"}, {"id": 23, "category": {"1": ["CWE-703"]}, "title": "decompose_limb does not work as intended", "description": "The decompose_limb method has been more completely implemented and appears to now iterate correctly through the limbs but lacks direct tests for its correctness.", "severity": "N/A", "contract": "misc-precopiled-circuit", "function": "decompose_limb", "lineNumber": "L146-L256"}, {"id": 24, "category": {"1": ["CWE-682"], "2": ["CWE-369"]}, "title": "Zero modulus will cause a panic", "description": "According to EVM specifications, if the modulus is zero, then the result of `mod_exp` is zero regardless of the input. The current `mod_exp` code relies on successive calls to `mod_mult` with the passed-in modulus, but the `mod_mult` function computes a quotient that will panic.", "severity": "Medium", "contract": "N/A", "function": "mod_exp", "lineNumber": "L514-522"}, {"id": 25, "category": {"1": ["CWE-682"]}, "title": "The ConstraintBuilder::condition API is dangerous", "description": "The `ConstraintBuilder` implements several useful ways of constructing constraints. One case is when constraints should be added and conditioned by a particular value. If the value is true, the constraints must be satisfied; otherwise, they do not need to be satisfied.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 26, "category": {"1": ["CWE-682"]}, "title": "The EXTCODECOPY opcode implementation does not work when the account address does not exist", "description": "The bytecode_length lookup will not work and the copy from code_hash = 0 will not work when the external_address doesn't exist, it should use EMPTY_HASH when code_hash = 0.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/2023-04-scroll-zkEVM-wave1-securityreview.pdf",
+    "project_info": {
+        "url": "https://github.com/scroll-tech/halo2-lib",
+        "commit_hash": "d24871338ade7dd56362de517b718ba14f3e7b90",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "ModGadget Underconstraint Allows Incorrect MULMOD Operations",
+            "description": "The ModGadget circuit computes the modulo operation, a mod n, with the caveat that the result should be 0 whenever n is 0. However, an incorrect constraint allows a proof that a mod 0 == a.",
+            "severity": "High",
+            "contract": "zkevm-circuits/evm_circuit/util/math_gadget/modulo.rs",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "The RlpU64Gadget is underconstrained when is_lt_128 is false",
+            "description": "The RlpU64Gadget allows incorrect operations to be proven when is_lt_128 is false, which can lead to security vulnerabilities.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "The BLOCKHASH opcode is underconstrained and allows the hash of any block to be computed",
+            "description": "The implementation of the BLOCKHASH opcode does not properly constrain the current_block_number variable, allowing it to take any value and enabling the computation of the hash of any block.",
+            "severity": "Critical",
+            "contract": "BlockHashGadget",
+            "function": "configure",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-477"
+                ]
+            },
+            "title": "zkevm-circuits crate depends on an outdated version of halo2-ecc",
+            "description": "The codebase depends upon an outdated version of the halo2-ecc library, which has had several updates made to its cryptographic primitives.",
+            "severity": "Moderate",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Unchecked N_BYTES Parameters",
+            "description": "The N_BYTES parameters are not checked to prevent overflow, which may lead to incorrect allowance of extremely large values and potential security issues.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "Figure E.1 in constant_division.rs"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-477"
+                ]
+            },
+            "title": "Differences in shared code between zkevm-circuits and halo2-lib",
+            "description": "Outdated version of halo2-ecc used in zkevm-circuits crate leading to differences in shared code.",
+            "severity": "Resolved",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Underconstrained warm status on CALL opcodes allows gas cost forgery",
+            "description": "An underconstrained variable in the CallOpGadget allows an attacker to prove the execution of a transaction with incorrect gas costs by setting an address as cold when it should become warm.",
+            "severity": "High",
+            "contract": "zkevm-circuits/evm_circuit/execution/callop.rs",
+            "function": "N/A",
+            "lineNumber": "129-138"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "RW table constants must match exactly when the verification key is created",
+            "description": "The RW table constants must match exactly to ensure correct initialization and coherency of read and write operations for addressable parts of the state, including the stack, memory, and account storage.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "The CREATE and CREATE2 opcodes can be called within a static context",
+            "description": "The `CREATE` and `CREATE2` opcodes are missing a constraint that prevents them from being called in the context of a static call, allowing for state-changing operations not allowed by the EVM specification.",
+            "severity": "High",
+            "contract": "zkevm-circuits/evm_circuit/execution/create.rs",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "ResponsibleOpcode table incorrectly handles CREATE and CREATE2",
+            "description": "The `ResponsibleOpcode` table is used to attribute different execution states to particular sets of opcodes but incorrectly reports both `CREATE` and `CREATE2` as the responsible opcodes for the `CREATE` state.",
+            "severity": "Informational",
+            "contract": "zkevm-circuits/step.rs",
+            "function": "N/A",
+            "lineNumber": "48\u201358"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Elliptic curve parameters omitted from Fiat-Shamir",
+            "description": "The Fiat-Shamir code in the `snark-verifier` patch does not incorporate the elliptic curve parameters into the transcript.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "The gas cost for the CALL opcode is underconstrained",
+            "description": "When calling an empty address or a precompile, the unconstrained cell `step_gas_cost` was used to determine the gas cost of the `CALL` opcode.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ]
+            },
+            "title": "Unconstrained opcodes allow nondeterministic execution",
+            "description": "The gadget that implements the successful execution of certain opcodes is underconstrained, allowing a malicious prover to successfully execute the opcode when it is in an error condition for particular opcode inputs. This allows the prover to cause state divergence from a correct EVM execution.",
+            "severity": "High",
+            "contract": "zkevm-circuits/src/evm_circuit/execution/returndatacopy.rs",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ],
+                "3": [
+                    "CWE-680"
+                ]
+            },
+            "title": "Nondeterministic execution of ReturnDataCopyGadget and ErrorReturnDataOutOfBoundGadget",
+            "description": "The overflow-related validation logic of `ReturnDataCopyGadget` and `ErrorReturnDataOutOfBoundGadget` has been factored out into a common component, `CommonReturnDataCopyGadget`. This common gadget forces the validation to succeed or fail based on the `is_overflow` parameter.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Many RW counter updates are magic numbers",
+            "description": "RW counter updates are manually specified instead of being computed using ConstraintBuilder::rw_counter_ffset, making it prone to errors.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": [
+                "RestoreContextGadget",
+                "CallOpGadget"
+            ],
+            "lineNumber": [
+                "185-202",
+                "440-458"
+            ]
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ],
+                "4": [
+                    "CWE-230"
+                ]
+            },
+            "title": "Native PCS accumulation deciders accept an empty vector",
+            "description": "Both the KZG and IPA native `decide_all` implementations accept an empty vector of accumulators. This can allow an attacker to bypass verification by submitting an empty vector.",
+            "severity": "Medium",
+            "contract": "snark-verifier/pcs/{kzg, ipa}/decider.rs",
+            "function": "decide_all()",
+            "lineNumber": "L54-69"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "The ErrorOOGSloadSstore and the ErrorOOGLog gadgets have redundant table lookups",
+            "description": "Both the `ErrorOOGSloadSstore` and the `ErrorOOGLog` gadgets do an RW table lookup to check whether the current call is within a static context. However, the lookup result is not used in any subsequent constraint, making the lookup redundant.",
+            "severity": "Informational",
+            "contract": "zkevm-circuits",
+            "function": "execution/{error_oog_sload_sstore, error_oog_log}",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "The State circuit does not enforce transaction receipt constraints",
+            "description": "The implementation of the `State` circuit does not enforce transaction receipt constraints due to an unsatisfiable constraint (`1 == 0`) and the function that implements them, `build_tx_receipt_constraints`, is not called in the `ConstraintBuilder::build` function.",
+            "severity": "Informational",
+            "contract": "zkevm-circuits",
+            "function": "build_tx_receipt_constraints",
+            "lineNumber": "L511-L524"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "The EXP opcode has an unused witness",
+            "description": "The EXP opcode contains an unused witness.",
+            "severity": "Undetermined",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "62"
+        },
+        {
+            "id": 19,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Truncation of Big Integers in bn_to_field Function",
+            "description": "The bn_to_field function silently truncates big integers if their byte representation exceeds 64 bytes, leading to identical field elements for different integers with the same least significant bits.",
+            "severity": "Low",
+            "contract": "misc-precompiled-circuit",
+            "function": "bn_to_field",
+            "lineNumber": "src/utils/mod.rs#L10-15"
+        },
+        {
+            "id": 20,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ],
+                "2": [
+                    "CWE-1024"
+                ]
+            },
+            "title": "Implementation-Specific Details Dependency in field_to_bn Function",
+            "description": "The field_to_bn function relies on implementation-specific details of the underlying field, which may lead to inconsistent results due to varying endianness returned by PrimeField::to_repr.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "field_to_bn",
+            "lineNumber": "5-8"
+        },
+        {
+            "id": 21,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1287"
+                ]
+            },
+            "title": "Unconstrained Bytecode Table Tag Column",
+            "description": "The bytecode table tag column values are not constrained to be HEADER or BYTE, allowing a malicious prover to break transition constraints by inserting a row with a tag value different from HEADER or BYTE.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 22,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Unconstrained columns on the bytecode HEADER rows",
+            "description": "The bytecode table `HEADER` rows have two unconstrained columns, `is_code` and `field_input`, on the Poseidon bytecode extended columns.",
+            "severity": "Informational",
+            "contract": "zkevm-circuits/bytecode_circuit",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 23,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "decompose_limb does not work as intended",
+            "description": "The decompose_limb method has been more completely implemented and appears to now iterate correctly through the limbs but lacks direct tests for its correctness.",
+            "severity": "N/A",
+            "contract": "misc-precopiled-circuit",
+            "function": "decompose_limb",
+            "lineNumber": "L146-L256"
+        },
+        {
+            "id": 24,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-369"
+                ]
+            },
+            "title": "Zero modulus will cause a panic",
+            "description": "According to EVM specifications, if the modulus is zero, then the result of `mod_exp` is zero regardless of the input. The current `mod_exp` code relies on successive calls to `mod_mult` with the passed-in modulus, but the `mod_mult` function computes a quotient that will panic.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "mod_exp",
+            "lineNumber": "L514-522"
+        },
+        {
+            "id": 25,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "The ConstraintBuilder::condition API is dangerous",
+            "description": "The `ConstraintBuilder` implements several useful ways of constructing constraints. One case is when constraints should be added and conditioned by a particular value. If the value is true, the constraints must be satisfied; otherwise, they do not need to be satisfied.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 26,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "The EXTCODECOPY opcode implementation does not work when the account address does not exist",
+            "description": "The bytecode_length lookup will not work and the copy from code_hash = 0 will not work when the external_address doesn't exist, it should use EMPTY_HASH when code_hash = 0.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

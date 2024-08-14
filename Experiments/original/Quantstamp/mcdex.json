@@ -1,1 +1,280 @@
-{"path": "./Audit_Reports_2024/Quantstamp/mcdex.pdf", "project_info": {"url": "https://github.com/mai-protocol-v3", "commit_hash": "50fb550", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Minting of unlimited number of sundae tokens", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Incorrect comment on extractSign", "description": "The comment on extractSign should indicate the case for zero (1 means the number is non-negative)", "severity": "Low", "contract": "Utils.sol", "function": "extractSign", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Incorrect comment on L138-139 for donateLiquidity", "description": "The LP does not receive share tokens in this case.", "severity": "N/A", "contract": "LiquidityPool.sol", "function": "donateLiquidity()", "lineNumber": "138-139"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Contract Stores Its Own Balance For Calculation Instead Of Utilising Real-Time Token Contract Value", "description": "The system stores its own balance data for calculation instead of utilising real-time token contract data. This could lead to faulty calculation when non-standard tokens are used.", "severity": "Low Risk", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Possible Reward Truncation", "description": "In `setRewardRate` function of `RewardDistribution.sol`, line 61 may truncate unfinished reward distribution.", "severity": "Low Risk", "contract": "RewardDistribution", "function": "setRewardRate()", "lineNumber": "L61"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "calculateCashToReturn Does Not Exclude Perpetuals", "description": "The function `calculateCashToReturn` assumes that the context is fully prepared without excluding any perpetuals.", "severity": "Low Risk", "contract": "AMMModule.sol", "function": "calculateCashToReturn", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "rebalance Does Not Have a Return Value", "description": "The `rebalance` function does not have a return value; this may lead to undesirable results or wasted computation.", "severity": "Low Risk", "contract": "LiquidityPoolModule", "function": "rebalance()", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-710"], "2": ["CWE-1164"], "3": ["CWE-561"]}, "title": "Unused Functions", "description": "Functions `transferFromUserToPool` and `transferFromPoolToUser` are unused.", "severity": "Low Risk", "contract": "LiquidityPoolModule.sol", "function": ["transferFromUserToPool", "transferFromPoolToUser"], "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-682"]}, "title": "Incorrect Constants", "description": "There is an error in `validateBaseParameters` : `INDEX_OPEN_SLIPPAGE_FACTOR` is used instead of `INDEX_MAINTENANCE_MARGIN_RATE` to validate the liquidation penalty parameter.", "severity": "Low Risk", "contract": "PerpetualModule.sol", "function": "validateBaseParameters", "lineNumber": "L759-761"}, {"id": 9, "category": {"1": ["CWE-682"], "2": ["CWE-1339"]}, "title": "Incorrect Data Representation", "description": "There is a difference in the representation of `int256 deltaPosition` between `liquidateByAMM` and `liquidateByTrader`, which may cause confusion in the future.", "severity": "Low Risk", "contract": "TradeModule", "function": ["liquidateByAMM", "liquidateByTrader"], "lineNumber": "L260, L324"}, {"id": 10, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Omitted Event", "description": "SetOracle event from module/PerpetualModule.sol is not included.", "severity": "Low Risk", "contract": "PerpetualModule", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Missing Argument", "description": "`OperatorCheckIn` event should contain `address indexed operator` as an argument.", "severity": "Low Risk", "contract": "LibraryEvents.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-682"]}, "title": "Gas Usage / for Loop Concerns", "description": "Gas usage is a main concern for smart contract developers and users, since high gas costs may prevent users from wanting to use the smart contract. Even worse, some gas usage issues may prevent the contract from providing services entirely.", "severity": "Low Risk", "contract": ["Broker", "AMMModule", "LiquidityPoolModule", "OracleRouter", "SymbolService"], "function": "N/A", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Integer Overflow / Underflow", "description": "Integer overflow/underflow occur when an integer hits its bit-size limit.", "severity": "Low Risk", "contract": "Broker.sol, EnumerableMapExt.sol, SymbolService.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-682"]}, "title": "Possibly Incorrect Revert Condition In validateBaseParameters", "description": "The revert message is inconsistent with the revert condition.", "severity": "Undetermined", "contract": "PerpetualModule", "function": "validateBaseParameters", "lineNumber": "L759-762"}, {"id": 15, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "End User Can Pretend To Be A Broker Or Relayer", "description": "In the function `brokerTrade`, a user can interact with `Perpetual.sol` directly by giving it a manipulated `OrderData` that seems to be sent by a broker, from a relayer.", "severity": "Undetermined", "contract": "Perpetual.sol", "function": "brokerTrade()", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Quantstamp/mcdex.pdf",
+    "project_info": {
+        "url": "https://github.com/mcarloai/mai-protocol-v3/tree/50fb550eea9c5a04c6eed0e80b470b753176eca1",
+        "commit_hash": "50fb550eea9c5a04c6eed0e80b470b753176eca1",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Minting of unlimited number of sundae tokens",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect comment on extractSign",
+            "description": "The comment on extractSign should indicate the case for zero (1 means the number is non-negative)",
+            "severity": "Low",
+            "contract": "Utils.sol",
+            "function": "extractSign",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect comment on L138-139 for donateLiquidity",
+            "description": "The LP does not receive share tokens in this case.",
+            "severity": "N/A",
+            "contract": "LiquidityPool.sol",
+            "function": "donateLiquidity()",
+            "lineNumber": "138-139"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Contract Stores Its Own Balance For Calculation Instead Of Utilising Real-Time Token Contract Value",
+            "description": "The system stores its own balance data for calculation instead of utilising real-time token contract data. This could lead to faulty calculation when non-standard tokens are used.",
+            "severity": "Low Risk",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Possible Reward Truncation",
+            "description": "In `setRewardRate` function of `RewardDistribution.sol`, line 61 may truncate unfinished reward distribution.",
+            "severity": "Low Risk",
+            "contract": "RewardDistribution",
+            "function": "setRewardRate()",
+            "lineNumber": "L61"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "calculateCashToReturn Does Not Exclude Perpetuals",
+            "description": "The function `calculateCashToReturn` assumes that the context is fully prepared without excluding any perpetuals.",
+            "severity": "Low Risk",
+            "contract": "AMMModule.sol",
+            "function": "calculateCashToReturn",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "rebalance Does Not Have a Return Value",
+            "description": "The `rebalance` function does not have a return value; this may lead to undesirable results or wasted computation.",
+            "severity": "Low Risk",
+            "contract": "LiquidityPoolModule",
+            "function": "rebalance()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ],
+                "3": [
+                    "CWE-561"
+                ]
+            },
+            "title": "Unused Functions",
+            "description": "Functions `transferFromUserToPool` and `transferFromPoolToUser` are unused.",
+            "severity": "Low Risk",
+            "contract": "LiquidityPoolModule.sol",
+            "function": [
+                "transferFromUserToPool",
+                "transferFromPoolToUser"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect Constants",
+            "description": "There is an error in `validateBaseParameters` : `INDEX_OPEN_SLIPPAGE_FACTOR` is used instead of `INDEX_MAINTENANCE_MARGIN_RATE` to validate the liquidation penalty parameter.",
+            "severity": "Low Risk",
+            "contract": "PerpetualModule.sol",
+            "function": "validateBaseParameters",
+            "lineNumber": "L759-761"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "Incorrect Data Representation",
+            "description": "There is a difference in the representation of `int256 deltaPosition` between `liquidateByAMM` and `liquidateByTrader`, which may cause confusion in the future.",
+            "severity": "Low Risk",
+            "contract": "TradeModule",
+            "function": [
+                "liquidateByAMM",
+                "liquidateByTrader"
+            ],
+            "lineNumber": "L260, L324"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Omitted Event",
+            "description": "SetOracle event from module/PerpetualModule.sol is not included.",
+            "severity": "Low Risk",
+            "contract": "PerpetualModule",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Missing Argument",
+            "description": "`OperatorCheckIn` event should contain `address indexed operator` as an argument.",
+            "severity": "Low Risk",
+            "contract": "LibraryEvents.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Gas Usage / for Loop Concerns",
+            "description": "Gas usage is a main concern for smart contract developers and users, since high gas costs may prevent users from wanting to use the smart contract. Even worse, some gas usage issues may prevent the contract from providing services entirely.",
+            "severity": "Low Risk",
+            "contract": [
+                "Broker",
+                "AMMModule",
+                "LiquidityPoolModule",
+                "OracleRouter",
+                "SymbolService"
+            ],
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Integer Overflow / Underflow",
+            "description": "Integer overflow/underflow occur when an integer hits its bit-size limit.",
+            "severity": "Low Risk",
+            "contract": "Broker.sol, EnumerableMapExt.sol, SymbolService.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Possibly Incorrect Revert Condition In validateBaseParameters",
+            "description": "The revert message is inconsistent with the revert condition.",
+            "severity": "Undetermined",
+            "contract": "PerpetualModule",
+            "function": "validateBaseParameters",
+            "lineNumber": "L759-762"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "End User Can Pretend To Be A Broker Or Relayer",
+            "description": "In the function `brokerTrade`, a user can interact with `Perpetual.sol` directly by giving it a manipulated `OrderData` that seems to be sent by a broker, from a relayer.",
+            "severity": "Undetermined",
+            "contract": "Perpetual.sol",
+            "function": "brokerTrade()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

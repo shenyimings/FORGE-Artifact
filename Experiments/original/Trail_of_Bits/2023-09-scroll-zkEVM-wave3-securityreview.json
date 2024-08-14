@@ -1,1 +1,246 @@
-{"path": "./Audit_Reports_2024/Trail_of_Bits/2023-09-scroll-zkEVM-wave3-securityreview.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-664"], "2": ["CWE-221"], "3": ["CWE-223"]}, "title": "Aggregated public input hash does not include coinbase or difficulty", "description": "The public input hash of an aggregated proof represents the public inputs of all SNARKs that the proof aggregates, but it does not include coinbase or difficulty.", "severity": "Informational", "contract": "aggregator/src/chunk.rs", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Use of account_hash_traces cells does not match specification", "description": "The implementation of account_ hash_traces cells deviates from the expected specification.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-229"], "4": ["CWE-232"]}, "title": "hash_traces skips invalid leaf hashes", "description": "The `hash_traces` function does not validate leaf hashes correctly, resulting in potential data validation issues.", "severity": "Informational", "contract": "mpt-circuits/gadgets/mpt_update.rs", "function": "hash_traces", "lineNumber": "642-647"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Values in chunk_is_valid_cells are not constrained to be Boolean", "description": "The values in chunk_is_valid_cells are used to compute the number of valid cells in a batch and are also used as an argument for the num_valid_snarks function, but they are not constrained to be Boolean.", "severity": "Medium", "contract": "aggregator/src/core.rs", "function": "num_valid_snarks", "lineNumber": "935-946"}, {"id": 4, "category": {"1": ["CWE-697"]}, "title": "The Sig circuit may reject valid signatures", "description": "The Sig circuit implementation rejects certain valid signatures, potentially leading to a denial of service for purposefully crafted signatures.", "severity": "Moderate", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Assigned_y_tmp Not Constrained to 87 Bits", "description": "The code constraints assigned_y_tmp to be 88 bits instead of 87 bits.", "severity": "Informational", "contract": "zkevm-circuits/src/sig_circuit.rs", "function": "N/A", "lineNumber": "420-424"}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-229"], "4": ["CWE-232"]}, "title": "Aggregated proof verification algorithm is unspecified", "description": "The actual details of how to construct and verify the aggregated proof are not clearly specified, documented, or implemented.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "Aggregation prover verifies each aggregated proof", "description": "The zkEVM proof aggregation algorithms combine several 'all-but-the-pairing' proofs into a single 'all-but-the-pairing' proof which, when verified with a pairing, simultaneously verifies all the constituent proofs.", "severity": "Informational", "contract": "aggregator", "function": "extract_accumulators_and_proof, AggregationCircuit::new, CompressionCircuit::new", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-682"]}, "title": "KECCAK_ROWS environment variable may disagree with DEFAULT_KECCAK_ROWS constant", "description": "The KECCAK_ROWS environment variable may have a different value than the DEFAULT_KECCAK_ROWS constant, which could lead to inconsistencies in the Keccak circuit construction.", "severity": "Undetermined", "contract": "N/A", "function": "get_num_rows_per_round()", "lineNumber": "aggregator/src/core.rs#253\u2013261, zkevm-circuits/src/keccak_circuit/keccak_packed_multi.rs#15\u201320"}, {"id": 9, "category": {"1": ["CWE-691"], "2": ["CWE-841"]}, "title": "Incorrect state transitions can be proven for any chunk by manipulating padding flags", "description": "The finding suggests that incorrect state transitions can be proven for any chunk by manipulating padding flags, potentially allowing an attacker to manipulate the validity of chunks.", "severity": "Resolved", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-682"]}, "title": "RlcConfig::rlc_with_flag is incorrect", "description": "The function rlc_with_flag has an incorrect implementation which may lead to unintended behavior.", "severity": "N/A", "contract": "aggregator/rlc/gates.rs", "function": "rlc_with_flag()", "lineNumber": "344-360, 125-141"}, {"id": 11, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Accumulator representation assumes fixed-length field limbs", "description": "The accumulator representation assumes fixed-length field limbs which may lead to potential security issues.", "severity": "Medium", "contract": "N/A", "function": "flatten_accumulator", "lineNumber": "226-258"}, {"id": 12, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "PlonkProof::read ignores extra entries in num_challenge", "description": "The PlonkProof::read function does not handle extra entries in the `num_challenge` field correctly, which may cause issues if code relies on Protocol values to be unique.", "severity": "Informational", "contract": "PlonkVerifier", "function": "PlonkProof::read", "lineNumber": "155-169"}, {"id": 13, "category": {"1": ["CWE-682"]}, "title": "MAX_AGG_SNARKS values other than 10 may misbehave", "description": "The implementation of the aggregation circuit is strongly coupled with a MAX_AGG_SNARKS value of 10, and it's not obvious whether a value of 8 would cause problems. Future updates of MAX_AGG_SNARKS may require a non-trivial amount of the circuit to be rewritten.", "severity": "Medium", "contract": "aggregator", "function": "N/A", "lineNumber": "56-60,507-510"}]}
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/2023-09-scroll-zkEVM-wave3-securityreview.pdf",
+    "project_info": {
+        "url": "https://github.com/scroll-tech/mpt-circuit/tree/2163a9c436ed85363c954ecf7e6e1044a1b991dc",
+        "commit_hash": "2163a9c436ed85363c954ecf7e6e1044a1b991dc",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-221"
+                ],
+                "3": [
+                    "CWE-223"
+                ]
+            },
+            "title": "Aggregated public input hash does not include coinbase or difficulty",
+            "description": "The public input hash of an aggregated proof represents the public inputs of all SNARKs that the proof aggregates, but it does not include coinbase or difficulty.",
+            "severity": "Informational",
+            "contract": "aggregator/src/chunk.rs",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Use of account_hash_traces cells does not match specification",
+            "description": "The implementation of account_ hash_traces cells deviates from the expected specification.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ],
+                "4": [
+                    "CWE-232"
+                ]
+            },
+            "title": "hash_traces skips invalid leaf hashes",
+            "description": "The `hash_traces` function does not validate leaf hashes correctly, resulting in potential data validation issues.",
+            "severity": "Informational",
+            "contract": "mpt-circuits/gadgets/mpt_update.rs",
+            "function": "hash_traces",
+            "lineNumber": "642-647"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Values in chunk_is_valid_cells are not constrained to be Boolean",
+            "description": "The values in chunk_is_valid_cells are used to compute the number of valid cells in a batch and are also used as an argument for the num_valid_snarks function, but they are not constrained to be Boolean.",
+            "severity": "Medium",
+            "contract": "aggregator/src/core.rs",
+            "function": "num_valid_snarks",
+            "lineNumber": "935-946"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ]
+            },
+            "title": "The Sig circuit may reject valid signatures",
+            "description": "The Sig circuit implementation rejects certain valid signatures, potentially leading to a denial of service for purposefully crafted signatures.",
+            "severity": "Moderate",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Assigned_y_tmp Not Constrained to 87 Bits",
+            "description": "The code constraints assigned_y_tmp to be 88 bits instead of 87 bits.",
+            "severity": "Informational",
+            "contract": "zkevm-circuits/src/sig_circuit.rs",
+            "function": "N/A",
+            "lineNumber": "420-424"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ],
+                "4": [
+                    "CWE-232"
+                ]
+            },
+            "title": "Aggregated proof verification algorithm is unspecified",
+            "description": "The actual details of how to construct and verify the aggregated proof are not clearly specified, documented, or implemented.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Aggregation prover verifies each aggregated proof",
+            "description": "The zkEVM proof aggregation algorithms combine several 'all-but-the-pairing' proofs into a single 'all-but-the-pairing' proof which, when verified with a pairing, simultaneously verifies all the constituent proofs.",
+            "severity": "Informational",
+            "contract": "aggregator",
+            "function": "extract_accumulators_and_proof, AggregationCircuit::new, CompressionCircuit::new",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "KECCAK_ROWS environment variable may disagree with DEFAULT_KECCAK_ROWS constant",
+            "description": "The KECCAK_ROWS environment variable may have a different value than the DEFAULT_KECCAK_ROWS constant, which could lead to inconsistencies in the Keccak circuit construction.",
+            "severity": "Undetermined",
+            "contract": "N/A",
+            "function": "get_num_rows_per_round()",
+            "lineNumber": "aggregator/src/core.rs#253\u2013261, zkevm-circuits/src/keccak_circuit/keccak_packed_multi.rs#15\u201320"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "Incorrect state transitions can be proven for any chunk by manipulating padding flags",
+            "description": "The finding suggests that incorrect state transitions can be proven for any chunk by manipulating padding flags, potentially allowing an attacker to manipulate the validity of chunks.",
+            "severity": "Resolved",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "RlcConfig::rlc_with_flag is incorrect",
+            "description": "The function rlc_with_flag has an incorrect implementation which may lead to unintended behavior.",
+            "severity": "N/A",
+            "contract": "aggregator/rlc/gates.rs",
+            "function": "rlc_with_flag()",
+            "lineNumber": "344-360, 125-141"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Accumulator representation assumes fixed-length field limbs",
+            "description": "The accumulator representation assumes fixed-length field limbs which may lead to potential security issues.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "flatten_accumulator",
+            "lineNumber": "226-258"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "PlonkProof::read ignores extra entries in num_challenge",
+            "description": "The PlonkProof::read function does not handle extra entries in the `num_challenge` field correctly, which may cause issues if code relies on Protocol values to be unique.",
+            "severity": "Informational",
+            "contract": "PlonkVerifier",
+            "function": "PlonkProof::read",
+            "lineNumber": "155-169"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "MAX_AGG_SNARKS values other than 10 may misbehave",
+            "description": "The implementation of the aggregation circuit is strongly coupled with a MAX_AGG_SNARKS value of 10, and it's not obvious whether a value of 8 would cause problems. Future updates of MAX_AGG_SNARKS may require a non-trivial amount of the circuit to be rewritten.",
+            "severity": "Medium",
+            "contract": "aggregator",
+            "function": "N/A",
+            "lineNumber": "56-60,507-510"
+        }
+    ]
+}

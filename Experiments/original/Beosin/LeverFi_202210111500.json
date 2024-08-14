@@ -1,1 +1,392 @@
-{"path": "./Audit_Reports_2024/Beosin/LeverFi_202210111500.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "The initialize function lacks permission check", "description": "In the initialize function, there is no initial admin permission, which will result in the subsequent failure to change the permissions of OPERATOR_ROLE and LIQUIDATE_EXECUTOR.", "severity": "Info", "contract": "Ledger", "function": "_initialize_", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "The swapPosition function lacks permission check", "description": "The _swapPosition_ function lacks permission verification. Anyone can execute this function and use the contract's tokens to swap, which will result in a loss of contract funds.", "severity": "Critical", "contract": "Ledger.sol", "function": "_swapPosition_", "lineNumber": "L1147"}, {"id": 2, "category": {"1": ["CWE-284"]}, "title": "The swap function is improperly designed", "description": "In the _swap_ function of the ZeroexSwapAdapter contract, because the swapBytesData parameter is controllable, the approveRouter and swapBytes are also controllable. Then an attacker can use call to perform arbitrary operations.", "severity": "Medium", "contract": "ZeroexSwapAdapter", "function": "_swap_", "lineNumber": "L35"}, {"id": 3, "category": {"1": ["CWE-693"], "2": ["CWE-358"]}, "title": "The withdrawLiquidationWalletLong function is improperly designed", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "withdrawLiquidationWalletLong", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "DoS attack", "description": "There is a DoS vulnerability in the _invest_ function of the AaveReinvestmentLogic and ConvexReinvestmentLogic contracts.", "severity": "High", "contract": "AaveReinvestmentLogic, ConvexReinvestmentLogic", "function": "_invest_", "lineNumber": "#L65,70,110,116-120"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "The _calculateRewards function design flaw", "description": "First of all, in the _getReserveSupply_ function, if the function uses true, then poolAmount will not use the UtilizedSupply part. Go back to the _depositReserve_ function of the Ledger contract and calculate the part of shareAmountRay that does not use UtilizedSupply, then the calculated share will be wrong.", "severity": "High", "contract": "Ledger", "function": "_calculateRewards", "lineNumber": "L812-825"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "The _depositReserve function is improperly designed", "description": "In the _depositReserve function, the calculation of the _getShareAmount function will be wrong due to the incorrect obtainment of reinvestment amount by the _getReserveAvailableSupply function.", "severity": "Medium", "contract": "Ledger.sol", "function": "_depositReserve", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-710"], "2": ["CWE-684"], "3": ["CWE-440"]}, "title": "The configureAsset function is improperly designed", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "_configureAsset_", "lineNumber": "20"}, {"id": 8, "category": {"1": ["CWE-682"]}, "title": "Clearing mechanism error", "description": "N/A", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "21"}, {"id": 9, "category": {"1": ["CWE-682"]}, "title": "The getNormalizedDebt function is improperly designed", "description": "No description provided.", "severity": "Medium", "contract": "N/A", "function": "_getNormalizedDebt_", "lineNumber": "Ledger.sol#L759-795"}, {"id": 10, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Implementation flaws in the reinvestReserveSupply and reinvestCollateralSupply functions", "description": "N/A", "severity": "Medium", "contract": "N/A", "function": "_reinvestReserveSupply_ and _reinvestCollateralSupply_", "lineNumber": "24"}, {"id": 11, "category": {"1": ["CWE-707"], "2": ["CWE-74"], "3": ["CWE-94"]}, "title": "Unsafe call", "description": "In the _swap_ function of the ZeroexSwapAdapter contract, because the swapBytesData parameter is controllable, the approveRouter and swapBytes are also controllable. Then an attacker can use call to perform arbitrary operations.", "severity": "Medium", "contract": "ZeroexSwapAdapter", "function": "_swap", "lineNumber": "L35"}, {"id": 12, "category": {"1": ["CWE-682"]}, "title": "The configureReserve function design flaw", "description": "In the _configureReserve_ function, the operator can modify the reinvestment arbitrarily, which may cause calculation errors in the _getShareAmount_ function.", "severity": "Medium", "contract": "Ledger.sol", "function": "_configureReserve_", "lineNumber": "L304"}, {"id": 13, "category": {"1": ["CWE-693"]}, "title": "Centralization risk", "description": "N/A", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-682"]}, "title": "The _repayShort function is improperly designed", "description": "The UtilizationPercentageRay parameter is not updated in the ExecutewithDrawReserve function, which will result in inaccurate utilization if the user exits liquidity.", "severity": "Medium", "contract": "ReservePoolLogic", "function": "_repayShort", "lineNumber": "96-144"}, {"id": 15, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-908"], "4": ["CWE-457"]}, "title": "The ExecutewithdrawReserve function lacks update percentageray parameters", "description": "The _UtilizationPercentageRay_ parameter is not updated in the ExecutewithDrawReserve function, which will result in inaccurate utilization if the user exits liquidity.", "severity": "Medium", "contract": "ReservePoolLogic", "function": "_executeWithdrawReserve_", "lineNumber": "96-144"}, {"id": 16, "category": {"1": ["CWE-682"]}, "title": "Improperly designed _depositCollateral function", "description": "In the _depositCollateral function, when verifying whether the stake meets the requirements, the current user's share (currUserDepositShareRay) plus the amount is incorrectly used to determine whether the minimum stake amount is met.", "severity": "Low", "contract": "Ledger", "function": "_depositCollateral", "lineNumber": "L914-916"}, {"id": 17, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "The validateTrade function check error", "description": "In the _validateTrade_ function, the state of reserve is repeatedly judged, and the state of assetConfig should be judged here.", "severity": "Low", "contract": "ValidationLogic.sol", "function": "_validateTrade_()", "lineNumber": "L170-174"}, {"id": 18, "category": {"1": ["CWE-691"], "2": ["CWE-841"]}, "title": "The configureCollateral function cannot modify reinvestment", "description": "Because reinvestment cannot be set in the _configureCollateral_ function, but there is a function for reinvesting new reinvestment in the contract, the reinvestment function will not be available.", "severity": "Low", "contract": "Ledger", "function": "_configureCollateral_", "lineNumber": "N/A"}, {"id": 19, "category": {"1": ["CWE-682"]}, "title": "Improper design when settlement user awards", "description": "During the settlement of user rewards, it did not receive the current reward in time, resulting in small rewards for user settlement.", "severity": "Low", "contract": "ConvexReinvestmentLogic", "function": "__checkpoint_", "lineNumber": "L168-170"}, {"id": 20, "category": {"1": ["CWE-682"]}, "title": "During the settlement of user rewards, it did not receive the current reward in time", "description": "During the settlement of user rewards, it did not receive the current reward in time, resulting in small rewards for user settlement.", "severity": "Low", "contract": "ConvexReinvestmentLogic", "function": "__checkpoint_", "lineNumber": "L168-170"}, {"id": 21, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-229"]}, "title": "Lack of Judgment on Input Value", "description": "The function lacks judgment on the input value.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "41"}, {"id": 22, "category": {"1": ["CWE-682"]}, "title": "Inaccurate availableLeverageUsd calculation", "description": "When calculating availableLeverageUsd, whether vars.pnlUsd>0 or vars.pnlUsd<0", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Beosin/LeverFi_202210111500.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "The initialize function lacks permission check",
+            "description": "In the initialize function, there is no initial admin permission, which will result in the subsequent failure to change the permissions of OPERATOR_ROLE and LIQUIDATE_EXECUTOR.",
+            "severity": "Info",
+            "contract": "Ledger",
+            "function": "_initialize_",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "The swapPosition function lacks permission check",
+            "description": "The _swapPosition_ function lacks permission verification. Anyone can execute this function and use the contract's tokens to swap, which will result in a loss of contract funds.",
+            "severity": "Critical",
+            "contract": "Ledger.sol",
+            "function": "_swapPosition_",
+            "lineNumber": "L1147"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "The swap function is improperly designed",
+            "description": "In the _swap_ function of the ZeroexSwapAdapter contract, because the swapBytesData parameter is controllable, the approveRouter and swapBytes are also controllable. Then an attacker can use call to perform arbitrary operations.",
+            "severity": "Medium",
+            "contract": "ZeroexSwapAdapter",
+            "function": "_swap_",
+            "lineNumber": "L35"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-358"
+                ]
+            },
+            "title": "The withdrawLiquidationWalletLong function is improperly designed",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "withdrawLiquidationWalletLong",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "DoS attack",
+            "description": "There is a DoS vulnerability in the _invest_ function of the AaveReinvestmentLogic and ConvexReinvestmentLogic contracts.",
+            "severity": "High",
+            "contract": "AaveReinvestmentLogic, ConvexReinvestmentLogic",
+            "function": "_invest_",
+            "lineNumber": "#L65,70,110,116-120"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "The _calculateRewards function design flaw",
+            "description": "First of all, in the _getReserveSupply_ function, if the function uses true, then poolAmount will not use the UtilizedSupply part. Go back to the _depositReserve_ function of the Ledger contract and calculate the part of shareAmountRay that does not use UtilizedSupply, then the calculated share will be wrong.",
+            "severity": "High",
+            "contract": "Ledger",
+            "function": "_calculateRewards",
+            "lineNumber": "L812-825"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "The _depositReserve function is improperly designed",
+            "description": "In the _depositReserve function, the calculation of the _getShareAmount function will be wrong due to the incorrect obtainment of reinvestment amount by the _getReserveAvailableSupply function.",
+            "severity": "Medium",
+            "contract": "Ledger.sol",
+            "function": "_depositReserve",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-684"
+                ],
+                "3": [
+                    "CWE-440"
+                ]
+            },
+            "title": "The configureAsset function is improperly designed",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "_configureAsset_",
+            "lineNumber": "20"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Clearing mechanism error",
+            "description": "N/A",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "21"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "The getNormalizedDebt function is improperly designed",
+            "description": "No description provided.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "_getNormalizedDebt_",
+            "lineNumber": "Ledger.sol#L759-795"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Implementation flaws in the reinvestReserveSupply and reinvestCollateralSupply functions",
+            "description": "N/A",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "_reinvestReserveSupply_ and _reinvestCollateralSupply_",
+            "lineNumber": "24"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-74"
+                ],
+                "3": [
+                    "CWE-94"
+                ]
+            },
+            "title": "Unsafe call",
+            "description": "In the _swap_ function of the ZeroexSwapAdapter contract, because the swapBytesData parameter is controllable, the approveRouter and swapBytes are also controllable. Then an attacker can use call to perform arbitrary operations.",
+            "severity": "Medium",
+            "contract": "ZeroexSwapAdapter",
+            "function": "_swap",
+            "lineNumber": "L35"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "The configureReserve function design flaw",
+            "description": "In the _configureReserve_ function, the operator can modify the reinvestment arbitrarily, which may cause calculation errors in the _getShareAmount_ function.",
+            "severity": "Medium",
+            "contract": "Ledger.sol",
+            "function": "_configureReserve_",
+            "lineNumber": "L304"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "Centralization risk",
+            "description": "N/A",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "The _repayShort function is improperly designed",
+            "description": "The UtilizationPercentageRay parameter is not updated in the ExecutewithDrawReserve function, which will result in inaccurate utilization if the user exits liquidity.",
+            "severity": "Medium",
+            "contract": "ReservePoolLogic",
+            "function": "_repayShort",
+            "lineNumber": "96-144"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-908"
+                ],
+                "4": [
+                    "CWE-457"
+                ]
+            },
+            "title": "The ExecutewithdrawReserve function lacks update percentageray parameters",
+            "description": "The _UtilizationPercentageRay_ parameter is not updated in the ExecutewithDrawReserve function, which will result in inaccurate utilization if the user exits liquidity.",
+            "severity": "Medium",
+            "contract": "ReservePoolLogic",
+            "function": "_executeWithdrawReserve_",
+            "lineNumber": "96-144"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improperly designed _depositCollateral function",
+            "description": "In the _depositCollateral function, when verifying whether the stake meets the requirements, the current user's share (currUserDepositShareRay) plus the amount is incorrectly used to determine whether the minimum stake amount is met.",
+            "severity": "Low",
+            "contract": "Ledger",
+            "function": "_depositCollateral",
+            "lineNumber": "L914-916"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "The validateTrade function check error",
+            "description": "In the _validateTrade_ function, the state of reserve is repeatedly judged, and the state of assetConfig should be judged here.",
+            "severity": "Low",
+            "contract": "ValidationLogic.sol",
+            "function": "_validateTrade_()",
+            "lineNumber": "L170-174"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "The configureCollateral function cannot modify reinvestment",
+            "description": "Because reinvestment cannot be set in the _configureCollateral_ function, but there is a function for reinvesting new reinvestment in the contract, the reinvestment function will not be available.",
+            "severity": "Low",
+            "contract": "Ledger",
+            "function": "_configureCollateral_",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 19,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improper design when settlement user awards",
+            "description": "During the settlement of user rewards, it did not receive the current reward in time, resulting in small rewards for user settlement.",
+            "severity": "Low",
+            "contract": "ConvexReinvestmentLogic",
+            "function": "__checkpoint_",
+            "lineNumber": "L168-170"
+        },
+        {
+            "id": 20,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "During the settlement of user rewards, it did not receive the current reward in time",
+            "description": "During the settlement of user rewards, it did not receive the current reward in time, resulting in small rewards for user settlement.",
+            "severity": "Low",
+            "contract": "ConvexReinvestmentLogic",
+            "function": "__checkpoint_",
+            "lineNumber": "L168-170"
+        },
+        {
+            "id": 21,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ]
+            },
+            "title": "Lack of Judgment on Input Value",
+            "description": "The function lacks judgment on the input value.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "41"
+        },
+        {
+            "id": 22,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Inaccurate availableLeverageUsd calculation",
+            "description": "When calculating availableLeverageUsd, whether vars.pnlUsd>0 or vars.pnlUsd<0",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

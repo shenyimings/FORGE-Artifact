@@ -1,1 +1,239 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Atlantis.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-908"], "4": ["CWE-457"]}, "title": "Uninitialized State Index DoS From Reward Activation", "description": "The initial supply-side index is configured on the conditions of atlantisSupplyState[address(aToken)].index == 0 and atlantisSupplyState[address(aToken)].block == 0, but for an already listed market with a current speed of 0, the first condition is indeed met while the second condition does not!", "severity": "High", "contract": "Comptroller", "function": "setAtlantisSpeedInternal()", "lineNumber": "1088"}, {"id": 1, "category": {"1": ["CWE-707"], "2": ["CWE-228"]}, "title": "Non ERC20-Compliance Of AToken", "description": "The AToken contract does not fully comply with the ERC20 specification, which may cause incompatibility issues with DeFi protocols.", "severity": "Medium", "contract": "AToken", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Proper dsrPerBlock() Calculation", "description": "The `dsrPerBlock()` function assumes a block time of 15 seconds per block on Binance Smart Chain (BSC), which is incorrect.", "severity": "Low", "contract": "DAIInterestRateModelV3", "function": "dsrPerBlock()", "lineNumber": "82"}, {"id": 3, "category": {"1": ["CWE-435"], "2": ["CWE-436"]}, "title": "Interface Inconsistency Between ABep20 And ABNB", "description": "The interfaces of `ABep20` and `ABNB` types are inconsistent, with differences in error handling for functions such as `replayBorrow()`, `repayBorrowBehalf()`, `mint()`, and `liquidateBorrow()`.", "severity": "Low", "contract": "Multiple Contracts", "function": "N/A", "lineNumber": "82-86"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Suggested Adherence Of Checks-Effects-Interactions Pattern", "description": "A common coding best practice in Solidity is the adherence of `checks-effects-interactions` principle to mitigate re-entrancy attacks.", "severity": "Low", "contract": "AToken", "function": "borrowFresh()", "lineNumber": "786, 789-791"}, {"id": 5, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Possible Front-Running For Unintended Payment In repayBorrowBehalf()", "description": "The assumption of using repayment amount of -1 to imply full repayment may be taken advantage of to launch a front-running borrow() operation, resulting in a higher borrowing balance for repayment.", "severity": "Low", "contract": "AToken", "function": "repayBorrowFresh()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Deflationary", "description": "Part of the tokens are burned or transferred as fee while on transfer()/transferFrom() calls", "severity": "N/A", "contract": "N/A", "function": "transfer(), transferFrom()", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Rebasing", "description": "N/A", "severity": "N/A", "contract": "AToken", "function": "borrowFresh() and other functions", "lineNumber": "737"}, {"id": 8, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Pausable", "description": "The token contract allows the owner or privileged users to pause the token transfers and other operations", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Blacklistable", "description": "The token contract allows the owner or privileged users to blacklist a specific address such that token transfers and other operations related to that address are prohibited", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Mintable", "description": "The token contract allows the owner or privileged users to mint tokens to a specific address", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Burnable", "description": "The token contract allows the owner or privileged users to burn tokens of a specific address", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Atlantis.pdf",
+    "project_info": {
+        "url": "https://github.com/atlantis-loans/atlantis-protocol-bsc/tree/647556c",
+        "commit_hash": "647556c",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-908"
+                ],
+                "4": [
+                    "CWE-457"
+                ]
+            },
+            "title": "Uninitialized State Index DoS From Reward Activation",
+            "description": "The initial supply-side index is configured on the conditions of atlantisSupplyState[address(aToken)].index == 0 and atlantisSupplyState[address(aToken)].block == 0, but for an already listed market with a current speed of 0, the first condition is indeed met while the second condition does not!",
+            "severity": "High",
+            "contract": "Comptroller",
+            "function": "setAtlantisSpeedInternal()",
+            "lineNumber": "1088"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-228"
+                ]
+            },
+            "title": "Non ERC20-Compliance Of AToken",
+            "description": "The AToken contract does not fully comply with the ERC20 specification, which may cause incompatibility issues with DeFi protocols.",
+            "severity": "Medium",
+            "contract": "AToken",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Proper dsrPerBlock() Calculation",
+            "description": "The `dsrPerBlock()` function assumes a block time of 15 seconds per block on Binance Smart Chain (BSC), which is incorrect.",
+            "severity": "Low",
+            "contract": "DAIInterestRateModelV3",
+            "function": "dsrPerBlock()",
+            "lineNumber": "82"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ]
+            },
+            "title": "Interface Inconsistency Between ABep20 And ABNB",
+            "description": "The interfaces of `ABep20` and `ABNB` types are inconsistent, with differences in error handling for functions such as `replayBorrow()`, `repayBorrowBehalf()`, `mint()`, and `liquidateBorrow()`.",
+            "severity": "Low",
+            "contract": "Multiple Contracts",
+            "function": "N/A",
+            "lineNumber": "82-86"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Suggested Adherence Of Checks-Effects-Interactions Pattern",
+            "description": "A common coding best practice in Solidity is the adherence of `checks-effects-interactions` principle to mitigate re-entrancy attacks.",
+            "severity": "Low",
+            "contract": "AToken",
+            "function": "borrowFresh()",
+            "lineNumber": "786, 789-791"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Possible Front-Running For Unintended Payment In repayBorrowBehalf()",
+            "description": "The assumption of using repayment amount of -1 to imply full repayment may be taken advantage of to launch a front-running borrow() operation, resulting in a higher borrowing balance for repayment.",
+            "severity": "Low",
+            "contract": "AToken",
+            "function": "repayBorrowFresh()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Deflationary",
+            "description": "Part of the tokens are burned or transferred as fee while on transfer()/transferFrom() calls",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "transfer(), transferFrom()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Rebasing",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "AToken",
+            "function": "borrowFresh() and other functions",
+            "lineNumber": "737"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Pausable",
+            "description": "The token contract allows the owner or privileged users to pause the token transfers and other operations",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Blacklistable",
+            "description": "The token contract allows the owner or privileged users to blacklist a specific address such that token transfers and other operations related to that address are prohibited",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Mintable",
+            "description": "The token contract allows the owner or privileged users to mint tokens to a specific address",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Burnable",
+            "description": "The token contract allows the owner or privileged users to burn tokens of a specific address",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

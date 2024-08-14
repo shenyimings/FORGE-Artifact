@@ -1,1 +1,283 @@
-{"path": "./Audit_Reports_2024/Secure3/MirrorWorldMPCWallet_final_Secure3_Audit_Report.pdf", "project_info": {"url": "N/A", "commit_hash": "a635c09f597b29fb2f8e8e3cfc8b4bb96cec9b79", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-287"]}, "title": "A hard-coded JWT token that is included in the code as a comment", "description": "There is a hard-coded JWT token in the form of a comment, which is intended for testing purposes. This may pose a security risk as it may be obtained by unauthorized persons and used to access protected resources, meaning that an attacker can carry out some operations with the identity of the userid in this JWT.", "severity": "Medium", "contract": "N/A", "function": "jwt_authentication", "lineNumber": "20"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-1230"]}, "title": "Add .gitignore to avoid information leakage", "description": "Sensitive information such as SSH private key and JWT secret key are exposed in the codebase, which can lead to unauthorized access and identity forgery.", "severity": "Critical", "contract": "N/A", "function": "N/A", "lineNumber": "code/two-party-ed25519/.ssh/id_ed25519#L1-L7, code/two-party-ed25519/.env#L1-L16"}, {"id": 2, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Base64 malleable risk", "description": "The usage of Base64 encoding can lead to transaction malleability, resulting in double spending and loss of assets on transactions.", "severity": "Informational", "contract": "N/A", "function": "TxFromBase64String", "lineNumber": "67-84"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-923"], "3": ["CWE-300"]}, "title": "CSRF due to CORS middleware with a setting that allows requests from any origin", "description": "The two-party-ed25519 server uses the Gin framework to configure CORS middleware for handling cross-origin resource sharing. The configuration allows requests from any origin by setting AllowOrigins to '*', which could potentially open up the application to a CSRF (Cross-site Request Forgery) vulnerability.", "severity": "Medium", "contract": "two-party-ed25519", "function": "router.go", "lineNumber": "L19"}, {"id": 4, "category": {"1": ["CWE-707"], "2": ["CWE-116"], "3": ["CWE-117"]}, "title": "Disclosure of sensitive data information", "description": "The use of `log.Println` plaintext logging may result in the disclosure of sensitive information about the database.", "severity": "Low", "contract": "N/A", "function": "initialize()", "lineNumber": "L16-20, L35"}, {"id": 5, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Extra comma returned in ed25519/BytesToStr function", "description": "The BytesToStr function returns an extra comma at the end of the string.", "severity": "Informational", "contract": "N/A", "function": "BytesToStr", "lineNumber": "16-23, 50-57"}, {"id": 6, "category": {"1": ["CWE-693"], "2": ["CWE-330"], "3": ["CWE-335"], "4": ["CWE-337"]}, "title": "Insecure Seed Generation for Long Term", "description": "The GeneratePartialNonce function generates the seed by setting a fixed string every time when seed is not nil, but for long term it's not secure because we should get a new string for a certain period.", "severity": "Low", "contract": "musig2", "function": "GeneratePartialNonce", "lineNumber": "46"}, {"id": 7, "category": {"1": ["CWE-697"], "2": ["CWE-185"], "3": ["CWE-625"]}, "title": "Non-standard Scalar Generation for Partial Nonce", "description": "The function generatePartialNonceInternal computes h := sha512.Sum512(fullBytes) but this method is not standard and does not provide full randomness.", "severity": "Informational", "contract": "N/A", "function": "generatePartialNonceInternal", "lineNumber": "L100"}, {"id": 8, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "The alias \"validator2\" in main.go of the two-party-ed25519 project is unnecessary", "description": "The alias 'validator2' is used to avoid naming conflicts with other packages that may have the same name, however, it is not strictly necessary if there are no other packages with the same name being imported in the same scope.", "severity": "Informational", "contract": "two-party-ed25519", "function": "N/A", "lineNumber": "8"}, {"id": 9, "category": {"1": ["CWE-703"]}, "title": "N/A", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "Unauthorized access to user id vulnerability", "description": "The JWTAuthentication function adds a user ID to the request header without proper validation, allowing an attacker to access any user's account by manipulating the 'id' field.", "severity": "Critical", "contract": "N/A", "function": "JWTAuthentication", "lineNumber": "48"}, {"id": 11, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-229"]}, "title": "Validate Input Length/Size", "description": "The `PartialSign` function does not validate its input values' length/size, which can lead to issues like dual public key attacks.", "severity": "Informational", "contract": "musig2", "function": "sign", "lineNumber": "197"}, {"id": 12, "category": {"1": ["CWE-693"], "2": ["CWE-327"]}, "title": "Vulnerable to Dual Public Key Attack", "description": "The code is vulnerable to a critical vulnerability which Chalkias recently exposed a vulnerability. The important statement is that the signing algorithm should only take private key as input.", "severity": "Critical", "contract": "eddsa_protocol/musig2/signature", "function": "PartialSign", "lineNumber": "187-253"}, {"id": 13, "category": {"1": ["CWE-682"]}, "title": "Wrong Scalar25519 Decoding Method", "description": "The privateKey decoding method in NewKeyPairFromSeed function is not following the Scalar25519 decoding approach listed in IETF standard, which may lead to privateKey information leakage.", "severity": "Critical", "contract": "N/A", "function": "NewKeyPairFromSeed", "lineNumber": "L110-L112"}, {"id": 14, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "fix typo", "description": "there is a typo in sign.go 'signStepOne' function, it should be R[1] instead of R[0]", "severity": "Informational", "contract": "N/A", "function": "SignStepOne", "lineNumber": "16"}]}
+{
+    "path": "./Audit_Reports_2024/Secure3/MirrorWorldMPCWallet_final_Secure3_Audit_Report.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "a635c09f597b29fb2f8e8e3cfc8b4bb96cec9b79",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-287"
+                ]
+            },
+            "title": "A hard-coded JWT token that is included in the code as a comment",
+            "description": "There is a hard-coded JWT token in the form of a comment, which is intended for testing purposes. This may pose a security risk as it may be obtained by unauthorized persons and used to access protected resources, meaning that an attacker can carry out some operations with the identity of the userid in this JWT.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "jwt_authentication",
+            "lineNumber": "20"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-1230"
+                ]
+            },
+            "title": "Add .gitignore to avoid information leakage",
+            "description": "Sensitive information such as SSH private key and JWT secret key are exposed in the codebase, which can lead to unauthorized access and identity forgery.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "code/two-party-ed25519/.ssh/id_ed25519#L1-L7, code/two-party-ed25519/.env#L1-L16"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Base64 malleable risk",
+            "description": "The usage of Base64 encoding can lead to transaction malleability, resulting in double spending and loss of assets on transactions.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "TxFromBase64String",
+            "lineNumber": "67-84"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-923"
+                ],
+                "3": [
+                    "CWE-300"
+                ]
+            },
+            "title": "CSRF due to CORS middleware with a setting that allows requests from any origin",
+            "description": "The two-party-ed25519 server uses the Gin framework to configure CORS middleware for handling cross-origin resource sharing. The configuration allows requests from any origin by setting AllowOrigins to '*', which could potentially open up the application to a CSRF (Cross-site Request Forgery) vulnerability.",
+            "severity": "Medium",
+            "contract": "two-party-ed25519",
+            "function": "router.go",
+            "lineNumber": "L19"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-116"
+                ],
+                "3": [
+                    "CWE-117"
+                ]
+            },
+            "title": "Disclosure of sensitive data information",
+            "description": "The use of `log.Println` plaintext logging may result in the disclosure of sensitive information about the database.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "initialize()",
+            "lineNumber": "L16-20, L35"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Extra comma returned in ed25519/BytesToStr function",
+            "description": "The BytesToStr function returns an extra comma at the end of the string.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "BytesToStr",
+            "lineNumber": "16-23, 50-57"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-330"
+                ],
+                "3": [
+                    "CWE-335"
+                ],
+                "4": [
+                    "CWE-337"
+                ]
+            },
+            "title": "Insecure Seed Generation for Long Term",
+            "description": "The GeneratePartialNonce function generates the seed by setting a fixed string every time when seed is not nil, but for long term it's not secure because we should get a new string for a certain period.",
+            "severity": "Low",
+            "contract": "musig2",
+            "function": "GeneratePartialNonce",
+            "lineNumber": "46"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ],
+                "2": [
+                    "CWE-185"
+                ],
+                "3": [
+                    "CWE-625"
+                ]
+            },
+            "title": "Non-standard Scalar Generation for Partial Nonce",
+            "description": "The function generatePartialNonceInternal computes h := sha512.Sum512(fullBytes) but this method is not standard and does not provide full randomness.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "generatePartialNonceInternal",
+            "lineNumber": "L100"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "The alias \"validator2\" in main.go of the two-party-ed25519 project is unnecessary",
+            "description": "The alias 'validator2' is used to avoid naming conflicts with other packages that may have the same name, however, it is not strictly necessary if there are no other packages with the same name being imported in the same scope.",
+            "severity": "Informational",
+            "contract": "two-party-ed25519",
+            "function": "N/A",
+            "lineNumber": "8"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "N/A",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Unauthorized access to user id vulnerability",
+            "description": "The JWTAuthentication function adds a user ID to the request header without proper validation, allowing an attacker to access any user's account by manipulating the 'id' field.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "JWTAuthentication",
+            "lineNumber": "48"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ]
+            },
+            "title": "Validate Input Length/Size",
+            "description": "The `PartialSign` function does not validate its input values' length/size, which can lead to issues like dual public key attacks.",
+            "severity": "Informational",
+            "contract": "musig2",
+            "function": "sign",
+            "lineNumber": "197"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-327"
+                ]
+            },
+            "title": "Vulnerable to Dual Public Key Attack",
+            "description": "The code is vulnerable to a critical vulnerability which Chalkias recently exposed a vulnerability. The important statement is that the signing algorithm should only take private key as input.",
+            "severity": "Critical",
+            "contract": "eddsa_protocol/musig2/signature",
+            "function": "PartialSign",
+            "lineNumber": "187-253"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Wrong Scalar25519 Decoding Method",
+            "description": "The privateKey decoding method in NewKeyPairFromSeed function is not following the Scalar25519 decoding approach listed in IETF standard, which may lead to privateKey information leakage.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "NewKeyPairFromSeed",
+            "lineNumber": "L110-L112"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "fix typo",
+            "description": "there is a typo in sign.go 'signStepOne' function, it should be R[1] instead of R[0]",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "SignStepOne",
+            "lineNumber": "16"
+        }
+    ]
+}

@@ -1,1 +1,339 @@
-{"path": "./Audit_Reports_2024/InterFi/RewardCycle2_AuditReport_InterFi.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "approve", "description": "The approve function has a security vulnerability.", "severity": "Critical", "contract": "N/A", "function": "approve", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Transfer Function Vulnerability", "description": "The transfer function has a vulnerability.", "severity": "High", "contract": "RC2", "function": "transfer()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "transferFrom", "description": "A non-whitelisted wallet can only transfer a specified number of tokens.", "severity": "Medium", "contract": "DividendPayingToken", "function": "_transfer(address,address,uint256)", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"]}, "title": "Unprotected permit Function", "description": "The permit function is marked as external and does not have any access modifiers, making it vulnerable to unauthorized access.", "severity": "High", "contract": "N/A", "function": "permit", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"]}, "title": "Unprotected Mint Function", "description": "The mint function is declared as external and can be called by anyone, potentially leading to unauthorized token creation.", "severity": "High", "contract": "RC2", "function": "_mint", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"]}, "title": "Unprotected _burn Function", "description": "The internal _burn function is declared without access modifiers, making it potentially accessible by unauthorized users.", "severity": "High", "contract": "RC2DividendTracker", "function": "_burn", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "Swap Function Vulnerabilities", "description": "Multiple swap functions are identified with potential vulnerabilities.", "severity": "High", "contract": "N/A", "function": ["swapTokensForRC1", "swapTokensForBUSD", "swapAndSendRC1Dividends", "swapAndSendBUSDDividends", "swapExactTokensForTokensSupportingFeeOnTransferTokens", "swapExactETHForTokensSupportingFeeOnTransferTokens", "swapExactTokensForETHSupportingFeeOnTransferTokens"], "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "Skim", "description": "N/A", "severity": "High", "contract": "N/A", "function": "skim()", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-284"]}, "title": "Unprotected Sync Function", "description": "The sync function is accessible by anyone and can be used to drain the contract's funds.", "severity": "High", "contract": "N/A", "function": "sync", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-284"]}, "title": "Unprotected Initialize Function", "description": "The initialize function is publicly accessible and can be called by anyone, potentially leading to unauthorized state changes.", "severity": "High", "contract": "RC2", "function": "initialize(address,address)", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-284"]}, "title": "<Constructor>", "description": "Unprotected constructor allowing unauthorized access to sensitive functions.", "severity": "Critical", "contract": "Multiple Contracts (RC2, RC1DividendTracker, Ownable, ERC20)", "function": "<Constructor>()", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-284"]}, "title": "distributeDividends", "description": "N/A", "severity": "N/A", "contract": "RC1DividendTracker", "function": "distributeDividends(uint256)", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"], "4": ["CWE-638"], "5": ["CWE-424"], "6": ["CWE-425"]}, "title": "withdrawDividend", "description": "N/A", "severity": "N/A", "contract": "DividendPayingToken", "function": "withdrawDividend", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"], "4": ["CWE-638"], "5": ["CWE-424"], "6": ["CWE-425"]}, "title": "_withdrawDividendOfUser", "description": "No description provided in the audit report fragments.", "severity": "N/A", "contract": "RC1DividendTracker", "function": "_withdrawDividendOfUser(address)", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-693"]}, "title": "_transfer", "description": "Potential reentrancy vulnerability in internal _transfer function.", "severity": "High", "contract": "DividendPayingToken", "function": "_transfer(address,address,uint256)", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "_mint", "description": "Potential security vulnerability in _mint function.", "severity": "High", "contract": "RC2", "function": "_mint", "lineNumber": "N/A"}, {"id": 16, "category": {"1": ["CWE-664"], "2": ["CWE-404"], "3": ["CWE-772"], "4": ["CWE-401"]}, "title": "_burn", "description": "N/A", "severity": "N/A", "contract": "RC1DividendTracker, RC2", "function": "_burn", "lineNumber": "N/A"}, {"id": 17, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "_setBalance", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "_setBalance(address,uint256)", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/InterFi/RewardCycle2_AuditReport_InterFi.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0x38330281b627240b1F5470014091F69ad5a84146"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "approve",
+            "description": "The approve function has a security vulnerability.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "approve",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Transfer Function Vulnerability",
+            "description": "The transfer function has a vulnerability.",
+            "severity": "High",
+            "contract": "RC2",
+            "function": "transfer()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "transferFrom",
+            "description": "A non-whitelisted wallet can only transfer a specified number of tokens.",
+            "severity": "Medium",
+            "contract": "DividendPayingToken",
+            "function": "_transfer(address,address,uint256)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected permit Function",
+            "description": "The permit function is marked as external and does not have any access modifiers, making it vulnerable to unauthorized access.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "permit",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected Mint Function",
+            "description": "The mint function is declared as external and can be called by anyone, potentially leading to unauthorized token creation.",
+            "severity": "High",
+            "contract": "RC2",
+            "function": "_mint",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected _burn Function",
+            "description": "The internal _burn function is declared without access modifiers, making it potentially accessible by unauthorized users.",
+            "severity": "High",
+            "contract": "RC2DividendTracker",
+            "function": "_burn",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Swap Function Vulnerabilities",
+            "description": "Multiple swap functions are identified with potential vulnerabilities.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": [
+                "swapTokensForRC1",
+                "swapTokensForBUSD",
+                "swapAndSendRC1Dividends",
+                "swapAndSendBUSDDividends",
+                "swapExactTokensForTokensSupportingFeeOnTransferTokens",
+                "swapExactETHForTokensSupportingFeeOnTransferTokens",
+                "swapExactTokensForETHSupportingFeeOnTransferTokens"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Skim",
+            "description": "N/A",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "skim()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected Sync Function",
+            "description": "The sync function is accessible by anyone and can be used to drain the contract's funds.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "sync",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected Initialize Function",
+            "description": "The initialize function is publicly accessible and can be called by anyone, potentially leading to unauthorized state changes.",
+            "severity": "High",
+            "contract": "RC2",
+            "function": "initialize(address,address)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "<Constructor>",
+            "description": "Unprotected constructor allowing unauthorized access to sensitive functions.",
+            "severity": "Critical",
+            "contract": "Multiple Contracts (RC2, RC1DividendTracker, Ownable, ERC20)",
+            "function": "<Constructor>()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "distributeDividends",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "RC1DividendTracker",
+            "function": "distributeDividends(uint256)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ],
+                "4": [
+                    "CWE-638"
+                ],
+                "5": [
+                    "CWE-424"
+                ],
+                "6": [
+                    "CWE-425"
+                ]
+            },
+            "title": "withdrawDividend",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "DividendPayingToken",
+            "function": "withdrawDividend",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ],
+                "4": [
+                    "CWE-638"
+                ],
+                "5": [
+                    "CWE-424"
+                ],
+                "6": [
+                    "CWE-425"
+                ]
+            },
+            "title": "_withdrawDividendOfUser",
+            "description": "No description provided in the audit report fragments.",
+            "severity": "N/A",
+            "contract": "RC1DividendTracker",
+            "function": "_withdrawDividendOfUser(address)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "_transfer",
+            "description": "Potential reentrancy vulnerability in internal _transfer function.",
+            "severity": "High",
+            "contract": "DividendPayingToken",
+            "function": "_transfer(address,address,uint256)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "_mint",
+            "description": "Potential security vulnerability in _mint function.",
+            "severity": "High",
+            "contract": "RC2",
+            "function": "_mint",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-401"
+                ]
+            },
+            "title": "_burn",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "RC1DividendTracker, RC2",
+            "function": "_burn",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "_setBalance",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "_setBalance(address,uint256)",
+            "lineNumber": "N/A"
+        }
+    ]
+}

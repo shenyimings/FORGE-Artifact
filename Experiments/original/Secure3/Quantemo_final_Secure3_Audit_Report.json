@@ -1,1 +1,241 @@
-{"path": "./Audit_Reports_2024/Secure3/Quantemo_final_Secure3_Audit_Report.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Incorrect unit in QEMOStake :: buyID O()", "description": "N/A", "severity": "N/A", "contract": "QEMOStake", "function": "buyID O()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "QTM-2: Integer Overflow", "description": "The contract is in version 0.5.16, which does not have auto-integer-overflow protection. In the swap function, there is a logic that directly subtracts two uint256 numbers without checking, which will lead to integer overflow.", "severity": "Critical", "contract": "my_factory.sol", "function": "swap", "lineNumber": "515"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "QTM-3: Logical error:Use referReward instead of reward", "description": "The variable `reward` is used instead of `referReward` when calling `transferFrom` function, which results in the wrong number of referral rewards being claimed.", "severity": "Medium", "contract": "N/A", "function": "claimDynamicReward()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "QTM-4: Missing K check in swap function", "description": "The check for x*y>=k is missing in the swap function of QEMOPair contract.", "severity": "Critical", "contract": "QEMOPair", "function": "swap", "lineNumber": "485-L545, 535, 536-542"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "Vulnerability in skim Function of my", "description": "The logic of the `skim` function is flawed, transferring token imbalances including burn amount to the `to` address, resulting in unintended increase in token supply. An attacker could exploit this vulnerability using flash loans.", "severity": "Critical", "contract": "my_factory.sol", "function": "skim(address)", "lineNumber": "549-556"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "QTM-6: Centralized risk.", "description": "In the _processTransfer function, there is a balance limit imposed when both the from and to addresses are not in the W mapping. When the balanceLimit is set too high, it can prevent users with lower asset balances from making transfers.", "severity": "Medium", "contract": "QEMO.sol", "function": "_processTransfer", "lineNumber": "96-100"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "QTM-7: Logical error:IDO funds will be permanently locked in the contract", "description": "IDO funds will be permanently locked in the contract due to a logical error.", "severity": "Medium", "contract": "stake.sol", "function": "buyIDO", "lineNumber": "428-478"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "Logical error:Missing check IDO Time Range in stake:: setIDOTime", "description": "The `setIDOTime` function in the `stake.sol` contract does not include a validation check to ensure that the provided `startTime` is less than the `endTime`. This can lead to issues such as incorrect calculations, unexpected behavior during the IDO process, or even a potential denial-of-service (DoS) vulnerability.", "severity": "Medium", "contract": "stake.sol", "function": "setIDOTime", "lineNumber": "199-202"}, {"id": 8, "category": {"1": ["CWE-682"]}, "title": "Logical error: Missing check startTime in stake:: countingStakePower", "description": "In the `countingStakePower` function of the `stake.sol` contract, there is a high-risk issue in the condition check. The current condition `if (startTime == 0)` is incorrect and may lead to errors when calculating the `day` variable below.", "severity": "Medium", "contract": "stake.sol", "function": "countingStakePower()", "lineNumber": "264-280"}, {"id": 9, "category": {"1": ["CWE-682"]}, "title": "Logical error: Referral rewards will be distributed twice", "description": "In function IdoStake(), referral rewards will be distributed twice to the invitor of the msg.sender.", "severity": "Medium", "contract": "QEMOStake", "function": "IdoStake()", "lineNumber": "446-478"}, {"id": 10, "category": {"1": ["CWE-682"]}, "title": "QTM-11: Logical error:Some usdt may be permanently locked", "description": "Logical error where some USDT may be permanently locked after swapping in the contract QEMOStake.", "severity": "Medium", "contract": "stake.sol", "function": "_stake(address, uint)", "lineNumber": "303-341"}, {"id": 11, "category": {"1": ["CWE-682"]}, "title": "QTM-12: Invalid Balance Checks", "description": "N/A", "severity": "Low", "contract": "stake.sol", "function": "_stake(address player, uint amount)", "lineNumber": "303-L329"}, {"id": 12, "category": {"1": ["CWE-682"]}, "title": "QTM-13: Logical error:Missing update rate after dailyOut changed", "description": "The issue here is that the `rate` is not updated after the `dailyOut` changed. This will result in a larger actual `rate` than expected and the number of daily rewards calculated based on `rate` will be larger than `dailyOut`.", "severity": "Low", "contract": "stake.sol", "function": "checkRate() modifier", "lineNumber": "133-166"}, {"id": 13, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "QTM-14: Logical error:Missing update refer_ R of the invitor when calling function stakeFor", "description": "In contract `QEMOStake`, the function `stakeFor` will bind a default invitor for the user if the user does not have any invitor, but it does not update the `refer_R` of the invitor.", "severity": "Low", "contract": "QEMOStake", "function": "stakeFor", "lineNumber": "349-357"}, {"id": 14, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "QTM-16: Missing parameter check in stake::setUserLevel", "description": "The function setUserLevel lacks a check for the level parameter, which can lead to an array-out-of-bounds error when setting the user's level.", "severity": "Low", "contract": "stake", "function": "setUserLevel", "lineNumber": "480-489"}]}
+{
+    "path": "./Audit_Reports_2024/Secure3/Quantemo_final_Secure3_Audit_Report.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect unit in QEMOStake :: buyID O()",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "QEMOStake",
+            "function": "buyID O()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "QTM-2: Integer Overflow",
+            "description": "The contract is in version 0.5.16, which does not have auto-integer-overflow protection. In the swap function, there is a logic that directly subtracts two uint256 numbers without checking, which will lead to integer overflow.",
+            "severity": "Critical",
+            "contract": "my_factory.sol",
+            "function": "swap",
+            "lineNumber": "515"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "QTM-3: Logical error:Use referReward instead of reward",
+            "description": "The variable `reward` is used instead of `referReward` when calling `transferFrom` function, which results in the wrong number of referral rewards being claimed.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "claimDynamicReward()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "QTM-4: Missing K check in swap function",
+            "description": "The check for x*y>=k is missing in the swap function of QEMOPair contract.",
+            "severity": "Critical",
+            "contract": "QEMOPair",
+            "function": "swap",
+            "lineNumber": "485-L545, 535, 536-542"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Vulnerability in skim Function of my",
+            "description": "The logic of the `skim` function is flawed, transferring token imbalances including burn amount to the `to` address, resulting in unintended increase in token supply. An attacker could exploit this vulnerability using flash loans.",
+            "severity": "Critical",
+            "contract": "my_factory.sol",
+            "function": "skim(address)",
+            "lineNumber": "549-556"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "QTM-6: Centralized risk.",
+            "description": "In the _processTransfer function, there is a balance limit imposed when both the from and to addresses are not in the W mapping. When the balanceLimit is set too high, it can prevent users with lower asset balances from making transfers.",
+            "severity": "Medium",
+            "contract": "QEMO.sol",
+            "function": "_processTransfer",
+            "lineNumber": "96-100"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "QTM-7: Logical error:IDO funds will be permanently locked in the contract",
+            "description": "IDO funds will be permanently locked in the contract due to a logical error.",
+            "severity": "Medium",
+            "contract": "stake.sol",
+            "function": "buyIDO",
+            "lineNumber": "428-478"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Logical error:Missing check IDO Time Range in stake:: setIDOTime",
+            "description": "The `setIDOTime` function in the `stake.sol` contract does not include a validation check to ensure that the provided `startTime` is less than the `endTime`. This can lead to issues such as incorrect calculations, unexpected behavior during the IDO process, or even a potential denial-of-service (DoS) vulnerability.",
+            "severity": "Medium",
+            "contract": "stake.sol",
+            "function": "setIDOTime",
+            "lineNumber": "199-202"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Logical error: Missing check startTime in stake:: countingStakePower",
+            "description": "In the `countingStakePower` function of the `stake.sol` contract, there is a high-risk issue in the condition check. The current condition `if (startTime == 0)` is incorrect and may lead to errors when calculating the `day` variable below.",
+            "severity": "Medium",
+            "contract": "stake.sol",
+            "function": "countingStakePower()",
+            "lineNumber": "264-280"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Logical error: Referral rewards will be distributed twice",
+            "description": "In function IdoStake(), referral rewards will be distributed twice to the invitor of the msg.sender.",
+            "severity": "Medium",
+            "contract": "QEMOStake",
+            "function": "IdoStake()",
+            "lineNumber": "446-478"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "QTM-11: Logical error:Some usdt may be permanently locked",
+            "description": "Logical error where some USDT may be permanently locked after swapping in the contract QEMOStake.",
+            "severity": "Medium",
+            "contract": "stake.sol",
+            "function": "_stake(address, uint)",
+            "lineNumber": "303-341"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "QTM-12: Invalid Balance Checks",
+            "description": "N/A",
+            "severity": "Low",
+            "contract": "stake.sol",
+            "function": "_stake(address player, uint amount)",
+            "lineNumber": "303-L329"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "QTM-13: Logical error:Missing update rate after dailyOut changed",
+            "description": "The issue here is that the `rate` is not updated after the `dailyOut` changed. This will result in a larger actual `rate` than expected and the number of daily rewards calculated based on `rate` will be larger than `dailyOut`.",
+            "severity": "Low",
+            "contract": "stake.sol",
+            "function": "checkRate() modifier",
+            "lineNumber": "133-166"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "QTM-14: Logical error:Missing update refer_ R of the invitor when calling function stakeFor",
+            "description": "In contract `QEMOStake`, the function `stakeFor` will bind a default invitor for the user if the user does not have any invitor, but it does not update the `refer_R` of the invitor.",
+            "severity": "Low",
+            "contract": "QEMOStake",
+            "function": "stakeFor",
+            "lineNumber": "349-357"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "QTM-16: Missing parameter check in stake::setUserLevel",
+            "description": "The function setUserLevel lacks a check for the level parameter, which can lead to an array-out-of-bounds error when setting the user's level.",
+            "severity": "Low",
+            "contract": "stake",
+            "function": "setUserLevel",
+            "lineNumber": "480-489"
+        }
+    ]
+}

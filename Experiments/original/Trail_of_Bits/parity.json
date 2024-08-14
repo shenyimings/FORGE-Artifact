@@ -1,1 +1,381 @@
-{"path": "./Audit_Reports_2024/Trail_of_Bits/parity.pdf", "project_info": {"url": "https://github.com/paritytech/contracts", "commit_hash": "7defba32ebe2c63876b8b47949f971899d512c85", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-691"], "2": ["CWE-1265"]}, "title": "Re-entrancy may lead to stolen ethers", "description": "A re-entrancy vulnerability may allow a malicious user to send more ethers than expected due to the transaction being executed before it is deleted from the proxy list.", "severity": "High", "contract": "Operations", "function": "checkProxy(bytes32 _txid)", "lineNumber": "L278-L284"}, {"id": 1, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Missing loop iteration leads to non-removable validator", "description": "An improper loop iteration in the constructor functions prevents the removal of a consensus validator from the OwnedSet and InnerOwnedSet contracts.", "severity": "Medium", "contract": "InnerOwnedSet.sol", "function": "OwnedSet", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Incorrect interface implementation leads to unexpected behavior", "description": "SimpleCertifier and ProofOfSMS inherit from Certifier but do not implement the getData function, leading to incorrect results.", "severity": "Medium", "contract": "SimpleCertifier.sol and SMSVerification.sol", "function": "getData()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-697"]}, "title": "Incorrect conditional prevents fork rejection", "description": "An incorrect conditional in the only_unratified modifier prevents forks from being rejected.", "severity": "Medium", "contract": "Operations", "function": "rejectFork()", "lineNumber": "162-167, 291-292"}, {"id": 4, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-908"], "4": ["CWE-457"]}, "title": "Uninitialized value leads to an unmodifiable owners list", "description": "An uninitialized OuterSet in InnerSet renders the owners list in InnerOwnedSet immutable.", "severity": "Medium", "contract": "InnerOwnedSet.sol and RelaySet.sol", "function": "N/A", "lineNumber": "L22, L79-80, L82-85"}, {"id": 5, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "Race condition may preempt an Ethereum address to email association", "description": "A race condition in ProofOfEmail may allow an attacker to preempt an Ethereum-address-to-email association.", "severity": "Medium", "contract": "ProofOfEmail", "function": ["puzzle", "confirm"], "lineNumber": "62-65, 66-77"}, {"id": 6, "category": {"1": ["CWE-435"], "2": ["CWE-436"]}, "title": "Incorrect interfaces may lead to unexpected behavior", "description": "ProofOfEmail implements the wrong interface, impacting some of its functions.", "severity": "Medium", "contract": "ProofOfEmail", "function": "N/A", "lineNumber": "L42,L21-L40"}, {"id": 7, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Incorrect authorization prevents the calling of reporting functions", "description": "An incorrect authorization schema prevents outerSet from calling the reportBenign and reportMalicious functions.", "severity": "Medium", "contract": "RelaySet.sol", "function": ["reportBenign", "reportMalicious"], "lineNumber": "71-76"}, {"id": 8, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "\u201cUnrequired\u201d clients can remove a \u201crequired\u201d client\u2019s privilege", "description": "Lack of validation in setClientOwner allows an \u201cunrequired\u201d client to remove the privilege of a \u201crequired\u201d client.", "severity": "Medium", "contract": "Operations.sol", "function": "setClientOwner(address _newOwner)", "lineNumber": "L169-175, L290"}, {"id": 9, "category": {"1": ["CWE-703"]}, "title": "Missing contract existence check may cause unexpected behavior", "description": "The lack of a contract existence check allows calls to an invalid address to return successfully instead of throwing an error, causing the getValidators function to erroneously return an empty list of validators.", "severity": "Medium", "contract": "RelaySet", "function": "getValidators()", "lineNumber": "L59-L69"}, {"id": 10, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "Race condition may lead to content compromise", "description": "A race condition may allow an attacker to preempt a GithubHint transaction and associate the specified hash to malicious content.", "severity": "Medium", "contract": "GithubHint.sol", "function": ["hint(bytes32 _content, string _accountSlashRepo, bytes20 _commit)", "hintURL(bytes32 _content, string _url)"], "lineNumber": ["L16-L22", "L14"]}, {"id": 11, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-415"]}, "title": "Fork re-proposition may prevent owners from accepting or rejecting a fork", "description": "A re-proposed fork cannot be confirmed or rejected by certain owners due to the reuse of memory from a deleted fork.", "severity": "Low", "contract": "Operations", "function": "N/A", "lineNumber": "70-77"}, {"id": 12, "category": {"1": ["CWE-691"], "2": ["CWE-841"]}, "title": "Owners cannot accept or reject re-proposed transactions", "description": "A reproposed transaction cannot be confirmed or rejected by certain owners due to the way the transaction structure is implemented.", "severity": "Low", "contract": "Operations.sol", "function": "N/A", "lineNumber": "79-86"}, {"id": 13, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Lack of argument validation may lead to incorrect deletion of badge information", "description": "A lack of validation in unregister may lead to the incorrect deletion of information.", "severity": "Low", "contract": "BadgeReg.sol", "function": "unregister(uint _id)", "lineNumber": "L52-57"}, {"id": 14, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Deleting clients may lead to incorrect getter values", "description": "Getter functions return information on clients even after clients are deleted, leading to unexpected behavior in third-party applications or contracts.", "severity": "Low", "contract": "Operations", "function": "removeClient()", "lineNumber": "L199-204"}, {"id": 15, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Deleting entries may lead to incorrect getter value (SimpleRegistry)", "description": "Getter functions return information on entries even after entries are deleted, which may lead to unexpected behavior in third-party applications or contracts.", "severity": "Low", "contract": "SimpleRegistry", "function": "N/A", "lineNumber": "L169, L47-51, L57-66, L94-99"}, {"id": 16, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Deleting dapps may lead to incorrect getter value (DappReg)", "description": "Getter functions return information on dapps even after dapps are deleted, which may lead to unexpected behavior in third-party applications or contracts.", "severity": "Low", "contract": "DappReg", "function": "unregister(bytes32 _id)", "lineNumber": "L87-L91"}, {"id": 17, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Deleting badges may lead to incorrect getter value (BadgeReg)", "description": "Getter functions return information on badges even after badges are deleted, which may lead to unexpected behavior in third-party applications or contracts.", "severity": "Low", "contract": "BadgeReg", "function": "unregister(uint _id)", "lineNumber": "L52-57"}, {"id": 18, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Empty keyServerIp may lead to incorrect keyServersList", "description": "KeyServerSet keeps a list of server names associated with IP addresses. A server name can be associated only once. This assumption can be broken by associating a server name with an empty IP address.", "severity": "Informational", "contract": "key_servers_set.sol", "function": "addKeyServer", "lineNumber": "L63-L74"}, {"id": 19, "category": {"1": ["CWE-710"], "2": ["CWE-477"]}, "title": "Contracts specify outdated compiler version", "description": "Some Parity contracts specify an outdated version of the Solidity compiler, which may lead to bugs and warnings.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/parity.pdf",
+    "project_info": {
+        "url": "https://github.com/paritytech/contracts",
+        "commit_hash": "7defba32ebe2c63876b8b47949f971899d512c85",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "Re-entrancy may lead to stolen ethers",
+            "description": "A re-entrancy vulnerability may allow a malicious user to send more ethers than expected due to the transaction being executed before it is deleted from the proxy list.",
+            "severity": "High",
+            "contract": "Operations",
+            "function": "checkProxy(bytes32 _txid)",
+            "lineNumber": "L278-L284"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Missing loop iteration leads to non-removable validator",
+            "description": "An improper loop iteration in the constructor functions prevents the removal of a consensus validator from the OwnedSet and InnerOwnedSet contracts.",
+            "severity": "Medium",
+            "contract": "InnerOwnedSet.sol",
+            "function": "OwnedSet",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect interface implementation leads to unexpected behavior",
+            "description": "SimpleCertifier and ProofOfSMS inherit from Certifier but do not implement the getData function, leading to incorrect results.",
+            "severity": "Medium",
+            "contract": "SimpleCertifier.sol and SMSVerification.sol",
+            "function": "getData()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ]
+            },
+            "title": "Incorrect conditional prevents fork rejection",
+            "description": "An incorrect conditional in the only_unratified modifier prevents forks from being rejected.",
+            "severity": "Medium",
+            "contract": "Operations",
+            "function": "rejectFork()",
+            "lineNumber": "162-167, 291-292"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-908"
+                ],
+                "4": [
+                    "CWE-457"
+                ]
+            },
+            "title": "Uninitialized value leads to an unmodifiable owners list",
+            "description": "An uninitialized OuterSet in InnerSet renders the owners list in InnerOwnedSet immutable.",
+            "severity": "Medium",
+            "contract": "InnerOwnedSet.sol and RelaySet.sol",
+            "function": "N/A",
+            "lineNumber": "L22, L79-80, L82-85"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Race condition may preempt an Ethereum address to email association",
+            "description": "A race condition in ProofOfEmail may allow an attacker to preempt an Ethereum-address-to-email association.",
+            "severity": "Medium",
+            "contract": "ProofOfEmail",
+            "function": [
+                "puzzle",
+                "confirm"
+            ],
+            "lineNumber": "62-65, 66-77"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ]
+            },
+            "title": "Incorrect interfaces may lead to unexpected behavior",
+            "description": "ProofOfEmail implements the wrong interface, impacting some of its functions.",
+            "severity": "Medium",
+            "contract": "ProofOfEmail",
+            "function": "N/A",
+            "lineNumber": "L42,L21-L40"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Incorrect authorization prevents the calling of reporting functions",
+            "description": "An incorrect authorization schema prevents outerSet from calling the reportBenign and reportMalicious functions.",
+            "severity": "Medium",
+            "contract": "RelaySet.sol",
+            "function": [
+                "reportBenign",
+                "reportMalicious"
+            ],
+            "lineNumber": "71-76"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "\u201cUnrequired\u201d clients can remove a \u201crequired\u201d client\u2019s privilege",
+            "description": "Lack of validation in setClientOwner allows an \u201cunrequired\u201d client to remove the privilege of a \u201crequired\u201d client.",
+            "severity": "Medium",
+            "contract": "Operations.sol",
+            "function": "setClientOwner(address _newOwner)",
+            "lineNumber": "L169-175, L290"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Missing contract existence check may cause unexpected behavior",
+            "description": "The lack of a contract existence check allows calls to an invalid address to return successfully instead of throwing an error, causing the getValidators function to erroneously return an empty list of validators.",
+            "severity": "Medium",
+            "contract": "RelaySet",
+            "function": "getValidators()",
+            "lineNumber": "L59-L69"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Race condition may lead to content compromise",
+            "description": "A race condition may allow an attacker to preempt a GithubHint transaction and associate the specified hash to malicious content.",
+            "severity": "Medium",
+            "contract": "GithubHint.sol",
+            "function": [
+                "hint(bytes32 _content, string _accountSlashRepo, bytes20 _commit)",
+                "hintURL(bytes32 _content, string _url)"
+            ],
+            "lineNumber": [
+                "L16-L22",
+                "L14"
+            ]
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-415"
+                ]
+            },
+            "title": "Fork re-proposition may prevent owners from accepting or rejecting a fork",
+            "description": "A re-proposed fork cannot be confirmed or rejected by certain owners due to the reuse of memory from a deleted fork.",
+            "severity": "Low",
+            "contract": "Operations",
+            "function": "N/A",
+            "lineNumber": "70-77"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "Owners cannot accept or reject re-proposed transactions",
+            "description": "A reproposed transaction cannot be confirmed or rejected by certain owners due to the way the transaction structure is implemented.",
+            "severity": "Low",
+            "contract": "Operations.sol",
+            "function": "N/A",
+            "lineNumber": "79-86"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Lack of argument validation may lead to incorrect deletion of badge information",
+            "description": "A lack of validation in unregister may lead to the incorrect deletion of information.",
+            "severity": "Low",
+            "contract": "BadgeReg.sol",
+            "function": "unregister(uint _id)",
+            "lineNumber": "L52-57"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Deleting clients may lead to incorrect getter values",
+            "description": "Getter functions return information on clients even after clients are deleted, leading to unexpected behavior in third-party applications or contracts.",
+            "severity": "Low",
+            "contract": "Operations",
+            "function": "removeClient()",
+            "lineNumber": "L199-204"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Deleting entries may lead to incorrect getter value (SimpleRegistry)",
+            "description": "Getter functions return information on entries even after entries are deleted, which may lead to unexpected behavior in third-party applications or contracts.",
+            "severity": "Low",
+            "contract": "SimpleRegistry",
+            "function": "N/A",
+            "lineNumber": "L169, L47-51, L57-66, L94-99"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Deleting dapps may lead to incorrect getter value (DappReg)",
+            "description": "Getter functions return information on dapps even after dapps are deleted, which may lead to unexpected behavior in third-party applications or contracts.",
+            "severity": "Low",
+            "contract": "DappReg",
+            "function": "unregister(bytes32 _id)",
+            "lineNumber": "L87-L91"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Deleting badges may lead to incorrect getter value (BadgeReg)",
+            "description": "Getter functions return information on badges even after badges are deleted, which may lead to unexpected behavior in third-party applications or contracts.",
+            "severity": "Low",
+            "contract": "BadgeReg",
+            "function": "unregister(uint _id)",
+            "lineNumber": "L52-57"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Empty keyServerIp may lead to incorrect keyServersList",
+            "description": "KeyServerSet keeps a list of server names associated with IP addresses. A server name can be associated only once. This assumption can be broken by associating a server name with an empty IP address.",
+            "severity": "Informational",
+            "contract": "key_servers_set.sol",
+            "function": "addKeyServer",
+            "lineNumber": "L63-L74"
+        },
+        {
+            "id": 19,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-477"
+                ]
+            },
+            "title": "Contracts specify outdated compiler version",
+            "description": "Some Parity contracts specify an outdated version of the Solidity compiler, which may lead to bugs and warnings.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

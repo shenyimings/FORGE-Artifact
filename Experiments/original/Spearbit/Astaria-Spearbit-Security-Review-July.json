@@ -1,1 +1,88 @@
-{"path": "./Audit_Reports_2024/Spearbit/Astaria-Spearbit-Security-Review-July.pdf", "project_info": {"url": "https://github.com/AstariaXYZ/astaria-core", "commit_hash": "b9d76c2fe3eb3418362ad280fbf1e5e98dd385a4", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Non-lien NFT tokens can get locked in the vaults", "description": "A malicious collateralized NFT token can block liquidation and also epoch processing for public vaults.", "severity": "Medium Risk", "contract": "CollateralToken.sol, PublicVault.sol", "function": "N/A", "lineNumber": "L523-L526, L353-L357"}, {"id": 1, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "UNI_V3Validator fetches spot prices that may lead to price manipulation attacks", "description": "The UNI_V3Validator contract's validateAndParse function fetches spot prices from Uniswap V3 position, which can be manipulated by attackers through flash loans and large swaps on Uniswap, leading to huge profits.", "severity": "Medium Risk", "contract": "UNI_V3Validator.sol", "function": "validateAndParse()", "lineNumber": "L126-L130"}, {"id": 2, "category": {"1": ["CWE-693"], "2": ["CWE-807"], "3": ["CWE-302"]}, "title": "transfer(...) function in issuePayout(...) can be replaced by a direct call", "description": "In the _issuePayout(...) internal function of the VaultImplementation if the asset is WETH the amount is withdrawn from WETH to native tokens and then transferred to the borrower. transfer limits the amount of gas shared to the call to the borrower which would prevent executing a complex callback and due to changes in gas prices in EVM it might even break some feature for a potential borrower contract.", "severity": "Medium Risk", "contract": "VaultImplementation", "function": "_issuePayout(...)", "lineNumber": "L245"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Price Manipulation Through Flash Loans", "description": "Attackers can manipulate the price of Uniswap pool by providing a large amount of liquidity at a specific price range and then borrowing a flash loan to shift the slot0, allowing them to acquire huge funds.", "severity": "Medium Risk", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Spearbit/Astaria-Spearbit-Security-Review-July.pdf",
+    "project_info": {
+        "url": "https://github.com/AstariaXYZ/astaria-core",
+        "commit_hash": "b9d76c2fe3eb3418362ad280fbf1e5e98dd385a4",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Non-lien NFT tokens can get locked in the vaults",
+            "description": "A malicious collateralized NFT token can block liquidation and also epoch processing for public vaults.",
+            "severity": "Medium Risk",
+            "contract": "CollateralToken.sol, PublicVault.sol",
+            "function": "N/A",
+            "lineNumber": "L523-L526, L353-L357"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "UNI_V3Validator fetches spot prices that may lead to price manipulation attacks",
+            "description": "The UNI_V3Validator contract's validateAndParse function fetches spot prices from Uniswap V3 position, which can be manipulated by attackers through flash loans and large swaps on Uniswap, leading to huge profits.",
+            "severity": "Medium Risk",
+            "contract": "UNI_V3Validator.sol",
+            "function": "validateAndParse()",
+            "lineNumber": "L126-L130"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ],
+                "3": [
+                    "CWE-302"
+                ]
+            },
+            "title": "transfer(...) function in issuePayout(...) can be replaced by a direct call",
+            "description": "In the _issuePayout(...) internal function of the VaultImplementation if the asset is WETH the amount is withdrawn from WETH to native tokens and then transferred to the borrower. transfer limits the amount of gas shared to the call to the borrower which would prevent executing a complex callback and due to changes in gas prices in EVM it might even break some feature for a potential borrower contract.",
+            "severity": "Medium Risk",
+            "contract": "VaultImplementation",
+            "function": "_issuePayout(...)",
+            "lineNumber": "L245"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Price Manipulation Through Flash Loans",
+            "description": "Attackers can manipulate the price of Uniswap pool by providing a large amount of liquidity at a specific price range and then borrowing a flash loan to shift the slot0, allowing them to acquire huge funds.",
+            "severity": "Medium Risk",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

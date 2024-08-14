@@ -1,1 +1,301 @@
-{"path": "./Audit_Reports_2024/Statemind/2022-07-08_Yearn_veYFI(Voting_and_RewardPool).pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "veYFI balance might not decrease", "description": "It is possible for a user to create a lock longer than `MAX_LOCK_DURATION`, but such that `kink.ts` at the line is less than `block.timestamp` since it rounds down to a week. Then in the function `balanceOf()`, function `replay_slope_changes()` will not consider the change of slope at `kink.ts` resulting in a balance of user that doesn't decrease with time.", "severity": "Critical", "contract": "VotingYFI.vy", "function": "balanceOf() and replay_slope_changes()", "lineNumber": "136"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Incorrect balance calculation leading to higher reward", "description": "The balance calculation can be incorrect if a user creates a lock longer than 4 years such that checkpoint slope is `0`. Then `balance_of` would be the initial veYFI balance at `old_user_point.ts` without factoring change of slope in kink. Then a user might get a bigger reward than they were supposed to.", "severity": "High", "contract": "RewardPool", "function": "N/A", "lineNumber": "266"}, {"id": 2, "category": {"1": ["CWE-707"], "2": ["CWE-228"], "3": ["CWE-237"], "4": ["CWE-239"]}, "title": "Incorrect interface", "description": "The interface for the `VotingYFI` contract is incorrect.", "severity": "High", "contract": "RewardPool", "function": "N/A", "lineNumber": "9-16"}, {"id": 3, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Tokens may be lost if checkpoint functions are not called for 20 weeks", "description": "If the function `_checkpoint_token()` is not called for more than 20 weeks, then `since_last` at the line will be bigger than 20 weeks, but the `for` loops only adds rewards for 20 weeks, meaning some tokens will be lost. If the function `_checkpoint_total_supply()` is not called for more than 20 weeks, then when claiming rewards `self.ve_supply[week_cursor]` will reach `0` reverting the transaction.", "severity": "Medium", "contract": "RewardPool", "function": "_checkpoint_token() and _checkpoint_total_supply()", "lineNumber": "92"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "Incorrect balance calculation", "description": "The function `ve_for_at()` returns the veYFI balance for a user at the timestamp. But the calculation can be incorrect if a user creates a lock longer than 4 years such that the checkpoint slope is `0` . Then the balance at `_timestamp` would return the initial veYFI balance without factoring change of slope in kink.", "severity": "High", "contract": "RewardPool", "function": "ve_for_at()", "lineNumber": "L175"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"], "4": ["CWE-766"]}, "title": "Function _find_timestamp_epoch() can be view", "description": "At the line RewardPool.vy#L130 function can be view.", "severity": "Informational", "contract": "RewardPool", "function": "_find_timestamp_epoch()", "lineNumber": "130"}, {"id": 6, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Code duplication", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Excess reentrancy protection", "description": "The `@noreentrant('lock')` modifier is unnecessary because this function only calls YFI token contract and VotingYFI contract.", "severity": "Informational", "contract": "RewardPool", "function": "N/A", "lineNumber": "284"}, {"id": 8, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"], "4": ["CWE-690"]}, "title": "No check for address zero", "description": "There is no check for address zero for parameters `token`, `reward_pool`.", "severity": "Acknowledged", "contract": "VotingYFI.vy", "function": "N/A", "lineNumber": "87-88"}, {"id": 9, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Unnecessary condition", "description": "The check `block.timestamp == t` is unnecessary since if `since_last == 0`, then `t` is equal to `block.timestamp`.", "severity": "Acknowledged", "contract": "RewardPool", "function": "N/A", "lineNumber": "RewardPool.vy#L100"}, {"id": 10, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Unreachable code", "description": "N/A", "severity": "Informational", "contract": "RewardPool.vy", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-682"]}, "title": "Unnecessary gas usage", "description": "The if condition at line RewardPool.vy#L86 is never true since `next_week` can never be equal to `t`. If `since_last == 0`, then `block.timestamp < next_week`. It is recommended to remove the if condition.", "severity": "N/A", "contract": "RewardPool", "function": "_checkpoint_token()", "lineNumber": "L86"}, {"id": 12, "category": {"1": ["CWE-697"], "2": ["CWE-1025"], "3": ["CWE-595"], "4": ["CWE-597"]}, "title": "Unnecessary check", "description": "The uint256 `balance_of` var is already compared to zero, so it isn't necessary to check if `balance_of > 0`. Also, there are two more instances of unnecessary checks.", "severity": "Informational", "contract": "RewardPool.vy", "function": "_checkpoint_token() and other functions", "lineNumber": "L212, L86, L100"}, {"id": 13, "category": {"1": ["CWE-710"], "2": ["CWE-1164"]}, "title": "Incorrect comment", "description": "We recommend deletion of a part the comment about the owner", "severity": "Informational", "contract": "RewardPool", "function": "N/A", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Unused arguments", "description": "`ve` isn't used at RewardPool.vy#L130 and RewardPool.vy#L147", "severity": "Informational", "contract": "RewardPool", "function": "N/A", "lineNumber": "130, 147"}, {"id": 15, "category": {"1": ["CWE-710"]}, "title": "Incorrect indentation", "description": "N/A", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Statemind/2022-07-08_Yearn_veYFI(Voting_and_RewardPool).pdf",
+    "project_info": {
+        "url": "https://github.com/yearn/veYFI/tree/fbda9ac523252920bf3295557f9f764725a23f41",
+        "commit_hash": "fbda9ac523252920bf3295557f9f764725a23f41",
+        "address": "0x90c1f9220d90d3966fbee24045edd73e1d588ad5",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "veYFI balance might not decrease",
+            "description": "It is possible for a user to create a lock longer than `MAX_LOCK_DURATION`, but such that `kink.ts` at the line is less than `block.timestamp` since it rounds down to a week. Then in the function `balanceOf()`, function `replay_slope_changes()` will not consider the change of slope at `kink.ts` resulting in a balance of user that doesn't decrease with time.",
+            "severity": "Critical",
+            "contract": "VotingYFI.vy",
+            "function": "balanceOf() and replay_slope_changes()",
+            "lineNumber": "136"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect balance calculation leading to higher reward",
+            "description": "The balance calculation can be incorrect if a user creates a lock longer than 4 years such that checkpoint slope is `0`. Then `balance_of` would be the initial veYFI balance at `old_user_point.ts` without factoring change of slope in kink. Then a user might get a bigger reward than they were supposed to.",
+            "severity": "High",
+            "contract": "RewardPool",
+            "function": "N/A",
+            "lineNumber": "266"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-237"
+                ],
+                "4": [
+                    "CWE-239"
+                ]
+            },
+            "title": "Incorrect interface",
+            "description": "The interface for the `VotingYFI` contract is incorrect.",
+            "severity": "High",
+            "contract": "RewardPool",
+            "function": "N/A",
+            "lineNumber": "9-16"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Tokens may be lost if checkpoint functions are not called for 20 weeks",
+            "description": "If the function `_checkpoint_token()` is not called for more than 20 weeks, then `since_last` at the line will be bigger than 20 weeks, but the `for` loops only adds rewards for 20 weeks, meaning some tokens will be lost. If the function `_checkpoint_total_supply()` is not called for more than 20 weeks, then when claiming rewards `self.ve_supply[week_cursor]` will reach `0` reverting the transaction.",
+            "severity": "Medium",
+            "contract": "RewardPool",
+            "function": "_checkpoint_token() and _checkpoint_total_supply()",
+            "lineNumber": "92"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect balance calculation",
+            "description": "The function `ve_for_at()` returns the veYFI balance for a user at the timestamp. But the calculation can be incorrect if a user creates a lock longer than 4 years such that the checkpoint slope is `0` . Then the balance at `_timestamp` would return the initial veYFI balance without factoring change of slope in kink.",
+            "severity": "High",
+            "contract": "RewardPool",
+            "function": "ve_for_at()",
+            "lineNumber": "L175"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ],
+                "4": [
+                    "CWE-766"
+                ]
+            },
+            "title": "Function _find_timestamp_epoch() can be view",
+            "description": "At the line RewardPool.vy#L130 function can be view.",
+            "severity": "Informational",
+            "contract": "RewardPool",
+            "function": "_find_timestamp_epoch()",
+            "lineNumber": "130"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Code duplication",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Excess reentrancy protection",
+            "description": "The `@noreentrant('lock')` modifier is unnecessary because this function only calls YFI token contract and VotingYFI contract.",
+            "severity": "Informational",
+            "contract": "RewardPool",
+            "function": "N/A",
+            "lineNumber": "284"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ],
+                "4": [
+                    "CWE-690"
+                ]
+            },
+            "title": "No check for address zero",
+            "description": "There is no check for address zero for parameters `token`, `reward_pool`.",
+            "severity": "Acknowledged",
+            "contract": "VotingYFI.vy",
+            "function": "N/A",
+            "lineNumber": "87-88"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Unnecessary condition",
+            "description": "The check `block.timestamp == t` is unnecessary since if `since_last == 0`, then `t` is equal to `block.timestamp`.",
+            "severity": "Acknowledged",
+            "contract": "RewardPool",
+            "function": "N/A",
+            "lineNumber": "RewardPool.vy#L100"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Unreachable code",
+            "description": "N/A",
+            "severity": "Informational",
+            "contract": "RewardPool.vy",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Unnecessary gas usage",
+            "description": "The if condition at line RewardPool.vy#L86 is never true since `next_week` can never be equal to `t`. If `since_last == 0`, then `block.timestamp < next_week`. It is recommended to remove the if condition.",
+            "severity": "N/A",
+            "contract": "RewardPool",
+            "function": "_checkpoint_token()",
+            "lineNumber": "L86"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ],
+                "2": [
+                    "CWE-1025"
+                ],
+                "3": [
+                    "CWE-595"
+                ],
+                "4": [
+                    "CWE-597"
+                ]
+            },
+            "title": "Unnecessary check",
+            "description": "The uint256 `balance_of` var is already compared to zero, so it isn't necessary to check if `balance_of > 0`. Also, there are two more instances of unnecessary checks.",
+            "severity": "Informational",
+            "contract": "RewardPool.vy",
+            "function": "_checkpoint_token() and other functions",
+            "lineNumber": "L212, L86, L100"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ]
+            },
+            "title": "Incorrect comment",
+            "description": "We recommend deletion of a part the comment about the owner",
+            "severity": "Informational",
+            "contract": "RewardPool",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Unused arguments",
+            "description": "`ve` isn't used at RewardPool.vy#L130 and RewardPool.vy#L147",
+            "severity": "Informational",
+            "contract": "RewardPool",
+            "function": "N/A",
+            "lineNumber": "130, 147"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ]
+            },
+            "title": "Incorrect indentation",
+            "description": "N/A",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

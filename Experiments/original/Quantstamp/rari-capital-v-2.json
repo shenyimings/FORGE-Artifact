@@ -1,1 +1,190 @@
-{"path": "./Audit_Reports_2024/Quantstamp/rari-capital-v-2.pdf", "project_info": {"url": "https://github.com/rari-capital/", "commit_hash": "feaa246", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Misaligned comments and implementation", "description": "The comment on L23 says 20 million tokens will be minted, but on L27 only 10 million are minted.", "severity": "Low", "contract": "RariGovernanceToken.sol", "function": "N/A", "lineNumber": "L23-L27"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Inaccurate token prices", "description": "N/A", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Incorrect Rari Governance Token amount", "description": "There is a typo on L27 of `RariGovernanceToken.sol`, namely 8570000 should be 8750000 according to the comment on L23.", "severity": "High Risk", "contract": "RariGovernanceToken", "function": "N/A", "lineNumber": "L27"}, {"id": 3, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-908"], "4": ["CWE-457"]}, "title": "Uninitialized _ethUsdPriceFeed", "description": "The `_ethUsdPriceFeed` state variable is never initialized and used in `getEthUsdPrice` function, causing it to always return 0.", "severity": "High Risk", "contract": "RariGovernanceTokenDistributor.sol", "function": "N/A", "lineNumber": "L234"}, {"id": 4, "category": {"1": ["CWE-435"], "2": ["CWE-436"], "3": ["CWE-437"]}, "title": "Divergent mirrored states", "description": "There are several state variables that are mirrored in the following contracts: `RariFundManager`, `RariFundController` and `RariFundProxy`.", "severity": "Medium Risk", "contract": "RariFundManager, RariFundController, RariFundProxy", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Gas Usage / for Loop Concerns", "description": "High gas costs may prevent users from wanting to use the smart contract and may even prevent the contract from providing services entirely due to excessive gas usage in for loops.", "severity": "Medium Risk", "contract": ["RariFundController.sol", "RariFundManager.sol", "RariFundProxy.sol"], "function": ["upgradeFundManager", "N/A", "N/A"], "lineNumber": ["N/A", "N/A", "N/A"]}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-393"]}, "title": "Unchecked Return Value", "description": "Most functions will return a value indicating success or failure. It's important to ensure that every necessary function is checked. Otherwise, the caller just assumes that the function call was successful and continues execution.", "severity": "Medium Risk", "contract": "CompoundPoolController.sol", "function": "cErc20.accrueInterest()", "lineNumber": "L49"}, {"id": 7, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Unfinished token upgrades", "description": "If a user upgrades but receives old fund tokens, they cannot upgrade the received tokens. The conditional on L69 will never hold due to old tokens in an already updated account.", "severity": "Medium Risk", "contract": "RariFundTokenUpgrader.sol", "function": "N/A", "lineNumber": "L69"}, {"id": 8, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Incorrect value for supported currencies", "description": "The array index of the left-hand side member of the assignment in the following code snippet located in `RariFundManager.sol` does not change for any loop iteration and it is out of bounds for the `acceptedCurrencies` array.", "severity": "Medium Risk", "contract": "RariFundManager.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-682"]}, "title": "Amount in pools may be incorrect", "description": "The issue is visible in the `_withdrawFrom` function in `RariFundManager.sol`: The amount in pools may be incorrect.", "severity": "Medium Risk", "contract": "RariFundManager", "function": "_withdrawFrom", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Quantstamp/rari-capital-v-2.pdf",
+    "project_info": {
+        "url": "https://github.com/Rari-Capital/rari-stable-pool-contracts/tree/master",
+        "commit_hash": "master",
+        "address": "0xe2f2a5C287993345a840Db3B0845fbC70f5935a5",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Misaligned comments and implementation",
+            "description": "The comment on L23 says 20 million tokens will be minted, but on L27 only 10 million are minted.",
+            "severity": "Low",
+            "contract": "RariGovernanceToken.sol",
+            "function": "N/A",
+            "lineNumber": "L23-L27"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Inaccurate token prices",
+            "description": "N/A",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect Rari Governance Token amount",
+            "description": "There is a typo on L27 of `RariGovernanceToken.sol`, namely 8570000 should be 8750000 according to the comment on L23.",
+            "severity": "High Risk",
+            "contract": "RariGovernanceToken",
+            "function": "N/A",
+            "lineNumber": "L27"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-908"
+                ],
+                "4": [
+                    "CWE-457"
+                ]
+            },
+            "title": "Uninitialized _ethUsdPriceFeed",
+            "description": "The `_ethUsdPriceFeed` state variable is never initialized and used in `getEthUsdPrice` function, causing it to always return 0.",
+            "severity": "High Risk",
+            "contract": "RariGovernanceTokenDistributor.sol",
+            "function": "N/A",
+            "lineNumber": "L234"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-437"
+                ]
+            },
+            "title": "Divergent mirrored states",
+            "description": "There are several state variables that are mirrored in the following contracts: `RariFundManager`, `RariFundController` and `RariFundProxy`.",
+            "severity": "Medium Risk",
+            "contract": "RariFundManager, RariFundController, RariFundProxy",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Gas Usage / for Loop Concerns",
+            "description": "High gas costs may prevent users from wanting to use the smart contract and may even prevent the contract from providing services entirely due to excessive gas usage in for loops.",
+            "severity": "Medium Risk",
+            "contract": [
+                "RariFundController.sol",
+                "RariFundManager.sol",
+                "RariFundProxy.sol"
+            ],
+            "function": [
+                "upgradeFundManager",
+                "N/A",
+                "N/A"
+            ],
+            "lineNumber": [
+                "N/A",
+                "N/A",
+                "N/A"
+            ]
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-393"
+                ]
+            },
+            "title": "Unchecked Return Value",
+            "description": "Most functions will return a value indicating success or failure. It's important to ensure that every necessary function is checked. Otherwise, the caller just assumes that the function call was successful and continues execution.",
+            "severity": "Medium Risk",
+            "contract": "CompoundPoolController.sol",
+            "function": "cErc20.accrueInterest()",
+            "lineNumber": "L49"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Unfinished token upgrades",
+            "description": "If a user upgrades but receives old fund tokens, they cannot upgrade the received tokens. The conditional on L69 will never hold due to old tokens in an already updated account.",
+            "severity": "Medium Risk",
+            "contract": "RariFundTokenUpgrader.sol",
+            "function": "N/A",
+            "lineNumber": "L69"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Incorrect value for supported currencies",
+            "description": "The array index of the left-hand side member of the assignment in the following code snippet located in `RariFundManager.sol` does not change for any loop iteration and it is out of bounds for the `acceptedCurrencies` array.",
+            "severity": "Medium Risk",
+            "contract": "RariFundManager.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Amount in pools may be incorrect",
+            "description": "The issue is visible in the `_withdrawFrom` function in `RariFundManager.sol`: The amount in pools may be incorrect.",
+            "severity": "Medium Risk",
+            "contract": "RariFundManager",
+            "function": "_withdrawFrom",
+            "lineNumber": "N/A"
+        }
+    ]
+}

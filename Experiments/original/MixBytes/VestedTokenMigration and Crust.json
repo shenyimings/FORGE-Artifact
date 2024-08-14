@@ -1,1 +1,143 @@
-{"path": "./Audit_Reports_2024/MixBytes/VestedTokenMigration and Crust.md", "project_info": {"url": "https://github.com/pie-dao/", "commit_hash": "779a9e1f7636df675323034a8196f430c5a91102", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Incorrect excess token migration", "description": "The return value can incorrectly exceed `_amount` resulting in redundant token migration (more than `_windowAmount`). The statement won't help because it was applied too late - after subtracting `amountMigratedFromWindow[leaf]`. This means several transactions of `_amount` less or equal to `_windowAmount` will succeed.", "severity": "MAJOR", "contract": "VestedTokenMigration", "function": "calcVestedAmount/migrateVested", "lineNumber": "L72, L91"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Differences in crumbs decimals not taken into account during summation", "description": "The differences in `crumbs` decimals are not considered during summation, which can lead to token domination over the entire `Crust`. This contradicts the objective of each token having the same weight.", "severity": "High", "contract": "Crust", "function": "N/A", "lineNumber": "L67, L87"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Returning zero from migrateAmount equals zero function", "description": "The function does not return zero when migrateAmount equals zero, which can cause issues.", "severity": "Medium", "contract": "VestedTokenMigration", "function": "migrateAmount", "lineNumber": "69"}, {"id": 3, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Assertion for amountMigratedFromWindow[leaf] <= _windowAmount", "description": "An assertion could be added to ensure that the amount migrated from the window does not exceed the window amount.", "severity": "N/A", "contract": "VestedTokenMigration", "function": "migrateVested", "lineNumber": "L74"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Allowed change of already set merkle root", "description": "It\u2019s allowed to change the already set merkle root. Make sure that this is desired behaviour.", "severity": "Medium", "contract": "VestedTokenMigration", "function": "N/A", "lineNumber": "43"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Strict check for _vestingStart < _vestingEnd", "description": "Adding a strict check `_vestingStart < _vestingEnd` to ensure the function always works with the correct input that in turn will reduce the number of input data invariants.", "severity": "Medium", "contract": "VestedTokenMigration", "function": "N/A", "lineNumber": "L88"}, {"id": 6, "category": {"1": ["CWE-682"], "2": ["CWE-369"]}, "title": "Check for parameters not equal to zero", "description": "The function should return zero as soon as migrateAmount equals zero.", "severity": "Medium", "contract": "VestedTokenMigration", "function": "N/A", "lineNumber": "69"}, {"id": 7, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Removal of unnecessary getter functions", "description": "For each public state variable an automatic getter function is generated. This means getters for name, symbol and decimals may be removed.", "severity": "N/A", "contract": "Crust", "function": "N/A", "lineNumber": "L25-L47"}]}
+{
+    "path": "./Audit_Reports_2024/MixBytes/VestedTokenMigration and Crust.md",
+    "project_info": {
+        "url": "https://github.com/pie-dao/",
+        "commit_hash": "779a9e1f7636df675323034a8196f430c5a91102",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Incorrect excess token migration",
+            "description": "The return value can incorrectly exceed `_amount` resulting in redundant token migration (more than `_windowAmount`). The statement won't help because it was applied too late - after subtracting `amountMigratedFromWindow[leaf]`. This means several transactions of `_amount` less or equal to `_windowAmount` will succeed.",
+            "severity": "MAJOR",
+            "contract": "VestedTokenMigration",
+            "function": "calcVestedAmount/migrateVested",
+            "lineNumber": "L72, L91"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Differences in crumbs decimals not taken into account during summation",
+            "description": "The differences in `crumbs` decimals are not considered during summation, which can lead to token domination over the entire `Crust`. This contradicts the objective of each token having the same weight.",
+            "severity": "High",
+            "contract": "Crust",
+            "function": "N/A",
+            "lineNumber": "L67, L87"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Returning zero from migrateAmount equals zero function",
+            "description": "The function does not return zero when migrateAmount equals zero, which can cause issues.",
+            "severity": "Medium",
+            "contract": "VestedTokenMigration",
+            "function": "migrateAmount",
+            "lineNumber": "69"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Assertion for amountMigratedFromWindow[leaf] <= _windowAmount",
+            "description": "An assertion could be added to ensure that the amount migrated from the window does not exceed the window amount.",
+            "severity": "N/A",
+            "contract": "VestedTokenMigration",
+            "function": "migrateVested",
+            "lineNumber": "L74"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Allowed change of already set merkle root",
+            "description": "It\u2019s allowed to change the already set merkle root. Make sure that this is desired behaviour.",
+            "severity": "Medium",
+            "contract": "VestedTokenMigration",
+            "function": "N/A",
+            "lineNumber": "43"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Strict check for _vestingStart < _vestingEnd",
+            "description": "Adding a strict check `_vestingStart < _vestingEnd` to ensure the function always works with the correct input that in turn will reduce the number of input data invariants.",
+            "severity": "Medium",
+            "contract": "VestedTokenMigration",
+            "function": "N/A",
+            "lineNumber": "L88"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-369"
+                ]
+            },
+            "title": "Check for parameters not equal to zero",
+            "description": "The function should return zero as soon as migrateAmount equals zero.",
+            "severity": "Medium",
+            "contract": "VestedTokenMigration",
+            "function": "N/A",
+            "lineNumber": "69"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Removal of unnecessary getter functions",
+            "description": "For each public state variable an automatic getter function is generated. This means getters for name, symbol and decimals may be removed.",
+            "severity": "N/A",
+            "contract": "Crust",
+            "function": "N/A",
+            "lineNumber": "L25-L47"
+        }
+    ]
+}

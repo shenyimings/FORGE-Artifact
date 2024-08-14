@@ -1,1 +1,259 @@
-{"path": "./Audit_Reports_2024/Verichains_Lab/Verichains Public Audit Report - WEMIX on Kroma Smartcontracts v1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Missing bridgeTotalSyncStaking update when invoking toOriginSyncExtra", "description": "The localAsset.bridgeTotalSyncStaking is not decreased when being invoked from the toOriginSyncExtra function.", "severity": "Acknowledged", "contract": "CrossBridgeRemote", "function": "toOriginSyncExtra(uint256 amount)", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "setRemoteToken will fail if the owner is changed", "description": "The setRemoteToken function may encounter failure due to a change in ownership.", "severity": "N/A", "contract": "N/A", "function": "setRemoteToken()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-691"]}, "title": "setStakingInfo will fail if the owner is changed", "description": "In the initCrossBridgeOrigin function, setStakingInfo is invoked after _transferOwnership, which changes the owner address. Consequently, setStakingInfo will fail due to the onlyOwner modifier.", "severity": "High", "contract": "CrossBridgeOrigin", "function": "initCrossBridgeOrigin", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Duplicated usage of staking value if ncpIds.length > 1", "description": "In the _stake function, the staking.deposit is called multiple times if ncpIds.length > 1. However, the amount is used as msg.value for each call, which leads to the duplicated usage of the staking value.", "severity": "N/A", "contract": "CrossBridgeOrigin", "function": "_stake", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Incomplete implementation for SupportUnderlyingNative contract", "description": "The SupportUnderlyingNative contract lacks implementation for calcUnderlyingToWrap and calcWrapToUnderlying functions and is not currently used anywhere in the codebase.", "severity": "High", "contract": "SupportUnderlyingNative", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Incomplete implementation for SupportRewardNative contract", "description": "The SupportRewardNative contract lacks implementation and is not used anywhere in the codebase.", "severity": "Medium", "contract": "SupportRewardNative", "function": "_transferReward", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-664"], "2": ["CWE-1329"]}, "title": "Upgradeable contract but based on non-upgradeable ones", "description": "The EcoERC20 contract is designed to be upgradeable, but it is built based on multiple non-upgradeable contracts such as ERC20, SlotAdminable, Ownable, etc. These contracts lack storage slot reservations, which are necessary for future upgrades.", "severity": "Acknowledged", "contract": "EcoERC20", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "Incorrect initialization implementation for EcoERC20Pausable contract", "description": "The initEcoERC20 function is invoked twice during deployment, and the initialization functions lack internal visibility and onlyInitializing modifier.", "severity": "High", "contract": "EcoERC20Pausable", "function": ["initEcoERC20", "initEcoERC20Pausable"], "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-693"]}, "title": "Possible of reentrancy attack in EcoERC20Pausable contract", "description": "The call to _trySendValueCatchFail is not the last call in the completeReceive function, which may lead to a reentrancy attack if msgBridge.account is a malicious contract.", "severity": "Low", "contract": "CrossBridgeRemote", "function": "completeReceive()", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-707"], "2": ["CWE-240"]}, "title": "Duplicated storage variables", "description": "The EcoERC20MetadataInitializable contract inherits from the ERC20 contract, which already contains the _name and _symbol state variables. However, these variables are redeclared in the EcoERC20MetadataInitializable contract, leading to unnecessary duplication of storage variables.", "severity": "N/A", "contract": "EcoERC20MetadataInitializable", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "setRemoteToken will fail if the owner is changed", "description": "The setRemoteToken function fails when the owner is changed.", "severity": "High", "contract": "N/A", "function": "setRemoteToken", "lineNumber": "11"}, {"id": 11, "category": {"1": ["CWE-691"]}, "title": "setStakingInfo will fail if the owner is changed", "description": "In the initCrossBridgeOrigin function, setStakingInfo is invoked after _transferOwnership, which changes the owner address, consequently, setStakingInfo will fail due to the onlyOwner modifier.", "severity": "Critical", "contract": "CrossBridgeOrigin", "function": "initCrossBridgeOrigin", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-682"]}, "title": "Duplicated usage of staking value if ncpIds.length > 1", "description": "In the _stake function, the staking.deposit is called multiple times if ncpIds.length > 1, leading to duplicated usage of the staking value.", "severity": "N/A", "contract": "CrossBridgeOrigin", "function": "_stake(uint256 amount)", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Incomplete implementation for SupportUnderlyingNative contract", "description": "The SupportUnderlyingNative contract lacks implementation for calcUnderlyingToWrap and calcWrapToUnderlying functions and is not currently used anywhere in the codebase.", "severity": "N/A", "contract": "SupportUnderlyingNative", "function": "stakeValue, unstakeValue", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "|6|Incomplete implementation for SupportRewardNative contract", "description": "The SupportRewardNative contract lacks implementation and is not used anywhere in the codebase.", "severity": "Medium", "contract": "SupportRewardNative", "function": "_transferReward", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Verichains_Lab/Verichains Public Audit Report - WEMIX on Kroma Smartcontracts v1.0.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Missing bridgeTotalSyncStaking update when invoking toOriginSyncExtra",
+            "description": "The localAsset.bridgeTotalSyncStaking is not decreased when being invoked from the toOriginSyncExtra function.",
+            "severity": "Acknowledged",
+            "contract": "CrossBridgeRemote",
+            "function": "toOriginSyncExtra(uint256 amount)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "setRemoteToken will fail if the owner is changed",
+            "description": "The setRemoteToken function may encounter failure due to a change in ownership.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "setRemoteToken()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ]
+            },
+            "title": "setStakingInfo will fail if the owner is changed",
+            "description": "In the initCrossBridgeOrigin function, setStakingInfo is invoked after _transferOwnership, which changes the owner address. Consequently, setStakingInfo will fail due to the onlyOwner modifier.",
+            "severity": "High",
+            "contract": "CrossBridgeOrigin",
+            "function": "initCrossBridgeOrigin",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Duplicated usage of staking value if ncpIds.length > 1",
+            "description": "In the _stake function, the staking.deposit is called multiple times if ncpIds.length > 1. However, the amount is used as msg.value for each call, which leads to the duplicated usage of the staking value.",
+            "severity": "N/A",
+            "contract": "CrossBridgeOrigin",
+            "function": "_stake",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Incomplete implementation for SupportUnderlyingNative contract",
+            "description": "The SupportUnderlyingNative contract lacks implementation for calcUnderlyingToWrap and calcWrapToUnderlying functions and is not currently used anywhere in the codebase.",
+            "severity": "High",
+            "contract": "SupportUnderlyingNative",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Incomplete implementation for SupportRewardNative contract",
+            "description": "The SupportRewardNative contract lacks implementation and is not used anywhere in the codebase.",
+            "severity": "Medium",
+            "contract": "SupportRewardNative",
+            "function": "_transferReward",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-1329"
+                ]
+            },
+            "title": "Upgradeable contract but based on non-upgradeable ones",
+            "description": "The EcoERC20 contract is designed to be upgradeable, but it is built based on multiple non-upgradeable contracts such as ERC20, SlotAdminable, Ownable, etc. These contracts lack storage slot reservations, which are necessary for future upgrades.",
+            "severity": "Acknowledged",
+            "contract": "EcoERC20",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect initialization implementation for EcoERC20Pausable contract",
+            "description": "The initEcoERC20 function is invoked twice during deployment, and the initialization functions lack internal visibility and onlyInitializing modifier.",
+            "severity": "High",
+            "contract": "EcoERC20Pausable",
+            "function": [
+                "initEcoERC20",
+                "initEcoERC20Pausable"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "Possible of reentrancy attack in EcoERC20Pausable contract",
+            "description": "The call to _trySendValueCatchFail is not the last call in the completeReceive function, which may lead to a reentrancy attack if msgBridge.account is a malicious contract.",
+            "severity": "Low",
+            "contract": "CrossBridgeRemote",
+            "function": "completeReceive()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-240"
+                ]
+            },
+            "title": "Duplicated storage variables",
+            "description": "The EcoERC20MetadataInitializable contract inherits from the ERC20 contract, which already contains the _name and _symbol state variables. However, these variables are redeclared in the EcoERC20MetadataInitializable contract, leading to unnecessary duplication of storage variables.",
+            "severity": "N/A",
+            "contract": "EcoERC20MetadataInitializable",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "setRemoteToken will fail if the owner is changed",
+            "description": "The setRemoteToken function fails when the owner is changed.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "setRemoteToken",
+            "lineNumber": "11"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ]
+            },
+            "title": "setStakingInfo will fail if the owner is changed",
+            "description": "In the initCrossBridgeOrigin function, setStakingInfo is invoked after _transferOwnership, which changes the owner address, consequently, setStakingInfo will fail due to the onlyOwner modifier.",
+            "severity": "Critical",
+            "contract": "CrossBridgeOrigin",
+            "function": "initCrossBridgeOrigin",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Duplicated usage of staking value if ncpIds.length > 1",
+            "description": "In the _stake function, the staking.deposit is called multiple times if ncpIds.length > 1, leading to duplicated usage of the staking value.",
+            "severity": "N/A",
+            "contract": "CrossBridgeOrigin",
+            "function": "_stake(uint256 amount)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Incomplete implementation for SupportUnderlyingNative contract",
+            "description": "The SupportUnderlyingNative contract lacks implementation for calcUnderlyingToWrap and calcWrapToUnderlying functions and is not currently used anywhere in the codebase.",
+            "severity": "N/A",
+            "contract": "SupportUnderlyingNative",
+            "function": "stakeValue, unstakeValue",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "|6|Incomplete implementation for SupportRewardNative contract",
+            "description": "The SupportRewardNative contract lacks implementation and is not used anywhere in the codebase.",
+            "severity": "Medium",
+            "contract": "SupportRewardNative",
+            "function": "_transferReward",
+            "lineNumber": "N/A"
+        }
+    ]
+}

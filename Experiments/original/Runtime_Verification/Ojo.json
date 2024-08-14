@@ -1,1 +1,240 @@
-{"path": "./Audit_Reports_2024/Runtime_V\u0435rification/Ojo.pdf", "project_info": {"url": "https://ojo.network/", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"]}, "title": "No error propagation in bulk operations", "description": "The price feed contract does not properly propagate errors triggered by function execution during bulk operations.", "severity": "Low", "contract": "Price feed contract", "function": "query_reference_data_bulk", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"], "2": ["CWE-190"], "3": ["CWE-680"]}, "title": "A02: (Price feeder) Potential risk of running pingTicker more times than desired", "description": "When utilizing Go's select implementation, the executed code will enable the system to wait on several communication operations simultaneously, blocking further execution of the function where the select statement is located until one of the operations successfully returns, proceeding to the execution of the case. This can cause the pingTicker to run multiple times.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "219-221"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "(Ojo node) Denial of service of the node (EndBlocker failure)", "description": "The _EndBlocker_ function fails when a validator submits a vote for a token denomination that does not exist or is not included in the _RewardBands_ list, causing the node to terminate without distributing rewards, setting prices, clearing ballots, and updating miss counters.", "severity": "High", "contract": "Ojo node", "function": "_EndBlocker_", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-697"]}, "title": "A04: (Price feeder) Enforcement of time interval for last candles in TVWAP takes only in consideration the comparison between the candle timestamp and the local clock time minus 5 minutes", "description": "The _ComputeTVWAP_ function does not properly enforce the time interval for last candles in TVWAP, considering only the comparison between the candle timestamp and the local clock time minus 5 minutes, which can lead to problematic consequences if the clock is deviated.", "severity": "Low", "contract": "oracle/util.go", "function": "_ComputeTVWAP_", "lineNumber": "113"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "A05: (Ojo node) Price manipulation by overpowering validators", "description": "Malicious users can manipulate asset prices by creating multiple validators with minimal voting power, overpowering honest validators' consensus.", "severity": "High", "contract": "N/A", "function": "_EndBlocker_", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "A06: (Ojo node) Variable representing the number of maximum valid votes can be lower than the actual value", "description": "In the Ojo node, a validator is awarded a \u201cwin\u201d if their exchange rate for the voted asset falls within the deviation range calculated by the protocol mechanisms. The maximum number of wins that a validator can have is calculated in the _PossibleWinsPerSlash_Window_ function.", "severity": "Low", "contract": "ojo/x/oracle/keeper/slash.go", "function": "_PossibleWinsPerSlash_Window_", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Possibility for denial of service in the price feeder", "description": "The _ConvertCandlesToUSD_ function in the _ojo/price-feeder/oracle/convert.go_ module has no validation regarding if the base of that candle is actually USD, meaning that candles with the exchange rate of assets other than USD can be used for calculating the price of Token A.", "severity": "Medium", "contract": "_ojo/price-feeder/oracle/convert.go", "function": "_ConvertCandlesToUSD_", "lineNumber": "58-78"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "A08: (Price feeder) Filtering of candles delays modification of exchange rates for assets", "description": "The filtering of candles prior to exchange rate calculation can delay the update of asset exchange rates in scenarios of drastic price fluctuations, as outlier values are removed and newest valid prices are not used.", "severity": "Low", "contract": "N/A", "function": "_ConvertCandlesToUSD_", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-697"], "2": ["CWE-1025"], "3": ["CWE-595"], "4": ["CWE-597"]}, "title": "(Price feed contract) RELAYERS map values are not used", "description": "The value mapped by the relayer address is never used as the validation process checks only if the address has an entry in the RELAYERS map.", "severity": "Informative", "contract": "Price feed contract", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-682"]}, "title": "Median data is a vector, which implies that the current median is not stored", "description": "When providing the median from a set of values, it is expected that the closest value to the midpoint of the ordered set will be returned. In Ojo\u2019s price-feed contracts, all values from the set are returned.", "severity": "Informative", "contract": "Price feed contract", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "(Price feed contract) Relayers are fully trusted by the contract and no validations are performed over relayed rates", "description": "Relayers are able to perform relays to the price-feed contract either gracefully or forcefully. In both cases, no validations over the actual exchange rate provided by the relayer are performed.", "severity": "Informative", "contract": "Price feed contract", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-703"]}, "title": "(Price feed contract) Median status is ignored when executing execute_force_relay_historical_median", "description": "All requests to update or query the historical median data will fail if the median status is false, indicating that this endpoint is disabled in the contract.", "severity": "Informative", "contract": "Price feed contract", "function": "_execute_force_relay_historical_median_", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-693"]}, "title": "B05: (Price feed contract) There are no prevention mechanisms to fully stop the price relaying process", "description": "Only the median data can be halted by changing the MEDIANSTATUS boolean variable. Deviation, reference, and ref data still can be queried.", "severity": "Informative", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "(Price feed contract) No checks on the received resolve time", "description": "The contract does not check if the timestamp is from a moment in time that is equals to or prior to the current blockchain timestamp, allowing a compromised relayer to manipulate the price feed contract.", "severity": "Informative", "contract": "Price feed contract", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Runtime_V\u0435rification/Ojo.pdf",
+    "project_info": {
+        "url": "https://github.com/ojo-network/ojo",
+        "commit_hash": "N/A",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "No error propagation in bulk operations",
+            "description": "The price feed contract does not properly propagate errors triggered by function execution during bulk operations.",
+            "severity": "Low",
+            "contract": "Price feed contract",
+            "function": "query_reference_data_bulk",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ],
+                "3": [
+                    "CWE-680"
+                ]
+            },
+            "title": "A02: (Price feeder) Potential risk of running pingTicker more times than desired",
+            "description": "When utilizing Go's select implementation, the executed code will enable the system to wait on several communication operations simultaneously, blocking further execution of the function where the select statement is located until one of the operations successfully returns, proceeding to the execution of the case. This can cause the pingTicker to run multiple times.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "219-221"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "(Ojo node) Denial of service of the node (EndBlocker failure)",
+            "description": "The _EndBlocker_ function fails when a validator submits a vote for a token denomination that does not exist or is not included in the _RewardBands_ list, causing the node to terminate without distributing rewards, setting prices, clearing ballots, and updating miss counters.",
+            "severity": "High",
+            "contract": "Ojo node",
+            "function": "_EndBlocker_",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ]
+            },
+            "title": "A04: (Price feeder) Enforcement of time interval for last candles in TVWAP takes only in consideration the comparison between the candle timestamp and the local clock time minus 5 minutes",
+            "description": "The _ComputeTVWAP_ function does not properly enforce the time interval for last candles in TVWAP, considering only the comparison between the candle timestamp and the local clock time minus 5 minutes, which can lead to problematic consequences if the clock is deviated.",
+            "severity": "Low",
+            "contract": "oracle/util.go",
+            "function": "_ComputeTVWAP_",
+            "lineNumber": "113"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "A05: (Ojo node) Price manipulation by overpowering validators",
+            "description": "Malicious users can manipulate asset prices by creating multiple validators with minimal voting power, overpowering honest validators' consensus.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "_EndBlocker_",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "A06: (Ojo node) Variable representing the number of maximum valid votes can be lower than the actual value",
+            "description": "In the Ojo node, a validator is awarded a \u201cwin\u201d if their exchange rate for the voted asset falls within the deviation range calculated by the protocol mechanisms. The maximum number of wins that a validator can have is calculated in the _PossibleWinsPerSlash_Window_ function.",
+            "severity": "Low",
+            "contract": "ojo/x/oracle/keeper/slash.go",
+            "function": "_PossibleWinsPerSlash_Window_",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Possibility for denial of service in the price feeder",
+            "description": "The _ConvertCandlesToUSD_ function in the _ojo/price-feeder/oracle/convert.go_ module has no validation regarding if the base of that candle is actually USD, meaning that candles with the exchange rate of assets other than USD can be used for calculating the price of Token A.",
+            "severity": "Medium",
+            "contract": "_ojo/price-feeder/oracle/convert.go",
+            "function": "_ConvertCandlesToUSD_",
+            "lineNumber": "58-78"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "A08: (Price feeder) Filtering of candles delays modification of exchange rates for assets",
+            "description": "The filtering of candles prior to exchange rate calculation can delay the update of asset exchange rates in scenarios of drastic price fluctuations, as outlier values are removed and newest valid prices are not used.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "_ConvertCandlesToUSD_",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ],
+                "2": [
+                    "CWE-1025"
+                ],
+                "3": [
+                    "CWE-595"
+                ],
+                "4": [
+                    "CWE-597"
+                ]
+            },
+            "title": "(Price feed contract) RELAYERS map values are not used",
+            "description": "The value mapped by the relayer address is never used as the validation process checks only if the address has an entry in the RELAYERS map.",
+            "severity": "Informative",
+            "contract": "Price feed contract",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Median data is a vector, which implies that the current median is not stored",
+            "description": "When providing the median from a set of values, it is expected that the closest value to the midpoint of the ordered set will be returned. In Ojo\u2019s price-feed contracts, all values from the set are returned.",
+            "severity": "Informative",
+            "contract": "Price feed contract",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "(Price feed contract) Relayers are fully trusted by the contract and no validations are performed over relayed rates",
+            "description": "Relayers are able to perform relays to the price-feed contract either gracefully or forcefully. In both cases, no validations over the actual exchange rate provided by the relayer are performed.",
+            "severity": "Informative",
+            "contract": "Price feed contract",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "(Price feed contract) Median status is ignored when executing execute_force_relay_historical_median",
+            "description": "All requests to update or query the historical median data will fail if the median status is false, indicating that this endpoint is disabled in the contract.",
+            "severity": "Informative",
+            "contract": "Price feed contract",
+            "function": "_execute_force_relay_historical_median_",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "B05: (Price feed contract) There are no prevention mechanisms to fully stop the price relaying process",
+            "description": "Only the median data can be halted by changing the MEDIANSTATUS boolean variable. Deviation, reference, and ref data still can be queried.",
+            "severity": "Informative",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "(Price feed contract) No checks on the received resolve time",
+            "description": "The contract does not check if the timestamp is from a moment in time that is equals to or prior to the current blockchain timestamp, allowing a compromised relayer to manipulate the price feed contract.",
+            "severity": "Informative",
+            "contract": "Price feed contract",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

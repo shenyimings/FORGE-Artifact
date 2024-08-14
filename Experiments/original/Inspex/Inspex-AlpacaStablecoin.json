@@ -1,1 +1,153 @@
-{"path": "./Audit_Reports_2024/Inspex/Inspex-AlpacaStablecoin.pdf", "project_info": {"url": "https://github.com/alpaca-finance/alpaca-stablecoin", "commit_hash": "0b684fcf4deedeba4c02a2454ccfbb10bc1e8f03", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-693"], "2": ["CWE-358"]}, "title": "Use of Upgradable Contract Design", "description": "The logic of affected contracts can be arbitrarily changed, allowing the proxy owner to perform malicious actions, such as stealing users' funds, at any time.", "severity": "High", "contract": "AccessControlConfig, AlpacaOraclePriceFeed, AlpacaStablecoin, AuthTokenAdapter, BookKeeper, CollateralPoolConfig, DexPriceOracle, FixedSpreadLiquidationStrategy, FlashMintModule, IbTokenAdapter, IbTokenPriceFeed, LiquidationEngine, PositionManager, PriceOracle, ProxyWalletRegistry, ShowStopper, SimplePriceFeed, StabilityFeeCollector, StableSwapModule, StablecoinAdapter, StrictAlpacaOraclePriceFeed, SystemDebtEngine, TokenAdapter", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Centralized Control of State Variables", "description": "The controlling authorities can change critical state variables to gain additional profit, which is unfair to other users.", "severity": "High", "contract": "AlpacaOraclePriceFeed BookKeeper CollateralPoolConfig FlashMintModule PositionManager PriceOracle ShowStopper SimplePriceFeed StabilityFeeCollector StableSwapModule SystemDebtEngine StrictAlpacaOraclePriceFeed", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Improper Pausing for Emergency Function", "description": "Users are unable to withdraw their funds in the emergency case when the smart contract is paused by the owner, which results in loss of funds for the users.", "severity": "Medium", "contract": "ibTokenAdapter", "function": "emergencyWithdraw()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Unsynced Collateral and Staking Balance", "description": "The staking balance of moved positions can be mismatched from the balances in the BookKeeper contract, causing incorrectly distributed farming rewards to users and reputation damage to the platform.", "severity": "Medium", "contract": "PositionManager", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "Unsafe Price Oracle", "description": "The price from the oracle can be manipulated, resulting in frozen positions. This is because the collateral asset value will be used to calculate the position margin (priceWithSafetyMargin), and the transaction will be reverted if the collateral asset price is not safe by comparing the primary and secondary price oracle sources with the price difference threshold.", "severity": "Low", "contract": "StrictAlpacaOraclePriceFeed.sol", "function": "peekPrice()", "lineNumber": "113-121"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Unchecked treasuryFeeBps Value Initialization", "description": "Without an upper limit checking mechanism in contract initialization, the functions and contracts that rely on the value of the `treasuryFeeBps` state might result in undesirable values or have their transactions reverted.", "severity": "Info", "contract": "ibTokenAdapter.sol", "function": "N/A", "lineNumber": "242"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-749"]}, "title": "Improper Function Visibility", "description": "Functions' visibility should be changed to external if they are not called from any internal function.", "severity": "Info", "contract": "AlpacaStablecoinProxyActions", "function": "unlockBNB, moveCollateral", "lineNumber": "433-441, 442-450"}, {"id": 7, "category": {"1": ["CWE-710"], "2": ["CWE-1164"]}, "title": "Unused Dependency", "description": "Removing unused dependency `PausableUpgradeable` abstract contract to reduce unnecessary gas usage.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "36"}]}
+{
+    "path": "./Audit_Reports_2024/Inspex/Inspex-AlpacaStablecoin.pdf",
+    "project_info": {
+        "url": "https://github.com/alpaca-finance/alpaca-stablecoin",
+        "commit_hash": "0b684fcf4deedeba4c02a2454ccfbb10bc1e8f03",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-358"
+                ]
+            },
+            "title": "Use of Upgradable Contract Design",
+            "description": "The logic of affected contracts can be arbitrarily changed, allowing the proxy owner to perform malicious actions, such as stealing users' funds, at any time.",
+            "severity": "High",
+            "contract": "AccessControlConfig, AlpacaOraclePriceFeed, AlpacaStablecoin, AuthTokenAdapter, BookKeeper, CollateralPoolConfig, DexPriceOracle, FixedSpreadLiquidationStrategy, FlashMintModule, IbTokenAdapter, IbTokenPriceFeed, LiquidationEngine, PositionManager, PriceOracle, ProxyWalletRegistry, ShowStopper, SimplePriceFeed, StabilityFeeCollector, StableSwapModule, StablecoinAdapter, StrictAlpacaOraclePriceFeed, SystemDebtEngine, TokenAdapter",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Centralized Control of State Variables",
+            "description": "The controlling authorities can change critical state variables to gain additional profit, which is unfair to other users.",
+            "severity": "High",
+            "contract": "AlpacaOraclePriceFeed BookKeeper CollateralPoolConfig FlashMintModule PositionManager PriceOracle ShowStopper SimplePriceFeed StabilityFeeCollector StableSwapModule SystemDebtEngine StrictAlpacaOraclePriceFeed",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Improper Pausing for Emergency Function",
+            "description": "Users are unable to withdraw their funds in the emergency case when the smart contract is paused by the owner, which results in loss of funds for the users.",
+            "severity": "Medium",
+            "contract": "ibTokenAdapter",
+            "function": "emergencyWithdraw()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Unsynced Collateral and Staking Balance",
+            "description": "The staking balance of moved positions can be mismatched from the balances in the BookKeeper contract, causing incorrectly distributed farming rewards to users and reputation damage to the platform.",
+            "severity": "Medium",
+            "contract": "PositionManager",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Unsafe Price Oracle",
+            "description": "The price from the oracle can be manipulated, resulting in frozen positions. This is because the collateral asset value will be used to calculate the position margin (priceWithSafetyMargin), and the transaction will be reverted if the collateral asset price is not safe by comparing the primary and secondary price oracle sources with the price difference threshold.",
+            "severity": "Low",
+            "contract": "StrictAlpacaOraclePriceFeed.sol",
+            "function": "peekPrice()",
+            "lineNumber": "113-121"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Unchecked treasuryFeeBps Value Initialization",
+            "description": "Without an upper limit checking mechanism in contract initialization, the functions and contracts that rely on the value of the `treasuryFeeBps` state might result in undesirable values or have their transactions reverted.",
+            "severity": "Info",
+            "contract": "ibTokenAdapter.sol",
+            "function": "N/A",
+            "lineNumber": "242"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-749"
+                ]
+            },
+            "title": "Improper Function Visibility",
+            "description": "Functions' visibility should be changed to external if they are not called from any internal function.",
+            "severity": "Info",
+            "contract": "AlpacaStablecoinProxyActions",
+            "function": "unlockBNB, moveCollateral",
+            "lineNumber": "433-441, 442-450"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ]
+            },
+            "title": "Unused Dependency",
+            "description": "Removing unused dependency `PausableUpgradeable` abstract contract to reduce unnecessary gas usage.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "36"
+        }
+    ]
+}

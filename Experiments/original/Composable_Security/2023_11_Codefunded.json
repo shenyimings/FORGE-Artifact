@@ -1,1 +1,263 @@
-{"path": "./Audit_Reports_2024/Composable_Security/2023_11_Codefunded.pdf", "project_info": {"url": "https://github.com/codefunded/sc-fundswap/", "commit_hash": "b279c659c822415ddca778dc44a15c176ede68e5", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Tokens theft via modified fee", "description": "The owner of a fee plugin can manipulate fees by adding levels with different amounts and percentages, allowing a taker to pay an invalid fee for a pair of tokens.", "severity": "MEDIUM", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-693"], "2": ["CWE-358"]}, "title": "Inconsistent use of modified order", "description": "N/A", "severity": "MEDIUM", "contract": "OrderLib.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Incorrect handling of non-standard ERC20 tokens", "description": "Using non-standard ERC20 tokens can lead to Denial of Service, inability to cancel the order and withdraw the `makerSellToken`. The contract assumes that full `order` `.` `makerSellTokenAmount` amount has been received and increases the balance in `tokenTreasury`, but the amount has been reduced by the fee.", "severity": "MEDIUM", "contract": "FundSwap", "function": ["createPublicOrder", "_fillPublicOrder", "_fillExactInputPublicOrderPartially", "withdraw()", "cancelOrder()", "fillPrivateOrder"], "lineNumber": ["L418", "L113", "L194"]}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Unfavorable rounding for the maker", "description": "During partial fill, `OrderLib` library calculates tokens left after order is partially filled using division and rounds down, allowing taker to exchange less tokens than required.", "severity": "LOW", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-282"], "3": ["CWE-708"]}, "title": "Lack of 2-step ownership transfer", "description": "In contracts `TokenWhitelistPlugin` and `FeeAggregatorPlugin`, inheriting from `Ownable`, if an invalid address is passed as the new owner, there is no way to get the ownership back.", "severity": "LOW", "contract": "TokenWhitelistPlugin, FeeAggregatorPlugin", "function": "transferOwnership", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"], "4": ["CWE-825"], "5": ["CWE-416"]}, "title": "Using counter ids in chains with long reorgs", "description": "The `createPublicOrder` function generates an order identifier using the `tokenIdCounter` counter, which can be vulnerable to reorg attacks on Polygon chain, allowing an attacker to reuse an identifier and resubmit a transaction.", "severity": "LOW", "contract": "order manager contract", "function": "safeMint() and createPublicOrder()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-693"], "2": ["CWE-358"]}, "title": "Whitelist bypass via changed order", "description": "The `TokenWhitelistPlugin` plugin can be bypassed by other plugins changing the tokens to non-whitelisted ones.", "severity": "LOW", "contract": "TokenWhitelistPlugin", "function": "N/A", "lineNumber": "L43, L50"}, {"id": 7, "category": {"1": ["CWE-693"], "2": ["CWE-358"]}, "title": "Full order fill with partial fill", "description": "The `_fillPublicOrderPartially` function allows to fill full amounts of the order without emitting the `PublicOrderFilled` event and burning the order. The taker can later call `fillPublicOrder` function with amount equal to 0 to emit that event, but there is no incentive for them to do that.", "severity": "LOW", "contract": "N/A", "function": "_fillPublicOrderPartially", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-691"], "2": ["CWE-1265"]}, "title": "Cancelling order via re-entrancy", "description": "The `cancelOrder` function is vulnerable to re-entrancy attacks, allowing an attacker to cancel their order during the filling process and retrieve twice as much tokens.", "severity": "HIGH", "contract": "FundSwap", "function": "cancelOrder()", "lineNumber": "412"}, {"id": 9, "category": {"1": ["CWE-691"], "2": ["CWE-1265"]}, "title": "Stealing treasury tokens via re-entrancy", "description": "The `withdraw` function can be manipulated using re-entrancy to withdraw more tokens than allowed.", "severity": "MEDIUM", "contract": "N/A", "function": "withdraw", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "Critical impact on FundSwap by malicious plugin", "description": "Malicious plugins can change makerBuyToken and makerSellToken, steal other approved tokens from takers and makers or cause a Denial of Service on the selected functionalities in the protocol.", "severity": "MEDIUM", "contract": "Fundswap", "function": ["runBeforeOrderCreation", "cancelOrder", "runBeforeOrderCancel", "runBeforeOrderFill"], "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-682"]}, "title": "Invalid fee used", "description": "The owner of fee plugin adds different levels for a specific pair of tokens with varying fees, but the taker pays an incorrect fee.", "severity": "MEDIUM", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-664"], "2": ["CWE-404"], "3": ["CWE-772"], "4": ["CWE-775"]}, "title": "Loss and theft of tokens in batch executor", "description": "The `batchFillPublicOrdersInSequence` function allows users to fill a chain of orders, but it only transfers the output token from the last filled order. Unused output tokens received from middle orders stay in the contract and can be stolen by other users.", "severity": "CRITICAL", "contract": "FundSwapBatchExecutor", "function": "batchFillPublicOrdersInSequence", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Composable_Security/2023_11_Codefunded.pdf",
+    "project_info": {
+        "url": "https://github.com/codefunded/sc-fundswap/",
+        "commit_hash": "b279c659c822415ddca778dc44a15c176ede68e5",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Tokens theft via modified fee",
+            "description": "The owner of a fee plugin can manipulate fees by adding levels with different amounts and percentages, allowing a taker to pay an invalid fee for a pair of tokens.",
+            "severity": "MEDIUM",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-358"
+                ]
+            },
+            "title": "Inconsistent use of modified order",
+            "description": "N/A",
+            "severity": "MEDIUM",
+            "contract": "OrderLib.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect handling of non-standard ERC20 tokens",
+            "description": "Using non-standard ERC20 tokens can lead to Denial of Service, inability to cancel the order and withdraw the `makerSellToken`. The contract assumes that full `order` `.` `makerSellTokenAmount` amount has been received and increases the balance in `tokenTreasury`, but the amount has been reduced by the fee.",
+            "severity": "MEDIUM",
+            "contract": "FundSwap",
+            "function": [
+                "createPublicOrder",
+                "_fillPublicOrder",
+                "_fillExactInputPublicOrderPartially",
+                "withdraw()",
+                "cancelOrder()",
+                "fillPrivateOrder"
+            ],
+            "lineNumber": [
+                "L418",
+                "L113",
+                "L194"
+            ]
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Unfavorable rounding for the maker",
+            "description": "During partial fill, `OrderLib` library calculates tokens left after order is partially filled using division and rounds down, allowing taker to exchange less tokens than required.",
+            "severity": "LOW",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-282"
+                ],
+                "3": [
+                    "CWE-708"
+                ]
+            },
+            "title": "Lack of 2-step ownership transfer",
+            "description": "In contracts `TokenWhitelistPlugin` and `FeeAggregatorPlugin`, inheriting from `Ownable`, if an invalid address is passed as the new owner, there is no way to get the ownership back.",
+            "severity": "LOW",
+            "contract": "TokenWhitelistPlugin, FeeAggregatorPlugin",
+            "function": "transferOwnership",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ],
+                "4": [
+                    "CWE-825"
+                ],
+                "5": [
+                    "CWE-416"
+                ]
+            },
+            "title": "Using counter ids in chains with long reorgs",
+            "description": "The `createPublicOrder` function generates an order identifier using the `tokenIdCounter` counter, which can be vulnerable to reorg attacks on Polygon chain, allowing an attacker to reuse an identifier and resubmit a transaction.",
+            "severity": "LOW",
+            "contract": "order manager contract",
+            "function": "safeMint() and createPublicOrder()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-358"
+                ]
+            },
+            "title": "Whitelist bypass via changed order",
+            "description": "The `TokenWhitelistPlugin` plugin can be bypassed by other plugins changing the tokens to non-whitelisted ones.",
+            "severity": "LOW",
+            "contract": "TokenWhitelistPlugin",
+            "function": "N/A",
+            "lineNumber": "L43, L50"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-358"
+                ]
+            },
+            "title": "Full order fill with partial fill",
+            "description": "The `_fillPublicOrderPartially` function allows to fill full amounts of the order without emitting the `PublicOrderFilled` event and burning the order. The taker can later call `fillPublicOrder` function with amount equal to 0 to emit that event, but there is no incentive for them to do that.",
+            "severity": "LOW",
+            "contract": "N/A",
+            "function": "_fillPublicOrderPartially",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "Cancelling order via re-entrancy",
+            "description": "The `cancelOrder` function is vulnerable to re-entrancy attacks, allowing an attacker to cancel their order during the filling process and retrieve twice as much tokens.",
+            "severity": "HIGH",
+            "contract": "FundSwap",
+            "function": "cancelOrder()",
+            "lineNumber": "412"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "Stealing treasury tokens via re-entrancy",
+            "description": "The `withdraw` function can be manipulated using re-entrancy to withdraw more tokens than allowed.",
+            "severity": "MEDIUM",
+            "contract": "N/A",
+            "function": "withdraw",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Critical impact on FundSwap by malicious plugin",
+            "description": "Malicious plugins can change makerBuyToken and makerSellToken, steal other approved tokens from takers and makers or cause a Denial of Service on the selected functionalities in the protocol.",
+            "severity": "MEDIUM",
+            "contract": "Fundswap",
+            "function": [
+                "runBeforeOrderCreation",
+                "cancelOrder",
+                "runBeforeOrderCancel",
+                "runBeforeOrderFill"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Invalid fee used",
+            "description": "The owner of fee plugin adds different levels for a specific pair of tokens with varying fees, but the taker pays an incorrect fee.",
+            "severity": "MEDIUM",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-775"
+                ]
+            },
+            "title": "Loss and theft of tokens in batch executor",
+            "description": "The `batchFillPublicOrdersInSequence` function allows users to fill a chain of orders, but it only transfers the output token from the last filled order. Unused output tokens received from middle orders stay in the contract and can be stolen by other users.",
+            "severity": "CRITICAL",
+            "contract": "FundSwapBatchExecutor",
+            "function": "batchFillPublicOrdersInSequence",
+            "lineNumber": "N/A"
+        }
+    ]
+}

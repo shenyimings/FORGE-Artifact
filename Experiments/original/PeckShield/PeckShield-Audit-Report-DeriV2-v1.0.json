@@ -1,1 +1,170 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-DeriV2-v1.0.pdf", "project_info": {"url": "https://github.com/dfactory-tech/deriprotocol-v2.git", "commit_hash": "78dc021c", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-693"], "2": ["CWE-807"], "3": ["CWE-302"]}, "title": "Replays Against SymbolOracleOffChain::updatePrice()", "description": "The updatePrice() function generates a message hash using required fields but lacks an EIP-712 domain separator with the EIP-155 chainID, making signature validation susceptible to possible replays across different chains.", "severity": "Informational", "contract": "SymbolOracleOffChain", "function": "updatePrice()", "lineNumber": "29-42"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Invariant Enforcement in removeLiquidity()/trade()", "description": "The _minBToken0Ratio invariant is only validated in the addliquidity() routine and needs to be enforced in all other liquidity-changing routines.", "severity": "Low", "contract": "PerpetualPool", "function": "removeLiquidity(), trade()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Proper Protocol Fee Accounting in removeMargin()", "description": "The `removeMargin()` routine has an inconsistent logic in accruing the protocol fee, specifically when removing margin of a non-`BToken0` asset.", "severity": "Medium", "contract": "PerpetualPool", "function": "removeMargin()", "lineNumber": "324-350"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Potential DoS Against setPool() in LToken/PToken", "description": "Front-running issue in the setPool() routine allowing anyone to call the function and set an arbitrary pool address to the token.", "severity": "Low", "contract": "LToken/PToken", "function": "setPool()", "lineNumber": "61-64"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Incomplete Migration Support In executePoolMigration()", "description": "The `executePoolMigration()` function in `PerpetualPool` has an incomplete implementation as its body is currently commented out.", "severity": "Low", "contract": "PerpetualPool", "function": "executePoolMigration()", "lineNumber": "199-211"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Trust Issue of Admin Keys", "description": "In the Deri-V2 protocol, there is a special administrative account, i.e., controller. This controller account plays a critical role in governing and regulating the system-wide operations.", "severity": "Medium", "contract": "PerpetualPoolRouter", "function": "setBTokenParameters,setSymbolParameters", "lineNumber": "108-126"}, {"id": 6, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "Potential Front-Running/MEV With Reduced Return", "description": "The protocol's helper routines `_swapExactTokensForTokens()` and `_swapTokensForExactTokens()` can be vulnerable to front-running/MEV with reduced return.", "severity": "Low", "contract": "LendingStrategyUSDT", "function": "_swapExactTokensForTokens() and _swapTokensForExactTokens()", "lineNumber": "79-92,94-97"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "Potential Manipulation of BToken Prices", "description": "The interval used to compute the TWAP is not restricted, leaving room for undesired price manipulation.", "severity": "Medium", "contract": "BTokenOracle1, BTokenOracle2", "function": "getPrice()", "lineNumber": "58"}, {"id": 8, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Improved Sanity Checks For System Parameters", "description": "DeFi protocols typically have a number of system-wide parameters that can be dynamically configured on demand.", "severity": "Low", "contract": "PerpetualPoolRouter", "function": "setBTokenParameters", "lineNumber": "172"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-DeriV2-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/dfactory-tech/deriprotocol-v2.git",
+        "commit_hash": "78dc021c",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ],
+                "3": [
+                    "CWE-302"
+                ]
+            },
+            "title": "Replays Against SymbolOracleOffChain::updatePrice()",
+            "description": "The updatePrice() function generates a message hash using required fields but lacks an EIP-712 domain separator with the EIP-155 chainID, making signature validation susceptible to possible replays across different chains.",
+            "severity": "Informational",
+            "contract": "SymbolOracleOffChain",
+            "function": "updatePrice()",
+            "lineNumber": "29-42"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Invariant Enforcement in removeLiquidity()/trade()",
+            "description": "The _minBToken0Ratio invariant is only validated in the addliquidity() routine and needs to be enforced in all other liquidity-changing routines.",
+            "severity": "Low",
+            "contract": "PerpetualPool",
+            "function": "removeLiquidity(), trade()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Proper Protocol Fee Accounting in removeMargin()",
+            "description": "The `removeMargin()` routine has an inconsistent logic in accruing the protocol fee, specifically when removing margin of a non-`BToken0` asset.",
+            "severity": "Medium",
+            "contract": "PerpetualPool",
+            "function": "removeMargin()",
+            "lineNumber": "324-350"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Potential DoS Against setPool() in LToken/PToken",
+            "description": "Front-running issue in the setPool() routine allowing anyone to call the function and set an arbitrary pool address to the token.",
+            "severity": "Low",
+            "contract": "LToken/PToken",
+            "function": "setPool()",
+            "lineNumber": "61-64"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Incomplete Migration Support In executePoolMigration()",
+            "description": "The `executePoolMigration()` function in `PerpetualPool` has an incomplete implementation as its body is currently commented out.",
+            "severity": "Low",
+            "contract": "PerpetualPool",
+            "function": "executePoolMigration()",
+            "lineNumber": "199-211"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "In the Deri-V2 protocol, there is a special administrative account, i.e., controller. This controller account plays a critical role in governing and regulating the system-wide operations.",
+            "severity": "Medium",
+            "contract": "PerpetualPoolRouter",
+            "function": "setBTokenParameters,setSymbolParameters",
+            "lineNumber": "108-126"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Potential Front-Running/MEV With Reduced Return",
+            "description": "The protocol's helper routines `_swapExactTokensForTokens()` and `_swapTokensForExactTokens()` can be vulnerable to front-running/MEV with reduced return.",
+            "severity": "Low",
+            "contract": "LendingStrategyUSDT",
+            "function": "_swapExactTokensForTokens() and _swapTokensForExactTokens()",
+            "lineNumber": "79-92,94-97"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Potential Manipulation of BToken Prices",
+            "description": "The interval used to compute the TWAP is not restricted, leaving room for undesired price manipulation.",
+            "severity": "Medium",
+            "contract": "BTokenOracle1, BTokenOracle2",
+            "function": "getPrice()",
+            "lineNumber": "58"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Improved Sanity Checks For System Parameters",
+            "description": "DeFi protocols typically have a number of system-wide parameters that can be dynamically configured on demand.",
+            "severity": "Low",
+            "contract": "PerpetualPoolRouter",
+            "function": "setBTokenParameters",
+            "lineNumber": "172"
+        }
+    ]
+}

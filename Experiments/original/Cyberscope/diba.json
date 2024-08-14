@@ -1,1 +1,234 @@
-{"path": "./Audit_Reports_2024/Cyberscope/diba.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "ULTW - Unlimited Liquidity to Team Wallet", "description": "The contract owner has the authority to transfer funds without limit to the team wallet, which can lead to unlimited liquidity and potential exploitation.", "severity": "Critical", "contract": "N/A", "function": "takeLiquidity()", "lineNumber": "338"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "MT - Mint Tokens", "description": "The contract owner has the authority to mint tokens and can take advantage of it by sequentially burning tokens from other wallets and minting tokens to the owner's wallet, resulting in highly inflated contract tokens.", "severity": "Critical", "contract": "MadibaBEP20", "function": ["mint", "mintReward", "takeLiquidity", "takeMarketingFee"], "lineNumber": "202, 236, 503, 338"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "BT - Burn Tokens", "description": "The contract owner has the authority to burn tokens from any address. The owner may take advantage of it by calling the `burn` function. As a result the targeted contract address will lose the corresponding tokens.", "severity": "Critical", "contract": "N/A", "function": "burn(address,uint256)", "lineNumber": "206"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "MAL - Misused Algorithmic Logic", "description": "Misused Algorithmic Logic", "severity": "Critical", "contract": "N/A", "function": "N/A", "lineNumber": "338,342"}, {"id": 4, "category": {"1": ["CWE-710"], "2": ["CWE-1126"]}, "title": "L01 - Public Function could be Declared External", "description": "Public functions that are never called by the contract should be declared external to save gas.", "severity": "Minor", "contract": ["Ownable", "MadibaBEP20", "BaseToken"], "function": ["N/A"], "lineNumber": ["54,62", "118,127,136,145,154,172,185,202,236,243"]}, {"id": 5, "category": {"1": ["CWE-710"], "2": ["CWE-1126"]}, "title": "L02 - State Variables could be Declared Constant", "description": "Constant state variables should be declared constant to save gas.", "severity": "minor", "contract": "MadibaBEP20.sol", "function": "N/A", "lineNumber": "60"}, {"id": 6, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1288"]}, "title": "L05 - Unused State Variable", "description": "There are segments that contain unused state variables.", "severity": "minor", "contract": "MadibaBEP20.sol", "function": "N/A", "lineNumber": "34,36"}, {"id": 7, "category": {"1": ["CWE-710"], "2": ["CWE-1076"]}, "title": "L04 - Conformance to Solidity Naming Conventions", "description": "Solidity defines a naming convention that should be followed.", "severity": "Minor", "contract": "MadibaBEP20.sol", "function": "N/A", "lineNumber": "202,243,350,358,422,430,436,443,448,453 and 6 more"}, {"id": 8, "category": {"1": ["CWE-710"], "2": ["CWE-1164"], "3": ["CWE-561"]}, "title": "L09 - Dead Code Elimination", "description": "Dead code elimination finding.", "severity": "Minor", "contract": "@openzeppelin/contracts/utils/Address.sol and MadibaBEP20.sol and @uniswap/lib/contracts/libraries/TransferHelper.sol", "function": "N/A", "lineNumber": "L80,90,109,123,169,179,142,152,27,55 and L321,302,253,350,358 and L7,20,47,33"}, {"id": 9, "category": {"1": ["CWE-697"]}, "title": "L11 - Unnecessary Boolean equality", "description": "The comparison to boolean constants is redundant. Boolean constants can be used directly and do not need to be compared to true or false.", "severity": "Minor", "contract": "MadibaBEP20.sol", "function": "N/A", "lineNumber": "453,485"}, {"id": 10, "category": {"1": ["CWE-682"]}, "title": "L08 - Tautology or Contradiction", "description": "Detects expressions that are tautologies or contradictions. For instance, an uint variable will always be greater than or equal to zero.", "severity": "minor", "contract": "MadibaBEP20.sol", "function": "N/A", "lineNumber": "L67"}, {"id": 11, "category": {"1": ["CWE-682"], "2": ["CWE-1339"]}, "title": "L13 - Divide before Multiply Operation", "description": "Performing divisions before multiplications may cause loss of precision.", "severity": "Minor", "contract": "MadibaBEP20", "function": "N/A", "lineNumber": "contracts/MadibaBEP20.sol#L485"}]}
+{
+    "path": "./Audit_Reports_2024/Cyberscope/diba.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0xE5094E58042e5332CfD25Ed18e4d805e86Fb8f05"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "ULTW - Unlimited Liquidity to Team Wallet",
+            "description": "The contract owner has the authority to transfer funds without limit to the team wallet, which can lead to unlimited liquidity and potential exploitation.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "takeLiquidity()",
+            "lineNumber": "338"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "MT - Mint Tokens",
+            "description": "The contract owner has the authority to mint tokens and can take advantage of it by sequentially burning tokens from other wallets and minting tokens to the owner's wallet, resulting in highly inflated contract tokens.",
+            "severity": "Critical",
+            "contract": "MadibaBEP20",
+            "function": [
+                "mint",
+                "mintReward",
+                "takeLiquidity",
+                "takeMarketingFee"
+            ],
+            "lineNumber": "202, 236, 503, 338"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "BT - Burn Tokens",
+            "description": "The contract owner has the authority to burn tokens from any address. The owner may take advantage of it by calling the `burn` function. As a result the targeted contract address will lose the corresponding tokens.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "burn(address,uint256)",
+            "lineNumber": "206"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "MAL - Misused Algorithmic Logic",
+            "description": "Misused Algorithmic Logic",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "338,342"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1126"
+                ]
+            },
+            "title": "L01 - Public Function could be Declared External",
+            "description": "Public functions that are never called by the contract should be declared external to save gas.",
+            "severity": "Minor",
+            "contract": [
+                "Ownable",
+                "MadibaBEP20",
+                "BaseToken"
+            ],
+            "function": [
+                "N/A"
+            ],
+            "lineNumber": [
+                "54,62",
+                "118,127,136,145,154,172,185,202,236,243"
+            ]
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1126"
+                ]
+            },
+            "title": "L02 - State Variables could be Declared Constant",
+            "description": "Constant state variables should be declared constant to save gas.",
+            "severity": "minor",
+            "contract": "MadibaBEP20.sol",
+            "function": "N/A",
+            "lineNumber": "60"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1288"
+                ]
+            },
+            "title": "L05 - Unused State Variable",
+            "description": "There are segments that contain unused state variables.",
+            "severity": "minor",
+            "contract": "MadibaBEP20.sol",
+            "function": "N/A",
+            "lineNumber": "34,36"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1076"
+                ]
+            },
+            "title": "L04 - Conformance to Solidity Naming Conventions",
+            "description": "Solidity defines a naming convention that should be followed.",
+            "severity": "Minor",
+            "contract": "MadibaBEP20.sol",
+            "function": "N/A",
+            "lineNumber": "202,243,350,358,422,430,436,443,448,453 and 6 more"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ],
+                "3": [
+                    "CWE-561"
+                ]
+            },
+            "title": "L09 - Dead Code Elimination",
+            "description": "Dead code elimination finding.",
+            "severity": "Minor",
+            "contract": "@openzeppelin/contracts/utils/Address.sol and MadibaBEP20.sol and @uniswap/lib/contracts/libraries/TransferHelper.sol",
+            "function": "N/A",
+            "lineNumber": "L80,90,109,123,169,179,142,152,27,55 and L321,302,253,350,358 and L7,20,47,33"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ]
+            },
+            "title": "L11 - Unnecessary Boolean equality",
+            "description": "The comparison to boolean constants is redundant. Boolean constants can be used directly and do not need to be compared to true or false.",
+            "severity": "Minor",
+            "contract": "MadibaBEP20.sol",
+            "function": "N/A",
+            "lineNumber": "453,485"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "L08 - Tautology or Contradiction",
+            "description": "Detects expressions that are tautologies or contradictions. For instance, an uint variable will always be greater than or equal to zero.",
+            "severity": "minor",
+            "contract": "MadibaBEP20.sol",
+            "function": "N/A",
+            "lineNumber": "L67"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "L13 - Divide before Multiply Operation",
+            "description": "Performing divisions before multiplications may cause loss of precision.",
+            "severity": "Minor",
+            "contract": "MadibaBEP20",
+            "function": "N/A",
+            "lineNumber": "contracts/MadibaBEP20.sol#L485"
+        }
+    ]
+}

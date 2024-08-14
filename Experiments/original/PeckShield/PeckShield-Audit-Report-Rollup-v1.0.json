@@ -1,1 +1,150 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Rollup-v1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Unauthorized Referrer Update in ReferralStorage", "description": "The `setCodeOwner()` function in the `ReferralStorage` contract allows unauthorized referrer update because it does not ensure the new owner agrees to accept the transferred ownership.", "severity": "Low", "contract": "ReferralStorage", "function": "setCodeOwner()", "lineNumber": "268-283"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Unauthorized Liquidity Addition in StableVault", "description": "The `depositFor()` function in the `StableVault` contract has a flawed implementation that allows malicious users to steal funds from approving users by triggering deposits for another user and arbitrarily specifying the recipient of minted vault shares.", "severity": "High", "contract": "StableVault", "function": "depositFor()", "lineNumber": "388-394"}, {"id": 2, "category": {"1": ["CWE-682"], "2": ["CWE-191"]}, "title": "Possible Underflow in FeeRewardDivider::distribute()", "description": "The `Rollup` protocol has a possible arithmetic underflow issue in the `distribute()` routine of `FeeRewardDivider`, which can occur when distributing rewards with adjusted percentage after trader rebate.", "severity": "Medium", "contract": "FeeRewardDivider", "function": "distribute()", "lineNumber": "50-51"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Possibly Inaccurate Rate Calculation in RewardDistributor", "description": "The computed token dissemination rate may be inaccurate due to not accounting for remaining rewards that have not been disseminated yet.", "severity": "Medium", "contract": "RewardDistributor", "function": "fetchRewardManual()", "lineNumber": "78-82"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "Incorrect _defaultToken() Logic in StableVault", "description": "The `_defaultToken()` routine makes an implicit assumption that all supported tokens have the same decimals, which may not be valid.", "severity": "Low", "contract": "StableVault", "function": "_defaultToken()", "lineNumber": "229"}, {"id": 5, "category": {"1": ["CWE-682"], "2": ["CWE-1339"]}, "title": "Precision Issue in Hourly Fee Calculation in Trading", "description": "The `getHourlyFee()` function in the `Trading` contract is vulnerable to precision loss due to the order of multiplication and division operations, which can lead to incorrect hourly fee calculations.", "severity": "Medium", "contract": "Trading", "function": "getHourlyFee()", "lineNumber": "796-799"}, {"id": 6, "category": {"1": ["CWE-682"], "2": ["CWE-369"]}, "title": "Funding Fee Avoidance via Zero-Size Increase Order", "description": "The funding rate of the user position is still refreshed without the associated fee being collected if the user input provides 0 sizeDelta for the position change.", "severity": "High", "contract": "Trading", "function": "increasePosition()", "lineNumber": "324-337"}, {"id": 7, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Lack of Protocol-Wide Risk Parameter Enforcement in Trading", "description": "DeFi protocols typically have a number of system- wide parameters that can be dynamically configured on demand. The `Rollup` protocol is no exception.", "severity": "Low", "contract": "PairsContract", "function": "addAsset", "lineNumber": "189-199"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Rollup-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/rollup-finance/contracts-v2/tree/185952c",
+        "commit_hash": "185952c",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Unauthorized Referrer Update in ReferralStorage",
+            "description": "The `setCodeOwner()` function in the `ReferralStorage` contract allows unauthorized referrer update because it does not ensure the new owner agrees to accept the transferred ownership.",
+            "severity": "Low",
+            "contract": "ReferralStorage",
+            "function": "setCodeOwner()",
+            "lineNumber": "268-283"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Unauthorized Liquidity Addition in StableVault",
+            "description": "The `depositFor()` function in the `StableVault` contract has a flawed implementation that allows malicious users to steal funds from approving users by triggering deposits for another user and arbitrarily specifying the recipient of minted vault shares.",
+            "severity": "High",
+            "contract": "StableVault",
+            "function": "depositFor()",
+            "lineNumber": "388-394"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-191"
+                ]
+            },
+            "title": "Possible Underflow in FeeRewardDivider::distribute()",
+            "description": "The `Rollup` protocol has a possible arithmetic underflow issue in the `distribute()` routine of `FeeRewardDivider`, which can occur when distributing rewards with adjusted percentage after trader rebate.",
+            "severity": "Medium",
+            "contract": "FeeRewardDivider",
+            "function": "distribute()",
+            "lineNumber": "50-51"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Possibly Inaccurate Rate Calculation in RewardDistributor",
+            "description": "The computed token dissemination rate may be inaccurate due to not accounting for remaining rewards that have not been disseminated yet.",
+            "severity": "Medium",
+            "contract": "RewardDistributor",
+            "function": "fetchRewardManual()",
+            "lineNumber": "78-82"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect _defaultToken() Logic in StableVault",
+            "description": "The `_defaultToken()` routine makes an implicit assumption that all supported tokens have the same decimals, which may not be valid.",
+            "severity": "Low",
+            "contract": "StableVault",
+            "function": "_defaultToken()",
+            "lineNumber": "229"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "Precision Issue in Hourly Fee Calculation in Trading",
+            "description": "The `getHourlyFee()` function in the `Trading` contract is vulnerable to precision loss due to the order of multiplication and division operations, which can lead to incorrect hourly fee calculations.",
+            "severity": "Medium",
+            "contract": "Trading",
+            "function": "getHourlyFee()",
+            "lineNumber": "796-799"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-369"
+                ]
+            },
+            "title": "Funding Fee Avoidance via Zero-Size Increase Order",
+            "description": "The funding rate of the user position is still refreshed without the associated fee being collected if the user input provides 0 sizeDelta for the position change.",
+            "severity": "High",
+            "contract": "Trading",
+            "function": "increasePosition()",
+            "lineNumber": "324-337"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Lack of Protocol-Wide Risk Parameter Enforcement in Trading",
+            "description": "DeFi protocols typically have a number of system- wide parameters that can be dynamically configured on demand. The `Rollup` protocol is no exception.",
+            "severity": "Low",
+            "contract": "PairsContract",
+            "function": "addAsset",
+            "lineNumber": "189-199"
+        }
+    ]
+}

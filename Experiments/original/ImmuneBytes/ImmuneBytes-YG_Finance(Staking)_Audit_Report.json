@@ -1,1 +1,124 @@
-{"path": "./Audit_Reports_2024/ImmuneBytes/ImmuneBytes-YG_Finance(Staking)_Audit_Report.pdf", "project_info": {"url": "N/A", "commit_hash": "ceeb9be2ca7eb8e73c4e56ce85f77093ce1302d8", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "unStake() can be called by anyone", "description": "The unStake() function in YgfStaking smart contract does not verify whether the caller has staked funds or not, allowing anyone to call this function any number of times.", "severity": "Low", "contract": "YgfStaking", "function": "unStake()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "The Contract prohibits the users to stake again", "description": "The stake() function has a statement require(stakedAmount[msg.sender] == 0,\"ERR_ALREADY_STACKED\"); which forces the users to stake only once. This implementation logic stops the user from staking his/her funds again.", "severity": "Low", "contract": "YgfStaking", "function": "stake()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "The contract only counts complete days for reward calculation", "description": "The YgfStaking contract only accounts for complete days passed since users staked their funds, neglecting any remaining hours.", "severity": "Low", "contract": "YgfStaking", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1288"]}, "title": "Ownable is inherited but not used", "description": "The YgfStaking contract inherits the Ownable contract but does not utilize it, increasing deployment size and cost.", "severity": "Low", "contract": "YgfStaking", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Fees are not getting distributed and can get stuck inside smart contract", "description": "The stake() function in YgfStake.sol is intended to deduct fees from the staking amount, however these fees are not getting transferred to any wallet/address. These fee amounts stay inside the YgfStaking contract.", "severity": "High", "contract": "YgfStake", "function": "stake()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "Implementation of transferToken() is not correct, and can cause loss of funds", "description": "The transferToken() function in YgfStake.sol is not implemented correctly and has few issues. Firstly, the function is not admin protected hence can be called by anyone. This function seems to be used to collect fees and dust amounts of token from the YgfStake contract after all users unstake their funds.", "severity": "High", "contract": "YgfStake", "function": "transferToken()", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/ImmuneBytes/ImmuneBytes-YG_Finance(Staking)_Audit_Report.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "ceeb9be2ca7eb8e73c4e56ce85f77093ce1302d8",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "unStake() can be called by anyone",
+            "description": "The unStake() function in YgfStaking smart contract does not verify whether the caller has staked funds or not, allowing anyone to call this function any number of times.",
+            "severity": "Low",
+            "contract": "YgfStaking",
+            "function": "unStake()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "The Contract prohibits the users to stake again",
+            "description": "The stake() function has a statement require(stakedAmount[msg.sender] == 0,\"ERR_ALREADY_STACKED\"); which forces the users to stake only once. This implementation logic stops the user from staking his/her funds again.",
+            "severity": "Low",
+            "contract": "YgfStaking",
+            "function": "stake()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "The contract only counts complete days for reward calculation",
+            "description": "The YgfStaking contract only accounts for complete days passed since users staked their funds, neglecting any remaining hours.",
+            "severity": "Low",
+            "contract": "YgfStaking",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1288"
+                ]
+            },
+            "title": "Ownable is inherited but not used",
+            "description": "The YgfStaking contract inherits the Ownable contract but does not utilize it, increasing deployment size and cost.",
+            "severity": "Low",
+            "contract": "YgfStaking",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Fees are not getting distributed and can get stuck inside smart contract",
+            "description": "The stake() function in YgfStake.sol is intended to deduct fees from the staking amount, however these fees are not getting transferred to any wallet/address. These fee amounts stay inside the YgfStaking contract.",
+            "severity": "High",
+            "contract": "YgfStake",
+            "function": "stake()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Implementation of transferToken() is not correct, and can cause loss of funds",
+            "description": "The transferToken() function in YgfStake.sol is not implemented correctly and has few issues. Firstly, the function is not admin protected hence can be called by anyone. This function seems to be used to collect fees and dust amounts of token from the YgfStake contract after all users unstake their funds.",
+            "severity": "High",
+            "contract": "YgfStake",
+            "function": "transferToken()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

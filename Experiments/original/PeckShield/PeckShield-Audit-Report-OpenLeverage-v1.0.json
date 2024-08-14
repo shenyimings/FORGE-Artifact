@@ -1,1 +1,59 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-OpenLeverage-v1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Revisited Logic in payoffTrade()", "description": "The current implementation of `payoffTrade()` can be improved by using `marketVars.buyPool.borrowBalanceStored(msg.sender)` instead of `marketVars.buyPool.borrowBalanceCurrent(msg.sender)` to avoid repeated calculation of interest accrual and minimizing the friction by involving only one transfer for tokens with tax.", "severity": "Low", "contract": "OpenLevV1", "function": "payoffTrade()", "lineNumber": "275-299"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Trust Issue of Admin Keys", "description": "In the OpenLeverage protocol, there is a privileged admin account that plays a critical role in governing and regulating system-wide operations, but it needs to be scrutinized.", "severity": "Medium", "contract": "OpenLevV1Lib", "function": "setAddressConfig(), setMarketConfig()", "lineNumber": "454-457, 459-460"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Revisited Interest Rate Calculation in LTimePool", "description": "The interest rate calculation in LTimePool contract's totalBorrowsCurrent() function makes an implicit assumption that block time is equal to 1 second, which may not be the case in the deployed blockchain.", "severity": "Informational", "contract": "LTimePool", "function": "totalBorrowsCurrent()", "lineNumber": "400-413"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-OpenLeverage-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/OpenLeverageDev/openleverage-contracts/tree/115f6d0",
+        "commit_hash": "115f6d0",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Revisited Logic in payoffTrade()",
+            "description": "The current implementation of `payoffTrade()` can be improved by using `marketVars.buyPool.borrowBalanceStored(msg.sender)` instead of `marketVars.buyPool.borrowBalanceCurrent(msg.sender)` to avoid repeated calculation of interest accrual and minimizing the friction by involving only one transfer for tokens with tax.",
+            "severity": "Low",
+            "contract": "OpenLevV1",
+            "function": "payoffTrade()",
+            "lineNumber": "275-299"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "In the OpenLeverage protocol, there is a privileged admin account that plays a critical role in governing and regulating system-wide operations, but it needs to be scrutinized.",
+            "severity": "Medium",
+            "contract": "OpenLevV1Lib",
+            "function": "setAddressConfig(), setMarketConfig()",
+            "lineNumber": "454-457, 459-460"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Revisited Interest Rate Calculation in LTimePool",
+            "description": "The interest rate calculation in LTimePool contract's totalBorrowsCurrent() function makes an implicit assumption that block time is equal to 1 second, which may not be the case in the deployed blockchain.",
+            "severity": "Informational",
+            "contract": "LTimePool",
+            "function": "totalBorrowsCurrent()",
+            "lineNumber": "400-413"
+        }
+    ]
+}

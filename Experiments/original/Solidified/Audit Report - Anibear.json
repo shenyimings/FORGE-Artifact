@@ -1,1 +1,189 @@
-{"path": "./Audit_Reports_2024/Solidified/Audit Report - Anibear.pdf", "project_info": {"url": "N/A", "commit_hash": "805107c01a10c8cf2d5851b5990445bc30a6239c608d2eca142dabe76d292f60, 8533d20d6efe95e7b31a05dc69b87f2777fb11e8801115f992018632dbebd482", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"]}, "title": "Non-compliant ERC20 token transfers might fail without reverting", "description": "If `PaymentType.TOKEN` is selected as the payment method, the function `safeMint` transfers tokens but can fail for non-compliant ERC20 tokens without reverting, allowing the execution flow to continue as normal and minting tokens for free.", "severity": "Major", "contract": "Anibear", "function": "safeMint() and withdrawToken()", "lineNumber": "149"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "The maximum NFT supply can be exceeded by the owner and the admin", "description": "The special minting functions `ownerSafeMint` and `ownerMint`, only callable by the owner and the admin, can be used to mint more NFTs than the maximum supply.", "severity": "Major", "contract": "Anibear", "function": "ownerSafeMint, ownerMint", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-909"], "4": ["CWE-456"]}, "title": "Native prices can be set to zero", "description": "The native prices for each minting method are set through the `updateNativePrice` function, but this function is not called when the contract is initialized, thus the values remain zero. If a minting method goes live before the native prices are set correctly, users can mint for free.", "severity": "High", "contract": "N/A", "function": "updateNativePrice", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "NFT minter can lose accidentally sent native tokens", "description": "If a user intends to pay with ERC-20 tokens but accidentally sends native tokens, the user will lose the native tokens sent.", "severity": "Minor", "contract": "N/A", "function": "safeMint()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "The owner and admin can increase the NFT price at any time and force users to pay more", "description": "The prices of an NFT can be increased anytime without a timelock enforced or slippage protection, allowing the owner and admin to force users to unwillingly pay more for minting an NFT with `safeMint`.", "severity": "Minor", "contract": "Anibear", "function": "safeMint", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "baseURI can be pre-maturely revealed", "description": "The baseURI can be set by the owner or admin with the use of the function setBaseURI before it should have been revealed, making the baseURI and subsequently tokenURIs available prematurely.", "severity": "Informational", "contract": "N/A", "function": "setBaseURI()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "The function ownerMint does not take into account any limits", "description": "The function `ownerMint` allows the owner to mint any number of NFTs up to the total remaining supply balance, without taking into account if any of the minting methods is active, if the `MAX_MULTIMINT` limit is exceeded or if the receiver has exceeded the `MAX_MINTS_PER_ADDRESS`. Also, it does not ensure that the receiver being in the allowlist and the allowlist has not exceeded its max supply.", "severity": "Minor", "contract": "Anibear", "function": "ownerMint()", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "The initialization of state variables is error-prone", "description": "Error-prone initialization of state variable mappings `MAX_SUPPLY`, `MAX_MULTIMINT`, `MAX_MINTS_PER_ADDRESS` and `MAX_SUPPLIES` using a single `uint256` array named `params`, risking to set immutable values mistakenly.", "severity": "Minor", "contract": "N/A", "function": "Constructor", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "The function flipSaleState might be error-prone", "description": "The state of each minting method is modified by the function `flipSaleState` which essentially reverts the current sale state of each minting method, but having a flip function is error prone.", "severity": "Minor", "contract": "N/A", "function": "flipSaleState", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-710"], "2": ["CWE-1059"]}, "title": "No license included in the Anibear.sol contact", "description": "Since making the source code available has legal implications, it is best recommended to add licensing in all Solidity files.", "severity": "Minor", "contract": "Anibear.sol", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Solidified/Audit Report - Anibear.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "805107c01a10c8cf2d5851b5990445bc30a6239c608d2eca142dabe76d292f60, 8533d20d6efe95e7b31a05dc69b87f2777fb11e8801115f992018632dbebd482",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Non-compliant ERC20 token transfers might fail without reverting",
+            "description": "If `PaymentType.TOKEN` is selected as the payment method, the function `safeMint` transfers tokens but can fail for non-compliant ERC20 tokens without reverting, allowing the execution flow to continue as normal and minting tokens for free.",
+            "severity": "Major",
+            "contract": "Anibear",
+            "function": "safeMint() and withdrawToken()",
+            "lineNumber": "149"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "The maximum NFT supply can be exceeded by the owner and the admin",
+            "description": "The special minting functions `ownerSafeMint` and `ownerMint`, only callable by the owner and the admin, can be used to mint more NFTs than the maximum supply.",
+            "severity": "Major",
+            "contract": "Anibear",
+            "function": "ownerSafeMint, ownerMint",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "Native prices can be set to zero",
+            "description": "The native prices for each minting method are set through the `updateNativePrice` function, but this function is not called when the contract is initialized, thus the values remain zero. If a minting method goes live before the native prices are set correctly, users can mint for free.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "updateNativePrice",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "NFT minter can lose accidentally sent native tokens",
+            "description": "If a user intends to pay with ERC-20 tokens but accidentally sends native tokens, the user will lose the native tokens sent.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "safeMint()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "The owner and admin can increase the NFT price at any time and force users to pay more",
+            "description": "The prices of an NFT can be increased anytime without a timelock enforced or slippage protection, allowing the owner and admin to force users to unwillingly pay more for minting an NFT with `safeMint`.",
+            "severity": "Minor",
+            "contract": "Anibear",
+            "function": "safeMint",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "baseURI can be pre-maturely revealed",
+            "description": "The baseURI can be set by the owner or admin with the use of the function setBaseURI before it should have been revealed, making the baseURI and subsequently tokenURIs available prematurely.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "setBaseURI()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "The function ownerMint does not take into account any limits",
+            "description": "The function `ownerMint` allows the owner to mint any number of NFTs up to the total remaining supply balance, without taking into account if any of the minting methods is active, if the `MAX_MULTIMINT` limit is exceeded or if the receiver has exceeded the `MAX_MINTS_PER_ADDRESS`. Also, it does not ensure that the receiver being in the allowlist and the allowlist has not exceeded its max supply.",
+            "severity": "Minor",
+            "contract": "Anibear",
+            "function": "ownerMint()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "The initialization of state variables is error-prone",
+            "description": "Error-prone initialization of state variable mappings `MAX_SUPPLY`, `MAX_MULTIMINT`, `MAX_MINTS_PER_ADDRESS` and `MAX_SUPPLIES` using a single `uint256` array named `params`, risking to set immutable values mistakenly.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "Constructor",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "The function flipSaleState might be error-prone",
+            "description": "The state of each minting method is modified by the function `flipSaleState` which essentially reverts the current sale state of each minting method, but having a flip function is error prone.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "flipSaleState",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1059"
+                ]
+            },
+            "title": "No license included in the Anibear.sol contact",
+            "description": "Since making the source code available has legal implications, it is best recommended to add licensing in all Solidity files.",
+            "severity": "Minor",
+            "contract": "Anibear.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

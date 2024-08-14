@@ -1,1 +1,317 @@
-{"path": "./Audit_Reports_2024/Cyberscope/2-dgr.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-923"], "3": ["CWE-300"]}, "title": "CCR - Contract Centralization Risk", "description": "The contract's functionality and behavior are heavily dependent on external parameters or configurations, posing centralization risks such as Single Point of Control, Vulnerability to Attacks, Operational Delays, Trust Dependencies, and Decentralization Erosion.", "severity": "High", "contract": "DeGuard", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "IRM - Inefficient Removal Method", "description": "The contract utilizes an inefficient method for removing elements from the plans array, specifically using a for loop to iterate through the array elements and shifting each element down by one index. This approach is functional but not optimal in terms of gas usage and execution time.", "severity": "Medium", "contract": "N/A", "function": "removePlan()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-435"], "2": ["CWE-436"]}, "title": "IMU - Inconsistent Modifier Usage", "description": "Inconsistent modifier usage between `asterizmClReceive` and `_asterizmReceiveInternal` functions can lead to scenarios where the `asterizmClReceive` function is accessible to a sender, but the subsequent internal function call fails due to different modifier requirements.", "severity": "Medium", "contract": "N/A", "function": "asterizmClReceive() and _asterizmReceiveInternal()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "ALM - Array Length Mismatch", "description": "The contract does not explicitly check whether the lengths of the `_chainIds` and `_trustedAddresses` arrays are equal, potentially causing out-of-bounds access if one array is shorter than the other.", "severity": "High", "contract": "N/A", "function": "addTrustedAddresses", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "RSU - Redundant Struct Usage", "description": "The current implementation of the `Sender` struct contains a single boolean field `exists`, which can be more efficiently represented as a standalone variable.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "MC - Missing Check", "description": "The contract does not prevent the owner from setting the zero address as a trusted address in the `addTrustedAddress` function, allowing cross-chain transfers to be directed to the zero address and potentially leading to unintentional loss of tokens.", "severity": "High", "contract": "N/A", "function": "addTrustedAddress", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-770"]}, "title": "UNMS - Undeclared NFT Max Supply", "description": "The contract does not declare a maximum supply for the NFTs, which can lead to oversupply issues and affect the rarity and value of the NFTs.", "severity": "High", "contract": "DeGuardNFT", "function": "buyPlan(uint _plan, uint64 _dstChainId, address _to, bool _crosschain)", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "RM - Redundant Modifier", "description": "The contract declares the `onlySenderOrOwner` modifier which is not being used by the contract, making it redundant.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "RFD - Redundant Function Declarations", "description": "The `AsterizmEnv` contract has redundant functions (`_buildClInitTransferRequestDto`, `_buildIzIninTransferRequestDto`, and `_buildClAsterizmReceiveRequestDto`) that are declared but not utilized, leading to unnecessary code.", "severity": "N/A", "contract": "AsterizmEnv", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1288"]}, "title": "SVR - Struct Variable Redundancy", "description": "The `PurchasedPlan` struct contains redundant variables `startTime` and `endTime` which are assigned values but do not contribute to any meaningful functionality within the contract.", "severity": "Medium", "contract": "N/A", "function": "buyPlan()", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "RIC - Redundant If Check", "description": "The contract has a redundant if check in the `_debitFrom` function to verify permission to burn a token, which is already checked in the internal `burn` function.", "severity": "Medium", "contract": "N/A", "function": "_debitFrom", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-435"], "2": ["CWE-1038"], "3": ["CWE-733"]}, "title": "CO - Code Optimization", "description": "The `buyPlan` function duplicates the functionality of the `safeMint` internal function, which can increase the risk of inconsistencies and make the contract less efficient.", "severity": "Medium", "contract": "N/A", "function": "buyPlan", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "MU - Modifiers Usage", "description": "The contract is using repetitive statements on some methods to validate some preconditions instead of using modifiers which can define a piece of code that can be reused across multiple functions within a contract.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "RCS - Redundant Comment Segments", "description": "The contract contains multiple segments of code that are commented out, introducing ambiguity regarding the intended features and current state of the contract.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "RES - Redundant Event Statement", "description": "The `EncodedPayloadRecieved` event statement is not used in the contract's implementation.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-710"], "2": ["CWE-1076"], "3": ["CWE-1078"], "4": ["CWE-1099"]}, "title": "L04 - Conformance to Solidity Naming Conventions", "description": "The code does not adhere to the Solidity style guide's naming conventions, which can affect readability and maintainability.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 16, "category": {"1": ["CWE-710"], "2": ["CWE-1164"], "3": ["CWE-561"]}, "title": "L09 - Dead Code Elimination", "description": "Dead code can make a contract more difficult to understand and maintain, and can also increase the size of the contract and the cost of deploying and interacting with it.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Cyberscope/2-dgr.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0x11c113efb490fbad0a998d3870de6dc94f229188"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-923"
+                ],
+                "3": [
+                    "CWE-300"
+                ]
+            },
+            "title": "CCR - Contract Centralization Risk",
+            "description": "The contract's functionality and behavior are heavily dependent on external parameters or configurations, posing centralization risks such as Single Point of Control, Vulnerability to Attacks, Operational Delays, Trust Dependencies, and Decentralization Erosion.",
+            "severity": "High",
+            "contract": "DeGuard",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "IRM - Inefficient Removal Method",
+            "description": "The contract utilizes an inefficient method for removing elements from the plans array, specifically using a for loop to iterate through the array elements and shifting each element down by one index. This approach is functional but not optimal in terms of gas usage and execution time.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "removePlan()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ]
+            },
+            "title": "IMU - Inconsistent Modifier Usage",
+            "description": "Inconsistent modifier usage between `asterizmClReceive` and `_asterizmReceiveInternal` functions can lead to scenarios where the `asterizmClReceive` function is accessible to a sender, but the subsequent internal function call fails due to different modifier requirements.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "asterizmClReceive() and _asterizmReceiveInternal()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "ALM - Array Length Mismatch",
+            "description": "The contract does not explicitly check whether the lengths of the `_chainIds` and `_trustedAddresses` arrays are equal, potentially causing out-of-bounds access if one array is shorter than the other.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "addTrustedAddresses",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "RSU - Redundant Struct Usage",
+            "description": "The current implementation of the `Sender` struct contains a single boolean field `exists`, which can be more efficiently represented as a standalone variable.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "MC - Missing Check",
+            "description": "The contract does not prevent the owner from setting the zero address as a trusted address in the `addTrustedAddress` function, allowing cross-chain transfers to be directed to the zero address and potentially leading to unintentional loss of tokens.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "addTrustedAddress",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "UNMS - Undeclared NFT Max Supply",
+            "description": "The contract does not declare a maximum supply for the NFTs, which can lead to oversupply issues and affect the rarity and value of the NFTs.",
+            "severity": "High",
+            "contract": "DeGuardNFT",
+            "function": "buyPlan(uint _plan, uint64 _dstChainId, address _to, bool _crosschain)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "RM - Redundant Modifier",
+            "description": "The contract declares the `onlySenderOrOwner` modifier which is not being used by the contract, making it redundant.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "RFD - Redundant Function Declarations",
+            "description": "The `AsterizmEnv` contract has redundant functions (`_buildClInitTransferRequestDto`, `_buildIzIninTransferRequestDto`, and `_buildClAsterizmReceiveRequestDto`) that are declared but not utilized, leading to unnecessary code.",
+            "severity": "N/A",
+            "contract": "AsterizmEnv",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1288"
+                ]
+            },
+            "title": "SVR - Struct Variable Redundancy",
+            "description": "The `PurchasedPlan` struct contains redundant variables `startTime` and `endTime` which are assigned values but do not contribute to any meaningful functionality within the contract.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "buyPlan()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "RIC - Redundant If Check",
+            "description": "The contract has a redundant if check in the `_debitFrom` function to verify permission to burn a token, which is already checked in the internal `burn` function.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "_debitFrom",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-1038"
+                ],
+                "3": [
+                    "CWE-733"
+                ]
+            },
+            "title": "CO - Code Optimization",
+            "description": "The `buyPlan` function duplicates the functionality of the `safeMint` internal function, which can increase the risk of inconsistencies and make the contract less efficient.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "buyPlan",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "MU - Modifiers Usage",
+            "description": "The contract is using repetitive statements on some methods to validate some preconditions instead of using modifiers which can define a piece of code that can be reused across multiple functions within a contract.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "RCS - Redundant Comment Segments",
+            "description": "The contract contains multiple segments of code that are commented out, introducing ambiguity regarding the intended features and current state of the contract.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "RES - Redundant Event Statement",
+            "description": "The `EncodedPayloadRecieved` event statement is not used in the contract's implementation.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1076"
+                ],
+                "3": [
+                    "CWE-1078"
+                ],
+                "4": [
+                    "CWE-1099"
+                ]
+            },
+            "title": "L04 - Conformance to Solidity Naming Conventions",
+            "description": "The code does not adhere to the Solidity style guide's naming conventions, which can affect readability and maintainability.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ],
+                "3": [
+                    "CWE-561"
+                ]
+            },
+            "title": "L09 - Dead Code Elimination",
+            "description": "Dead code can make a contract more difficult to understand and maintain, and can also increase the size of the contract and the cost of deploying and interacting with it.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

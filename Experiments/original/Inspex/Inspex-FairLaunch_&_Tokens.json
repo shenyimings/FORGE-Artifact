@@ -1,1 +1,280 @@
-{"path": "./Audit_Reports_2024/Inspex/Inspex-FairLaunch_&_Tokens.pdf", "project_info": {"url": "https://github.com/seeder-finance/seeder-core-contract", "commit_hash": "6ef6a79b066c79138860682f96da71f0979c8cd9", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "Upgradable Proxy Contract Without Timelock", "description": "The contract owner can deploy new logic to the proxy anytime without notifying the users.", "severity": "Critical", "contract": "BigFarm.sol, GranaryV2.sol, GreenHouse.sol, BankV1_5.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"]}, "title": "Token Draining via Adding Duplicated ibToken Address", "description": "The tokens deposited to the contract can be drained by the owner of the contract due to improper access control.", "severity": "Critical", "contract": "BankV1_5.sol", "function": "addDepositPair()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Token Manual Minting by Contract Owner", "description": "The contract owner can arbitrarily mint affected tokens.", "severity": "Critical", "contract": "Leaf.sol Tree.sol sdToken.sol", "function": "mint()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-703"]}, "title": "Denial of Services in BigFarm", "description": "The victim won't be able to execute core functions of the BigFarm contract, causing disruption of service and loss of reputation to the platform.", "severity": "High", "contract": "BigFarm.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "Centralized Control of State Variable", "description": "Critical state variables can be updated any time by the controlling authorities without notifying users.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Improper Share Calculation", "description": "The calculation of share will be incorrect due to the totalOrigin variable in the deposit() and withdraw() functions, since the borrowed balance is not included.", "severity": "High", "contract": "BankV1_5.sol", "function": "deposit(), withdraw()", "lineNumber": "146-158"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "Incorrect Token Distribution", "description": "Inconsistency between the current contract and document can cause the loss of trust from users due to incorrect token distribution.", "severity": "Medium", "contract": "BigFarm.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "Improper Reward Calculation (1)", "description": "The reward miscalculation can lead to unfair $LEAF token distribution, which may cause loss of reputation.", "severity": "Medium", "contract": "BigFarm.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-284"], "2": ["CWE-1270"]}, "title": "Unsafe Token Transfer", "description": "Improperly implemented token transfer can allow ibToken to be minted without using any token.", "severity": "Medium", "contract": "BankV1_5.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-682"]}, "title": "Inconsistent Token Transfer Fee", "description": "Users can use the transferFrom() function to avoid the transfer fee. The fee will always be inconsistent between transfer() and transferFrom() functions.", "severity": "Medium", "contract": "Tree.sol", "function": ["transfer()", "transferFrom()"], "lineNumber": "39-62"}, {"id": 10, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-770"]}, "title": "Design Flaw in updateAllFarms() Function", "description": "The updateAllFarms() function will eventually be unusable due to excessive gas usage because added farms cannot be removed and _updateFarm() is still called even when a farm is disabled.", "severity": "Low", "contract": "BigFarm.sol", "function": "updateAllFarms()", "lineNumber": "161-165"}, {"id": 11, "category": {"1": ["CWE-682"]}, "title": "Improper Reward Calculation (2)", "description": "The reward of the pool that has the same staking token as the reward token will be slightly lower than what it should be.", "severity": "Low", "contract": "BigFarm.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-664"], "2": ["CWE-404"], "3": ["CWE-772"], "4": ["CWE-775"]}, "title": "Improper Release of Locked Tokens", "description": "The tokens to be released in the later indexes won't be released until all of the prior entries are done, and may cause loss of reputation to the platform.", "severity": "Low", "contract": "GranaryV2.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Inexplicit Solidity Compiler Version", "description": "The solidity compiler version is not explicitly specified, which can lead to potential security risks and compatibility issues.", "severity": "Info", "contract": "BigFarm.sol, GranaryV2.sol, GreenHouse.sol, BankV1_5.sol, Leaf.sol, Tree.sol, sdToken.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-284"], "2": ["CWE-749"]}, "title": "Improper Function Visibility", "description": "The getKeepInformations() function should have its visibility changed to external if it is not called by any internal function.", "severity": "Info", "contract": "GranaryV2.sol", "function": "getKeepInformations(address beneficiary)", "lineNumber": "62-63"}, {"id": 15, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Design Flaw in the Loanable Library", "description": "A design flaw in the Loanable library allows duplicated loan issuers to be added without any checks on the value of the loanIssuerAddress parameter, which can prevent loan issuers from being removed.", "severity": "Info", "contract": "Loanable.sol", "function": "_addLoanIssuer() and _removeLoanIssuer()", "lineNumber": "27-29, 39-42, 44-47"}]}
+{
+    "path": "./Audit_Reports_2024/Inspex/Inspex-FairLaunch_&_Tokens.pdf",
+    "project_info": {
+        "url": "https://github.com/seeder-finance/seeder-core-contract",
+        "commit_hash": "6ef6a79b066c79138860682f96da71f0979c8cd9",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Upgradable Proxy Contract Without Timelock",
+            "description": "The contract owner can deploy new logic to the proxy anytime without notifying the users.",
+            "severity": "Critical",
+            "contract": "BigFarm.sol, GranaryV2.sol, GreenHouse.sol, BankV1_5.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Token Draining via Adding Duplicated ibToken Address",
+            "description": "The tokens deposited to the contract can be drained by the owner of the contract due to improper access control.",
+            "severity": "Critical",
+            "contract": "BankV1_5.sol",
+            "function": "addDepositPair()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Token Manual Minting by Contract Owner",
+            "description": "The contract owner can arbitrarily mint affected tokens.",
+            "severity": "Critical",
+            "contract": "Leaf.sol Tree.sol sdToken.sol",
+            "function": "mint()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Denial of Services in BigFarm",
+            "description": "The victim won't be able to execute core functions of the BigFarm contract, causing disruption of service and loss of reputation to the platform.",
+            "severity": "High",
+            "contract": "BigFarm.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Centralized Control of State Variable",
+            "description": "Critical state variables can be updated any time by the controlling authorities without notifying users.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improper Share Calculation",
+            "description": "The calculation of share will be incorrect due to the totalOrigin variable in the deposit() and withdraw() functions, since the borrowed balance is not included.",
+            "severity": "High",
+            "contract": "BankV1_5.sol",
+            "function": "deposit(), withdraw()",
+            "lineNumber": "146-158"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect Token Distribution",
+            "description": "Inconsistency between the current contract and document can cause the loss of trust from users due to incorrect token distribution.",
+            "severity": "Medium",
+            "contract": "BigFarm.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improper Reward Calculation (1)",
+            "description": "The reward miscalculation can lead to unfair $LEAF token distribution, which may cause loss of reputation.",
+            "severity": "Medium",
+            "contract": "BigFarm.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-1270"
+                ]
+            },
+            "title": "Unsafe Token Transfer",
+            "description": "Improperly implemented token transfer can allow ibToken to be minted without using any token.",
+            "severity": "Medium",
+            "contract": "BankV1_5.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Inconsistent Token Transfer Fee",
+            "description": "Users can use the transferFrom() function to avoid the transfer fee. The fee will always be inconsistent between transfer() and transferFrom() functions.",
+            "severity": "Medium",
+            "contract": "Tree.sol",
+            "function": [
+                "transfer()",
+                "transferFrom()"
+            ],
+            "lineNumber": "39-62"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "Design Flaw in updateAllFarms() Function",
+            "description": "The updateAllFarms() function will eventually be unusable due to excessive gas usage because added farms cannot be removed and _updateFarm() is still called even when a farm is disabled.",
+            "severity": "Low",
+            "contract": "BigFarm.sol",
+            "function": "updateAllFarms()",
+            "lineNumber": "161-165"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improper Reward Calculation (2)",
+            "description": "The reward of the pool that has the same staking token as the reward token will be slightly lower than what it should be.",
+            "severity": "Low",
+            "contract": "BigFarm.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-775"
+                ]
+            },
+            "title": "Improper Release of Locked Tokens",
+            "description": "The tokens to be released in the later indexes won't be released until all of the prior entries are done, and may cause loss of reputation to the platform.",
+            "severity": "Low",
+            "contract": "GranaryV2.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Inexplicit Solidity Compiler Version",
+            "description": "The solidity compiler version is not explicitly specified, which can lead to potential security risks and compatibility issues.",
+            "severity": "Info",
+            "contract": "BigFarm.sol, GranaryV2.sol, GreenHouse.sol, BankV1_5.sol, Leaf.sol, Tree.sol, sdToken.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-749"
+                ]
+            },
+            "title": "Improper Function Visibility",
+            "description": "The getKeepInformations() function should have its visibility changed to external if it is not called by any internal function.",
+            "severity": "Info",
+            "contract": "GranaryV2.sol",
+            "function": "getKeepInformations(address beneficiary)",
+            "lineNumber": "62-63"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Design Flaw in the Loanable Library",
+            "description": "A design flaw in the Loanable library allows duplicated loan issuers to be added without any checks on the value of the loanIssuerAddress parameter, which can prevent loan issuers from being removed.",
+            "severity": "Info",
+            "contract": "Loanable.sol",
+            "function": "_addLoanIssuer() and _removeLoanIssuer()",
+            "lineNumber": "27-29, 39-42, 44-47"
+        }
+    ]
+}

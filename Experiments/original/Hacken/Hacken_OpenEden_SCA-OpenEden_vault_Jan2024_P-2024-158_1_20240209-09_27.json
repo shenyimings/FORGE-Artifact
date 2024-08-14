@@ -1,1 +1,221 @@
-{"path": "./Audit_Reports_2024/Hacken/Hacken_OpenEden_SCA-OpenEden_vault_Jan2024_P-2024-158_1_20240209-09_27.pdf", "project_info": {"url": "https://github.com/OpenEdenHQ/openeden.vault.v2.audit/", "commit_hash": "fdfe7a34f65a2a026632054c69e5b1a453c658a4", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "Centralized operator's discretion risks", "description": "The redemption process relies on a centralized operator's discretion, and any issues or risks related to this operator's actions can result in users being unable to access their deposited TBILL tokens or the promised USDC tokens, potentially compromising the trustworthiness of the redemption process.", "severity": "High", "contract": "OpenEdenVaultV3", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Risk of inaccurate isWeekend flag setting", "description": "There exists a risk where the backend system could fail to accurately set the isWeekend flag, which is crucial for enforcing the intended fee structure and deposit limits. In this case, users might be able to deposit funds under incorrect fee structures.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-770"]}, "title": "User banning mechanism risks", "description": "Implementing a failover mechanism is strongly advised to address situations where a valid (non-banned) user's withdrawal request experiences a reversal, resulting in the blocking of the withdrawal queue.", "severity": "Medium", "contract": "N/A", "function": "withdrawal", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "Unlimited upgrade of OpenEdenVaultV3 contract logic", "description": "The Admin has the capability to upgrade the OpenEdenVaultV3 contract logic at any time.", "severity": "N/A", "contract": "OpenEdenVaultV3", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "Epoch update risks", "description": "The Epoch might be updated unlimited amount of times by the operator.", "severity": "Medium", "contract": "OpenEdenVaultV3", "function": "updateEpoch()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Withdrawal and deposit pause capability", "description": "The Open Eden operators can ban users, which may result in declining withdrawal requests if a user has already deposited funds.", "severity": "Info", "contract": "OpenEdenVaultV3Impl.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "Transaction fee configuration risks", "description": "The system owner possesses the authority to set transaction fees to any value, including 100%, which implies that users may receive nothing when attempting to deposit or redeem tokens. The fee is calculated and collected when the operator executes the withdrawal queue, based on the latest fee rate, not the rate at the time of user redemption.", "severity": "Medium", "contract": "feeManager.sol", "function": "setTxFeeHolidayWithdrawPct(), setTxFeeHolidayDepositPct(), setTxFeeWorkdayWithdrawPct(), setTxFeeWorkdayDepositPct()", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-664"], "2": ["CWE-610"]}, "title": "TBILL price oracle risks", "description": "The TBILL price used in calculations is provided by an oracle through an off-chain mechanism and the implementation to sustain stable coin mechanism is also handled off-chain.", "severity": "High", "contract": "TBillPriceOracle", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Owner withdrawal authority risks", "description": "The owner has the authority to withdraw any token including USDC from the contract.", "severity": "Medium", "contract": "OpenEdenVaultV3", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Redemption request execution timing risks", "description": "The owner has the authority to execute redemption requests, and the timing of execution is determined by the operator's discretion.", "severity": "High", "contract": "OpenEdenVaultV3", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-703"]}, "title": "Reliability of Treasury, KycManager, and TBillPriceOracle contracts cannot be confirmed", "description": "The reliability of Treasury, KycManager, and TBillPriceOracle contracts cannot be confirmed as they are beyond the scope of this audit.", "severity": "Unknown", "contract": "Treasury, KycManager, and TBillPriceOracle", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "KYC approval and token locking risks", "description": "A user, after receiving KYC approval and depositing tokens, could be subsequently banned, resulting in their tokens being permanently locked in their account.", "severity": "High", "contract": "OpenEdenVaultV3", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Hacken/Hacken_OpenEden_SCA-OpenEden_vault_Jan2024_P-2024-158_1_20240209-09_27.pdf",
+    "project_info": {
+        "url": "https://github.com/OpenEdenHQ/openeden.vault.v2.audit/",
+        "commit_hash": "fdfe7a34f65a2a026632054c69e5b1a453c658a4",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Centralized operator's discretion risks",
+            "description": "The redemption process relies on a centralized operator's discretion, and any issues or risks related to this operator's actions can result in users being unable to access their deposited TBILL tokens or the promised USDC tokens, potentially compromising the trustworthiness of the redemption process.",
+            "severity": "High",
+            "contract": "OpenEdenVaultV3",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Risk of inaccurate isWeekend flag setting",
+            "description": "There exists a risk where the backend system could fail to accurately set the isWeekend flag, which is crucial for enforcing the intended fee structure and deposit limits. In this case, users might be able to deposit funds under incorrect fee structures.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "User banning mechanism risks",
+            "description": "Implementing a failover mechanism is strongly advised to address situations where a valid (non-banned) user's withdrawal request experiences a reversal, resulting in the blocking of the withdrawal queue.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "withdrawal",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Unlimited upgrade of OpenEdenVaultV3 contract logic",
+            "description": "The Admin has the capability to upgrade the OpenEdenVaultV3 contract logic at any time.",
+            "severity": "N/A",
+            "contract": "OpenEdenVaultV3",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Epoch update risks",
+            "description": "The Epoch might be updated unlimited amount of times by the operator.",
+            "severity": "Medium",
+            "contract": "OpenEdenVaultV3",
+            "function": "updateEpoch()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Withdrawal and deposit pause capability",
+            "description": "The Open Eden operators can ban users, which may result in declining withdrawal requests if a user has already deposited funds.",
+            "severity": "Info",
+            "contract": "OpenEdenVaultV3Impl.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Transaction fee configuration risks",
+            "description": "The system owner possesses the authority to set transaction fees to any value, including 100%, which implies that users may receive nothing when attempting to deposit or redeem tokens. The fee is calculated and collected when the operator executes the withdrawal queue, based on the latest fee rate, not the rate at the time of user redemption.",
+            "severity": "Medium",
+            "contract": "feeManager.sol",
+            "function": "setTxFeeHolidayWithdrawPct(), setTxFeeHolidayDepositPct(), setTxFeeWorkdayWithdrawPct(), setTxFeeWorkdayDepositPct()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-610"
+                ]
+            },
+            "title": "TBILL price oracle risks",
+            "description": "The TBILL price used in calculations is provided by an oracle through an off-chain mechanism and the implementation to sustain stable coin mechanism is also handled off-chain.",
+            "severity": "High",
+            "contract": "TBillPriceOracle",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Owner withdrawal authority risks",
+            "description": "The owner has the authority to withdraw any token including USDC from the contract.",
+            "severity": "Medium",
+            "contract": "OpenEdenVaultV3",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Redemption request execution timing risks",
+            "description": "The owner has the authority to execute redemption requests, and the timing of execution is determined by the operator's discretion.",
+            "severity": "High",
+            "contract": "OpenEdenVaultV3",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Reliability of Treasury, KycManager, and TBillPriceOracle contracts cannot be confirmed",
+            "description": "The reliability of Treasury, KycManager, and TBillPriceOracle contracts cannot be confirmed as they are beyond the scope of this audit.",
+            "severity": "Unknown",
+            "contract": "Treasury, KycManager, and TBillPriceOracle",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "KYC approval and token locking risks",
+            "description": "A user, after receiving KYC approval and depositing tokens, could be subsequently banned, resulting in their tokens being permanently locked in their account.",
+            "severity": "High",
+            "contract": "OpenEdenVaultV3",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

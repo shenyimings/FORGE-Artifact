@@ -1,1 +1,240 @@
-{"path": "./Audit_Reports_2024/BlockSec/BlockSec-blocksec_stnd_v1.7_signed.pdf", "project_info": {"url": "https://github.com/digitalnativeinc/standard-evm", "commit_hash": "d7c016ca098a4e5a554583c499fc0cead4db7088", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-693"]}, "title": "The local variables collateral and debt shadow the global ones", "description": "In the getStatus function of Vault contract, local variables collateral and debt shadow the global ones, causing the function to not work as expected.", "severity": "Medium", "contract": "Vault", "function": "getStatus()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-691"], "2": ["CWE-670"]}, "title": "Fees can not be distributed as expected due to the unreachable branch", "description": "The second branch (L285 L290) in FeeHelper.sol cannot be reached, causing fees to not be distributed as expected.", "severity": "High", "contract": "FeeHelper.sol", "function": "N/A", "lineNumber": "L285-L290"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Potential mistakes", "description": "N/A", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "Anyone can withdraw the liquidated collaterals", "description": "The liquidator contract does not deposit the liquidated collaterals correctly, allowing anyone to invoke the function skim and withdraw the liquidated collaterals directly.", "severity": "Critical", "contract": "Liquidator.sol", "function": "distribute()", "lineNumber": "L34"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "The VaultManager contract does not handle the debt decimals when judging whether it is a valid CDP", "description": "The contract VaultManager judges whether a CDP is valid using the function isValidCDP, but handles the collateral decimals only at L162, without considering debt decimals.", "severity": "Critical", "contract": "VaultManager", "function": "isValidCDP()", "lineNumber": "L162"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "The check in the function liquidate can not be passed", "description": "The function liquidate always checks if the CDP is valid before liquidating the collaterals, but the check code always returns true due to IERC20Minimal(debt).balanceOf(address(this)) being zero.", "severity": "High", "contract": "Vault", "function": "liquidate()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Uninitialized CDP vaults may incur infinite MTR minted", "description": "If a CDP vault is not initialized in the contract VaultManager, the minimum collateralization ratio (MCRConfig) of the collateral is zero. That causes the function isValidCDP always returns true. Furthermore, since all vaults created by the VaultFactory are authorized to mint MTR stable coins, the bypass of isValidCDP may incur infinite MTR minted.", "severity": "High", "contract": "VaultManager", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "Incorrect usage to the function isValidCDP may incur infinite MTR minted", "description": "The bypass of isValidCDP may incur infinite MTR minted due to uninitialized CDP vaults and incorrect usage of the function.", "severity": "Critical", "contract": "VaultManager/VaultFactory", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "The global variable borrow is not be updated correctly", "description": "The functions borrowMore and borrowMoreNative do not update the global variable borrow which records how many MTR stable coins are minted (or borrowed) in the contract Vault.", "severity": "Critical", "contract": "Vault", "function": "borrowMore, borrowMoreNative", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-284"]}, "title": "Users\u2019 collaterals may be locked in vaults", "description": "Anyone can create vaults for any collaterals due to lack of restriction on VaultFactory, potentially causing users' collaterals to be locked.", "severity": "High", "contract": "VaultFactory", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-435"], "2": ["CWE-436"], "3": ["CWE-437"]}, "title": "The potential reentrancy risk", "description": "If the collateral is a token with callback mechanism, such as ERC-777 tokens, the function will be reentered to borrow more debt token than expected.", "severity": "High", "contract": "Vault.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-693"], "2": ["CWE-807"], "3": ["CWE-302"]}, "title": "The minting cap may be bypassed", "description": "In order to fix the issue 2.2.8, the project moves borrow change before fund transfer. However, the validation of minting limit, the external call, and the MTR mint is still the classic reentrant pattern. Therefore, there is a potential risk to bypass the MTR minting cap.", "severity": "High", "contract": "Vault.sol", "function": "N/A", "lineNumber": "196, 200, 207, 225, 229, 231"}, {"id": 12, "category": {"1": ["CWE-682"]}, "title": "Price manipulation attacks against FeeRoll contract", "description": "An attacker can manipulate prices by creating a swap pool with little liquidity and then invoking tradeCollateralls function of the FeeRoll contract to sell WETH reserves for little MTR and then for little STND, resulting in profit.", "severity": "High", "contract": "FeeRoll", "function": "tradeCollateralls", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-703"]}, "title": "The invocation to the function tradeLPs will be reverted", "description": "The invocation to the function tradeLPs will be reverted.", "severity": "N/A", "contract": "FeeRoll", "function": "tradeLPs()", "lineNumber": "853"}]}
+{
+    "path": "./Audit_Reports_2024/BlockSec/BlockSec-blocksec_stnd_v1.7_signed.pdf",
+    "project_info": {
+        "url": "https://github.com/digitalnativeinc/standard-evm",
+        "commit_hash": "d7c016ca098a4e5a554583c499fc0cead4db7088",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "The local variables collateral and debt shadow the global ones",
+            "description": "In the getStatus function of Vault contract, local variables collateral and debt shadow the global ones, causing the function to not work as expected.",
+            "severity": "Medium",
+            "contract": "Vault",
+            "function": "getStatus()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-670"
+                ]
+            },
+            "title": "Fees can not be distributed as expected due to the unreachable branch",
+            "description": "The second branch (L285 L290) in FeeHelper.sol cannot be reached, causing fees to not be distributed as expected.",
+            "severity": "High",
+            "contract": "FeeHelper.sol",
+            "function": "N/A",
+            "lineNumber": "L285-L290"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Potential mistakes",
+            "description": "N/A",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Anyone can withdraw the liquidated collaterals",
+            "description": "The liquidator contract does not deposit the liquidated collaterals correctly, allowing anyone to invoke the function skim and withdraw the liquidated collaterals directly.",
+            "severity": "Critical",
+            "contract": "Liquidator.sol",
+            "function": "distribute()",
+            "lineNumber": "L34"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "The VaultManager contract does not handle the debt decimals when judging whether it is a valid CDP",
+            "description": "The contract VaultManager judges whether a CDP is valid using the function isValidCDP, but handles the collateral decimals only at L162, without considering debt decimals.",
+            "severity": "Critical",
+            "contract": "VaultManager",
+            "function": "isValidCDP()",
+            "lineNumber": "L162"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "The check in the function liquidate can not be passed",
+            "description": "The function liquidate always checks if the CDP is valid before liquidating the collaterals, but the check code always returns true due to IERC20Minimal(debt).balanceOf(address(this)) being zero.",
+            "severity": "High",
+            "contract": "Vault",
+            "function": "liquidate()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Uninitialized CDP vaults may incur infinite MTR minted",
+            "description": "If a CDP vault is not initialized in the contract VaultManager, the minimum collateralization ratio (MCRConfig) of the collateral is zero. That causes the function isValidCDP always returns true. Furthermore, since all vaults created by the VaultFactory are authorized to mint MTR stable coins, the bypass of isValidCDP may incur infinite MTR minted.",
+            "severity": "High",
+            "contract": "VaultManager",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect usage to the function isValidCDP may incur infinite MTR minted",
+            "description": "The bypass of isValidCDP may incur infinite MTR minted due to uninitialized CDP vaults and incorrect usage of the function.",
+            "severity": "Critical",
+            "contract": "VaultManager/VaultFactory",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "The global variable borrow is not be updated correctly",
+            "description": "The functions borrowMore and borrowMoreNative do not update the global variable borrow which records how many MTR stable coins are minted (or borrowed) in the contract Vault.",
+            "severity": "Critical",
+            "contract": "Vault",
+            "function": "borrowMore, borrowMoreNative",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Users\u2019 collaterals may be locked in vaults",
+            "description": "Anyone can create vaults for any collaterals due to lack of restriction on VaultFactory, potentially causing users' collaterals to be locked.",
+            "severity": "High",
+            "contract": "VaultFactory",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-437"
+                ]
+            },
+            "title": "The potential reentrancy risk",
+            "description": "If the collateral is a token with callback mechanism, such as ERC-777 tokens, the function will be reentered to borrow more debt token than expected.",
+            "severity": "High",
+            "contract": "Vault.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ],
+                "3": [
+                    "CWE-302"
+                ]
+            },
+            "title": "The minting cap may be bypassed",
+            "description": "In order to fix the issue 2.2.8, the project moves borrow change before fund transfer. However, the validation of minting limit, the external call, and the MTR mint is still the classic reentrant pattern. Therefore, there is a potential risk to bypass the MTR minting cap.",
+            "severity": "High",
+            "contract": "Vault.sol",
+            "function": "N/A",
+            "lineNumber": "196, 200, 207, 225, 229, 231"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Price manipulation attacks against FeeRoll contract",
+            "description": "An attacker can manipulate prices by creating a swap pool with little liquidity and then invoking tradeCollateralls function of the FeeRoll contract to sell WETH reserves for little MTR and then for little STND, resulting in profit.",
+            "severity": "High",
+            "contract": "FeeRoll",
+            "function": "tradeCollateralls",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "The invocation to the function tradeLPs will be reverted",
+            "description": "The invocation to the function tradeLPs will be reverted.",
+            "severity": "N/A",
+            "contract": "FeeRoll",
+            "function": "tradeLPs()",
+            "lineNumber": "853"
+        }
+    ]
+}

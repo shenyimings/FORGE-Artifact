@@ -1,1 +1,167 @@
-{"path": "./Audit_Reports_2024/Beosin/NFTAQ721_202204181629.pdf", "project_info": {"url": "https://github.com/alphaquark/nft-lending-alphaquark", "commit_hash": "6349442249dfd290dcd6fd6dd3a178793ef46a71, aeccb4910a0d3be3672519ef7669e4eda68af904", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Fake recharge risk", "description": "N/A", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "No deadlines set for repayment and liquidation", "description": "For loans that have not been liquidated, users can repay the loans and get back their NFTs at any time beyond the loan period. The deadline is also not set at the time of liquidation.", "severity": "Low", "contract": "NFTaq.sol", "function": "_payBackLoan_ and _liquidateOverdueLoan_", "lineNumber": "L528-600, L616-672"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "Owner cannot pause loan", "description": "The main contract inherits the pause module and uses the whenNotPaused modifier in the _beginLoan_ function. However, the admin contract does not implement the pause function, and the owner cannot pause the loan.", "severity": "Low", "contract": "NFTaqAdmin.sol", "function": "_beginLoan_", "lineNumber": "L4"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "Centralization risk", "description": "The owner can arbitrarily call functions to change the fee and loan cycle, as well as modify the whitelist status of NFT and BEP20 contracts.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Data types are not unified", "description": "In the _beginLoan_ function, the _loanDuration and _loanInterestRateForDurationInBasisPoints parameters are of type uint256, which are converted to uint32 in the function. There may be a loss of precision caused by the user entering a value larger than uint32, which does not match the expected input information.", "severity": "Info", "contract": "NFTaq.sol", "function": "_beginLoan_", "lineNumber": "L359-426"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Event parameters do not add indexed", "description": "It is recommended to add indexed to the addresses of both lenders and borrowers and parameters such as loan.nftCollateralId, _loanId, loan.nftCollateralContract, etc., When abnormal transactions occur, transaction events can be quickly filtered through indexed.", "severity": "Info", "contract": "NFTaq.sol", "function": "LoanStarted, LoanRepaid, LoanLiquidated", "lineNumber": "494-508, 583-593, 656-665"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "Unprotected BEP20 Token Transfer", "description": "The contract uses _transferFrom_ to transfer BEP20 tokens and does not judge the return value.", "severity": "Low", "contract": "NFTaq.sol", "function": "beginLoan", "lineNumber": "L487, L567-570"}, {"id": 7, "category": {"1": ["CWE-284"], "2": ["CWE-282"]}, "title": "Manage Owner Permission", "description": "N/A", "severity": "N/A", "contract": "NFTAQ721", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-682"], "2": ["CWE-1339"]}, "title": "Potential Precision Loss Due to Type Conversion", "description": "In the _beginLoan_ function, the _loanDuration and _loanInterestRateForDurationInBasisPoints parameters are of type uint256, which are converted to uint32 in the function. There may be a loss of precision caused by the user entering a value larger than uint32.", "severity": "Info", "contract": "NFTaq.sol", "function": "_beginLoan_", "lineNumber": "L359-426"}]}
+{
+    "path": "./Audit_Reports_2024/Beosin/NFTAQ721_202204181629.pdf",
+    "project_info": {
+        "url": "https://github.com/alphaquark/nft-lending-alphaquark",
+        "commit_hash": "6349442249dfd290dcd6fd6dd3a178793ef46a71, aeccb4910a0d3be3672519ef7669e4eda68af904",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Fake recharge risk",
+            "description": "N/A",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "No deadlines set for repayment and liquidation",
+            "description": "For loans that have not been liquidated, users can repay the loans and get back their NFTs at any time beyond the loan period. The deadline is also not set at the time of liquidation.",
+            "severity": "Low",
+            "contract": "NFTaq.sol",
+            "function": "_payBackLoan_ and _liquidateOverdueLoan_",
+            "lineNumber": "L528-600, L616-672"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Owner cannot pause loan",
+            "description": "The main contract inherits the pause module and uses the whenNotPaused modifier in the _beginLoan_ function. However, the admin contract does not implement the pause function, and the owner cannot pause the loan.",
+            "severity": "Low",
+            "contract": "NFTaqAdmin.sol",
+            "function": "_beginLoan_",
+            "lineNumber": "L4"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Centralization risk",
+            "description": "The owner can arbitrarily call functions to change the fee and loan cycle, as well as modify the whitelist status of NFT and BEP20 contracts.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Data types are not unified",
+            "description": "In the _beginLoan_ function, the _loanDuration and _loanInterestRateForDurationInBasisPoints parameters are of type uint256, which are converted to uint32 in the function. There may be a loss of precision caused by the user entering a value larger than uint32, which does not match the expected input information.",
+            "severity": "Info",
+            "contract": "NFTaq.sol",
+            "function": "_beginLoan_",
+            "lineNumber": "L359-426"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Event parameters do not add indexed",
+            "description": "It is recommended to add indexed to the addresses of both lenders and borrowers and parameters such as loan.nftCollateralId, _loanId, loan.nftCollateralContract, etc., When abnormal transactions occur, transaction events can be quickly filtered through indexed.",
+            "severity": "Info",
+            "contract": "NFTaq.sol",
+            "function": "LoanStarted, LoanRepaid, LoanLiquidated",
+            "lineNumber": "494-508, 583-593, 656-665"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Unprotected BEP20 Token Transfer",
+            "description": "The contract uses _transferFrom_ to transfer BEP20 tokens and does not judge the return value.",
+            "severity": "Low",
+            "contract": "NFTaq.sol",
+            "function": "beginLoan",
+            "lineNumber": "L487, L567-570"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-282"
+                ]
+            },
+            "title": "Manage Owner Permission",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "NFTAQ721",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "Potential Precision Loss Due to Type Conversion",
+            "description": "In the _beginLoan_ function, the _loanDuration and _loanInterestRateForDurationInBasisPoints parameters are of type uint256, which are converted to uint32 in the function. There may be a loss of precision caused by the user entering a value larger than uint32.",
+            "severity": "Info",
+            "contract": "NFTaq.sol",
+            "function": "_beginLoan_",
+            "lineNumber": "L359-426"
+        }
+    ]
+}

@@ -1,1 +1,133 @@
-{"path": "./Audit_Reports_2024/Spearbit/Tracer-Spearbit-Security-Review.pdf", "project_info": {"url": "https://github.com/tracer-protocol/perpetual-pools-contracts", "commit_hash": "fc55a2b47a61426971a5c533e60927a9c3efb113", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Minting of unlimited number of sundae tokens", "description": "There is no cap on what the minting fee can be.", "severity": "N/A", "contract": "PoolCommitter.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-287"]}, "title": "Committer not validated on withdraw claim and multi-paid claim", "description": "The committer is not validated in the withdrawClaimRequest(), multiPaidClaimMultiplePoolCommitters() and multiPaidClaimSinglePoolCommitter() functions, which could lead to potential security issues.", "severity": "Medium", "contract": "N/A", "function": ["withdrawClaimRequest()", "multiPaidClaimMultiplePoolCommitters()", "multiPaidClaimSinglePoolCommitter()"], "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Pool token price is incorrect when there is more than one pending upkeep", "description": "The amount of pool tokens to mint and quote tokens to burn is determined by the pool token price. However, in the current implementation price includes the _current total supply_ but `burn` commits burn pool tokens immediately when `commit()` is called, not when `upkeep()` is executed.", "severity": "Critical", "contract": "PoolCommitter.sol", "function": "N/A", "lineNumber": "L384-391"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "No price scaling in SMAOracle", "description": "The update() function of the SMAOracle contract doesn\u2019t scale the latestPrice although a scaler is set in the constructor.", "severity": "High Risk", "contract": "SMAOracle", "function": "update()", "lineNumber": "L82-L96"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "Two different `invariantCheck` variables used in `PoolFactory.deployPool()`", "description": "The `deployPool()` function in the `PoolFactory` contract uses two different `invariantCheck` variables: the one defined as a contract\u2019s instance variable and the one supplied as a parameter.", "severity": "High Risk", "contract": "PoolFactory", "function": "deployPool()", "lineNumber": "L93-L174"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Duplicate user payments for long commits when paid from balance", "description": "When minting pool tokens in `commit()`, the `fromAggregateBalance` parameter indicates if the user wants to pay from their internal balances or by transferring the tokens. The second `if` condition is wrong and leads to users having to pay twice when calling `commit()` with `CommitType.LongMint` and `fromAggregateBalance` = true.", "severity": "High Risk", "contract": "PoolCommitter.sol", "function": "commit()", "lineNumber": "L299-L306"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "Initial `executionPrice` is too high", "description": "When a pool is deployed the initial `executionPrice` is calculated as `firstPrice * 1e18` where `firstPrice` is `ILeveragedPool(_poolAddress).getOraclePrice()` : All other updates to `executionPrice` use the result of `getPriceAndMetadata()` directly without scaling: The price after the `firstPrice` will always be lower, therefore its funding rate payment will always go to the shorts and long pool token holders will incur a loss.", "severity": "High Risk", "contract": "PoolKeeper.sol", "function": "N/A", "lineNumber": "73"}, {"id": 7, "category": {"1": ["CWE-703"]}, "title": "Paused state can\u2019t be set and therefore `withdrawQuote()` can\u2019t be executed", "description": "The `paused` state cannot be set due to the modifiers `checkInvariantsBeforeFunction()` and `checkInvariantsAfterFunction()` reverting the transaction, making it impossible to execute `withdrawQuote()`.", "severity": "High Risk", "contract": "LeveragedPool, PoolCommitter", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Spearbit/Tracer-Spearbit-Security-Review.pdf",
+    "project_info": {
+        "url": "https://github.com/tracer-protocol/perpetual-pools-contracts",
+        "commit_hash": "fc55a2b47a61426971a5c533e60927a9c3efb113",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Minting of unlimited number of sundae tokens",
+            "description": "There is no cap on what the minting fee can be.",
+            "severity": "N/A",
+            "contract": "PoolCommitter.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-287"
+                ]
+            },
+            "title": "Committer not validated on withdraw claim and multi-paid claim",
+            "description": "The committer is not validated in the withdrawClaimRequest(), multiPaidClaimMultiplePoolCommitters() and multiPaidClaimSinglePoolCommitter() functions, which could lead to potential security issues.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": [
+                "withdrawClaimRequest()",
+                "multiPaidClaimMultiplePoolCommitters()",
+                "multiPaidClaimSinglePoolCommitter()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Pool token price is incorrect when there is more than one pending upkeep",
+            "description": "The amount of pool tokens to mint and quote tokens to burn is determined by the pool token price. However, in the current implementation price includes the _current total supply_ but `burn` commits burn pool tokens immediately when `commit()` is called, not when `upkeep()` is executed.",
+            "severity": "Critical",
+            "contract": "PoolCommitter.sol",
+            "function": "N/A",
+            "lineNumber": "L384-391"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "No price scaling in SMAOracle",
+            "description": "The update() function of the SMAOracle contract doesn\u2019t scale the latestPrice although a scaler is set in the constructor.",
+            "severity": "High Risk",
+            "contract": "SMAOracle",
+            "function": "update()",
+            "lineNumber": "L82-L96"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Two different `invariantCheck` variables used in `PoolFactory.deployPool()`",
+            "description": "The `deployPool()` function in the `PoolFactory` contract uses two different `invariantCheck` variables: the one defined as a contract\u2019s instance variable and the one supplied as a parameter.",
+            "severity": "High Risk",
+            "contract": "PoolFactory",
+            "function": "deployPool()",
+            "lineNumber": "L93-L174"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Duplicate user payments for long commits when paid from balance",
+            "description": "When minting pool tokens in `commit()`, the `fromAggregateBalance` parameter indicates if the user wants to pay from their internal balances or by transferring the tokens. The second `if` condition is wrong and leads to users having to pay twice when calling `commit()` with `CommitType.LongMint` and `fromAggregateBalance` = true.",
+            "severity": "High Risk",
+            "contract": "PoolCommitter.sol",
+            "function": "commit()",
+            "lineNumber": "L299-L306"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Initial `executionPrice` is too high",
+            "description": "When a pool is deployed the initial `executionPrice` is calculated as `firstPrice * 1e18` where `firstPrice` is `ILeveragedPool(_poolAddress).getOraclePrice()` : All other updates to `executionPrice` use the result of `getPriceAndMetadata()` directly without scaling: The price after the `firstPrice` will always be lower, therefore its funding rate payment will always go to the shorts and long pool token holders will incur a loss.",
+            "severity": "High Risk",
+            "contract": "PoolKeeper.sol",
+            "function": "N/A",
+            "lineNumber": "73"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Paused state can\u2019t be set and therefore `withdrawQuote()` can\u2019t be executed",
+            "description": "The `paused` state cannot be set due to the modifiers `checkInvariantsBeforeFunction()` and `checkInvariantsAfterFunction()` reverting the transaction, making it impossible to execute `withdrawQuote()`.",
+            "severity": "High Risk",
+            "contract": "LeveragedPool, PoolCommitter",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

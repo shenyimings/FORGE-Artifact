@@ -1,1 +1,147 @@
-{"path": "./Audit_Reports_2024/Solidified/Solidified-Sandbox_StarterPack_[29.09.2020].pdf", "project_info": {"url": "https://github.com/thesandboxgame/sandbox-private-contracts", "commit_hash": "fcb5ea804fddf8e94683405f39630ad61a16f120", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-693"], "2": ["CWE-330"], "3": ["CWE-1241"]}, "title": "Unsecure source of randomness", "description": "The computation for simulating pseudo-random numbers in CatalystDataBase.sol depends purely on user-supplied values passed as arguments to getValues(). This means that the caller can pre-compute values that are advantageous.", "severity": "Critical", "contract": "CatalystDataBase.sol", "function": "getValues()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-693"], "2": ["CWE-358"]}, "title": "Maker can update priceFeed", "description": "The StarterPackV1 uses Maker\u2019s medianizer to read the ETH/USD value pair, but this address could be upgraded by Maker and the price stops updating, affecting all sale prices.", "severity": "Major", "contract": "StarterPackV1.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "Change can be sent to relayer", "description": "When an exceeding amount is sent to the contract, the outstanding amount is returned to msg.sender which could be a meta transaction relayer. This can cause issues since transfer() only forwards a small amount of gas, which might not be enough to perform the necessary calculations to return to the original user.", "severity": "Minor", "contract": "SatrterPackV1.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Potential Integer Overflow in StartPackV1.sol", "description": "Possible integer overflow if quantities and prices are large enough in the function _calculateTotalPriceInSand() due to lack of guards to check for overflows during total price calculation.", "severity": "Minor", "contract": "StarterPackV1.sol", "function": "_calculateTotalPriceInSand()", "lineNumber": "L286 & L290"}, {"id": 4, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "No input validation in price calculation", "description": "The `_calculateTotalPriceInSand()` function doesn't do any sanitization on the inputs it receives, which might cause unintended behaviors if catalystIds and catalystQuantities are of different lengths.", "severity": "Minor", "contract": "StarterPackV1.sol", "function": "_calculateTotalPriceInSand()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Potential gas saving on price calculation", "description": "Instead of every purchase calling the function to `_priceSelector()`, consider changing the dynamics of price changes by the admin calling the contract a second time to make the new price effective, which can save quite a lot of gas in the long term.", "severity": "Minor", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "Get prices can return inconsistent switch time", "description": "Switch time value can be inconsistent depending on the time the function is called, showing different values based on external factors.", "severity": "Minor", "contract": "SarterPackV1.sol", "function": "_getPrices()", "lineNumber": "L235 - L251"}, {"id": 7, "category": {"1": ["CWE-710"], "2": ["CWE-1126"]}, "title": "Consider using alias or constants instead of magic numbers", "description": "Using magic numbers can lead to mistakes and make code harder to read. Instead, consider using aliases or constants for decimal places.", "severity": "Minor", "contract": "StarterPackV1.sol", "function": "purchaseWithDAI()", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Solidified/Solidified-Sandbox_StarterPack_[29.09.2020].pdf",
+    "project_info": {
+        "url": "https://github.com/thesandboxgame/sandbox-private-contracts",
+        "commit_hash": "fcb5ea804fddf8e94683405f39630ad61a16f120",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-330"
+                ],
+                "3": [
+                    "CWE-1241"
+                ]
+            },
+            "title": "Unsecure source of randomness",
+            "description": "The computation for simulating pseudo-random numbers in CatalystDataBase.sol depends purely on user-supplied values passed as arguments to getValues(). This means that the caller can pre-compute values that are advantageous.",
+            "severity": "Critical",
+            "contract": "CatalystDataBase.sol",
+            "function": "getValues()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-358"
+                ]
+            },
+            "title": "Maker can update priceFeed",
+            "description": "The StarterPackV1 uses Maker\u2019s medianizer to read the ETH/USD value pair, but this address could be upgraded by Maker and the price stops updating, affecting all sale prices.",
+            "severity": "Major",
+            "contract": "StarterPackV1.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Change can be sent to relayer",
+            "description": "When an exceeding amount is sent to the contract, the outstanding amount is returned to msg.sender which could be a meta transaction relayer. This can cause issues since transfer() only forwards a small amount of gas, which might not be enough to perform the necessary calculations to return to the original user.",
+            "severity": "Minor",
+            "contract": "SatrterPackV1.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Potential Integer Overflow in StartPackV1.sol",
+            "description": "Possible integer overflow if quantities and prices are large enough in the function _calculateTotalPriceInSand() due to lack of guards to check for overflows during total price calculation.",
+            "severity": "Minor",
+            "contract": "StarterPackV1.sol",
+            "function": "_calculateTotalPriceInSand()",
+            "lineNumber": "L286 & L290"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "No input validation in price calculation",
+            "description": "The `_calculateTotalPriceInSand()` function doesn't do any sanitization on the inputs it receives, which might cause unintended behaviors if catalystIds and catalystQuantities are of different lengths.",
+            "severity": "Minor",
+            "contract": "StarterPackV1.sol",
+            "function": "_calculateTotalPriceInSand()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Potential gas saving on price calculation",
+            "description": "Instead of every purchase calling the function to `_priceSelector()`, consider changing the dynamics of price changes by the admin calling the contract a second time to make the new price effective, which can save quite a lot of gas in the long term.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Get prices can return inconsistent switch time",
+            "description": "Switch time value can be inconsistent depending on the time the function is called, showing different values based on external factors.",
+            "severity": "Minor",
+            "contract": "SarterPackV1.sol",
+            "function": "_getPrices()",
+            "lineNumber": "L235 - L251"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1126"
+                ]
+            },
+            "title": "Consider using alias or constants instead of magic numbers",
+            "description": "Using magic numbers can lead to mistakes and make code harder to read. Instead, consider using aliases or constants for decimal places.",
+            "severity": "Minor",
+            "contract": "StarterPackV1.sol",
+            "function": "purchaseWithDAI()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

@@ -1,1 +1,112 @@
-{"path": "./Audit_Reports_2024/Beosin/MasterChefV2_202204211554.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Wrong function parameters may lead to inaccurate reward calculation", "description": "If the contract owner sets the parameter _withUpdate to false when calling the _add_, _set_ and _updateCakeRate_ function, the contract will not update the current deposit pool, which may cause that the rewards obtained by the previous deposit users are not calculated according to the latest distribution proportion.", "severity": "Low", "contract": "MasterChefV2", "function": "_add_, _set_ and _updateCakeRate_", "lineNumber": "#L172-204, #L210-229, #L407-432"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Abnormal circumstances may result in insufficient reward tokens", "description": "If the depositing reward of this contract in MasterChefV1 is less than 40CAKE per block, when the contract owner burns the tokens, the CAKE that originally belonged to the user's depositing reward may be burnt.", "severity": "Low", "contract": "MasterChefV2", "function": "_burnCake", "lineNumber": "#L390-401"}, {"id": 2, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "The init function can be called repeatedly", "description": "If the contract owner repeatedly calls the _init_ function, it may cause inconsistency between the contract destruction amount and the project description.", "severity": "Info", "contract": "MasterChefV2", "function": "_init()", "lineNumber": "contracts/MasterChefV2.sol #L389-400"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "The burnCake function is missing event", "description": "There are more important variable updates in the _burnCake_ function, but event triggering is missing.", "severity": "Info", "contract": "MasterChefV2", "function": "_burnCake_", "lineNumber": "contracts/MasterChefV2.sol #L150-164"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "The modifier onlyBoostContract error message is inaccurate", "description": "The error message of the modifier should come from the MasterChefV2 contract instead of the Ownable contract.", "severity": "Info", "contract": "MasterChefV2", "function": "onlyBoostContract modifier", "lineNumber": "contracts/MasterChefV2.sol #L141-144"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "The burnAdmin address can be changed", "description": "According to the project design, some of the cake tokens in this contract reward will be burned, which is reflected in the contract as sending CAKE tokens to burnAdmin address, but burnAdmin address can be modified to other account address.", "severity": "Info", "contract": "MasterChefV2", "function": "_updateBurnAdmin_", "lineNumber": "L437-443"}]}
+{
+    "path": "./Audit_Reports_2024/Beosin/MasterChefV2_202204211554.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Wrong function parameters may lead to inaccurate reward calculation",
+            "description": "If the contract owner sets the parameter _withUpdate to false when calling the _add_, _set_ and _updateCakeRate_ function, the contract will not update the current deposit pool, which may cause that the rewards obtained by the previous deposit users are not calculated according to the latest distribution proportion.",
+            "severity": "Low",
+            "contract": "MasterChefV2",
+            "function": "_add_, _set_ and _updateCakeRate_",
+            "lineNumber": "#L172-204, #L210-229, #L407-432"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Abnormal circumstances may result in insufficient reward tokens",
+            "description": "If the depositing reward of this contract in MasterChefV1 is less than 40CAKE per block, when the contract owner burns the tokens, the CAKE that originally belonged to the user's depositing reward may be burnt.",
+            "severity": "Low",
+            "contract": "MasterChefV2",
+            "function": "_burnCake",
+            "lineNumber": "#L390-401"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "The init function can be called repeatedly",
+            "description": "If the contract owner repeatedly calls the _init_ function, it may cause inconsistency between the contract destruction amount and the project description.",
+            "severity": "Info",
+            "contract": "MasterChefV2",
+            "function": "_init()",
+            "lineNumber": "contracts/MasterChefV2.sol #L389-400"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "The burnCake function is missing event",
+            "description": "There are more important variable updates in the _burnCake_ function, but event triggering is missing.",
+            "severity": "Info",
+            "contract": "MasterChefV2",
+            "function": "_burnCake_",
+            "lineNumber": "contracts/MasterChefV2.sol #L150-164"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "The modifier onlyBoostContract error message is inaccurate",
+            "description": "The error message of the modifier should come from the MasterChefV2 contract instead of the Ownable contract.",
+            "severity": "Info",
+            "contract": "MasterChefV2",
+            "function": "onlyBoostContract modifier",
+            "lineNumber": "contracts/MasterChefV2.sol #L141-144"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "The burnAdmin address can be changed",
+            "description": "According to the project design, some of the cake tokens in this contract reward will be burned, which is reflected in the contract as sending CAKE tokens to burnAdmin address, but burnAdmin address can be modified to other account address.",
+            "severity": "Info",
+            "contract": "MasterChefV2",
+            "function": "_updateBurnAdmin_",
+            "lineNumber": "L437-443"
+        }
+    ]
+}

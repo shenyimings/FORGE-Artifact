@@ -1,1 +1,284 @@
-{"path": "./Audit_Reports_2024/InterFi/ChaosOfKnights_0x3108eA28bbc29D3D423D7D7247Fbf3C362b7F9AA.pdf", "project_info": {"url": "https://github.com/interfinetwork/audited-codes/blob/main/", "commit_hash": "1c7954c6982fe6318c52963aa85193c297d878d2", "address": "0x3108eA28bbc29D3D423D7D7247Fbf3C362b7F9AA"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Potential unauthorized script upgrade", "description": "The smart contract may allow an unauthorized user to upgrade the script.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"]}, "title": "Minting of unlimited number of sundae tokens", "description": "The internal _mint function allows minting of unlimited number of tokens without any restrictions.", "severity": "Critical", "contract": "ChaosOfKnightsToken", "function": "_mint", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "Unprotected function calls", "description": "The contracts contain unprotected function calls which can lead to unauthorized access and manipulation of sensitive data.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Insecure approve and transferFrom functions", "description": "The approve and transferFrom functions are vulnerable to insecure operations.", "severity": "High", "contract": "ChaosOfKnightsToken", "function": ["approve", "transferFrom"], "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "Unprotected increaseAllowance and decreaseAllowance functions", "description": "The increaseAllowance and decreaseAllowance functions are unprotected, allowing unauthorized access and potential manipulation of allowances.", "severity": "High", "contract": "ChaosOfKnightsToken", "function": ["increaseAllowance(address,uint256)", "decreaseAllowance(address,uint256)"], "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "Unprotected _transfer, _mint, _burn, _approve, and _spendAllowance functions", "description": "The _transfer, _mint, _burn, _approve, and _spendAllowance functions are unprotected, which can lead to unauthorized access and manipulation of the contract's state.", "severity": "High", "contract": "N/A", "function": "_transfer, _mint, _burn, _approve, and _spendAllowance", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-284"]}, "title": "Unprotected _beforeTokenTransfer and _afterTokenTransfer functions", "description": "The _beforeTokenTransfer and _afterTokenTransfer functions are internal and can modify state, but they do not have any access modifiers or restrictions.", "severity": "High", "contract": "ChaosOfKnightsToken", "function": "_beforeTokenTransfer, _afterTokenTransfer", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-284"]}, "title": "Unprotected paused and unpaused functions", "description": "The pause and unpause functions are public and can be accessed by anyone, allowing unauthorized users to pause or unpause the contract.", "severity": "High", "contract": "ChaosOfKnightsToken", "function": ["pause()", "unpause()"], "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "Unprotected renounceOwnership and transferOwnership functions", "description": "The smart contract has unprotected renounceOwnership and transferOwnership functions which can lead to unauthorized changes in ownership.", "severity": "High", "contract": "ChaosOfKnightsToken", "function": ["renounceOwnership()", "transferOwnership(address)"], "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "Unprotected _transferOwnership function", "description": "The smart contract utilizes redundant code for `transferOwnership()`. Ideal transfer ownership code should look like the provided example.", "severity": "Low", "contract": "ChaosOfKnightsToken", "function": "_transferOwnership(address)", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-693"]}, "title": "Potential reentrancy vulnerabilities in findUpperBound function", "description": "The findUpperBound function may be vulnerable to reentrancy attacks.", "severity": "High", "contract": "ERC20Snapshot", "function": "findUpperBound(uint256[],uint256)", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Insecure ERC20 Functions", "description": "The functions name, symbol, decimals, totalSupply, balanceOf, allowance, approve, and transferFrom do not follow secure practices.", "severity": "High", "contract": "ERC20", "function": ["name", "symbol", "decimals", "totalSupply", "balanceOf", "allowance", "approve", "transferFrom"], "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-284"]}, "title": "Unprotected _snapshot, _getCurrentSnapshotId, balanceOfAt, and totalSupplyAt functions", "description": "The _snapshot, _getCurrentSnapshotId, balanceOfAt, and totalSupplyAt functions are unprotected and can be accessed publicly.", "severity": "High", "contract": "ERC20Snapshot", "function": "_snapshot, _getCurrentSnapshotId, balanceOfAt, totalSupplyAt", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-284"]}, "title": "Unprotected _valueAt, _updateAccountSnapshot, _updateTotalSupplySnapshot, and _updateSnapshot functions", "description": "The private functions _valueAt, _updateAccountSnapshot, _updateTotalSupplySnapshot, and _updateSnapshot are unprotected and can be accessed directly.", "severity": "High", "contract": "ERC20Snapshot", "function": "_valueAt, _updateAccountSnapshot, _updateTotalSupplySnapshot, _updateSnapshot", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-284"]}, "title": "Unprotected _lastSnapshotId function", "description": "The _lastSnapshotId function is declared as private but lacks access modifiers or restrictions, making it potentially accessible and exploitable.", "severity": "High", "contract": "ERC20Snapshot", "function": "_lastSnapshotId(uint256[])", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/InterFi/ChaosOfKnights_0x3108eA28bbc29D3D423D7D7247Fbf3C362b7F9AA.pdf",
+    "project_info": {
+        "url": "https://github.com/interfinetwork/audited-codes/blob/main/",
+        "commit_hash": "1c7954c6982fe6318c52963aa85193c297d878d2",
+        "address": "0x3108eA28bbc29D3D423D7D7247Fbf3C362b7F9AA",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Potential unauthorized script upgrade",
+            "description": "The smart contract may allow an unauthorized user to upgrade the script.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Minting of unlimited number of sundae tokens",
+            "description": "The internal _mint function allows minting of unlimited number of tokens without any restrictions.",
+            "severity": "Critical",
+            "contract": "ChaosOfKnightsToken",
+            "function": "_mint",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Unprotected function calls",
+            "description": "The contracts contain unprotected function calls which can lead to unauthorized access and manipulation of sensitive data.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Insecure approve and transferFrom functions",
+            "description": "The approve and transferFrom functions are vulnerable to insecure operations.",
+            "severity": "High",
+            "contract": "ChaosOfKnightsToken",
+            "function": [
+                "approve",
+                "transferFrom"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Unprotected increaseAllowance and decreaseAllowance functions",
+            "description": "The increaseAllowance and decreaseAllowance functions are unprotected, allowing unauthorized access and potential manipulation of allowances.",
+            "severity": "High",
+            "contract": "ChaosOfKnightsToken",
+            "function": [
+                "increaseAllowance(address,uint256)",
+                "decreaseAllowance(address,uint256)"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Unprotected _transfer, _mint, _burn, _approve, and _spendAllowance functions",
+            "description": "The _transfer, _mint, _burn, _approve, and _spendAllowance functions are unprotected, which can lead to unauthorized access and manipulation of the contract's state.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "_transfer, _mint, _burn, _approve, and _spendAllowance",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected _beforeTokenTransfer and _afterTokenTransfer functions",
+            "description": "The _beforeTokenTransfer and _afterTokenTransfer functions are internal and can modify state, but they do not have any access modifiers or restrictions.",
+            "severity": "High",
+            "contract": "ChaosOfKnightsToken",
+            "function": "_beforeTokenTransfer, _afterTokenTransfer",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected paused and unpaused functions",
+            "description": "The pause and unpause functions are public and can be accessed by anyone, allowing unauthorized users to pause or unpause the contract.",
+            "severity": "High",
+            "contract": "ChaosOfKnightsToken",
+            "function": [
+                "pause()",
+                "unpause()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Unprotected renounceOwnership and transferOwnership functions",
+            "description": "The smart contract has unprotected renounceOwnership and transferOwnership functions which can lead to unauthorized changes in ownership.",
+            "severity": "High",
+            "contract": "ChaosOfKnightsToken",
+            "function": [
+                "renounceOwnership()",
+                "transferOwnership(address)"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Unprotected _transferOwnership function",
+            "description": "The smart contract utilizes redundant code for `transferOwnership()`. Ideal transfer ownership code should look like the provided example.",
+            "severity": "Low",
+            "contract": "ChaosOfKnightsToken",
+            "function": "_transferOwnership(address)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "Potential reentrancy vulnerabilities in findUpperBound function",
+            "description": "The findUpperBound function may be vulnerable to reentrancy attacks.",
+            "severity": "High",
+            "contract": "ERC20Snapshot",
+            "function": "findUpperBound(uint256[],uint256)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Insecure ERC20 Functions",
+            "description": "The functions name, symbol, decimals, totalSupply, balanceOf, allowance, approve, and transferFrom do not follow secure practices.",
+            "severity": "High",
+            "contract": "ERC20",
+            "function": [
+                "name",
+                "symbol",
+                "decimals",
+                "totalSupply",
+                "balanceOf",
+                "allowance",
+                "approve",
+                "transferFrom"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected _snapshot, _getCurrentSnapshotId, balanceOfAt, and totalSupplyAt functions",
+            "description": "The _snapshot, _getCurrentSnapshotId, balanceOfAt, and totalSupplyAt functions are unprotected and can be accessed publicly.",
+            "severity": "High",
+            "contract": "ERC20Snapshot",
+            "function": "_snapshot, _getCurrentSnapshotId, balanceOfAt, totalSupplyAt",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected _valueAt, _updateAccountSnapshot, _updateTotalSupplySnapshot, and _updateSnapshot functions",
+            "description": "The private functions _valueAt, _updateAccountSnapshot, _updateTotalSupplySnapshot, and _updateSnapshot are unprotected and can be accessed directly.",
+            "severity": "High",
+            "contract": "ERC20Snapshot",
+            "function": "_valueAt, _updateAccountSnapshot, _updateTotalSupplySnapshot, _updateSnapshot",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected _lastSnapshotId function",
+            "description": "The _lastSnapshotId function is declared as private but lacks access modifiers or restrictions, making it potentially accessible and exploitable.",
+            "severity": "High",
+            "contract": "ERC20Snapshot",
+            "function": "_lastSnapshotId(uint256[])",
+            "lineNumber": "N/A"
+        }
+    ]
+}

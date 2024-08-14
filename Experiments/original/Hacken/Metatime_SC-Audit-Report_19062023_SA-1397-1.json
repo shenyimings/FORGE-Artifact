@@ -1,1 +1,636 @@
-{"path": "./Audit_Reports_2024/Hacken/Metatime_SC-Audit-Report_19062023_SA-1397-1.pdf", "project_info": {"url": "https://github.com/Metatime-Technology-Inc/pool-contracts", "commit_hash": "31a4e8c", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "H01. Invalid Calculations; Missing Validation", "description": "Invalid vesting logic in Distributor and TokenDistributor contracts due to missing validation or incorrect checks of dependencies between endTime, DISTRIBUTION_RATE, and PERIOD variables during initialization.", "severity": "High", "contract": "Distributor and TokenDistributor", "function": "_calculateClaimableAmount()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "H02. Funds Lock", "description": "Contracts TokenDistributor and PrivateSaleTokenDistributor do not allow users to claim tokens after the end date, resulting in tokens that are locked and can only be claimed later by the owner.", "severity": "Medium", "contract": "TokenDistributor, PrivateSaleTokenDistributor", "function": "claim()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-229"], "4": ["CWE-230"]}, "title": "H03. Missing Validation; Data Consistency", "description": "N/A", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "H04. Undocumented Functionality: Proxy System Architecture", "description": "The proxy systems defined by DistributorProxyManager, TokenDistributorProxyManager and InitializeProxy are implemented using an immutable logic address, but it is not clear why the project is using custom proxy contracts and inheriting upgradeable contracts like Ownable2StepUpgradeable if the contracts are not supposed to be upgraded.", "severity": "High", "contract": "Multiple Contracts (PrivateSaleTokenDistributor, TokenDistributorProxyManager, DistributorProxyManager, InitializedProxy, Distributor, TokenDistributor)", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "M01. Best Practice Violation: Disable Initializers", "description": "_disableInitializers() should be called in the constructor() of the Distributor and TokenDistributor contracts.", "severity": "N/A", "contract": ["Distributor", "TokenDistributor"], "function": "constructor()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Best Practice Violation: Unchecked Transfer", "description": "The ERC20 function transfer() is used repeatedly without the SafeERC20 wrapper, which can lead to a Denial of Service or unexpected behavior when dealing with some tokens.", "severity": "Medium", "contract": "N/A", "function": "claim(), sweep(), _withdraw(), _transfer()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-435"], "2": ["CWE-436"], "3": ["CWE-437"]}, "title": "M03. Contradiction: Third Party Integration", "description": "Contradiction: Third Party Integration", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Best Practice Violation - Checks-Effects-Interactions Pattern", "description": "State variables are updated after the external calls to the token contract.", "severity": "Medium", "contract": "Distributor.sol, PrivateSaleTokenDistributor.sol, TokenDistributor.sol, StrategicPool.sol", "function": "claim(), burnWithFormula(), burn()", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-682"], "2": ["CWE-1339"]}, "title": "M05. Division Before Multiplication", "description": "Performing divisions before multiplications results in a loss of precision due to Solidity language's lack of floating point numbers.", "severity": "Low", "contract": "Distributor, TokenDistributor", "function": "_calculateClaimableAmount()", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "M06. Missing Check: Loss of Funds", "description": "N/A", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-682"]}, "title": "M07. Wrong Event Data", "description": "N/A", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "M08. Funds Lock", "description": "Contracts TokenDistributor and PrivateSaleTokenDistributor do not allow users to claim tokens after the end date, resulting in tokens that are locked and can only be claimed later by the owner.", "severity": "Medium", "contract": "TokenDistributor and PrivateSaleTokenDistributor", "function": "claim()", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-703"]}, "title": "M09. Requirements Violation", "description": "N/A", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "L01. Unused Variables", "description": "Unused variables are allowed in Solidity and do not pose a direct security issue. However, it is best practice to avoid them as they can cause an increase in computations (and unnecessary Gas consumption) and decrease readability.", "severity": "Low", "contract": "Distributor.sol, TokenDistributor.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-710"], "2": ["CWE-758"], "3": ["CWE-1038"], "4": ["CWE-733"]}, "title": "L02. Floating Pragma", "description": "Contracts should be deployed with the same compiler version and flags that they have been tested thoroughly.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "L03. Missing Zero Address Validation", "description": "Additional checks against the 0x0 address should be included in the reported functions to avoid unexpected results.", "severity": "Low", "contract": "Multiple", "function": ["setClaimableAmounts()", "initialize()", "createTokenDistributor()", "createDistributor()", "constructor()"], "lineNumber": "N/A"}, {"id": 16, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "L04. Missing Amount Validation", "description": "An additional check should be introduced in the function claim() to make sure that claimableAmount is not zero.", "severity": "Low", "contract": "PrivateSaleTokenDistributor", "function": "claim()", "lineNumber": "N/A"}, {"id": 17, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "L05. Missing NatSpecs: Burning Formula", "description": "Missing NatSpecs in burning formula function.", "severity": "Low", "contract": "StrategicPool", "function": "burnWithFormula()", "lineNumber": "N/A"}, {"id": 18, "category": {"1": ["CWE-710"], "2": ["CWE-1076"], "3": ["CWE-1078"], "4": ["CWE-1099"]}, "title": "L06. Naming Consistency", "description": "Local and State Variable names should be mixedCase: capitalize all the letters of the initialisms, except keep the first one lower case if it is the beginning of the name.", "severity": "Low", "contract": "Distributor, StrategicPool, TokenDistributor", "function": "N/A", "lineNumber": "N/A"}, {"id": 19, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "L07. Redundant Code: Unnecessary Getters", "description": "Public variables do not need a getter function in order to be accessed. Unnecessary functions lead to bigger contract code and higher deployment costs.", "severity": "Medium", "contract": ["Distributor", "StrategicPool", "TokenDistributor"], "function": ["getLeftClaimableAmount()", "getTotalBurnedAmount()", "getLeftClaimableAmount()"], "lineNumber": "N/A"}, {"id": 20, "category": {"1": ["CWE-710"], "2": ["CWE-1126"]}, "title": "L08. Variable That Should Be Constant", "description": "Hard-coded variables that do not change their values during their lifecycle should be declared as constants in order to save Gas.", "severity": "Medium", "contract": "StrategicPool", "function": "N/A", "lineNumber": "N/A"}, {"id": 21, "category": {"1": ["CWE-710"], "2": ["CWE-1126"]}, "title": "L09. Functions That Should Be External", "description": "Public functions that are not called from inside the contract should be declared external to save Gas.", "severity": "Medium", "contract": ["DistributorProxyManager", "MultiSigWallet", "TokenDistributorProxyManager"], "function": ["getPoolProxy()", "addToWhitelist()", "removeFromWhitelist()", "submitTransaction()", "confirmTransaction()", "executeTransaction()", "getOwners()", "getTransactionCount()", "getTransaction()"], "lineNumber": "N/A"}, {"id": 22, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "L10. Redundant SafeMath", "description": "The contract integrates the SafeMath library for uint256 while using the compiler ^0.8.0, which is redundant due to Solidity version 0.8.0 introducing new arithmetic overflow and underflow protection features.", "severity": "Low", "contract": "./contracts/core/StrategicPool.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 23, "category": {"1": ["CWE-693"], "2": ["CWE-358"]}, "title": "L11. Non-Explicit Variable Visibilities", "description": "Variables without explicit visibility will be public by default. Lack of variable visibility can lead to readability issues.", "severity": "Low", "contract": "StrategicPool", "function": "N/A", "lineNumber": "N/A"}, {"id": 24, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "L12. Wrong Import", "description": "The code references draft contracts which may be changed in the future.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 25, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "L13. Missing Check", "description": "N/A", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 26, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "L14. Repetitive Code", "description": "Repetitive code was found in the contract.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 27, "category": {"1": ["CWE-682"]}, "title": "L15. Redundant Require Statement", "description": "The function calculateClaimableAmount() introduces a redundant check block.timestamp < endTime in an 'else' block scope that will not happen in block.timestamp > endTime, leading to unnecessary Gas usage.", "severity": "Medium", "contract": "./contracts/core/TokenDistributor.sol", "function": "calculateClaimableAmount()", "lineNumber": "N/A"}, {"id": 28, "category": {"1": ["CWE-682"]}, "title": "L16. Redundant Code; Invalid Calculations", "description": "The totalLockedAmount calculations inside the submitPools() function are redundant as they are never used and have an invalid calculation case where the contract skips the transfer but still increases the value of the variable when the pool address is 0x0.", "severity": "Low", "contract": "MTC", "function": "submitPools()", "lineNumber": "N/A"}, {"id": 29, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"], "4": ["CWE-766"]}, "title": "L17. Variables That Can Be Set Immutable", "description": "Variables without explicit visibility will be public by default, which can lead to readability issues.", "severity": "Low", "contract": "StrategicPool", "function": "N/A", "lineNumber": "n, S"}, {"id": 30, "category": {"1": ["CWE-710"]}, "title": "Solidity Style Guide: mixedCase", "description": "Local and State Variable names should be mixedCase: capitalize all the letters of the initialisms, except keep the first one lower case if it is the beginning of the name.", "severity": "Informational", "contract": "./contracts/core/Distributor.sol, ./contracts/core/StrategicPool.sol, ./contracts/core/TokenDistributor.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 31, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Missing Events for Critical Value Updates", "description": "Events are not emitted when critical values are updated.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 32, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Non-Explicit Variable Unit Sizes", "description": "Variable types uint and bytes are used without explicitly setting their size in the whole contract MultiSigWallet.", "severity": "Informational", "contract": "MultiSigWallet", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Hacken/Metatime_SC-Audit-Report_19062023_SA-1397-1.pdf",
+    "project_info": {
+        "url": "https://github.com/Metatime-Technology-Inc/pool-contracts",
+        "commit_hash": "31a4e8c",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "H01. Invalid Calculations; Missing Validation",
+            "description": "Invalid vesting logic in Distributor and TokenDistributor contracts due to missing validation or incorrect checks of dependencies between endTime, DISTRIBUTION_RATE, and PERIOD variables during initialization.",
+            "severity": "High",
+            "contract": "Distributor and TokenDistributor",
+            "function": "_calculateClaimableAmount()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "H02. Funds Lock",
+            "description": "Contracts TokenDistributor and PrivateSaleTokenDistributor do not allow users to claim tokens after the end date, resulting in tokens that are locked and can only be claimed later by the owner.",
+            "severity": "Medium",
+            "contract": "TokenDistributor, PrivateSaleTokenDistributor",
+            "function": "claim()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ],
+                "4": [
+                    "CWE-230"
+                ]
+            },
+            "title": "H03. Missing Validation; Data Consistency",
+            "description": "N/A",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "H04. Undocumented Functionality: Proxy System Architecture",
+            "description": "The proxy systems defined by DistributorProxyManager, TokenDistributorProxyManager and InitializeProxy are implemented using an immutable logic address, but it is not clear why the project is using custom proxy contracts and inheriting upgradeable contracts like Ownable2StepUpgradeable if the contracts are not supposed to be upgraded.",
+            "severity": "High",
+            "contract": "Multiple Contracts (PrivateSaleTokenDistributor, TokenDistributorProxyManager, DistributorProxyManager, InitializedProxy, Distributor, TokenDistributor)",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "M01. Best Practice Violation: Disable Initializers",
+            "description": "_disableInitializers() should be called in the constructor() of the Distributor and TokenDistributor contracts.",
+            "severity": "N/A",
+            "contract": [
+                "Distributor",
+                "TokenDistributor"
+            ],
+            "function": "constructor()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Best Practice Violation: Unchecked Transfer",
+            "description": "The ERC20 function transfer() is used repeatedly without the SafeERC20 wrapper, which can lead to a Denial of Service or unexpected behavior when dealing with some tokens.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "claim(), sweep(), _withdraw(), _transfer()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-437"
+                ]
+            },
+            "title": "M03. Contradiction: Third Party Integration",
+            "description": "Contradiction: Third Party Integration",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Best Practice Violation - Checks-Effects-Interactions Pattern",
+            "description": "State variables are updated after the external calls to the token contract.",
+            "severity": "Medium",
+            "contract": "Distributor.sol, PrivateSaleTokenDistributor.sol, TokenDistributor.sol, StrategicPool.sol",
+            "function": "claim(), burnWithFormula(), burn()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "M05. Division Before Multiplication",
+            "description": "Performing divisions before multiplications results in a loss of precision due to Solidity language's lack of floating point numbers.",
+            "severity": "Low",
+            "contract": "Distributor, TokenDistributor",
+            "function": "_calculateClaimableAmount()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "M06. Missing Check: Loss of Funds",
+            "description": "N/A",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "M07. Wrong Event Data",
+            "description": "N/A",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "M08. Funds Lock",
+            "description": "Contracts TokenDistributor and PrivateSaleTokenDistributor do not allow users to claim tokens after the end date, resulting in tokens that are locked and can only be claimed later by the owner.",
+            "severity": "Medium",
+            "contract": "TokenDistributor and PrivateSaleTokenDistributor",
+            "function": "claim()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "M09. Requirements Violation",
+            "description": "N/A",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "L01. Unused Variables",
+            "description": "Unused variables are allowed in Solidity and do not pose a direct security issue. However, it is best practice to avoid them as they can cause an increase in computations (and unnecessary Gas consumption) and decrease readability.",
+            "severity": "Low",
+            "contract": "Distributor.sol, TokenDistributor.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-758"
+                ],
+                "3": [
+                    "CWE-1038"
+                ],
+                "4": [
+                    "CWE-733"
+                ]
+            },
+            "title": "L02. Floating Pragma",
+            "description": "Contracts should be deployed with the same compiler version and flags that they have been tested thoroughly.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "L03. Missing Zero Address Validation",
+            "description": "Additional checks against the 0x0 address should be included in the reported functions to avoid unexpected results.",
+            "severity": "Low",
+            "contract": "Multiple",
+            "function": [
+                "setClaimableAmounts()",
+                "initialize()",
+                "createTokenDistributor()",
+                "createDistributor()",
+                "constructor()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "L04. Missing Amount Validation",
+            "description": "An additional check should be introduced in the function claim() to make sure that claimableAmount is not zero.",
+            "severity": "Low",
+            "contract": "PrivateSaleTokenDistributor",
+            "function": "claim()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "L05. Missing NatSpecs: Burning Formula",
+            "description": "Missing NatSpecs in burning formula function.",
+            "severity": "Low",
+            "contract": "StrategicPool",
+            "function": "burnWithFormula()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1076"
+                ],
+                "3": [
+                    "CWE-1078"
+                ],
+                "4": [
+                    "CWE-1099"
+                ]
+            },
+            "title": "L06. Naming Consistency",
+            "description": "Local and State Variable names should be mixedCase: capitalize all the letters of the initialisms, except keep the first one lower case if it is the beginning of the name.",
+            "severity": "Low",
+            "contract": "Distributor, StrategicPool, TokenDistributor",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 19,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "L07. Redundant Code: Unnecessary Getters",
+            "description": "Public variables do not need a getter function in order to be accessed. Unnecessary functions lead to bigger contract code and higher deployment costs.",
+            "severity": "Medium",
+            "contract": [
+                "Distributor",
+                "StrategicPool",
+                "TokenDistributor"
+            ],
+            "function": [
+                "getLeftClaimableAmount()",
+                "getTotalBurnedAmount()",
+                "getLeftClaimableAmount()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 20,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1126"
+                ]
+            },
+            "title": "L08. Variable That Should Be Constant",
+            "description": "Hard-coded variables that do not change their values during their lifecycle should be declared as constants in order to save Gas.",
+            "severity": "Medium",
+            "contract": "StrategicPool",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 21,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1126"
+                ]
+            },
+            "title": "L09. Functions That Should Be External",
+            "description": "Public functions that are not called from inside the contract should be declared external to save Gas.",
+            "severity": "Medium",
+            "contract": [
+                "DistributorProxyManager",
+                "MultiSigWallet",
+                "TokenDistributorProxyManager"
+            ],
+            "function": [
+                "getPoolProxy()",
+                "addToWhitelist()",
+                "removeFromWhitelist()",
+                "submitTransaction()",
+                "confirmTransaction()",
+                "executeTransaction()",
+                "getOwners()",
+                "getTransactionCount()",
+                "getTransaction()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 22,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "L10. Redundant SafeMath",
+            "description": "The contract integrates the SafeMath library for uint256 while using the compiler ^0.8.0, which is redundant due to Solidity version 0.8.0 introducing new arithmetic overflow and underflow protection features.",
+            "severity": "Low",
+            "contract": "./contracts/core/StrategicPool.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 23,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-358"
+                ]
+            },
+            "title": "L11. Non-Explicit Variable Visibilities",
+            "description": "Variables without explicit visibility will be public by default. Lack of variable visibility can lead to readability issues.",
+            "severity": "Low",
+            "contract": "StrategicPool",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 24,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "L12. Wrong Import",
+            "description": "The code references draft contracts which may be changed in the future.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 25,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "L13. Missing Check",
+            "description": "N/A",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 26,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "L14. Repetitive Code",
+            "description": "Repetitive code was found in the contract.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 27,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "L15. Redundant Require Statement",
+            "description": "The function calculateClaimableAmount() introduces a redundant check block.timestamp < endTime in an 'else' block scope that will not happen in block.timestamp > endTime, leading to unnecessary Gas usage.",
+            "severity": "Medium",
+            "contract": "./contracts/core/TokenDistributor.sol",
+            "function": "calculateClaimableAmount()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 28,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "L16. Redundant Code; Invalid Calculations",
+            "description": "The totalLockedAmount calculations inside the submitPools() function are redundant as they are never used and have an invalid calculation case where the contract skips the transfer but still increases the value of the variable when the pool address is 0x0.",
+            "severity": "Low",
+            "contract": "MTC",
+            "function": "submitPools()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 29,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ],
+                "4": [
+                    "CWE-766"
+                ]
+            },
+            "title": "L17. Variables That Can Be Set Immutable",
+            "description": "Variables without explicit visibility will be public by default, which can lead to readability issues.",
+            "severity": "Low",
+            "contract": "StrategicPool",
+            "function": "N/A",
+            "lineNumber": "n, S"
+        },
+        {
+            "id": 30,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ]
+            },
+            "title": "Solidity Style Guide: mixedCase",
+            "description": "Local and State Variable names should be mixedCase: capitalize all the letters of the initialisms, except keep the first one lower case if it is the beginning of the name.",
+            "severity": "Informational",
+            "contract": "./contracts/core/Distributor.sol, ./contracts/core/StrategicPool.sol, ./contracts/core/TokenDistributor.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 31,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Missing Events for Critical Value Updates",
+            "description": "Events are not emitted when critical values are updated.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 32,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Non-Explicit Variable Unit Sizes",
+            "description": "Variable types uint and bytes are used without explicitly setting their size in the whole contract MultiSigWallet.",
+            "severity": "Informational",
+            "contract": "MultiSigWallet",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

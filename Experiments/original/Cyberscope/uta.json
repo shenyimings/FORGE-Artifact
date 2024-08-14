@@ -1,1 +1,327 @@
-{"path": "./Audit_Reports_2024/Cyberscope/uta.pdf", "project_info": {"url": "N/A", "commit_hash": "8e192e3a28a716f4a6d04b50ab30745ce11fbcf4c16fbbf0f22216a0c817357c", "address": "0x64600D9C8Df1ab026E0a90BCf04Dc22ca9B7DA36"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "ST - Stop Transactions", "description": "The contract owner has the authority to stop transactions for all users by setting `taxAddress` and `tax` or `maxBuyAmount`/`maxSellAmount` to manipulate the transaction amounts.", "severity": "Critical", "contract": "N/A", "function": "N/A", "lineNumber": "513,517,522"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "ELFM - Exceed Limit Fees Manipulation", "description": "The contract owner has the authority to increase over the allowed limit of 25% by calling the `update_tax` function with a high percentage value.", "severity": "Critical", "contract": "N/A", "function": "update_tax", "lineNumber": "551"}, {"id": 2, "category": {"1": ["CWE-710"], "2": ["CWE-1126"]}, "title": "L01 - Public Function could be Declared External", "description": "Public functions that are never called by the contract should be declared external to save gas.", "severity": "Minor", "contract": "N/A", "function": ["update_tax", "update_tax_Status", "update_master_wallet", "update_tax_Address", "update_Max_Token_Amount", "decreaseAllowance", "increaseAllowance", "transferOwnership", "renounceOwnership"], "lineNumber": "316,325,469,488,532,537,542,547,551"}, {"id": 3, "category": {"1": ["CWE-710"], "2": ["CWE-1076"]}, "title": "L04 - Conformance to Solidity Naming Conventions", "description": "Solidity defines a naming convention that should be followed.", "severity": "Minor", "contract": "N/A", "function": "N/A", "lineNumber": "339, 532, 537, 542, 547, 551"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "L07 - Missing Events Arithmetic", "description": "Detected missing events for critical arithmetic parameters. There are functions that have no event emitted, so it is difficult to track off-chain changes.", "severity": "Minor", "contract": "N/A", "function": "N/A", "lineNumber": "532,551"}, {"id": 5, "category": {"1": ["CWE-710"], "2": ["CWE-1164"], "3": ["CWE-561"]}, "title": "L09 - Dead Code Elimination", "description": "N/A", "severity": "Minor", "contract": "N/A", "function": "N/A", "lineNumber": "582, 617, 564"}, {"id": 6, "category": {"1": ["CWE-697"]}, "title": "L11 - Unnecessary Boolean equality", "description": "The comparison to boolean constants is redundant. Boolean constants can be used directly and do not need to be compared to true or false.", "severity": "Minor", "contract": "N/A", "function": "N/A", "lineNumber": "508"}, {"id": 7, "category": {"1": ["CWE-682"], "2": ["CWE-369"]}, "title": "L13 - Divide before Multiply Operation", "description": "Performing divisions before multiplications may cause loss of precision.", "severity": "minor", "contract": "N/A", "function": "N/A", "lineNumber": "508"}, {"id": 8, "category": {"1": ["CWE-693"]}, "title": "L15 - Local Scope Variable Shadowing", "description": "Variables defined in local scope have the same name as upper scoped variables.", "severity": "Minor", "contract": "N/A", "function": "N/A", "lineNumber": "355"}, {"id": 9, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "ST - Contract Owner is able to stop or pause transactions", "description": "The contract owner has the authority to stop transactions for all users by setting certain variables such as taxAddress and tax, maxBuyAmount, or maxSellAmount. This can be exploited by the owner to manipulate transactions.", "severity": "Critical", "contract": "N/A", "function": "N/A", "lineNumber": "513, 517, 522"}, {"id": 10, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "OCTD - Contract Owner is not able to transfer tokens from specific address", "description": "The contract owner does not have the authority to transfer tokens from a specific address.", "severity": "Critical", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-682"]}, "title": "OTUT - Owner Transfer User's Tokens", "description": "The contract owner has the authority to transfer user's tokens by setting the `taxAddress` to the router address and the `tax` to a high number, causing an insufficient calculated amount.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "ELFM - Exceed Limit Fees Manipulation", "description": "The contract owner has the authority to increase fees over the allowed limit of 25%. The owner may take advantage of it by calling the `update_tax` function with a high percentage value.", "severity": "Critical", "contract": "N/A", "function": "update_tax", "lineNumber": "551"}, {"id": 13, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "ULTW - Contract Owner is not able to increase the amount of liquidity taken by dev wallet more than a reasonable percent", "description": "The contract owner can increase the amount of liquidity taken by the dev wallet beyond a reasonable percentage, potentially leading to manipulation.", "severity": "N/A", "contract": "N/A", "function": "update_tax()", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "MT - Contract Owner is not able to mint new tokens", "description": "Contract Owner is not able to mint new tokens", "severity": "Critical", "contract": "UTA_BEP20Token", "function": "N/A", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "BT - Contract Owner is not able to burn tokens from specific wallet", "description": "The contract owner does not have the authority to burn tokens from a specific wallet.", "severity": "Critical", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 16, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "BC - Contract Owner is not able to blacklist wallets from selling", "description": "The contract owner does not have the authority to stop specific wallets from selling tokens.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Cyberscope/uta.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "8e192e3a28a716f4a6d04b50ab30745ce11fbcf4c16fbbf0f22216a0c817357c",
+        "address": "0x64600D9C8Df1ab026E0a90BCf04Dc22ca9B7DA36"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "ST - Stop Transactions",
+            "description": "The contract owner has the authority to stop transactions for all users by setting `taxAddress` and `tax` or `maxBuyAmount`/`maxSellAmount` to manipulate the transaction amounts.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "513,517,522"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "ELFM - Exceed Limit Fees Manipulation",
+            "description": "The contract owner has the authority to increase over the allowed limit of 25% by calling the `update_tax` function with a high percentage value.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "update_tax",
+            "lineNumber": "551"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1126"
+                ]
+            },
+            "title": "L01 - Public Function could be Declared External",
+            "description": "Public functions that are never called by the contract should be declared external to save gas.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": [
+                "update_tax",
+                "update_tax_Status",
+                "update_master_wallet",
+                "update_tax_Address",
+                "update_Max_Token_Amount",
+                "decreaseAllowance",
+                "increaseAllowance",
+                "transferOwnership",
+                "renounceOwnership"
+            ],
+            "lineNumber": "316,325,469,488,532,537,542,547,551"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1076"
+                ]
+            },
+            "title": "L04 - Conformance to Solidity Naming Conventions",
+            "description": "Solidity defines a naming convention that should be followed.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "339, 532, 537, 542, 547, 551"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "L07 - Missing Events Arithmetic",
+            "description": "Detected missing events for critical arithmetic parameters. There are functions that have no event emitted, so it is difficult to track off-chain changes.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "532,551"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ],
+                "3": [
+                    "CWE-561"
+                ]
+            },
+            "title": "L09 - Dead Code Elimination",
+            "description": "N/A",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "582, 617, 564"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ]
+            },
+            "title": "L11 - Unnecessary Boolean equality",
+            "description": "The comparison to boolean constants is redundant. Boolean constants can be used directly and do not need to be compared to true or false.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "508"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-369"
+                ]
+            },
+            "title": "L13 - Divide before Multiply Operation",
+            "description": "Performing divisions before multiplications may cause loss of precision.",
+            "severity": "minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "508"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "L15 - Local Scope Variable Shadowing",
+            "description": "Variables defined in local scope have the same name as upper scoped variables.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "355"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "ST - Contract Owner is able to stop or pause transactions",
+            "description": "The contract owner has the authority to stop transactions for all users by setting certain variables such as taxAddress and tax, maxBuyAmount, or maxSellAmount. This can be exploited by the owner to manipulate transactions.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "513, 517, 522"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "OCTD - Contract Owner is not able to transfer tokens from specific address",
+            "description": "The contract owner does not have the authority to transfer tokens from a specific address.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "OTUT - Owner Transfer User's Tokens",
+            "description": "The contract owner has the authority to transfer user's tokens by setting the `taxAddress` to the router address and the `tax` to a high number, causing an insufficient calculated amount.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "ELFM - Exceed Limit Fees Manipulation",
+            "description": "The contract owner has the authority to increase fees over the allowed limit of 25%. The owner may take advantage of it by calling the `update_tax` function with a high percentage value.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "update_tax",
+            "lineNumber": "551"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "ULTW - Contract Owner is not able to increase the amount of liquidity taken by dev wallet more than a reasonable percent",
+            "description": "The contract owner can increase the amount of liquidity taken by the dev wallet beyond a reasonable percentage, potentially leading to manipulation.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "update_tax()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "MT - Contract Owner is not able to mint new tokens",
+            "description": "Contract Owner is not able to mint new tokens",
+            "severity": "Critical",
+            "contract": "UTA_BEP20Token",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "BT - Contract Owner is not able to burn tokens from specific wallet",
+            "description": "The contract owner does not have the authority to burn tokens from a specific wallet.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "BC - Contract Owner is not able to blacklist wallets from selling",
+            "description": "The contract owner does not have the authority to stop specific wallets from selling tokens.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

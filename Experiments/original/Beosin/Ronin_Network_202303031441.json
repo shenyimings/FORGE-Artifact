@@ -1,1 +1,192 @@
-{"path": "./Audit_Reports_2024/Beosin/Ronin_Network_202303031441.pdf", "project_info": {"url": "https://github.com/axieinfinity/ronin (Ronin Node) https://github.com/axieinfinity/ronin-dpos-contracts (Ronin DPoS Contracts)", "commit_hash": "9bf4895fbd51a9964a9b09c03b38abf0ace53008", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Wrong use of _candidates as current validator", "description": "The __setNewValidatorSet_ function of the CoinbaseExecution contract is not designed properly and will result in the validator's EnumFlags.ValidatorFlag.", "severity": "N/A", "contract": "CoinbaseExecution", "function": "__setNewValidatorSet_", "lineNumber": "403-428"}, {"id": 1, "category": {"1": ["CWE-682"], "2": ["CWE-128"]}, "title": "Credit score update exception", "description": "When the _wrapUpEpoch_ function is triggered at the end of the period, it will first update __currentPeriodStartAtBlock_ to _block.number+1_, which will affect the _updateCreditScores_ function from getting __periodStartAtBlock_ to get currentPeriodStartAtBlock is _block.number+1_, causing the _maintaineds status of all __validators_ in _checkManyMaintainedInBlockRange_ to return a value of false.", "severity": "Medium", "contract": "CoinbaseExecution.sol", "function": "_wrapUpEpoch_", "lineNumber": "L108"}, {"id": 2, "category": {"1": ["CWE-703"]}, "title": "Will cause the validator to exit unexpectedly", "description": "The __setNewValidatorSet_ function of the CoinbaseExecution contract is not designed properly and will result in the validator's EnumFlags.ValidatorFlag.", "severity": "Medium", "contract": "CoinbaseExecution", "function": "__setNewValidatorSet_", "lineNumber": "403-428"}, {"id": 3, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "The proposal vote will result in defeat", "description": "In the _proposal_ function of the RoninGovernanceAdmin contract, when the Governor submits a proposal, the nonce is added to 1. But in the __createVotingRound_ function it can lead to a situation where _round is not equal to nonce.", "severity": "Low", "contract": "CoreGovernance", "function": "_proposal", "lineNumber": "ronin/extensions/sequential-governance/CoreGovernance.sol #L118"}, {"id": 4, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Parameter assignment error", "description": "In the __setBridgeVotingSlashingConfigs_ function in the SlashBridgeVoting contract, the __slashAmount_ parameter and the __bridgeVotingSlashAmount_ parameter are in the wrong place, which will cause the __bridgeVotingSlashAmount_ cannot be assigned a value.", "severity": "Low", "contract": "SlashBridgeVoting", "function": "__setBridgeVotingSlashingConfigs_", "lineNumber": "131-132"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "_SlashDoubleSign_ function call is not implemented", "description": "The _SlashDoubleSign_ function is used to punish Double-sign in the contract, but this function is not called in consortiumV2.", "severity": "Low", "contract": "SlashIndicator", "function": "_SlashDoubleSign_", "lineNumber": "ronin/slash-indicator/SlashDoubleSign.sol #29"}, {"id": 6, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Redundant codes", "description": "The code has redundant lines or statements that can be removed without affecting its functionality.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "The _updateTrustedOrganization function is not designed properly", "description": "In the _addTrustedOrganization_ function of the RoninTrustedOrganization contract, when setting the address, it is required that the consensusAddr, governor and bridgeVoter addresses cannot be the same, but when calling the _updateTrustedOrganization_ function to update, it does not check that the consensusAddr, governor and bridgeVoter addresses cannot be the same.", "severity": "Info", "contract": "RoninTrustedOrganization", "function": "_updateTrustedOrganization_", "lineNumber": "src\\registries\\NodeOperatorRegistry.sol #L172-178"}, {"id": 8, "category": {"1": ["CWE-703"]}, "title": "[Ronin Node-1] consortium V2 checks the snapshot improperly", "description": "When the block reaches the height of the consortium V2, due to the error handling and verification of the snapshot, if the node restarts, it will not be able to continue to produce blocks.", "severity": "Medium", "contract": "consortium", "function": "_snapshot_ method", "lineNumber": "310-382"}, {"id": 9, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "[Ronin Node-2] The _consortiumVerifyHeaders.Run_ method lacks data association validation", "description": "The _Run_ method function does not check whether the data of a block passed in already exists in the chain database, nor does it check whether the data of the two blocks passed in are the same. Therefore, malicious data can be constructed to bypass _Run_ method check.", "severity": "Medium", "contract": "consortium_precompiled_contracts.go", "function": "_consortiumVerifyHeaders.Run_", "lineNumber": "421-449, 478-493"}, {"id": 10, "category": {"1": ["CWE-682"]}, "title": "[Ronin Node-3] Changing the Coinbase by the validator node will result in incorrect block generation", "description": "When the validator node calls miner.setEtherbase API to change the coinbase, it will likely cause the Merkle Patricia Trie to be abnormal, thus packing the wrong block in consortium V1.", "severity": "Info", "contract": "N/A", "function": "_validateState_ method", "lineNumber": "core/block_validator.go #L99"}]}
+{
+    "path": "./Audit_Reports_2024/Beosin/Ronin_Network_202303031441.pdf",
+    "project_info": {
+        "url": "https://github.com/axieinfinity/ronin (Ronin Node) https://github.com/axieinfinity/ronin-dpos-contracts (Ronin DPoS Contracts)",
+        "commit_hash": "9bf4895fbd51a9964a9b09c03b38abf0ace53008",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Wrong use of _candidates as current validator",
+            "description": "The __setNewValidatorSet_ function of the CoinbaseExecution contract is not designed properly and will result in the validator's EnumFlags.ValidatorFlag.",
+            "severity": "N/A",
+            "contract": "CoinbaseExecution",
+            "function": "__setNewValidatorSet_",
+            "lineNumber": "403-428"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-128"
+                ]
+            },
+            "title": "Credit score update exception",
+            "description": "When the _wrapUpEpoch_ function is triggered at the end of the period, it will first update __currentPeriodStartAtBlock_ to _block.number+1_, which will affect the _updateCreditScores_ function from getting __periodStartAtBlock_ to get currentPeriodStartAtBlock is _block.number+1_, causing the _maintaineds status of all __validators_ in _checkManyMaintainedInBlockRange_ to return a value of false.",
+            "severity": "Medium",
+            "contract": "CoinbaseExecution.sol",
+            "function": "_wrapUpEpoch_",
+            "lineNumber": "L108"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Will cause the validator to exit unexpectedly",
+            "description": "The __setNewValidatorSet_ function of the CoinbaseExecution contract is not designed properly and will result in the validator's EnumFlags.ValidatorFlag.",
+            "severity": "Medium",
+            "contract": "CoinbaseExecution",
+            "function": "__setNewValidatorSet_",
+            "lineNumber": "403-428"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "The proposal vote will result in defeat",
+            "description": "In the _proposal_ function of the RoninGovernanceAdmin contract, when the Governor submits a proposal, the nonce is added to 1. But in the __createVotingRound_ function it can lead to a situation where _round is not equal to nonce.",
+            "severity": "Low",
+            "contract": "CoreGovernance",
+            "function": "_proposal",
+            "lineNumber": "ronin/extensions/sequential-governance/CoreGovernance.sol #L118"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Parameter assignment error",
+            "description": "In the __setBridgeVotingSlashingConfigs_ function in the SlashBridgeVoting contract, the __slashAmount_ parameter and the __bridgeVotingSlashAmount_ parameter are in the wrong place, which will cause the __bridgeVotingSlashAmount_ cannot be assigned a value.",
+            "severity": "Low",
+            "contract": "SlashBridgeVoting",
+            "function": "__setBridgeVotingSlashingConfigs_",
+            "lineNumber": "131-132"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "_SlashDoubleSign_ function call is not implemented",
+            "description": "The _SlashDoubleSign_ function is used to punish Double-sign in the contract, but this function is not called in consortiumV2.",
+            "severity": "Low",
+            "contract": "SlashIndicator",
+            "function": "_SlashDoubleSign_",
+            "lineNumber": "ronin/slash-indicator/SlashDoubleSign.sol #29"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Redundant codes",
+            "description": "The code has redundant lines or statements that can be removed without affecting its functionality.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "The _updateTrustedOrganization function is not designed properly",
+            "description": "In the _addTrustedOrganization_ function of the RoninTrustedOrganization contract, when setting the address, it is required that the consensusAddr, governor and bridgeVoter addresses cannot be the same, but when calling the _updateTrustedOrganization_ function to update, it does not check that the consensusAddr, governor and bridgeVoter addresses cannot be the same.",
+            "severity": "Info",
+            "contract": "RoninTrustedOrganization",
+            "function": "_updateTrustedOrganization_",
+            "lineNumber": "src\\registries\\NodeOperatorRegistry.sol #L172-178"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "[Ronin Node-1] consortium V2 checks the snapshot improperly",
+            "description": "When the block reaches the height of the consortium V2, due to the error handling and verification of the snapshot, if the node restarts, it will not be able to continue to produce blocks.",
+            "severity": "Medium",
+            "contract": "consortium",
+            "function": "_snapshot_ method",
+            "lineNumber": "310-382"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "[Ronin Node-2] The _consortiumVerifyHeaders.Run_ method lacks data association validation",
+            "description": "The _Run_ method function does not check whether the data of a block passed in already exists in the chain database, nor does it check whether the data of the two blocks passed in are the same. Therefore, malicious data can be constructed to bypass _Run_ method check.",
+            "severity": "Medium",
+            "contract": "consortium_precompiled_contracts.go",
+            "function": "_consortiumVerifyHeaders.Run_",
+            "lineNumber": "421-449, 478-493"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "[Ronin Node-3] Changing the Coinbase by the validator node will result in incorrect block generation",
+            "description": "When the validator node calls miner.setEtherbase API to change the coinbase, it will likely cause the Merkle Patricia Trie to be abnormal, thus packing the wrong block in consortium V1.",
+            "severity": "Info",
+            "contract": "N/A",
+            "function": "_validateState_ method",
+            "lineNumber": "core/block_validator.go #L99"
+        }
+    ]
+}

@@ -1,1 +1,188 @@
-{"path": "./Audit_Reports_2024/Trail_of_Bits/2022-11-folksfinance-securityreview.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Ability to drain a pool by reusing a flash_loan_end index", "description": "The lack of validation of the `flash_loan_end` transaction could enable an attacker to drain a pool of its funds by reusing the same repayment transaction for multiple loans.", "severity": "High", "contract": "pool.py", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-691"], "2": ["CWE-841"]}, "title": "Lack of a two-step process for admin role transfers", "description": "The Folks Finance methods used to transfer the admin role from one address to another perform those transfers in a single step, immediately updating the admin address. Making such a critical change in a single step is error-prone and can lead to irrevocable mistakes.", "severity": "High", "contract": "pool_manager.py, pool.py, loan.py, lp_token_oracle.py, oracle_adapter.py", "function": "update_admin", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-233"]}, "title": "Insufficient validation of application initialization arguments", "description": "Several of the methods involved in creating and setting up Folks Finance applications fail to validate incoming arguments. As a result, important state variables of an application can be set to invalid values, rendering the deployed application unusable.", "severity": "Low", "contract": "pool_manager.py, pool.py, loan.py, lp_token_oracle.py, oracle_adapter.py", "function": "create, setup", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Ability to reuse swap indexes", "description": "N/A", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "oracle_adapter could be forced to use outdated LP token information in price calculations", "description": "The oracle_adapter may utilize outdated LP token information for price calculations due to a potential update issue with lp_token_oracle and oracle_adapter, enabling an attacker like Eve to liquidate Bob's position.", "severity": "N/A", "contract": "oracle_adapter", "function": "refresh_prices", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"], "2": ["CWE-1339"]}, "title": "Incorrect rounding directions in the calculation of borrowed asset amounts", "description": "The cumulative loss of precision can cause the system to underestimate the amount of assets borrowed in a loan, preventing the loan\u2019s liquidation.", "severity": "Low", "contract": "N/A", "function": "is_loan_over_collateralized", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-693"]}, "title": "Risk of global state variable collision", "description": "The layout of the loan application's global state could cause a loan's `params` variable to collide with a pool variable.", "severity": "High", "contract": "loan/loan_state.py, loan/loan.py", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Lack of documentation on strategies in case of system parameter update", "description": "Long term, identify and document all possible actions that can be taken by privileged accounts and their associated risks.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "30"}, {"id": 8, "category": {"1": ["CWE-682"]}, "title": "Incorrect decoding of method arguments results in the use of invalid values", "description": "Certain methods use the `Btoi` instruction to decode the arguments of other transactions in their group, resulting in the use of incorrect values.", "severity": "Low", "contract": "loan.py", "function": ["add_pool", "swap_collateral_begin"], "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Lack of minimum / maximum bounds on user operation parameters", "description": "The outcomes of several pool and loan operations are dependent on the system state, lacking guarantees for users' transactions to produce expected outcomes.", "severity": "N/A", "contract": "Pool and Loan Applications", "function": ["pool.deposit()", "pool.withdraw()", "loan.borrow()", "loan.switch_borrow_type()"], "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/2022-11-folksfinance-securityreview.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Ability to drain a pool by reusing a flash_loan_end index",
+            "description": "The lack of validation of the `flash_loan_end` transaction could enable an attacker to drain a pool of its funds by reusing the same repayment transaction for multiple loans.",
+            "severity": "High",
+            "contract": "pool.py",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "Lack of a two-step process for admin role transfers",
+            "description": "The Folks Finance methods used to transfer the admin role from one address to another perform those transfers in a single step, immediately updating the admin address. Making such a critical change in a single step is error-prone and can lead to irrevocable mistakes.",
+            "severity": "High",
+            "contract": "pool_manager.py, pool.py, loan.py, lp_token_oracle.py, oracle_adapter.py",
+            "function": "update_admin",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-233"
+                ]
+            },
+            "title": "Insufficient validation of application initialization arguments",
+            "description": "Several of the methods involved in creating and setting up Folks Finance applications fail to validate incoming arguments. As a result, important state variables of an application can be set to invalid values, rendering the deployed application unusable.",
+            "severity": "Low",
+            "contract": "pool_manager.py, pool.py, loan.py, lp_token_oracle.py, oracle_adapter.py",
+            "function": "create, setup",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Ability to reuse swap indexes",
+            "description": "N/A",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "oracle_adapter could be forced to use outdated LP token information in price calculations",
+            "description": "The oracle_adapter may utilize outdated LP token information for price calculations due to a potential update issue with lp_token_oracle and oracle_adapter, enabling an attacker like Eve to liquidate Bob's position.",
+            "severity": "N/A",
+            "contract": "oracle_adapter",
+            "function": "refresh_prices",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "Incorrect rounding directions in the calculation of borrowed asset amounts",
+            "description": "The cumulative loss of precision can cause the system to underestimate the amount of assets borrowed in a loan, preventing the loan\u2019s liquidation.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "is_loan_over_collateralized",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "Risk of global state variable collision",
+            "description": "The layout of the loan application's global state could cause a loan's `params` variable to collide with a pool variable.",
+            "severity": "High",
+            "contract": "loan/loan_state.py, loan/loan.py",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Lack of documentation on strategies in case of system parameter update",
+            "description": "Long term, identify and document all possible actions that can be taken by privileged accounts and their associated risks.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "30"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect decoding of method arguments results in the use of invalid values",
+            "description": "Certain methods use the `Btoi` instruction to decode the arguments of other transactions in their group, resulting in the use of incorrect values.",
+            "severity": "Low",
+            "contract": "loan.py",
+            "function": [
+                "add_pool",
+                "swap_collateral_begin"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Lack of minimum / maximum bounds on user operation parameters",
+            "description": "The outcomes of several pool and loan operations are dependent on the system state, lacking guarantees for users' transactions to produce expected outcomes.",
+            "severity": "N/A",
+            "contract": "Pool and Loan Applications",
+            "function": [
+                "pool.deposit()",
+                "pool.withdraw()",
+                "loan.borrow()",
+                "loan.switch_borrow_type()"
+            ],
+            "lineNumber": "N/A"
+        }
+    ]
+}

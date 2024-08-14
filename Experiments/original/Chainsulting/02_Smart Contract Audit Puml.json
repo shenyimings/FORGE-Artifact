@@ -1,1 +1,280 @@
-{"path": "./Audit_Reports_2024/Chainsulting/02_Smart Contract Audit Puml.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Minting of unlimited number of sundae tokens", "description": "The token contract allows minting of an unlimited number of sundae tokens due to lack of supply cap or validation.", "severity": "Critical", "contract": "token", "function": "issue()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Potential unauthorized script upgrade", "description": "The smart contract allows potential unauthorized script upgrades.", "severity": "High", "contract": "pumlhealthio.cpp", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Invalid symbol name", "description": "The 'invalid symbol name' check ensures that the provided symbol is valid.", "severity": "High", "contract": "token", "function": ["issue", "retire", "create"], "lineNumber": ["N/A", "N/A", "N/A"]}, {"id": 3, "category": {"1": ["CWE-707"], "2": ["CWE-170"]}, "title": "Memo has more than 256 bytes", "description": "The memo string parameter in the issue and retire functions can have a size greater than 256 bytes, which may lead to unexpected behavior.", "severity": "Medium", "contract": "token", "function": ["issue", "retire"], "lineNumber": ["issue: 5", "retire: 3"]}, {"id": 4, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-908"], "4": ["CWE-457"]}, "title": "Token with symbol does not exist", "description": "The token with a specified symbol does not exist before issuing or retiring it.", "severity": "High", "contract": "token", "function": ["issue", "retire"], "lineNumber": ["N/A", "N/A"]}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-229"]}, "title": "Invalid quantity", "description": "The 'quantity' parameter passed to certain functions does not meet validation criteria.", "severity": "High", "contract": "eosio.token", "function": ["transfer", "issue", "retire"], "lineNumber": ["N/A"]}, {"id": 6, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Must issue positive quantity", "description": "The 'issue' function does not check if the issued quantity is positive, which can lead to unexpected behavior.", "severity": "Medium", "contract": "token", "function": "issue(name to, asset quantity, string memo)", "lineNumber": "317"}, {"id": 7, "category": {"1": ["CWE-697"], "2": ["CWE-1024"]}, "title": "Symbol precision mismatch", "description": "The check ensures that the symbol of the quantity being transferred/retired matches the symbol of the supply in the stats table.", "severity": "High", "contract": "token", "function": ["transfer()", "open()", "sub_balance()"], "lineNumber": ["N/A", "N/A", "N/A"]}, {"id": 8, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Quantity exceeds available supply", "description": "The quantity being issued or transferred exceeds the available supply of tokens.", "severity": "High", "contract": "eosio.token", "function": "issue() and retire()", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Cannot transfer to self", "description": "Transfer operation cannot be performed from an account to itself.", "severity": "Medium", "contract": "token", "function": "transfer(name, name, asset, string)", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "To account does not exist", "description": "The 'to' account does not exist during token transfer.", "severity": "High", "contract": "token", "function": "transfer(name from, name to, asset quantity, string memo)", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Must retire positive quantity", "description": "The retire function does not check if the quantity to be retired is positive, which can lead to incorrect token supply management.", "severity": "High", "contract": "token", "function": "retire(asset quantity, string memo)", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Must transfer positive quantity", "description": "The 'transfer' function does not check if the transferred quantity is positive.", "severity": "Medium", "contract": "token", "function": "transfer(name from, name to, asset quantity, string memo)", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Chainsulting/02_Smart Contract Audit Puml.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Minting of unlimited number of sundae tokens",
+            "description": "The token contract allows minting of an unlimited number of sundae tokens due to lack of supply cap or validation.",
+            "severity": "Critical",
+            "contract": "token",
+            "function": "issue()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Potential unauthorized script upgrade",
+            "description": "The smart contract allows potential unauthorized script upgrades.",
+            "severity": "High",
+            "contract": "pumlhealthio.cpp",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Invalid symbol name",
+            "description": "The 'invalid symbol name' check ensures that the provided symbol is valid.",
+            "severity": "High",
+            "contract": "token",
+            "function": [
+                "issue",
+                "retire",
+                "create"
+            ],
+            "lineNumber": [
+                "N/A",
+                "N/A",
+                "N/A"
+            ]
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-170"
+                ]
+            },
+            "title": "Memo has more than 256 bytes",
+            "description": "The memo string parameter in the issue and retire functions can have a size greater than 256 bytes, which may lead to unexpected behavior.",
+            "severity": "Medium",
+            "contract": "token",
+            "function": [
+                "issue",
+                "retire"
+            ],
+            "lineNumber": [
+                "issue: 5",
+                "retire: 3"
+            ]
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-908"
+                ],
+                "4": [
+                    "CWE-457"
+                ]
+            },
+            "title": "Token with symbol does not exist",
+            "description": "The token with a specified symbol does not exist before issuing or retiring it.",
+            "severity": "High",
+            "contract": "token",
+            "function": [
+                "issue",
+                "retire"
+            ],
+            "lineNumber": [
+                "N/A",
+                "N/A"
+            ]
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ]
+            },
+            "title": "Invalid quantity",
+            "description": "The 'quantity' parameter passed to certain functions does not meet validation criteria.",
+            "severity": "High",
+            "contract": "eosio.token",
+            "function": [
+                "transfer",
+                "issue",
+                "retire"
+            ],
+            "lineNumber": [
+                "N/A"
+            ]
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Must issue positive quantity",
+            "description": "The 'issue' function does not check if the issued quantity is positive, which can lead to unexpected behavior.",
+            "severity": "Medium",
+            "contract": "token",
+            "function": "issue(name to, asset quantity, string memo)",
+            "lineNumber": "317"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ],
+                "2": [
+                    "CWE-1024"
+                ]
+            },
+            "title": "Symbol precision mismatch",
+            "description": "The check ensures that the symbol of the quantity being transferred/retired matches the symbol of the supply in the stats table.",
+            "severity": "High",
+            "contract": "token",
+            "function": [
+                "transfer()",
+                "open()",
+                "sub_balance()"
+            ],
+            "lineNumber": [
+                "N/A",
+                "N/A",
+                "N/A"
+            ]
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Quantity exceeds available supply",
+            "description": "The quantity being issued or transferred exceeds the available supply of tokens.",
+            "severity": "High",
+            "contract": "eosio.token",
+            "function": "issue() and retire()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Cannot transfer to self",
+            "description": "Transfer operation cannot be performed from an account to itself.",
+            "severity": "Medium",
+            "contract": "token",
+            "function": "transfer(name, name, asset, string)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "To account does not exist",
+            "description": "The 'to' account does not exist during token transfer.",
+            "severity": "High",
+            "contract": "token",
+            "function": "transfer(name from, name to, asset quantity, string memo)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Must retire positive quantity",
+            "description": "The retire function does not check if the quantity to be retired is positive, which can lead to incorrect token supply management.",
+            "severity": "High",
+            "contract": "token",
+            "function": "retire(asset quantity, string memo)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Must transfer positive quantity",
+            "description": "The 'transfer' function does not check if the transferred quantity is positive.",
+            "severity": "Medium",
+            "contract": "token",
+            "function": "transfer(name from, name to, asset quantity, string memo)",
+            "lineNumber": "N/A"
+        }
+    ]
+}

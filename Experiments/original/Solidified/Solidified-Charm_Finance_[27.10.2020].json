@@ -1,1 +1,222 @@
-{"path": "./Audit_Reports_2024/Solidified/Solidified-Charm_Finance_[27.10.2020].pdf", "project_info": {"url": "https://github.com/Charm-Finance/charm-options", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "OptionsMarketMaker has no oracle verification", "description": "The OptionsMarketMaker contract constructor and setOracle() function do not verify the given oracle is valid for the token pair represented by the options market maker, which could lead to loss of funds or prevent settlement altogether.", "severity": "Critical", "contract": "OptionsMarketMaker", "function": ["constructor", "setOracle()"], "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Ownership privileges cannot be revoked in staking contract", "description": "The implementation of ownership privileges in StakingReward.sol does not allow ownership to be renounced, which can lead to security issues.", "severity": "Minor", "contract": "StakingReward", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Consider additional sanity checks and automated oracle deployment for extra safety", "description": "Several parameters can be configured in a way that does not make sense or could lead to problems, including start time set in the very far future, incorrect decimals for the token, and lack of check for Oracle funding.", "severity": "Minor", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "SeedRewards.sol: function exit() should allow users to specify minAmountOut", "description": "The function `exit()` currently does not allow users to specify the `minAmountOut` they\u2019re willing to accept while exiting, and instead sets the minimum at zero. This could result in users getting unfavorable trades at the time of exit in case slippage is too high.", "severity": "Minor", "contract": "SeedRewards.sol", "function": "exit()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "uniTransfer() can potentially fail if it transfers ETH to a smart contract", "description": "The uniTransfer() function uses transfer() to send back ETH to the (to) parameter, which only forwards 2300 gas. In cases where (to) is a smart contract whose fallback function consumes more than 2300 gas, the call will always fail.", "severity": "Critical", "contract": "UniERC20.sol", "function": "uniTransfer()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1287"]}, "title": "Beware of malicious tokens", "description": "It's possible to design contracts that conform to ERC20 specification but do not implement it accordingly to the desired behavior, allowing for fake or malicious tokens.", "severity": "Minor", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-697"], "2": ["CWE-1025"], "3": ["CWE-595"], "4": ["CWE-597"]}, "title": "Check for incorrect token in ERC20 recover function", "description": "The function `recoverERC20()` checks the provided token address for the SNX token symbol, which is likely due to code reuse. This check is not applicable to this project.", "severity": "Minor", "contract": "StakingReward.sol and SeedRewards.sol", "function": "recoverERC20()", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Consider checking for zero amounts before minting", "description": "The buy() and sell() functions of OptionMarketMaker.sol always call mint on both long and short order, which may cause unnecessary gas cost. It is recommended to include checks for > 0 before calling mint.", "severity": "Minor", "contract": "OptionMarketMaker.sol", "function": "buy(), sell()", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Unsettled Redeem Call", "description": "Consider calling settle() from redeem() if it has not been called yet as a convenience to users.", "severity": "Minor", "contract": "OptionsMarketMaker.sol", "function": "redeem()", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "Consider Providing contract users with an amountInRequired() convenience function", "description": "Provide a convenience function to determine how much of baseToken is required for a successful buy() call and the minimum amount received when calling sell().", "severity": "Minor", "contract": "OptionsMarketMaker.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Notes regarding OptionsMarketMaker owner privileges", "description": "The current `OptionsMarketMaker` owner privileges allow them to perform operations such as pausing the contract indefinitely, changing the contract's oracle, changing the contract's expiry date, and prematurely settling the contract before its expiry date.", "severity": "Minor", "contract": "OptionsMarketMaker", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Solidified/Solidified-Charm_Finance_[27.10.2020].pdf",
+    "project_info": {
+        "url": "https://github.com/Charm-Finance/charm-options",
+        "commit_hash": "N/A",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "OptionsMarketMaker has no oracle verification",
+            "description": "The OptionsMarketMaker contract constructor and setOracle() function do not verify the given oracle is valid for the token pair represented by the options market maker, which could lead to loss of funds or prevent settlement altogether.",
+            "severity": "Critical",
+            "contract": "OptionsMarketMaker",
+            "function": [
+                "constructor",
+                "setOracle()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Ownership privileges cannot be revoked in staking contract",
+            "description": "The implementation of ownership privileges in StakingReward.sol does not allow ownership to be renounced, which can lead to security issues.",
+            "severity": "Minor",
+            "contract": "StakingReward",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Consider additional sanity checks and automated oracle deployment for extra safety",
+            "description": "Several parameters can be configured in a way that does not make sense or could lead to problems, including start time set in the very far future, incorrect decimals for the token, and lack of check for Oracle funding.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "SeedRewards.sol: function exit() should allow users to specify minAmountOut",
+            "description": "The function `exit()` currently does not allow users to specify the `minAmountOut` they\u2019re willing to accept while exiting, and instead sets the minimum at zero. This could result in users getting unfavorable trades at the time of exit in case slippage is too high.",
+            "severity": "Minor",
+            "contract": "SeedRewards.sol",
+            "function": "exit()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "uniTransfer() can potentially fail if it transfers ETH to a smart contract",
+            "description": "The uniTransfer() function uses transfer() to send back ETH to the (to) parameter, which only forwards 2300 gas. In cases where (to) is a smart contract whose fallback function consumes more than 2300 gas, the call will always fail.",
+            "severity": "Critical",
+            "contract": "UniERC20.sol",
+            "function": "uniTransfer()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1287"
+                ]
+            },
+            "title": "Beware of malicious tokens",
+            "description": "It's possible to design contracts that conform to ERC20 specification but do not implement it accordingly to the desired behavior, allowing for fake or malicious tokens.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ],
+                "2": [
+                    "CWE-1025"
+                ],
+                "3": [
+                    "CWE-595"
+                ],
+                "4": [
+                    "CWE-597"
+                ]
+            },
+            "title": "Check for incorrect token in ERC20 recover function",
+            "description": "The function `recoverERC20()` checks the provided token address for the SNX token symbol, which is likely due to code reuse. This check is not applicable to this project.",
+            "severity": "Minor",
+            "contract": "StakingReward.sol and SeedRewards.sol",
+            "function": "recoverERC20()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Consider checking for zero amounts before minting",
+            "description": "The buy() and sell() functions of OptionMarketMaker.sol always call mint on both long and short order, which may cause unnecessary gas cost. It is recommended to include checks for > 0 before calling mint.",
+            "severity": "Minor",
+            "contract": "OptionMarketMaker.sol",
+            "function": "buy(), sell()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Unsettled Redeem Call",
+            "description": "Consider calling settle() from redeem() if it has not been called yet as a convenience to users.",
+            "severity": "Minor",
+            "contract": "OptionsMarketMaker.sol",
+            "function": "redeem()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Consider Providing contract users with an amountInRequired() convenience function",
+            "description": "Provide a convenience function to determine how much of baseToken is required for a successful buy() call and the minimum amount received when calling sell().",
+            "severity": "Minor",
+            "contract": "OptionsMarketMaker.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Notes regarding OptionsMarketMaker owner privileges",
+            "description": "The current `OptionsMarketMaker` owner privileges allow them to perform operations such as pausing the contract indefinitely, changing the contract's oracle, changing the contract's expiry date, and prematurely settling the contract before its expiry date.",
+            "severity": "Minor",
+            "contract": "OptionsMarketMaker",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

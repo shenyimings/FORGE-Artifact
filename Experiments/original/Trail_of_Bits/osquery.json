@@ -1,1 +1,321 @@
-{"path": "./Audit_Reports_2024/Trail_of_Bits/osquery.pdf", "project_info": {"url": "https://github.com/osquery/osquery", "commit_hash": "4274d3bfaedbcf7fa2b7b225abc2c2fb1b1b2e5a", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Project dependencies are not monitored for vulnerabilities", "description": "The osquery project depends on a large number of dependencies to realize the functionality of the existing tables. They are included as Git submodules in the project, but there is no process in place to detect published vulnerabilities in the dependencies.", "severity": "High", "contract": "osquery", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-250"]}, "title": "No separation of privileges when executing dependency code", "description": "In several places in the codebase, the osquery agent realizes the functionality of a table by invoking code in a dependency project without separation of privileges or sandboxing.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "No limit on the amount of information that can be read from the Firefox add-ons table", "description": "The `osquery::parseJSON` function has no limit on the amount of data it can read, allowing an attacker to craft a large JSON file and store it on the Firefox profile path, causing high resource consumption.", "severity": "N/A", "contract": "N/A", "function": "osquery::parseJSON", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "The SIP status on macOS may be misreported", "description": "osquery misreports the state of SIP when building the response for the sip_config table if any flag is present or if any of the known flags are present.", "severity": "N/A", "contract": "osquery", "function": "sip_config", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "The OpenReadableFile function can hang on reading a file", "description": "If the file to be read is a FIFO, the `open` syscall in the second invocation of `PlatformFile`'s constructor blocks the osquery thread until another thread opens the FIFO file to write to it.", "severity": "High", "contract": "N/A", "function": "OpenReadableFile", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-691"], "2": ["CWE-362"]}, "title": "Methods in POSIX PlatformFile class are susceptible to race conditions", "description": "Race conditions can occur due to changes in file permissions and contents between method calls in the PlatformFile class.", "severity": "N/A", "contract": "osquery/PlatformFile", "function": "hasSafePermissions", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "No limit on the amount of data that parsePlist can parse", "description": "The osquery codebase contains a function called `osquery::parsePlist` which reads and parses `.plist` files without any limit on the amount of data it can deserialize, leading to potential Denial of Service attacks.", "severity": "Medium", "contract": "N/A", "function": "parsePlist", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "The parsePList function can hang on reading certain files", "description": "The osquery codebase contains a function called `osquery::parsePlist` which reads and parses `.plist` files but it can hang on reading certain files.", "severity": "Medium", "contract": "N/A", "function": "parsePList", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "The parseJSON function can hang on reading certain files", "description": "The `parseJSON` function blocks indefinitely when attempting to read a FIFO file, leading to Denial of Service.", "severity": "N/A", "contract": "osquery", "function": "parseJSON()", "lineNumber": "L68-98"}, {"id": 9, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "No limit on the amount of data read or expanded from the Safari extensions table", "description": "The osquery program does not have a limit on the amount of data that can be processed when reading and inflating the Safari extension contents; a large amount of data may cause a denial of service.", "severity": "N/A", "contract": "N/A", "function": "genSafariExtension", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1285"], "4": ["CWE-129"]}, "title": "Extended attributes table may read uninitialized or out-of-bounds memory", "description": "The `extended_attributes` table calls the `listxattr` function twice without checking for errors, leading to potential race conditions and out-of-bounds memory reads.", "severity": "Medium", "contract": "osquery/tables/system/darwin/extended_attributes.cpp", "function": "parseExtendedAttributeList", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "The readFile function can hang on reading a file", "description": "The `readFile` function blocks the osquery thread when reading certain files, such as FIFO, until another program or thread opens the FIFO to write to it.", "severity": "High", "contract": "N/A", "function": "readFile()", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "The POSIX PlatformFile constructor may block the osquery thread", "description": "The POSIX implementation of `PlatformFile`\u2019s constructor uses the `open` syscall to obtain a handle to the file. If the file to be opened is a FIFO, the call to `open` blocks the osquery thread unless the `O_NONBLOCK` flag is used.", "severity": "Medium", "contract": "osquery/filesystem/posix/fileops.cpp", "function": "PlatformFile::PlatformFile", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-770"]}, "title": "No limit on the amount of data the Carver::blockwiseCopy method can write", "description": "The Carver::blockwiseCopy method has no limit on the amount of data it can write, allowing an attacker to create a large sparse file on disk in a location where a carving operation is performed, consuming available space on the destination file system.", "severity": "N/A", "contract": "osquery", "function": "Carver::blockwiseCopy", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Truncation of Large File Sizes to 32 Bits", "description": "The carves table truncates large file sizes to 32 bits, which can lead to incorrect reporting and potential bypassing of checks based on reported file size.", "severity": "Informational", "contract": "N/A", "function": "enumerateCarves", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "The time table may not null-terminate strings correctly", "description": "The code does not check the return value of strftime and assumes that the string buffer is always null-terminated, which may not always be the case.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 16, "category": {"1": ["CWE-703"]}, "title": "The elf_info table can crash the osquery agent", "description": "Crashing of osquery agent due to elf_info table", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/osquery.pdf",
+    "project_info": {
+        "url": "https://github.com/osquery/osquery",
+        "commit_hash": "4274d3bfaedbcf7fa2b7b225abc2c2fb1b1b2e5a",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Project dependencies are not monitored for vulnerabilities",
+            "description": "The osquery project depends on a large number of dependencies to realize the functionality of the existing tables. They are included as Git submodules in the project, but there is no process in place to detect published vulnerabilities in the dependencies.",
+            "severity": "High",
+            "contract": "osquery",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-250"
+                ]
+            },
+            "title": "No separation of privileges when executing dependency code",
+            "description": "In several places in the codebase, the osquery agent realizes the functionality of a table by invoking code in a dependency project without separation of privileges or sandboxing.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "No limit on the amount of information that can be read from the Firefox add-ons table",
+            "description": "The `osquery::parseJSON` function has no limit on the amount of data it can read, allowing an attacker to craft a large JSON file and store it on the Firefox profile path, causing high resource consumption.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "osquery::parseJSON",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "The SIP status on macOS may be misreported",
+            "description": "osquery misreports the state of SIP when building the response for the sip_config table if any flag is present or if any of the known flags are present.",
+            "severity": "N/A",
+            "contract": "osquery",
+            "function": "sip_config",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "The OpenReadableFile function can hang on reading a file",
+            "description": "If the file to be read is a FIFO, the `open` syscall in the second invocation of `PlatformFile`'s constructor blocks the osquery thread until another thread opens the FIFO file to write to it.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "OpenReadableFile",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-362"
+                ]
+            },
+            "title": "Methods in POSIX PlatformFile class are susceptible to race conditions",
+            "description": "Race conditions can occur due to changes in file permissions and contents between method calls in the PlatformFile class.",
+            "severity": "N/A",
+            "contract": "osquery/PlatformFile",
+            "function": "hasSafePermissions",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "No limit on the amount of data that parsePlist can parse",
+            "description": "The osquery codebase contains a function called `osquery::parsePlist` which reads and parses `.plist` files without any limit on the amount of data it can deserialize, leading to potential Denial of Service attacks.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "parsePlist",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "The parsePList function can hang on reading certain files",
+            "description": "The osquery codebase contains a function called `osquery::parsePlist` which reads and parses `.plist` files but it can hang on reading certain files.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "parsePList",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "The parseJSON function can hang on reading certain files",
+            "description": "The `parseJSON` function blocks indefinitely when attempting to read a FIFO file, leading to Denial of Service.",
+            "severity": "N/A",
+            "contract": "osquery",
+            "function": "parseJSON()",
+            "lineNumber": "L68-98"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "No limit on the amount of data read or expanded from the Safari extensions table",
+            "description": "The osquery program does not have a limit on the amount of data that can be processed when reading and inflating the Safari extension contents; a large amount of data may cause a denial of service.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "genSafariExtension",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1285"
+                ],
+                "4": [
+                    "CWE-129"
+                ]
+            },
+            "title": "Extended attributes table may read uninitialized or out-of-bounds memory",
+            "description": "The `extended_attributes` table calls the `listxattr` function twice without checking for errors, leading to potential race conditions and out-of-bounds memory reads.",
+            "severity": "Medium",
+            "contract": "osquery/tables/system/darwin/extended_attributes.cpp",
+            "function": "parseExtendedAttributeList",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "The readFile function can hang on reading a file",
+            "description": "The `readFile` function blocks the osquery thread when reading certain files, such as FIFO, until another program or thread opens the FIFO to write to it.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "readFile()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "The POSIX PlatformFile constructor may block the osquery thread",
+            "description": "The POSIX implementation of `PlatformFile`\u2019s constructor uses the `open` syscall to obtain a handle to the file. If the file to be opened is a FIFO, the call to `open` blocks the osquery thread unless the `O_NONBLOCK` flag is used.",
+            "severity": "Medium",
+            "contract": "osquery/filesystem/posix/fileops.cpp",
+            "function": "PlatformFile::PlatformFile",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "No limit on the amount of data the Carver::blockwiseCopy method can write",
+            "description": "The Carver::blockwiseCopy method has no limit on the amount of data it can write, allowing an attacker to create a large sparse file on disk in a location where a carving operation is performed, consuming available space on the destination file system.",
+            "severity": "N/A",
+            "contract": "osquery",
+            "function": "Carver::blockwiseCopy",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Truncation of Large File Sizes to 32 Bits",
+            "description": "The carves table truncates large file sizes to 32 bits, which can lead to incorrect reporting and potential bypassing of checks based on reported file size.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "enumerateCarves",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "The time table may not null-terminate strings correctly",
+            "description": "The code does not check the return value of strftime and assumes that the string buffer is always null-terminated, which may not always be the case.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "The elf_info table can crash the osquery agent",
+            "description": "Crashing of osquery agent due to elf_info table",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

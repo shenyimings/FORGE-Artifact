@@ -1,1 +1,172 @@
-{"path": "./Audit_Reports_2024/BlockSec/BlockSec-blocksec_cakepie_2nd_v1.0-signed.pdf", "project_info": {"url": "https://github.com/magpiexyz/cakepie_contract", "commit_hash": "3abfc8d14d473eb53947963c0fcbdc4af2653eaa", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-909"], "4": ["CWE-456"]}, "title": "Uninitialized state variables", "description": "In the following contracts, there are several state variables that cannot be set through constructors or privileged functions.", "severity": "Medium", "contract": ["RewardDistributor", "PancakeStakingBNBChain", "PancakeVoteManager"], "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-691"], "2": ["CWE-841"]}, "title": "Incorrect interface used for CakepieBribeManager", "description": "In the CakepieBribeManager contract, a pool identifier consists of an epoch and a pid. However, this contract allows the admin to force reset a pool\u2019s pid, introducing potential data inconsistency issues.", "severity": "Low", "contract": "CakepieBribeManager", "function": "N/A", "lineNumber": "Listing 2.3-2.4"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "Potential DoS to native token transfer due to insufficient gas", "description": "The `_refundETH` function in the `DustRefunder` contract utilizes `send` to transfer native tokens. However, this can fail if the recipient is a proxy contract whose fallback function consumes significant gas, causing a DoS.", "severity": "Medium", "contract": "DustRefunder", "function": "_refundETH()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-697"], "2": ["CWE-1023"], "3": ["CWE-187"]}, "title": "Potential inconsistent pool identifier", "description": "In the PancakeV3Helper contract, the _checkForValidPool function verifies that token0 and token1 of the position match the pool before position operations. However, this check may be inadequate as the same token pair can correspond to multiple pools on PancakeSwap.", "severity": "Low", "contract": "PancakeV3Helper", "function": "_checkForValidPool", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-697"], "2": ["CWE-1024"]}, "title": "Potential inconsistent token pairs", "description": "In the PancakeStakingBaseUpg contract, the increaseLiquidityV3For function assumes that token1 is the native token when a pool info's isNative field is set to true. However, for token pairs with the native token as token0 , this assumption is violated.", "severity": "Low", "contract": "PancakeStakingBaseUpg and DustRefunder", "function": "increaseLiquidityV3For", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Insufficient check on the Pancakeswap pool", "description": "In the `PancakeV3Helper` contract, the `_checkForValidPool` function verifies that `token0` and `token1` of the position match the pool before position operations. However, this check may be inadequate as the same token pair can correspond to multiple pools on PancakeSwap.", "severity": "Low", "contract": "PancakeV3Helper", "function": "_checkForValidPool()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "Centralization risk", "description": "Privileged functions in Cakepie contracts can cause severe consequences when misused by project maintainers.", "severity": "Note", "contract": [{"name": "CakepieBribeRewardDistributor", "function": "emergencyWithdraw", "lineNumber": "N/A"}, {"name": "mCakeConvertorBNBChain", "function": "mintFor", "lineNumber": "N/A"}, {"name": "BaseRewardPoolV3", "function": "emergencyWithdraw", "lineNumber": "N/A"}, {"name": "CakepieBribeManager", "function": "manualClaimFees", "lineNumber": "N/A"}, {"name": "CakepieBribeRewardDistributor", "function": "rewards distribution", "lineNumber": "N/A"}], "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/BlockSec/BlockSec-blocksec_cakepie_2nd_v1.0-signed.pdf",
+    "project_info": {
+        "url": "https://github.com/magpiexyz/cakepie_contract",
+        "commit_hash": "3abfc8d14d473eb53947963c0fcbdc4af2653eaa",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "Uninitialized state variables",
+            "description": "In the following contracts, there are several state variables that cannot be set through constructors or privileged functions.",
+            "severity": "Medium",
+            "contract": [
+                "RewardDistributor",
+                "PancakeStakingBNBChain",
+                "PancakeVoteManager"
+            ],
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "Incorrect interface used for CakepieBribeManager",
+            "description": "In the CakepieBribeManager contract, a pool identifier consists of an epoch and a pid. However, this contract allows the admin to force reset a pool\u2019s pid, introducing potential data inconsistency issues.",
+            "severity": "Low",
+            "contract": "CakepieBribeManager",
+            "function": "N/A",
+            "lineNumber": "Listing 2.3-2.4"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Potential DoS to native token transfer due to insufficient gas",
+            "description": "The `_refundETH` function in the `DustRefunder` contract utilizes `send` to transfer native tokens. However, this can fail if the recipient is a proxy contract whose fallback function consumes significant gas, causing a DoS.",
+            "severity": "Medium",
+            "contract": "DustRefunder",
+            "function": "_refundETH()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ],
+                "2": [
+                    "CWE-1023"
+                ],
+                "3": [
+                    "CWE-187"
+                ]
+            },
+            "title": "Potential inconsistent pool identifier",
+            "description": "In the PancakeV3Helper contract, the _checkForValidPool function verifies that token0 and token1 of the position match the pool before position operations. However, this check may be inadequate as the same token pair can correspond to multiple pools on PancakeSwap.",
+            "severity": "Low",
+            "contract": "PancakeV3Helper",
+            "function": "_checkForValidPool",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ],
+                "2": [
+                    "CWE-1024"
+                ]
+            },
+            "title": "Potential inconsistent token pairs",
+            "description": "In the PancakeStakingBaseUpg contract, the increaseLiquidityV3For function assumes that token1 is the native token when a pool info's isNative field is set to true. However, for token pairs with the native token as token0 , this assumption is violated.",
+            "severity": "Low",
+            "contract": "PancakeStakingBaseUpg and DustRefunder",
+            "function": "increaseLiquidityV3For",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Insufficient check on the Pancakeswap pool",
+            "description": "In the `PancakeV3Helper` contract, the `_checkForValidPool` function verifies that `token0` and `token1` of the position match the pool before position operations. However, this check may be inadequate as the same token pair can correspond to multiple pools on PancakeSwap.",
+            "severity": "Low",
+            "contract": "PancakeV3Helper",
+            "function": "_checkForValidPool()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Centralization risk",
+            "description": "Privileged functions in Cakepie contracts can cause severe consequences when misused by project maintainers.",
+            "severity": "Note",
+            "contract": [
+                {
+                    "name": "CakepieBribeRewardDistributor",
+                    "function": "emergencyWithdraw",
+                    "lineNumber": "N/A"
+                },
+                {
+                    "name": "mCakeConvertorBNBChain",
+                    "function": "mintFor",
+                    "lineNumber": "N/A"
+                },
+                {
+                    "name": "BaseRewardPoolV3",
+                    "function": "emergencyWithdraw",
+                    "lineNumber": "N/A"
+                },
+                {
+                    "name": "CakepieBribeManager",
+                    "function": "manualClaimFees",
+                    "lineNumber": "N/A"
+                },
+                {
+                    "name": "CakepieBribeRewardDistributor",
+                    "function": "rewards distribution",
+                    "lineNumber": "N/A"
+                }
+            ],
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

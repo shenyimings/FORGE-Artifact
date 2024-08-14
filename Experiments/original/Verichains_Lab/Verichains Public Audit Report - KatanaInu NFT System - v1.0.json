@@ -1,1 +1,110 @@
-{"path": "./Audit_Reports_2024/Verichains_Lab/Verichains Public Audit Report - KatanaInu NFT System - v1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "Anyone can withdraw all royalty fund", "description": "In `withdraw` function, there is no check to ensure that only wallets with proportions for royalties can withdraw fund. As a result, anyone can withdraw the entire balance of the treasury.", "severity": "CRITICAL", "contract": "RoyaltyController", "function": "withdraw()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "configureRoyaltiesProportions the second time will make proportions invalid", "description": "When configuring royalty proportions, if we configure the same collection again and the new receivers are different from the old ones, the mapping s_royalty_configures will become invalid as it is not removed old records but adding new ones.", "severity": "HIGH", "contract": "RoyaltyController", "function": "configureRoyaltiesProportions()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Users can control _discount and make free mint if signer is set to address 0", "description": "If the contract sets signer to address 0 (disable signing requirement for minting), users can control _discount and set it to equal to _amount to make free mint.", "severity": "HIGH", "contract": "Creator", "function": "makeMintingAction", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-693"], "2": ["CWE-807"], "3": ["CWE-302"]}, "title": "Signature replay", "description": "In the `makeMintingAction` function, signature is not checked whether it is used or not. User can replay the signature and mint many times.", "severity": "HIGH", "contract": "Creator", "function": "makeMintingAction", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Unsafe initialize", "description": "The Configurations contract grants admin roles for msg.sender while calling initialize, allowing attackers to front run and steal admin roles right after the contract is deployed.", "severity": "HIGH", "contract": "Configurations", "function": "initialize()", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Verichains_Lab/Verichains Public Audit Report - KatanaInu NFT System - v1.0.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Anyone can withdraw all royalty fund",
+            "description": "In `withdraw` function, there is no check to ensure that only wallets with proportions for royalties can withdraw fund. As a result, anyone can withdraw the entire balance of the treasury.",
+            "severity": "CRITICAL",
+            "contract": "RoyaltyController",
+            "function": "withdraw()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "configureRoyaltiesProportions the second time will make proportions invalid",
+            "description": "When configuring royalty proportions, if we configure the same collection again and the new receivers are different from the old ones, the mapping s_royalty_configures will become invalid as it is not removed old records but adding new ones.",
+            "severity": "HIGH",
+            "contract": "RoyaltyController",
+            "function": "configureRoyaltiesProportions()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Users can control _discount and make free mint if signer is set to address 0",
+            "description": "If the contract sets signer to address 0 (disable signing requirement for minting), users can control _discount and set it to equal to _amount to make free mint.",
+            "severity": "HIGH",
+            "contract": "Creator",
+            "function": "makeMintingAction",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ],
+                "3": [
+                    "CWE-302"
+                ]
+            },
+            "title": "Signature replay",
+            "description": "In the `makeMintingAction` function, signature is not checked whether it is used or not. User can replay the signature and mint many times.",
+            "severity": "HIGH",
+            "contract": "Creator",
+            "function": "makeMintingAction",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Unsafe initialize",
+            "description": "The Configurations contract grants admin roles for msg.sender while calling initialize, allowing attackers to front run and steal admin roles right after the contract is deployed.",
+            "severity": "HIGH",
+            "contract": "Configurations",
+            "function": "initialize()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

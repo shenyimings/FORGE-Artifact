@@ -1,1 +1,107 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-LiquidFinance-v1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-435"], "2": ["CWE-436"], "3": ["CWE-437"]}, "title": "Incompatibility with Deflationary Tokens", "description": "The FASTChef contract uses safeTransferFrom() or safeTransfer() routines to transfer assets into or out of its pool, which may not work as expected with deflationary tokens.", "severity": "Low", "contract": "FASTChef", "function": ["deposit()", "withdraw()"], "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Redundant Code Removal", "description": "The `presale` contract makes good use of a number of reference contracts, such as `Ownable`, `SafeMath`, and `ReentrancyGuard`, to facilitate its code implementation and organization. While the current implementation is rather thorough and solid, our analysis shows the (minor) inclusion of certain redundant code that can be safely removed.", "severity": "Informational", "contract": "presale", "function": "addWhitelistedWallet()", "lineNumber": "113-115"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Safe-Version Replacement With safeTransfer() And safeTransferFrom()", "description": "The transfer() function does not have a return value, which may cause calls to it to be reverted; instead, use safeTransfer() and safeTransferFrom() functions that wrap ERC20 operations and handle failures", "severity": "Low", "contract": "Multiple Contracts", "function": "transfer()", "lineNumber": "126-139"}, {"id": 3, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Potential Overflow Mitigation in _notifyReward()", "description": "Arithmetic overflow pitfall when a new oversized reward amount is added into the pool, especially when the `rewardRate` is largely controlled by an external entity.", "severity": "Low", "contract": "FASTStaking", "function": "_notifyReward()", "lineNumber": "128-131"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Trust Issue of Admin Keys", "description": "In the `Liquid Finance` protocol, there is a special administrative account, i.e., `owner`. This `owner` account plays a critical role in governing and regulating the protocol-wide operations. It also has the privilege to control or govern the flow of assets managed by this protocol.", "severity": "Medium", "contract": "Pool", "function": "setFlashLoanContract()", "lineNumber": "207-209"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-LiquidFinance-v1.0.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0x73700aeCfC4621E112304B6eDC5BA9e36D7743D3"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-437"
+                ]
+            },
+            "title": "Incompatibility with Deflationary Tokens",
+            "description": "The FASTChef contract uses safeTransferFrom() or safeTransfer() routines to transfer assets into or out of its pool, which may not work as expected with deflationary tokens.",
+            "severity": "Low",
+            "contract": "FASTChef",
+            "function": [
+                "deposit()",
+                "withdraw()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Redundant Code Removal",
+            "description": "The `presale` contract makes good use of a number of reference contracts, such as `Ownable`, `SafeMath`, and `ReentrancyGuard`, to facilitate its code implementation and organization. While the current implementation is rather thorough and solid, our analysis shows the (minor) inclusion of certain redundant code that can be safely removed.",
+            "severity": "Informational",
+            "contract": "presale",
+            "function": "addWhitelistedWallet()",
+            "lineNumber": "113-115"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Safe-Version Replacement With safeTransfer() And safeTransferFrom()",
+            "description": "The transfer() function does not have a return value, which may cause calls to it to be reverted; instead, use safeTransfer() and safeTransferFrom() functions that wrap ERC20 operations and handle failures",
+            "severity": "Low",
+            "contract": "Multiple Contracts",
+            "function": "transfer()",
+            "lineNumber": "126-139"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Potential Overflow Mitigation in _notifyReward()",
+            "description": "Arithmetic overflow pitfall when a new oversized reward amount is added into the pool, especially when the `rewardRate` is largely controlled by an external entity.",
+            "severity": "Low",
+            "contract": "FASTStaking",
+            "function": "_notifyReward()",
+            "lineNumber": "128-131"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "In the `Liquid Finance` protocol, there is a special administrative account, i.e., `owner`. This `owner` account plays a critical role in governing and regulating the protocol-wide operations. It also has the privilege to control or govern the flow of assets managed by this protocol.",
+            "severity": "Medium",
+            "contract": "Pool",
+            "function": "setFlashLoanContract()",
+            "lineNumber": "207-209"
+        }
+    ]
+}

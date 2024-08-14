@@ -1,1 +1,179 @@
-{"path": "./Audit_Reports_2024/Trail_of_Bits/Linkerd-fixreview.pdf", "project_info": {"url": "https://github.com/linkerd/linkerd2", "commit_hash": "00954d71c60649331aef0b63f002b69c305775ad", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"]}, "title": "Various unhandled errors", "description": "The `linkerd` codebase contains various methods with unhandled errors. In most cases, errors returned by functions are simply not checked; in other cases, functions that surround `_deferred_` error-returning functions do not capture the relevant errors.", "severity": "Undetermined", "contract": "N/A", "function": "handleProfileDownload and renderStatStats", "lineNumber": "web/srv/handlers.go#L65-91 and viz/cmd/stat.go#L295-302"}, {"id": 1, "category": {"1": ["CWE-664"], "2": ["CWE-404"], "3": ["CWE-772"], "4": ["CWE-401"]}, "title": "The use of time.After() in select statements can lead to memory leaks", "description": "Calls to `time.After` in `for/select` statements can lead to memory leaks because the garbage collector does not clean up the underlying `Timer` object until the timer fires.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "cli/cmd/metrics_diagnostics_util.go#L131-142"}, {"id": 2, "category": {"1": ["CWE-697"], "2": ["CWE-1025"], "3": ["CWE-595"], "4": ["CWE-597"]}, "title": "Use of string.Contains instead of string.HasPrefix to check for prefixes", "description": "When formatting event metadata, the `formatMetadata` method checks whether a given string in the metadata map contains a given prefix. However, rather than using `string.HasPrefix` to perform this check, it uses `string.Contains`, which returns `true` if the given prefix string is located anywhere in the target string.", "severity": "Undetermined", "contract": "multicluster/service-mirror/events_formatting.go", "function": "formatMetadata()", "lineNumber": "L23-27"}, {"id": 3, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-770"]}, "title": "Risk of resource exhaustion due to the use of defer inside a loop", "description": "The `runCheck` function performs its core functions inside of an infinite `for` loop and calls `defer cancel()` at the beginning of the loop, which could cause resource exhaustion conditions because the deferred function is called when the function exits, not at the end of each loop.", "severity": "Informational", "contract": "pkg/healthcheck/healthcheck.go", "function": "runCheck", "lineNumber": "L1619-1628"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Lack of maximum request and response body constraint", "description": "The ioutil.ReadAll function reads from source until an error or an end-of-file (EOF) condition occurs, at which point it returns the data that it read. There is no limit on the maximum size of request and response bodies, so using ioutil.ReadAll to parse requests and responses could cause a denial of service (due to insufficient memory).", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "239, 32, 83, 124, 48"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Potential goroutine leak in Kubernetes port-forwarding initialization logic", "description": "The Init function responsible for initializing port-forwarding connections for Kubernetes causes a goroutine leak when connections succeed due to an unbuffered channel.", "severity": "Informational", "contract": "pkg/healthcheck/healthcheck.go", "function": "Init()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-707"], "2": ["CWE-74"]}, "title": "Risk of log injection in TAP service API", "description": "An attacker could perform log injection attacks by calling API endpoints with a namespace or name containing newline indicators.", "severity": "Low", "contract": "viz/tap/api/handlers.go", "function": "handleTap", "lineNumber": "L106-125"}, {"id": 7, "category": {"1": ["CWE-693"], "2": ["CWE-757"]}, "title": "TLS configuration does not enforce minimum TLS version", "description": "Transport Layer Security (TLS) configurations do not have a minimum version requirement, allowing connections from TLS 1.0 and later. This may leave the webhook and TAP API servers vulnerable to protocol downgrade and man-in-the-middle attacks.", "severity": "Low", "contract": "N/A", "function": "NewServer", "lineNumber": "43-64, L106-L125"}, {"id": 8, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Nil dereferences in the webhook server", "description": "The webhook server\u2019s `processReq` function does not properly validate request objects, resulting in `nil` dereferences and panics on the server.", "severity": "Informational", "contract": "N/A", "function": "processReq", "lineNumber": "154, 162"}]}
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/Linkerd-fixreview.pdf",
+    "project_info": {
+        "url": "https://github.com/linkerd/linkerd2",
+        "commit_hash": "00954d71c60649331aef0b63f002b69c305775ad",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Various unhandled errors",
+            "description": "The `linkerd` codebase contains various methods with unhandled errors. In most cases, errors returned by functions are simply not checked; in other cases, functions that surround `_deferred_` error-returning functions do not capture the relevant errors.",
+            "severity": "Undetermined",
+            "contract": "N/A",
+            "function": "handleProfileDownload and renderStatStats",
+            "lineNumber": "web/srv/handlers.go#L65-91 and viz/cmd/stat.go#L295-302"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-401"
+                ]
+            },
+            "title": "The use of time.After() in select statements can lead to memory leaks",
+            "description": "Calls to `time.After` in `for/select` statements can lead to memory leaks because the garbage collector does not clean up the underlying `Timer` object until the timer fires.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "cli/cmd/metrics_diagnostics_util.go#L131-142"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ],
+                "2": [
+                    "CWE-1025"
+                ],
+                "3": [
+                    "CWE-595"
+                ],
+                "4": [
+                    "CWE-597"
+                ]
+            },
+            "title": "Use of string.Contains instead of string.HasPrefix to check for prefixes",
+            "description": "When formatting event metadata, the `formatMetadata` method checks whether a given string in the metadata map contains a given prefix. However, rather than using `string.HasPrefix` to perform this check, it uses `string.Contains`, which returns `true` if the given prefix string is located anywhere in the target string.",
+            "severity": "Undetermined",
+            "contract": "multicluster/service-mirror/events_formatting.go",
+            "function": "formatMetadata()",
+            "lineNumber": "L23-27"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "Risk of resource exhaustion due to the use of defer inside a loop",
+            "description": "The `runCheck` function performs its core functions inside of an infinite `for` loop and calls `defer cancel()` at the beginning of the loop, which could cause resource exhaustion conditions because the deferred function is called when the function exits, not at the end of each loop.",
+            "severity": "Informational",
+            "contract": "pkg/healthcheck/healthcheck.go",
+            "function": "runCheck",
+            "lineNumber": "L1619-1628"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Lack of maximum request and response body constraint",
+            "description": "The ioutil.ReadAll function reads from source until an error or an end-of-file (EOF) condition occurs, at which point it returns the data that it read. There is no limit on the maximum size of request and response bodies, so using ioutil.ReadAll to parse requests and responses could cause a denial of service (due to insufficient memory).",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "239, 32, 83, 124, 48"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Potential goroutine leak in Kubernetes port-forwarding initialization logic",
+            "description": "The Init function responsible for initializing port-forwarding connections for Kubernetes causes a goroutine leak when connections succeed due to an unbuffered channel.",
+            "severity": "Informational",
+            "contract": "pkg/healthcheck/healthcheck.go",
+            "function": "Init()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-74"
+                ]
+            },
+            "title": "Risk of log injection in TAP service API",
+            "description": "An attacker could perform log injection attacks by calling API endpoints with a namespace or name containing newline indicators.",
+            "severity": "Low",
+            "contract": "viz/tap/api/handlers.go",
+            "function": "handleTap",
+            "lineNumber": "L106-125"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-757"
+                ]
+            },
+            "title": "TLS configuration does not enforce minimum TLS version",
+            "description": "Transport Layer Security (TLS) configurations do not have a minimum version requirement, allowing connections from TLS 1.0 and later. This may leave the webhook and TAP API servers vulnerable to protocol downgrade and man-in-the-middle attacks.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "NewServer",
+            "lineNumber": "43-64, L106-L125"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Nil dereferences in the webhook server",
+            "description": "The webhook server\u2019s `processReq` function does not properly validate request objects, resulting in `nil` dereferences and panics on the server.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "processReq",
+            "lineNumber": "154, 162"
+        }
+    ]
+}

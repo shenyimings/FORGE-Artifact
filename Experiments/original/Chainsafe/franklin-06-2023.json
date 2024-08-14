@@ -1,1 +1,212 @@
-{"path": "./Audit_Reports_2024/Chainsafe/franklin-06-2023.pdf", "project_info": {"url": "N/A", "commit_hash": "ab5bfe5c8db3acd7dd63619af13635d132588c4f", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Streaming Treasury Reduction", "description": "The withdrawStreamingFunds() function could reduce the streaming treasury to zero while there are active streams still present", "severity": "Medium", "contract": "FranklinTreasuryFacet", "function": "withdrawStreamingFunds()", "lineNumber": "169"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "Insecure Modifier adminOrWorkerCanView()", "description": "The adminOrWorkerCanView() modifier does not restrict external observers from accessing data and only enforces restrictions on other contracts calling in.", "severity": "Medium", "contract": "LibFranklinStorage", "function": "adminOrWorkerCanView()", "lineNumber": "267"}, {"id": 2, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Excessive Execution of Modifiers", "description": "The bulkPayWorkers() function excessively executes whenNotPaused and onlyExecuteAdmin modifiers on every iteration.", "severity": "Optimization", "contract": "FranklinPayrollFacet", "function": "bulkPayWorkers()", "lineNumber": "120"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "Missing Modifiers in getStreamBalance() Function", "description": "The getStreamBalance() function in FranklinStreamingFacet contract is missing onlyExistingWorker and onlyApprovedTokens modifiers, which can lead to potential security issues.", "severity": "Medium", "contract": "FranklinStreamingFacet", "function": "getStreamBalance()", "lineNumber": "58"}, {"id": 4, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-770"]}, "title": "Unoptimized Storage Access", "description": "The createStream() function reads the t.workersWithStream.length value from storage multiple times, which can lead to unnecessary gas consumption.", "severity": "Optimization", "contract": "FranklinStreamingFacet", "function": "createStream()", "lineNumber": "170"}, {"id": 5, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Unnecessary Modifier Execution", "description": "The bulkCreateStreams() function will excessively execute whenNotPaused and onlyStreamAdmin modifiers on every iteration.", "severity": "Optimization", "contract": "FranklinStreamingFacet", "function": "bulkCreateStreams()", "lineNumber": "228"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "editStream() function will not emit StreamEdited event", "description": "The editStream() function does not emit a StreamEdited event if the current stream has already ended and the new one starts before the next.", "severity": "Minor", "contract": "FranklinStreamingFacet", "function": "editStream()", "lineNumber": "302"}, {"id": 7, "category": {"1": ["CWE-664"], "2": ["CWE-400"]}, "title": "Unoptimized Storage Access in endStream() Function", "description": "The endStream() function reads the b.current.end value from storage multiple times, which can lead to unnecessary gas consumption and optimization issues.", "severity": "Optimization", "contract": "FranklinStreamingFacet", "function": "endStream()", "lineNumber": "349"}, {"id": 8, "category": {"1": ["CWE-664"], "2": ["CWE-400"]}, "title": "Unoptimized Storage Access in endStream() Function", "description": "The endStream() function reads the b.current.start value from storage multiple times, which can lead to inefficiencies and increased gas costs.", "severity": "Optimization", "contract": "FranklinStreamingFacet", "function": "endStream()", "lineNumber": "356"}, {"id": 9, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-770"]}, "title": "Unnecessary Storage Reads", "description": "The endStream() function reads the b.next.end value from storage multiple times.", "severity": "Optimization", "contract": "FranklinStreamingFacet", "function": "endStream()", "lineNumber": "369"}, {"id": 10, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Unnecessary Next Stream Start Date Setting", "description": "The editStream() function sets the next stream start date even if the next stream does not exist.", "severity": "Minor", "contract": "FranklinStreamingFacet", "function": "editStream()", "lineNumber": "373"}]}
+{
+    "path": "./Audit_Reports_2024/Chainsafe/franklin-06-2023.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "ab5bfe5c8db3acd7dd63619af13635d132588c4f",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Streaming Treasury Reduction",
+            "description": "The withdrawStreamingFunds() function could reduce the streaming treasury to zero while there are active streams still present",
+            "severity": "Medium",
+            "contract": "FranklinTreasuryFacet",
+            "function": "withdrawStreamingFunds()",
+            "lineNumber": "169"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Insecure Modifier adminOrWorkerCanView()",
+            "description": "The adminOrWorkerCanView() modifier does not restrict external observers from accessing data and only enforces restrictions on other contracts calling in.",
+            "severity": "Medium",
+            "contract": "LibFranklinStorage",
+            "function": "adminOrWorkerCanView()",
+            "lineNumber": "267"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Excessive Execution of Modifiers",
+            "description": "The bulkPayWorkers() function excessively executes whenNotPaused and onlyExecuteAdmin modifiers on every iteration.",
+            "severity": "Optimization",
+            "contract": "FranklinPayrollFacet",
+            "function": "bulkPayWorkers()",
+            "lineNumber": "120"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Missing Modifiers in getStreamBalance() Function",
+            "description": "The getStreamBalance() function in FranklinStreamingFacet contract is missing onlyExistingWorker and onlyApprovedTokens modifiers, which can lead to potential security issues.",
+            "severity": "Medium",
+            "contract": "FranklinStreamingFacet",
+            "function": "getStreamBalance()",
+            "lineNumber": "58"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "Unoptimized Storage Access",
+            "description": "The createStream() function reads the t.workersWithStream.length value from storage multiple times, which can lead to unnecessary gas consumption.",
+            "severity": "Optimization",
+            "contract": "FranklinStreamingFacet",
+            "function": "createStream()",
+            "lineNumber": "170"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Unnecessary Modifier Execution",
+            "description": "The bulkCreateStreams() function will excessively execute whenNotPaused and onlyStreamAdmin modifiers on every iteration.",
+            "severity": "Optimization",
+            "contract": "FranklinStreamingFacet",
+            "function": "bulkCreateStreams()",
+            "lineNumber": "228"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "editStream() function will not emit StreamEdited event",
+            "description": "The editStream() function does not emit a StreamEdited event if the current stream has already ended and the new one starts before the next.",
+            "severity": "Minor",
+            "contract": "FranklinStreamingFacet",
+            "function": "editStream()",
+            "lineNumber": "302"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ]
+            },
+            "title": "Unoptimized Storage Access in endStream() Function",
+            "description": "The endStream() function reads the b.current.end value from storage multiple times, which can lead to unnecessary gas consumption and optimization issues.",
+            "severity": "Optimization",
+            "contract": "FranklinStreamingFacet",
+            "function": "endStream()",
+            "lineNumber": "349"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ]
+            },
+            "title": "Unoptimized Storage Access in endStream() Function",
+            "description": "The endStream() function reads the b.current.start value from storage multiple times, which can lead to inefficiencies and increased gas costs.",
+            "severity": "Optimization",
+            "contract": "FranklinStreamingFacet",
+            "function": "endStream()",
+            "lineNumber": "356"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "Unnecessary Storage Reads",
+            "description": "The endStream() function reads the b.next.end value from storage multiple times.",
+            "severity": "Optimization",
+            "contract": "FranklinStreamingFacet",
+            "function": "endStream()",
+            "lineNumber": "369"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Unnecessary Next Stream Start Date Setting",
+            "description": "The editStream() function sets the next stream start date even if the next stream does not exist.",
+            "severity": "Minor",
+            "contract": "FranklinStreamingFacet",
+            "function": "editStream()",
+            "lineNumber": "373"
+        }
+    ]
+}

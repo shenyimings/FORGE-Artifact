@@ -1,1 +1,48 @@
-{"path": "./Audit_Reports_2024/Iosiro/Synthetix Muhlifain Release Smart Contract Audit _ iosiro.md", "project_info": {"url": "https://github.com/Synthetixio/SIPs", "commit_hash": "950d20f6dfb636e45477708e1263c297103ce882", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Incomplete implementation (low risk)", "description": "The implementations of `rateIsInvalid`, `anyRateIsInvalid`, and `anyRateIsInvalidAtRound` did not include the status of the currency's circuit breaker in the `isValid` return parameter;", "severity": "Low", "contract": "ExchangeRates.sol", "function": "N/A", "lineNumber": "335,345,363"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Required statements removed from Atomic Exchanges (high risk)", "description": "As part of the restructuring of the circuit breaker logic, the internal call to `_ensureCanExchange` was removed from `ExchangerWithFeeRecAlternatives::_exchangeAtomically`. This would allow users to specify the same source and destination currency, which could result in undesirable behavior. Furthermore, it resulted in the implementations of `exchange` and `exchangeAtomically` to deviate significantly and unjustifiably increased the complexity of the system.", "severity": "High", "contract": "ExchangerWithFeeRecAlternatives.sol", "function": "_exchangeAtomically", "lineNumber": "L140"}]}
+{
+    "path": "./Audit_Reports_2024/Iosiro/Synthetix Muhlifain Release Smart Contract Audit _ iosiro.md",
+    "project_info": {
+        "url": "https://github.com/Synthetixio/SIPs",
+        "commit_hash": "950d20f6dfb636e45477708e1263c297103ce882",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Incomplete implementation (low risk)",
+            "description": "The implementations of `rateIsInvalid`, `anyRateIsInvalid`, and `anyRateIsInvalidAtRound` did not include the status of the currency's circuit breaker in the `isValid` return parameter;",
+            "severity": "Low",
+            "contract": "ExchangeRates.sol",
+            "function": "N/A",
+            "lineNumber": "335,345,363"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Required statements removed from Atomic Exchanges (high risk)",
+            "description": "As part of the restructuring of the circuit breaker logic, the internal call to `_ensureCanExchange` was removed from `ExchangerWithFeeRecAlternatives::_exchangeAtomically`. This would allow users to specify the same source and destination currency, which could result in undesirable behavior. Furthermore, it resulted in the implementations of `exchange` and `exchangeAtomically` to deviate significantly and unjustifiably increased the complexity of the system.",
+            "severity": "High",
+            "contract": "ExchangerWithFeeRecAlternatives.sol",
+            "function": "_exchangeAtomically",
+            "lineNumber": "L140"
+        }
+    ]
+}

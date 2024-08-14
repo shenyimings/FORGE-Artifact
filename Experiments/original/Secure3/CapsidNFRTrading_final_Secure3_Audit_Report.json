@@ -1,1 +1,135 @@
-{"path": "./Audit_Reports_2024/Secure3/CapsidNFRTrading_final_Secure3_Audit_Report.pdf", "project_info": {"url": "https://secure3.io", "commit_hash": "1f02a5e7a9e48c9dbb5030133c271808d53253fd", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "Centralization Risk", "description": "The administrator can call batchExpire() to destroy any asset of any user, which is a centralization risk and administrators can burn anyone's funds at will. The mint function has centralized authority.", "severity": "Low", "contract": "Nfr1155.sol", "function": ["mint", "batchExpire"], "lineNumber": ["64-72", "75-85"]}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Nfr1155 Check the length of the array", "description": "In the batchExpire() function, two arrays of _froms and _ids are passed in, but the lengths of these two arrays may be different. If the length of _froms is greater than _ids, then there will be an array out of bounds problem.", "severity": "Informational", "contract": "Nfr1155", "function": "batchExpire()", "lineNumber": "75-85"}, {"id": 2, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "NfrTrade code does not match documentation", "description": "The code does not check if the price is lower than 0.01ETH as required by the documentation.", "severity": "Informational", "contract": "NfrTrade", "function": "_basicValidateOrder", "lineNumber": "288"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Flash loan bypasses the judgment of NFT ownership", "description": "The judgment of NFT ownership can be bypassed using flash loans, allowing unauthorized access.", "severity": "Medium", "contract": "NfrTrade.sol", "function": "_fullfill", "lineNumber": "142-153"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "Gas Optimizations - Cache Array Length Outside of Loop", "description": "Abnormal consumption of gas due to not caching array length outside of loop.", "severity": "Informational", "contract": "Nfr1155", "function": "", "lineNumber": "79"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "No Validation/Whitelist of ERC20 token", "description": "There is no restriction in the code and any token can participate, allowing anyone to create a random ERC20 token and use it as forms of payment.", "severity": "Informational", "contract": "NfrTrade.sol", "function": "N/A", "lineNumber": "169"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "Use safeTransferFrom() function", "description": "The USDT's transfer and transferFrom functions don't return a bool, so the call to these functions will revert although the user has enough balance.", "severity": "N/A", "contract": "Nfrtrade", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Secure3/CapsidNFRTrading_final_Secure3_Audit_Report.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "1f02a5e7a9e48c9dbb5030133c271808d53253fd",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Centralization Risk",
+            "description": "The administrator can call batchExpire() to destroy any asset of any user, which is a centralization risk and administrators can burn anyone's funds at will. The mint function has centralized authority.",
+            "severity": "Low",
+            "contract": "Nfr1155.sol",
+            "function": [
+                "mint",
+                "batchExpire"
+            ],
+            "lineNumber": [
+                "64-72",
+                "75-85"
+            ]
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Nfr1155 Check the length of the array",
+            "description": "In the batchExpire() function, two arrays of _froms and _ids are passed in, but the lengths of these two arrays may be different. If the length of _froms is greater than _ids, then there will be an array out of bounds problem.",
+            "severity": "Informational",
+            "contract": "Nfr1155",
+            "function": "batchExpire()",
+            "lineNumber": "75-85"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "NfrTrade code does not match documentation",
+            "description": "The code does not check if the price is lower than 0.01ETH as required by the documentation.",
+            "severity": "Informational",
+            "contract": "NfrTrade",
+            "function": "_basicValidateOrder",
+            "lineNumber": "288"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Flash loan bypasses the judgment of NFT ownership",
+            "description": "The judgment of NFT ownership can be bypassed using flash loans, allowing unauthorized access.",
+            "severity": "Medium",
+            "contract": "NfrTrade.sol",
+            "function": "_fullfill",
+            "lineNumber": "142-153"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Gas Optimizations - Cache Array Length Outside of Loop",
+            "description": "Abnormal consumption of gas due to not caching array length outside of loop.",
+            "severity": "Informational",
+            "contract": "Nfr1155",
+            "function": "",
+            "lineNumber": "79"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "No Validation/Whitelist of ERC20 token",
+            "description": "There is no restriction in the code and any token can participate, allowing anyone to create a random ERC20 token and use it as forms of payment.",
+            "severity": "Informational",
+            "contract": "NfrTrade.sol",
+            "function": "N/A",
+            "lineNumber": "169"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Use safeTransferFrom() function",
+            "description": "The USDT's transfer and transferFrom functions don't return a bool, so the call to these functions will revert although the user has enough balance.",
+            "severity": "N/A",
+            "contract": "Nfrtrade",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

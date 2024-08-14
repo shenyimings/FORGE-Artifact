@@ -1,1 +1,246 @@
-{"path": "./Audit_Reports_2024/Trail_of_Bits/Linkerd-threatmodel.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "Lack of rate-limiting mechanisms in the identity service", "description": "The identity service lacks sufficient rate-limiting mechanisms, which may make it prone to denial-of-service attacks.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "Lack of rate-limiting mechanisms in the destination service", "description": "The destination service lacks sufficient rate-limiting mechanisms, making it prone to denial-of-service attacks if a pod repeatedly changes its availability status.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "CLI tool allows the use of insecure protocols when externally sourcing infrastructure definitions", "description": "When using the CLI tool, an operator may source infrastructural YAML definitions from a URI path specifying any protocol, such as `http://` or `https://`. Therefore, a user could expose sensitive information when using an insecure protocol such as HTTP.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-749"]}, "title": "Exposure of admin endpoint may affect application availability", "description": "User application sidecar proxies expose an admin endpoint that can be used for tasks such as shutting down the proxy server and collecting metrics. This endpoint is exposed to other components within the same pod.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-749"]}, "title": "Go's pprof endpoints enabled by default in all admin servers", "description": "All core components of the Linkerd infrastructure have an admin server with Go's pprof endpoints on `/debug/pprof` enabled by default, which could be leveraged in a threat scenario.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"]}, "title": "Lack of access controls on the linkerd-viz dashboard", "description": "Linkerd operators can enable a set of metrics-focused features by adding the `linkerd-viz` extension. Doing so enables a web UI dashboard that lists detailed information about the namespaces, services, pods, containers, and other resources in a Kubernetes cluster in which Linkerd is configured.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-923"], "3": ["CWE-300"]}, "title": "Prometheus endpoints reachable from the user application namespace", "description": "Internal attackers with access to the user application namespace could reach Prometheus endpoints to obtain metrics data that could give them insight into other cluster components that they would not otherwise have visibility into.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-284"]}, "title": "8. Lack of egress access controls", "description": "Linkerd provides access control mechanisms for ingress traffic but not for egress traffic.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-284"]}, "title": "Prometheus endpoints are unencrypted and unauthenticated by default", "description": "The `linkerd-viz` extension provides a Prometheus API that collects metrics data from the various proxies and controllers used by the control and data planes. However, this endpoint is unencrypted and unauthenticated, lacking access and confidentiality controls entirely.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "Shared identity and destination services in a cluster poses risks to multi-application clusters", "description": "An attacker gains access to a single user application pod and begins to launch attacks against the identity and destination services. As a result, these services cannot serve other user application pods.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-435"]}, "title": "Lack of isolation between components and their sidecar proxies", "description": "Within the Linkerd, `linkerd-viz` , and user application namespaces, each core component lives alongside a `linkerd-proxy` container, which proxies the component\u2019s traffic and provides mTLS for internal connections. However, because the sidecar proxies are not isolated from their corresponding components, the compromise of a component would mean the compromise of its proxy, and vice versa.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-710"], "2": ["CWE-1059"]}, "title": "Lack of centralized security best practices documentation", "description": "The lack of centralized guidance on security best practices and documentation on securing clusters lacks guidance on security best practices such as configuring timeouts and retries, authorization policy recommendations for defense in depth, and locking down access to `linkerd-viz` components.", "severity": "N/A", "contract": "Linkerd", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Unclear distinction between Linkerd and Linkerd2 in official Linkerd blog post guidance", "description": "The official Linkerd documentation clearly indicates the version of Linkerd that each document pertains to, but this is not the case for the official Linkerd blog post guidance.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Insufficient logging of outbound HTTPS calls", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "46"}]}
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/Linkerd-threatmodel.pdf",
+    "project_info": {
+        "url": "https://github.com/linkerd/linkerd2",
+        "commit_hash": "N/A",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Lack of rate-limiting mechanisms in the identity service",
+            "description": "The identity service lacks sufficient rate-limiting mechanisms, which may make it prone to denial-of-service attacks.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Lack of rate-limiting mechanisms in the destination service",
+            "description": "The destination service lacks sufficient rate-limiting mechanisms, making it prone to denial-of-service attacks if a pod repeatedly changes its availability status.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "CLI tool allows the use of insecure protocols when externally sourcing infrastructure definitions",
+            "description": "When using the CLI tool, an operator may source infrastructural YAML definitions from a URI path specifying any protocol, such as `http://` or `https://`. Therefore, a user could expose sensitive information when using an insecure protocol such as HTTP.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-749"
+                ]
+            },
+            "title": "Exposure of admin endpoint may affect application availability",
+            "description": "User application sidecar proxies expose an admin endpoint that can be used for tasks such as shutting down the proxy server and collecting metrics. This endpoint is exposed to other components within the same pod.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-749"
+                ]
+            },
+            "title": "Go's pprof endpoints enabled by default in all admin servers",
+            "description": "All core components of the Linkerd infrastructure have an admin server with Go's pprof endpoints on `/debug/pprof` enabled by default, which could be leveraged in a threat scenario.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Lack of access controls on the linkerd-viz dashboard",
+            "description": "Linkerd operators can enable a set of metrics-focused features by adding the `linkerd-viz` extension. Doing so enables a web UI dashboard that lists detailed information about the namespaces, services, pods, containers, and other resources in a Kubernetes cluster in which Linkerd is configured.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-923"
+                ],
+                "3": [
+                    "CWE-300"
+                ]
+            },
+            "title": "Prometheus endpoints reachable from the user application namespace",
+            "description": "Internal attackers with access to the user application namespace could reach Prometheus endpoints to obtain metrics data that could give them insight into other cluster components that they would not otherwise have visibility into.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "8. Lack of egress access controls",
+            "description": "Linkerd provides access control mechanisms for ingress traffic but not for egress traffic.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Prometheus endpoints are unencrypted and unauthenticated by default",
+            "description": "The `linkerd-viz` extension provides a Prometheus API that collects metrics data from the various proxies and controllers used by the control and data planes. However, this endpoint is unencrypted and unauthenticated, lacking access and confidentiality controls entirely.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Shared identity and destination services in a cluster poses risks to multi-application clusters",
+            "description": "An attacker gains access to a single user application pod and begins to launch attacks against the identity and destination services. As a result, these services cannot serve other user application pods.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ]
+            },
+            "title": "Lack of isolation between components and their sidecar proxies",
+            "description": "Within the Linkerd, `linkerd-viz` , and user application namespaces, each core component lives alongside a `linkerd-proxy` container, which proxies the component\u2019s traffic and provides mTLS for internal connections. However, because the sidecar proxies are not isolated from their corresponding components, the compromise of a component would mean the compromise of its proxy, and vice versa.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1059"
+                ]
+            },
+            "title": "Lack of centralized security best practices documentation",
+            "description": "The lack of centralized guidance on security best practices and documentation on securing clusters lacks guidance on security best practices such as configuring timeouts and retries, authorization policy recommendations for defense in depth, and locking down access to `linkerd-viz` components.",
+            "severity": "N/A",
+            "contract": "Linkerd",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Unclear distinction between Linkerd and Linkerd2 in official Linkerd blog post guidance",
+            "description": "The official Linkerd documentation clearly indicates the version of Linkerd that each document pertains to, but this is not the case for the official Linkerd blog post guidance.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Insufficient logging of outbound HTTPS calls",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "46"
+        }
+    ]
+}

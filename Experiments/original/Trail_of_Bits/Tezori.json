@@ -1,1 +1,318 @@
-{"path": "./Audit_Reports_2024/Trail_of_Bits/Tezori.pdf", "project_info": {"url": "https://github.com/Cryptonomic/T2", "commit_hash": "c5fddc00a5799eb8094ff3b22765099a40c98e0a", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-707"], "2": ["CWE-74"], "3": ["CWE-94"], "4": ["CWE-95"]}, "title": "Remote code execution via openExternal", "description": "The wallet opens URI links with the `shell.openExternal` function which accepts URIs with protocol schemes other than `https://`. The related code is presented in Figures 1.1, 1.2 and 1.3. There are a few particularly dangerous schemes like `file://` and `smb://` which perform code execution when provided to the `shell.openExternal` function.", "severity": "High", "contract": "T2", "function": "openLink, openBlockExplorerForOperation, openBlockExplorerForAccount", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Unencrypted secretes in memory", "description": "The wallet stores the secret key and password as plaintext in memory.", "severity": "High", "contract": "Wallet", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Insecure private key in-memory encryption", "description": "The private key is stored in memory as ciphertext along with a random passphrase and salt used to encrypt the key. The passphrase and salt are stored nearby the key as plaintext.", "severity": "High", "contract": "ConseilS-softsigner/SoftSigner.ts", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"]}, "title": "Access to raw private key and signing without additional authentication", "description": "The private key can be displayed and used to sign arbitrary data without additional authentication. Anyone with access to an unlocked wallet can perform those two actions.", "severity": "High", "contract": "Wallet", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "Signing valid operation hashes via UI dialog", "description": "The message text box in the `Sign` tab in the `Sign & Verify` dialog box accepts arbitrary data, including binary, non-ascii bytes. Users can be tricked to sign data that is a valid hash of some operation.", "severity": "Medium", "contract": "N/A", "function": "signText", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"]}, "title": "Wallet file permissions", "description": "Wallets are created with default file-access permissions (0666 & ~umask). On some systems this may result in creation of a world-readable file.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-397"]}, "title": "Ignored exceptions", "description": "The codebase has some places which catch all exception types without further action, effectively silencing them.", "severity": "Informational", "contract": "TokenContract", "function": "N/A", "lineNumber": "21-70"}, {"id": 7, "category": {"1": ["CWE-707"], "2": ["CWE-74"], "3": ["CWE-99"]}, "title": "Users can be tricked to blindly sign transactions", "description": "The wallet implements a custom `galleon://...` URI handler which opens the \u201cdApp Authentication Request\u201d dialog and could be exploited to send signatures of attacker-controlled messages to attacker-controlled URL addresses.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-435"], "2": ["CWE-436"], "3": ["CWE-437"]}, "title": "Client-side request forgery through dApp authentication", "description": "The same functionality as described in TOB-TEZORI-008 can be used to perform HTTP request forgery attacks against local services which are running on wallet user\u2019s private networks.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-710"], "2": ["CWE-1061"]}, "title": "User interface bugs", "description": "There are a few issues that do not pose direct risk to users but may be used to leverage other vulnerabilities. They also impact usability of the wallet.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Wallet\u2019s password not cleared from a dialog box", "description": "The wallet password is not cleared from the `Send` `Confirmation` dialog box after the box is closed (with `Confirm` button or `X` button). It\u2019s likely cached in `SendConfirmationModal` local state.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-284"], "2": ["CWE-923"], "3": ["CWE-940"]}, "title": "Operations can be injected by a Tezos node before signing", "description": "A compromised or malicious Tezos node can imperceptibly inject operations which will be signed along with other operations.", "severity": "High", "contract": "ConseilJS", "function": "sendOperation", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-707"], "2": ["CWE-74"], "3": ["CWE-94"]}, "title": "Entrypoint not validated, possible injection of data to sign", "description": "In function `encodeTransaction`, the length of `transaction.parameters.entrypoint` is not validated which may lead to injection of excessive data into encoded operations.", "severity": "High", "contract": "N/A", "function": "encodeTransaction", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-707"], "2": ["CWE-116"]}, "title": "URL components not encoded", "description": "In a few places, URL addresses are constructed from arguments that have not been properly sanitized. This may result in broken functionality or be leveraged as a part of an attack.", "severity": "Informational", "contract": "ConseilJS", "function": "executeEntityQuery()", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-707"], "2": ["CWE-74"], "3": ["CWE-77"], "4": ["CWE-88"]}, "title": "Arguments to contract's parameters not encoded", "description": "The `parameters` string is created based on unsanitized inputs to the `transferBalance` function, allowing arbitrary characters that can be used for an injection attack.", "severity": "Informational", "contract": "TzbtcTokenHelper", "function": "transferBalance()", "lineNumber": "88"}, {"id": 15, "category": {"1": ["CWE-707"], "2": ["CWE-138"]}, "title": "JSONPath argument is not escaped", "description": "The `operationGroupId` argument is interpolated into the `path` argument passed to the `JSONPath` function without sanitization.", "severity": "Informational", "contract": "N/A", "function": "getMempoolOperation", "lineNumber": "N/A"}, {"id": 16, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Discrepancies between master branch and latest release", "description": "The master branch of T2 is not regularly maintained for dependency issues and is behind the most recent release by several months, posing a threat to users who build their own production version of T2 wallet from the master branch.", "severity": "Medium", "contract": "T2", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/Tezori.pdf",
+    "project_info": {
+        "url": "https://github.com/Cryptonomic/T2",
+        "commit_hash": "c5fddc00a5799eb8094ff3b22765099a40c98e0a",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-74"
+                ],
+                "3": [
+                    "CWE-94"
+                ],
+                "4": [
+                    "CWE-95"
+                ]
+            },
+            "title": "Remote code execution via openExternal",
+            "description": "The wallet opens URI links with the `shell.openExternal` function which accepts URIs with protocol schemes other than `https://`. The related code is presented in Figures 1.1, 1.2 and 1.3. There are a few particularly dangerous schemes like `file://` and `smb://` which perform code execution when provided to the `shell.openExternal` function.",
+            "severity": "High",
+            "contract": "T2",
+            "function": "openLink, openBlockExplorerForOperation, openBlockExplorerForAccount",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Unencrypted secretes in memory",
+            "description": "The wallet stores the secret key and password as plaintext in memory.",
+            "severity": "High",
+            "contract": "Wallet",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Insecure private key in-memory encryption",
+            "description": "The private key is stored in memory as ciphertext along with a random passphrase and salt used to encrypt the key. The passphrase and salt are stored nearby the key as plaintext.",
+            "severity": "High",
+            "contract": "ConseilS-softsigner/SoftSigner.ts",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Access to raw private key and signing without additional authentication",
+            "description": "The private key can be displayed and used to sign arbitrary data without additional authentication. Anyone with access to an unlocked wallet can perform those two actions.",
+            "severity": "High",
+            "contract": "Wallet",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Signing valid operation hashes via UI dialog",
+            "description": "The message text box in the `Sign` tab in the `Sign & Verify` dialog box accepts arbitrary data, including binary, non-ascii bytes. Users can be tricked to sign data that is a valid hash of some operation.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "signText",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Wallet file permissions",
+            "description": "Wallets are created with default file-access permissions (0666 & ~umask). On some systems this may result in creation of a world-readable file.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-397"
+                ]
+            },
+            "title": "Ignored exceptions",
+            "description": "The codebase has some places which catch all exception types without further action, effectively silencing them.",
+            "severity": "Informational",
+            "contract": "TokenContract",
+            "function": "N/A",
+            "lineNumber": "21-70"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-74"
+                ],
+                "3": [
+                    "CWE-99"
+                ]
+            },
+            "title": "Users can be tricked to blindly sign transactions",
+            "description": "The wallet implements a custom `galleon://...` URI handler which opens the \u201cdApp Authentication Request\u201d dialog and could be exploited to send signatures of attacker-controlled messages to attacker-controlled URL addresses.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-437"
+                ]
+            },
+            "title": "Client-side request forgery through dApp authentication",
+            "description": "The same functionality as described in TOB-TEZORI-008 can be used to perform HTTP request forgery attacks against local services which are running on wallet user\u2019s private networks.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1061"
+                ]
+            },
+            "title": "User interface bugs",
+            "description": "There are a few issues that do not pose direct risk to users but may be used to leverage other vulnerabilities. They also impact usability of the wallet.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Wallet\u2019s password not cleared from a dialog box",
+            "description": "The wallet password is not cleared from the `Send` `Confirmation` dialog box after the box is closed (with `Confirm` button or `X` button). It\u2019s likely cached in `SendConfirmationModal` local state.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-923"
+                ],
+                "3": [
+                    "CWE-940"
+                ]
+            },
+            "title": "Operations can be injected by a Tezos node before signing",
+            "description": "A compromised or malicious Tezos node can imperceptibly inject operations which will be signed along with other operations.",
+            "severity": "High",
+            "contract": "ConseilJS",
+            "function": "sendOperation",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-74"
+                ],
+                "3": [
+                    "CWE-94"
+                ]
+            },
+            "title": "Entrypoint not validated, possible injection of data to sign",
+            "description": "In function `encodeTransaction`, the length of `transaction.parameters.entrypoint` is not validated which may lead to injection of excessive data into encoded operations.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "encodeTransaction",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-116"
+                ]
+            },
+            "title": "URL components not encoded",
+            "description": "In a few places, URL addresses are constructed from arguments that have not been properly sanitized. This may result in broken functionality or be leveraged as a part of an attack.",
+            "severity": "Informational",
+            "contract": "ConseilJS",
+            "function": "executeEntityQuery()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-74"
+                ],
+                "3": [
+                    "CWE-77"
+                ],
+                "4": [
+                    "CWE-88"
+                ]
+            },
+            "title": "Arguments to contract's parameters not encoded",
+            "description": "The `parameters` string is created based on unsanitized inputs to the `transferBalance` function, allowing arbitrary characters that can be used for an injection attack.",
+            "severity": "Informational",
+            "contract": "TzbtcTokenHelper",
+            "function": "transferBalance()",
+            "lineNumber": "88"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-138"
+                ]
+            },
+            "title": "JSONPath argument is not escaped",
+            "description": "The `operationGroupId` argument is interpolated into the `path` argument passed to the `JSONPath` function without sanitization.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "getMempoolOperation",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Discrepancies between master branch and latest release",
+            "description": "The master branch of T2 is not regularly maintained for dependency issues and is behind the most recent release by several months, posing a threat to users who build their own production version of T2 wallet from the master branch.",
+            "severity": "Medium",
+            "contract": "T2",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

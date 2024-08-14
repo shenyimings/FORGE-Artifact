@@ -1,1 +1,478 @@
-{"path": "./Audit_Reports_2024/Quantstamp/r-token-ethereum-contracts.pdf", "project_info": {"url": "https://github.com/decentral-ee/rtoken-contracts", "commit_hash": "1d3c5df", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Functions with similar code and complexity", "description": "The functions 'recollectLoans' and 'distributeLoans' in 'RToken.sol' share very similar code and are very long and complex, making them hard to maintain.", "severity": "Medium", "contract": "RToken.sol", "function": ["recollectLoans", "distributeLoans"], "lineNumber": ["L780", "L684"]}, {"id": 1, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Code clones in `getHatByAddress` function", "description": "Avoid code clones by reusing `getHatByID()` inside of the `getHatByAddress` function.", "severity": "Medium", "contract": "RToken.sol", "function": "getHatByAddress()", "lineNumber": "261"}, {"id": 2, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Code clones in `transferAll()` function", "description": "The `transferAll()` function has similar code to the `transfer()` function and could reuse it to avoid code duplication.", "severity": "Informational", "contract": "RToken.sol", "function": "transferAll()", "lineNumber": "125"}, {"id": 3, "category": {"1": ["CWE-707"], "2": ["CWE-228"], "3": ["CWE-237"]}, "title": "Code clones in `transferAllFrom()` function", "description": "The `transferAllFrom()` function has similar code to `transferFrom()` and can reuse it.", "severity": "Informational", "contract": "RToken.sol", "function": "transferAllFrom()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Code clones in `minWithNewHat()` function", "description": "The `minWithNewHat()` function has similar code to `minWithSelectedHat()`, which can make maintenance harder.", "severity": "Medium", "contract": "RToken.sol", "function": "minWithNewHat()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-707"], "2": ["CWE-228"], "3": ["CWE-237"]}, "title": "Code clones in `redeemAll()` function", "description": "The `redeemAll()` function has similar code to `redeem()` and can reuse it.", "severity": "Informational", "contract": "RToken.sol", "function": "redeemAll()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-707"], "2": ["CWE-228"], "3": ["CWE-237"]}, "title": "Code clones in `redeemAndTranferAll()` function", "description": "The `redeemAndTranferAll()` function has code clones and could reuse `redeemAndTransfer()`", "severity": "Informational", "contract": "RToken.sol", "function": "redeemAndTranferAll()", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "Unnecessary payment of interests to `dst`", "description": "The implementation pays interest to `dst` unnecessarily, differing from other functions like `transfer()`, `transferAll()`, and `transferFromI()`.", "severity": "Medium", "contract": "RToken.sol", "function": "N/A", "lineNumber": "135"}, {"id": 8, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Inconsistent hat inheritance rule", "description": "The technical specification mentions that contracts can generally change the hat once, but the administrator can change the contract's hat any number of times.", "severity": "Medium", "contract": "RToken.sol", "function": "N/A", "lineNumber": "416"}, {"id": 9, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Rounding error without explanation", "description": "Possible confusion between `savingAssetConversionRate` and `10**18` leading to potential rounding errors.", "severity": "Undetermined", "contract": "RToken.sol", "function": "N/A", "lineNumber": "342, 368-370"}, {"id": 10, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Malicious allocation strategy", "description": "An exploit scenario where Bob can transfer more tokens than allowed by Alice due to the lack of increase/decrease allowance functions.", "severity": "High", "contract": "Token", "function": "approve() and transferFrom()", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-435"], "2": ["CWE-436"], "3": ["CWE-437"]}, "title": "Transaction-ordering dependence", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-682"]}, "title": "Timestamp dependence", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-703"], "2": ["CWE-755"], "3": ["CWE-248"]}, "title": "Mishandled exceptions and call stack limits", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Unsafe external calls", "description": "Ignoring return value by external calls in RToken.changeAllocationStrategy(IAllocationStrategy) and token.transferFrom(msg.sender,address(this),totalSupply)", "severity": "Informational", "contract": "RToken.sol", "function": "changeAllocationStrategy() and transferFrom()", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Integer Overflow / Underflow", "description": "Integer overflow/underflow occur when an integer hits its bit-size limit.", "severity": "High", "contract": "RToken.sol", "function": "N/A", "lineNumber": "L540, L617, L621, L667, L668, L705, L717, L801, L814"}, {"id": 16, "category": {"1": ["CWE-682"], "2": ["CWE-1339"]}, "title": "Number rounding errors", "description": "Rounding errors occur when using `savingAssetConversionRate` instead of the constant `10**18`, potentially leading to precision loss.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "368-370"}, {"id": 17, "category": {"1": ["CWE-691"], "2": ["CWE-1265"]}, "title": "Reentrancy and cross-function vulnerabilities", "description": "Functions perform calls to the `IAllocationStrategy` instance `ias` and then update state variables, which may lead to reentrancy issues.", "severity": "Unknown", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 18, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Denial of service / logical oversights", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 19, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Access control", "description": "The administrator can change the contract's hat any number of times, which may lead to unintended consequences.", "severity": "Medium", "contract": "RToken.sol", "function": "N/A", "lineNumber": "416"}, {"id": 20, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Centralization of power", "description": "The 'allocationStrategy' can be changed by the owner of the contract and all the investment is automatically invested into the new allocation strategy, which requires some trust from users as it may be malicious.", "severity": "High", "contract": "RToken.sol", "function": "N/A", "lineNumber": "390"}, {"id": 21, "category": {"1": ["CWE-682"]}, "title": "Business logic contradicting the specification", "description": "The implementation of the contract does not align with its technical specification.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 22, "category": {"1": ["CWE-710"], "2": ["CWE-1164"]}, "title": "Code clones, functionality duplication", "description": "Functions with similar code and long complexity make them hard to maintain. It is recommended to extract common code into functions and call the new functions.", "severity": "Medium", "contract": "RToken.sol", "function": ["recollectLoans", "distributeLoans", "getHatByAddress", "transferAll", "transferAllFrom", "minWithNewHat", "redeemAll", "redeemAndTranferAll"], "lineNumber": ["L780", "L684", "261", "125", "N/A", "N/A", "N/A", "N/A"]}, {"id": 23, "category": {"1": ["CWE-682"]}, "title": "Gas usage", "description": "High gas usage in various contract functions", "severity": "Medium", "contract": "Multiple contracts (CErc20, CompoundAllocationStrategy, RToken, Proxy)", "function": "Various functions (new, transferOwnership, mint, approve, etc.)", "lineNumber": "N/A"}, {"id": 24, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Arbitrary token minting", "description": "The `mint` event is not standard in ERC20 and can confuse some trackers that follow OpenZeppelin.", "severity": "Medium", "contract": "RToken.sol", "function": "Mint", "lineNumber": "548-549"}]}
+{
+    "path": "./Audit_Reports_2024/Quantstamp/r-token-ethereum-contracts.pdf",
+    "project_info": {
+        "url": "https://github.com/decentral-ee/rtoken-contracts",
+        "commit_hash": "1d3c5df",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Functions with similar code and complexity",
+            "description": "The functions 'recollectLoans' and 'distributeLoans' in 'RToken.sol' share very similar code and are very long and complex, making them hard to maintain.",
+            "severity": "Medium",
+            "contract": "RToken.sol",
+            "function": [
+                "recollectLoans",
+                "distributeLoans"
+            ],
+            "lineNumber": [
+                "L780",
+                "L684"
+            ]
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Code clones in `getHatByAddress` function",
+            "description": "Avoid code clones by reusing `getHatByID()` inside of the `getHatByAddress` function.",
+            "severity": "Medium",
+            "contract": "RToken.sol",
+            "function": "getHatByAddress()",
+            "lineNumber": "261"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Code clones in `transferAll()` function",
+            "description": "The `transferAll()` function has similar code to the `transfer()` function and could reuse it to avoid code duplication.",
+            "severity": "Informational",
+            "contract": "RToken.sol",
+            "function": "transferAll()",
+            "lineNumber": "125"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-237"
+                ]
+            },
+            "title": "Code clones in `transferAllFrom()` function",
+            "description": "The `transferAllFrom()` function has similar code to `transferFrom()` and can reuse it.",
+            "severity": "Informational",
+            "contract": "RToken.sol",
+            "function": "transferAllFrom()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Code clones in `minWithNewHat()` function",
+            "description": "The `minWithNewHat()` function has similar code to `minWithSelectedHat()`, which can make maintenance harder.",
+            "severity": "Medium",
+            "contract": "RToken.sol",
+            "function": "minWithNewHat()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-237"
+                ]
+            },
+            "title": "Code clones in `redeemAll()` function",
+            "description": "The `redeemAll()` function has similar code to `redeem()` and can reuse it.",
+            "severity": "Informational",
+            "contract": "RToken.sol",
+            "function": "redeemAll()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-237"
+                ]
+            },
+            "title": "Code clones in `redeemAndTranferAll()` function",
+            "description": "The `redeemAndTranferAll()` function has code clones and could reuse `redeemAndTransfer()`",
+            "severity": "Informational",
+            "contract": "RToken.sol",
+            "function": "redeemAndTranferAll()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Unnecessary payment of interests to `dst`",
+            "description": "The implementation pays interest to `dst` unnecessarily, differing from other functions like `transfer()`, `transferAll()`, and `transferFromI()`.",
+            "severity": "Medium",
+            "contract": "RToken.sol",
+            "function": "N/A",
+            "lineNumber": "135"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Inconsistent hat inheritance rule",
+            "description": "The technical specification mentions that contracts can generally change the hat once, but the administrator can change the contract's hat any number of times.",
+            "severity": "Medium",
+            "contract": "RToken.sol",
+            "function": "N/A",
+            "lineNumber": "416"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Rounding error without explanation",
+            "description": "Possible confusion between `savingAssetConversionRate` and `10**18` leading to potential rounding errors.",
+            "severity": "Undetermined",
+            "contract": "RToken.sol",
+            "function": "N/A",
+            "lineNumber": "342, 368-370"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Malicious allocation strategy",
+            "description": "An exploit scenario where Bob can transfer more tokens than allowed by Alice due to the lack of increase/decrease allowance functions.",
+            "severity": "High",
+            "contract": "Token",
+            "function": "approve() and transferFrom()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-437"
+                ]
+            },
+            "title": "Transaction-ordering dependence",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Timestamp dependence",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-755"
+                ],
+                "3": [
+                    "CWE-248"
+                ]
+            },
+            "title": "Mishandled exceptions and call stack limits",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Unsafe external calls",
+            "description": "Ignoring return value by external calls in RToken.changeAllocationStrategy(IAllocationStrategy) and token.transferFrom(msg.sender,address(this),totalSupply)",
+            "severity": "Informational",
+            "contract": "RToken.sol",
+            "function": "changeAllocationStrategy() and transferFrom()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Integer Overflow / Underflow",
+            "description": "Integer overflow/underflow occur when an integer hits its bit-size limit.",
+            "severity": "High",
+            "contract": "RToken.sol",
+            "function": "N/A",
+            "lineNumber": "L540, L617, L621, L667, L668, L705, L717, L801, L814"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "Number rounding errors",
+            "description": "Rounding errors occur when using `savingAssetConversionRate` instead of the constant `10**18`, potentially leading to precision loss.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "368-370"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "Reentrancy and cross-function vulnerabilities",
+            "description": "Functions perform calls to the `IAllocationStrategy` instance `ias` and then update state variables, which may lead to reentrancy issues.",
+            "severity": "Unknown",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Denial of service / logical oversights",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 19,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Access control",
+            "description": "The administrator can change the contract's hat any number of times, which may lead to unintended consequences.",
+            "severity": "Medium",
+            "contract": "RToken.sol",
+            "function": "N/A",
+            "lineNumber": "416"
+        },
+        {
+            "id": 20,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Centralization of power",
+            "description": "The 'allocationStrategy' can be changed by the owner of the contract and all the investment is automatically invested into the new allocation strategy, which requires some trust from users as it may be malicious.",
+            "severity": "High",
+            "contract": "RToken.sol",
+            "function": "N/A",
+            "lineNumber": "390"
+        },
+        {
+            "id": 21,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Business logic contradicting the specification",
+            "description": "The implementation of the contract does not align with its technical specification.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 22,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ]
+            },
+            "title": "Code clones, functionality duplication",
+            "description": "Functions with similar code and long complexity make them hard to maintain. It is recommended to extract common code into functions and call the new functions.",
+            "severity": "Medium",
+            "contract": "RToken.sol",
+            "function": [
+                "recollectLoans",
+                "distributeLoans",
+                "getHatByAddress",
+                "transferAll",
+                "transferAllFrom",
+                "minWithNewHat",
+                "redeemAll",
+                "redeemAndTranferAll"
+            ],
+            "lineNumber": [
+                "L780",
+                "L684",
+                "261",
+                "125",
+                "N/A",
+                "N/A",
+                "N/A",
+                "N/A"
+            ]
+        },
+        {
+            "id": 23,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Gas usage",
+            "description": "High gas usage in various contract functions",
+            "severity": "Medium",
+            "contract": "Multiple contracts (CErc20, CompoundAllocationStrategy, RToken, Proxy)",
+            "function": "Various functions (new, transferOwnership, mint, approve, etc.)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 24,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Arbitrary token minting",
+            "description": "The `mint` event is not standard in ERC20 and can confuse some trackers that follow OpenZeppelin.",
+            "severity": "Medium",
+            "contract": "RToken.sol",
+            "function": "Mint",
+            "lineNumber": "548-549"
+        }
+    ]
+}

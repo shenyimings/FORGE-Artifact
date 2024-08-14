@@ -1,1 +1,155 @@
-{"path": "./Audit_Reports_2024/BlockSec/BlockSec-blocksec_impossible_finance_swap_v1.2.pdf", "project_info": {"url": "https://github.com/ImpossibleFinance/impossible-swap-core", "commit_hash": "29aaef89f996acdbee92b67c4d95fb608dc8b876", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-691"], "2": ["CWE-1265"]}, "title": "Reentrancy Vulnerability in ImpossibleWrappedToken", "description": "There exists a potential reentrancy vulnerability in ImpossibleWrappedToken, including the deposit(address) function and the deposit(address, uint256) function.", "severity": "Critical", "contract": "ImpossibleWrappedToken", "function": ["deposit(address)", "deposit(address, uint256)"], "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Incorrect Emitted Event", "description": "The emitted event can be misleading and break other implementations that rely on these logs.", "severity": "Medium", "contract": "ImpossibleWrappedToken", "function": "deposit(address, uint256)", "lineNumber": "59"}, {"id": 2, "category": {"1": ["CWE-691"], "2": ["CWE-362"]}, "title": "Deposit Front-running Vulnerability", "description": "The design of ImpossibleWrappedToken.deposit(address) takes deflation/inflation or rebasing tokens into account. However, the transfer and deposit operations are separated. As a result, the attacker could launch the front-running attack by inserting a deposit transaction between user\u2019s transfer and deposit transactions.", "severity": "High", "contract": "ImpossibleWrappedToken", "function": "deposit(address)", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-435"], "2": ["CWE-436"]}, "title": "Requirement Inconsistency in ImpossibleLibrary and ImpossiblePair", "description": "The hardstop mechanism (ratioStart & ratioEnd) is not considered in ImpossibleLibrary.getAmountOut() by the Router. As a result, the amount returned by getAmountOut() might be rejected by ImpossiblePair.swap().", "severity": "High", "contract": "ImpossiblePair", "function": "swap()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "Hardstop Mechanism Inconsistency", "description": "The hardstop mechanism (ratioStart & ratioEnd) is not considered in ImpossibleLibrary.getAmountOut() by the Router. As a result, the amount returned by getAmountOut() might be rejected by ImpossiblePair.swap().", "severity": "High", "contract": "ImpossiblePair", "function": "swap()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Does Not Consider the Impact of Deflation/Rebasing Tokens", "description": "The design and implementation of ImpossibleWrappedToken do not take deflation/rebasing tokens into consideration, which may result in the difference between the recorded amount and the actual amount of the underlying token.", "severity": "High", "contract": "ImpossibleWrappedToken", "function": "deposit(address, uint256)", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-770"]}, "title": "Avoid to Empty the Pair", "description": "In xybk scenario, a swap that empties a pool should not be allowed as the original Uniswap is not designed for the case that one of the reserves could be zero.", "severity": "N/A", "contract": "ImpossiblePair", "function": "addLiquidity()", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "Improper Design of kLast in Fees Collection", "description": "In ImpossiblePair, the k calculated by _xybkComputeK() in xybk state will always be larger than that calculated by reserve0 * reserve1 in uni state. This leads to a rare case where fees to the feeTo() function will fail to be collected.", "severity": "High", "contract": "ImpossiblePair", "function": "_mintFee", "lineNumber": "405"}, {"id": 8, "category": {"1": ["CWE-682"]}, "title": "Documentation Inconsistency", "description": "The calculation formulas of k (which is used in swap) in code implementation and documentation are different.", "severity": "N/A", "contract": "Impossible Finance Swap-core Contracts", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/BlockSec/BlockSec-blocksec_impossible_finance_swap_v1.2.pdf",
+    "project_info": {
+        "url": "https://github.com/ImpossibleFinance/impossible-swap-core",
+        "commit_hash": "29aaef89f996acdbee92b67c4d95fb608dc8b876",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "Reentrancy Vulnerability in ImpossibleWrappedToken",
+            "description": "There exists a potential reentrancy vulnerability in ImpossibleWrappedToken, including the deposit(address) function and the deposit(address, uint256) function.",
+            "severity": "Critical",
+            "contract": "ImpossibleWrappedToken",
+            "function": [
+                "deposit(address)",
+                "deposit(address, uint256)"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect Emitted Event",
+            "description": "The emitted event can be misleading and break other implementations that rely on these logs.",
+            "severity": "Medium",
+            "contract": "ImpossibleWrappedToken",
+            "function": "deposit(address, uint256)",
+            "lineNumber": "59"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-362"
+                ]
+            },
+            "title": "Deposit Front-running Vulnerability",
+            "description": "The design of ImpossibleWrappedToken.deposit(address) takes deflation/inflation or rebasing tokens into account. However, the transfer and deposit operations are separated. As a result, the attacker could launch the front-running attack by inserting a deposit transaction between user\u2019s transfer and deposit transactions.",
+            "severity": "High",
+            "contract": "ImpossibleWrappedToken",
+            "function": "deposit(address)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ]
+            },
+            "title": "Requirement Inconsistency in ImpossibleLibrary and ImpossiblePair",
+            "description": "The hardstop mechanism (ratioStart & ratioEnd) is not considered in ImpossibleLibrary.getAmountOut() by the Router. As a result, the amount returned by getAmountOut() might be rejected by ImpossiblePair.swap().",
+            "severity": "High",
+            "contract": "ImpossiblePair",
+            "function": "swap()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Hardstop Mechanism Inconsistency",
+            "description": "The hardstop mechanism (ratioStart & ratioEnd) is not considered in ImpossibleLibrary.getAmountOut() by the Router. As a result, the amount returned by getAmountOut() might be rejected by ImpossiblePair.swap().",
+            "severity": "High",
+            "contract": "ImpossiblePair",
+            "function": "swap()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Does Not Consider the Impact of Deflation/Rebasing Tokens",
+            "description": "The design and implementation of ImpossibleWrappedToken do not take deflation/rebasing tokens into consideration, which may result in the difference between the recorded amount and the actual amount of the underlying token.",
+            "severity": "High",
+            "contract": "ImpossibleWrappedToken",
+            "function": "deposit(address, uint256)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "Avoid to Empty the Pair",
+            "description": "In xybk scenario, a swap that empties a pool should not be allowed as the original Uniswap is not designed for the case that one of the reserves could be zero.",
+            "severity": "N/A",
+            "contract": "ImpossiblePair",
+            "function": "addLiquidity()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improper Design of kLast in Fees Collection",
+            "description": "In ImpossiblePair, the k calculated by _xybkComputeK() in xybk state will always be larger than that calculated by reserve0 * reserve1 in uni state. This leads to a rare case where fees to the feeTo() function will fail to be collected.",
+            "severity": "High",
+            "contract": "ImpossiblePair",
+            "function": "_mintFee",
+            "lineNumber": "405"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Documentation Inconsistency",
+            "description": "The calculation formulas of k (which is used in swap) in code implementation and documentation are different.",
+            "severity": "N/A",
+            "contract": "Impossible Finance Swap-core Contracts",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

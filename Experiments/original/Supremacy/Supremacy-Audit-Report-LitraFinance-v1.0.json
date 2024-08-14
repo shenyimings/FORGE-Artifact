@@ -1,1 +1,169 @@
-{"path": "./Audit_Reports_2024/Supremacy/Supremacy-Audit-Report-LitraFinance-v1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "9303970128295bc8c223712bfbd56f92826d3821b4f51798eca9a38f97643b5b", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "WrappedNFT forcible minting", "description": "NFTVault::wrap() allows WrappedNFT to be arbitrarily minted due to controllable _nftAddr and wnftId assignment.", "severity": "Critical", "contract": "NFTVault", "function": "wrap()", "lineNumber": "#L90, #L56, #L61, #L94"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Theft of any user's NFT", "description": "A hacker can force the minting of any number of WrappedNFTs under a certain NFT series and redeem the NFTs of that series by calling `NFTVault::unwrap()`, thus stealing all users' NFTs.", "severity": "Critical", "contract": "NFTVault", "function": "unwrap()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "Potential fee loss", "description": "It is not recommended to leave the initial fee to the user to set, because due to the atomic nature of the transaction, it is not possible to charge a fee for WrappedNFTs created within a single transaction anyway. If the user sets both `Wrap` and `Unwrap` fees to `0` after the WrappedNFT is created, no fee will be charged during the window until the parameterAdmin sets the fee again, thus, causing some financial loss.", "severity": "Medium", "contract": "NFTVault", "function": "Wrap() or Unwrap()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Centralization risk", "description": "The protocol's privileged account poses counter-party risk to users and may lead to centralization risks if not mitigated.", "severity": "Low", "contract": "OwnershipAdminManaged.sol, EmergencyAdminManaged.sol, ParameterAdminManaged.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Unchecked zero-address", "description": "The 'unwrap' function does not check if the address of 'ftInfo.nftAddr' or 'ftInfo.wnftAddr' is zero before performing operations.", "severity": "Critical", "contract": "NFTVault", "function": "unwrap(uint256,uint256)", "lineNumber": "317-319"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-393"]}, "title": "Unchecked return values", "description": "N/A", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Missing event records", "description": "In the `EmergencyAdminManaged`, `OwnershipAdminManaged`, `ParameterAdminManaged`, and `Stoppable` contracts, privileged accounts can set Admin privileges and `stopped` status through privileged functions respectively, but no event logging is performed. And, in `FeeManager` contract, user will call `setWrapFee()` & `setUnwrapFee()` to change the status, but no event logging.", "severity": "Informational", "contract": ["EmergencyAdminManaged", "OwnershipAdminManaged", "ParameterAdminManaged", "Stoppable", "FeeManager"], "function": ["N/A"], "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-710"]}, "title": "Best Practices", "description": "N/A", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Supremacy/Supremacy-Audit-Report-LitraFinance-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/litrafi/litra-contract",
+        "commit_hash": "N/A",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "WrappedNFT forcible minting",
+            "description": "NFTVault::wrap() allows WrappedNFT to be arbitrarily minted due to controllable _nftAddr and wnftId assignment.",
+            "severity": "Critical",
+            "contract": "NFTVault",
+            "function": "wrap()",
+            "lineNumber": "#L90, #L56, #L61, #L94"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Theft of any user's NFT",
+            "description": "A hacker can force the minting of any number of WrappedNFTs under a certain NFT series and redeem the NFTs of that series by calling `NFTVault::unwrap()`, thus stealing all users' NFTs.",
+            "severity": "Critical",
+            "contract": "NFTVault",
+            "function": "unwrap()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Potential fee loss",
+            "description": "It is not recommended to leave the initial fee to the user to set, because due to the atomic nature of the transaction, it is not possible to charge a fee for WrappedNFTs created within a single transaction anyway. If the user sets both `Wrap` and `Unwrap` fees to `0` after the WrappedNFT is created, no fee will be charged during the window until the parameterAdmin sets the fee again, thus, causing some financial loss.",
+            "severity": "Medium",
+            "contract": "NFTVault",
+            "function": "Wrap() or Unwrap()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Centralization risk",
+            "description": "The protocol's privileged account poses counter-party risk to users and may lead to centralization risks if not mitigated.",
+            "severity": "Low",
+            "contract": "OwnershipAdminManaged.sol, EmergencyAdminManaged.sol, ParameterAdminManaged.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Unchecked zero-address",
+            "description": "The 'unwrap' function does not check if the address of 'ftInfo.nftAddr' or 'ftInfo.wnftAddr' is zero before performing operations.",
+            "severity": "Critical",
+            "contract": "NFTVault",
+            "function": "unwrap(uint256,uint256)",
+            "lineNumber": "317-319"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-393"
+                ]
+            },
+            "title": "Unchecked return values",
+            "description": "N/A",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Missing event records",
+            "description": "In the `EmergencyAdminManaged`, `OwnershipAdminManaged`, `ParameterAdminManaged`, and `Stoppable` contracts, privileged accounts can set Admin privileges and `stopped` status through privileged functions respectively, but no event logging is performed. And, in `FeeManager` contract, user will call `setWrapFee()` & `setUnwrapFee()` to change the status, but no event logging.",
+            "severity": "Informational",
+            "contract": [
+                "EmergencyAdminManaged",
+                "OwnershipAdminManaged",
+                "ParameterAdminManaged",
+                "Stoppable",
+                "FeeManager"
+            ],
+            "function": [
+                "N/A"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ]
+            },
+            "title": "Best Practices",
+            "description": "N/A",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

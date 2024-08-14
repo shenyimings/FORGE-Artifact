@@ -1,1 +1,371 @@
-{"path": "./Audit_Reports_2024/Hacken/Eesee_SC-Audit-Report_29112023_SA-2010.pdf", "project_info": {"url": "https://gitlab.com/eesee.io/network/eesee-contracts", "commit_hash": "8564a3153162b97fa3b107c3bd8342e67cf6867e", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Potential Risk of Inconsistent Financial Calculations", "description": "Unchecked arithmetic operations and inconsistent integer usage can lead to miscalculations in reward distribution and fund management, casting errors affecting user balances and transaction accuracy, and inconsistent or erroneous updates of contract state variables.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Absence of Reentrancy Guard in Eesee Ecosystem Contracts Handling Multiple Asset Types", "description": "The Eesee ecosystem contracts lack a reentrancy guard mechanism despite adhering to the Checks-Effects-Interactions (CEI) pattern, presenting a latent risk when managing multiple asset types and complex custom implementations.", "severity": "High", "contract": "Eesee Ecosystem Contracts", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Duplicate Winner Determination Logic in Eesee Contract Functions", "description": "N/A", "severity": "N/A", "contract": "Eesee", "function": "N/A", "lineNumber": "38"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Inefficient Double Loop in mintDrops() Function", "description": "Leading to Gas Overhead", "severity": "Medium", "contract": "EeseeDrops", "function": "mintDrops()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "I08. Lack of Bounds Checking for Lot Array Access in Multiple Functions of Eesee.sol", "description": "In the Eesee.sol smart contract, several functions including receiveAssets, receiveTokens, reclaimAssets, reclaimTokens, and _buyTickets access the lots array without proper bounds checking, leading to a runtime error if these functions are called with an index that does not exist in the lots array.", "severity": "N/A", "contract": "Eesee.sol", "function": ["receiveAssets()", "receiveTokens()", "reclaimAssets()", "reclaimTokens()", "_buyTickets()"], "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "I09. Inefficient Minting Process in ESE Token _beforeTokenTransfer()", "description": "The minting process in the _beforeTokenTransfer function of the ESE token contract is inefficient due to unnecessary minting calls when releasableAmount is zero, leading to Gas consumption inefficiency and unnecessary costs for the contract and its users.", "severity": "Medium", "contract": "ESE", "function": "_beforeTokenTransfer()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "C01. Reusable msg.value Allows Multiple Lot Creation with Single Payment in multicall() Function", "description": "The multicall function does not account for the cumulative msg.value when processing multiple delegate calls to the createLots function, allowing a malicious actor to create multiple lots while only paying for one.", "severity": "Critical", "contract": "Eesee.sol and Multicall.sol", "function": "createLots() and multicall()", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "C02. Premature Asset Claim in receiveAssets() Function due to Missing Closure Check", "description": "The receiveAssets function of the Eesee smart contract lacks necessary validation to ensure that a winner is only determined after a lot closes, allowing claims before closure against the intended logic of fair and complete participation.", "severity": "High", "contract": "Eesee", "function": "receiveAssets()", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "C03. Inadequate msg.value Validation in createLots() Allows Multiple Lot Creation with Single Payment", "description": "The createLots() function does not properly validate msg.value, allowing a malicious actor to create multiple lots with a single payment.", "severity": "Critical", "contract": "N/A", "function": "createLots()", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-682"]}, "title": "H01. Incorrect Calculation of maxESE Due to Bitwise XOR Operator Misapplication Instead of Exponentiation Operator", "description": "The caret symbol (^) is mistakenly used instead of the double asterisk (**) which is the correct operator for exponentiation in Solidity, resulting in an incorrect maxESE value.", "severity": "Medium", "contract": "Eesee", "function": "_createLot()", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-682"]}, "title": "H02. Fixed Fee Calculation in EeseeRaribleRouter Incompatible with Rarible's Dynamic Fee Structure", "description": "The purchaseAsset function in EeseeRaribleRouter calculates fees based on a fixed rate of 1%, which is incompatible with Rarible's dynamic fee structure, leading to potential transaction reverts and suboptimal user experience.", "severity": "Medium", "contract": "EeseeRaribleRouter", "function": "purchaseAsset()", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "H03. Front-Running and Indiscriminate Lock-Up Extensions Due to Untracked Deposit Durations in Staking Contract", "description": "The staking contract fails to separately track lock-up durations associated with individual deposits, leading to front-running exposure and indiscriminate lock-up extensions.", "severity": "Critical", "contract": "Staking Contract", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-682"], "2": ["CWE-369"]}, "title": "M01. Zero Reward Rate Setting in updateRewardRates() Function Can Nullify Staking Yields", "description": "The updateRewardRates function lacks validation against setting a reward rate to zero, which can halt the reward accumulation process and lead to scenarios where stakers do not receive any rewards.", "severity": "High", "contract": "EeseeStaking", "function": "updateRewardRates()", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "M02. ESE Token Supply Cap Inconsistency with Tokenomics", "description": "In the ESE token contract, there is a potential inconsistency with the project tokenomics that stipulates a maximum supply cap of 1,000,000,000 (one billion) ESE tokens. The current implementation allows the total supply to potentially exceed this cap.", "severity": "High", "contract": "ESE", "function": "addVestingBeneficiaries()", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "M03. Immutable callbackGasLimit in Chainlink VRF Consumer Restricts Adaptability to Gas Fluctuations", "description": "The EeseeRandom contract has an immutable private variable callbackGasLimit that sets the Gas limit for Chainlink VRF callbacks, restricting adaptability to fluctuating Gas prices on the Ethereum network.", "severity": "Medium", "contract": "EeseeRandom", "function": "N/A", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-909"], "4": ["CWE-456"]}, "title": "L01. Immutable Payee Information in EeseeFeeSplitter Contract May Lead to Funds Misallocation", "description": "The EeseeFeeSplitter smart contract lacks functionality to update payee information post-deployment, leading to potential funds misallocation due to changes in business structure or payee addresses.", "severity": "Medium", "contract": "EeseeFeeSplitter", "function": "N/A", "lineNumber": "N/A"}, {"id": 16, "category": {"1": ["CWE-693"]}, "title": "L02. Absence of Pausable Mechanisms in Eesee Contracts Risks Uncontrolled Exposure to External Vulnerabilities", "description": "The absence of emergency halting mechanisms or circuit breakers in Eesee contracts risks uncontrolled exposure to external vulnerabilities, potentially leading to exploitation or operational malfunctions.", "severity": "Medium", "contract": "EeseeOpenseaRouter, EeseeRaribleRouter, EeseeSwap, and EeseePeriphery", "function": "N/A", "lineNumber": "N/A"}, {"id": 17, "category": {"1": ["CWE-691"], "2": ["CWE-362"]}, "title": "L03. Potential Front-Run with changeFee() for Eesee. sol and EeseeDrops. sol", "description": "There exists a potential race condition in both the Eesee. sol and EeseeDrops. sol smart contracts, allowing an authorized admin to alter the fee percentage before user transactions that call listDrop or createLots are executed.", "severity": "Medium", "contract": "Eesee. sol, EeseeDrops. sol", "function": "createLots(), changeFee(), listDrop()", "lineNumber": "N/A"}, {"id": 18, "category": {"1": ["CWE-710"], "2": ["CWE-1076"], "3": ["CWE-1078"]}, "title": "I01. Style Guide Violation", "description": "Align with the DRY principle and streamline the codebase.", "severity": "N/A", "contract": "Multiple contracts (listed below)", "function": "N/A", "lineNumber": "N/A"}, {"id": 19, "category": {"1": ["CWE-682"]}, "title": "Optimization for Gas Efficiency and Logical Ordering in claimRewards() Function", "description": "The function can be optimized for gas efficiency by rearranging the order of operations to check if a reward was already claimed before verifying the merkle proof, as the latter is more gas-intensive.", "severity": "N/A", "contract": "N/A", "function": "claimRewards()", "lineNumber": "N/A"}, {"id": 20, "category": {"1": ["CWE-703"]}, "title": "Potential Silent Failures in Volume Updating Calls in Eesee and future updates", "description": "The Eesee and EeseeDrops contracts implement a function that includes a call to staking.addVolume within a try-catch block, but the catch block is empty, potentially leading to silent failures.", "severity": "N/A", "contract": ["Eesee", "EeseeDrops"], "function": ["buyTickets", "mintDrops"], "lineNumber": "./contracts/marketplace/Eesee.sol : buyTickets()\n./contracts/marketplace/EeseeDrops.sol : mintDrops()\n./contracts/rewards/EeseeStaking.sol : addVolume()"}]}
+{
+    "path": "./Audit_Reports_2024/Hacken/Eesee_SC-Audit-Report_29112023_SA-2010.pdf",
+    "project_info": {
+        "url": "https://gitlab.com/eesee.io/network/eesee-contracts",
+        "commit_hash": "8564a3153162b97fa3b107c3bd8342e67cf6867e",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Potential Risk of Inconsistent Financial Calculations",
+            "description": "Unchecked arithmetic operations and inconsistent integer usage can lead to miscalculations in reward distribution and fund management, casting errors affecting user balances and transaction accuracy, and inconsistent or erroneous updates of contract state variables.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Absence of Reentrancy Guard in Eesee Ecosystem Contracts Handling Multiple Asset Types",
+            "description": "The Eesee ecosystem contracts lack a reentrancy guard mechanism despite adhering to the Checks-Effects-Interactions (CEI) pattern, presenting a latent risk when managing multiple asset types and complex custom implementations.",
+            "severity": "High",
+            "contract": "Eesee Ecosystem Contracts",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Duplicate Winner Determination Logic in Eesee Contract Functions",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "Eesee",
+            "function": "N/A",
+            "lineNumber": "38"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Inefficient Double Loop in mintDrops() Function",
+            "description": "Leading to Gas Overhead",
+            "severity": "Medium",
+            "contract": "EeseeDrops",
+            "function": "mintDrops()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "I08. Lack of Bounds Checking for Lot Array Access in Multiple Functions of Eesee.sol",
+            "description": "In the Eesee.sol smart contract, several functions including receiveAssets, receiveTokens, reclaimAssets, reclaimTokens, and _buyTickets access the lots array without proper bounds checking, leading to a runtime error if these functions are called with an index that does not exist in the lots array.",
+            "severity": "N/A",
+            "contract": "Eesee.sol",
+            "function": [
+                "receiveAssets()",
+                "receiveTokens()",
+                "reclaimAssets()",
+                "reclaimTokens()",
+                "_buyTickets()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "I09. Inefficient Minting Process in ESE Token _beforeTokenTransfer()",
+            "description": "The minting process in the _beforeTokenTransfer function of the ESE token contract is inefficient due to unnecessary minting calls when releasableAmount is zero, leading to Gas consumption inefficiency and unnecessary costs for the contract and its users.",
+            "severity": "Medium",
+            "contract": "ESE",
+            "function": "_beforeTokenTransfer()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "C01. Reusable msg.value Allows Multiple Lot Creation with Single Payment in multicall() Function",
+            "description": "The multicall function does not account for the cumulative msg.value when processing multiple delegate calls to the createLots function, allowing a malicious actor to create multiple lots while only paying for one.",
+            "severity": "Critical",
+            "contract": "Eesee.sol and Multicall.sol",
+            "function": "createLots() and multicall()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "C02. Premature Asset Claim in receiveAssets() Function due to Missing Closure Check",
+            "description": "The receiveAssets function of the Eesee smart contract lacks necessary validation to ensure that a winner is only determined after a lot closes, allowing claims before closure against the intended logic of fair and complete participation.",
+            "severity": "High",
+            "contract": "Eesee",
+            "function": "receiveAssets()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "C03. Inadequate msg.value Validation in createLots() Allows Multiple Lot Creation with Single Payment",
+            "description": "The createLots() function does not properly validate msg.value, allowing a malicious actor to create multiple lots with a single payment.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "createLots()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "H01. Incorrect Calculation of maxESE Due to Bitwise XOR Operator Misapplication Instead of Exponentiation Operator",
+            "description": "The caret symbol (^) is mistakenly used instead of the double asterisk (**) which is the correct operator for exponentiation in Solidity, resulting in an incorrect maxESE value.",
+            "severity": "Medium",
+            "contract": "Eesee",
+            "function": "_createLot()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "H02. Fixed Fee Calculation in EeseeRaribleRouter Incompatible with Rarible's Dynamic Fee Structure",
+            "description": "The purchaseAsset function in EeseeRaribleRouter calculates fees based on a fixed rate of 1%, which is incompatible with Rarible's dynamic fee structure, leading to potential transaction reverts and suboptimal user experience.",
+            "severity": "Medium",
+            "contract": "EeseeRaribleRouter",
+            "function": "purchaseAsset()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "H03. Front-Running and Indiscriminate Lock-Up Extensions Due to Untracked Deposit Durations in Staking Contract",
+            "description": "The staking contract fails to separately track lock-up durations associated with individual deposits, leading to front-running exposure and indiscriminate lock-up extensions.",
+            "severity": "Critical",
+            "contract": "Staking Contract",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-369"
+                ]
+            },
+            "title": "M01. Zero Reward Rate Setting in updateRewardRates() Function Can Nullify Staking Yields",
+            "description": "The updateRewardRates function lacks validation against setting a reward rate to zero, which can halt the reward accumulation process and lead to scenarios where stakers do not receive any rewards.",
+            "severity": "High",
+            "contract": "EeseeStaking",
+            "function": "updateRewardRates()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "M02. ESE Token Supply Cap Inconsistency with Tokenomics",
+            "description": "In the ESE token contract, there is a potential inconsistency with the project tokenomics that stipulates a maximum supply cap of 1,000,000,000 (one billion) ESE tokens. The current implementation allows the total supply to potentially exceed this cap.",
+            "severity": "High",
+            "contract": "ESE",
+            "function": "addVestingBeneficiaries()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "M03. Immutable callbackGasLimit in Chainlink VRF Consumer Restricts Adaptability to Gas Fluctuations",
+            "description": "The EeseeRandom contract has an immutable private variable callbackGasLimit that sets the Gas limit for Chainlink VRF callbacks, restricting adaptability to fluctuating Gas prices on the Ethereum network.",
+            "severity": "Medium",
+            "contract": "EeseeRandom",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "L01. Immutable Payee Information in EeseeFeeSplitter Contract May Lead to Funds Misallocation",
+            "description": "The EeseeFeeSplitter smart contract lacks functionality to update payee information post-deployment, leading to potential funds misallocation due to changes in business structure or payee addresses.",
+            "severity": "Medium",
+            "contract": "EeseeFeeSplitter",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "L02. Absence of Pausable Mechanisms in Eesee Contracts Risks Uncontrolled Exposure to External Vulnerabilities",
+            "description": "The absence of emergency halting mechanisms or circuit breakers in Eesee contracts risks uncontrolled exposure to external vulnerabilities, potentially leading to exploitation or operational malfunctions.",
+            "severity": "Medium",
+            "contract": "EeseeOpenseaRouter, EeseeRaribleRouter, EeseeSwap, and EeseePeriphery",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-362"
+                ]
+            },
+            "title": "L03. Potential Front-Run with changeFee() for Eesee. sol and EeseeDrops. sol",
+            "description": "There exists a potential race condition in both the Eesee. sol and EeseeDrops. sol smart contracts, allowing an authorized admin to alter the fee percentage before user transactions that call listDrop or createLots are executed.",
+            "severity": "Medium",
+            "contract": "Eesee. sol, EeseeDrops. sol",
+            "function": "createLots(), changeFee(), listDrop()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1076"
+                ],
+                "3": [
+                    "CWE-1078"
+                ]
+            },
+            "title": "I01. Style Guide Violation",
+            "description": "Align with the DRY principle and streamline the codebase.",
+            "severity": "N/A",
+            "contract": "Multiple contracts (listed below)",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 19,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Optimization for Gas Efficiency and Logical Ordering in claimRewards() Function",
+            "description": "The function can be optimized for gas efficiency by rearranging the order of operations to check if a reward was already claimed before verifying the merkle proof, as the latter is more gas-intensive.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "claimRewards()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 20,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Potential Silent Failures in Volume Updating Calls in Eesee and future updates",
+            "description": "The Eesee and EeseeDrops contracts implement a function that includes a call to staking.addVolume within a try-catch block, but the catch block is empty, potentially leading to silent failures.",
+            "severity": "N/A",
+            "contract": [
+                "Eesee",
+                "EeseeDrops"
+            ],
+            "function": [
+                "buyTickets",
+                "mintDrops"
+            ],
+            "lineNumber": "./contracts/marketplace/Eesee.sol : buyTickets()\n./contracts/marketplace/EeseeDrops.sol : mintDrops()\n./contracts/rewards/EeseeStaking.sol : addVolume()"
+        }
+    ]
+}

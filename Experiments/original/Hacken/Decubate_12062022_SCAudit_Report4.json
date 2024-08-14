@@ -1,1 +1,184 @@
-{"path": "./Audit_Reports_2024/Hacken/Decubate_12062022_SCAudit_Report4.pdf", "project_info": {"url": "https://github.com/Decubate-com/ats-contracts", "commit_hash": "ccc17a87b1816a32fed634046a139b68a2b52dcb", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "handleNFTMultiplier() and _claim()", "description": "The handleNFTMultiplier() function and _claim() function have issues related to index management.", "severity": "Medium", "contract": "DCBNFTStaking", "function": "add(), stake()", "lineNumber": "180, N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Highly Permissive Owner Access", "description": "The owner can withdraw the deposited funds that belong to the users.", "severity": "Critical", "contract": "DCBVault", "function": "transferToken()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Highly Permissive Owner Access", "description": "The owner can withdraw staked NFTs that are belonged to the users.", "severity": "Critical", "contract": "DCBNFTStaking", "function": "transferStuckNFT()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "9. Highly Permissive Owner Access", "description": "The owner can withdraw the deposited liquidity tokens of users.", "severity": "Critical", "contract": "DCBLiquidityLocker", "function": "transferToken()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Highly Permissive Owner Access", "description": "Pool info such as APY, lock period days, is withdraw locked status can be changed by the owner even if there are funds of users who have already deposited on those pools.", "severity": "Critical", "contract": "DCBNFTStaking.sol, DecubateMasterChef.sol", "function": "set(), setNFTInfo(), set(), setNFT()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-233"], "4": ["CWE-235"]}, "title": "Compilation Issues", "description": "Because too many parameters are provided in the add function, stack is too deep, and the contracts are not able to be compiled.", "severity": "Critical", "contract": ["DCBLiquidityLocker", "DCBNFTStaking", "DecubateMasterChef"], "function": "add()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-691"], "2": ["CWE-841"]}, "title": "Checks-Effects-Interactions Pattern Violation", "description": "State variable changes after token transfer in unStake and _stake functions of DecubateMasterChef, harvest and _earn functions of DCBVault, _claim function of DCBLiquidityLocker and safeTransferFrom in unstake and _safeTOKENTransfer in _claim functions of DCBNFTStaking which violates Checks-Effects-Interactions pattern.", "severity": "High", "contract": ["DecubateMasterChef", "DCBVault", "DCBLiquidityLocker", "DCBNFTStaking"], "function": ["unstake()", "_stake()", "harvest()", "_earn()", "_claim()", "unStake()"], "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Possible Denial of Service Vulnerability", "description": "Execution of the code should never be blocked by a specific contract state unless required.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Hacken/Decubate_12062022_SCAudit_Report4.pdf",
+    "project_info": {
+        "url": "https://github.com/Decubate-com/ats-contracts",
+        "commit_hash": "ccc17a87b1816a32fed634046a139b68a2b52dcb",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "handleNFTMultiplier() and _claim()",
+            "description": "The handleNFTMultiplier() function and _claim() function have issues related to index management.",
+            "severity": "Medium",
+            "contract": "DCBNFTStaking",
+            "function": "add(), stake()",
+            "lineNumber": "180, N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Highly Permissive Owner Access",
+            "description": "The owner can withdraw the deposited funds that belong to the users.",
+            "severity": "Critical",
+            "contract": "DCBVault",
+            "function": "transferToken()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Highly Permissive Owner Access",
+            "description": "The owner can withdraw staked NFTs that are belonged to the users.",
+            "severity": "Critical",
+            "contract": "DCBNFTStaking",
+            "function": "transferStuckNFT()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "9. Highly Permissive Owner Access",
+            "description": "The owner can withdraw the deposited liquidity tokens of users.",
+            "severity": "Critical",
+            "contract": "DCBLiquidityLocker",
+            "function": "transferToken()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Highly Permissive Owner Access",
+            "description": "Pool info such as APY, lock period days, is withdraw locked status can be changed by the owner even if there are funds of users who have already deposited on those pools.",
+            "severity": "Critical",
+            "contract": "DCBNFTStaking.sol, DecubateMasterChef.sol",
+            "function": "set(), setNFTInfo(), set(), setNFT()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-233"
+                ],
+                "4": [
+                    "CWE-235"
+                ]
+            },
+            "title": "Compilation Issues",
+            "description": "Because too many parameters are provided in the add function, stack is too deep, and the contracts are not able to be compiled.",
+            "severity": "Critical",
+            "contract": [
+                "DCBLiquidityLocker",
+                "DCBNFTStaking",
+                "DecubateMasterChef"
+            ],
+            "function": "add()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "Checks-Effects-Interactions Pattern Violation",
+            "description": "State variable changes after token transfer in unStake and _stake functions of DecubateMasterChef, harvest and _earn functions of DCBVault, _claim function of DCBLiquidityLocker and safeTransferFrom in unstake and _safeTOKENTransfer in _claim functions of DCBNFTStaking which violates Checks-Effects-Interactions pattern.",
+            "severity": "High",
+            "contract": [
+                "DecubateMasterChef",
+                "DCBVault",
+                "DCBLiquidityLocker",
+                "DCBNFTStaking"
+            ],
+            "function": [
+                "unstake()",
+                "_stake()",
+                "harvest()",
+                "_earn()",
+                "_claim()",
+                "unStake()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Possible Denial of Service Vulnerability",
+            "description": "Execution of the code should never be blocked by a specific contract state unless required.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

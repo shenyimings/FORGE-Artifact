@@ -1,1 +1,249 @@
-{"path": "./Audit_Reports_2024/Beosin/FamSwap_202307191838.pdf", "project_info": {"url": "N/A", "commit_hash": "A6A50A6748B49BCF47D791D6E96AAFD84D684908166149D610C076A10CDBB16D685974DE9AEACF35A8B0DE0B664DBD22AB4BEF86A9C34ACC4296AD23F5850647C1B49928F3E24FBD39AC039BE6156ACA741C429579DE53327E364E22E3BC63548C78C88D021839A4D178A4BC3BFDEC6112F66D12225121718D22C1C26F547B554A32F3BD3EB1CA686D30B7DFCC11174C92230F160104A978C26BC5679CCC38E635e7e44a5d1ed0c539131e3b282fbdc492cfe661fcce87de0de222f552b5e28b", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-909"], "4": ["CWE-456"]}, "title": "Reward Tokens Are Not Pre-Positioned", "description": "The reward tokens are not pre-positioned when setting up initReward in the MiningPool and SwapBonus contracts.", "severity": "Medium", "contract": "MiningPool, SwapBonus", "function": "_initNewRewardRound_, _initMiningPool_", "lineNumber": "SwapBonus.sol #L113-L122"}, {"id": 1, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Reward Limit Logic Error", "description": "In the SwapBonus contract, the reward distribution was originally designed to release a certain amount of rewards each day to be weighted and divided equally among users. However, the code implementation makes it impossible to satisfy the project design by allowing users to collect rewards for a maximum of 1 day.", "severity": "Medium", "contract": "SwapBonus", "function": "_checkLimit", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Pre-Sale Quota Is Susceptible to Manipulation", "description": "In the _pageWhitePledge_ and _pageOgPledge_ functions of the Presale contract, the purchasable amount is determined by the number of tokens pledged by the user in the pool. The user can pledge and withdraw as many tokens as he wants in the pool to manipulate the purchase amount.", "severity": "Medium", "contract": "Presale", "function": "_pageWhitePledge_ and _pageOgPledge_", "lineNumber": "L173-L183, L62-L91"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Modify Variable Permissions Are Too Large", "description": "In the Presale contract, Owner has excessive variable modification privileges.", "severity": "Low", "contract": "Presale", "function": "N/A", "lineNumber": "L62-L91"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "Variable Type Error", "description": "In the Transaction contract, the variable erc20 is defined as type IERC721Metadata, and according to the business logic this variable should represent the ERC20 contract.", "severity": "Low", "contract": "Transaction", "function": "N/A", "lineNumber": "L32"}, {"id": 5, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Redundant Code", "description": "The code contains redundant lines or expressions that can be removed without affecting the functionality.", "severity": "Rare", "contract": "N/A", "function": "N/A", "lineNumber": "17"}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Missing Event", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "FamSwap-12"}, {"id": 7, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Lack of Assignment of Variables", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "19"}, {"id": 8, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "Anyone Can Mint NFT", "description": "In normal business logic, users who want to cast NFTs need to pay a certain fee for casting through the _createNft_ function in the Transaction contract. But in the NftToken contract, due to the lack of _pageMint_ function call permission restrictions, anyone can call the _pageMint_ function to cast NFT.", "severity": "High", "contract": "NftToken", "function": "_pageMint", "lineNumber": "L31-L36"}, {"id": 9, "category": {"1": ["CWE-682"]}, "title": "Lack of Reward Logic", "description": "In the SwapBonus contract, the reward distribution was originally designed to release a certain amount of rewards each day to be weighted and divided equally among users. However, the code implementation makes it impossible to satisfy the project design by allowing users to collect rewards for a maximum of 1 day.", "severity": "Medium", "contract": "SwapBonus", "function": "_initNewRewardRound_", "lineNumber": "L113-L122"}, {"id": 10, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "MiningPool Owner Can Withdraw All Funds", "description": "The MiningPool owner can withdraw all funds.", "severity": "High", "contract": "MiningPool.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-697"], "2": ["CWE-1024"]}, "title": "Signature Address Error", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Funds Locked in Presale Contracts", "description": "In the _pageWhitePledge_ and _pageOgPledge_ functions of the Presale contract, the purchasable amount is determined by the number of tokens pledged by the user in the pool. The user can pledge and withdraw as many tokens as he wants in the pool to manipulate the purchase amount.", "severity": "Medium", "contract": "Presale.sol", "function": "_pageWhitePledge_ and _pageOgPledge_", "lineNumber": "L173-L183"}]}
+{
+    "path": "./Audit_Reports_2024/Beosin/FamSwap_202307191838.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "A6A50A6748B49BCF47D791D6E96AAFD84D684908166149D610C076A10CDBB16D685974DE9AEACF35A8B0DE0B664DBD22AB4BEF86A9C34ACC4296AD23F5850647C1B49928F3E24FBD39AC039BE6156ACA741C429579DE53327E364E22E3BC63548C78C88D021839A4D178A4BC3BFDEC6112F66D12225121718D22C1C26F547B554A32F3BD3EB1CA686D30B7DFCC11174C92230F160104A978C26BC5679CCC38E635e7e44a5d1ed0c539131e3b282fbdc492cfe661fcce87de0de222f552b5e28b",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "Reward Tokens Are Not Pre-Positioned",
+            "description": "The reward tokens are not pre-positioned when setting up initReward in the MiningPool and SwapBonus contracts.",
+            "severity": "Medium",
+            "contract": "MiningPool, SwapBonus",
+            "function": "_initNewRewardRound_, _initMiningPool_",
+            "lineNumber": "SwapBonus.sol #L113-L122"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Reward Limit Logic Error",
+            "description": "In the SwapBonus contract, the reward distribution was originally designed to release a certain amount of rewards each day to be weighted and divided equally among users. However, the code implementation makes it impossible to satisfy the project design by allowing users to collect rewards for a maximum of 1 day.",
+            "severity": "Medium",
+            "contract": "SwapBonus",
+            "function": "_checkLimit",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Pre-Sale Quota Is Susceptible to Manipulation",
+            "description": "In the _pageWhitePledge_ and _pageOgPledge_ functions of the Presale contract, the purchasable amount is determined by the number of tokens pledged by the user in the pool. The user can pledge and withdraw as many tokens as he wants in the pool to manipulate the purchase amount.",
+            "severity": "Medium",
+            "contract": "Presale",
+            "function": "_pageWhitePledge_ and _pageOgPledge_",
+            "lineNumber": "L173-L183, L62-L91"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Modify Variable Permissions Are Too Large",
+            "description": "In the Presale contract, Owner has excessive variable modification privileges.",
+            "severity": "Low",
+            "contract": "Presale",
+            "function": "N/A",
+            "lineNumber": "L62-L91"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Variable Type Error",
+            "description": "In the Transaction contract, the variable erc20 is defined as type IERC721Metadata, and according to the business logic this variable should represent the ERC20 contract.",
+            "severity": "Low",
+            "contract": "Transaction",
+            "function": "N/A",
+            "lineNumber": "L32"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Redundant Code",
+            "description": "The code contains redundant lines or expressions that can be removed without affecting the functionality.",
+            "severity": "Rare",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "17"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Missing Event",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "FamSwap-12"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Lack of Assignment of Variables",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "19"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Anyone Can Mint NFT",
+            "description": "In normal business logic, users who want to cast NFTs need to pay a certain fee for casting through the _createNft_ function in the Transaction contract. But in the NftToken contract, due to the lack of _pageMint_ function call permission restrictions, anyone can call the _pageMint_ function to cast NFT.",
+            "severity": "High",
+            "contract": "NftToken",
+            "function": "_pageMint",
+            "lineNumber": "L31-L36"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Lack of Reward Logic",
+            "description": "In the SwapBonus contract, the reward distribution was originally designed to release a certain amount of rewards each day to be weighted and divided equally among users. However, the code implementation makes it impossible to satisfy the project design by allowing users to collect rewards for a maximum of 1 day.",
+            "severity": "Medium",
+            "contract": "SwapBonus",
+            "function": "_initNewRewardRound_",
+            "lineNumber": "L113-L122"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "MiningPool Owner Can Withdraw All Funds",
+            "description": "The MiningPool owner can withdraw all funds.",
+            "severity": "High",
+            "contract": "MiningPool.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ],
+                "2": [
+                    "CWE-1024"
+                ]
+            },
+            "title": "Signature Address Error",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Funds Locked in Presale Contracts",
+            "description": "In the _pageWhitePledge_ and _pageOgPledge_ functions of the Presale contract, the purchasable amount is determined by the number of tokens pledged by the user in the pool. The user can pledge and withdraw as many tokens as he wants in the pool to manipulate the purchase amount.",
+            "severity": "Medium",
+            "contract": "Presale.sol",
+            "function": "_pageWhitePledge_ and _pageOgPledge_",
+            "lineNumber": "L173-L183"
+        }
+    ]
+}

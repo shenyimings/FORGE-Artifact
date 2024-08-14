@@ -1,1 +1,199 @@
-{"path": "./Audit_Reports_2024/Solidified/Solidified-Diagonal.pdf", "project_info": {"url": "https://github.com/oak-security/audit-diagonal-finance", "commit_hash": "11daca92fdfbcb655bb4d8d24d6e60c9679280dc", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "DiagonalServiceBeacon.sol: Anyone can upgrade the contract", "description": "The `upgradeTo` method in the `DiagonalServiceBeacon` contract is missing validation to check who is calling the contract, allowing anyone to call this method to upgrade the contract code.", "severity": "Critical", "contract": "DiagonalServiceBeacon", "function": "upgradeTo()", "lineNumber": "41-44"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "DiagonalServiceV1.sol: After updated callback can be called by anyone", "description": "The `afterAgreementUpdated` method in the `DiagonalServiceV1` contract is missing validation to check who is calling the contract, allowing anyone to call it instead of restricting it to the `SuperFluid` host.", "severity": "Critical", "contract": "DiagonalServiceV1", "function": "afterAgreementUpdated()", "lineNumber": "231"}, {"id": 2, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Missing input validations", "description": "The contracts are missing input validations on several methods which is generally recommended to avoid any unexpected fund loss.", "severity": "Minor", "contract": ["DiagonalServiceStreamsV1.sol", "DiagonalRegistryV1.sol", "DiagonalServiceManagementV1.sol"], "function": ["emergencyCloseSubscription", "transferServiceOwnership", "initialize()", "_addPackage()"], "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "_removePackageId method will not work in all cases", "description": "The _removePackageId method removes the first element if no packageId match is found during the search, which is not a valid implementation for removing an element from an array.", "severity": "Minor", "contract": "DiagonalServiceStreamsV1.sol", "function": "_removePackageId", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-691"], "2": ["CWE-841"]}, "title": "Revert vs return during iteration", "description": "In some cases, contracts revert if one validation fails in a `for` loop, which can revert the whole transaction and fail to commit any operation that has happened before.", "severity": "Minor", "contract": "N/A", "function": "_safeUpsertSubscription, _upsertSubscriptionWithContext", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Custom upgradable contract patterns may be risky", "description": "The custom implementation of upgradable contracts lacks validations present in OpenZeppelin libraries, such as code length validation before deployment.", "severity": "Note", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Miscellaneous code cleanup", "description": "Code cleanup comments to improve the readability of the overall code.", "severity": "Informational", "contract": "DiagonalRegistryProxy.sol, DiagonalServiceBeacon.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-229"], "4": ["CWE-232"]}, "title": "Validate the hardcoded addresses before deploying", "description": "There are several addresses hardcoded in the contracts and it is recommended to verify them before deploying the contracts.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-682"]}, "title": "DiagonalServiceManagementV1.sol: addPackage() function includes costly operations", "description": "The `addPackage()` function in the `DiagonalServiceManagementV1.sol` contract includes costly **_for_** loop operations, which rely on an arbitrary number of total packages being passed as an argument and include external calls in every iteration.", "severity": "Medium", "contract": "DiagonalServiceManagementV1", "function": "addPackage()", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Dependency on SuperFluid", "description": "Consider minimizing the reliance on SuperFluid to reduce the app from being exposed by exploits in SuperFluid.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Solidified/Solidified-Diagonal.pdf",
+    "project_info": {
+        "url": "https://github.com/oak-security/audit-diagonal-finance",
+        "commit_hash": "11daca92fdfbcb655bb4d8d24d6e60c9679280dc",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "DiagonalServiceBeacon.sol: Anyone can upgrade the contract",
+            "description": "The `upgradeTo` method in the `DiagonalServiceBeacon` contract is missing validation to check who is calling the contract, allowing anyone to call this method to upgrade the contract code.",
+            "severity": "Critical",
+            "contract": "DiagonalServiceBeacon",
+            "function": "upgradeTo()",
+            "lineNumber": "41-44"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "DiagonalServiceV1.sol: After updated callback can be called by anyone",
+            "description": "The `afterAgreementUpdated` method in the `DiagonalServiceV1` contract is missing validation to check who is calling the contract, allowing anyone to call it instead of restricting it to the `SuperFluid` host.",
+            "severity": "Critical",
+            "contract": "DiagonalServiceV1",
+            "function": "afterAgreementUpdated()",
+            "lineNumber": "231"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Missing input validations",
+            "description": "The contracts are missing input validations on several methods which is generally recommended to avoid any unexpected fund loss.",
+            "severity": "Minor",
+            "contract": [
+                "DiagonalServiceStreamsV1.sol",
+                "DiagonalRegistryV1.sol",
+                "DiagonalServiceManagementV1.sol"
+            ],
+            "function": [
+                "emergencyCloseSubscription",
+                "transferServiceOwnership",
+                "initialize()",
+                "_addPackage()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "_removePackageId method will not work in all cases",
+            "description": "The _removePackageId method removes the first element if no packageId match is found during the search, which is not a valid implementation for removing an element from an array.",
+            "severity": "Minor",
+            "contract": "DiagonalServiceStreamsV1.sol",
+            "function": "_removePackageId",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "Revert vs return during iteration",
+            "description": "In some cases, contracts revert if one validation fails in a `for` loop, which can revert the whole transaction and fail to commit any operation that has happened before.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "_safeUpsertSubscription, _upsertSubscriptionWithContext",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Custom upgradable contract patterns may be risky",
+            "description": "The custom implementation of upgradable contracts lacks validations present in OpenZeppelin libraries, such as code length validation before deployment.",
+            "severity": "Note",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Miscellaneous code cleanup",
+            "description": "Code cleanup comments to improve the readability of the overall code.",
+            "severity": "Informational",
+            "contract": "DiagonalRegistryProxy.sol, DiagonalServiceBeacon.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ],
+                "4": [
+                    "CWE-232"
+                ]
+            },
+            "title": "Validate the hardcoded addresses before deploying",
+            "description": "There are several addresses hardcoded in the contracts and it is recommended to verify them before deploying the contracts.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "DiagonalServiceManagementV1.sol: addPackage() function includes costly operations",
+            "description": "The `addPackage()` function in the `DiagonalServiceManagementV1.sol` contract includes costly **_for_** loop operations, which rely on an arbitrary number of total packages being passed as an argument and include external calls in every iteration.",
+            "severity": "Medium",
+            "contract": "DiagonalServiceManagementV1",
+            "function": "addPackage()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Dependency on SuperFluid",
+            "description": "Consider minimizing the reliance on SuperFluid to reduce the app from being exposed by exploits in SuperFluid.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

@@ -1,1 +1,260 @@
-{"path": "./Audit_Reports_2024/Cyberscope/stoicdao.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "MEE - Missing Events Emission", "description": "The contract performs actions and state mutations from external methods that do not result in the emission of events.", "severity": "Minor / Informative", "contract": "N/A", "function": ["whitelistMint()", "publicSaleMint()", "gift()", "lowerSupply()", "setMaxTotalPUBLIC()", "setMaxTotalWL()", "setMaxPerWalletWL()", "setMaxPerWalletPUBLIC()", "setWLSalePrice()", "setPublicSalePrice()", "setBaseUri()", "setStep()", "setMerkleRootWL()", "setRoyaltyInfo()"], "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "RAP - Redundant Account Parameter", "description": "Both functions `whitelistMint()` and `publicSaleMint()` include an argument named `_account`, which is intended to represent the address of the participant attempting to perform the minting operation. However, upon closer inspection, it appears that these functions are designed to be exclusively invoked by the transaction sender `msg.sender`. Consequently, the inclusion of the `_account` parameter seems redundant, as it can be inferred from the `msg.sender` value.", "severity": "N/A", "contract": "N/A", "function": "whitelistMint(), publicSaleMint()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-923"], "3": ["CWE-300"]}, "title": "CCR - Contract Centralization Risk", "description": "The contract's functionality and behavior are dependent on external parameters or configurations, posing centralization risks such as Single Point of Control, Vulnerability to Attacks, Operational Delays, Trust Dependencies, and Decentralization Erosion.", "severity": "High", "contract": "StoicDAO", "function": ["gift()", "lowerSupply()", "setMaxTotalPUBLIC()", "setMaxTotalWL()", "setMaxPerWalletWL()", "setMaxPerWalletPUBLIC()", "setWLSalePrice()", "setPublicSalePrice()", "setBaseUri()", "setStep()", "setMerkleRootWL()", "releaseAll()"], "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "MPC - Merkle Proof Centralization", "description": "The contract uses a Merkle Proof mechanism based on an off-chain configuration, which can potentially be compromised and affect the on-chain state unexpectedly.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1288"]}, "title": "RTLS - Redundant Team Length Storage", "description": "The contract uses OpenZeppelin PaymentSplitter to manage fund distribution but stores total payees in state variable teamLength, which is redundant as PaymentSplitter provides a dynamic mechanism to query payees.", "severity": "N/A", "contract": "N/A", "function": "constructor", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "PRER - Potential Release Execution Revert", "description": "The contract contains a method called 'releaseAll()' where predefined addresses receive proportional payment. If one of these addresses releases the corresponding amount by calling the 'release()' method prior to the 'releaseAll()', then the 'releaseAll()' will revert since the releasable amount for that user will be zero.", "severity": "High", "contract": "StoicDAO", "function": "releaseAll()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-710"], "2": ["CWE-1126"]}, "title": "IDI - Immutable Declaration Improvement", "description": "The contract declares state variables that their value is initialized once in the constructor and are not modified afterwards. The `immutable` declaration can save gas by making certain optimizations.", "severity": "Informational", "contract": "StoicDAO", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-710"], "2": ["CWE-1164"], "3": ["CWE-561"]}, "title": "L09 - Dead Code Elimination", "description": "Dead code can occur due to conditional statements that are always false, functions that are never called, or unreachable code (e.g., code that follows a return statement). It makes a contract more difficult to understand and maintain, increases the size of the contract, and the cost of deploying and interacting with it.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-682"], "2": ["CWE-369"]}, "title": "L13 - Divide before Multiply Operation", "description": "Performing divisions before multiplications may cause loss of precision.", "severity": "Critical", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "L16 - Validate Variable Setters", "description": "The contract performs operations on variables configured by user-supplied input without proper checks for zero values, leading to potential problems during execution.", "severity": "High", "contract": "stoicDAO", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-682"]}, "title": "L18 - Multiple Pragma Directives", "description": "If the contract includes multiple conflicting pragma directives, it may produce unexpected errors.", "severity": "Medium", "contract": "StoicDAO", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-237"], "4": ["CWE-238"]}, "title": "L19 - Stable Compiler Version", "description": "The `^` symbol indicates that any version of Solidity that is compatible with the specified version can be used to compile the contract. The version lock is a mechanism that allows the author to specify a minimum version of the Solidity compiler that must be used to compile the contract code.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Cyberscope/stoicdao.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0x5fDD01E563238f9E986CE9D94F5d1bf40fF11CEB"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "MEE - Missing Events Emission",
+            "description": "The contract performs actions and state mutations from external methods that do not result in the emission of events.",
+            "severity": "Minor / Informative",
+            "contract": "N/A",
+            "function": [
+                "whitelistMint()",
+                "publicSaleMint()",
+                "gift()",
+                "lowerSupply()",
+                "setMaxTotalPUBLIC()",
+                "setMaxTotalWL()",
+                "setMaxPerWalletWL()",
+                "setMaxPerWalletPUBLIC()",
+                "setWLSalePrice()",
+                "setPublicSalePrice()",
+                "setBaseUri()",
+                "setStep()",
+                "setMerkleRootWL()",
+                "setRoyaltyInfo()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "RAP - Redundant Account Parameter",
+            "description": "Both functions `whitelistMint()` and `publicSaleMint()` include an argument named `_account`, which is intended to represent the address of the participant attempting to perform the minting operation. However, upon closer inspection, it appears that these functions are designed to be exclusively invoked by the transaction sender `msg.sender`. Consequently, the inclusion of the `_account` parameter seems redundant, as it can be inferred from the `msg.sender` value.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "whitelistMint(), publicSaleMint()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-923"
+                ],
+                "3": [
+                    "CWE-300"
+                ]
+            },
+            "title": "CCR - Contract Centralization Risk",
+            "description": "The contract's functionality and behavior are dependent on external parameters or configurations, posing centralization risks such as Single Point of Control, Vulnerability to Attacks, Operational Delays, Trust Dependencies, and Decentralization Erosion.",
+            "severity": "High",
+            "contract": "StoicDAO",
+            "function": [
+                "gift()",
+                "lowerSupply()",
+                "setMaxTotalPUBLIC()",
+                "setMaxTotalWL()",
+                "setMaxPerWalletWL()",
+                "setMaxPerWalletPUBLIC()",
+                "setWLSalePrice()",
+                "setPublicSalePrice()",
+                "setBaseUri()",
+                "setStep()",
+                "setMerkleRootWL()",
+                "releaseAll()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "MPC - Merkle Proof Centralization",
+            "description": "The contract uses a Merkle Proof mechanism based on an off-chain configuration, which can potentially be compromised and affect the on-chain state unexpectedly.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1288"
+                ]
+            },
+            "title": "RTLS - Redundant Team Length Storage",
+            "description": "The contract uses OpenZeppelin PaymentSplitter to manage fund distribution but stores total payees in state variable teamLength, which is redundant as PaymentSplitter provides a dynamic mechanism to query payees.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "constructor",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "PRER - Potential Release Execution Revert",
+            "description": "The contract contains a method called 'releaseAll()' where predefined addresses receive proportional payment. If one of these addresses releases the corresponding amount by calling the 'release()' method prior to the 'releaseAll()', then the 'releaseAll()' will revert since the releasable amount for that user will be zero.",
+            "severity": "High",
+            "contract": "StoicDAO",
+            "function": "releaseAll()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1126"
+                ]
+            },
+            "title": "IDI - Immutable Declaration Improvement",
+            "description": "The contract declares state variables that their value is initialized once in the constructor and are not modified afterwards. The `immutable` declaration can save gas by making certain optimizations.",
+            "severity": "Informational",
+            "contract": "StoicDAO",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ],
+                "3": [
+                    "CWE-561"
+                ]
+            },
+            "title": "L09 - Dead Code Elimination",
+            "description": "Dead code can occur due to conditional statements that are always false, functions that are never called, or unreachable code (e.g., code that follows a return statement). It makes a contract more difficult to understand and maintain, increases the size of the contract, and the cost of deploying and interacting with it.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-369"
+                ]
+            },
+            "title": "L13 - Divide before Multiply Operation",
+            "description": "Performing divisions before multiplications may cause loss of precision.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "L16 - Validate Variable Setters",
+            "description": "The contract performs operations on variables configured by user-supplied input without proper checks for zero values, leading to potential problems during execution.",
+            "severity": "High",
+            "contract": "stoicDAO",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "L18 - Multiple Pragma Directives",
+            "description": "If the contract includes multiple conflicting pragma directives, it may produce unexpected errors.",
+            "severity": "Medium",
+            "contract": "StoicDAO",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-237"
+                ],
+                "4": [
+                    "CWE-238"
+                ]
+            },
+            "title": "L19 - Stable Compiler Version",
+            "description": "The `^` symbol indicates that any version of Solidity that is compatible with the specified version can be used to compile the contract. The version lock is a mechanism that allows the author to specify a minimum version of the Solidity compiler that must be used to compile the contract code.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

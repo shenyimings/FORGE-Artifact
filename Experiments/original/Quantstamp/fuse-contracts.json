@@ -1,1 +1,210 @@
-{"path": "./Audit_Reports_2024/Quantstamp/fuse-contracts.pdf", "project_info": {"url": "N/A", "commit_hash": "79229d4", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-909"], "4": ["CWE-456"]}, "title": "Unset owner", "description": "Owner is not initialized in `FuseFeeDistrubutor` ; all funds withdrawn through `FuseFeeDistrubutor.withdrawAssets` will be sent to `address(0)` .", "severity": "High Risk", "contract": "FuseFeeDistrubutor.sol", "function": "withdrawAssets", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-703"]}, "title": "Limited tests and documentation for certain contracts", "description": "In the diff versus existing `open-oracle` code, the newly added `UniswapView.sol` is significantly modified from the existing `UniswapAnchorView.sol`, but does not have corresponding tests. Further, there is little inline documentation making it difficult to assess the diff.", "severity": "Medium Risk", "contract": "UniswapView.sol, UniswapAnchorView.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "getSymbolHashIndex may consume excessive gas", "description": "UniswapAnchoredView.getSymbolHashIndex iterates over _configs to get the symbol hash index. Depending on the length of the _configs array this function can consume excessive gas when executed during a transaction.", "severity": "Low Risk", "contract": "UniswapAnchoredView.sol", "function": "getSymbolHashIndex", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Missing input validation", "description": "The following functions should perform additional checks: UniswapConfig.changeAdmin to ensure newAdmin is non-zero, PreferredPriceOracle.constructor to ensure both address arguments are non-zero, FuseFeeDistributor.sol constructor and setInterestFeeRate to validate _interestFeeRate less than 1e18, and FusePoolDirectory.deployPool to ensure address arguments are non-zero.", "severity": "Low Risk", "contract": "UniswapConfig, PreferredPriceOracle, RariFundController, FuseFeeDistributor, FusePoolDirectory", "function": "changeAdmin, constructor, setInterestFeeRate, deployPool", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "Incorrect return value", "description": "`FusePoolDirectory.registerPool` does not return the index as expected since the call to the internal function `FusePoolDirectory._registerPool` does not contain a return statement and will always return zero.", "severity": "Low Risk", "contract": "FusePoolDirectory.sol", "function": "_registerPool", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-908"]}, "title": "Stale oracle price", "description": "ChainlinkPriceOracle.getUnderlyingPrice calls AggregatorV3Interface.latestRoundData without checking startedAt and updatedAt values, meaning that the latest round returned can be obsolete since Chainlink aggregators rely on external nodes to be updated once a request is submitted by one of the sponsors.", "severity": "Low", "contract": "ChainlinkPriceOracle.sol", "function": "getUnderlyingPrice", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Array not updated on market exit", "description": "Users addresses added in `Comptroller.addToMarketInternal` are not removed later when `Comptroller.exitMarket` logic is executed.", "severity": "Low Risk", "contract": "Comptroller", "function": "addToMarketInternal, exitMarket", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "_setFuseFee, _withdrawFuseFees, and _withdrawAdminFees are callable", "description": "The functions can be invoked by any user, potentially emitting spurious event messages or allowing non-privileged users to withdraw fees.", "severity": "Low Risk", "contract": "CToken.sol", "function": "_setFuseFee, _withdrawFuseFees, and _withdrawAdminFees", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "Fund sent by mistake can be withdrawn by any user", "description": "If funds are sent by error to the contract, any user interacting with the contract will be able to take the funds.", "severity": "Informational", "contract": "FuseSafeLiquidator.sol", "function": "transferSeizedFunds and exchangeAllEthOrTokens", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-710"], "2": ["CWE-1059"]}, "title": "Low documentation quality", "description": "The specification and inline documentation is limited for the provided diffs.", "severity": "Medium Risk", "contract": "UniswapView.sol, UniswapAnchorView.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Low test quality", "description": "The audit report highlights a low test quality issue due to the unavailability of coverage scripts, making it difficult to assess the quality of the test suite.", "severity": "Unknown", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Quantstamp/fuse-contracts.pdf",
+    "project_info": {
+        "url": "https://github.com/Rari-Capital/compound-protocol/tree/f162ce512934a9e0642595b6e0cfef5cc869b981",
+        "commit_hash": "f162ce512934a9e0642595b6e0cfef5cc869b981",
+        "address": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "Unset owner",
+            "description": "Owner is not initialized in `FuseFeeDistrubutor` ; all funds withdrawn through `FuseFeeDistrubutor.withdrawAssets` will be sent to `address(0)` .",
+            "severity": "High Risk",
+            "contract": "FuseFeeDistrubutor.sol",
+            "function": "withdrawAssets",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Limited tests and documentation for certain contracts",
+            "description": "In the diff versus existing `open-oracle` code, the newly added `UniswapView.sol` is significantly modified from the existing `UniswapAnchorView.sol`, but does not have corresponding tests. Further, there is little inline documentation making it difficult to assess the diff.",
+            "severity": "Medium Risk",
+            "contract": "UniswapView.sol, UniswapAnchorView.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "getSymbolHashIndex may consume excessive gas",
+            "description": "UniswapAnchoredView.getSymbolHashIndex iterates over _configs to get the symbol hash index. Depending on the length of the _configs array this function can consume excessive gas when executed during a transaction.",
+            "severity": "Low Risk",
+            "contract": "UniswapAnchoredView.sol",
+            "function": "getSymbolHashIndex",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Missing input validation",
+            "description": "The following functions should perform additional checks: UniswapConfig.changeAdmin to ensure newAdmin is non-zero, PreferredPriceOracle.constructor to ensure both address arguments are non-zero, FuseFeeDistributor.sol constructor and setInterestFeeRate to validate _interestFeeRate less than 1e18, and FusePoolDirectory.deployPool to ensure address arguments are non-zero.",
+            "severity": "Low Risk",
+            "contract": "UniswapConfig, PreferredPriceOracle, RariFundController, FuseFeeDistributor, FusePoolDirectory",
+            "function": "changeAdmin, constructor, setInterestFeeRate, deployPool",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect return value",
+            "description": "`FusePoolDirectory.registerPool` does not return the index as expected since the call to the internal function `FusePoolDirectory._registerPool` does not contain a return statement and will always return zero.",
+            "severity": "Low Risk",
+            "contract": "FusePoolDirectory.sol",
+            "function": "_registerPool",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-908"
+                ]
+            },
+            "title": "Stale oracle price",
+            "description": "ChainlinkPriceOracle.getUnderlyingPrice calls AggregatorV3Interface.latestRoundData without checking startedAt and updatedAt values, meaning that the latest round returned can be obsolete since Chainlink aggregators rely on external nodes to be updated once a request is submitted by one of the sponsors.",
+            "severity": "Low",
+            "contract": "ChainlinkPriceOracle.sol",
+            "function": "getUnderlyingPrice",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Array not updated on market exit",
+            "description": "Users addresses added in `Comptroller.addToMarketInternal` are not removed later when `Comptroller.exitMarket` logic is executed.",
+            "severity": "Low Risk",
+            "contract": "Comptroller",
+            "function": "addToMarketInternal, exitMarket",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "_setFuseFee, _withdrawFuseFees, and _withdrawAdminFees are callable",
+            "description": "The functions can be invoked by any user, potentially emitting spurious event messages or allowing non-privileged users to withdraw fees.",
+            "severity": "Low Risk",
+            "contract": "CToken.sol",
+            "function": "_setFuseFee, _withdrawFuseFees, and _withdrawAdminFees",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Fund sent by mistake can be withdrawn by any user",
+            "description": "If funds are sent by error to the contract, any user interacting with the contract will be able to take the funds.",
+            "severity": "Informational",
+            "contract": "FuseSafeLiquidator.sol",
+            "function": "transferSeizedFunds and exchangeAllEthOrTokens",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1059"
+                ]
+            },
+            "title": "Low documentation quality",
+            "description": "The specification and inline documentation is limited for the provided diffs.",
+            "severity": "Medium Risk",
+            "contract": "UniswapView.sol, UniswapAnchorView.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Low test quality",
+            "description": "The audit report highlights a low test quality issue due to the unavailability of coverage scripts, making it difficult to assess the quality of the test suite.",
+            "severity": "Unknown",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

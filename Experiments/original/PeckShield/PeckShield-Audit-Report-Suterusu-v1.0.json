@@ -1,1 +1,135 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Suterusu-v1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-435"], "2": ["CWE-436"]}, "title": "Incompatibility with Deflationary/Rebasing Tokens", "description": "The SuterERC20 contract is incompatible with deflationary/rebasing tokens due to its asset-transferring routines designed for standard ERC20 tokens.", "severity": "Informational", "contract": "SuterERC20", "function": "fund()", "lineNumber": "22-27"}, {"id": 1, "category": {"1": ["CWE-693"], "2": ["CWE-807"], "3": ["CWE-302"]}, "title": "Possible Front-Running For Nonce Invalidation", "description": "The `transfer` function in `SuterBase` contract allows users to authorize transfer using the `Suterusu` protocol, but it is vulnerable to front-running attacks due to nonce-based mechanism, allowing malicious actors to invalidate user transactions.", "severity": "Low", "contract": "SuterBase", "function": "transfer()", "lineNumber": "279-281"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Improved Sanity Checks For System Parameters", "description": "DeFi protocols typically have a number of system- wide parameters that can be dynamically configured on demand.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Improved Ether Transfers", "description": "When transferring ETH, the Solidity function transfer() is used, but it may lead to an out-of-gas error if the recipient happens to be a contract that implements a callback function containing EVM instructions such as SLOAD.", "severity": "Low", "contract": "SuterBase", "function": "burn()", "lineNumber": "29-32"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "Suggested Adherence Of The Checks-Effects-Interactions Pattern", "description": "The adherence of `checks-effects-interactions` principle is effective in mitigating a serious attack vector known as `re-entrancy`. Several occasions were found where this principle was violated, including the `burn()` function in `SuterERC20` contract.", "severity": "Informational", "contract": "SuterERC20", "function": "burn()", "lineNumber": "38"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Support Of Chain-Specific User Registration", "description": "The challenge calculation in the register function does not take into account the chainID information, making differentiation from different Ethereum-alike chains impossible.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Trust Issue of Admin Keys", "description": "In the `Suterusu` protocol, there is an administrative-level account `suterAgency` that plays a critical role in governing and regulating the system-wide operations.", "severity": "Medium", "contract": "Multiple Contracts", "function": "burn()", "lineNumber": "22-33"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Suterusu-v1.0.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ]
+            },
+            "title": "Incompatibility with Deflationary/Rebasing Tokens",
+            "description": "The SuterERC20 contract is incompatible with deflationary/rebasing tokens due to its asset-transferring routines designed for standard ERC20 tokens.",
+            "severity": "Informational",
+            "contract": "SuterERC20",
+            "function": "fund()",
+            "lineNumber": "22-27"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ],
+                "3": [
+                    "CWE-302"
+                ]
+            },
+            "title": "Possible Front-Running For Nonce Invalidation",
+            "description": "The `transfer` function in `SuterBase` contract allows users to authorize transfer using the `Suterusu` protocol, but it is vulnerable to front-running attacks due to nonce-based mechanism, allowing malicious actors to invalidate user transactions.",
+            "severity": "Low",
+            "contract": "SuterBase",
+            "function": "transfer()",
+            "lineNumber": "279-281"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Improved Sanity Checks For System Parameters",
+            "description": "DeFi protocols typically have a number of system- wide parameters that can be dynamically configured on demand.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Improved Ether Transfers",
+            "description": "When transferring ETH, the Solidity function transfer() is used, but it may lead to an out-of-gas error if the recipient happens to be a contract that implements a callback function containing EVM instructions such as SLOAD.",
+            "severity": "Low",
+            "contract": "SuterBase",
+            "function": "burn()",
+            "lineNumber": "29-32"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Suggested Adherence Of The Checks-Effects-Interactions Pattern",
+            "description": "The adherence of `checks-effects-interactions` principle is effective in mitigating a serious attack vector known as `re-entrancy`. Several occasions were found where this principle was violated, including the `burn()` function in `SuterERC20` contract.",
+            "severity": "Informational",
+            "contract": "SuterERC20",
+            "function": "burn()",
+            "lineNumber": "38"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Support Of Chain-Specific User Registration",
+            "description": "The challenge calculation in the register function does not take into account the chainID information, making differentiation from different Ethereum-alike chains impossible.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "In the `Suterusu` protocol, there is an administrative-level account `suterAgency` that plays a critical role in governing and regulating the system-wide operations.",
+            "severity": "Medium",
+            "contract": "Multiple Contracts",
+            "function": "burn()",
+            "lineNumber": "22-33"
+        }
+    ]
+}

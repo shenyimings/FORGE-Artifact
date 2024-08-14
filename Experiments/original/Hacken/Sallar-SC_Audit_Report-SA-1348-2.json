@@ -1,1 +1,548 @@
-{"path": "./Audit_Reports_2024/Hacken/Sallar-SC_Audit_Report-SA-1348-2.pdf", "project_info": {"url": "https://github.com/Sallar-Foundation/sallar", "commit_hash": "122d0172748ab2489c08d6993d1def9c2318c0b7", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Redundant outer scope declaration and mutability of local variables", "description": "N/A", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-710"], "2": ["CWE-1126"]}, "title": "Declare the variables where they are assigned", "description": "Variables should be declared at the point of assignment to improve code readability and prevent potential issues.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Unnecessary Parameters", "description": "The mint and authority parameters are always the same at the call site; therefore, the function can be optimized by having only one of them instead of two.", "severity": "Medium", "contract": "./programs/sallar/src/utils.rs", "function": "mint_tokens()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "Flashloan Attack", "description": "When working with exchange rates, they should be received from a trusted source and not be vulnerable to short-term rate changes that can be achieved by using flash loans. Oracles should be used.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Token Supply Manipulation", "description": "The owner has complete control over token distribution and can arbitrarily forge or censor user claims.", "severity": "Critical", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Gas and Loops", "description": "Inefficient code pattern for matching accounts between ctx.remaining_accounts and users_info in a loop produces error-checking boilerplate to extract the single found account in users_info.", "severity": "Medium", "contract": "./programs/sallar/src/lib.rs", "function": "solve_bottom_block, solve_top_block, final_mining, final_staking", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-233"]}, "title": "Compiler Warnings", "description": "It is preferable for a production project to have the programming language version pinned explicitly.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "./rust-toolchain.toml"}, {"id": 7, "category": {"1": ["CWE-710"], "2": ["CWE-1068"]}, "title": "Requirements Compliance", "description": "N/A", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-908"], "4": ["CWE-457"]}, "title": "Environment Consistency", "description": "Smart contract data should be consistent all over the data flow.", "severity": "Passed", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "Secure Oracles Usage", "description": "The code should have the ability to pause specific data feeds that it relies on. This should be done to protect a contract from compromised oracles.", "severity": "Not Relevant", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Tests Coverage", "description": "Code coverage of the project is about 90%. Some instructions are tested but their effects are not checked during testing.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "I03. Floating Language Version", "description": "It is preferable for a production project to have the programming language version pinned explicitly.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "./rust-toolchain.toml"}, {"id": 12, "category": {"1": ["CWE-682"]}, "title": "C01. Incorrect Value", "description": "Incorrect values are used in the documentation of several constants and variables in lib.rs and token_math.rs files.", "severity": "Critical", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "H01. Unset Or Unsettable Token Metadata", "description": "The SPL-token mint account of Sallar token is a PDA of the program and the mint authority is also a PDA of the program, which guarantees that the token management functions can only be performed by the program code. However, the program code does not set the token metadata nor provides an API to set it later.", "severity": "High", "contract": "Sallar Token", "function": "N/A", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-682"]}, "title": "H02. Stuck Funds", "description": "Funds stuck in final staking account due to exponential decay of balance over time, making it difficult to extract 70% or more of the initial balance.", "severity": "Medium", "contract": "./programs/solana-contracts/src/lib.rs", "function": "final_staking", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-710"], "2": ["CWE-1126"]}, "title": "M01. Invalid Hardcoded Value", "description": "Hardcoded values duplicate constant definitions.", "severity": "High", "contract": "programs/sallar/src/lib.rs", "function": ["solve_top_block", "solve_bottom_block", "final_mining", "final_staking", "initialize"], "lineNumber": "N/A"}, {"id": 16, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "M02. Immutable Ownership", "description": "The contract is designed in a way that ownership cannot be transferred. This may lead to the impossibility to update the owner in critical situations.", "severity": "High", "contract": "lib.rs", "function": "N/A", "lineNumber": "N/A"}, {"id": 17, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "M03. Missing Validation", "description": "N/A", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 18, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "M04. Denial Of Service State", "description": "Denial of service due to a specific contract state unless required.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 19, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "M05. Missing Validation & Corrupted Data", "description": "N/A", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 20, "category": {"1": ["CWE-682"], "2": ["CWE-1339"]}, "title": "L01. Inconsistent Data", "description": "Functions performing conversions between integers and floating point numbers are expected to perform conversions safely; however, they can still result in corrupted values due to rounding errors.", "severity": "Low", "contract": "N/A", "function": "convert_u64_to_f64_safely & convert_f64_to_u64_safely", "lineNumber": "N/A"}, {"id": 21, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-229"], "4": ["CWE-230"]}, "title": "I01. Missing Validation", "description": "N/A", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 22, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "I02.1. Redundant Code", "description": "Remove redundant owner checks and refactor code to avoid duplication.", "severity": "N/A", "contract": "N/A", "function": ["initial_token_distribution", "solve_top_block", "solve_bottom_block", "final_mining", "final_staking", "valid_owner"], "lineNumber": "N/A"}, {"id": 23, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "I02.2. Redundant Code", "description": "Redundant owner checks and duplicated code patterns.", "severity": "Medium", "contract": "N/A", "function": ["initial_ token_distribution", "solve_top_block", "solve_bottom_block", "final_mining", "final_staking", "valid_owner"], "lineNumber": "N/A"}, {"id": 24, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "I03. Floating Language Version", "description": "It is preferable for a production project, especially a smart contract, to have the programming language version pinned explicitly.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 25, "category": {"1": ["CWE-710"]}, "title": "I04. Unformatted Code", "description": "cargo fmt yields changes in some files.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 26, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "I05. Confusing Code", "description": "The code pattern is repeated in different functions.", "severity": "Medium", "contract": "N/A", "function": ["initialize", "solve_top_block", "solve_bottom_block", "switch_ top_block_to_next_one_if_applicable", "switch_bottom_block_to_next_one_if_applicable"], "lineNumber": "N/A"}, {"id": 27, "category": {"1": ["CWE-710"], "2": ["CWE-1164"]}, "title": "I06. Confusing Code", "description": "N/A", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 28, "category": {"1": ["CWE-710"], "2": ["CWE-1164"], "3": ["CWE-561"]}, "title": "I07. Unused Code", "description": "U32ConversionError and FinalMiningAheadOfTime error variants are not used.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "./programs/sallar/src/error.rs"}]}
+{
+    "path": "./Audit_Reports_2024/Hacken/Sallar-SC_Audit_Report-SA-1348-2.pdf",
+    "project_info": {
+        "url": "https://github.com/Sallar-Foundation/sallar",
+        "commit_hash": "122d0172748ab2489c08d6993d1def9c2318c0b7",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Redundant outer scope declaration and mutability of local variables",
+            "description": "N/A",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1126"
+                ]
+            },
+            "title": "Declare the variables where they are assigned",
+            "description": "Variables should be declared at the point of assignment to improve code readability and prevent potential issues.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Unnecessary Parameters",
+            "description": "The mint and authority parameters are always the same at the call site; therefore, the function can be optimized by having only one of them instead of two.",
+            "severity": "Medium",
+            "contract": "./programs/sallar/src/utils.rs",
+            "function": "mint_tokens()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Flashloan Attack",
+            "description": "When working with exchange rates, they should be received from a trusted source and not be vulnerable to short-term rate changes that can be achieved by using flash loans. Oracles should be used.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Token Supply Manipulation",
+            "description": "The owner has complete control over token distribution and can arbitrarily forge or censor user claims.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Gas and Loops",
+            "description": "Inefficient code pattern for matching accounts between ctx.remaining_accounts and users_info in a loop produces error-checking boilerplate to extract the single found account in users_info.",
+            "severity": "Medium",
+            "contract": "./programs/sallar/src/lib.rs",
+            "function": "solve_bottom_block, solve_top_block, final_mining, final_staking",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-233"
+                ]
+            },
+            "title": "Compiler Warnings",
+            "description": "It is preferable for a production project to have the programming language version pinned explicitly.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "./rust-toolchain.toml"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1068"
+                ]
+            },
+            "title": "Requirements Compliance",
+            "description": "N/A",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-908"
+                ],
+                "4": [
+                    "CWE-457"
+                ]
+            },
+            "title": "Environment Consistency",
+            "description": "Smart contract data should be consistent all over the data flow.",
+            "severity": "Passed",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Secure Oracles Usage",
+            "description": "The code should have the ability to pause specific data feeds that it relies on. This should be done to protect a contract from compromised oracles.",
+            "severity": "Not Relevant",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Tests Coverage",
+            "description": "Code coverage of the project is about 90%. Some instructions are tested but their effects are not checked during testing.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "I03. Floating Language Version",
+            "description": "It is preferable for a production project to have the programming language version pinned explicitly.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "./rust-toolchain.toml"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "C01. Incorrect Value",
+            "description": "Incorrect values are used in the documentation of several constants and variables in lib.rs and token_math.rs files.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "H01. Unset Or Unsettable Token Metadata",
+            "description": "The SPL-token mint account of Sallar token is a PDA of the program and the mint authority is also a PDA of the program, which guarantees that the token management functions can only be performed by the program code. However, the program code does not set the token metadata nor provides an API to set it later.",
+            "severity": "High",
+            "contract": "Sallar Token",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "H02. Stuck Funds",
+            "description": "Funds stuck in final staking account due to exponential decay of balance over time, making it difficult to extract 70% or more of the initial balance.",
+            "severity": "Medium",
+            "contract": "./programs/solana-contracts/src/lib.rs",
+            "function": "final_staking",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1126"
+                ]
+            },
+            "title": "M01. Invalid Hardcoded Value",
+            "description": "Hardcoded values duplicate constant definitions.",
+            "severity": "High",
+            "contract": "programs/sallar/src/lib.rs",
+            "function": [
+                "solve_top_block",
+                "solve_bottom_block",
+                "final_mining",
+                "final_staking",
+                "initialize"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "M02. Immutable Ownership",
+            "description": "The contract is designed in a way that ownership cannot be transferred. This may lead to the impossibility to update the owner in critical situations.",
+            "severity": "High",
+            "contract": "lib.rs",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "M03. Missing Validation",
+            "description": "N/A",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "M04. Denial Of Service State",
+            "description": "Denial of service due to a specific contract state unless required.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 19,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "M05. Missing Validation & Corrupted Data",
+            "description": "N/A",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 20,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "L01. Inconsistent Data",
+            "description": "Functions performing conversions between integers and floating point numbers are expected to perform conversions safely; however, they can still result in corrupted values due to rounding errors.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "convert_u64_to_f64_safely & convert_f64_to_u64_safely",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 21,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ],
+                "4": [
+                    "CWE-230"
+                ]
+            },
+            "title": "I01. Missing Validation",
+            "description": "N/A",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 22,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "I02.1. Redundant Code",
+            "description": "Remove redundant owner checks and refactor code to avoid duplication.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": [
+                "initial_token_distribution",
+                "solve_top_block",
+                "solve_bottom_block",
+                "final_mining",
+                "final_staking",
+                "valid_owner"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 23,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "I02.2. Redundant Code",
+            "description": "Redundant owner checks and duplicated code patterns.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": [
+                "initial_ token_distribution",
+                "solve_top_block",
+                "solve_bottom_block",
+                "final_mining",
+                "final_staking",
+                "valid_owner"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 24,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "I03. Floating Language Version",
+            "description": "It is preferable for a production project, especially a smart contract, to have the programming language version pinned explicitly.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 25,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ]
+            },
+            "title": "I04. Unformatted Code",
+            "description": "cargo fmt yields changes in some files.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 26,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "I05. Confusing Code",
+            "description": "The code pattern is repeated in different functions.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": [
+                "initialize",
+                "solve_top_block",
+                "solve_bottom_block",
+                "switch_ top_block_to_next_one_if_applicable",
+                "switch_bottom_block_to_next_one_if_applicable"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 27,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ]
+            },
+            "title": "I06. Confusing Code",
+            "description": "N/A",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 28,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ],
+                "3": [
+                    "CWE-561"
+                ]
+            },
+            "title": "I07. Unused Code",
+            "description": "U32ConversionError and FinalMiningAheadOfTime error variants are not used.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "./programs/sallar/src/error.rs"
+        }
+    ]
+}

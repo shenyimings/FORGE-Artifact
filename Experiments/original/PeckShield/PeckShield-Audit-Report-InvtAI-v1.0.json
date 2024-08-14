@@ -1,1 +1,79 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-InvtAI-v1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Improper sanity checks on pool-wide parameters", "description": "The token sale contract lacks rigorous sanity checks on pool-wide parameters such as `_startTime` and `_endTime`, which can lead to undesirable consequences if mis-configured. Additionally, when a new payment token is added, the `decimals` should be validated to ensure consistency with the token's decimals.", "severity": "Low", "contract": "IvstSale", "function": "setPool()", "lineNumber": "338-349"}, {"id": 1, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Incorrect computeVestingScheduleIdForAddressAndPid() Logic", "description": "In the audited token sale contract, there is a helper routine `computeVestingScheduleIdForAddressAndPid` that assumes the given address has no more than 2 vesting schedules, which can be relaxed.", "severity": "Medium", "contract": "IvstSale", "function": "computeVestingScheduleIdForAddressAndPid()", "lineNumber": "717-725"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Incorrect vestingStartTime Activation in harvestPool()", "description": "The token sale contract has a global state 'vestingStartTime' which marks the vesting start time for everyone but it does not check whether all other pools have completed the sale, leading to incorrect activation.", "severity": "Medium", "contract": "IvstSale", "function": "harvestPool()", "lineNumber": "268-270"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Trust Issue of Admin Keys", "description": "In `InvtAI`, there is a privileged administrative account, i.e., `owner`. The administrative account plays a critical role in governing and regulating the token sale operations.", "severity": "Medium", "contract": "IvstSale", "function": "finalWithdraw()", "lineNumber": "302"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-InvtAI-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/InvtAIOfficial/tokensale-smartcontract/tree/b26d171",
+        "commit_hash": "b26d171",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Improper sanity checks on pool-wide parameters",
+            "description": "The token sale contract lacks rigorous sanity checks on pool-wide parameters such as `_startTime` and `_endTime`, which can lead to undesirable consequences if mis-configured. Additionally, when a new payment token is added, the `decimals` should be validated to ensure consistency with the token's decimals.",
+            "severity": "Low",
+            "contract": "IvstSale",
+            "function": "setPool()",
+            "lineNumber": "338-349"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Incorrect computeVestingScheduleIdForAddressAndPid() Logic",
+            "description": "In the audited token sale contract, there is a helper routine `computeVestingScheduleIdForAddressAndPid` that assumes the given address has no more than 2 vesting schedules, which can be relaxed.",
+            "severity": "Medium",
+            "contract": "IvstSale",
+            "function": "computeVestingScheduleIdForAddressAndPid()",
+            "lineNumber": "717-725"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect vestingStartTime Activation in harvestPool()",
+            "description": "The token sale contract has a global state 'vestingStartTime' which marks the vesting start time for everyone but it does not check whether all other pools have completed the sale, leading to incorrect activation.",
+            "severity": "Medium",
+            "contract": "IvstSale",
+            "function": "harvestPool()",
+            "lineNumber": "268-270"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "In `InvtAI`, there is a privileged administrative account, i.e., `owner`. The administrative account plays a critical role in governing and regulating the token sale operations.",
+            "severity": "Medium",
+            "contract": "IvstSale",
+            "function": "finalWithdraw()",
+            "lineNumber": "302"
+        }
+    ]
+}

@@ -1,1 +1,116 @@
-{"path": "./Audit_Reports_2024/HAECHI_AUDIT/HAECHI_AUDIT-MyTV.pdf", "project_info": {"url": "https://github.com/smart-chain-fr/smartcontractMyTV/tree/main/packages/hardhat/contracts", "commit_hash": "01f6569a606026572a673e7146e50ee7f06523d6", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-697"], "2": ["CWE-1024"]}, "title": "Id Mismatch between MyTvStaking#stakingFlexKeys and MyTvStaking#stakingFlex", "description": "The id information of MyTvStaking#stakingFlexKeys may mismatch with the id information of MyTvStaking#stakingFlex.", "severity": "Minor", "contract": "MyTvStaking", "function": "unstakeFlex()", "lineNumber": "553-557"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Unintended Update of penaltyBalance Value", "description": "In the MyTvStaking#unstakeLock() function, MyTvStaking#penaltyBalance value may be updated as unintended due to incorrect logic when a user unstakes or claims earlier than the period of the stacking pack.", "severity": "Minor", "contract": "MyTvStaking", "function": "unstakeLock()", "lineNumber": "L663-665, L675"}, {"id": 2, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "StakingPack already in progress can call the MyTvStaking#deleteStakingPack() function.", "description": "When a user has already participated in a StakingPack, calling the deleteStakingPack() function may cause an issue when trying to access the non-existent element of the stakingOptions array in the unstakeLock() function.", "severity": "High", "contract": "MyTvStaking", "function": "deleteStakingPack()", "lineNumber": "317-327"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "The reward value of StakingFlex is not 0 in the MyTvStaking#stakeFor() function.", "description": "The reward value enters MyTvStaking#stakedFlex as a significant value when calling the MyTvStaking#stakeFor() function, unlike staking in the flexible stacking pack with the MyTvStaking#stake() function, which can cause unintended behavior in the MyTvStaking#increaseStakeFlex() function and other places.", "severity": "Medium", "contract": "MyTvStaking", "function": "stakeFor()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Unupdated currentUser Information", "description": "When a user unstakes all staked amount in the flexible staking pack using MyTvStaking#unstakeFlex(), the function removes the user\u2019s address from the MyTvStaking#stakedFlexKeys array but does not update the currentUser of the corresponding stake pack.", "severity": "Minor", "contract": "MyTvStaking", "function": "unstakeFlex()", "lineNumber": "530-561"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "There are missing events.", "description": "The functions transferToReserveAndBurn lacks the TransferReserve event, making it difficult to identify accurate values recorded on the blockchain in real-time.", "severity": "N/A", "contract": "MyTvStaking", "function": "transferToReserveAndBurn", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/HAECHI_AUDIT/HAECHI_AUDIT-MyTV.pdf",
+    "project_info": {
+        "url": "https://github.com/smart-chain-fr/smartcontractMyTV/tree/main/packages/hardhat/contracts",
+        "commit_hash": "01f6569a606026572a673e7146e50ee7f06523d6",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ],
+                "2": [
+                    "CWE-1024"
+                ]
+            },
+            "title": "Id Mismatch between MyTvStaking#stakingFlexKeys and MyTvStaking#stakingFlex",
+            "description": "The id information of MyTvStaking#stakingFlexKeys may mismatch with the id information of MyTvStaking#stakingFlex.",
+            "severity": "Minor",
+            "contract": "MyTvStaking",
+            "function": "unstakeFlex()",
+            "lineNumber": "553-557"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Unintended Update of penaltyBalance Value",
+            "description": "In the MyTvStaking#unstakeLock() function, MyTvStaking#penaltyBalance value may be updated as unintended due to incorrect logic when a user unstakes or claims earlier than the period of the stacking pack.",
+            "severity": "Minor",
+            "contract": "MyTvStaking",
+            "function": "unstakeLock()",
+            "lineNumber": "L663-665, L675"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "StakingPack already in progress can call the MyTvStaking#deleteStakingPack() function.",
+            "description": "When a user has already participated in a StakingPack, calling the deleteStakingPack() function may cause an issue when trying to access the non-existent element of the stakingOptions array in the unstakeLock() function.",
+            "severity": "High",
+            "contract": "MyTvStaking",
+            "function": "deleteStakingPack()",
+            "lineNumber": "317-327"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "The reward value of StakingFlex is not 0 in the MyTvStaking#stakeFor() function.",
+            "description": "The reward value enters MyTvStaking#stakedFlex as a significant value when calling the MyTvStaking#stakeFor() function, unlike staking in the flexible stacking pack with the MyTvStaking#stake() function, which can cause unintended behavior in the MyTvStaking#increaseStakeFlex() function and other places.",
+            "severity": "Medium",
+            "contract": "MyTvStaking",
+            "function": "stakeFor()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Unupdated currentUser Information",
+            "description": "When a user unstakes all staked amount in the flexible staking pack using MyTvStaking#unstakeFlex(), the function removes the user\u2019s address from the MyTvStaking#stakedFlexKeys array but does not update the currentUser of the corresponding stake pack.",
+            "severity": "Minor",
+            "contract": "MyTvStaking",
+            "function": "unstakeFlex()",
+            "lineNumber": "530-561"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "There are missing events.",
+            "description": "The functions transferToReserveAndBurn lacks the TransferReserve event, making it difficult to identify accurate values recorded on the blockchain in real-time.",
+            "severity": "N/A",
+            "contract": "MyTvStaking",
+            "function": "transferToReserveAndBurn",
+            "lineNumber": "N/A"
+        }
+    ]
+}

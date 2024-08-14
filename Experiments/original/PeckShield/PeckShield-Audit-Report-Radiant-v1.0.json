@@ -1,1 +1,116 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Radiant-v1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Improved Logic in Leverager::loop()", "description": "The current implementation of `Leverager` contract's loop function can be improved due to potential issues with token contracts not following ERC-20 specification or having additional functionalities beyond the specification.", "severity": "Low", "contract": "Leverager", "function": "loop()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Improved Staking Logic in MultiFeeDistribution::stake()", "description": "The staking function `stake()` from the `MultiFeeDistribution` contract has a redundant parameter `lock` which can be removed or adjusted to remove the `else` branch.", "severity": "Low", "contract": "MultiFeeDistribution", "function": "stake()", "lineNumber": "267, 282-284"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "Revisited Stable Borrow Logic in LendingPool", "description": "The Radiant protocol has the core LendingPool contract that provides a number of core routines for borrowing/lending users to interact with, including deposit(), withdraw(), borrow(), repay(), flashloan(), and etc. To facilitate the execution of each core routine, Radiant validates the given arguments to these core routines with corresponding validation routines in ValidationLogic.", "severity": "Low", "contract": "LendingPool", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Incentive Inconsistency Between AToken And StableDebtToken", "description": "The `Radiant` protocol extends the built-in `IncentivesController` framework to engage protocol users. While reviewing the logic to integrate the incentive mechanism, we observe unnecessary inconsistency that may introduce unwanted confusion and errors.", "severity": "Medium", "contract": "AToken, StableDebtToken", "function": "_mint()", "lineNumber": "212, 413"}, {"id": 4, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Fork-Resistant Domain Separator in AToken", "description": "The DOMAIN_SEPARATOR is used in the permit() function and should be unique to the contract and chain in order to prevent replay attacks from other domains, but the current implementation needs to be improved by recalculating the value of DOMAIN_SEPARATOR inside the permit() function.", "severity": "Low", "contract": "AToken", "function": "initialize()", "lineNumber": "81-89"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Trust Issue of Admin Keys", "description": "Privileged 'owner' account has critical roles in governing and regulating system-wide operations and asset management, requiring scrutiny.", "severity": "Medium", "contract": "Multiple Contracts", "function": ["setOnwardIncentives()", "setClaimReceiver()"], "lineNumber": "135-144, 146-149"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Radiant-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/radiant-capital/radiant-protocol-deployment/tree/f74526a",
+        "commit_hash": "f74526a",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improved Logic in Leverager::loop()",
+            "description": "The current implementation of `Leverager` contract's loop function can be improved due to potential issues with token contracts not following ERC-20 specification or having additional functionalities beyond the specification.",
+            "severity": "Low",
+            "contract": "Leverager",
+            "function": "loop()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Improved Staking Logic in MultiFeeDistribution::stake()",
+            "description": "The staking function `stake()` from the `MultiFeeDistribution` contract has a redundant parameter `lock` which can be removed or adjusted to remove the `else` branch.",
+            "severity": "Low",
+            "contract": "MultiFeeDistribution",
+            "function": "stake()",
+            "lineNumber": "267, 282-284"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Revisited Stable Borrow Logic in LendingPool",
+            "description": "The Radiant protocol has the core LendingPool contract that provides a number of core routines for borrowing/lending users to interact with, including deposit(), withdraw(), borrow(), repay(), flashloan(), and etc. To facilitate the execution of each core routine, Radiant validates the given arguments to these core routines with corresponding validation routines in ValidationLogic.",
+            "severity": "Low",
+            "contract": "LendingPool",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incentive Inconsistency Between AToken And StableDebtToken",
+            "description": "The `Radiant` protocol extends the built-in `IncentivesController` framework to engage protocol users. While reviewing the logic to integrate the incentive mechanism, we observe unnecessary inconsistency that may introduce unwanted confusion and errors.",
+            "severity": "Medium",
+            "contract": "AToken, StableDebtToken",
+            "function": "_mint()",
+            "lineNumber": "212, 413"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Fork-Resistant Domain Separator in AToken",
+            "description": "The DOMAIN_SEPARATOR is used in the permit() function and should be unique to the contract and chain in order to prevent replay attacks from other domains, but the current implementation needs to be improved by recalculating the value of DOMAIN_SEPARATOR inside the permit() function.",
+            "severity": "Low",
+            "contract": "AToken",
+            "function": "initialize()",
+            "lineNumber": "81-89"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "Privileged 'owner' account has critical roles in governing and regulating system-wide operations and asset management, requiring scrutiny.",
+            "severity": "Medium",
+            "contract": "Multiple Contracts",
+            "function": [
+                "setOnwardIncentives()",
+                "setClaimReceiver()"
+            ],
+            "lineNumber": "135-144, 146-149"
+        }
+    ]
+}

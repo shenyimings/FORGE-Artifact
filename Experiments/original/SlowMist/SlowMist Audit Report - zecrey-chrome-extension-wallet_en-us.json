@@ -1,1 +1,207 @@
-{"path": "./Audit_Reports_2024/SlowMist/SlowMist Audit Report - zecrey-chrome-extension-wallet_en-us.pdf", "project_info": {"url": "https://github.com/Zecrey-Labs/zecrey-chrome-extension/tree/audit", "commit_hash": "97f4f99bbbaf9b3e3da7072a9e22945f50a23b3d", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Signature Reminders of Defects", "description": "(1). The DApp domain address corresponding to the signed request is not displayed when using the zecrey testnet faucet. (2). When signing, the type of transaction will be parsed, but the characteristics of evm are not taken into account.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-287"]}, "title": "Password verification can be bypassed", "description": "Password verification for exporting mnemonics and private keys is implemented in popup, but the logic of judging whether the password is correct should be judged in the background.", "severity": "Medium", "contract": "N/A", "function": "ExportMnemonic.tsx", "lineNumber": "L241"}, {"id": 2, "category": {"1": ["CWE-664"], "2": ["CWE-669"], "3": ["CWE-212"], "4": ["CWE-226"], "5": ["CWE-1272"]}, "title": "Sensitive data is not cleared after reset", "description": "After the wallet is reset, the nonce, password, and authorized domains are not cleared.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1284"]}, "title": "PBKDF2 iterator value is small", "description": "The value of the iterator is small and may be easily cracked by brute force.", "severity": "Low", "contract": "N/A", "function": "kdf", "lineNumber": "src/lib/utils.ts#L99"}, {"id": 4, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Redundant configuration", "description": "No description provided.", "severity": "Suggestion", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-664"], "2": ["CWE-922"], "3": ["CWE-312"]}, "title": "[N6] Cached data is not cleared", "description": "Encrypted password is cached in local storage and can be retrieved in locked state. If password and nonce are obtained, which may be brute-forced.", "severity": "Low", "contract": "N/A", "function": "sha256WithNonce, savePasswordToLocalStore", "lineNumber": "src/lib/utils.ts#L82-L93"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "Paths in routes lack permission control", "description": "When the wallet is locked, the path in the url can be modified to bypass the locked page, there is an issue of lack of permission control.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "src/constant/routes.ts#L1-L12"}, {"id": 7, "category": {"1": ["CWE-284"], "2": ["CWE-287"]}, "title": "Password verification optimization", "description": "The password verification logic should be implemented in the background instead of popup layer.", "severity": "Medium", "contract": "N/A", "function": "submit()", "lineNumber": "src/components/password-match/index.tsx#L30"}, {"id": 8, "category": {"1": ["CWE-693"]}, "title": "[N9] Autolock is missing", "description": "No mechanism for automatic locking was found.", "severity": "Suggestion", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-435"]}, "title": "Architectural design flaws", "description": "N/A", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-703"]}, "title": "Error message optimization", "description": "When an error is reported, the prompt is MetaMask, which needs to be optimized.", "severity": "Suggestion", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/SlowMist/SlowMist Audit Report - zecrey-chrome-extension-wallet_en-us.pdf",
+    "project_info": {
+        "url": "https://github.com/Zecrey-Labs/zecrey-chrome-extension/tree/audit",
+        "commit_hash": "97f4f99bbbaf9b3e3da7072a9e22945f50a23b3d",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Signature Reminders of Defects",
+            "description": "(1). The DApp domain address corresponding to the signed request is not displayed when using the zecrey testnet faucet. (2). When signing, the type of transaction will be parsed, but the characteristics of evm are not taken into account.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-287"
+                ]
+            },
+            "title": "Password verification can be bypassed",
+            "description": "Password verification for exporting mnemonics and private keys is implemented in popup, but the logic of judging whether the password is correct should be judged in the background.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "ExportMnemonic.tsx",
+            "lineNumber": "L241"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-669"
+                ],
+                "3": [
+                    "CWE-212"
+                ],
+                "4": [
+                    "CWE-226"
+                ],
+                "5": [
+                    "CWE-1272"
+                ]
+            },
+            "title": "Sensitive data is not cleared after reset",
+            "description": "After the wallet is reset, the nonce, password, and authorized domains are not cleared.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1284"
+                ]
+            },
+            "title": "PBKDF2 iterator value is small",
+            "description": "The value of the iterator is small and may be easily cracked by brute force.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "kdf",
+            "lineNumber": "src/lib/utils.ts#L99"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Redundant configuration",
+            "description": "No description provided.",
+            "severity": "Suggestion",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-922"
+                ],
+                "3": [
+                    "CWE-312"
+                ]
+            },
+            "title": "[N6] Cached data is not cleared",
+            "description": "Encrypted password is cached in local storage and can be retrieved in locked state. If password and nonce are obtained, which may be brute-forced.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "sha256WithNonce, savePasswordToLocalStore",
+            "lineNumber": "src/lib/utils.ts#L82-L93"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Paths in routes lack permission control",
+            "description": "When the wallet is locked, the path in the url can be modified to bypass the locked page, there is an issue of lack of permission control.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "src/constant/routes.ts#L1-L12"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-287"
+                ]
+            },
+            "title": "Password verification optimization",
+            "description": "The password verification logic should be implemented in the background instead of popup layer.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "submit()",
+            "lineNumber": "src/components/password-match/index.tsx#L30"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "[N9] Autolock is missing",
+            "description": "No mechanism for automatic locking was found.",
+            "severity": "Suggestion",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ]
+            },
+            "title": "Architectural design flaws",
+            "description": "N/A",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Error message optimization",
+            "description": "When an error is reported, the prompt is MetaMask, which needs to be optimized.",
+            "severity": "Suggestion",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

@@ -1,1 +1,270 @@
-{"path": "./Audit_Reports_2024/Trail_of_Bits/wALGO.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "Anyone can update or delete the app-vault", "description": "Without transaction field validation on user interactions, any user can update or delete `app-vault`. This means an attacker can update the application and steal the funds from all the associated vaults.", "severity": "High", "contract": "app-vault-clear-state.teal", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Lack of clear state program check allows any vault to be drained", "description": "The vault authorization can be abused by executing the clear state program on the `app-vault`. This assumption can be broken if the first transaction in the group is a call to the clear state program of the `app-vault`, allowing an attacker to execute any transaction from any vault.", "severity": "High", "contract": "vault.teal.tmpl", "function": "N/A", "lineNumber": "L5-L18"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "Missing RekeyTo on mint operations allows vault owner to withdraw all the Algo from the vault", "description": "The minting operation does not validate that its associated transaction has no `RekeyTo`. As a result, an attacker can rekey its vault and withdraw the Algo without paying back the wAlgo.", "severity": "High", "contract": "app-vault.teal", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"], "4": ["CWE-638"], "5": ["CWE-424"], "6": ["CWE-425"]}, "title": "Missing RekeyTo on burn operations allows vault owner to withdraw all the Algo from the vault", "description": "The burning operation does not validate that its associated transaction has no `RekeyTo`. As a result, an attacker can rekey its vault and withdraw the Algo without paying back the wAlgo.", "severity": "High", "contract": "app-vault.teal", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"]}, "title": "Minter can be abused to avoid paying the burned wAlgo", "description": "Without access controls on the minter account, an attacker can withdraw its Algo without paying back the wAlgo.", "severity": "High", "contract": "app-vault.teal", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Incorrect vault bytecode usage", "description": "The app-vault uses a different bytecode than the one generated from the vault source code, which may lead to security vulnerabilities.", "severity": "High", "contract": "app-vault", "function": "N/A", "lineNumber": "L450-L452,L457-L459"}, {"id": 6, "category": {"1": ["CWE-710"], "2": ["CWE-1164"]}, "title": "Code does not match", "description": "The current development practice involves copying code from string variables in `vault.js` into the `vault.teal.tmpl` file, which is error-prone and requires manual copying and pasting of the TEAL code.", "severity": "High", "contract": "vault", "function": "N/A", "lineNumber": "35-60"}, {"id": 7, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-267"]}, "title": "Undocumented privileged operations", "description": "Several admin operations are not documented, which can mislead users regarding the system\u2019s centralization.", "severity": "High", "contract": "app-vault.teal", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "Anyone can burn all the minter\u2019s Algo", "description": "Without a transaction fee check on the burning operation, anyone can burn all the Algo from the minter\u2019s account.", "severity": "Medium", "contract": "app-vault.teal, minter.teal.tmpl", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-682"]}, "title": "With no fee consideration for burning operations the system is undercollateralized", "description": "The system assumes that every vault cannot have more Algo minted than its current balance. This assumption can be broken through the fees paid by the burning operations, leading to an undercollateralized system.", "severity": "Medium", "contract": "app-vault", "function": "N/A", "lineNumber": "940-951"}, {"id": 10, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "Attackers can prevent a user from opening a vault", "description": "An attacker can send funds into the user's vault address to prevent them from opening a vault.", "severity": "Low", "contract": "app-vault.teal", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-703"]}, "title": "Bad practices for exception handling in the test suite", "description": "The test suite does not provide sufficient exception handling in test cases, which can allow failed tests to be overlooked or prevent the addition of new tests.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Insufficient testing coverage", "description": "The StakerDao Vault codebase does not include sufficient test cases, which is critical for catching bugs and logic errors early in development.", "severity": "Low", "contract": "StakerDao Vault", "function": "N/A", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-710"], "2": ["CWE-1177"], "3": ["CWE-676"]}, "title": "Hardcoded ASA_ ID value is error-prone", "description": "The use of hardcoded value is error-prone and might allow the codebase to be deployed with an incorrect asset.", "severity": "Informational", "contract": "app-vault", "function": "N/A", "lineNumber": "L704-706, L923-925"}]}
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/wALGO.pdf",
+    "project_info": {
+        "url": "https://github.com/randlabs/stakerdao-vault/tree/98bac113cf066d0f47564937e1ad00109789869f",
+        "commit_hash": "98bac113cf066d0f47564937e1ad00109789869f",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Anyone can update or delete the app-vault",
+            "description": "Without transaction field validation on user interactions, any user can update or delete `app-vault`. This means an attacker can update the application and steal the funds from all the associated vaults.",
+            "severity": "High",
+            "contract": "app-vault-clear-state.teal",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Lack of clear state program check allows any vault to be drained",
+            "description": "The vault authorization can be abused by executing the clear state program on the `app-vault`. This assumption can be broken if the first transaction in the group is a call to the clear state program of the `app-vault`, allowing an attacker to execute any transaction from any vault.",
+            "severity": "High",
+            "contract": "vault.teal.tmpl",
+            "function": "N/A",
+            "lineNumber": "L5-L18"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Missing RekeyTo on mint operations allows vault owner to withdraw all the Algo from the vault",
+            "description": "The minting operation does not validate that its associated transaction has no `RekeyTo`. As a result, an attacker can rekey its vault and withdraw the Algo without paying back the wAlgo.",
+            "severity": "High",
+            "contract": "app-vault.teal",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ],
+                "4": [
+                    "CWE-638"
+                ],
+                "5": [
+                    "CWE-424"
+                ],
+                "6": [
+                    "CWE-425"
+                ]
+            },
+            "title": "Missing RekeyTo on burn operations allows vault owner to withdraw all the Algo from the vault",
+            "description": "The burning operation does not validate that its associated transaction has no `RekeyTo`. As a result, an attacker can rekey its vault and withdraw the Algo without paying back the wAlgo.",
+            "severity": "High",
+            "contract": "app-vault.teal",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Minter can be abused to avoid paying the burned wAlgo",
+            "description": "Without access controls on the minter account, an attacker can withdraw its Algo without paying back the wAlgo.",
+            "severity": "High",
+            "contract": "app-vault.teal",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect vault bytecode usage",
+            "description": "The app-vault uses a different bytecode than the one generated from the vault source code, which may lead to security vulnerabilities.",
+            "severity": "High",
+            "contract": "app-vault",
+            "function": "N/A",
+            "lineNumber": "L450-L452,L457-L459"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ]
+            },
+            "title": "Code does not match",
+            "description": "The current development practice involves copying code from string variables in `vault.js` into the `vault.teal.tmpl` file, which is error-prone and requires manual copying and pasting of the TEAL code.",
+            "severity": "High",
+            "contract": "vault",
+            "function": "N/A",
+            "lineNumber": "35-60"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-267"
+                ]
+            },
+            "title": "Undocumented privileged operations",
+            "description": "Several admin operations are not documented, which can mislead users regarding the system\u2019s centralization.",
+            "severity": "High",
+            "contract": "app-vault.teal",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Anyone can burn all the minter\u2019s Algo",
+            "description": "Without a transaction fee check on the burning operation, anyone can burn all the Algo from the minter\u2019s account.",
+            "severity": "Medium",
+            "contract": "app-vault.teal, minter.teal.tmpl",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "With no fee consideration for burning operations the system is undercollateralized",
+            "description": "The system assumes that every vault cannot have more Algo minted than its current balance. This assumption can be broken through the fees paid by the burning operations, leading to an undercollateralized system.",
+            "severity": "Medium",
+            "contract": "app-vault",
+            "function": "N/A",
+            "lineNumber": "940-951"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Attackers can prevent a user from opening a vault",
+            "description": "An attacker can send funds into the user's vault address to prevent them from opening a vault.",
+            "severity": "Low",
+            "contract": "app-vault.teal",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Bad practices for exception handling in the test suite",
+            "description": "The test suite does not provide sufficient exception handling in test cases, which can allow failed tests to be overlooked or prevent the addition of new tests.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Insufficient testing coverage",
+            "description": "The StakerDao Vault codebase does not include sufficient test cases, which is critical for catching bugs and logic errors early in development.",
+            "severity": "Low",
+            "contract": "StakerDao Vault",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1177"
+                ],
+                "3": [
+                    "CWE-676"
+                ]
+            },
+            "title": "Hardcoded ASA_ ID value is error-prone",
+            "description": "The use of hardcoded value is error-prone and might allow the codebase to be deployed with an incorrect asset.",
+            "severity": "Informational",
+            "contract": "app-vault",
+            "function": "N/A",
+            "lineNumber": "L704-706, L923-925"
+        }
+    ]
+}

@@ -1,1 +1,206 @@
-{"path": "./Audit_Reports_2024/Trail_of_Bits/ParallelFinance.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Vulnerable dependencies in the Substrate parachain", "description": "The Parallel Finance parachain node uses dependencies with known vulnerabilities inherited from the Substrate framework.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Users can avoid accruing interest by repaying a zero amount", "description": "Malicious users can avoid paying interest on loans by repaying a zero amount whenever interest is accrued by the system.", "severity": "N/A", "contract": "loans", "function": "repay_borrow", "lineNumber": "1106-1121"}, {"id": 2, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Missing validation in Pallet::force_update_market", "description": "The `force_update_market` function lacks input validation, allowing the caller to inadvertently change immutable market parameters like `ptoken_id` by mistake.", "severity": "Undetermined", "contract": "Pallet", "function": "force_update_market", "lineNumber": "539-556"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-229"], "4": ["CWE-230"]}, "title": "Missing validation in multiple StakingLedger methods", "description": "Input validation is missing in multiple StakingLedger methods, which could lead to issues due to implementation errors or overlooked corner cases.", "severity": "N/A", "contract": "StakingLedger", "function": ["rebond"], "lineNumber": "230-253"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Failed XCM requests left in storage", "description": "If any of the following conditions are true, the corresponding XCM request is left in storage indefinitely: 1. The request fails and `Pallet::do_notification_received` exits early. 2. `Pallet::do_notification_ceived` fails. 3. The response type is not `Response::ExecutionResult`. These three cases are currently unhandled by the codebase.", "severity": "N/A", "contract": "liquid-staking", "function": "Pallet::do_notification_received", "lineNumber": "1071-1159"}, {"id": 5, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Risk of using stale oracle prices in loans pallet", "description": "The price feeding oracles fail to deliver prices for an extended period of time, causing the `get_asset_value` function to return a non-market asset value.", "severity": "Undetermined", "contract": "loans", "function": "get_price", "lineNumber": "1430-1441"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "Missing calculations in crowdloans extrinsics", "description": "The `claim` and `refund` extrinsics do not update the total amount in `vault.contributed`, leading to incorrect calculations in other places.", "severity": "N/A", "contract": "crowdloans", "function": "claim() and refund()", "lineNumber": "718-765"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "Event emitted when update_vault and set_vrf calls do not make updates", "description": "The `update_vault` extrinsic in the `crowdloans` pallet emits an event regardless of whether an update occurred, which can lead to incorrect logic execution.", "severity": "Informational", "contract": "crowdloans", "function": "update_vault()", "lineNumber": "599-616"}, {"id": 8, "category": {"1": ["CWE-707"], "2": ["CWE-74"]}, "title": "The referral code is a sequence of arbitrary bytes", "description": "The referral code is rendered as raw bytes in a vulnerable environment, introducing an opportunity to perform a log injection attack.", "severity": "N/A", "contract": "crowdloans", "function": "contribute", "lineNumber": "502-594"}, {"id": 9, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-354"]}, "title": "Missing validation of referral code size", "description": "The length of the referral code is not validated by the `contribute` extrinsic defined by the `crowdloans` pallet. Since the referral code is stored by the node, a malicious user could call `contribute` multiple times with a very large referral code. This would increase the memory pressure on the node, potentially leading to memory exhaustion.", "severity": "Low", "contract": "pallets/crowdloans/src/lib.rs", "function": "do_contribute", "lineNumber": "502-594"}, {"id": 10, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "11. Code duplication in crowdloans pallet", "description": "A number of extrinsics in the `crowdloans` pallet have duplicate code.", "severity": "Informational", "contract": "pallets/crowdloans/src/lib.rs", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/ParallelFinance.pdf",
+    "project_info": {
+        "url": "https://github.com/parallel-finance/parallel/tree/5ca8e13b7b4312855ae2ef1d39f14b38088dfdbd",
+        "commit_hash": "5ca8e13b7b4312855ae2ef1d39f14b38088dfdbd",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Vulnerable dependencies in the Substrate parachain",
+            "description": "The Parallel Finance parachain node uses dependencies with known vulnerabilities inherited from the Substrate framework.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Users can avoid accruing interest by repaying a zero amount",
+            "description": "Malicious users can avoid paying interest on loans by repaying a zero amount whenever interest is accrued by the system.",
+            "severity": "N/A",
+            "contract": "loans",
+            "function": "repay_borrow",
+            "lineNumber": "1106-1121"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Missing validation in Pallet::force_update_market",
+            "description": "The `force_update_market` function lacks input validation, allowing the caller to inadvertently change immutable market parameters like `ptoken_id` by mistake.",
+            "severity": "Undetermined",
+            "contract": "Pallet",
+            "function": "force_update_market",
+            "lineNumber": "539-556"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ],
+                "4": [
+                    "CWE-230"
+                ]
+            },
+            "title": "Missing validation in multiple StakingLedger methods",
+            "description": "Input validation is missing in multiple StakingLedger methods, which could lead to issues due to implementation errors or overlooked corner cases.",
+            "severity": "N/A",
+            "contract": "StakingLedger",
+            "function": [
+                "rebond"
+            ],
+            "lineNumber": "230-253"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Failed XCM requests left in storage",
+            "description": "If any of the following conditions are true, the corresponding XCM request is left in storage indefinitely: 1. The request fails and `Pallet::do_notification_received` exits early. 2. `Pallet::do_notification_ceived` fails. 3. The response type is not `Response::ExecutionResult`. These three cases are currently unhandled by the codebase.",
+            "severity": "N/A",
+            "contract": "liquid-staking",
+            "function": "Pallet::do_notification_received",
+            "lineNumber": "1071-1159"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Risk of using stale oracle prices in loans pallet",
+            "description": "The price feeding oracles fail to deliver prices for an extended period of time, causing the `get_asset_value` function to return a non-market asset value.",
+            "severity": "Undetermined",
+            "contract": "loans",
+            "function": "get_price",
+            "lineNumber": "1430-1441"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Missing calculations in crowdloans extrinsics",
+            "description": "The `claim` and `refund` extrinsics do not update the total amount in `vault.contributed`, leading to incorrect calculations in other places.",
+            "severity": "N/A",
+            "contract": "crowdloans",
+            "function": "claim() and refund()",
+            "lineNumber": "718-765"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Event emitted when update_vault and set_vrf calls do not make updates",
+            "description": "The `update_vault` extrinsic in the `crowdloans` pallet emits an event regardless of whether an update occurred, which can lead to incorrect logic execution.",
+            "severity": "Informational",
+            "contract": "crowdloans",
+            "function": "update_vault()",
+            "lineNumber": "599-616"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-74"
+                ]
+            },
+            "title": "The referral code is a sequence of arbitrary bytes",
+            "description": "The referral code is rendered as raw bytes in a vulnerable environment, introducing an opportunity to perform a log injection attack.",
+            "severity": "N/A",
+            "contract": "crowdloans",
+            "function": "contribute",
+            "lineNumber": "502-594"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-354"
+                ]
+            },
+            "title": "Missing validation of referral code size",
+            "description": "The length of the referral code is not validated by the `contribute` extrinsic defined by the `crowdloans` pallet. Since the referral code is stored by the node, a malicious user could call `contribute` multiple times with a very large referral code. This would increase the memory pressure on the node, potentially leading to memory exhaustion.",
+            "severity": "Low",
+            "contract": "pallets/crowdloans/src/lib.rs",
+            "function": "do_contribute",
+            "lineNumber": "502-594"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "11. Code duplication in crowdloans pallet",
+            "description": "A number of extrinsics in the `crowdloans` pallet have duplicate code.",
+            "severity": "Informational",
+            "contract": "pallets/crowdloans/src/lib.rs",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

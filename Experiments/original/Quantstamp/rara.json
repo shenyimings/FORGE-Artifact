@@ -1,1 +1,259 @@
-{"path": "./Audit_Reports_2024/Quantstamp/rara.pdf", "project_info": {"url": "https://github.com/rara-protocol", "commit_hash": "a4a2474", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Use of Unsafe Cast Operations", "description": "Primitive cast operations ( `uint256(...)` and `int256(...)` ) are used, which are prone to over-/underflows.", "severity": "Medium Risk", "contract": ["SigmoidCuratorVault.sol", "Sigmoid.sol"], "function": "N/A", "lineNumber": ["L111, L140", "L123-L128, L189-L194"]}, {"id": 1, "category": {"1": ["CWE-691"]}, "title": "Violating Checks Effects Interactions Pattern", "description": "The main purpose of the Checks Effects Interactions pattern is to reduce the attack surface for malicious contracts trying to hijack control flow after an external call.", "severity": "Low Risk", "contract": ["SigmoidCuratorVault", "ReactionVault"], "function": ["buyCuratorTokens()", "_buyReaction()"], "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-282"], "3": ["CWE-708"]}, "title": "Privileged Roles and Ownership", "description": "Certain contracts have state variables, e.g. `owner`, which provide certain addresses with privileged roles. Such roles may pose a risk to end-users.", "severity": "Low Risk", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Missing Input Validation", "description": "It is important to validate inputs, even if they only come from trusted addresses, to avoid human error.", "severity": "Low Risk", "contract": ["ParameterManager", "RoleManager", "SigmoidCuratorVault", "ReactionVault"], "function": ["N/A", "initialize()", "initialize()", "initialize()"], "lineNumber": ["N/A"]}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Re-registering NFTs Transfers Taker Rewards", "description": "The rewards for takers whenever reactions are spent are stored in the nftOwnerRewards mapping. Since this does not include any information about the address owner, the address that is currently registered as the owner of the NFT will be able to claim the rewards.", "severity": "Low Risk", "contract": "ReactionVault.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Re-registering NFTs Without De-registering Is Possible", "description": "The `_registerForOwner` function in `MakerRegistrar` does not check if the NFT is already registered. It simply overwrites the `sourceToDetailsLookup` mapping with the new information.", "severity": "Low Risk", "contract": "MakerRegistrar.sol", "function": "_registerForOwner", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-284"]}, "title": "Front Running fxRootTunnel Setting", "description": "`fxRootTunnel` is not initialized in the constructor of `ChildRegistrar` and `ChildRegistrar.setFxRootTunnel()` can be front-run since it is not restricted and can be called by anyone.", "severity": "Low Risk", "contract": "ChildRegistrar.sol, RootRegistrar.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "Possible Wrong Taker Amount Value", "description": "Executing `info.totalCuratorLiability -= info.referrerCut` in `ReactionVault._spendReaction()` before computing `takerAmount` reduces the taker value.", "severity": "Low Risk", "contract": "ReactionVault.sol", "function": "_spendReaction()", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Events Not Emitted on State Change", "description": "It is recommended to index address parameters within events by adding the indexed keyword to facilitate logging.", "severity": "Low Risk", "contract": "ReactionVault", "function": "MakerRewardsGranted() and ERC20RewardsClaimed()", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Using Low Level Calls", "description": "The `_verifyOwnership` function uses `staticcall` directly by encoding the parameters with `abi.encodeWithSignature` and decoding the results with `abi.decode`, which is not type-checked by the compiler, making it easy to introduce errors.", "severity": "Informational", "contract": "NftOwnership.sol", "function": "_verifyOwnership", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Duplicate Overflow Checks", "description": "The pow2 and pow3 functions from the ExtendedMath library implement explicit overflow checks which are already checked by solidity version 0.8.9, wasting gas.", "severity": "Informational", "contract": "ExtendedMath", "function": "pow2, pow3", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Bonding Curve Parameters Modification", "description": "Modifying the bonding curve parameters using `ParameterManager.setBondingCurveParams(...)` can be problematic, if a curator id is already set, meaning that users might not get the expected token amount when selling back to the contract if `a`, `b`, and `c` parameters are updated after its creation.", "severity": "Informational", "contract": "ParameterManager.sol", "function": "setBondingCurveParams(...)", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "Upgradeable Contracts", "description": "Many contracts are implemented using the proxy pattern to be upgradeable. As a result, some address that owns the proxy is able to upgrade the contract and completely change its code.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Quantstamp/rara.pdf",
+    "project_info": {
+        "url": "https://github.com/rara-social/rara-protocol/tree/a4a2474c9cbc8238f0ee7f6c1d1e9924bf9da95d",
+        "commit_hash": "a4a2474c9cbc8238f0ee7f6c1d1e9924bf9da95d",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Use of Unsafe Cast Operations",
+            "description": "Primitive cast operations ( `uint256(...)` and `int256(...)` ) are used, which are prone to over-/underflows.",
+            "severity": "Medium Risk",
+            "contract": [
+                "SigmoidCuratorVault.sol",
+                "Sigmoid.sol"
+            ],
+            "function": "N/A",
+            "lineNumber": [
+                "L111, L140",
+                "L123-L128, L189-L194"
+            ]
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ]
+            },
+            "title": "Violating Checks Effects Interactions Pattern",
+            "description": "The main purpose of the Checks Effects Interactions pattern is to reduce the attack surface for malicious contracts trying to hijack control flow after an external call.",
+            "severity": "Low Risk",
+            "contract": [
+                "SigmoidCuratorVault",
+                "ReactionVault"
+            ],
+            "function": [
+                "buyCuratorTokens()",
+                "_buyReaction()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-282"
+                ],
+                "3": [
+                    "CWE-708"
+                ]
+            },
+            "title": "Privileged Roles and Ownership",
+            "description": "Certain contracts have state variables, e.g. `owner`, which provide certain addresses with privileged roles. Such roles may pose a risk to end-users.",
+            "severity": "Low Risk",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Missing Input Validation",
+            "description": "It is important to validate inputs, even if they only come from trusted addresses, to avoid human error.",
+            "severity": "Low Risk",
+            "contract": [
+                "ParameterManager",
+                "RoleManager",
+                "SigmoidCuratorVault",
+                "ReactionVault"
+            ],
+            "function": [
+                "N/A",
+                "initialize()",
+                "initialize()",
+                "initialize()"
+            ],
+            "lineNumber": [
+                "N/A"
+            ]
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Re-registering NFTs Transfers Taker Rewards",
+            "description": "The rewards for takers whenever reactions are spent are stored in the nftOwnerRewards mapping. Since this does not include any information about the address owner, the address that is currently registered as the owner of the NFT will be able to claim the rewards.",
+            "severity": "Low Risk",
+            "contract": "ReactionVault.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Re-registering NFTs Without De-registering Is Possible",
+            "description": "The `_registerForOwner` function in `MakerRegistrar` does not check if the NFT is already registered. It simply overwrites the `sourceToDetailsLookup` mapping with the new information.",
+            "severity": "Low Risk",
+            "contract": "MakerRegistrar.sol",
+            "function": "_registerForOwner",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Front Running fxRootTunnel Setting",
+            "description": "`fxRootTunnel` is not initialized in the constructor of `ChildRegistrar` and `ChildRegistrar.setFxRootTunnel()` can be front-run since it is not restricted and can be called by anyone.",
+            "severity": "Low Risk",
+            "contract": "ChildRegistrar.sol, RootRegistrar.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Possible Wrong Taker Amount Value",
+            "description": "Executing `info.totalCuratorLiability -= info.referrerCut` in `ReactionVault._spendReaction()` before computing `takerAmount` reduces the taker value.",
+            "severity": "Low Risk",
+            "contract": "ReactionVault.sol",
+            "function": "_spendReaction()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Events Not Emitted on State Change",
+            "description": "It is recommended to index address parameters within events by adding the indexed keyword to facilitate logging.",
+            "severity": "Low Risk",
+            "contract": "ReactionVault",
+            "function": "MakerRewardsGranted() and ERC20RewardsClaimed()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Using Low Level Calls",
+            "description": "The `_verifyOwnership` function uses `staticcall` directly by encoding the parameters with `abi.encodeWithSignature` and decoding the results with `abi.decode`, which is not type-checked by the compiler, making it easy to introduce errors.",
+            "severity": "Informational",
+            "contract": "NftOwnership.sol",
+            "function": "_verifyOwnership",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Duplicate Overflow Checks",
+            "description": "The pow2 and pow3 functions from the ExtendedMath library implement explicit overflow checks which are already checked by solidity version 0.8.9, wasting gas.",
+            "severity": "Informational",
+            "contract": "ExtendedMath",
+            "function": "pow2, pow3",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Bonding Curve Parameters Modification",
+            "description": "Modifying the bonding curve parameters using `ParameterManager.setBondingCurveParams(...)` can be problematic, if a curator id is already set, meaning that users might not get the expected token amount when selling back to the contract if `a`, `b`, and `c` parameters are updated after its creation.",
+            "severity": "Informational",
+            "contract": "ParameterManager.sol",
+            "function": "setBondingCurveParams(...)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Upgradeable Contracts",
+            "description": "Many contracts are implemented using the proxy pattern to be upgradeable. As a result, some address that owns the proxy is able to upgrade the contract and completely change its code.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

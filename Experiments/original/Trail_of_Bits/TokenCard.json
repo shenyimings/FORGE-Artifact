@@ -1,1 +1,241 @@
-{"path": "./Audit_Reports_2024/Trail_of_Bits/TokenCard.pdf", "project_info": {"url": "https://github.com/tokencard/contracts", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-435"], "2": ["CWE-436"], "3": ["CWE-437"]}, "title": "Wallet and Licence are incompatible with non-standard ERC20 tokens", "description": "The TokenCard contracts are meant to work with any ERC20 token, but several high-profile ERC20 tokens do not correctly implement the ERC20 standard. Therefore, the Wallet and Licence contracts will not work with these tokens.", "severity": "Low", "contract": "wallet.sol, licence.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Parsing large JSON integers could result in interoperability issues", "description": "The parsing of strings as JSON integers differs from mainstream implementations such as NodeJS and jq, which may cause interoperability problems in numeric types outside the range [-(2**53)+1, (2**53)-1].", "severity": "Low", "contract": "TokenCard", "function": "_parseIntScientific", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-229"]}, "title": "Base64 decoding does not validate its input", "description": "The _base64decode function does not properly validate its input and only checks if the length is greater than 0 and divisible by 4, which is insufficient to handle all possible invalid inputs.", "severity": "Low", "contract": "externals/TokenCard", "function": "_base64decode(bytes)", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Solidity compiler optimizations can be dangerous", "description": "The compilation of the TokenCard smart contracts has optional Solidity compiler optimizations enabled, which may lead to security implications due to optimization bugs.", "severity": "Undetermined", "contract": "TokenCard", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "Lack of contract existence check may mislead the user about the transaction\u2019s result", "description": "A failure to check for a contract's existence may mislead a user into thinking that a failed transaction was successful.", "severity": "Medium", "contract": "Wallet.sol", "function": "_externalCall(address,uint,uint,bytes)", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-435"], "2": ["CWE-439"]}, "title": "Contracts used as dependencies do not track upstream changes", "description": "Several third-party contracts or functions are copy-pasted into the TokenCard contracts, including: the strings library, Oraclize contracts (version 0.4.25), Ownable from OpenZeppelin and several functions from Stack Overflow responses.", "severity": "Low", "contract": "Wallet.sol, oracle.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-707"], "2": ["CWE-74"], "3": ["CWE-77"], "4": ["CWE-78"]}, "title": "No sanitization is performed when the Oraclize query is constructed", "description": "An Oraclize URL query is not carefully constructed using the name of the token and can be manipulated using special characters (e.g., &, %, #, etc). The oracle contract defines _updateTokenRatesList, a function to construct an Oraclize URL query, execute it and save its result.", "severity": "Medium", "contract": "oracle.sol", "function": "_updateTokenRatesList", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "_licenceAmountScaled can be incorrectly initialized", "description": "The licence contract collects a percentage fee when a user loads her card. The fee percentage is recorded in the _licenceAmountScaled state variable which can be initialized during the contract deployment or updated using updateLicenceAmount. However, _licenceAmountScaled can be set to any unsigned integer value in the call to the contract constructor.", "severity": "Low", "contract": "licence", "function": "constructor()", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Multiplication overflow can block certain wallet operations", "description": "Some wallet transfers involving a very large number of tokens may trigger an integer overflow that will revert the transaction.", "severity": "Low", "contract": "wallet.sol", "function": "convertToEther and convertToStablecoin", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "AddressWhitelist owner can be added to the whitelist", "description": "The AddressWhitelist contract's modifier hasNoOwnerOrZeroAddress is intended to prevent the contract owner or zero address from being added to the whitelist, but it is possible to add the owner by transferring ownership of the contract to another address controlled by the current owner.", "severity": "Medium", "contract": "wallet.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Date validation is insufficient and returns imprecise timestamps", "description": "The _verifyDate function does not properly validate its input and uses imprecise coefficients to compute timestamps from a string, potentially leading to incorrect date parsing and timestamp computation.", "severity": "Low", "contract": "oracle.sol", "function": "_verifyDate(string,uint)", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "Malicious price source can block withdrawal of funds", "description": "The TokenCard oracle interacts with an Oraclize smart contract to facilitate off-chain queries to obtain token exchange rates. In the event that CryptoCompare is compromised or becomes malicious, transfers of whitelisted tokens out of users\u2019 wallets could become impossible until a new oracle is deployed.", "severity": "Low", "contract": "oracle.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Daily limits may be bypassed via executeTransaction for certain tokens", "description": "The TokenCard wallet enforces daily limits to limit transfers to addresses outside of a user's whitelist. However, due to the executeTransaction function it may be possible to bypass the daily limit for certain tokens.", "severity": "Medium", "contract": "wallet.sol", "function": "executeTransaction()", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/TokenCard.pdf",
+    "project_info": {
+        "url": "https://github.com/tokencard/contracts",
+        "commit_hash": "N/A",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-437"
+                ]
+            },
+            "title": "Wallet and Licence are incompatible with non-standard ERC20 tokens",
+            "description": "The TokenCard contracts are meant to work with any ERC20 token, but several high-profile ERC20 tokens do not correctly implement the ERC20 standard. Therefore, the Wallet and Licence contracts will not work with these tokens.",
+            "severity": "Low",
+            "contract": "wallet.sol, licence.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Parsing large JSON integers could result in interoperability issues",
+            "description": "The parsing of strings as JSON integers differs from mainstream implementations such as NodeJS and jq, which may cause interoperability problems in numeric types outside the range [-(2**53)+1, (2**53)-1].",
+            "severity": "Low",
+            "contract": "TokenCard",
+            "function": "_parseIntScientific",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ]
+            },
+            "title": "Base64 decoding does not validate its input",
+            "description": "The _base64decode function does not properly validate its input and only checks if the length is greater than 0 and divisible by 4, which is insufficient to handle all possible invalid inputs.",
+            "severity": "Low",
+            "contract": "externals/TokenCard",
+            "function": "_base64decode(bytes)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Solidity compiler optimizations can be dangerous",
+            "description": "The compilation of the TokenCard smart contracts has optional Solidity compiler optimizations enabled, which may lead to security implications due to optimization bugs.",
+            "severity": "Undetermined",
+            "contract": "TokenCard",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Lack of contract existence check may mislead the user about the transaction\u2019s result",
+            "description": "A failure to check for a contract's existence may mislead a user into thinking that a failed transaction was successful.",
+            "severity": "Medium",
+            "contract": "Wallet.sol",
+            "function": "_externalCall(address,uint,uint,bytes)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-439"
+                ]
+            },
+            "title": "Contracts used as dependencies do not track upstream changes",
+            "description": "Several third-party contracts or functions are copy-pasted into the TokenCard contracts, including: the strings library, Oraclize contracts (version 0.4.25), Ownable from OpenZeppelin and several functions from Stack Overflow responses.",
+            "severity": "Low",
+            "contract": "Wallet.sol, oracle.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-74"
+                ],
+                "3": [
+                    "CWE-77"
+                ],
+                "4": [
+                    "CWE-78"
+                ]
+            },
+            "title": "No sanitization is performed when the Oraclize query is constructed",
+            "description": "An Oraclize URL query is not carefully constructed using the name of the token and can be manipulated using special characters (e.g., &, %, #, etc). The oracle contract defines _updateTokenRatesList, a function to construct an Oraclize URL query, execute it and save its result.",
+            "severity": "Medium",
+            "contract": "oracle.sol",
+            "function": "_updateTokenRatesList",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "_licenceAmountScaled can be incorrectly initialized",
+            "description": "The licence contract collects a percentage fee when a user loads her card. The fee percentage is recorded in the _licenceAmountScaled state variable which can be initialized during the contract deployment or updated using updateLicenceAmount. However, _licenceAmountScaled can be set to any unsigned integer value in the call to the contract constructor.",
+            "severity": "Low",
+            "contract": "licence",
+            "function": "constructor()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Multiplication overflow can block certain wallet operations",
+            "description": "Some wallet transfers involving a very large number of tokens may trigger an integer overflow that will revert the transaction.",
+            "severity": "Low",
+            "contract": "wallet.sol",
+            "function": "convertToEther and convertToStablecoin",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "AddressWhitelist owner can be added to the whitelist",
+            "description": "The AddressWhitelist contract's modifier hasNoOwnerOrZeroAddress is intended to prevent the contract owner or zero address from being added to the whitelist, but it is possible to add the owner by transferring ownership of the contract to another address controlled by the current owner.",
+            "severity": "Medium",
+            "contract": "wallet.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Date validation is insufficient and returns imprecise timestamps",
+            "description": "The _verifyDate function does not properly validate its input and uses imprecise coefficients to compute timestamps from a string, potentially leading to incorrect date parsing and timestamp computation.",
+            "severity": "Low",
+            "contract": "oracle.sol",
+            "function": "_verifyDate(string,uint)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Malicious price source can block withdrawal of funds",
+            "description": "The TokenCard oracle interacts with an Oraclize smart contract to facilitate off-chain queries to obtain token exchange rates. In the event that CryptoCompare is compromised or becomes malicious, transfers of whitelisted tokens out of users\u2019 wallets could become impossible until a new oracle is deployed.",
+            "severity": "Low",
+            "contract": "oracle.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Daily limits may be bypassed via executeTransaction for certain tokens",
+            "description": "The TokenCard wallet enforces daily limits to limit transfers to addresses outside of a user's whitelist. However, due to the executeTransaction function it may be possible to bypass the daily limit for certain tokens.",
+            "severity": "Medium",
+            "contract": "wallet.sol",
+            "function": "executeTransaction()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

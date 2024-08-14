@@ -1,1 +1,236 @@
-{"path": "./Audit_Reports_2024/Secure3/ApeX_final_Secure3_Audit_Report.pdf", "project_info": {"url": "https://github.com/ApeX-Protocol/periphery/, https://github.com/ApeX-Protocol/apexpro-contracts", "commit_hash": "4661330a339e1e7e5888ec7d7e457f6ee8c1af53, 2fa3161d72e21908a012cac778bfafc45819e46e", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "Banana Contract transferFrom Operation Lacks Approve Event Updates", "description": "The Banana contract's transferFrom operation lacks Approve event updates, which can result in missing Approve event content and cause false recognition by the dextool.", "severity": "Informational", "contract": "Banana", "function": "_spendAllowance", "lineNumber": "114-117"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Contract may permanent broken due to careless constructor parameter", "description": "If the variable lastReward is carelessly set to zero in the constructor, distribute() will always calculate newReward as 0 and cause transaction revert. This cannot be remedied.", "severity": "Informational", "contract": "Bana naDistributor.sol", "function": "constructor()", "lineNumber": "30-49"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "First minter can break minting of BANA", "description": "The malicious first minter can manipulate apeXBalance to prevent other minters from minting BANA tokens.", "severity": "Informational", "contract": "Bana na", "function": "mint(address, uint256)", "lineNumber": "L45-L60"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-237"], "4": ["CWE-239"]}, "title": "Function parameter Should be Declared as Calldata", "description": "Both `claim` and `verify` functions have bytes arguments `nonce` and `signature`, but one is declared as calldata and another as memory. Function can directly read the parameters from calldata. Setting it to other storage locations may waste gas.", "severity": "Informational", "contract": "BananaClaimable", "function": ["claim", "verify"], "lineNumber": ["42", "57"]}, {"id": 4, "category": {"1": ["CWE-697"], "2": ["CWE-1023"]}, "title": "Incomplete different signer checker", "description": "Different signer checker only checks the first and second signers cannot be the same, allowing the same signer if there are more than 2 signers, which results in multi-sign not reaching the actual threshold.", "severity": "Low", "contract": "Market Maker.sol, MultiSigPool.sol", "function": "N/A", "lineNumber": "180, 187, 225, 233"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Missing msg.value check in deposit", "description": "There is no requirement for the amount argument to equal msg.value in deposit native token, which causes the amount to be arbitrarily forged and the emit event is also faked data.", "severity": "Medium", "contract": "MultiSigPool", "function": "deposit()", "lineNumber": "L103"}, {"id": 6, "category": {"1": ["CWE-693"], "2": ["CWE-807"], "3": ["CWE-302"]}, "title": "Reset allowance when using safeApprove", "description": "The initial intention of `safeApprove` to only allow allowance change from zero to non-zero is to avoid excessive spend of owner's allowance by front running. However, reset allowance in one transaction doesn't prevent front running at all just a walkaround on `safeApprove` 's check.", "severity": "Low", "contract": "MultiSigPool", "function": "N/A", "lineNumber": "L128, L146, L299"}, {"id": 7, "category": {"1": ["CWE-693"], "2": ["CWE-807"], "3": ["CWE-302"]}, "title": "Signature replay for different chains", "description": "The signatures used in withdrawErc20() and withdrawETH() do not contain a chainid field, making the contract vulnerable to replay attacks on different chains.", "severity": "Critical", "contract": "MultiSigPool", "function": "withdrawErc20() and withdrawETH()", "lineNumber": "L190"}, {"id": 8, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "User-provided exchangeData is not sufficiently validated", "description": "The `exchangeData` used to call `AggregationRouterV4` is user-controlled and not properly checked, allowing attackers to force `MultiSigPool` to invoke other methods of `AggregationRouterV4`, bypassing checks in lines 118-121. Additionally, the first parameter of `IAggregationRouterV4.swap()` should be the official 1inch Aggregation Executor contract, but it's not checked.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "117-121"}, {"id": 9, "category": {"1": ["CWE-682"]}, "title": "When the user transfers tokens to himself, the amount of tokens is double counted", "description": "In the _transfer function, if sender == recipient, the amount of tokens will be double counted. This can cause a user's balance to increase without increasing the total supply of tokens.", "severity": "Critical", "contract": "SelfSufficientERC20", "function": "_transfer()", "lineNumber": "L120-L121"}, {"id": 10, "category": {"1": ["CWE-693"], "2": ["CWE-807"], "3": ["CWE-302"]}, "title": "Banana.approve() can be front-run", "description": "The ERC20 `approve()` is vulnerable to front-run attack, which allows the spender to front-run and take more tokens than the owner pretended to approve.", "severity": "Low", "contract": "banana/Banana", "function": "approve", "lineNumber": "102"}, {"id": 11, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Banana::_mint should check to avoid tokens being permanently locked", "description": "The _mint function does not check the 0 address of the incoming address, and the newly issued token may enter the 0 address, Pledged apeXToken is permanently locked.", "severity": "Informational", "contract": "Banana", "function": "_mint", "lineNumber": "119-123"}]}
+{
+    "path": "./Audit_Reports_2024/Secure3/ApeX_final_Secure3_Audit_Report.pdf",
+    "project_info": {
+        "url": "https://github.com/ApeX-Protocol/periphery/, https://github.com/ApeX-Protocol/apexpro-contracts",
+        "commit_hash": "4661330a339e1e7e5888ec7d7e457f6ee8c1af53, 2fa3161d72e21908a012cac778bfafc45819e46e",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Banana Contract transferFrom Operation Lacks Approve Event Updates",
+            "description": "The Banana contract's transferFrom operation lacks Approve event updates, which can result in missing Approve event content and cause false recognition by the dextool.",
+            "severity": "Informational",
+            "contract": "Banana",
+            "function": "_spendAllowance",
+            "lineNumber": "114-117"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Contract may permanent broken due to careless constructor parameter",
+            "description": "If the variable lastReward is carelessly set to zero in the constructor, distribute() will always calculate newReward as 0 and cause transaction revert. This cannot be remedied.",
+            "severity": "Informational",
+            "contract": "Bana naDistributor.sol",
+            "function": "constructor()",
+            "lineNumber": "30-49"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "First minter can break minting of BANA",
+            "description": "The malicious first minter can manipulate apeXBalance to prevent other minters from minting BANA tokens.",
+            "severity": "Informational",
+            "contract": "Bana na",
+            "function": "mint(address, uint256)",
+            "lineNumber": "L45-L60"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-237"
+                ],
+                "4": [
+                    "CWE-239"
+                ]
+            },
+            "title": "Function parameter Should be Declared as Calldata",
+            "description": "Both `claim` and `verify` functions have bytes arguments `nonce` and `signature`, but one is declared as calldata and another as memory. Function can directly read the parameters from calldata. Setting it to other storage locations may waste gas.",
+            "severity": "Informational",
+            "contract": "BananaClaimable",
+            "function": [
+                "claim",
+                "verify"
+            ],
+            "lineNumber": [
+                "42",
+                "57"
+            ]
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ],
+                "2": [
+                    "CWE-1023"
+                ]
+            },
+            "title": "Incomplete different signer checker",
+            "description": "Different signer checker only checks the first and second signers cannot be the same, allowing the same signer if there are more than 2 signers, which results in multi-sign not reaching the actual threshold.",
+            "severity": "Low",
+            "contract": "Market Maker.sol, MultiSigPool.sol",
+            "function": "N/A",
+            "lineNumber": "180, 187, 225, 233"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Missing msg.value check in deposit",
+            "description": "There is no requirement for the amount argument to equal msg.value in deposit native token, which causes the amount to be arbitrarily forged and the emit event is also faked data.",
+            "severity": "Medium",
+            "contract": "MultiSigPool",
+            "function": "deposit()",
+            "lineNumber": "L103"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ],
+                "3": [
+                    "CWE-302"
+                ]
+            },
+            "title": "Reset allowance when using safeApprove",
+            "description": "The initial intention of `safeApprove` to only allow allowance change from zero to non-zero is to avoid excessive spend of owner's allowance by front running. However, reset allowance in one transaction doesn't prevent front running at all just a walkaround on `safeApprove` 's check.",
+            "severity": "Low",
+            "contract": "MultiSigPool",
+            "function": "N/A",
+            "lineNumber": "L128, L146, L299"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ],
+                "3": [
+                    "CWE-302"
+                ]
+            },
+            "title": "Signature replay for different chains",
+            "description": "The signatures used in withdrawErc20() and withdrawETH() do not contain a chainid field, making the contract vulnerable to replay attacks on different chains.",
+            "severity": "Critical",
+            "contract": "MultiSigPool",
+            "function": "withdrawErc20() and withdrawETH()",
+            "lineNumber": "L190"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "User-provided exchangeData is not sufficiently validated",
+            "description": "The `exchangeData` used to call `AggregationRouterV4` is user-controlled and not properly checked, allowing attackers to force `MultiSigPool` to invoke other methods of `AggregationRouterV4`, bypassing checks in lines 118-121. Additionally, the first parameter of `IAggregationRouterV4.swap()` should be the official 1inch Aggregation Executor contract, but it's not checked.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "117-121"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "When the user transfers tokens to himself, the amount of tokens is double counted",
+            "description": "In the _transfer function, if sender == recipient, the amount of tokens will be double counted. This can cause a user's balance to increase without increasing the total supply of tokens.",
+            "severity": "Critical",
+            "contract": "SelfSufficientERC20",
+            "function": "_transfer()",
+            "lineNumber": "L120-L121"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ],
+                "3": [
+                    "CWE-302"
+                ]
+            },
+            "title": "Banana.approve() can be front-run",
+            "description": "The ERC20 `approve()` is vulnerable to front-run attack, which allows the spender to front-run and take more tokens than the owner pretended to approve.",
+            "severity": "Low",
+            "contract": "banana/Banana",
+            "function": "approve",
+            "lineNumber": "102"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Banana::_mint should check to avoid tokens being permanently locked",
+            "description": "The _mint function does not check the 0 address of the incoming address, and the newly issued token may enter the 0 address, Pledged apeXToken is permanently locked.",
+            "severity": "Informational",
+            "contract": "Banana",
+            "function": "_mint",
+            "lineNumber": "119-123"
+        }
+    ]
+}

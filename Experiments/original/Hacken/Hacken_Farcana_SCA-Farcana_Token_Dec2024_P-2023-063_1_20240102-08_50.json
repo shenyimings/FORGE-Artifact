@@ -1,1 +1,245 @@
-{"path": "./Audit_Reports_2024/Hacken/Hacken_Farcana_SCA-Farcana_Token_Dec2024_P-2023-063_1_20240102-08_50.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-354"]}, "title": "Insufficient Parameter Validation In AddVestingSchedule() Function Of Vesting Contract", "description": "The `addVestingSchedule` function in the TokenVesting contract does not perform adequate checks on input parameters such as `cliff`, `duration`, `start`, and their relationship to each other and to `tgeTime`. This can result in immediate availability of tokens, tokens being locked indefinitely, or inaccurate vesting timelines.", "severity": "Medium", "contract": "TokenVesting", "function": "addVestingSchedule()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Unrestricted Authority to Alter Vesting Beneficiary Addresses", "description": "The TokenVesting contract includes a function `changeBeneficiaryAddress`, which allows the contract owner to alter the `beneficiary` address of any vesting schedule without any constraints or oversight mechanisms.", "severity": "Medium", "contract": "FarcanaVesting.sol", "function": "changeBeneficiaryAddress()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-282"], "3": ["CWE-708"]}, "title": "Single-Step Ownership Transfer", "description": "The current implementation of the FarcanaToken and FarcanaVesting contract utilizes a single-step process for ownership transfer without verification step for the new owner address before finalizing the transfer, leading to significant security and operational risks.", "severity": "Low", "contract": "FarcanaToken, FarcanaVesting", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Inappropriate Mutability Of TgeTime In Vesting Contract", "description": "The vesting contract initializes a `tgeTime` variable in its `constructor` and provides a setter function `setTGEtime` that allows the owner to modify this time. Given that `tgeTime` represents the Token Generation Event time, a fundamental contract parameter, its ability to be altered post-deployment poses a risk of misuse or errors.", "severity": "Low", "contract": "FarcanaVesting.sol", "function": "setTGEtime()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-707"], "2": ["CWE-116"], "3": ["CWE-838"]}, "title": "Non-Utilization Of SafeERC20 For Token Transfers In Vesting Contract", "description": "The implementation of the `claim` function in the Vesting contract inconsistently applies safety measures by using the standard `transfer` method instead of SafeERC20's safe transfer method, which can lead to unhandled exceptions and failed or stuck transactions.", "severity": "Low", "contract": "FarcanaVesting.sol", "function": "claim()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-710"], "2": ["CWE-477"]}, "title": "Outdated Compiler Version", "description": "The FarcanaToken is written in Solidity version 0.4.24, which is significantly outdated. Using older versions of Solidity exposes the contract to potential security vulnerabilities that have been addressed in later versions.", "severity": "Info", "contract": "FarcanaToken.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Missing Zero Address Checks", "description": "The TokenVesting contract's constructor and addVestingSchedule function lacks validation checks for zero addresses.", "severity": "Info", "contract": "TokenVesting", "function": ["constructor", "addVestingSchedule"], "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-710"], "2": ["CWE-1164"]}, "title": "Copy Of Well Known Contract", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "Floating Pragma", "description": "Using a floating pragma makes the contract susceptible to potential breaking changes or unexpected behavior introduced in newer compiler versions.", "severity": "Info", "contract": "FarcanaToken.sol, FarcanaVesting.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Redundant SafeMath", "description": "The use of SafeMath library becomes redundant if using Solc versions above 0.8.0 as Solidity introduced new arithmetic overflow and underflow protection features.", "severity": "Info", "contract": "FarcanaVesting.sol, FarcanaToken", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Lack Of Event Emissions In Key Functions Of Vesting Contract", "description": "The `addVestingSchedule` and `changeBeneficiaryAddress` functions in the vesting contract lack event emissions, which is a significant oversight. Events in smart contracts are essential for tracking changes on the blockchain, especially for key administrative actions.", "severity": "Info", "contract": "FarcanaVesting.sol", "function": ["addVestingSchedule", "changeBeneficiaryAddress"], "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "State Variables Default Visibility", "description": "Variable `tgetime` visibility is not specified. The default variable visibility in Solidity is `internal`. Specifying state variables visibility helps to catch incorrect assumptions about who can access the variable.", "severity": "Info", "contract": "FarcanaVesting.sol", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Hacken/Hacken_Farcana_SCA-Farcana_Token_Dec2024_P-2023-063_1_20240102-08_50.pdf",
+    "project_info": {
+        "url": "https://github.com/farcana/smart-contracts",
+        "commit_hash": "N/A",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-354"
+                ]
+            },
+            "title": "Insufficient Parameter Validation In AddVestingSchedule() Function Of Vesting Contract",
+            "description": "The `addVestingSchedule` function in the TokenVesting contract does not perform adequate checks on input parameters such as `cliff`, `duration`, `start`, and their relationship to each other and to `tgeTime`. This can result in immediate availability of tokens, tokens being locked indefinitely, or inaccurate vesting timelines.",
+            "severity": "Medium",
+            "contract": "TokenVesting",
+            "function": "addVestingSchedule()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Unrestricted Authority to Alter Vesting Beneficiary Addresses",
+            "description": "The TokenVesting contract includes a function `changeBeneficiaryAddress`, which allows the contract owner to alter the `beneficiary` address of any vesting schedule without any constraints or oversight mechanisms.",
+            "severity": "Medium",
+            "contract": "FarcanaVesting.sol",
+            "function": "changeBeneficiaryAddress()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-282"
+                ],
+                "3": [
+                    "CWE-708"
+                ]
+            },
+            "title": "Single-Step Ownership Transfer",
+            "description": "The current implementation of the FarcanaToken and FarcanaVesting contract utilizes a single-step process for ownership transfer without verification step for the new owner address before finalizing the transfer, leading to significant security and operational risks.",
+            "severity": "Low",
+            "contract": "FarcanaToken, FarcanaVesting",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Inappropriate Mutability Of TgeTime In Vesting Contract",
+            "description": "The vesting contract initializes a `tgeTime` variable in its `constructor` and provides a setter function `setTGEtime` that allows the owner to modify this time. Given that `tgeTime` represents the Token Generation Event time, a fundamental contract parameter, its ability to be altered post-deployment poses a risk of misuse or errors.",
+            "severity": "Low",
+            "contract": "FarcanaVesting.sol",
+            "function": "setTGEtime()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-116"
+                ],
+                "3": [
+                    "CWE-838"
+                ]
+            },
+            "title": "Non-Utilization Of SafeERC20 For Token Transfers In Vesting Contract",
+            "description": "The implementation of the `claim` function in the Vesting contract inconsistently applies safety measures by using the standard `transfer` method instead of SafeERC20's safe transfer method, which can lead to unhandled exceptions and failed or stuck transactions.",
+            "severity": "Low",
+            "contract": "FarcanaVesting.sol",
+            "function": "claim()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-477"
+                ]
+            },
+            "title": "Outdated Compiler Version",
+            "description": "The FarcanaToken is written in Solidity version 0.4.24, which is significantly outdated. Using older versions of Solidity exposes the contract to potential security vulnerabilities that have been addressed in later versions.",
+            "severity": "Info",
+            "contract": "FarcanaToken.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Missing Zero Address Checks",
+            "description": "The TokenVesting contract's constructor and addVestingSchedule function lacks validation checks for zero addresses.",
+            "severity": "Info",
+            "contract": "TokenVesting",
+            "function": [
+                "constructor",
+                "addVestingSchedule"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ]
+            },
+            "title": "Copy Of Well Known Contract",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Floating Pragma",
+            "description": "Using a floating pragma makes the contract susceptible to potential breaking changes or unexpected behavior introduced in newer compiler versions.",
+            "severity": "Info",
+            "contract": "FarcanaToken.sol, FarcanaVesting.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Redundant SafeMath",
+            "description": "The use of SafeMath library becomes redundant if using Solc versions above 0.8.0 as Solidity introduced new arithmetic overflow and underflow protection features.",
+            "severity": "Info",
+            "contract": "FarcanaVesting.sol, FarcanaToken",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Lack Of Event Emissions In Key Functions Of Vesting Contract",
+            "description": "The `addVestingSchedule` and `changeBeneficiaryAddress` functions in the vesting contract lack event emissions, which is a significant oversight. Events in smart contracts are essential for tracking changes on the blockchain, especially for key administrative actions.",
+            "severity": "Info",
+            "contract": "FarcanaVesting.sol",
+            "function": [
+                "addVestingSchedule",
+                "changeBeneficiaryAddress"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "State Variables Default Visibility",
+            "description": "Variable `tgetime` visibility is not specified. The default variable visibility in Solidity is `internal`. Specifying state variables visibility helps to catch incorrect assumptions about who can access the variable.",
+            "severity": "Info",
+            "contract": "FarcanaVesting.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

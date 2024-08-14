@@ -1,1 +1,215 @@
-{"path": "./Audit_Reports_2024/InterFi/WomenofMankind_0xD31fa3109e5960E77e57C4862093e4eA1a60d7B6.pdf", "project_info": {"url": "https://github.com/interfinetwork/audited-codes/blob/main/WomenofMankind.sol", "commit_hash": "dc4c6bec38e854be5e7a82b86cafce4ab0ab2d91", "address": "0xD31fa3109e5960E77e57C4862093e4eA1a60d7B6"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Minting of unlimited number of sundae tokens", "description": "Owner can mint tokens after initial contract creation/deployment.", "severity": "Critical", "contract": "WomenofMankind", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Potential unauthorized script upgrade", "description": "The contract allows an unauthorized user to upgrade the script, potentially leading to unintended behavior or security risks.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "Unprotected approve function", "description": "The approve function is unprotected, allowing unauthorized access and potential manipulation of allowances.", "severity": "High", "contract": "N/A", "function": "approve(address,uint256)", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "Unprotected transfer function", "description": "The _transfer function does not have any access modifiers or checks, making it possible for anyone to call and transfer tokens.", "severity": "High", "contract": "N/A", "function": "_transfer(address,address,uint256)", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "Unprotected transferFrom function", "description": "The transferFrom function is unprotected and can be exploited by malicious users.", "severity": "High", "contract": "N/A", "function": "transferFrom(address,address,uint256)", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"]}, "title": "Unprotected permit function", "description": "The permit function does not have any protection or access control, allowing unauthorized users to call it.", "severity": "High", "contract": "N/A", "function": "permit()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-284"]}, "title": "Unprotected mint function", "description": "The mint function allows anyone to create new tokens without any restrictions or access control.", "severity": "Critical", "contract": "N/A", "function": "mint(address)", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-284"]}, "title": "Unprotected burn function", "description": "The burn function does not have any access control or validation, allowing anyone to call it and potentially drain the contract's balance.", "severity": "High", "contract": "N/A", "function": "burn(address)", "lineNumber": "89afcb44"}, {"id": 8, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "Unprotected swap function", "description": "The 'swap' function with signature 'swap(uint256,uint256,address,bytes)' is unprotected and can be exploited.", "severity": "High", "contract": "N/A", "function": "swap(uint256,uint256,address,bytes)", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-284"]}, "title": "Unprotected skim function", "description": "The skim function is unprotected, allowing unauthorized access and potential manipulation of sensitive data.", "severity": "High", "contract": "N/A", "function": "skim()", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-693"]}, "title": "Unprotected sync function", "description": "The sync function does not have any protection mechanism to prevent unauthorized access.", "severity": "High", "contract": "N/A", "function": "sync()", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-284"]}, "title": "Unprotected initialize function", "description": "The initialize function is unprotected, allowing anyone to call it and potentially alter the contract's state.", "severity": "High", "contract": "N/A", "function": "initialize()", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/InterFi/WomenofMankind_0xD31fa3109e5960E77e57C4862093e4eA1a60d7B6.pdf",
+    "project_info": {
+        "url": "https://github.com/interfinetwork/audited-codes/blob/main/WomenofMankind.sol",
+        "commit_hash": "dc4c6bec38e854be5e7a82b86cafce4ab0ab2d91",
+        "address": "0xD31fa3109e5960E77e57C4862093e4eA1a60d7B6",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Minting of unlimited number of sundae tokens",
+            "description": "Owner can mint tokens after initial contract creation/deployment.",
+            "severity": "Critical",
+            "contract": "WomenofMankind",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Potential unauthorized script upgrade",
+            "description": "The contract allows an unauthorized user to upgrade the script, potentially leading to unintended behavior or security risks.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Unprotected approve function",
+            "description": "The approve function is unprotected, allowing unauthorized access and potential manipulation of allowances.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "approve(address,uint256)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Unprotected transfer function",
+            "description": "The _transfer function does not have any access modifiers or checks, making it possible for anyone to call and transfer tokens.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "_transfer(address,address,uint256)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Unprotected transferFrom function",
+            "description": "The transferFrom function is unprotected and can be exploited by malicious users.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "transferFrom(address,address,uint256)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected permit function",
+            "description": "The permit function does not have any protection or access control, allowing unauthorized users to call it.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "permit()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected mint function",
+            "description": "The mint function allows anyone to create new tokens without any restrictions or access control.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "mint(address)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected burn function",
+            "description": "The burn function does not have any access control or validation, allowing anyone to call it and potentially drain the contract's balance.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "burn(address)",
+            "lineNumber": "89afcb44"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Unprotected swap function",
+            "description": "The 'swap' function with signature 'swap(uint256,uint256,address,bytes)' is unprotected and can be exploited.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "swap(uint256,uint256,address,bytes)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected skim function",
+            "description": "The skim function is unprotected, allowing unauthorized access and potential manipulation of sensitive data.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "skim()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "Unprotected sync function",
+            "description": "The sync function does not have any protection mechanism to prevent unauthorized access.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "sync()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected initialize function",
+            "description": "The initialize function is unprotected, allowing anyone to call it and potentially alter the contract's state.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "initialize()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

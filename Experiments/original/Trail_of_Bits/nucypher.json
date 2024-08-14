@@ -1,1 +1,255 @@
-{"path": "./Audit_Reports_2024/Trail_of_Bits/nucypher.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-691"], "2": ["CWE-362"]}, "title": "NuCypherKMSToken may be vulnerable to transaction reordering attacks", "description": "There\u2019s a well-known race condition in the ERC20 standard where an attacker with the ability to reorder transactions can use transferFrom to take more tokens than they were allotted with approve.", "severity": "Medium", "contract": "NuCypherKMSToken", "function": "approve() and decreaseApproval()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Unsalted HKDF in utils.py", "description": "The kdf function in utils.py sets salt to None, which can lead to brute-force attacks on all applications of kdf at once.", "severity": "Low", "contract": "pyUmbral/umbral/utils.py", "function": "kdf", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Multiple issues related to curve specification", "description": "Several operations and object constructors take an optional curve parameter which can lead to inconsistency and functionality bugs.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"]}, "title": "Multiple issues related to parametrization over arbitrary curves", "description": "_Umbral: A Threshold Proxy Re-encryption Scheme_ doesn\u2019t restrict the curve used in its implementation.", "severity": "High", "contract": "pyUmbral", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1173"]}, "title": "Insufficient validation of signatures", "description": "The Signature class implements no verification for the r and s parameters, allowing for the construction of signatures that don\u2019t depend on the private key used to sign.", "severity": "High", "contract": "nucypher/crypto/signature.py", "function": "Signature.__init__", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "Network cannot detect malicious nodes", "description": "NuCypherKMS does not currently have a way to establish whether a miner is performing valid re-encryptions, leading to reliability issues and potential malicious behavior.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Server implements no rate-limiting functionality", "description": "The NuCypher server code features no functionality that limits the rate at which its clients can make requests, making it easy for a client to exhaust the server's resources.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Database has no snapshot and rollback functionality", "description": "Right now, many functions write to the database with no validation of input data. Especially in concert with TOB-NCY-007, we believe it is likely some databases become large to the point of being unwieldy and filled with mostly useless data.", "severity": "Medium", "contract": "nucypher/keystore", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "Lack of anonymity allows collusion-based attacks", "description": "Currently the NuCypher system does not anonymize its users, allowing re-encryption nodes to acquire information about both senders and recipients, enabling collusion attacks.", "severity": "High", "contract": "nucypher/keystore", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-284"]}, "title": "Database has no access controls", "description": "The keystore sqlite database is stored unencrypted. No permission-based access controls are present. An attacker with even temporary filesystem access can add, modify, or delete entries at will.", "severity": "Low", "contract": "nucypher/keystore", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "ProxyRESTServer.set_policy can be used to invalidate policy arrangements", "description": "An attacker with network access can make policy arrangements held by any node effectively useless due to several individual small bugs and questionable design decisions.", "severity": "Medium", "contract": "nucypher/network/server.py", "function": "set_policy", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Several issues related to policy issuance", "description": "The policy system presents several issues including unsigned m parameter, optional Alice's signature, unvalidated kfrags, lack of policy revocation mechanism and vulnerability to replay attacks.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-693"], "2": ["CWE-345"], "3": ["CWE-353"]}, "title": "Work orders have no protection from replay attacks", "description": "The work order submission process has no blockchain component and no protection against replay attacks, allowing an attacker to observe and replay a valid work order indefinitely.", "severity": "Low", "contract": "keystore", "function": "N/A", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-284"], "2": ["CWE-287"]}, "title": "Impersonating Ursula is trivial", "description": "Ursula never signs her response to work orders. Anyone can pretend to be her and respond to a given Bob.", "severity": "Low", "contract": "nucypher/characters.py", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/nucypher.pdf",
+    "project_info": {
+        "url": "https://github.com/nucypher/nucypher",
+        "commit_hash": "N/A",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-362"
+                ]
+            },
+            "title": "NuCypherKMSToken may be vulnerable to transaction reordering attacks",
+            "description": "There\u2019s a well-known race condition in the ERC20 standard where an attacker with the ability to reorder transactions can use transferFrom to take more tokens than they were allotted with approve.",
+            "severity": "Medium",
+            "contract": "NuCypherKMSToken",
+            "function": "approve() and decreaseApproval()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Unsalted HKDF in utils.py",
+            "description": "The kdf function in utils.py sets salt to None, which can lead to brute-force attacks on all applications of kdf at once.",
+            "severity": "Low",
+            "contract": "pyUmbral/umbral/utils.py",
+            "function": "kdf",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Multiple issues related to curve specification",
+            "description": "Several operations and object constructors take an optional curve parameter which can lead to inconsistency and functionality bugs.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Multiple issues related to parametrization over arbitrary curves",
+            "description": "_Umbral: A Threshold Proxy Re-encryption Scheme_ doesn\u2019t restrict the curve used in its implementation.",
+            "severity": "High",
+            "contract": "pyUmbral",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1173"
+                ]
+            },
+            "title": "Insufficient validation of signatures",
+            "description": "The Signature class implements no verification for the r and s parameters, allowing for the construction of signatures that don\u2019t depend on the private key used to sign.",
+            "severity": "High",
+            "contract": "nucypher/crypto/signature.py",
+            "function": "Signature.__init__",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Network cannot detect malicious nodes",
+            "description": "NuCypherKMS does not currently have a way to establish whether a miner is performing valid re-encryptions, leading to reliability issues and potential malicious behavior.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Server implements no rate-limiting functionality",
+            "description": "The NuCypher server code features no functionality that limits the rate at which its clients can make requests, making it easy for a client to exhaust the server's resources.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Database has no snapshot and rollback functionality",
+            "description": "Right now, many functions write to the database with no validation of input data. Especially in concert with TOB-NCY-007, we believe it is likely some databases become large to the point of being unwieldy and filled with mostly useless data.",
+            "severity": "Medium",
+            "contract": "nucypher/keystore",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Lack of anonymity allows collusion-based attacks",
+            "description": "Currently the NuCypher system does not anonymize its users, allowing re-encryption nodes to acquire information about both senders and recipients, enabling collusion attacks.",
+            "severity": "High",
+            "contract": "nucypher/keystore",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Database has no access controls",
+            "description": "The keystore sqlite database is stored unencrypted. No permission-based access controls are present. An attacker with even temporary filesystem access can add, modify, or delete entries at will.",
+            "severity": "Low",
+            "contract": "nucypher/keystore",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "ProxyRESTServer.set_policy can be used to invalidate policy arrangements",
+            "description": "An attacker with network access can make policy arrangements held by any node effectively useless due to several individual small bugs and questionable design decisions.",
+            "severity": "Medium",
+            "contract": "nucypher/network/server.py",
+            "function": "set_policy",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Several issues related to policy issuance",
+            "description": "The policy system presents several issues including unsigned m parameter, optional Alice's signature, unvalidated kfrags, lack of policy revocation mechanism and vulnerability to replay attacks.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-345"
+                ],
+                "3": [
+                    "CWE-353"
+                ]
+            },
+            "title": "Work orders have no protection from replay attacks",
+            "description": "The work order submission process has no blockchain component and no protection against replay attacks, allowing an attacker to observe and replay a valid work order indefinitely.",
+            "severity": "Low",
+            "contract": "keystore",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-287"
+                ]
+            },
+            "title": "Impersonating Ursula is trivial",
+            "description": "Ursula never signs her response to work orders. Anyone can pretend to be her and respond to a given Bob.",
+            "severity": "Low",
+            "contract": "nucypher/characters.py",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

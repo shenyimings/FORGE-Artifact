@@ -1,1 +1,179 @@
-{"path": "./Audit_Reports_2024/Statemind/2023-08-29_Arrakis_V2_core_rev2.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "No checks if liquidity to mint is zero", "description": "In functions ArrakisV2.mint() and ArrakisV2.rebalance(), there are no checks if liquidity to mint is zero, which can cause transaction reverts.", "severity": "Medium", "contract": "ArrakisV2", "function": ["mint()", "rebalance()"], "lineNumber": ["L138", "L391"]}, {"id": 1, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "First minter can skew the initial ratio", "description": "In the function ArrakisV2.mint(), it is possible to skew the initial ratio in a certain case due to division being rounded up.", "severity": "Medium", "contract": "ArrakisV2", "function": "mint()", "lineNumber": "84"}, {"id": 2, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "getAmountsForDelta reverts for liquidity < 0", "description": "The getAmountsForDelta function in the Underlying library reverts when the liquidity parameter is less than 0 due to SafeCast.toUint256 reverting as the input is negative.", "severity": "Informational", "contract": "Underlying", "function": "getAmountsForDelta", "lineNumber": "L302"}, {"id": 3, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Inconsistent function name", "description": "The Underlying library has a function computeMintAmounts that returns only one parameter - mintAmount.", "severity": "Informational", "contract": "Underlying", "function": "computeMintAmounts()", "lineNumber": "L355"}, {"id": 4, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Zero address check", "description": "The ArrakisV2Storage contract's _whitelistRouters function allows adding zero addresses as routers.", "severity": "Informational", "contract": "ArrakisV2Storage", "function": "_whitelistRouters", "lineNumber": "311"}, {"id": 5, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Magic number", "description": "The ArrakisV2Storage contract's setManagerFeeBPS function has a check for a managerFeeBPS_ input variable, it has to be <= 10000. This number already has a named variable which could be used here.", "severity": "Informational", "contract": "ArrakisV2Storage", "function": "setManagerFeeBPS", "lineNumber": "218"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Zero address _arrakisV2Beacon for ArrakisV2FactoryStorage", "description": "**ArrakisV2FactoryStorage** allows creating factory with zero address for **_arrakisV2Beacon**. Also, owner can't change **arrakisV2Beacon** after creation.", "severity": "Informational", "contract": "ArrakisV2FactoryStorage", "function": "N/A", "lineNumber": "L24,L30"}, {"id": 7, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Zero address factory_ for ArrakisV2Resolver", "description": "**ArrakisV2Resolver** allows creating a factory with zero address for **_factory** and owner can't change **factory** after creation.", "severity": "INFORMATIONAL", "contract": "ArrakisV2Resolver", "function": "N/A", "lineNumber": "L30, L32"}, {"id": 8, "category": {"1": ["CWE-710"], "2": ["CWE-1076"]}, "title": "Inconsistent event name", "description": "All ArrakisV2Storage contract's events have a 'Log' prefix except one - LPBurned.", "severity": "Informational", "contract": "ArrakisV2Storage", "function": "N/A", "lineNumber": "74"}]}
+{
+    "path": "./Audit_Reports_2024/Statemind/2023-08-29_Arrakis_V2_core_rev2.pdf",
+    "project_info": {
+        "url": "https://github.com/ArrakisFinance/v2-core/tree/a9759d1a45bc3a9dc9a378cbff3588e76a5083f5",
+        "commit_hash": "a9759d1a45bc3a9dc9a378cbff3588e76a5083f5",
+        "address": "0x7f346f1eb7a65ff83f51b3fd76dcc70979e6df38",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "No checks if liquidity to mint is zero",
+            "description": "In functions ArrakisV2.mint() and ArrakisV2.rebalance(), there are no checks if liquidity to mint is zero, which can cause transaction reverts.",
+            "severity": "Medium",
+            "contract": "ArrakisV2",
+            "function": [
+                "mint()",
+                "rebalance()"
+            ],
+            "lineNumber": [
+                "L138",
+                "L391"
+            ]
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "First minter can skew the initial ratio",
+            "description": "In the function ArrakisV2.mint(), it is possible to skew the initial ratio in a certain case due to division being rounded up.",
+            "severity": "Medium",
+            "contract": "ArrakisV2",
+            "function": "mint()",
+            "lineNumber": "84"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "getAmountsForDelta reverts for liquidity < 0",
+            "description": "The getAmountsForDelta function in the Underlying library reverts when the liquidity parameter is less than 0 due to SafeCast.toUint256 reverting as the input is negative.",
+            "severity": "Informational",
+            "contract": "Underlying",
+            "function": "getAmountsForDelta",
+            "lineNumber": "L302"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Inconsistent function name",
+            "description": "The Underlying library has a function computeMintAmounts that returns only one parameter - mintAmount.",
+            "severity": "Informational",
+            "contract": "Underlying",
+            "function": "computeMintAmounts()",
+            "lineNumber": "L355"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Zero address check",
+            "description": "The ArrakisV2Storage contract's _whitelistRouters function allows adding zero addresses as routers.",
+            "severity": "Informational",
+            "contract": "ArrakisV2Storage",
+            "function": "_whitelistRouters",
+            "lineNumber": "311"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Magic number",
+            "description": "The ArrakisV2Storage contract's setManagerFeeBPS function has a check for a managerFeeBPS_ input variable, it has to be <= 10000. This number already has a named variable which could be used here.",
+            "severity": "Informational",
+            "contract": "ArrakisV2Storage",
+            "function": "setManagerFeeBPS",
+            "lineNumber": "218"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Zero address _arrakisV2Beacon for ArrakisV2FactoryStorage",
+            "description": "**ArrakisV2FactoryStorage** allows creating factory with zero address for **_arrakisV2Beacon**. Also, owner can't change **arrakisV2Beacon** after creation.",
+            "severity": "Informational",
+            "contract": "ArrakisV2FactoryStorage",
+            "function": "N/A",
+            "lineNumber": "L24,L30"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Zero address factory_ for ArrakisV2Resolver",
+            "description": "**ArrakisV2Resolver** allows creating a factory with zero address for **_factory** and owner can't change **factory** after creation.",
+            "severity": "INFORMATIONAL",
+            "contract": "ArrakisV2Resolver",
+            "function": "N/A",
+            "lineNumber": "L30, L32"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1076"
+                ]
+            },
+            "title": "Inconsistent event name",
+            "description": "All ArrakisV2Storage contract's events have a 'Log' prefix except one - LPBurned.",
+            "severity": "Informational",
+            "contract": "ArrakisV2Storage",
+            "function": "N/A",
+            "lineNumber": "74"
+        }
+    ]
+}

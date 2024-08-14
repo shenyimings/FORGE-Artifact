@@ -1,1 +1,224 @@
-{"path": "./Audit_Reports_2024/Blocksafu/BNOU-Audit-by-BlockSAFU.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "0xE89200d1b9d0C50BA637C71F0f1Af3CB0aD2E78F"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "A01.Mint Function", "description": "The contract does not have a mint function and lacks certain functionality such as setting fees, max tx amount, pausing transfer, blacklisting, taking back ownership, limiting wallet holdings, and setting trading cooldown.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Incorrect Fee Calculation", "description": "The contract calculates fees using a division operation before multiplication, which can lead to precision loss and incorrect fee amounts.", "severity": "High", "contract": "N/A", "function": "Multiple functions (swapAndLiquify, _transfer)", "lineNumber": "Multiple lines (e.g., 2-4, 14-16)"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-354"]}, "title": "Tx Amount", "description": "Insufficient validation of transaction amounts can lead to potential security risks.", "severity": "Medium", "contract": "BitnouCoin", "function": "checkForWhale()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-691"], "2": ["CWE-841"]}, "title": "A04.Transfer Pausable", "description": "The transfer function can be paused by the owner, which may lead to unintended consequences.", "severity": "High", "contract": "N/A", "function": "_transfer(address, address, uint256)", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"], "4": ["CWE-638"], "5": ["CWE-424"], "6": ["CWE-425"]}, "title": "A05.Blacklist", "description": "Owner cannot blacklist.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-282"], "3": ["CWE-708"]}, "title": "A06.Ownership", "description": "The contract has functionality related to ownership, including renouncing and transferring ownership, which can impact the contract's behavior and control.", "severity": "Medium", "contract": "N/A", "function": "renounceOwnership, transferOwnership", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Unprotected Proxy Call", "description": "The contract uses a proxy call without proper validation and access control, which can lead to unauthorized access or manipulation of the proxy contract.", "severity": "High", "contract": "N/A", "function": "updateUniswapV2Router", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "A08.Anti Whale", "description": "The owner cannot limit the number of wallet holdings below 1% from total supply.", "severity": "Medium", "contract": "N/A", "function": "checkForWhale()", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "A09.Trading Cooldown", "description": "Owner cannot set the selling time interval.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-284"], "2": ["CWE-282"], "3": ["CWE-708"]}, "title": "A10.renounceOwnership", "description": "Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner", "severity": "Medium", "contract": "N/A", "function": "renounceOwnership()", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-284"]}, "title": "Unprotected transferOwnership Function", "description": "The function transferOwnership(newOwner) lacks access control, allowing anyone to change the contract owner.", "severity": "High", "contract": "N/A", "function": "transferOwnership", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Blocksafu/BNOU-Audit-by-BlockSAFU.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0xE89200d1b9d0C50BA637C71F0f1Af3CB0aD2E78F"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "A01.Mint Function",
+            "description": "The contract does not have a mint function and lacks certain functionality such as setting fees, max tx amount, pausing transfer, blacklisting, taking back ownership, limiting wallet holdings, and setting trading cooldown.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect Fee Calculation",
+            "description": "The contract calculates fees using a division operation before multiplication, which can lead to precision loss and incorrect fee amounts.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "Multiple functions (swapAndLiquify, _transfer)",
+            "lineNumber": "Multiple lines (e.g., 2-4, 14-16)"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-354"
+                ]
+            },
+            "title": "Tx Amount",
+            "description": "Insufficient validation of transaction amounts can lead to potential security risks.",
+            "severity": "Medium",
+            "contract": "BitnouCoin",
+            "function": "checkForWhale()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "A04.Transfer Pausable",
+            "description": "The transfer function can be paused by the owner, which may lead to unintended consequences.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "_transfer(address, address, uint256)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ],
+                "4": [
+                    "CWE-638"
+                ],
+                "5": [
+                    "CWE-424"
+                ],
+                "6": [
+                    "CWE-425"
+                ]
+            },
+            "title": "A05.Blacklist",
+            "description": "Owner cannot blacklist.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-282"
+                ],
+                "3": [
+                    "CWE-708"
+                ]
+            },
+            "title": "A06.Ownership",
+            "description": "The contract has functionality related to ownership, including renouncing and transferring ownership, which can impact the contract's behavior and control.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "renounceOwnership, transferOwnership",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Unprotected Proxy Call",
+            "description": "The contract uses a proxy call without proper validation and access control, which can lead to unauthorized access or manipulation of the proxy contract.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "updateUniswapV2Router",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "A08.Anti Whale",
+            "description": "The owner cannot limit the number of wallet holdings below 1% from total supply.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "checkForWhale()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "A09.Trading Cooldown",
+            "description": "Owner cannot set the selling time interval.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-282"
+                ],
+                "3": [
+                    "CWE-708"
+                ]
+            },
+            "title": "A10.renounceOwnership",
+            "description": "Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "renounceOwnership()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected transferOwnership Function",
+            "description": "The function transferOwnership(newOwner) lacks access control, allowing anyone to change the contract owner.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "transferOwnership",
+            "lineNumber": "N/A"
+        }
+    ]
+}

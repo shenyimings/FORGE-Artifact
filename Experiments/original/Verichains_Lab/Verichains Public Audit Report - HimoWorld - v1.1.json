@@ -1,1 +1,288 @@
-{"path": "./Audit_Reports_2024/Verichains_Lab/Verichains Public Audit Report - HimoWorld - v1.1.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Wrong listingTime when transfer zero amount", "description": "In protect function, if someone transfers 0 token to lpPair before adding LP, listingTime will be set and can not be reset so fastestValidIn feature of bot protection will not work as expected.", "severity": "HIGH", "contract": "BPContract.sol", "function": "protect()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "Low version of solidity does not support custom:oz-upgrades-unsafe-allow", "description": "Initializable is using custom:oz-upgrades-unsafe-allow which is only supported from solidity version 0.8.3 and above.", "severity": "INFORMATIVE", "contract": "Investing.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-710"], "2": ["CWE-1120"], "3": ["CWE-1060"]}, "title": "Use calldata instead of memory for gas saving", "description": "In external function with array arguments, using memory will force solidity to copy that array to memory thus wasting more gas than using directly from calldata.", "severity": "INFORMATIVE", "contract": ["BPContract", "Investing"], "function": ["multiRemoveFromBlackList", "multiAddFastestBuyer", "multiAddWhiteList", "multiRemoveFromWhiteList", "addMultiBeneficicary"], "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "PausableUpgradeable is extended but not init", "description": "The contract extends PausableUpgradeable but does not initialize it.", "severity": "INFORMATIVE", "contract": "Investing.sol", "function": "N/A", "lineNumber": "10"}, {"id": 4, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Typo in Beneficicary", "description": "There are some typo in some functions with Beneficicary , the correct should be Beneficiary .", "severity": "INFORMATIVE", "contract": "Investing.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Timestamp Dependence", "description": "The contract uses block.timestamp which can be manipulated by miners and is subject to timestamp dependence vulnerabilities.", "severity": "HIGH", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-691"], "2": ["CWE-362"]}, "title": "Race Conditions", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-435"], "2": ["CWE-436"]}, "title": "Transaction-Ordering Dependence", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-703"]}, "title": "DoS with (Unexpected) revert", "description": "N/A", "severity": "HIGH", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "DoS with Block Gas Limit", "description": "N/A", "severity": "HIGH", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Gas Usage, Gas Limit and Loops", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Redundant fallback function", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-682"]}, "title": "Unsafe type Inference", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-691"], "2": ["CWE-1265"]}, "title": "Reentrancy", "description": "N/A", "severity": "HIGH", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-284"]}, "title": "Explicit visibility of functions state variables (external, internal, private and public)", "description": "Functions or state variables with explicit visibility can lead to unintended access or modification.", "severity": "MEDIUM", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-691"], "2": ["CWE-670"], "3": ["CWE-783"]}, "title": "Logic Flaws", "description": "N/A", "severity": "N/A", "contract": "HimoWorld", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Verichains_Lab/Verichains Public Audit Report - HimoWorld - v1.1.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Wrong listingTime when transfer zero amount",
+            "description": "In protect function, if someone transfers 0 token to lpPair before adding LP, listingTime will be set and can not be reset so fastestValidIn feature of bot protection will not work as expected.",
+            "severity": "HIGH",
+            "contract": "BPContract.sol",
+            "function": "protect()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Low version of solidity does not support custom:oz-upgrades-unsafe-allow",
+            "description": "Initializable is using custom:oz-upgrades-unsafe-allow which is only supported from solidity version 0.8.3 and above.",
+            "severity": "INFORMATIVE",
+            "contract": "Investing.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1120"
+                ],
+                "3": [
+                    "CWE-1060"
+                ]
+            },
+            "title": "Use calldata instead of memory for gas saving",
+            "description": "In external function with array arguments, using memory will force solidity to copy that array to memory thus wasting more gas than using directly from calldata.",
+            "severity": "INFORMATIVE",
+            "contract": [
+                "BPContract",
+                "Investing"
+            ],
+            "function": [
+                "multiRemoveFromBlackList",
+                "multiAddFastestBuyer",
+                "multiAddWhiteList",
+                "multiRemoveFromWhiteList",
+                "addMultiBeneficicary"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "PausableUpgradeable is extended but not init",
+            "description": "The contract extends PausableUpgradeable but does not initialize it.",
+            "severity": "INFORMATIVE",
+            "contract": "Investing.sol",
+            "function": "N/A",
+            "lineNumber": "10"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Typo in Beneficicary",
+            "description": "There are some typo in some functions with Beneficicary , the correct should be Beneficiary .",
+            "severity": "INFORMATIVE",
+            "contract": "Investing.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Timestamp Dependence",
+            "description": "The contract uses block.timestamp which can be manipulated by miners and is subject to timestamp dependence vulnerabilities.",
+            "severity": "HIGH",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-362"
+                ]
+            },
+            "title": "Race Conditions",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ]
+            },
+            "title": "Transaction-Ordering Dependence",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "DoS with (Unexpected) revert",
+            "description": "N/A",
+            "severity": "HIGH",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "DoS with Block Gas Limit",
+            "description": "N/A",
+            "severity": "HIGH",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Gas Usage, Gas Limit and Loops",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Redundant fallback function",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Unsafe type Inference",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "Reentrancy",
+            "description": "N/A",
+            "severity": "HIGH",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Explicit visibility of functions state variables (external, internal, private and public)",
+            "description": "Functions or state variables with explicit visibility can lead to unintended access or modification.",
+            "severity": "MEDIUM",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-670"
+                ],
+                "3": [
+                    "CWE-783"
+                ]
+            },
+            "title": "Logic Flaws",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "HimoWorld",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

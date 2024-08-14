@@ -1,1 +1,274 @@
-{"path": "./Audit_Reports_2024/Hacken/report.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Coinbase inflation", "description": "When proof-of-stake mining is enabled, value of reward in coinbase is not validated which allows to generate any number of new coins.", "severity": "CRITICAL", "contract": "N/A", "function": "CChainState::ConnectBlock", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Duplicated transactions", "description": "It is possible to include the same transaction in more than one block due to improper validation of coinbase transactions in proof-of-stake mode.", "severity": "CRITICAL", "contract": "N/A", "function": "CChainState::ConnectBlock", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Invalid transaction time", "description": "A transaction with nVersion > 1 has a new field, nTime, that contains the timestamp of when a transaction was created. It is being verified incorrectly.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-693"], "2": ["CWE-345"], "3": ["CWE-353"]}, "title": "Transaction malleability", "description": "The transaction `nTime` field is not cryptographically secured and can be modified by anyone, allowing manipulation of proof-of-stake consensus.", "severity": "CRITICAL", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Block DoS", "description": "A node able to mine a new block can generate an infinite number of new, valid blocks causing a denial of service.", "severity": "CRITICAL", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Block header DoS", "description": "In proof-of-stake mining, it is impossible to validate whether the block header is valid or not. Anyone can generate an infinite number of new block headers, causing a denial of service attack.", "severity": "CRITICAL", "contract": "N/A", "function": "CheckBlockHeader", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "Incorrect stake modifier cache", "description": "The cache may return different results for different active_chainstate, especially when validating a new chain forking from some older block, which can lead to accepting an invalid block or rejecting a valid one.", "severity": "CRITICAL", "contract": "N/A", "function": "GetKernelStakeModifier()", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-125"]}, "title": "Coinstake DoS", "description": "Out-of-bounds array read in CheckProofOfStake function can crash the application.", "severity": "CRITICAL", "contract": "N/A", "function": "CheckProofOfStake", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Duplicated coinstake proof", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "CheckProofOfStake", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-707"]}, "title": "Invalid block synchronization", "description": "Block field `vchBlockSig` containing the block signature is not transferred when a block is synchronized using CMPCTBLOCK.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-693"], "2": ["CWE-345"], "3": ["CWE-347"]}, "title": "Invalid block validation", "description": "Proof-of-stake block may be set as valid even when it has an invalid signature.", "severity": "MEDIUM", "contract": "N/A", "function": "CheckBlock", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "CBlockIndex exception", "description": "The strprintf function will always throw a tiny format exception because the number of parameters is greater than the number of parameters required by the format string.", "severity": "LOW", "contract": "N/A", "function": "strprintf", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-682"], "2": ["CWE-1339"]}, "title": "Usage of floating point arithmetic", "description": "Floating point arithmetic used by consensus may work differently on various platforms.", "severity": "LOW", "contract": "N/A", "function": "GetCoinAgeWeight", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-682"]}, "title": "Slow GetLastBlockIndex", "description": "Function `GetLastBlockIndex` has O(n) complexity where n is a number of blocks, it may be very slow in the future.", "severity": "LOW", "contract": "N/A", "function": "GetLastBlockIndex", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-693"], "2": ["CWE-807"], "3": ["CWE-302"]}, "title": "Long range and grinding attack against consensus", "description": "Indxcoin's proof of stake consensus implementation is vulnerable to long range and grinding attacks, allowing an attacker with a very low stake (less than 0.01% of all existing coins) to potentially perform such an attack.", "severity": "Critical", "contract": "Indxcoin", "function": "N/A", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-125"]}, "title": "Out-of-bounds read (denial of service)", "description": "In function CheckProofOfStake, an out-if-bonds array read can crash the application.", "severity": "CRITICAL", "contract": "pos/kernel.cpp", "function": "CheckProofOfStake", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Hacken/report.pdf",
+    "project_info": {
+        "url": "https://github.com/indxcoin/indxcoin/tree/7d52377bec95c1e0b6f23038da0785b0b33b102a",
+        "commit_hash": "7d52377bec95c1e0b6f23038da0785b0b33b102a",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Coinbase inflation",
+            "description": "When proof-of-stake mining is enabled, value of reward in coinbase is not validated which allows to generate any number of new coins.",
+            "severity": "CRITICAL",
+            "contract": "N/A",
+            "function": "CChainState::ConnectBlock",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Duplicated transactions",
+            "description": "It is possible to include the same transaction in more than one block due to improper validation of coinbase transactions in proof-of-stake mode.",
+            "severity": "CRITICAL",
+            "contract": "N/A",
+            "function": "CChainState::ConnectBlock",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Invalid transaction time",
+            "description": "A transaction with nVersion > 1 has a new field, nTime, that contains the timestamp of when a transaction was created. It is being verified incorrectly.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-345"
+                ],
+                "3": [
+                    "CWE-353"
+                ]
+            },
+            "title": "Transaction malleability",
+            "description": "The transaction `nTime` field is not cryptographically secured and can be modified by anyone, allowing manipulation of proof-of-stake consensus.",
+            "severity": "CRITICAL",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Block DoS",
+            "description": "A node able to mine a new block can generate an infinite number of new, valid blocks causing a denial of service.",
+            "severity": "CRITICAL",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Block header DoS",
+            "description": "In proof-of-stake mining, it is impossible to validate whether the block header is valid or not. Anyone can generate an infinite number of new block headers, causing a denial of service attack.",
+            "severity": "CRITICAL",
+            "contract": "N/A",
+            "function": "CheckBlockHeader",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect stake modifier cache",
+            "description": "The cache may return different results for different active_chainstate, especially when validating a new chain forking from some older block, which can lead to accepting an invalid block or rejecting a valid one.",
+            "severity": "CRITICAL",
+            "contract": "N/A",
+            "function": "GetKernelStakeModifier()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-125"
+                ]
+            },
+            "title": "Coinstake DoS",
+            "description": "Out-of-bounds array read in CheckProofOfStake function can crash the application.",
+            "severity": "CRITICAL",
+            "contract": "N/A",
+            "function": "CheckProofOfStake",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Duplicated coinstake proof",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "CheckProofOfStake",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ]
+            },
+            "title": "Invalid block synchronization",
+            "description": "Block field `vchBlockSig` containing the block signature is not transferred when a block is synchronized using CMPCTBLOCK.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-345"
+                ],
+                "3": [
+                    "CWE-347"
+                ]
+            },
+            "title": "Invalid block validation",
+            "description": "Proof-of-stake block may be set as valid even when it has an invalid signature.",
+            "severity": "MEDIUM",
+            "contract": "N/A",
+            "function": "CheckBlock",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "CBlockIndex exception",
+            "description": "The strprintf function will always throw a tiny format exception because the number of parameters is greater than the number of parameters required by the format string.",
+            "severity": "LOW",
+            "contract": "N/A",
+            "function": "strprintf",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "Usage of floating point arithmetic",
+            "description": "Floating point arithmetic used by consensus may work differently on various platforms.",
+            "severity": "LOW",
+            "contract": "N/A",
+            "function": "GetCoinAgeWeight",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Slow GetLastBlockIndex",
+            "description": "Function `GetLastBlockIndex` has O(n) complexity where n is a number of blocks, it may be very slow in the future.",
+            "severity": "LOW",
+            "contract": "N/A",
+            "function": "GetLastBlockIndex",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ],
+                "3": [
+                    "CWE-302"
+                ]
+            },
+            "title": "Long range and grinding attack against consensus",
+            "description": "Indxcoin's proof of stake consensus implementation is vulnerable to long range and grinding attacks, allowing an attacker with a very low stake (less than 0.01% of all existing coins) to potentially perform such an attack.",
+            "severity": "Critical",
+            "contract": "Indxcoin",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-125"
+                ]
+            },
+            "title": "Out-of-bounds read (denial of service)",
+            "description": "In function CheckProofOfStake, an out-if-bonds array read can crash the application.",
+            "severity": "CRITICAL",
+            "contract": "pos/kernel.cpp",
+            "function": "CheckProofOfStake",
+            "lineNumber": "N/A"
+        }
+    ]
+}

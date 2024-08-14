@@ -1,1 +1,162 @@
-{"path": "./Audit_Reports_2024/PepperSec/POA-Network-Bridge-audit-report.pdf", "project_info": {"url": "https://github.com/poanetwork/poa-bridge-contracts", "commit_hash": "2bf70c7e9fd42968aec2dc352017618907834401", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Double spending", "description": "Since the signatures for the NativeToERC and ERC20ToERC20 (home to foreign) transfers are not different in any way, they can be used to cause double spending.", "severity": "Major", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "Contract does not prevent accidental token transferring", "description": "The transfer method does not prevent token transferring to ForeignBridgeNativeToErc, but in this case the UserRequestForAffirmation(userAddr, value) event will not be fired.", "severity": "Medium", "contract": "HomeBridgeNativeToErc", "function": "transfer()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Possible Denial of Service", "description": "No description provided in the audit report fragment.", "severity": "Minor", "contract": "HomeBridgeNativeToErc", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Unnecessary functionality", "description": "Redundant checks and code", "severity": "Acknowledged", "contract": "ERC677BridgeToken", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Redundant checks and code", "description": "N/A", "severity": "Medium", "contract": "BridgeValidators", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-755"], "3": ["CWE-392"]}, "title": "Function does not generate the event", "description": "The initialize function sets the requiredSignatures var but does not generate the RequiredSignaturesChanged(requiredSignatures); event.", "severity": "Minor", "contract": "BridgeValidators.sol", "function": "initialize()", "lineNumber": "L15"}, {"id": 6, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "No message checking", "description": "The submitSignature function in BasicHomeBridge.sol contract does not check the message entities, allowing an attacker to spoof recipient or value by a MITM attack.", "severity": "Minor", "contract": "BasicHomeBridge.sol", "function": "submitSignature", "lineNumber": "L43"}, {"id": 7, "category": {"1": ["CWE-435"], "2": ["CWE-436"], "3": ["CWE-437"]}, "title": "Possible Validators/RequiredSignatures desync", "description": "Because there is no on-chain way to sync the \u201cHome\u201d and \u201cForeign\u201d sides in terms of \u201ccurrent Validators list\u201d and/or RequiredSignatures , Validator Software should notify of any desync and stop Bridge trade if it happens.", "severity": "No issue", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/PepperSec/POA-Network-Bridge-audit-report.pdf",
+    "project_info": {
+        "url": "https://github.com/poanetwork/poa-bridge-contracts",
+        "commit_hash": "2bf70c7e9fd42968aec2dc352017618907834401",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Double spending",
+            "description": "Since the signatures for the NativeToERC and ERC20ToERC20 (home to foreign) transfers are not different in any way, they can be used to cause double spending.",
+            "severity": "Major",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Contract does not prevent accidental token transferring",
+            "description": "The transfer method does not prevent token transferring to ForeignBridgeNativeToErc, but in this case the UserRequestForAffirmation(userAddr, value) event will not be fired.",
+            "severity": "Medium",
+            "contract": "HomeBridgeNativeToErc",
+            "function": "transfer()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Possible Denial of Service",
+            "description": "No description provided in the audit report fragment.",
+            "severity": "Minor",
+            "contract": "HomeBridgeNativeToErc",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Unnecessary functionality",
+            "description": "Redundant checks and code",
+            "severity": "Acknowledged",
+            "contract": "ERC677BridgeToken",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Redundant checks and code",
+            "description": "N/A",
+            "severity": "Medium",
+            "contract": "BridgeValidators",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-755"
+                ],
+                "3": [
+                    "CWE-392"
+                ]
+            },
+            "title": "Function does not generate the event",
+            "description": "The initialize function sets the requiredSignatures var but does not generate the RequiredSignaturesChanged(requiredSignatures); event.",
+            "severity": "Minor",
+            "contract": "BridgeValidators.sol",
+            "function": "initialize()",
+            "lineNumber": "L15"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "No message checking",
+            "description": "The submitSignature function in BasicHomeBridge.sol contract does not check the message entities, allowing an attacker to spoof recipient or value by a MITM attack.",
+            "severity": "Minor",
+            "contract": "BasicHomeBridge.sol",
+            "function": "submitSignature",
+            "lineNumber": "L43"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-437"
+                ]
+            },
+            "title": "Possible Validators/RequiredSignatures desync",
+            "description": "Because there is no on-chain way to sync the \u201cHome\u201d and \u201cForeign\u201d sides in terms of \u201ccurrent Validators list\u201d and/or RequiredSignatures , Validator Software should notify of any desync and stop Bridge trade if it happens.",
+            "severity": "No issue",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

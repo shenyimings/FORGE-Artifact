@@ -1,1 +1,164 @@
-{"path": "./Audit_Reports_2024/Verichains_Lab/Verichains Public Report - Xpool Deployment Review - v2.0.pdf", "project_info": {"url": "https://github.com/aave/protocol-v2", "commit_hash": "30a2a19f6d28b6fb8d26fc07568ca0f2918f4070", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"]}, "title": "A01. Unprotected `constructor` function", "description": "The constructor function in TokenTimeLockV2 contract is unprotected and can be called externally, potentially allowing unauthorized access to sensitive functionality.", "severity": "High", "contract": "TokenTimeLockV2", "function": "constructor()", "lineNumber": "6-14"}, {"id": 1, "category": {"1": ["CWE-693"], "2": ["CWE-330"], "3": ["CWE-340"], "4": ["CWE-341"]}, "title": "Use of `block.timestamp` for time-sensitive logic", "description": "The contract uses `block.timestamp` for time-sensitive logic which can be vulnerable to manipulation by miners.", "severity": "Medium", "contract": "TokenTimeLockV2", "function": ["constructor()", "balance()"], "lineNumber": ["5-6", "19"]}, {"id": 2, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "A03. Lack of input validation in `balance()` function", "description": "The `balance()` function does not perform any input validation, which can lead to potential security vulnerabilities.", "severity": "High", "contract": "TokenTimeLockV2", "function": "balance()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-693"]}, "title": "Potential reentrancy vulnerability in `claim()` function", "description": "The claim() function has a potential reentrancy vulnerability due to the use of transfer from IERC20(token) which can lead to reentrancy attacks.", "severity": "High", "contract": "TokenTimeLockV2", "function": "claim()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-693"]}, "title": "A05. Unsecured use of `transfer()` function", "description": "Unsecured use of transfer() function can lead to reentrancy attacks.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Insecure Use of `mul()` and `div()` Functions", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Unvalidated user input in `beneficier` variable", "description": "The `beneficier` variable is vulnerable to unvalidated user input.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-284"]}, "title": "A08. Unprotected `lastClaim` variable", "description": "The `lastClaim` variable is unprotected and can be modified by anyone, potentially leading to unauthorized claims.", "severity": "High", "contract": "TokenTimeLockV2", "function": "N/A", "lineNumber": "constructor, claim()"}, {"id": 8, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1173"]}, "title": "A09. Insecure use of `IERC20` interface", "description": "The finding indicates insecure usage of the IERC20 interface which can lead to security vulnerabilities.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Verichains_Lab/Verichains Public Report - Xpool Deployment Review - v2.0.pdf",
+    "project_info": {
+        "url": "https://github.com/aave/protocol-v2",
+        "commit_hash": "30a2a19f6d28b6fb8d26fc07568ca0f2918f4070",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "A01. Unprotected `constructor` function",
+            "description": "The constructor function in TokenTimeLockV2 contract is unprotected and can be called externally, potentially allowing unauthorized access to sensitive functionality.",
+            "severity": "High",
+            "contract": "TokenTimeLockV2",
+            "function": "constructor()",
+            "lineNumber": "6-14"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-330"
+                ],
+                "3": [
+                    "CWE-340"
+                ],
+                "4": [
+                    "CWE-341"
+                ]
+            },
+            "title": "Use of `block.timestamp` for time-sensitive logic",
+            "description": "The contract uses `block.timestamp` for time-sensitive logic which can be vulnerable to manipulation by miners.",
+            "severity": "Medium",
+            "contract": "TokenTimeLockV2",
+            "function": [
+                "constructor()",
+                "balance()"
+            ],
+            "lineNumber": [
+                "5-6",
+                "19"
+            ]
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "A03. Lack of input validation in `balance()` function",
+            "description": "The `balance()` function does not perform any input validation, which can lead to potential security vulnerabilities.",
+            "severity": "High",
+            "contract": "TokenTimeLockV2",
+            "function": "balance()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "Potential reentrancy vulnerability in `claim()` function",
+            "description": "The claim() function has a potential reentrancy vulnerability due to the use of transfer from IERC20(token) which can lead to reentrancy attacks.",
+            "severity": "High",
+            "contract": "TokenTimeLockV2",
+            "function": "claim()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "A05. Unsecured use of `transfer()` function",
+            "description": "Unsecured use of transfer() function can lead to reentrancy attacks.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Insecure Use of `mul()` and `div()` Functions",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Unvalidated user input in `beneficier` variable",
+            "description": "The `beneficier` variable is vulnerable to unvalidated user input.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "A08. Unprotected `lastClaim` variable",
+            "description": "The `lastClaim` variable is unprotected and can be modified by anyone, potentially leading to unauthorized claims.",
+            "severity": "High",
+            "contract": "TokenTimeLockV2",
+            "function": "N/A",
+            "lineNumber": "constructor, claim()"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1173"
+                ]
+            },
+            "title": "A09. Insecure use of `IERC20` interface",
+            "description": "The finding indicates insecure usage of the IERC20 interface which can lead to security vulnerabilities.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

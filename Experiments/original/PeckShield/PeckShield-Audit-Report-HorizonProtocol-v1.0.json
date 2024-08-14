@@ -1,1 +1,135 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-HorizonProtocol-v1.0.pdf", "project_info": {"url": "https://github.com/Horizon-Protocol/testnet-contracts.git", "commit_hash": "299917f", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-435"], "2": ["CWE-436"]}, "title": "Inconsistent Transfer Logic in Synth::transfer()/transferFrom()", "description": "The ERC20-compliant token-transferring feature has an inconsistent implementation between `transfer()` and `transferFrom()` routines.", "severity": "Low", "contract": "Synth", "function": "transfer() / transferFrom()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Improved SignedSafeMath::mul() Logic", "description": "The `mul()` function from the `SignedSafeMath` contract does not handle all overflowing cases when operating on signed integers.", "severity": "Low", "contract": "SignedSafeMath", "function": "mul()", "lineNumber": "49-63"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Improper Logic of Exchanger::calculateAmountAfterSettlement()", "description": "The `calculateAmountAfterSettlement()` function has improper logic that can cause incorrect calculations of synth balance after settlement.", "severity": "Medium", "contract": "Exchanger", "function": "calculateAmountAfterSettlement()", "lineNumber": "277-297"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "3.4 Explicit collateralKey Enforcement in CollateralShort", "description": "The contract 'CollateralShort' does not explicitly enforce the use of 'sUSD' as collateral, which is strongly suggested.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "3.5 Redundant State/Code Removal", "description": "The `Horizon` protocol has unused code or unnecessary redundancies that can be safely removed. For example, in the `Exchanger` contract, there is a routine to calculate the dynamic fee for the given currency with an early exit condition checked twice, which can be simplified.", "severity": "Informational", "contract": "Exchanger", "function": "_dynamicFeeRateForCurrency", "lineNumber": "774-776, 792-794"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Trust Issue of Admin Keys", "description": "In the Horizon protocol, there is a privileged owner account that plays a critical role in governing and regulating the protocol-wide operations, allowing an attacker to modify sensitive system parameters.", "severity": "Medium", "contract": "Multiple Contracts", "function": ["setIssuanceRatio()", "setTradingRewardsEnabled()", "setWaitingPeriodSecs()", "setPriceDeviationThresholdFactor()"], "lineNumber": "276-297"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "Improved Logic of BaseRewardEscrowV2::accountMergingIsOpen()", "description": "The helper routine of `accountMergingIsOpen()` can be improved by making an implicit assumption explicit.", "severity": "Low", "contract": "BaseRewardEscrowV2", "function": "accountMergingIsOpen()", "lineNumber": "378-380"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-HorizonProtocol-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/Horizon-Protocol/testnet-contracts.git",
+        "commit_hash": "299917f",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ]
+            },
+            "title": "Inconsistent Transfer Logic in Synth::transfer()/transferFrom()",
+            "description": "The ERC20-compliant token-transferring feature has an inconsistent implementation between `transfer()` and `transferFrom()` routines.",
+            "severity": "Low",
+            "contract": "Synth",
+            "function": "transfer() / transferFrom()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Improved SignedSafeMath::mul() Logic",
+            "description": "The `mul()` function from the `SignedSafeMath` contract does not handle all overflowing cases when operating on signed integers.",
+            "severity": "Low",
+            "contract": "SignedSafeMath",
+            "function": "mul()",
+            "lineNumber": "49-63"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improper Logic of Exchanger::calculateAmountAfterSettlement()",
+            "description": "The `calculateAmountAfterSettlement()` function has improper logic that can cause incorrect calculations of synth balance after settlement.",
+            "severity": "Medium",
+            "contract": "Exchanger",
+            "function": "calculateAmountAfterSettlement()",
+            "lineNumber": "277-297"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "3.4 Explicit collateralKey Enforcement in CollateralShort",
+            "description": "The contract 'CollateralShort' does not explicitly enforce the use of 'sUSD' as collateral, which is strongly suggested.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "3.5 Redundant State/Code Removal",
+            "description": "The `Horizon` protocol has unused code or unnecessary redundancies that can be safely removed. For example, in the `Exchanger` contract, there is a routine to calculate the dynamic fee for the given currency with an early exit condition checked twice, which can be simplified.",
+            "severity": "Informational",
+            "contract": "Exchanger",
+            "function": "_dynamicFeeRateForCurrency",
+            "lineNumber": "774-776, 792-794"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "In the Horizon protocol, there is a privileged owner account that plays a critical role in governing and regulating the protocol-wide operations, allowing an attacker to modify sensitive system parameters.",
+            "severity": "Medium",
+            "contract": "Multiple Contracts",
+            "function": [
+                "setIssuanceRatio()",
+                "setTradingRewardsEnabled()",
+                "setWaitingPeriodSecs()",
+                "setPriceDeviationThresholdFactor()"
+            ],
+            "lineNumber": "276-297"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improved Logic of BaseRewardEscrowV2::accountMergingIsOpen()",
+            "description": "The helper routine of `accountMergingIsOpen()` can be improved by making an implicit assumption explicit.",
+            "severity": "Low",
+            "contract": "BaseRewardEscrowV2",
+            "function": "accountMergingIsOpen()",
+            "lineNumber": "378-380"
+        }
+    ]
+}

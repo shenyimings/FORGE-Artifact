@@ -1,1 +1,130 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-BNPL-v1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Improved Logic Of Calculation For PrincipalLost Amount", "description": "The calculation of principalLost uses (1e12 * principalLost)/ getTotalAssetValue(), which makes an implicit assumption that principalLost is the total loss, but it should equal to principalLost - baseTokenOut.", "severity": "Medium", "contract": "BankingNode", "function": "slashLoan()", "lineNumber": "645-670"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Proper Handling Of TotalUnbondingShares Calculation", "description": "Logic error in unstake() routine of BankingNode contract leading to incorrect calculation of totalUnbondingShares.", "severity": "Medium", "contract": "BankingNode", "function": "unstake()", "lineNumber": "615-637"}, {"id": 2, "category": {"1": ["CWE-691"], "2": ["CWE-1265"]}, "title": "Reentrancy Risk In BankingNode", "description": "The `unstake()` function in `BankingNode` contract violates the `checks-effects-interactions` principle, making it vulnerable to re-entrancy attacks.", "severity": "Low", "contract": "BankingNode", "function": "unstake()", "lineNumber": "631"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Possible Costly LPs From Improper BankingNode Initialization", "description": "The `BankingNode` contract allows lenders to deposit funds and receive `bUSD` token as shares. However, an issue may cause share calculation to be extremely expensive or even result in loss for later depositors due to improper initialization.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-229"], "4": ["CWE-230"]}, "title": "Accommodation Of Approve() Idiosyncrasies", "description": "The `approve()` routine may have idiosyncrasies from current widely-used token contracts due to non-strict adherence to ERC-20 specification, which can lead to a known `approve()/transferFrom()` race condition. The function requires reducing the allowance to 0 first before setting the proper allowance.", "severity": "Low", "contract": "BankingNode", "function": "_depositToLendingPool()", "lineNumber": "863-867"}, {"id": 5, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Incompatibility With Deflationary Tokens", "description": "The BNPLRewardsController contract is incompatible with deflationary tokens due to its use of safeTransferFrom() routine, which may cause inconsistent internal asset balances and actual token balances.", "severity": "Low", "contract": "BNPLRewardsController", "function": "deposit(), withdraw()", "lineNumber": "161-163, 167-170"}, {"id": 6, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "Possible Sandwich/MEV Attacks For Reduced Returns", "description": "The `BankingNode` contract's `collectFees()` function is vulnerable to possible sandwich/MEV attacks for reduced returns due to its logic of token swap and fee collection.", "severity": "Low", "contract": "BankingNode", "function": "collectFees()", "lineNumber": "453-470"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-BNPL-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/BNPLPayTech/BNPL/tree/1f791a6c1d292d3c600b9d8420d841ec577116b2",
+        "commit_hash": "1f791a6c1d292d3c600b9d8420d841ec577116b2",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improved Logic Of Calculation For PrincipalLost Amount",
+            "description": "The calculation of principalLost uses (1e12 * principalLost)/ getTotalAssetValue(), which makes an implicit assumption that principalLost is the total loss, but it should equal to principalLost - baseTokenOut.",
+            "severity": "Medium",
+            "contract": "BankingNode",
+            "function": "slashLoan()",
+            "lineNumber": "645-670"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Proper Handling Of TotalUnbondingShares Calculation",
+            "description": "Logic error in unstake() routine of BankingNode contract leading to incorrect calculation of totalUnbondingShares.",
+            "severity": "Medium",
+            "contract": "BankingNode",
+            "function": "unstake()",
+            "lineNumber": "615-637"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "Reentrancy Risk In BankingNode",
+            "description": "The `unstake()` function in `BankingNode` contract violates the `checks-effects-interactions` principle, making it vulnerable to re-entrancy attacks.",
+            "severity": "Low",
+            "contract": "BankingNode",
+            "function": "unstake()",
+            "lineNumber": "631"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Possible Costly LPs From Improper BankingNode Initialization",
+            "description": "The `BankingNode` contract allows lenders to deposit funds and receive `bUSD` token as shares. However, an issue may cause share calculation to be extremely expensive or even result in loss for later depositors due to improper initialization.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ],
+                "4": [
+                    "CWE-230"
+                ]
+            },
+            "title": "Accommodation Of Approve() Idiosyncrasies",
+            "description": "The `approve()` routine may have idiosyncrasies from current widely-used token contracts due to non-strict adherence to ERC-20 specification, which can lead to a known `approve()/transferFrom()` race condition. The function requires reducing the allowance to 0 first before setting the proper allowance.",
+            "severity": "Low",
+            "contract": "BankingNode",
+            "function": "_depositToLendingPool()",
+            "lineNumber": "863-867"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Incompatibility With Deflationary Tokens",
+            "description": "The BNPLRewardsController contract is incompatible with deflationary tokens due to its use of safeTransferFrom() routine, which may cause inconsistent internal asset balances and actual token balances.",
+            "severity": "Low",
+            "contract": "BNPLRewardsController",
+            "function": "deposit(), withdraw()",
+            "lineNumber": "161-163, 167-170"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Possible Sandwich/MEV Attacks For Reduced Returns",
+            "description": "The `BankingNode` contract's `collectFees()` function is vulnerable to possible sandwich/MEV attacks for reduced returns due to its logic of token swap and fee collection.",
+            "severity": "Low",
+            "contract": "BankingNode",
+            "function": "collectFees()",
+            "lineNumber": "453-470"
+        }
+    ]
+}

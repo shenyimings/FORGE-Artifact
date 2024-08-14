@@ -1,1 +1,129 @@
-{"path": "./Audit_Reports_2024/Coinspect/RIF2018v2006.pdf", "project_info": {"url": "N/A", "commit_hash": "b045729bb556fd02399ca5ca3ddc247b5e35d908", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Contributors can transfer tokens before redeemed", "description": "The function `transferFrom` in `RIFToken` doesn't enforce the rule that contributors cannot move their tokens before they redeem them. A contributor could take advantage of this vulnerability to move funds before redeeming them by calling `approve` with a destination address and then calling `transferFrom` to move token to the destination address.", "severity": "Medium", "contract": "RIFToken", "function": "transferFrom() and approve()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"]}, "title": "Anyone can steal tokens of shareholders", "description": "The `setShareholderAddress` function in the `TokenManager` contract has no access controls, allowing anyone to call it and steal tokens destined for shareholders.", "severity": "High", "contract": "TokenManager", "function": "setShareholderAddress()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-691"], "2": ["CWE-841"]}, "title": "Potential unexpected lockout states", "description": "N/A", "severity": "Low", "contract": "LockupAccount", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Redeem multiple contributors to same address increases paid bonus", "description": "An attacker can exploit the vulnerability by redeeming multiple contributors to the same address, resulting in an increased paid bonus. This is possible due to the overwrite of the `minimumLeftFromSale` variable when a second contributor redeems to the same address.", "severity": "High", "contract": "RIFToken", "function": "contingentRedeem", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-710"], "2": ["CWE-1061"], "3": ["CWE-766"]}, "title": "Missing visibility modifiers in TransferAndCall", "description": "The public method `TransferAndCall` in the RIFToken contract lacks visibility modifiers, such as `public`. It\u2019s a good smart-contract programming practice to clearly distinguish between private and public methods, to prevent mistakes.", "severity": "Low", "contract": "RIFToken", "function": "TransferAndCall", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "redeemToSameAddress does not return the expected value", "description": "The method `redeemToSameAddress` in the RIFToken contract specifies that a bool result will be returned, however there is no `return` statement in the function.", "severity": "High", "contract": "RIFToken", "function": "redeemToSameAddress()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-241"]}, "title": "fromAsciiString does not fail for invalid addresses", "description": "The function AddressHelper.fromAsciiString accepts invalid hexadecimal strings and returns an address() with a 0 in the position of each invalid hexadecimal character. This function is used to obtain the destination address for the tokens when the RIFToken.redeem function is called by a contributor.", "severity": "Medium", "contract": "RIFToken", "function": "redeem", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Coinspect/RIF2018v2006.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "b045729bb556fd02399ca5ca3ddc247b5e35d908",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Contributors can transfer tokens before redeemed",
+            "description": "The function `transferFrom` in `RIFToken` doesn't enforce the rule that contributors cannot move their tokens before they redeem them. A contributor could take advantage of this vulnerability to move funds before redeeming them by calling `approve` with a destination address and then calling `transferFrom` to move token to the destination address.",
+            "severity": "Medium",
+            "contract": "RIFToken",
+            "function": "transferFrom() and approve()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Anyone can steal tokens of shareholders",
+            "description": "The `setShareholderAddress` function in the `TokenManager` contract has no access controls, allowing anyone to call it and steal tokens destined for shareholders.",
+            "severity": "High",
+            "contract": "TokenManager",
+            "function": "setShareholderAddress()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "Potential unexpected lockout states",
+            "description": "N/A",
+            "severity": "Low",
+            "contract": "LockupAccount",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Redeem multiple contributors to same address increases paid bonus",
+            "description": "An attacker can exploit the vulnerability by redeeming multiple contributors to the same address, resulting in an increased paid bonus. This is possible due to the overwrite of the `minimumLeftFromSale` variable when a second contributor redeems to the same address.",
+            "severity": "High",
+            "contract": "RIFToken",
+            "function": "contingentRedeem",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1061"
+                ],
+                "3": [
+                    "CWE-766"
+                ]
+            },
+            "title": "Missing visibility modifiers in TransferAndCall",
+            "description": "The public method `TransferAndCall` in the RIFToken contract lacks visibility modifiers, such as `public`. It\u2019s a good smart-contract programming practice to clearly distinguish between private and public methods, to prevent mistakes.",
+            "severity": "Low",
+            "contract": "RIFToken",
+            "function": "TransferAndCall",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "redeemToSameAddress does not return the expected value",
+            "description": "The method `redeemToSameAddress` in the RIFToken contract specifies that a bool result will be returned, however there is no `return` statement in the function.",
+            "severity": "High",
+            "contract": "RIFToken",
+            "function": "redeemToSameAddress()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-241"
+                ]
+            },
+            "title": "fromAsciiString does not fail for invalid addresses",
+            "description": "The function AddressHelper.fromAsciiString accepts invalid hexadecimal strings and returns an address() with a 0 in the position of each invalid hexadecimal character. This function is used to obtain the destination address for the tokens when the RIFToken.redeem function is called by a contributor.",
+            "severity": "Medium",
+            "contract": "RIFToken",
+            "function": "redeem",
+            "lineNumber": "N/A"
+        }
+    ]
+}

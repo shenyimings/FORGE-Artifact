@@ -1,1 +1,274 @@
-{"path": "./Audit_Reports_2024/Trail_of_Bits/numerai.pdf", "project_info": {"url": "N/A", "commit_hash": "374de2e9500cef332487a3f92b1959c41b4fd9b8", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-664"], "2": ["CWE-404"], "3": ["CWE-772"], "4": ["CWE-775"]}, "title": "createRound in UpgradeDelegate calls delete on a struct containing a mapping", "description": "The createRound function in the UpgradeDelegate contract has been repurposed to clear out active rounds from the tournament contract. As part of this process, it loops over the tournaments state variable and deletes all of its rounds. However, a Round struct contains a mapping called stakes.", "severity": "Low", "contract": "UpgradeDelegate", "function": "createRound", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-393"]}, "title": "Missing return on disableContractUpgradability", "description": "The function disableContractUpgradability in NumeraireBackend is intended to prevent the contract from being upgraded beyond its current state but does not include a return statement, resulting in it always returning false.", "severity": "Low", "contract": "NumeraireBackend", "function": "disableContractUpgradability()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-435"], "2": ["CWE-436"]}, "title": "The Gnosis wallet has incompatible behaviors between wallet implementations regarding data padding", "description": "MultiSigWalletWithDailyLimit is meant to be an extension of MultiSigWallet with a daily limit. In versions of the wallet prior to commit 95d51ae89ddec56859720fbb28cfe9d6732a26cf, the use of different calling patterns results in different transaction behaviors if the length of the data sent is not a multiple of 32 bytes.", "severity": "Medium", "contract": "MultiSigWallet", "function": "external_call", "lineNumber": "244-261"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "The Gnosis wallet does not check for contract existence and may mislead the user about the transaction's result", "description": "A failure to check for a contract\u2019s existence may mislead a user into thinking that a failed transaction was successful.", "severity": "Medium", "contract": "MultiSigWallet, MultiSigWalletWithDailyLimit", "function": "external_call", "lineNumber": "244-261, 59"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Project dependencies contain vulnerabilities", "description": "Dependencies with known vulnerabilities have been identified in the NMR_monorepo project, which could potentially lead to malicious code execution and sensitive information disclosure.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-703"]}, "title": "Yarn commands can fail and still continue execution", "description": "When performing an upgrade or migration, Yarn scripts can fail and still continue execution, causing unintended behavior of commands executing after a failed group of commands.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Transactions can occur during the upgrade process", "description": "The current process to upgrade does not account for transactions which could occur during an upgrade, leading to data loss and an invalid system state.", "severity": "Medium", "contract": "Numerai smart contracts", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "The call function has confusing success logic and comorbid return values", "description": "Within migrationProcedure.js, the call helper function is used to invoke on-chain contract methods with a shouldSucceed parameter, but the logic used to determine whether an error occurred is based on two variables: shouldSucceed and succeeded, resulting in confusing success logic and comorbid return values.", "severity": "Informational", "contract": "NMR_monorepo", "function": "call()", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-703"]}, "title": "Error logging is disabled for calls to contracts on-chain", "description": "Within $PROJECT_ROOT/scripts/test/migrationProcedure.js the call helper function is used to invoke on-chain contract methods. When the call function is executed and an error occurs, error-handling logic denotes that an error has occurred, but this error is not captured, returned, or logged.", "severity": "Medium", "contract": "N/A", "function": "call", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Solidity compiler optimizations can be dangerous", "description": "Numerai has enabled optional compiler optimizations in Solidity which have been related to security implications and bugs in the past.", "severity": "Informational", "contract": "NMR_monorepo", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-703"], "2": ["CWE-393"]}, "title": "TOB-NMR-002: Missing return on disableContractUpgradability", "description": "The function disableContractUpgradability in NumeraireBackend is intended to prevent the contract from being upgraded beyond its current state, but it does not include a return statement and will always return false.", "severity": "Low", "contract": "NumeraireBackend", "function": "disableContractUpgradability()", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-435"], "2": ["CWE-436"]}, "title": "Incompatible Behaviors Between Wallet Implementations Regarding Data Padding", "description": "MultiSigWalletWithDailyLimit is meant to be an extension of MultiSigWallet with a daily limit. In versions of the wallet prior to commit 95d51ae89ddec56859720fbb28cfe9d6732a26cf, the use of different calling patterns results in different transaction behaviors if the length of the data sent is not a multiple of 32 bytes.", "severity": "Medium", "contract": "MultiSigWallet", "function": "external_call", "lineNumber": "244-261"}, {"id": 12, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "TOB-NMR-004: The Gnosis wallet does not check for contract existence and may mislead the user about transaction's result", "description": "A failure to check for a contract's existence may mislead a user into thinking that a failed transaction was successful.", "severity": "Medium", "contract": "MultiSigWallet, MultiSigWalletWithDailyLimit", "function": "external_call", "lineNumber": "244-261, 59"}, {"id": 13, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Transactions can occur during the upgrade process", "description": "The current process to upgrade does not account for transactions which could occur during an upgrade. This could lead to data loss, and consequently an invalid system state.", "severity": "Medium", "contract": "Numerai smart contracts", "function": "N/A", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Solidity compiler optimizations can be dangerous", "description": "Numerai has enabled optional compiler optimizations in Solidity which have been related to several bugs with security implications and it is unclear how well they are being tested and exercised.", "severity": "Informational", "contract": "NMR_ monorepo/ truffle-config.js and NMR_ monorepo/truffle-config-0.4.js", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/numerai.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "374de2e9500cef332487a3f92b1959c41b4fd9b8",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-775"
+                ]
+            },
+            "title": "createRound in UpgradeDelegate calls delete on a struct containing a mapping",
+            "description": "The createRound function in the UpgradeDelegate contract has been repurposed to clear out active rounds from the tournament contract. As part of this process, it loops over the tournaments state variable and deletes all of its rounds. However, a Round struct contains a mapping called stakes.",
+            "severity": "Low",
+            "contract": "UpgradeDelegate",
+            "function": "createRound",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-393"
+                ]
+            },
+            "title": "Missing return on disableContractUpgradability",
+            "description": "The function disableContractUpgradability in NumeraireBackend is intended to prevent the contract from being upgraded beyond its current state but does not include a return statement, resulting in it always returning false.",
+            "severity": "Low",
+            "contract": "NumeraireBackend",
+            "function": "disableContractUpgradability()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ]
+            },
+            "title": "The Gnosis wallet has incompatible behaviors between wallet implementations regarding data padding",
+            "description": "MultiSigWalletWithDailyLimit is meant to be an extension of MultiSigWallet with a daily limit. In versions of the wallet prior to commit 95d51ae89ddec56859720fbb28cfe9d6732a26cf, the use of different calling patterns results in different transaction behaviors if the length of the data sent is not a multiple of 32 bytes.",
+            "severity": "Medium",
+            "contract": "MultiSigWallet",
+            "function": "external_call",
+            "lineNumber": "244-261"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "The Gnosis wallet does not check for contract existence and may mislead the user about the transaction's result",
+            "description": "A failure to check for a contract\u2019s existence may mislead a user into thinking that a failed transaction was successful.",
+            "severity": "Medium",
+            "contract": "MultiSigWallet, MultiSigWalletWithDailyLimit",
+            "function": "external_call",
+            "lineNumber": "244-261, 59"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Project dependencies contain vulnerabilities",
+            "description": "Dependencies with known vulnerabilities have been identified in the NMR_monorepo project, which could potentially lead to malicious code execution and sensitive information disclosure.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Yarn commands can fail and still continue execution",
+            "description": "When performing an upgrade or migration, Yarn scripts can fail and still continue execution, causing unintended behavior of commands executing after a failed group of commands.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Transactions can occur during the upgrade process",
+            "description": "The current process to upgrade does not account for transactions which could occur during an upgrade, leading to data loss and an invalid system state.",
+            "severity": "Medium",
+            "contract": "Numerai smart contracts",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "The call function has confusing success logic and comorbid return values",
+            "description": "Within migrationProcedure.js, the call helper function is used to invoke on-chain contract methods with a shouldSucceed parameter, but the logic used to determine whether an error occurred is based on two variables: shouldSucceed and succeeded, resulting in confusing success logic and comorbid return values.",
+            "severity": "Informational",
+            "contract": "NMR_monorepo",
+            "function": "call()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Error logging is disabled for calls to contracts on-chain",
+            "description": "Within $PROJECT_ROOT/scripts/test/migrationProcedure.js the call helper function is used to invoke on-chain contract methods. When the call function is executed and an error occurs, error-handling logic denotes that an error has occurred, but this error is not captured, returned, or logged.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "call",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Solidity compiler optimizations can be dangerous",
+            "description": "Numerai has enabled optional compiler optimizations in Solidity which have been related to security implications and bugs in the past.",
+            "severity": "Informational",
+            "contract": "NMR_monorepo",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-393"
+                ]
+            },
+            "title": "TOB-NMR-002: Missing return on disableContractUpgradability",
+            "description": "The function disableContractUpgradability in NumeraireBackend is intended to prevent the contract from being upgraded beyond its current state, but it does not include a return statement and will always return false.",
+            "severity": "Low",
+            "contract": "NumeraireBackend",
+            "function": "disableContractUpgradability()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ]
+            },
+            "title": "Incompatible Behaviors Between Wallet Implementations Regarding Data Padding",
+            "description": "MultiSigWalletWithDailyLimit is meant to be an extension of MultiSigWallet with a daily limit. In versions of the wallet prior to commit 95d51ae89ddec56859720fbb28cfe9d6732a26cf, the use of different calling patterns results in different transaction behaviors if the length of the data sent is not a multiple of 32 bytes.",
+            "severity": "Medium",
+            "contract": "MultiSigWallet",
+            "function": "external_call",
+            "lineNumber": "244-261"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "TOB-NMR-004: The Gnosis wallet does not check for contract existence and may mislead the user about transaction's result",
+            "description": "A failure to check for a contract's existence may mislead a user into thinking that a failed transaction was successful.",
+            "severity": "Medium",
+            "contract": "MultiSigWallet, MultiSigWalletWithDailyLimit",
+            "function": "external_call",
+            "lineNumber": "244-261, 59"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Transactions can occur during the upgrade process",
+            "description": "The current process to upgrade does not account for transactions which could occur during an upgrade. This could lead to data loss, and consequently an invalid system state.",
+            "severity": "Medium",
+            "contract": "Numerai smart contracts",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Solidity compiler optimizations can be dangerous",
+            "description": "Numerai has enabled optional compiler optimizations in Solidity which have been related to several bugs with security implications and it is unclear how well they are being tested and exercised.",
+            "severity": "Informational",
+            "contract": "NMR_ monorepo/ truffle-config.js and NMR_ monorepo/truffle-config-0.4.js",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

@@ -1,1 +1,173 @@
-{"path": "./Audit_Reports_2024/HAECHI_AUDIT/HAECHI_AUDIT-Klaytn_Service_Bridge.pdf", "project_info": {"url": "https://github.com/HAECHI-LABS/audit-klaytn-service-chain", "commit_hash": "48eee111ba5cf0a8f29708937880b0e829761499", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-693"], "2": ["CWE-358"]}, "title": "One Token Holder can paralyze the Bridge Contract", "description": "A token holder can prevent transaction processing by not approving a token in the Bridge Contract, causing the nonce to not increase and paralyzing the Bridge Contract.", "severity": "Critical", "contract": "Bridge", "function": "N/A", "lineNumber": "134-146"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Unintended Behavior in checkAndCallSafeTransfer()", "description": "In ServiceChainToken#checkAndCallSafeTransfer() and ServiceChainNFT#checkAndCallSafeTransfer(), it is executed even if _bridge is not the address of Contract, leading to unintended behavior.", "severity": "Critical", "contract": "ServiceChainToken, ServiceChainNFT", "function": "checkAndCallSafeTransfer()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Unintended NFT Minting", "description": "ServiceChainNFT#mintToBridge() can be called by an unintended address, allowing NFTs to be minted freely.", "severity": "Critical", "contract": "ServiceChainNFT", "function": "mintToBridge()", "lineNumber": "28-31"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Service chain providers are vulnerable to DoS attacks by malicious users", "description": "The Service Chain Provider can be exploited by malicious users, leading to a denial-of-service (DoS) attack.", "severity": "Unintended Behavior", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"], "4": ["CWE-766"]}, "title": "Insecure Access Modifier of ServiceChainNFT#safeTransferAndCall()", "description": "The access modifier of ServiceChainNFT#safeTransferAndCall() is public, which may lead to unintended usage and potential security risks.", "severity": "Medium", "contract": "ServiceChainNFT", "function": "safeTransferAndCall()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Unintended Behavior in Bridge#chargeWithoutEvent()", "description": "Reverting when the amount of KLAY deposited is 0 to prevent unintended behavior.", "severity": "Medium", "contract": "Bridge", "function": "chargeWithoutEvent()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Token Owner mistakenly mints the NFTs of the same ID to different users on different chains (Main Chain, Service Chain)", "description": "The Token Owner may mint the NFTs of the same ID to different users on different chains (Main Chain, Service Chain) due to a lack of prevention mechanism.", "severity": "High", "contract": "N/A", "function": "mint()", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Unintended Execution of checkAndCallSafeTransfer()", "description": "In ServiceChainToken#checkAndCallSafeTransfer() and ServiceChainNFT#checkAndCallSafeTransfer(), it is executed even if _bridge is not the address of Contract, leading to unintended behavior.", "severity": "Critical", "contract": "ServiceChainToken & ServiceChainNFT", "function": "checkAndCallSafeTransfer()", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Insufficient Input Validation", "description": "The amount of KLAY to be deposited is not validated, allowing zero or negative values.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/HAECHI_AUDIT/HAECHI_AUDIT-Klaytn_Service_Bridge.pdf",
+    "project_info": {
+        "url": "https://github.com/HAECHI-LABS/audit-klaytn-service-chain",
+        "commit_hash": "48eee111ba5cf0a8f29708937880b0e829761499",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-358"
+                ]
+            },
+            "title": "One Token Holder can paralyze the Bridge Contract",
+            "description": "A token holder can prevent transaction processing by not approving a token in the Bridge Contract, causing the nonce to not increase and paralyzing the Bridge Contract.",
+            "severity": "Critical",
+            "contract": "Bridge",
+            "function": "N/A",
+            "lineNumber": "134-146"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Unintended Behavior in checkAndCallSafeTransfer()",
+            "description": "In ServiceChainToken#checkAndCallSafeTransfer() and ServiceChainNFT#checkAndCallSafeTransfer(), it is executed even if _bridge is not the address of Contract, leading to unintended behavior.",
+            "severity": "Critical",
+            "contract": "ServiceChainToken, ServiceChainNFT",
+            "function": "checkAndCallSafeTransfer()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Unintended NFT Minting",
+            "description": "ServiceChainNFT#mintToBridge() can be called by an unintended address, allowing NFTs to be minted freely.",
+            "severity": "Critical",
+            "contract": "ServiceChainNFT",
+            "function": "mintToBridge()",
+            "lineNumber": "28-31"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Service chain providers are vulnerable to DoS attacks by malicious users",
+            "description": "The Service Chain Provider can be exploited by malicious users, leading to a denial-of-service (DoS) attack.",
+            "severity": "Unintended Behavior",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ],
+                "4": [
+                    "CWE-766"
+                ]
+            },
+            "title": "Insecure Access Modifier of ServiceChainNFT#safeTransferAndCall()",
+            "description": "The access modifier of ServiceChainNFT#safeTransferAndCall() is public, which may lead to unintended usage and potential security risks.",
+            "severity": "Medium",
+            "contract": "ServiceChainNFT",
+            "function": "safeTransferAndCall()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Unintended Behavior in Bridge#chargeWithoutEvent()",
+            "description": "Reverting when the amount of KLAY deposited is 0 to prevent unintended behavior.",
+            "severity": "Medium",
+            "contract": "Bridge",
+            "function": "chargeWithoutEvent()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Token Owner mistakenly mints the NFTs of the same ID to different users on different chains (Main Chain, Service Chain)",
+            "description": "The Token Owner may mint the NFTs of the same ID to different users on different chains (Main Chain, Service Chain) due to a lack of prevention mechanism.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "mint()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Unintended Execution of checkAndCallSafeTransfer()",
+            "description": "In ServiceChainToken#checkAndCallSafeTransfer() and ServiceChainNFT#checkAndCallSafeTransfer(), it is executed even if _bridge is not the address of Contract, leading to unintended behavior.",
+            "severity": "Critical",
+            "contract": "ServiceChainToken & ServiceChainNFT",
+            "function": "checkAndCallSafeTransfer()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Insufficient Input Validation",
+            "description": "The amount of KLAY to be deposited is not validated, allowing zero or negative values.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

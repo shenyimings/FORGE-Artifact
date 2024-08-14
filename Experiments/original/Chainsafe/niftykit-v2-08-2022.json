@@ -1,1 +1,335 @@
-{"path": "./Audit_Reports_2024/Chainsafe/niftykit-v2-08-2022.pdf", "project_info": {"url": "N/A", "commit_hash": "a1141e7b29fb6cffc41b4c9f65159f5dfa0e59bc", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"]}, "title": "Unprotected Implementation Contract", "description": "Consider adding a constructor with `initialize()` to avoid initialization of the implementation contract by anyone.", "severity": "Low", "contract": "DropCollection", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1173"]}, "title": "Unused Import of ERC2981Upgradeable", "description": "The `ERC2981Upgradeable` import is not used in the DropCollection contract.", "severity": "Note", "contract": "DropCollection", "function": "N/A", "lineNumber": "6"}, {"id": 2, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1288"]}, "title": "Unused `MerkleProofUpgradeable` Using-Declaration", "description": "The `MerkleProofUpgradeable` using-declaration is not used in the DropCollection contract.", "severity": "Note", "contract": "DropCollection", "function": "N/A", "lineNumber": "17"}, {"id": 3, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Incorrect Revert Message in onlyMintable() Modifier", "description": "The `onlyMintable()` modifier has an incorrect revert message, it should be something like 'Must be greater than 0' or 'Quantity is 0'.", "severity": "Note", "contract": "DropCollection", "function": "onlyMintable()", "lineNumber": "34"}, {"id": 4, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Unnecessary Variable Reads", "description": "In the `presaleMint()` function, the `_mintCount[_msgSender()]` variable is read multiple times.", "severity": "Optimization", "contract": "DropCollection", "function": "presaleMint()", "lineNumber": "74"}, {"id": 5, "category": {"1": ["CWE-703"]}, "title": "Missing Error Message in Array Length Validation", "description": "In the `batchAirdrop()` function, arrays length validation is performed without an error message.", "severity": "Note", "contract": "DropCollection", "function": "batchAirdrop()", "lineNumber": "93"}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "No Checks for Mint Amount", "description": "In the `batchAirdrop()` function, no checks are performed for mint amount.", "severity": "Note", "contract": "DropCollection", "function": "batchAirdrop()", "lineNumber": "96"}, {"id": 7, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Unnecessary Validation", "description": "The `quantity > 0` validation is performed twice in the `_purchaseMint()` function.", "severity": "Optimization", "contract": "DropCollection", "function": "_purchaseMint()", "lineNumber": "158"}, {"id": 8, "category": {"1": ["CWE-682"]}, "title": "Incorrect Revert Message", "description": "The `_purchaseMint()` function quantity validation revert message is incorrect", "severity": "Note", "contract": "DropCollection", "function": "_purchaseMint()", "lineNumber": "158"}, {"id": 9, "category": {"1": ["CWE-284"]}, "title": "Unprotected Implementation Contract", "description": "Consider adding a constructor with `initialize()` to avoid initialization of the implementation contract by anyone.", "severity": "Note", "contract": "TokenCollection", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-710"], "2": ["CWE-1164"]}, "title": "Unused Import of ERC2981Upgradeable", "description": "The `ERC2981Upgradeable` import is not used in TokenCollection contract.", "severity": "Note", "contract": "TokenCollection", "function": "N/A", "lineNumber": "9"}, {"id": 11, "category": {"1": ["CWE-682"]}, "title": "Unnecessary Double Call of redeemableAt() Function", "description": "In the `redeem()` function, the `redeemableAt(redeemableId)` is called twice, which can lead to unnecessary gas consumption.", "severity": "Optimization", "contract": "TokenCollection", "function": "redeem()", "lineNumber": "76"}, {"id": 12, "category": {"1": ["CWE-664"], "2": ["CWE-400"]}, "title": "Unnecessary Storage Reads", "description": "In the withdraw() function of BaseCollection, the `_niftyKit` variable is read from storage three times, which can lead to unnecessary gas usage.", "severity": "Optimization", "contract": "BaseCollection", "function": "withdraw()", "lineNumber": "40"}, {"id": 13, "category": {"1": ["CWE-682"]}, "title": "Consecutive Calls to `_niftyKit` Optimization", "description": "In the `withdraw()` function, combining two consecutive calls to `_niftyKit` contract into one can save gas.", "severity": "Optimization", "contract": "BaseCollection", "function": "withdraw()", "lineNumber": "41"}, {"id": 14, "category": {"1": ["CWE-284"]}, "title": "Unprotected Implementation Contract Initialization", "description": "Consider adding a constructor with `initialize()` to avoid initialization of the implementation contract by anyone.", "severity": "Minor", "contract": "NiftyKitV2", "function": "N/A", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Potential Failure of `_dropKitPass.getFeeRateOf()` due to Excessive Tokens", "description": "In the `_createCollection()` function, if `msg.sender` has too many tokens (too many entries in `dropKitPass` contract), then `_dropKitPass.getFeeRateOf()` will fail because gas needed for the 'for' loop can exceed the block gas limit, causing collection creation to fail for that user.", "severity": "Minor", "contract": "NiftyKitV2", "function": "_createCollection()", "lineNumber": "163"}, {"id": 16, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1288"]}, "title": "Unused `MerkleProofUpgradeable` Using-Declaration", "description": "The `MerkleProofUpgradeable` using-declaration is not used.", "severity": "Note", "contract": "Redeemables", "function": "N/A", "lineNumber": "31"}, {"id": 17, "category": {"1": ["CWE-682"]}, "title": "Redundant Storage Reads in `_redeem()` Function", "description": "The `redeemableAt(redeemableId)` function is called twice in the second `_redeem()` function, resulting in redundant storage reads.", "severity": "Optimization", "contract": "Redeemables", "function": "_redeem()", "lineNumber": "121"}, {"id": 18, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Unnecessary Double Call of `redeemableAt` Function", "description": "In the `redeem()` function, the `redeemableAt(redeemableId)` is called twice, resulting in unnecessary storage reads.", "severity": "Optimization", "contract": "TokenCollection", "function": "redeem()", "lineNumber": "92"}, {"id": 19, "category": {"1": ["CWE-682"]}, "title": "Unnecessary Storage Read Optimization", "description": "In the `_redeem()` function, the `_redeemedByWallet[redeemableId][_msgSender()]` variable is read from storage twice, causing unnecessary gas consumption.", "severity": "Optimization", "contract": "Redeemables", "function": "_redeem()", "lineNumber": "91"}]}
+{
+    "path": "./Audit_Reports_2024/Chainsafe/niftykit-v2-08-2022.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "a1141e7b29fb6cffc41b4c9f65159f5dfa0e59bc",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected Implementation Contract",
+            "description": "Consider adding a constructor with `initialize()` to avoid initialization of the implementation contract by anyone.",
+            "severity": "Low",
+            "contract": "DropCollection",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1173"
+                ]
+            },
+            "title": "Unused Import of ERC2981Upgradeable",
+            "description": "The `ERC2981Upgradeable` import is not used in the DropCollection contract.",
+            "severity": "Note",
+            "contract": "DropCollection",
+            "function": "N/A",
+            "lineNumber": "6"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1288"
+                ]
+            },
+            "title": "Unused `MerkleProofUpgradeable` Using-Declaration",
+            "description": "The `MerkleProofUpgradeable` using-declaration is not used in the DropCollection contract.",
+            "severity": "Note",
+            "contract": "DropCollection",
+            "function": "N/A",
+            "lineNumber": "17"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Incorrect Revert Message in onlyMintable() Modifier",
+            "description": "The `onlyMintable()` modifier has an incorrect revert message, it should be something like 'Must be greater than 0' or 'Quantity is 0'.",
+            "severity": "Note",
+            "contract": "DropCollection",
+            "function": "onlyMintable()",
+            "lineNumber": "34"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Unnecessary Variable Reads",
+            "description": "In the `presaleMint()` function, the `_mintCount[_msgSender()]` variable is read multiple times.",
+            "severity": "Optimization",
+            "contract": "DropCollection",
+            "function": "presaleMint()",
+            "lineNumber": "74"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Missing Error Message in Array Length Validation",
+            "description": "In the `batchAirdrop()` function, arrays length validation is performed without an error message.",
+            "severity": "Note",
+            "contract": "DropCollection",
+            "function": "batchAirdrop()",
+            "lineNumber": "93"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "No Checks for Mint Amount",
+            "description": "In the `batchAirdrop()` function, no checks are performed for mint amount.",
+            "severity": "Note",
+            "contract": "DropCollection",
+            "function": "batchAirdrop()",
+            "lineNumber": "96"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Unnecessary Validation",
+            "description": "The `quantity > 0` validation is performed twice in the `_purchaseMint()` function.",
+            "severity": "Optimization",
+            "contract": "DropCollection",
+            "function": "_purchaseMint()",
+            "lineNumber": "158"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect Revert Message",
+            "description": "The `_purchaseMint()` function quantity validation revert message is incorrect",
+            "severity": "Note",
+            "contract": "DropCollection",
+            "function": "_purchaseMint()",
+            "lineNumber": "158"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected Implementation Contract",
+            "description": "Consider adding a constructor with `initialize()` to avoid initialization of the implementation contract by anyone.",
+            "severity": "Note",
+            "contract": "TokenCollection",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ]
+            },
+            "title": "Unused Import of ERC2981Upgradeable",
+            "description": "The `ERC2981Upgradeable` import is not used in TokenCollection contract.",
+            "severity": "Note",
+            "contract": "TokenCollection",
+            "function": "N/A",
+            "lineNumber": "9"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Unnecessary Double Call of redeemableAt() Function",
+            "description": "In the `redeem()` function, the `redeemableAt(redeemableId)` is called twice, which can lead to unnecessary gas consumption.",
+            "severity": "Optimization",
+            "contract": "TokenCollection",
+            "function": "redeem()",
+            "lineNumber": "76"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ]
+            },
+            "title": "Unnecessary Storage Reads",
+            "description": "In the withdraw() function of BaseCollection, the `_niftyKit` variable is read from storage three times, which can lead to unnecessary gas usage.",
+            "severity": "Optimization",
+            "contract": "BaseCollection",
+            "function": "withdraw()",
+            "lineNumber": "40"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Consecutive Calls to `_niftyKit` Optimization",
+            "description": "In the `withdraw()` function, combining two consecutive calls to `_niftyKit` contract into one can save gas.",
+            "severity": "Optimization",
+            "contract": "BaseCollection",
+            "function": "withdraw()",
+            "lineNumber": "41"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected Implementation Contract Initialization",
+            "description": "Consider adding a constructor with `initialize()` to avoid initialization of the implementation contract by anyone.",
+            "severity": "Minor",
+            "contract": "NiftyKitV2",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Potential Failure of `_dropKitPass.getFeeRateOf()` due to Excessive Tokens",
+            "description": "In the `_createCollection()` function, if `msg.sender` has too many tokens (too many entries in `dropKitPass` contract), then `_dropKitPass.getFeeRateOf()` will fail because gas needed for the 'for' loop can exceed the block gas limit, causing collection creation to fail for that user.",
+            "severity": "Minor",
+            "contract": "NiftyKitV2",
+            "function": "_createCollection()",
+            "lineNumber": "163"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1288"
+                ]
+            },
+            "title": "Unused `MerkleProofUpgradeable` Using-Declaration",
+            "description": "The `MerkleProofUpgradeable` using-declaration is not used.",
+            "severity": "Note",
+            "contract": "Redeemables",
+            "function": "N/A",
+            "lineNumber": "31"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Redundant Storage Reads in `_redeem()` Function",
+            "description": "The `redeemableAt(redeemableId)` function is called twice in the second `_redeem()` function, resulting in redundant storage reads.",
+            "severity": "Optimization",
+            "contract": "Redeemables",
+            "function": "_redeem()",
+            "lineNumber": "121"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Unnecessary Double Call of `redeemableAt` Function",
+            "description": "In the `redeem()` function, the `redeemableAt(redeemableId)` is called twice, resulting in unnecessary storage reads.",
+            "severity": "Optimization",
+            "contract": "TokenCollection",
+            "function": "redeem()",
+            "lineNumber": "92"
+        },
+        {
+            "id": 19,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Unnecessary Storage Read Optimization",
+            "description": "In the `_redeem()` function, the `_redeemedByWallet[redeemableId][_msgSender()]` variable is read from storage twice, causing unnecessary gas consumption.",
+            "severity": "Optimization",
+            "contract": "Redeemables",
+            "function": "_redeem()",
+            "lineNumber": "91"
+        }
+    ]
+}

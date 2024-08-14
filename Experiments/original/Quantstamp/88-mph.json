@@ -1,1 +1,220 @@
-{"path": "./Audit_Reports_2024/Quantstamp/88-mph.pdf", "project_info": {"url": "https://github.com/88mph-contracts", "commit_hash": "2fc696b", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Potentially Incorrect Minting", "description": "The documentation indicates minting of MPH tokens to the dev fund on new deposits, but the issuance model also mints MPH tokens to the dev fund on funding. In addition, the dev fund would accrue MPH tokens rather quickly because it receives 10% of the full MPH tokens minted on deposit.", "severity": "Medium Risk", "contract": "MPHIssuanceModel01.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-691"], "2": ["CWE-841"]}, "title": "Functions May Become Disabled", "description": "setMPHTokenOwner() and setMPHTokenOwnerToZero() will not allow further MPH token minting in the mintDepositorReward() and mintFunderReward() functions within the MPHMinter contract, which in turn can disable _deposit(), _withdraw(), and _payInterestToFunder() functions in DInterest.sol.", "severity": "Medium", "contract": "MPHMinter.sol, DInterest.sol", "function": "mintDepositorReward(), mintFunderReward(), _deposit(), _withdraw(), _payInterestToFunder()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Privileged Minting", "description": "Privileged roles: `setMPHTokenOwner()` can be called at any time with the new owner minting as many MPH Tokens as desired.", "severity": "Medium Risk", "contract": "MPHMinter.sol", "function": "setMPHTokenOwner()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Possible Market Mismatch", "description": "setInterestOracle() does not check for the same money market as the pool. Ideally it should also check consistency of data between the old and new oracle before updating to avoid significant changes in the interest rate parameters.", "severity": "Low Risk", "contract": "DInterest.sol", "function": "setInterestOracle()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-703"]}, "title": "N/A", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Copycat NFTs can be minted", "description": "An attacker can create rogue pools using rogue DInterest contracts with a popular stablecoin and get a fake NFT that can be sold in a secondary market like OpenSea.", "severity": "Low Risk", "contract": "DInterest.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "Gas Usage / for Loop Concerns", "description": "Gas usage is a main concern for smart contract developers and users, since high gas costs may prevent users from wanting to use the smart contract. Even worse, some gas usage issues may prevent the contract from providing services entirely.", "severity": "Low Risk", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Unchecked Parameters", "description": "Several functions and constructors do not check if addresses are non-zero, which may cause headaches during deployment or unintended consequences when such an address is not intended as an argument.", "severity": "Low Risk", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-710"], "2": ["CWE-1061"]}, "title": "Use external declaration for functions not used in other functions", "description": "Functions only called externally by other contracts or users can be declared as `external`, saving gas and reducing internal function control in case of vulnerabilities.", "severity": "Informational", "contract": ["EMAOracle.sol", "MPHToken.sol"], "function": ["updateAndQuery()", "query()", "init()", "ownerMint()"], "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-770"]}, "title": "Possible Surplus Funds", "description": "The system can have a lot of surplus but the surplus coins are stuck inside the protocol (deposited in the respective money markets) and can only be used to fund possible deficits in.", "severity": "Undetermined", "contract": "DInterest.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-682"]}, "title": "Linear Interest Model May Underestimate Deposit APY", "description": "The linear interest rate model may underestimate deposit APY, especially for bigger rates around 5%, 10%, or 20%. The original exponential rate is more accurate.", "severity": "Undetermined", "contract": "LinearInterestModel.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "Underlying Rate Manipulation", "description": "An attacker can manipulate the underlying rate by making large deposits and withdrawals, buying and liquidating floating-rate bonds, causing the fixed rate depositors to bear the loss.", "severity": "Undetermined", "contract": "DInterest.sol", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Quantstamp/88-mph.pdf",
+    "project_info": {
+        "url": "https://github.com/88mphapp/88mph-contracts/tree/2fc696b2573c0c06b2613cb9abd09f87c2509041",
+        "commit_hash": "2fc696b2573c0c06b2613cb9abd09f87c2509041",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Potentially Incorrect Minting",
+            "description": "The documentation indicates minting of MPH tokens to the dev fund on new deposits, but the issuance model also mints MPH tokens to the dev fund on funding. In addition, the dev fund would accrue MPH tokens rather quickly because it receives 10% of the full MPH tokens minted on deposit.",
+            "severity": "Medium Risk",
+            "contract": "MPHIssuanceModel01.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "Functions May Become Disabled",
+            "description": "setMPHTokenOwner() and setMPHTokenOwnerToZero() will not allow further MPH token minting in the mintDepositorReward() and mintFunderReward() functions within the MPHMinter contract, which in turn can disable _deposit(), _withdraw(), and _payInterestToFunder() functions in DInterest.sol.",
+            "severity": "Medium",
+            "contract": "MPHMinter.sol, DInterest.sol",
+            "function": "mintDepositorReward(), mintFunderReward(), _deposit(), _withdraw(), _payInterestToFunder()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Privileged Minting",
+            "description": "Privileged roles: `setMPHTokenOwner()` can be called at any time with the new owner minting as many MPH Tokens as desired.",
+            "severity": "Medium Risk",
+            "contract": "MPHMinter.sol",
+            "function": "setMPHTokenOwner()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Possible Market Mismatch",
+            "description": "setInterestOracle() does not check for the same money market as the pool. Ideally it should also check consistency of data between the old and new oracle before updating to avoid significant changes in the interest rate parameters.",
+            "severity": "Low Risk",
+            "contract": "DInterest.sol",
+            "function": "setInterestOracle()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "N/A",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Copycat NFTs can be minted",
+            "description": "An attacker can create rogue pools using rogue DInterest contracts with a popular stablecoin and get a fake NFT that can be sold in a secondary market like OpenSea.",
+            "severity": "Low Risk",
+            "contract": "DInterest.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Gas Usage / for Loop Concerns",
+            "description": "Gas usage is a main concern for smart contract developers and users, since high gas costs may prevent users from wanting to use the smart contract. Even worse, some gas usage issues may prevent the contract from providing services entirely.",
+            "severity": "Low Risk",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Unchecked Parameters",
+            "description": "Several functions and constructors do not check if addresses are non-zero, which may cause headaches during deployment or unintended consequences when such an address is not intended as an argument.",
+            "severity": "Low Risk",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1061"
+                ]
+            },
+            "title": "Use external declaration for functions not used in other functions",
+            "description": "Functions only called externally by other contracts or users can be declared as `external`, saving gas and reducing internal function control in case of vulnerabilities.",
+            "severity": "Informational",
+            "contract": [
+                "EMAOracle.sol",
+                "MPHToken.sol"
+            ],
+            "function": [
+                "updateAndQuery()",
+                "query()",
+                "init()",
+                "ownerMint()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "Possible Surplus Funds",
+            "description": "The system can have a lot of surplus but the surplus coins are stuck inside the protocol (deposited in the respective money markets) and can only be used to fund possible deficits in.",
+            "severity": "Undetermined",
+            "contract": "DInterest.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Linear Interest Model May Underestimate Deposit APY",
+            "description": "The linear interest rate model may underestimate deposit APY, especially for bigger rates around 5%, 10%, or 20%. The original exponential rate is more accurate.",
+            "severity": "Undetermined",
+            "contract": "LinearInterestModel.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Underlying Rate Manipulation",
+            "description": "An attacker can manipulate the underlying rate by making large deposits and withdrawals, buying and liquidating floating-rate bonds, causing the fixed rate depositors to bear the loss.",
+            "severity": "Undetermined",
+            "contract": "DInterest.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

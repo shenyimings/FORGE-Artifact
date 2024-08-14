@@ -1,1 +1,288 @@
-{"path": "./Audit_Reports_2024/InterFi/CheetahFinance_0x6a02d9f7fD9445A9978F1A8E3A24f1a8a7e6479a.pdf", "project_info": {"url": "https://github.com/interfinetwork/audited-codes/blob/main/CheetahFinance.sol", "commit_hash": "1b49e61005d749966584df0f571a2cedb435880d", "address": "0x6a02d9f7fD9445A9978F1A8E3A24f1a8a7e6479a"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "approve", "description": "Unspecified vulnerability in approve function", "severity": "High", "contract": "N/A", "function": "approve", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "Transfer Function Vulnerability", "description": "Executes transfers of a specified number of tokens to a specified address.", "severity": "N/A", "contract": "N/A", "function": "transfer()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "transferFrom", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "_transferFrom", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"]}, "title": "Unprotected permit Function", "description": "The permit function is declared as external and does not have any access modifiers, making it vulnerable to unauthorized calls.", "severity": "High", "contract": "N/A", "function": "permit", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Mint Function Vulnerability", "description": "The mint function has been marked as vulnerable.", "severity": "High", "contract": "Cheetah", "function": "mint(address)", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"]}, "title": "Unprotected burn Function", "description": "The burn function is accessible by anyone and can lead to unintended consequences.", "severity": "High", "contract": "N/A", "function": "burn()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-284"]}, "title": "Unprotected Swap Functions", "description": "Multiple unprotected swap functions are present in the contract, which can lead to potential security risks.", "severity": "High", "contract": "N/A", "function": ["swapTokensForExactETH", "swapExactTokensForETH", "swapETHForExactTokens", "swapExactTokensForTokensSupportingFeeOnTransferTokens", "swapExactETHForTokensSupportingFeeOnTransferTokens", "swapExactTokensForETHSupportingFeeOnTransferTokens"], "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Skim", "description": "N/A", "severity": "High", "contract": "UniswapV2Pair", "function": "skim", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-284"]}, "title": "Manual Sync", "description": "The manualSync function has no access modifier specified.", "severity": "Critical", "contract": "N/A", "function": "manualSync", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-908"], "4": ["CWE-457"]}, "title": "Uninitialized Variables", "description": "The constructor of Cheetah contract does not initialize state variables.", "severity": "High", "contract": "Cheetah", "function": "<Constructor>", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "createPair", "description": "Potential vulnerability in createPair function.", "severity": "High", "contract": "IPancakeSwapFactory", "function": "createPair()", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "setFeeTo", "description": "The setFeeTo function has a vulnerability.", "severity": "High", "contract": "Cheetah", "function": "setFeeTo", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "setFeeToSetter", "description": "The setFeeToSetter function has a potential vulnerability.", "severity": "High", "contract": "N/A", "function": "setFeeReceivers", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-284"], "2": ["CWE-282"], "3": ["CWE-708"]}, "title": "renounceOwnership", "description": "The renounceOwnership function allows an owner to relinquish ownership of a contract, which can lead to unintended consequences if not properly understood.", "severity": "High", "contract": "N/A", "function": "renounceOwnership()", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Redundant Code in transferOwnership", "description": "Ideal transfer ownership code should look like: function transferOwnership(address newOwner) public virtual onlyOwner {require (newOwner != address(0), \"Ownable: new owner is the zero address\"); emit OwnershipTransferred (_owner, newOwner); _owner = newOwner;}", "severity": "Medium", "contract": "N/A", "function": "transferOwnership(address)", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/InterFi/CheetahFinance_0x6a02d9f7fD9445A9978F1A8E3A24f1a8a7e6479a.pdf",
+    "project_info": {
+        "url": "https://github.com/interfinetwork/audited-codes/blob/main/CheetahFinance.sol",
+        "commit_hash": "1b49e61005d749966584df0f571a2cedb435880d",
+        "address": "0x6a02d9f7fD9445A9978F1A8E3A24f1a8a7e6479a",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "approve",
+            "description": "Unspecified vulnerability in approve function",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "approve",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Transfer Function Vulnerability",
+            "description": "Executes transfers of a specified number of tokens to a specified address.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "transfer()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "transferFrom",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "_transferFrom",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected permit Function",
+            "description": "The permit function is declared as external and does not have any access modifiers, making it vulnerable to unauthorized calls.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "permit",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Mint Function Vulnerability",
+            "description": "The mint function has been marked as vulnerable.",
+            "severity": "High",
+            "contract": "Cheetah",
+            "function": "mint(address)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected burn Function",
+            "description": "The burn function is accessible by anyone and can lead to unintended consequences.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "burn()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected Swap Functions",
+            "description": "Multiple unprotected swap functions are present in the contract, which can lead to potential security risks.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": [
+                "swapTokensForExactETH",
+                "swapExactTokensForETH",
+                "swapETHForExactTokens",
+                "swapExactTokensForTokensSupportingFeeOnTransferTokens",
+                "swapExactETHForTokensSupportingFeeOnTransferTokens",
+                "swapExactTokensForETHSupportingFeeOnTransferTokens"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Skim",
+            "description": "N/A",
+            "severity": "High",
+            "contract": "UniswapV2Pair",
+            "function": "skim",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Manual Sync",
+            "description": "The manualSync function has no access modifier specified.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "manualSync",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-908"
+                ],
+                "4": [
+                    "CWE-457"
+                ]
+            },
+            "title": "Uninitialized Variables",
+            "description": "The constructor of Cheetah contract does not initialize state variables.",
+            "severity": "High",
+            "contract": "Cheetah",
+            "function": "<Constructor>",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "createPair",
+            "description": "Potential vulnerability in createPair function.",
+            "severity": "High",
+            "contract": "IPancakeSwapFactory",
+            "function": "createPair()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "setFeeTo",
+            "description": "The setFeeTo function has a vulnerability.",
+            "severity": "High",
+            "contract": "Cheetah",
+            "function": "setFeeTo",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "setFeeToSetter",
+            "description": "The setFeeToSetter function has a potential vulnerability.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "setFeeReceivers",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-282"
+                ],
+                "3": [
+                    "CWE-708"
+                ]
+            },
+            "title": "renounceOwnership",
+            "description": "The renounceOwnership function allows an owner to relinquish ownership of a contract, which can lead to unintended consequences if not properly understood.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "renounceOwnership()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Redundant Code in transferOwnership",
+            "description": "Ideal transfer ownership code should look like: function transferOwnership(address newOwner) public virtual onlyOwner {require (newOwner != address(0), \"Ownable: new owner is the zero address\"); emit OwnershipTransferred (_owner, newOwner); _owner = newOwner;}",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "transferOwnership(address)",
+            "lineNumber": "N/A"
+        }
+    ]
+}

@@ -1,1 +1,156 @@
-{"path": "./Audit_Reports_2024/Quantstamp/auric-network.pdf", "project_info": {"url": "https://github.com/auric-finance", "commit_hash": "177b244", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "Rebase During Warm-Up Phase", "description": "The `rebase()` function can be called during the warm-up phase for generating average prices if `setNextRebase()` is not set properly.", "severity": "Low Risk", "contract": "N/A", "function": "rebase()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-691"], "2": ["CWE-362"]}, "title": "Initialization Race Pattern", "description": "The platform uses the initialization pattern to set some parameters, instead of those being placed in the constructor. This includes especially `setPendingAdmin()` in `TimeLock.sol` and `rebase()` on `Rebaser.sol` if `nextRebase` timestamp is set below current `block.timestamp`.", "severity": "Low", "contract": "TimeLock.sol, Rebaser.sol", "function": "setPendingAdmin(), rebase()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"], "2": ["CWE-190"], "3": ["CWE-680"]}, "title": "Allowance Double-Spend Exploit", "description": "The contract is vulnerable to the allowance double-spend exploit as with other ERC20 tokens, allowing an attacker to transfer more tokens than intended.", "severity": "Informational", "contract": "AUSC.sol", "function": "transferFrom()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-435"]}, "title": "Unenforceable Interfaces", "description": "The code orchestrates several smart contracts making calls to each other. If the platform is deployed in a way that expected interfaces become unavailable, transactions may start failing.", "severity": "Informational", "contract": "Multiple (AuricRewards, PoolEscrow, AUSCM token, Rebaser)", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-282"], "3": ["CWE-708"]}, "title": "Privileged Roles and Ownership", "description": "Smart contracts will often have `owner` variables to designate the person with special privileges to make modifications to the smart contract. However, this centralization of power needs to be made clear to the users, especially depending on the level of privilege the contract allows to the owner.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Oracle Dependency", "description": "The platform depends on external oracles for determining the price of gold (Chainlink) and AUSCM (Uniswap), which can lead to rebasing to a false target if the oracles become unavailable or report dishonest prices.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Strict Inequality", "description": "There is a minor mismatch with spec in that the implementation requires the proposer to exceed 1% of the AUSC supply to be able to propose as opposed to \u201cat least 1% of all the tokens\u201d as described.", "severity": "Informational", "contract": "GovernorAlpha.sol", "function": "N/A", "lineNumber": "170"}, {"id": 7, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Low Quorum Requirement", "description": "Any proposal will automatically reach quorum since `quorumVotes()` returns `proposalThreshold()`. If the proposer votes \u201cfor\u201d, then the default state of any proposal is to pass.", "severity": "Undetermined", "contract": "N/A", "function": "N/A", "lineNumber": "33"}]}
+{
+    "path": "./Audit_Reports_2024/Quantstamp/auric-network.pdf",
+    "project_info": {
+        "url": "https://github.com/auricfinance/auric-finance/tree/master",
+        "commit_hash": "master",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Rebase During Warm-Up Phase",
+            "description": "The `rebase()` function can be called during the warm-up phase for generating average prices if `setNextRebase()` is not set properly.",
+            "severity": "Low Risk",
+            "contract": "N/A",
+            "function": "rebase()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-362"
+                ]
+            },
+            "title": "Initialization Race Pattern",
+            "description": "The platform uses the initialization pattern to set some parameters, instead of those being placed in the constructor. This includes especially `setPendingAdmin()` in `TimeLock.sol` and `rebase()` on `Rebaser.sol` if `nextRebase` timestamp is set below current `block.timestamp`.",
+            "severity": "Low",
+            "contract": "TimeLock.sol, Rebaser.sol",
+            "function": "setPendingAdmin(), rebase()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ],
+                "3": [
+                    "CWE-680"
+                ]
+            },
+            "title": "Allowance Double-Spend Exploit",
+            "description": "The contract is vulnerable to the allowance double-spend exploit as with other ERC20 tokens, allowing an attacker to transfer more tokens than intended.",
+            "severity": "Informational",
+            "contract": "AUSC.sol",
+            "function": "transferFrom()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ]
+            },
+            "title": "Unenforceable Interfaces",
+            "description": "The code orchestrates several smart contracts making calls to each other. If the platform is deployed in a way that expected interfaces become unavailable, transactions may start failing.",
+            "severity": "Informational",
+            "contract": "Multiple (AuricRewards, PoolEscrow, AUSCM token, Rebaser)",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-282"
+                ],
+                "3": [
+                    "CWE-708"
+                ]
+            },
+            "title": "Privileged Roles and Ownership",
+            "description": "Smart contracts will often have `owner` variables to designate the person with special privileges to make modifications to the smart contract. However, this centralization of power needs to be made clear to the users, especially depending on the level of privilege the contract allows to the owner.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Oracle Dependency",
+            "description": "The platform depends on external oracles for determining the price of gold (Chainlink) and AUSCM (Uniswap), which can lead to rebasing to a false target if the oracles become unavailable or report dishonest prices.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Strict Inequality",
+            "description": "There is a minor mismatch with spec in that the implementation requires the proposer to exceed 1% of the AUSC supply to be able to propose as opposed to \u201cat least 1% of all the tokens\u201d as described.",
+            "severity": "Informational",
+            "contract": "GovernorAlpha.sol",
+            "function": "N/A",
+            "lineNumber": "170"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Low Quorum Requirement",
+            "description": "Any proposal will automatically reach quorum since `quorumVotes()` returns `proposalThreshold()`. If the proposer votes \u201cfor\u201d, then the default state of any proposal is to pass.",
+            "severity": "Undetermined",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "33"
+        }
+    ]
+}

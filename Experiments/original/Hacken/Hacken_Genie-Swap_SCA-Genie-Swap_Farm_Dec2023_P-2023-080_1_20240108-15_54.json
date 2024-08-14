@@ -1,1 +1,176 @@
-{"path": "./Audit_Reports_2024/Hacken/Hacken_Genie-Swap_SCA-Genie-Swap_Farm_Dec2023_P-2023-080_1_20240108-15_54.pdf", "project_info": {"url": "https://github.com/Genieswap-com/simplified-farms-contracts", "commit_hash": "2fed0fdde983b6ec96592ec4d003cc33fd71540b", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "F-2023-0279 - Floating Pragma", "description": "The project uses floating pragma `^0.8.20;` which may result in the contracts being deployed using the wrong pragma version, different from the one they were tested with.", "severity": "Info", "contract": "contracts/Farm.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-710"], "2": ["CWE-1120"], "3": ["CWE-1060"]}, "title": "F-2023-0280 - Revert String Size Optimization", "description": "Optimizing revert strings to fit within 32 bytes can decrease deployment time and runtime Gas when the revert condition is met.", "severity": "Info", "contract": "Farm.sol", "function": "N/A", "lineNumber": "292, 296, 385, 393, 398, 419, 456, 488"}, {"id": 2, "category": {"1": ["CWE-710"], "2": ["CWE-1120"], "3": ["CWE-1060"]}, "title": "F-2023-0281 - Custom Errors In Solidity For Gas Efficiency", "description": "Using custom errors instead of revert strings can significantly reduce gas consumption, leading to more gas-efficient contracts.", "severity": "Info", "contract": "Farm.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-710"], "2": ["CWE-1120"]}, "title": "F-2023-0282 - Storage Layout Optimization", "description": "Storage layout optimization involves arranging state variables to minimize gas costs by combining variables into as few slots as possible and deleting unneeded variables.", "severity": "Info", "contract": "Farm", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-710"], "2": ["CWE-1120"], "3": ["CWE-1060"]}, "title": "F-2023-0283 - Avoid Using State Variables Directly In `Emit` For Gas Efficiency", "description": "Avoid using state variables directly in `emit` for gas efficiency. Misuse of the `public` keyword for functions that are only meant to be accessed externally can introduce potential vulnerabilities and consume more gas than required.", "severity": "Info", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-282"], "3": ["CWE-708"]}, "title": "F-2023-0284 - Owner Can Renounce Ownership", "description": "The contract inherits from `Ownable` library and retains the default `renounceOwnership` function, which allows the owner to renounce ownership, making the contract ownerless and immutable.", "severity": "Info", "contract": "Farm.sol", "function": "renounceOwnership", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-1235"]}, "title": "F-2023-0285 - Inefficient Resource Usage In ResetFarm Function", "description": "The resetFarm function is less efficient and potentially more error-prone as it individually resets each property of the Farm struct instead of utilizing the Solidity delete keyword, which can simplify the code and reduce gas costs.", "severity": "Info", "contract": "Farm.sol", "function": "resetFarm(address farmer)", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "F-2023-0308 - Cache State Variables", "description": "Cache state variables issues in Solidity refer to situations where developers fail to efficiently manage and update state variables in smart contracts. These issues can lead to suboptimal gas usage, decreased contract performance, and even vulnerabilities that can be exploited by malicious actors.", "severity": "Info", "contract": "Farm.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-682"]}, "title": "F-2023-0286 - Exploitable `extendLockTime` Function in Farming", "description": "A design flaw in the `extendLockTime` function allows users to initially stake tokens for a minimal duration, then extend the lock time just before withdrawing, thus earning a disproportionate yield.", "severity": "Critical", "contract": "Farm.sol", "function": "extendLockTime", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Hacken/Hacken_Genie-Swap_SCA-Genie-Swap_Farm_Dec2023_P-2023-080_1_20240108-15_54.pdf",
+    "project_info": {
+        "url": "https://github.com/Genieswap-com/simplified-farms-contracts",
+        "commit_hash": "2fed0fdde983b6ec96592ec4d003cc33fd71540b",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "F-2023-0279 - Floating Pragma",
+            "description": "The project uses floating pragma `^0.8.20;` which may result in the contracts being deployed using the wrong pragma version, different from the one they were tested with.",
+            "severity": "Info",
+            "contract": "contracts/Farm.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1120"
+                ],
+                "3": [
+                    "CWE-1060"
+                ]
+            },
+            "title": "F-2023-0280 - Revert String Size Optimization",
+            "description": "Optimizing revert strings to fit within 32 bytes can decrease deployment time and runtime Gas when the revert condition is met.",
+            "severity": "Info",
+            "contract": "Farm.sol",
+            "function": "N/A",
+            "lineNumber": "292, 296, 385, 393, 398, 419, 456, 488"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1120"
+                ],
+                "3": [
+                    "CWE-1060"
+                ]
+            },
+            "title": "F-2023-0281 - Custom Errors In Solidity For Gas Efficiency",
+            "description": "Using custom errors instead of revert strings can significantly reduce gas consumption, leading to more gas-efficient contracts.",
+            "severity": "Info",
+            "contract": "Farm.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1120"
+                ]
+            },
+            "title": "F-2023-0282 - Storage Layout Optimization",
+            "description": "Storage layout optimization involves arranging state variables to minimize gas costs by combining variables into as few slots as possible and deleting unneeded variables.",
+            "severity": "Info",
+            "contract": "Farm",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1120"
+                ],
+                "3": [
+                    "CWE-1060"
+                ]
+            },
+            "title": "F-2023-0283 - Avoid Using State Variables Directly In `Emit` For Gas Efficiency",
+            "description": "Avoid using state variables directly in `emit` for gas efficiency. Misuse of the `public` keyword for functions that are only meant to be accessed externally can introduce potential vulnerabilities and consume more gas than required.",
+            "severity": "Info",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-282"
+                ],
+                "3": [
+                    "CWE-708"
+                ]
+            },
+            "title": "F-2023-0284 - Owner Can Renounce Ownership",
+            "description": "The contract inherits from `Ownable` library and retains the default `renounceOwnership` function, which allows the owner to renounce ownership, making the contract ownerless and immutable.",
+            "severity": "Info",
+            "contract": "Farm.sol",
+            "function": "renounceOwnership",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-1235"
+                ]
+            },
+            "title": "F-2023-0285 - Inefficient Resource Usage In ResetFarm Function",
+            "description": "The resetFarm function is less efficient and potentially more error-prone as it individually resets each property of the Farm struct instead of utilizing the Solidity delete keyword, which can simplify the code and reduce gas costs.",
+            "severity": "Info",
+            "contract": "Farm.sol",
+            "function": "resetFarm(address farmer)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "F-2023-0308 - Cache State Variables",
+            "description": "Cache state variables issues in Solidity refer to situations where developers fail to efficiently manage and update state variables in smart contracts. These issues can lead to suboptimal gas usage, decreased contract performance, and even vulnerabilities that can be exploited by malicious actors.",
+            "severity": "Info",
+            "contract": "Farm.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "F-2023-0286 - Exploitable `extendLockTime` Function in Farming",
+            "description": "A design flaw in the `extendLockTime` function allows users to initially stake tokens for a minimal duration, then extend the lock time just before withdrawing, thus earning a disproportionate yield.",
+            "severity": "Critical",
+            "contract": "Farm.sol",
+            "function": "extendLockTime",
+            "lineNumber": "N/A"
+        }
+    ]
+}

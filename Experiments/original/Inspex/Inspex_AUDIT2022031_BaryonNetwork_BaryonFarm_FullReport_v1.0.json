@@ -1,1 +1,165 @@
-{"path": "./Audit_Reports_2024/Inspex/Inspex_AUDIT2022031_BaryonNetwork_BaryonFarm_FullReport_v1.0.pdf", "project_info": {"url": "https://github.com/coin98/baryon-farm", "commit_hash": "75f13934af5208e43922f5339833b62d015955ef", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Centralized Control of State Variable", "description": "The controlling authorities can change critical state variables to gain additional profit, which is unfair to other users.", "severity": "High", "contract": "SmartBaryFactory", "function": ["setPool()", "withdrawMultiplePool()", "withdrawPoolTokens()", "setRewardConfig()", "withdrawMultiple()"], "lineNumber": ["561", "792", "804", "818", "831"]}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Reward Miscalculation in updatePool() Function", "description": "The rewards in the SmartBaryFactoryRewarder contract can be claimed largely when the pool starts or renews because it was accumulated when the pool was added or renewed by the platform owner which should be accumulated when the pool starts to active instead.", "severity": "Medium", "contract": "SmartBaryFactoryRewarder", "function": "updatePool()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-664"], "2": ["CWE-410"]}, "title": "Design Flaw in Reward Distribution Mechanism", "description": "The platform users will not be able to claim the reward when the balance in the pool reward is insufficient.", "severity": "Low", "contract": "SmartBaryFactory, SmartBaryFactoryRewarder", "function": "add(), set()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-273"]}, "title": "Insufficient Logging for Privileged Functions", "description": "Privileged functions that are executable by the controlling parties are not logged properly by emitting events.", "severity": "Very Low", "contract": "SmartBaryFactory", "function": [{"name": "withdrawMultiplePool()", "lineNumber": "792"}, {"name": "withdrawPoolTokens()", "lineNumber": "804"}, {"name": "setRewardConfig()", "lineNumber": "818"}, {"name": "withdrawMultiple()", "lineNumber": "831"}], "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-710"], "2": ["CWE-1061"], "3": ["CWE-766"]}, "title": "Improper Function Visibility", "description": "Public functions that are never called internally by the contract itself should have external visibility to improve readability and allow clear distinction between externally used and internally called functions.", "severity": "Info", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-233"]}, "title": "Inexplicit Solidity Compiler Version", "description": "The Solidity compiler versions declared in the smart contracts were not explicit, which may potentially result in compatibility issues.", "severity": "Info", "contract": "SmartBaryFactory, SmartBaryFactoryRewarder", "function": "N/A", "lineNumber": "3"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "Unsupported Design for Deflationary Tokens", "description": "The deposit function does not validate the amount of received token from user and uses the value of amount parameter directly, which can lead to business logic errors.", "severity": "Info", "contract": "SmartBaryFactory", "function": "deposit()", "lineNumber": "699-702, 717"}]}
+{
+    "path": "./Audit_Reports_2024/Inspex/Inspex_AUDIT2022031_BaryonNetwork_BaryonFarm_FullReport_v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/coin98/baryon-farm",
+        "commit_hash": "75f13934af5208e43922f5339833b62d015955ef",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Centralized Control of State Variable",
+            "description": "The controlling authorities can change critical state variables to gain additional profit, which is unfair to other users.",
+            "severity": "High",
+            "contract": "SmartBaryFactory",
+            "function": [
+                "setPool()",
+                "withdrawMultiplePool()",
+                "withdrawPoolTokens()",
+                "setRewardConfig()",
+                "withdrawMultiple()"
+            ],
+            "lineNumber": [
+                "561",
+                "792",
+                "804",
+                "818",
+                "831"
+            ]
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Reward Miscalculation in updatePool() Function",
+            "description": "The rewards in the SmartBaryFactoryRewarder contract can be claimed largely when the pool starts or renews because it was accumulated when the pool was added or renewed by the platform owner which should be accumulated when the pool starts to active instead.",
+            "severity": "Medium",
+            "contract": "SmartBaryFactoryRewarder",
+            "function": "updatePool()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-410"
+                ]
+            },
+            "title": "Design Flaw in Reward Distribution Mechanism",
+            "description": "The platform users will not be able to claim the reward when the balance in the pool reward is insufficient.",
+            "severity": "Low",
+            "contract": "SmartBaryFactory, SmartBaryFactoryRewarder",
+            "function": "add(), set()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-273"
+                ]
+            },
+            "title": "Insufficient Logging for Privileged Functions",
+            "description": "Privileged functions that are executable by the controlling parties are not logged properly by emitting events.",
+            "severity": "Very Low",
+            "contract": "SmartBaryFactory",
+            "function": [
+                {
+                    "name": "withdrawMultiplePool()",
+                    "lineNumber": "792"
+                },
+                {
+                    "name": "withdrawPoolTokens()",
+                    "lineNumber": "804"
+                },
+                {
+                    "name": "setRewardConfig()",
+                    "lineNumber": "818"
+                },
+                {
+                    "name": "withdrawMultiple()",
+                    "lineNumber": "831"
+                }
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1061"
+                ],
+                "3": [
+                    "CWE-766"
+                ]
+            },
+            "title": "Improper Function Visibility",
+            "description": "Public functions that are never called internally by the contract itself should have external visibility to improve readability and allow clear distinction between externally used and internally called functions.",
+            "severity": "Info",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-233"
+                ]
+            },
+            "title": "Inexplicit Solidity Compiler Version",
+            "description": "The Solidity compiler versions declared in the smart contracts were not explicit, which may potentially result in compatibility issues.",
+            "severity": "Info",
+            "contract": "SmartBaryFactory, SmartBaryFactoryRewarder",
+            "function": "N/A",
+            "lineNumber": "3"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Unsupported Design for Deflationary Tokens",
+            "description": "The deposit function does not validate the amount of received token from user and uses the value of amount parameter directly, which can lead to business logic errors.",
+            "severity": "Info",
+            "contract": "SmartBaryFactory",
+            "function": "deposit()",
+            "lineNumber": "699-702, 717"
+        }
+    ]
+}

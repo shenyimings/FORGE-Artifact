@@ -1,1 +1,113 @@
-{"path": "./Audit_Reports_2024/Trail_of_Bits/DFINITYCanisterSandboxFixReview.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1173"]}, "title": "The canister sandbox has vulnerable dependencies", "description": "The canister sandbox codebase uses vulnerable or unmaintained Rust dependencies.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-749"]}, "title": "Complete environment of the replica is passed to the sandboxed process", "description": "When the `spawn_socketed_process` function spawns a new sandboxed process, the call to the `Command::spawn` method passes the entire environment of the replica to the sandboxed process.", "severity": "Informational", "contract": "canister_sandbox/common/src/process.rs", "function": "spawn_socketed_process", "lineNumber": "17-46"}, {"id": 2, "category": {"1": ["CWE-284"]}, "title": "SELinux policy allows the sandbox process to write replica log messages", "description": "The SELinux policy for the canister sandbox currently allows sandboxed processes to read from and write to all file descriptors inherited from the replica, which could allow a compromised sandbox to spoof log messages to the replica's stdout or stderr.", "severity": "Low", "contract": "N/A", "function": "Command::spawn", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"]}, "title": "Canister sandbox system calls are not filtered using Seccomp", "description": "The current implementation of the canister sandbox does not use Seccomp to filter outgoing system calls, instead relying on mandatory access controls (via SELinux) to restrict the system calls available to a sandboxed process.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Invalid system state changes cause the replica to panic", "description": "Sending a WebAssembly (Wasm) execution output with invalid system state changes can cause the replica to panic.", "severity": "N/A", "contract": "system_api/ src/sandbox_safe_system_state.rs", "function": "apply_changes", "lineNumber": "99-157"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-354"]}, "title": "SandboxedExecutionController does not enforce memory size invariants", "description": "The code does not validate Wasm and stable memory sizes against corresponding page maps, allowing a compromised sandbox to report incorrect memory sizes and use up cycles normally reserved for memory use.", "severity": "Informational", "contract": "replica_controller/src/sandboxed_execution_controller.rs", "function": "process", "lineNumber": "663-700"}]}
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/DFINITYCanisterSandboxFixReview.pdf",
+    "project_info": {
+        "url": "https://github.com/dfinity/ic/tree/master",
+        "commit_hash": "master",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1173"
+                ]
+            },
+            "title": "The canister sandbox has vulnerable dependencies",
+            "description": "The canister sandbox codebase uses vulnerable or unmaintained Rust dependencies.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-749"
+                ]
+            },
+            "title": "Complete environment of the replica is passed to the sandboxed process",
+            "description": "When the `spawn_socketed_process` function spawns a new sandboxed process, the call to the `Command::spawn` method passes the entire environment of the replica to the sandboxed process.",
+            "severity": "Informational",
+            "contract": "canister_sandbox/common/src/process.rs",
+            "function": "spawn_socketed_process",
+            "lineNumber": "17-46"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "SELinux policy allows the sandbox process to write replica log messages",
+            "description": "The SELinux policy for the canister sandbox currently allows sandboxed processes to read from and write to all file descriptors inherited from the replica, which could allow a compromised sandbox to spoof log messages to the replica's stdout or stderr.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "Command::spawn",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Canister sandbox system calls are not filtered using Seccomp",
+            "description": "The current implementation of the canister sandbox does not use Seccomp to filter outgoing system calls, instead relying on mandatory access controls (via SELinux) to restrict the system calls available to a sandboxed process.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Invalid system state changes cause the replica to panic",
+            "description": "Sending a WebAssembly (Wasm) execution output with invalid system state changes can cause the replica to panic.",
+            "severity": "N/A",
+            "contract": "system_api/ src/sandbox_safe_system_state.rs",
+            "function": "apply_changes",
+            "lineNumber": "99-157"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-354"
+                ]
+            },
+            "title": "SandboxedExecutionController does not enforce memory size invariants",
+            "description": "The code does not validate Wasm and stable memory sizes against corresponding page maps, allowing a compromised sandbox to report incorrect memory sizes and use up cycles normally reserved for memory use.",
+            "severity": "Informational",
+            "contract": "replica_controller/src/sandboxed_execution_controller.rs",
+            "function": "process",
+            "lineNumber": "663-700"
+        }
+    ]
+}

@@ -1,1 +1,116 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Minterest-v1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Possible Front-Running For Unintended Payment In repayBorrowBehalf()", "description": "The protocol assumes the intention for a full repayment when the given amount is larger than the current borrowing balance, which may lead to front-running and unintended payment.", "severity": "Low", "contract": "MToken", "function": "repayBorrowFresh()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"]}, "title": "Possible Sandwich/MEV Attacks For Drip Collection", "description": "The `BuybackDripper` mechanism may be abused to steal most drip distribution due to permissionless and open-to-public access, allowing for possible flashloan-assisted MEV attacks.", "severity": "Medium", "contract": "BuybackDripper, Buyback", "function": "drip()", "lineNumber": "71-78"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Trust Issue of Admin Keys", "description": "In the `Minterest` protocol, there is a privileged account with the role of `DEFAULT_ADMIN_ROLE` that plays a critical role in governing and regulating system-wide operations, but this extra power may also be a counter-party risk to contract users.", "severity": "Medium", "contract": "Multiple Contracts", "function": ["setBuyback(Buyback newBuyback)", "setEmissionBooster(EmissionBooster _emissionBooster)"], "lineNumber": ["578-582", "588-589"]}, {"id": 3, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1287"]}, "title": "Accommodation of Non-ERC20-Compliant Tokens", "description": "The `transfer` function does not comply with ERC20 standard, allowing transactions to proceed successfully without being reverted even if the check fails.", "severity": "Low", "contract": "Treasury, MNTSource", "function": "transfer()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-710"], "2": ["CWE-1068"]}, "title": "Improved ERC20-Compliance Of MToken", "description": "Ensuring ERC20 compliance of MToken contract by implementing required API functions and events as per ERC20 specification.", "severity": "Low", "contract": "MToken", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Improved Gas Efficiency in EmissionBooster::enableTiersInternal()", "description": "The function enableTiersInternal() can be optimized to avoid repeated writes on the same storage state with the same value for gas efficiency.", "severity": "Low", "contract": "EmissionBooster", "function": "enableTiersInternal()", "lineNumber": "263-264"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Minterest-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/minterest-finance/protocol/tree/46fdda0",
+        "commit_hash": "46fdda0",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Possible Front-Running For Unintended Payment In repayBorrowBehalf()",
+            "description": "The protocol assumes the intention for a full repayment when the given amount is larger than the current borrowing balance, which may lead to front-running and unintended payment.",
+            "severity": "Low",
+            "contract": "MToken",
+            "function": "repayBorrowFresh()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Possible Sandwich/MEV Attacks For Drip Collection",
+            "description": "The `BuybackDripper` mechanism may be abused to steal most drip distribution due to permissionless and open-to-public access, allowing for possible flashloan-assisted MEV attacks.",
+            "severity": "Medium",
+            "contract": "BuybackDripper, Buyback",
+            "function": "drip()",
+            "lineNumber": "71-78"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "In the `Minterest` protocol, there is a privileged account with the role of `DEFAULT_ADMIN_ROLE` that plays a critical role in governing and regulating system-wide operations, but this extra power may also be a counter-party risk to contract users.",
+            "severity": "Medium",
+            "contract": "Multiple Contracts",
+            "function": [
+                "setBuyback(Buyback newBuyback)",
+                "setEmissionBooster(EmissionBooster _emissionBooster)"
+            ],
+            "lineNumber": [
+                "578-582",
+                "588-589"
+            ]
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1287"
+                ]
+            },
+            "title": "Accommodation of Non-ERC20-Compliant Tokens",
+            "description": "The `transfer` function does not comply with ERC20 standard, allowing transactions to proceed successfully without being reverted even if the check fails.",
+            "severity": "Low",
+            "contract": "Treasury, MNTSource",
+            "function": "transfer()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1068"
+                ]
+            },
+            "title": "Improved ERC20-Compliance Of MToken",
+            "description": "Ensuring ERC20 compliance of MToken contract by implementing required API functions and events as per ERC20 specification.",
+            "severity": "Low",
+            "contract": "MToken",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improved Gas Efficiency in EmissionBooster::enableTiersInternal()",
+            "description": "The function enableTiersInternal() can be optimized to avoid repeated writes on the same storage state with the same value for gas efficiency.",
+            "severity": "Low",
+            "contract": "EmissionBooster",
+            "function": "enableTiersInternal()",
+            "lineNumber": "263-264"
+        }
+    ]
+}

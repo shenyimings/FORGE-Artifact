@@ -1,1 +1,302 @@
-{"path": "./Audit_Reports_2024/Runtime_V\u0435rification/GnosisSafe.pdf", "project_info": {"url": "https://github.com/trailofbits/publications#security-reviews", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-710"], "2": ["CWE-684"], "3": ["CWE-440"]}, "title": "Reentrancy vulnerability in execTransaction", "description": "GnosisSafe employs storage field nonce to protect against reentrancy attacks, but there are 3 external calls performed during a transaction that need to be guarded from reentrancy.", "severity": "Critical", "contract": "GnosisSafe", "function": "execTransaction()", "lineNumber": "69-104"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "ISignatureValidator gas and refund abuse", "description": "The account that initiated the transaction can consume large amounts of gas for free, unnoticed by other owners, and possibly receive a refund larger than the amount of gas consumed.", "severity": "Critical", "contract": "GnosisSafe", "function": "execTransaction()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-691"], "2": ["CWE-362"]}, "title": "Transaction reordering vulnerability in addOwnerWithThreshold, removeOwner, and changeThreshold", "description": "A race condition exists in addOwnerWithThreshold, removeOwner, and changeThreshold functions allowing an update to threshold value, which can lead to incorrect threshold values if transactions are approved in the wrong order.", "severity": "Critical", "contract": "N/A", "function": ["addOwnerWithThreshold", "removeOwner", "changeThreshold"], "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "execTransaction allows a user transaction to address 0 (zero)", "description": "The execTransaction function does not reject transactions to the zero address, which can cause Ether to remain stuck at 0x0 if a large amount is attached as a startup fund for the new account.", "severity": "Critical", "contract": "GnosisSafe", "function": "execTransaction()", "lineNumber": "L95"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "execTransaction missing the contract existence check for the user transaction target", "description": "The execTransaction function does not check if the user transaction target is a valid contract, which may result in Ether loss if a non-existent account is provided.", "severity": "Critical", "contract": "N/A", "function": "execTransaction", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-703"]}, "title": "changeMasterCopy missing contract existence check", "description": "The changeMasterCopy function is missing a contract existence check for the new master copy address, which can cause the Proxy fall-back function to silently return if the master copy is set to a non-contract account.", "severity": "Critical", "contract": "MasterCopy", "function": "changeMasterCopy(address _masterCopy)", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Potential overflow if contract invariant is not met", "description": "Arithmetic operations without SafeMath can cause potential overflow if contract invariants are not met.", "severity": "Critical", "contract": "GnosisSafe and OwnerManager", "function": "N/A", "lineNumber": "92, 139, 62, 79, 85"}, {"id": 7, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Potential list index out of bounds in signatureSplit", "description": "The signatureSplit function does not check that the index is within the bounds of the signatures list.", "severity": "Critical", "contract": "GnosisSafe", "function": "signatureSplit", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1286"]}, "title": "Missing well-formedness check for signature encoding in checkSignatures", "description": "The function checkSignatures does not explicitly check if the signature encoding is valid, which can lead to reading garbage values from memory or causing out-of-gas exceptions.", "severity": "Critical", "contract": "GnosisSafe", "function": "checkSignatures()", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Lazy enum type check", "description": "The operation argument value must be within the range of Enum.Operation (0-2 inclusive), but the Solidity compiler's generated range check is missing in the execTransaction function.", "severity": "Informative (non-critical)", "contract": "GnosisSafe", "function": "execTransaction()", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Address range", "description": "All address argument values must be within the range of address (0 to 2^160-1 inclusive), otherwise the first 96 bits are silently truncated.", "severity": "Informative", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Scanning isValidSignature when adding an owner", "description": "It may be considered to scan the isValidSignature function whenever adding a new owner (either on-chain or off-chain), to ensure that the function body contains no malicious opcode.", "severity": "Informative", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-697"], "2": ["CWE-1023"], "3": ["CWE-187"]}, "title": "Local validity check of checkSignatures", "description": "The checkSignatures function only checks the first threshold number of signatures and does not consider the remaining signatures' validity. This can lead to a potential issue where a 'bad' owner intentionally sends an invalid signature to veto a transaction.", "severity": "Informative", "contract": "GnosisSafe", "function": "checkSignatures()", "lineNumber": "134"}, {"id": 13, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "No explicit check for the case 2 <= v <= 26 in checkSignatures", "description": "The code does not have an explicit check for the invalid signature case where 2 <= v <= 26, instead relying on ecrecover to implicitly reject it. This may lead to unknown zero-day vulnerabilities.", "severity": "Informative", "contract": "N/A", "function": "checkSignatures()", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "handlePayment allows to send Ether to the precompiled contract addresses", "description": "The handlePayment function sends Ether to the receiver address, which could be a non-owned account, especially one of the precompiled contract addresses (0x1 - 0x8). This can lead to sending Ether to unintended contracts.", "severity": "Informative", "contract": "GnosisSafe", "function": "handlePayment()", "lineNumber": "L106-L120"}, {"id": 15, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Insufficient external call result check and gas efficiency of transferToken", "description": "The transferToken function only checks the termination status and return value of the token contract call, which may lead to payment failure if the token contract does not properly implement the ERC20 transfer function. Additionally, the function's gas efficiency is a concern as it consumes gas for copying the return value or revert message.", "severity": "Critical", "contract": "GnosisSafe", "function": "transferToken()", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Runtime_V\u0435rification/GnosisSafe.pdf",
+    "project_info": {
+        "url": "https://github.com/gnosis/safe-contracts/tree/bfb8abac580d76dd44f68307a5356a919c6cfb9b",
+        "commit_hash": "bfb8abac580d76dd44f68307a5356a919c6cfb9b",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-684"
+                ],
+                "3": [
+                    "CWE-440"
+                ]
+            },
+            "title": "Reentrancy vulnerability in execTransaction",
+            "description": "GnosisSafe employs storage field nonce to protect against reentrancy attacks, but there are 3 external calls performed during a transaction that need to be guarded from reentrancy.",
+            "severity": "Critical",
+            "contract": "GnosisSafe",
+            "function": "execTransaction()",
+            "lineNumber": "69-104"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "ISignatureValidator gas and refund abuse",
+            "description": "The account that initiated the transaction can consume large amounts of gas for free, unnoticed by other owners, and possibly receive a refund larger than the amount of gas consumed.",
+            "severity": "Critical",
+            "contract": "GnosisSafe",
+            "function": "execTransaction()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-362"
+                ]
+            },
+            "title": "Transaction reordering vulnerability in addOwnerWithThreshold, removeOwner, and changeThreshold",
+            "description": "A race condition exists in addOwnerWithThreshold, removeOwner, and changeThreshold functions allowing an update to threshold value, which can lead to incorrect threshold values if transactions are approved in the wrong order.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": [
+                "addOwnerWithThreshold",
+                "removeOwner",
+                "changeThreshold"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "execTransaction allows a user transaction to address 0 (zero)",
+            "description": "The execTransaction function does not reject transactions to the zero address, which can cause Ether to remain stuck at 0x0 if a large amount is attached as a startup fund for the new account.",
+            "severity": "Critical",
+            "contract": "GnosisSafe",
+            "function": "execTransaction()",
+            "lineNumber": "L95"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "execTransaction missing the contract existence check for the user transaction target",
+            "description": "The execTransaction function does not check if the user transaction target is a valid contract, which may result in Ether loss if a non-existent account is provided.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "execTransaction",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "changeMasterCopy missing contract existence check",
+            "description": "The changeMasterCopy function is missing a contract existence check for the new master copy address, which can cause the Proxy fall-back function to silently return if the master copy is set to a non-contract account.",
+            "severity": "Critical",
+            "contract": "MasterCopy",
+            "function": "changeMasterCopy(address _masterCopy)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Potential overflow if contract invariant is not met",
+            "description": "Arithmetic operations without SafeMath can cause potential overflow if contract invariants are not met.",
+            "severity": "Critical",
+            "contract": "GnosisSafe and OwnerManager",
+            "function": "N/A",
+            "lineNumber": "92, 139, 62, 79, 85"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Potential list index out of bounds in signatureSplit",
+            "description": "The signatureSplit function does not check that the index is within the bounds of the signatures list.",
+            "severity": "Critical",
+            "contract": "GnosisSafe",
+            "function": "signatureSplit",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1286"
+                ]
+            },
+            "title": "Missing well-formedness check for signature encoding in checkSignatures",
+            "description": "The function checkSignatures does not explicitly check if the signature encoding is valid, which can lead to reading garbage values from memory or causing out-of-gas exceptions.",
+            "severity": "Critical",
+            "contract": "GnosisSafe",
+            "function": "checkSignatures()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Lazy enum type check",
+            "description": "The operation argument value must be within the range of Enum.Operation (0-2 inclusive), but the Solidity compiler's generated range check is missing in the execTransaction function.",
+            "severity": "Informative (non-critical)",
+            "contract": "GnosisSafe",
+            "function": "execTransaction()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Address range",
+            "description": "All address argument values must be within the range of address (0 to 2^160-1 inclusive), otherwise the first 96 bits are silently truncated.",
+            "severity": "Informative",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Scanning isValidSignature when adding an owner",
+            "description": "It may be considered to scan the isValidSignature function whenever adding a new owner (either on-chain or off-chain), to ensure that the function body contains no malicious opcode.",
+            "severity": "Informative",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ],
+                "2": [
+                    "CWE-1023"
+                ],
+                "3": [
+                    "CWE-187"
+                ]
+            },
+            "title": "Local validity check of checkSignatures",
+            "description": "The checkSignatures function only checks the first threshold number of signatures and does not consider the remaining signatures' validity. This can lead to a potential issue where a 'bad' owner intentionally sends an invalid signature to veto a transaction.",
+            "severity": "Informative",
+            "contract": "GnosisSafe",
+            "function": "checkSignatures()",
+            "lineNumber": "134"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "No explicit check for the case 2 <= v <= 26 in checkSignatures",
+            "description": "The code does not have an explicit check for the invalid signature case where 2 <= v <= 26, instead relying on ecrecover to implicitly reject it. This may lead to unknown zero-day vulnerabilities.",
+            "severity": "Informative",
+            "contract": "N/A",
+            "function": "checkSignatures()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "handlePayment allows to send Ether to the precompiled contract addresses",
+            "description": "The handlePayment function sends Ether to the receiver address, which could be a non-owned account, especially one of the precompiled contract addresses (0x1 - 0x8). This can lead to sending Ether to unintended contracts.",
+            "severity": "Informative",
+            "contract": "GnosisSafe",
+            "function": "handlePayment()",
+            "lineNumber": "L106-L120"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Insufficient external call result check and gas efficiency of transferToken",
+            "description": "The transferToken function only checks the termination status and return value of the token contract call, which may lead to payment failure if the token contract does not properly implement the ERC20 transfer function. Additionally, the function's gas efficiency is a concern as it consumes gas for copying the return value or revert message.",
+            "severity": "Critical",
+            "contract": "GnosisSafe",
+            "function": "transferToken()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

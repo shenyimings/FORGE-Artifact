@@ -1,1 +1,300 @@
-{"path": "./Audit_Reports_2024/ConsenSys_Diligence/glif-audit-2023-04.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "InfinityPool contract authorization bypass attack", "description": "An attacker could create their own credential and set the AgentID to 0, which would bypass the subjectIsAgent modifier, allowing them to borrow funds from the pool, draining any available liquidity.", "severity": "Critical", "contract": "InfinityPool", "function": "N/A", "lineNumber": "L302-L325, L96-L101"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-923"], "3": ["CWE-940"]}, "title": "Agent Data Oracle signed credential front-running attack", "description": "Anyone can request SignedCredential data containing all the relevant current info about the \u201coff\u2011chain\u201d state of the Agent. If an attacker consistently requests the credentials with the function and parameters that the actual Agent wouldn\u2019t want to call, the Agent won\u2019t be able to generate the credentials that are needed.", "severity": "Major", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Wrong accounting for totalBorrowed in the InfinityPool.writeOff function", "description": "The totalBorrowed is decreased by the lostAmt value instead of the original account principal value to acknowledge the loss.", "severity": "Major", "contract": "InfinityPool", "function": "writeOff()", "lineNumber": "L271-L287"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Wrong accounting for totalBorrowed in the InfinityPool.pay function", "description": "If the Agent pays more than the current interest debt, the remaining payment will be accounted as repayment of the principal debt. However, there are 2 mistakes in the calculation: should be totalBorrowed instead of 0 and the principalPaid cannot be larger than the account.principal in that calculation.", "severity": "Major", "contract": "InfinityPool", "function": "pay()", "lineNumber": "L382-L401, L387"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "The beneficiaryWithdrawable function can be called by anyone", "description": "The beneficiaryWithdrawable function is supposed to be called by the Agent when a beneficiary is trying to withdraw funds, but any one can call this function directly and reduce the quota without transferring funds.", "severity": "Major", "contract": "AgentPolice", "function": "beneficiaryWithdrawable", "lineNumber": "L320-L341"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "An Agent can borrow even with existing debt in interest payments", "description": "The borrow function does not check the current debt status of an Agent before borrowing, allowing them to borrow funds despite having existing debt in interest payments.", "severity": "Medium", "contract": "InfinityPool", "function": "borrow(VerifiableCredential memory vc)", "lineNumber": "L302-L325"}, {"id": 6, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-826"]}, "title": "Undistributed Residual Funds in AgentPolice.distributeLiquidatedFunds()", "description": "When an Agent is liquidated, the liquidator may not distribute all funds to the pools, resulting in residual funds stuck in the AgentPolice contract.", "severity": "Medium", "contract": "AgentPolice", "function": "distributeLiquidatedFunds()", "lineNumber": "L185-L191"}, {"id": 7, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "An Agent can be upgraded even if there is no new implementation", "description": "The owner can trigger an upgrade even if no new implementation exists, which may cause multiple problems such as breaking the logic and losing funds.", "severity": "Medium", "contract": "AgentFactory.sol", "function": "upgrade function", "lineNumber": "L51-72"}, {"id": 8, "category": {"1": ["CWE-693"]}, "title": "Potential re-entrancy issues when upgrading the contracts", "description": "The protocol doesn't have any built-in re-entrancy protection mechanisms. When upgrading an Agent, the oldAgent.decommissionAgent(newAgent); call happens before the oldAgent is deleted. Inside this function, FIL tokens are transferred to a new contract which is currently unimplemented and unknown. Potentially, the fallback function of this contract could trigger a re-entrancy attack.", "severity": "Minor", "contract": "AgentFactory.sol", "function": "decommissionAgent()", "lineNumber": "L51-L72"}, {"id": 9, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "In\ufffdinityPool is subject to a donation within limitation attack if emtied.", "description": "An attacker could front-run the first deposit and inflate the share price to an extent where the following deposit will be less than the value of 1 wei of share, resulting in 0 shares minted. The attacker could conduct the inflation by means of self-destructing of another contract.", "severity": "Minor", "contract": "In\ufffdinityPool", "function": "N/A", "lineNumber": "L491-L516"}, {"id": 10, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-770"]}, "title": "MaxWithdraw should potentially account for the funds available in the ramp", "description": "The MaxWithdraw function returns the maximum amount without considering any withdrawal limitation that the participant could encounter and does not include funds available in the ramp.", "severity": "Minor", "contract": "InfinityPool", "function": "MaxWithdraw", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-693"]}, "title": "The upgradeability of MinerRegistry, AgentPolice, and Agent is overcomplicated and has a high chance of errors.", "description": "The upgradeability mechanism of MinerRegistry, AgentPolice, and Agent contracts is overly complex and prone to errors. This complexity arises from the presence of mappings inside these contracts that need to be recreated during upgrades, which can lead to data loss or inconsistencies.", "severity": "Minor", "contract": ["AgentPolice", "MinerRegistry", "Agent"], "function": ["migrateMiner", "refreshRoutes", "decommission pool"], "lineNumber": ["L51-L60", "L18-L20"]}, {"id": 12, "category": {"1": ["CWE-682"]}, "title": "Mint function in the Infinity pool will emit the incorrect value.", "description": "In the InfinityPool file, the mint function recomputes the amount of assets before emitting the event. However, this assumption breaks after the first liquidation because the result of previewMint and convertToAssets will only be equal while totalAssets and totalSupply are equal.", "severity": "Minor", "contract": "InfinityPool", "function": "mint()", "lineNumber": "L449-L457"}, {"id": 13, "category": {"1": ["CWE-682"]}, "title": "Incorrect Operator Used", "description": "In the InfinityPool, the -= operator should be replaced with -.", "severity": "Minor", "contract": "InfinityPool", "function": "N/A", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-682"], "2": ["CWE-1339"]}, "title": "Potential overpayment due to rounding imprecision", "description": "In the pay function of InfinityPool, if the value does not divide by the interestPerEpoch exactly, any remainder will remain in the InfinityPool.", "severity": "Minor", "contract": "InfinityPool", "function": "pay()", "lineNumber": "L373-L381"}, {"id": 15, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "jumpStartAccount should be subject to the same approval checks as regular borrow.", "description": "The jumpStartAccount is not following the same approval checks as regular borrow, which can lead to potential security risks.", "severity": "Minor", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/ConsenSys_Diligence/glif-audit-2023-04.pdf",
+    "project_info": {
+        "url": "https://github.com/glif-confidential/pools/tree/bf28b412e0e13c87b1dfdcf4cb6ee2707bbe44f8",
+        "commit_hash": "bf28b412e0e13c87b1dfdcf4cb6ee2707bbe44f8",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "InfinityPool contract authorization bypass attack",
+            "description": "An attacker could create their own credential and set the AgentID to 0, which would bypass the subjectIsAgent modifier, allowing them to borrow funds from the pool, draining any available liquidity.",
+            "severity": "Critical",
+            "contract": "InfinityPool",
+            "function": "N/A",
+            "lineNumber": "L302-L325, L96-L101"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-923"
+                ],
+                "3": [
+                    "CWE-940"
+                ]
+            },
+            "title": "Agent Data Oracle signed credential front-running attack",
+            "description": "Anyone can request SignedCredential data containing all the relevant current info about the \u201coff\u2011chain\u201d state of the Agent. If an attacker consistently requests the credentials with the function and parameters that the actual Agent wouldn\u2019t want to call, the Agent won\u2019t be able to generate the credentials that are needed.",
+            "severity": "Major",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Wrong accounting for totalBorrowed in the InfinityPool.writeOff function",
+            "description": "The totalBorrowed is decreased by the lostAmt value instead of the original account principal value to acknowledge the loss.",
+            "severity": "Major",
+            "contract": "InfinityPool",
+            "function": "writeOff()",
+            "lineNumber": "L271-L287"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Wrong accounting for totalBorrowed in the InfinityPool.pay function",
+            "description": "If the Agent pays more than the current interest debt, the remaining payment will be accounted as repayment of the principal debt. However, there are 2 mistakes in the calculation: should be totalBorrowed instead of 0 and the principalPaid cannot be larger than the account.principal in that calculation.",
+            "severity": "Major",
+            "contract": "InfinityPool",
+            "function": "pay()",
+            "lineNumber": "L382-L401, L387"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "The beneficiaryWithdrawable function can be called by anyone",
+            "description": "The beneficiaryWithdrawable function is supposed to be called by the Agent when a beneficiary is trying to withdraw funds, but any one can call this function directly and reduce the quota without transferring funds.",
+            "severity": "Major",
+            "contract": "AgentPolice",
+            "function": "beneficiaryWithdrawable",
+            "lineNumber": "L320-L341"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "An Agent can borrow even with existing debt in interest payments",
+            "description": "The borrow function does not check the current debt status of an Agent before borrowing, allowing them to borrow funds despite having existing debt in interest payments.",
+            "severity": "Medium",
+            "contract": "InfinityPool",
+            "function": "borrow(VerifiableCredential memory vc)",
+            "lineNumber": "L302-L325"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-826"
+                ]
+            },
+            "title": "Undistributed Residual Funds in AgentPolice.distributeLiquidatedFunds()",
+            "description": "When an Agent is liquidated, the liquidator may not distribute all funds to the pools, resulting in residual funds stuck in the AgentPolice contract.",
+            "severity": "Medium",
+            "contract": "AgentPolice",
+            "function": "distributeLiquidatedFunds()",
+            "lineNumber": "L185-L191"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "An Agent can be upgraded even if there is no new implementation",
+            "description": "The owner can trigger an upgrade even if no new implementation exists, which may cause multiple problems such as breaking the logic and losing funds.",
+            "severity": "Medium",
+            "contract": "AgentFactory.sol",
+            "function": "upgrade function",
+            "lineNumber": "L51-72"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "Potential re-entrancy issues when upgrading the contracts",
+            "description": "The protocol doesn't have any built-in re-entrancy protection mechanisms. When upgrading an Agent, the oldAgent.decommissionAgent(newAgent); call happens before the oldAgent is deleted. Inside this function, FIL tokens are transferred to a new contract which is currently unimplemented and unknown. Potentially, the fallback function of this contract could trigger a re-entrancy attack.",
+            "severity": "Minor",
+            "contract": "AgentFactory.sol",
+            "function": "decommissionAgent()",
+            "lineNumber": "L51-L72"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "In\ufffdinityPool is subject to a donation within limitation attack if emtied.",
+            "description": "An attacker could front-run the first deposit and inflate the share price to an extent where the following deposit will be less than the value of 1 wei of share, resulting in 0 shares minted. The attacker could conduct the inflation by means of self-destructing of another contract.",
+            "severity": "Minor",
+            "contract": "In\ufffdinityPool",
+            "function": "N/A",
+            "lineNumber": "L491-L516"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "MaxWithdraw should potentially account for the funds available in the ramp",
+            "description": "The MaxWithdraw function returns the maximum amount without considering any withdrawal limitation that the participant could encounter and does not include funds available in the ramp.",
+            "severity": "Minor",
+            "contract": "InfinityPool",
+            "function": "MaxWithdraw",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "The upgradeability of MinerRegistry, AgentPolice, and Agent is overcomplicated and has a high chance of errors.",
+            "description": "The upgradeability mechanism of MinerRegistry, AgentPolice, and Agent contracts is overly complex and prone to errors. This complexity arises from the presence of mappings inside these contracts that need to be recreated during upgrades, which can lead to data loss or inconsistencies.",
+            "severity": "Minor",
+            "contract": [
+                "AgentPolice",
+                "MinerRegistry",
+                "Agent"
+            ],
+            "function": [
+                "migrateMiner",
+                "refreshRoutes",
+                "decommission pool"
+            ],
+            "lineNumber": [
+                "L51-L60",
+                "L18-L20"
+            ]
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Mint function in the Infinity pool will emit the incorrect value.",
+            "description": "In the InfinityPool file, the mint function recomputes the amount of assets before emitting the event. However, this assumption breaks after the first liquidation because the result of previewMint and convertToAssets will only be equal while totalAssets and totalSupply are equal.",
+            "severity": "Minor",
+            "contract": "InfinityPool",
+            "function": "mint()",
+            "lineNumber": "L449-L457"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect Operator Used",
+            "description": "In the InfinityPool, the -= operator should be replaced with -.",
+            "severity": "Minor",
+            "contract": "InfinityPool",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "Potential overpayment due to rounding imprecision",
+            "description": "In the pay function of InfinityPool, if the value does not divide by the interestPerEpoch exactly, any remainder will remain in the InfinityPool.",
+            "severity": "Minor",
+            "contract": "InfinityPool",
+            "function": "pay()",
+            "lineNumber": "L373-L381"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "jumpStartAccount should be subject to the same approval checks as regular borrow.",
+            "description": "The jumpStartAccount is not following the same approval checks as regular borrow, which can lead to potential security risks.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

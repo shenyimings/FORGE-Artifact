@@ -1,1 +1,235 @@
-{"path": "./Audit_Reports_2024/ConsenSys_Diligence/ConsenSys_Diligence-Bounties_Network.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "ERC721 can be stolen in many cases", "description": "Anyone can update their own fulfillment (except for owner of fulfillments[_bountyId] ) and steal all the bounty that should have gone to the original fulfillers.", "severity": "Critical", "contract": "StandardBounties.sol", "function": "acceptFulfillment", "lineNumber": "L377"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Misprint in updateFulfillment", "description": "and nobody can update their own fulfillment (except for owner of `fulfillments[_bountyId]` ).", "severity": "Critical", "contract": "StandardBounties.sol", "function": "updateFulfillment", "lineNumber": "L377"}, {"id": 2, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "NFT with TokenID = 0 cannot be used", "description": "ERC721 tokens are misused in many ways, and one of the critical issues is that NFT with TokenID = 0 cannot be used.", "severity": "Critical", "contract": "StandardBounties.sol", "function": "N/A", "lineNumber": "L246"}, {"id": 3, "category": {"1": ["CWE-435"], "2": ["CWE-436"], "3": ["CWE-115"]}, "title": "ETH contributions don't work with meta transactions", "description": "The current version of the code does not handle relayed ether bounties because the ether is not relayed to the `StandardBounties` contract.", "severity": "Major", "contract": "StandardBounties", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Anyone can act as a contributor before any tokens of the contribution were sent", "description": "Token transferring in `contribute` function is happening after the contribution was processed and added into StandardBounties contract. That means that in some types of tokens that may allow reentrancy in `transferFrom` function (ERC777 tokens or regulated/controlled tokens), an attacker can act as a contributor of any amount of tokens even before he actually transferred these tokens.", "severity": "Medium", "contract": "StandardBounties", "function": "contribute()", "lineNumber": "L243-L262"}, {"id": 5, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Use safe math for arithmetic operations", "description": "For internal bookkeeping `StandardBounties` is keeping track of a bounty's total balance. The total balance is the sum of the amount of individual contributions. While it is unlikely that this amount may overflow for contributions in ETH (uint256_MAX) it may be possible for `ERC20` tokens where a user might have an arbitrarily sized stake in the token.", "severity": "Medium", "contract": "StandardBounties", "function": "N/A", "lineNumber": "L246, L294, L418"}, {"id": 6, "category": {"1": ["CWE-703"]}, "title": "Add tests for meta transactions functionality", "description": "No tests exist for meta transactions functionality, which could lead to bugs or security issues when implementing or writing tests.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Make sure at least one issuer is set", "description": "`onlyIssuer` can error if a bounty does not specify any `issuers` and someone calls any of the functions decorated with `validateIssuerArrayIndex` and `onlyIssuer` with an `_issuerId` of zero.", "severity": "Minor", "contract": "StandardBounties", "function": "N/A", "lineNumber": "L77-L83, L93-L100"}, {"id": 8, "category": {"1": ["CWE-697"], "2": ["CWE-1024"]}, "title": "Use correct sender when emitting events", "description": "`msg.sender` should be changed to `_sender`.", "severity": "Medium", "contract": "BountiesMetaTxRelayer", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Incompatible ERC721Basic transferFrom() function", "description": "The hardcoded reference in the bounties code defines transferFrom as `transferFrom(address _from, address _to, uint256 _tokenId) public returns(bool);`, whereas the standard is `transferFrom(address _from, address _to, uint256 _tokenId) public;`.", "severity": "Medium", "contract": "ERC721Basic", "function": "transferFrom()", "lineNumber": "L215"}, {"id": 10, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Safeguard contribute() against invalid bounty.tokenversion", "description": "In order to make the code resilient to potential future errors introduced with changes to issueBounty it is recommended to throw an exception in the else path of the token selection in contribute for an invalid bounty.tokenversion.", "severity": "Minor", "contract": "StandardBounties", "function": "contribute()", "lineNumber": "L250-L268"}, {"id": 11, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"], "4": ["CWE-766"]}, "title": "Change public methods to external", "description": "Variables can be specified as being `public`, `internal` or `private`. Make a conscious decision and explicitly define visibility for all state variables.", "severity": "Minor", "contract": "BountiesMetaTxRelayer.sol", "function": "N/A", "lineNumber": "L10"}]}
+{
+    "path": "./Audit_Reports_2024/ConsenSys_Diligence/ConsenSys_Diligence-Bounties_Network.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "ERC721 can be stolen in many cases",
+            "description": "Anyone can update their own fulfillment (except for owner of fulfillments[_bountyId] ) and steal all the bounty that should have gone to the original fulfillers.",
+            "severity": "Critical",
+            "contract": "StandardBounties.sol",
+            "function": "acceptFulfillment",
+            "lineNumber": "L377"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Misprint in updateFulfillment",
+            "description": "and nobody can update their own fulfillment (except for owner of `fulfillments[_bountyId]` ).",
+            "severity": "Critical",
+            "contract": "StandardBounties.sol",
+            "function": "updateFulfillment",
+            "lineNumber": "L377"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "NFT with TokenID = 0 cannot be used",
+            "description": "ERC721 tokens are misused in many ways, and one of the critical issues is that NFT with TokenID = 0 cannot be used.",
+            "severity": "Critical",
+            "contract": "StandardBounties.sol",
+            "function": "N/A",
+            "lineNumber": "L246"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-115"
+                ]
+            },
+            "title": "ETH contributions don't work with meta transactions",
+            "description": "The current version of the code does not handle relayed ether bounties because the ether is not relayed to the `StandardBounties` contract.",
+            "severity": "Major",
+            "contract": "StandardBounties",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Anyone can act as a contributor before any tokens of the contribution were sent",
+            "description": "Token transferring in `contribute` function is happening after the contribution was processed and added into StandardBounties contract. That means that in some types of tokens that may allow reentrancy in `transferFrom` function (ERC777 tokens or regulated/controlled tokens), an attacker can act as a contributor of any amount of tokens even before he actually transferred these tokens.",
+            "severity": "Medium",
+            "contract": "StandardBounties",
+            "function": "contribute()",
+            "lineNumber": "L243-L262"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Use safe math for arithmetic operations",
+            "description": "For internal bookkeeping `StandardBounties` is keeping track of a bounty's total balance. The total balance is the sum of the amount of individual contributions. While it is unlikely that this amount may overflow for contributions in ETH (uint256_MAX) it may be possible for `ERC20` tokens where a user might have an arbitrarily sized stake in the token.",
+            "severity": "Medium",
+            "contract": "StandardBounties",
+            "function": "N/A",
+            "lineNumber": "L246, L294, L418"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Add tests for meta transactions functionality",
+            "description": "No tests exist for meta transactions functionality, which could lead to bugs or security issues when implementing or writing tests.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Make sure at least one issuer is set",
+            "description": "`onlyIssuer` can error if a bounty does not specify any `issuers` and someone calls any of the functions decorated with `validateIssuerArrayIndex` and `onlyIssuer` with an `_issuerId` of zero.",
+            "severity": "Minor",
+            "contract": "StandardBounties",
+            "function": "N/A",
+            "lineNumber": "L77-L83, L93-L100"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ],
+                "2": [
+                    "CWE-1024"
+                ]
+            },
+            "title": "Use correct sender when emitting events",
+            "description": "`msg.sender` should be changed to `_sender`.",
+            "severity": "Medium",
+            "contract": "BountiesMetaTxRelayer",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Incompatible ERC721Basic transferFrom() function",
+            "description": "The hardcoded reference in the bounties code defines transferFrom as `transferFrom(address _from, address _to, uint256 _tokenId) public returns(bool);`, whereas the standard is `transferFrom(address _from, address _to, uint256 _tokenId) public;`.",
+            "severity": "Medium",
+            "contract": "ERC721Basic",
+            "function": "transferFrom()",
+            "lineNumber": "L215"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Safeguard contribute() against invalid bounty.tokenversion",
+            "description": "In order to make the code resilient to potential future errors introduced with changes to issueBounty it is recommended to throw an exception in the else path of the token selection in contribute for an invalid bounty.tokenversion.",
+            "severity": "Minor",
+            "contract": "StandardBounties",
+            "function": "contribute()",
+            "lineNumber": "L250-L268"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ],
+                "4": [
+                    "CWE-766"
+                ]
+            },
+            "title": "Change public methods to external",
+            "description": "Variables can be specified as being `public`, `internal` or `private`. Make a conscious decision and explicitly define visibility for all state variables.",
+            "severity": "Minor",
+            "contract": "BountiesMetaTxRelayer.sol",
+            "function": "N/A",
+            "lineNumber": "L10"
+        }
+    ]
+}

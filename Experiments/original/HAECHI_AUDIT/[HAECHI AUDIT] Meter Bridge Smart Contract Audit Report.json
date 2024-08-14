@@ -1,1 +1,206 @@
-{"path": "./Audit_Reports_2024/HAECHI_AUDIT/[HAECHI AUDIT] Meter Bridge Smart Contract Audit Report.pdf", "project_info": {"url": "https://github.com/meterio/chainbridge-solidity-v2.0.0-eth", "commit_hash": "1a02abfe86e7a87d1de61bb64328ff2382938ce0", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Using EnumerableSet Index may lead to undesired behavior", "description": "Upon relayers renouncing their role or admins removing relayer\u2019s roles, there may be undesired behavior such as one relayer voting multiple times or a relayer not being able to vote on a proposal.", "severity": "Minor", "contract": "handlers/Bridge(Upgradeable)", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Various optimizations are possible", "description": "Optimizations can be made by removing unnecessary code and repeated computation in ERC1967Upgrade.sol, Signatures contracts, ERC20Safe.sol, and Bridge contract.", "severity": "Tips", "contract": ["ERC1967Upgrade", "Signatures", "ERC20Safe", "Bridge"], "function": ["_upgradeToAndCallSecure()", "onlyRelayers()", "_safeTransferETH()", "voteProposals()"], "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "ERC721Handler can be used to steal other's bridged NFTs", "description": "Attackers can steal NFTs that are burnable if the owner has approved it to the ERC721Handler.", "severity": "Critical", "contract": "handlers/ERC721Handler(Upgradeable)", "function": "deposit() and burnERC721()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "Signatures.sol\u2019s incorrect usage of signatures may lead to DoS", "description": "A relayer can send valid signatures for a proposal repeatedly, which may lead to DoS.", "severity": "Major", "contract": "Signatures(Upgradeable).sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-241"]}, "title": "Signatures.sol\u2019s insufficient input validation may lead to DoS", "description": "A relayer may send invalid signatures due to insufficient input validation, which can cause DoS.", "severity": "Major", "contract": "Signatures(Upgradeable).sol", "function": "submitSignature()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "FeeHandler token check is missing", "description": "The bridge contract assumes fees are paid in native tokens without checking the returned tokenAddress from FeeHandlerWithOracle, causing deposits to revert.", "severity": "Minor", "contract": "Bridge(Upgradeable)", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "ResourceID is not checked properly in proposal execution", "description": "Given a passed proposal, any token with the same ERCHandler can be withdrawn due to improper ResourceID checking.", "severity": "Critical", "contract": "Bridge(Upgradeable)", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-710"], "2": ["CWE-1059"]}, "title": "Minor documentation flaws exist", "description": "Minor documentation flaws which may confuse the user or developers exist.", "severity": "Tips", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-693"]}, "title": "Reentrancy in voteProposals() leads to double spending", "description": "A token can be withdrawn twice with a single proposal due to reentrancy vulnerability in the voteProposals() function.", "severity": "Critical", "contract": "Bridge(Upgradeable)", "function": "voteProposals()", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-664"], "2": ["CWE-610"]}, "title": "Handler change for a resourceID leads to Signature Replay", "description": "If a token\u2019s handler address changes without changing its resourceID, any attacker may replay the signatures of past proposals on the same token, withdrawing tokens once again.", "severity": "Minor", "contract": "Bridge(Upgradeable)", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/HAECHI_AUDIT/[HAECHI AUDIT] Meter Bridge Smart Contract Audit Report.pdf",
+    "project_info": {
+        "url": "https://github.com/meterio/chainbridge-solidity-v2.0.0-eth",
+        "commit_hash": "1a02abfe86e7a87d1de61bb64328ff2382938ce0",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Using EnumerableSet Index may lead to undesired behavior",
+            "description": "Upon relayers renouncing their role or admins removing relayer\u2019s roles, there may be undesired behavior such as one relayer voting multiple times or a relayer not being able to vote on a proposal.",
+            "severity": "Minor",
+            "contract": "handlers/Bridge(Upgradeable)",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Various optimizations are possible",
+            "description": "Optimizations can be made by removing unnecessary code and repeated computation in ERC1967Upgrade.sol, Signatures contracts, ERC20Safe.sol, and Bridge contract.",
+            "severity": "Tips",
+            "contract": [
+                "ERC1967Upgrade",
+                "Signatures",
+                "ERC20Safe",
+                "Bridge"
+            ],
+            "function": [
+                "_upgradeToAndCallSecure()",
+                "onlyRelayers()",
+                "_safeTransferETH()",
+                "voteProposals()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "ERC721Handler can be used to steal other's bridged NFTs",
+            "description": "Attackers can steal NFTs that are burnable if the owner has approved it to the ERC721Handler.",
+            "severity": "Critical",
+            "contract": "handlers/ERC721Handler(Upgradeable)",
+            "function": "deposit() and burnERC721()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Signatures.sol\u2019s incorrect usage of signatures may lead to DoS",
+            "description": "A relayer can send valid signatures for a proposal repeatedly, which may lead to DoS.",
+            "severity": "Major",
+            "contract": "Signatures(Upgradeable).sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-241"
+                ]
+            },
+            "title": "Signatures.sol\u2019s insufficient input validation may lead to DoS",
+            "description": "A relayer may send invalid signatures due to insufficient input validation, which can cause DoS.",
+            "severity": "Major",
+            "contract": "Signatures(Upgradeable).sol",
+            "function": "submitSignature()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "FeeHandler token check is missing",
+            "description": "The bridge contract assumes fees are paid in native tokens without checking the returned tokenAddress from FeeHandlerWithOracle, causing deposits to revert.",
+            "severity": "Minor",
+            "contract": "Bridge(Upgradeable)",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "ResourceID is not checked properly in proposal execution",
+            "description": "Given a passed proposal, any token with the same ERCHandler can be withdrawn due to improper ResourceID checking.",
+            "severity": "Critical",
+            "contract": "Bridge(Upgradeable)",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1059"
+                ]
+            },
+            "title": "Minor documentation flaws exist",
+            "description": "Minor documentation flaws which may confuse the user or developers exist.",
+            "severity": "Tips",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "Reentrancy in voteProposals() leads to double spending",
+            "description": "A token can be withdrawn twice with a single proposal due to reentrancy vulnerability in the voteProposals() function.",
+            "severity": "Critical",
+            "contract": "Bridge(Upgradeable)",
+            "function": "voteProposals()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-610"
+                ]
+            },
+            "title": "Handler change for a resourceID leads to Signature Replay",
+            "description": "If a token\u2019s handler address changes without changing its resourceID, any attacker may replay the signatures of past proposals on the same token, withdrawing tokens once again.",
+            "severity": "Minor",
+            "contract": "Bridge(Upgradeable)",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

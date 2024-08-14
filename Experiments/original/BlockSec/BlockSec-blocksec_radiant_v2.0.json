@@ -1,1 +1,285 @@
-{"path": "./Audit_Reports_2024/BlockSec/BlockSec-blocksec_radiant_v2.0.pdf", "project_info": {"url": "https://github.com/radiant-capital/", "commit_hash": "1328c4d9015b035530b516de817252fb0df8e11e", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Improper Calculation of the Oracle", "description": "The function consult() in contract ComboOracle is used to compute the average price from several sources. In the implementation of version 1, it uses arithmetic mean to calculate the final price, which can be manipulated by influencing one of the source oracles.", "severity": "Medium", "contract": "ComboOracle", "function": "consult()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"]}, "title": "Potential Drain of Funds through BaseBounty", "description": "An attacker can drain all funds in the contract 'BountyManager' by repeatedly invoking 'executeBounty()' and exploiting the limitation of 'maxLockWithdrawPerTxn', leading to disruption of designed bounty mechanisms.", "severity": "High", "contract": "BountyManager", "function": "executeBounty()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Potential Invalid Emission Schedules", "description": "In the contract `ChefIncentivesController`, function `setEmissionSchedule()` is invoked by the `owner` to set schedules for different rewards rates. However, it only checks the first element in `_startTimeOffsets`, which is not enough. Furthermore, the `_startTimeOffsets[i]` is converted from `uint256` to `uint128` when it\u2019s being added to `emissionSchedule`, which can be truncated if the original input is too large.", "severity": "Low", "contract": "ChefIncentivesController", "function": "setEmissionSchedule()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Skippable Emission schedules", "description": "In contract `ChefIncentivesController`, the function `setScheduleRewardsPerSecond()` may skip some emission schedules, potentially leading to undistributed rewards.", "severity": "Low", "contract": "ChefIncentivesController", "function": "setScheduleRewardsPerSecond()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "Changeable Exchange Rate during Migration", "description": "The contract `Migration` is implemented for users to exchange from `tokenV1` to `tokenV2` with a specified `exchangeRate`. However, during the process of migration, this `exchangeRate` can still be adjusted by the `owner` via the function `setExchangeRate()`.", "severity": "Medium", "contract": "Migration", "function": "setExchangeRate()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Improper Implementation of _transfer() (I)", "description": "In contract IncentivizedERC20, the function _transfer() does not consider self transfer situation where sender and recipient are the same account, allowing hackers to increase their own balance infinitely.", "severity": "High", "contract": "IncentivizedERC20", "function": "_transfer()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Lack of Check on Period in UniV2TwapOracle", "description": "The UniV2TwapOracle lacks a check on period.", "severity": "Low", "contract": "UniV2TwapOracle", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Non-Refundable Dust Tokens", "description": "In contract UniswapPoolHelper, the function zapWETH() doesn't implement functionality to handle dust tokens after adding liquidity.", "severity": "Medium", "contract": "UniswapPoolHelper", "function": "zapWETH()", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Improper Implementation of _transfer() (I)", "description": "In contract `IncentivizedERC20`, the function `_transfer()` does not consider self transfer, allowing hackers to increase their own balance infinitely by transferring to their own account repeatedly.", "severity": "High", "contract": "IncentivizedERC20", "function": "_transfer()", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-682"]}, "title": "Manipulatable Compound Rewards", "description": "In MFDPlus contract, the function _convertPendingRewardsToWeth() swaps the user\u2019s rewards to WETH through the Uniswap router for relocking without slippage check after swapping.", "severity": "Medium", "contract": "MFDPlus", "function": "_convertPendingRewardsToWeth()", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-284"]}, "title": "Lack of Access Control in setLeverager()", "description": "Function `setLeverager()` in the contract `LendingPool` has no access control.", "severity": "Medium", "contract": "LendingPool", "function": "setLeverager()", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-682"]}, "title": "No Slippage Check in addLiquidityWETHOnly()", "description": "There is no slippage check after swapping rewards to WETH through Uniswap router for relocking.", "severity": "Medium", "contract": "N/A", "function": "addLiquidityWETHOnly()", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Lack of Check of borrowRatio in loopETH()", "description": "Function `loopETH()` receives a parameter `borrowRatio` to specify the borrow ratio but it is not checked before the loop starts.", "severity": "Low", "contract": "Leverager.sol", "function": "loopETH()", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Lack of Check of Length between assets and poolIDs in setPoolIDs()", "description": "The function setPoolIDs() allows the owner to set different poolIDs for different assets. However, the lengths of these two arrays are not checked to be equal.", "severity": "Low", "contract": "StarBorrow.sol", "function": "setPoolIDs()", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-271"], "4": ["CWE-272"]}, "title": "Lack of mint Privilege Revoke in addBountyContract()", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "addBountyContract()", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Minters Can Only be Assigned Once", "description": "The outdated minters can not be removed when they are upgraded.", "severity": "Medium", "contract": "MultiFeeDistribution", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/BlockSec/BlockSec-blocksec_radiant_v2.0.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "1328c4d9015b035530b516de817252fb0df8e11e",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improper Calculation of the Oracle",
+            "description": "The function consult() in contract ComboOracle is used to compute the average price from several sources. In the implementation of version 1, it uses arithmetic mean to calculate the final price, which can be manipulated by influencing one of the source oracles.",
+            "severity": "Medium",
+            "contract": "ComboOracle",
+            "function": "consult()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Potential Drain of Funds through BaseBounty",
+            "description": "An attacker can drain all funds in the contract 'BountyManager' by repeatedly invoking 'executeBounty()' and exploiting the limitation of 'maxLockWithdrawPerTxn', leading to disruption of designed bounty mechanisms.",
+            "severity": "High",
+            "contract": "BountyManager",
+            "function": "executeBounty()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Potential Invalid Emission Schedules",
+            "description": "In the contract `ChefIncentivesController`, function `setEmissionSchedule()` is invoked by the `owner` to set schedules for different rewards rates. However, it only checks the first element in `_startTimeOffsets`, which is not enough. Furthermore, the `_startTimeOffsets[i]` is converted from `uint256` to `uint128` when it\u2019s being added to `emissionSchedule`, which can be truncated if the original input is too large.",
+            "severity": "Low",
+            "contract": "ChefIncentivesController",
+            "function": "setEmissionSchedule()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Skippable Emission schedules",
+            "description": "In contract `ChefIncentivesController`, the function `setScheduleRewardsPerSecond()` may skip some emission schedules, potentially leading to undistributed rewards.",
+            "severity": "Low",
+            "contract": "ChefIncentivesController",
+            "function": "setScheduleRewardsPerSecond()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Changeable Exchange Rate during Migration",
+            "description": "The contract `Migration` is implemented for users to exchange from `tokenV1` to `tokenV2` with a specified `exchangeRate`. However, during the process of migration, this `exchangeRate` can still be adjusted by the `owner` via the function `setExchangeRate()`.",
+            "severity": "Medium",
+            "contract": "Migration",
+            "function": "setExchangeRate()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Improper Implementation of _transfer() (I)",
+            "description": "In contract IncentivizedERC20, the function _transfer() does not consider self transfer situation where sender and recipient are the same account, allowing hackers to increase their own balance infinitely.",
+            "severity": "High",
+            "contract": "IncentivizedERC20",
+            "function": "_transfer()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Lack of Check on Period in UniV2TwapOracle",
+            "description": "The UniV2TwapOracle lacks a check on period.",
+            "severity": "Low",
+            "contract": "UniV2TwapOracle",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Non-Refundable Dust Tokens",
+            "description": "In contract UniswapPoolHelper, the function zapWETH() doesn't implement functionality to handle dust tokens after adding liquidity.",
+            "severity": "Medium",
+            "contract": "UniswapPoolHelper",
+            "function": "zapWETH()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Improper Implementation of _transfer() (I)",
+            "description": "In contract `IncentivizedERC20`, the function `_transfer()` does not consider self transfer, allowing hackers to increase their own balance infinitely by transferring to their own account repeatedly.",
+            "severity": "High",
+            "contract": "IncentivizedERC20",
+            "function": "_transfer()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Manipulatable Compound Rewards",
+            "description": "In MFDPlus contract, the function _convertPendingRewardsToWeth() swaps the user\u2019s rewards to WETH through the Uniswap router for relocking without slippage check after swapping.",
+            "severity": "Medium",
+            "contract": "MFDPlus",
+            "function": "_convertPendingRewardsToWeth()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Lack of Access Control in setLeverager()",
+            "description": "Function `setLeverager()` in the contract `LendingPool` has no access control.",
+            "severity": "Medium",
+            "contract": "LendingPool",
+            "function": "setLeverager()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "No Slippage Check in addLiquidityWETHOnly()",
+            "description": "There is no slippage check after swapping rewards to WETH through Uniswap router for relocking.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "addLiquidityWETHOnly()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Lack of Check of borrowRatio in loopETH()",
+            "description": "Function `loopETH()` receives a parameter `borrowRatio` to specify the borrow ratio but it is not checked before the loop starts.",
+            "severity": "Low",
+            "contract": "Leverager.sol",
+            "function": "loopETH()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Lack of Check of Length between assets and poolIDs in setPoolIDs()",
+            "description": "The function setPoolIDs() allows the owner to set different poolIDs for different assets. However, the lengths of these two arrays are not checked to be equal.",
+            "severity": "Low",
+            "contract": "StarBorrow.sol",
+            "function": "setPoolIDs()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-271"
+                ],
+                "4": [
+                    "CWE-272"
+                ]
+            },
+            "title": "Lack of mint Privilege Revoke in addBountyContract()",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "addBountyContract()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Minters Can Only be Assigned Once",
+            "description": "The outdated minters can not be removed when they are upgraded.",
+            "severity": "Medium",
+            "contract": "MultiFeeDistribution",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

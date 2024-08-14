@@ -1,1 +1,131 @@
-{"path": "./Audit_Reports_2024/Solidified/Solidified-SingularityNET_-_Staking_[30.04.2021].pdf", "project_info": {"url": "https://github.com/singnet/snet-stake/tree/phase-2", "commit_hash": "b9c99546cfab9cc2177c242e6dbf42ccb321d67b", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Operator can reject stakes from previous windows", "description": "The operator can use any previous stakeMapIndex to reject a stake during the current stake submission end period, contrary to the documentation.", "severity": "Minor", "contract": "TokenStake.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "TokenStake.sol: Pragma allows for a wide range of compiler versions", "description": "Function `pragma` statement allows for a very large range of compiler versions, including some versions with known bugs. In addition, the language syntax has changed since the earlier versions that are allowed.", "severity": "Note", "contract": "TokenStake.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-664"], "2": ["CWE-404"], "3": ["CWE-772"], "4": ["CWE-775"]}, "title": "TokenStake.sol: A staker is not removed from the stakeHolders array when they withdraw all their tokens or get rejected", "description": "A staker remains in the stakeHolders array even after withdrawing all their tokens via `withdrawStake()` or getting rejected in `rejectStake()`.", "severity": "Minor", "contract": "TokenStake.sol", "function": ["withdrawStake()", "rejectStake()"], "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Functions migrateStakes() and updateRewards() could be declared as external to save gas", "description": "Declaring functions migrateStakes() and updateRewards() as 'external' instead of 'public' can save a significant amount of gas for the calling user.", "severity": "Minor", "contract": "TokenStake.sol", "function": "migrateStakes(), updateRewards()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "TokenStake.sol: Function depositToken() is redundant", "description": "Function `depositToken()` is redundant, as any user is able to transfer `token` to the contract without calling it.", "severity": "Minor", "contract": "TokenStake.sol", "function": "depositToken()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "TokenStake.sol: Stake migration does not update total stake", "description": "The method migrateStakeWindow is not updating the `windowTotalStake` variable and can be used during an active stake.", "severity": "Minor", "contract": "TokenStake.sol", "function": "migrateStakeWindow()", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Solidified/Solidified-SingularityNET_-_Staking_[30.04.2021].pdf",
+    "project_info": {
+        "url": "https://github.com/singnet/snet-stake/tree/phase-2",
+        "commit_hash": "b9c99546cfab9cc2177c242e6dbf42ccb321d67b",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Operator can reject stakes from previous windows",
+            "description": "The operator can use any previous stakeMapIndex to reject a stake during the current stake submission end period, contrary to the documentation.",
+            "severity": "Minor",
+            "contract": "TokenStake.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "TokenStake.sol: Pragma allows for a wide range of compiler versions",
+            "description": "Function `pragma` statement allows for a very large range of compiler versions, including some versions with known bugs. In addition, the language syntax has changed since the earlier versions that are allowed.",
+            "severity": "Note",
+            "contract": "TokenStake.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-775"
+                ]
+            },
+            "title": "TokenStake.sol: A staker is not removed from the stakeHolders array when they withdraw all their tokens or get rejected",
+            "description": "A staker remains in the stakeHolders array even after withdrawing all their tokens via `withdrawStake()` or getting rejected in `rejectStake()`.",
+            "severity": "Minor",
+            "contract": "TokenStake.sol",
+            "function": [
+                "withdrawStake()",
+                "rejectStake()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Functions migrateStakes() and updateRewards() could be declared as external to save gas",
+            "description": "Declaring functions migrateStakes() and updateRewards() as 'external' instead of 'public' can save a significant amount of gas for the calling user.",
+            "severity": "Minor",
+            "contract": "TokenStake.sol",
+            "function": "migrateStakes(), updateRewards()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "TokenStake.sol: Function depositToken() is redundant",
+            "description": "Function `depositToken()` is redundant, as any user is able to transfer `token` to the contract without calling it.",
+            "severity": "Minor",
+            "contract": "TokenStake.sol",
+            "function": "depositToken()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "TokenStake.sol: Stake migration does not update total stake",
+            "description": "The method migrateStakeWindow is not updating the `windowTotalStake` variable and can be used during an active stake.",
+            "severity": "Minor",
+            "contract": "TokenStake.sol",
+            "function": "migrateStakeWindow()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

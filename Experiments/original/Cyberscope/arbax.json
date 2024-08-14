@@ -1,1 +1,316 @@
-{"path": "./Audit_Reports_2024/Cyberscope/arbax.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-691"], "2": ["CWE-841"]}, "title": "ST - Stops Transactions", "description": "As part of the launch process, initially, the transfers are disabled for all the users excluding the authorized addresses. Once the trades are enabled it will not be able to stop again.", "severity": "Critical", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"], "2": ["CWE-369"]}, "title": "ZD - Zero Division", "description": "The contract uses variables that may be set to zero as denominators, leading to unpredictable and potentially harmful results such as a transaction revert.", "severity": "Critical", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "PAP - Pair Address Preexistence", "description": "The contract initializes the pair address in the `initializePair()` method. If a third user creates the pair address prior to the `initializePair()` call, then this method will not be able to be called again since the `createPair()` will revert.", "severity": "Critical", "contract": "N/A", "function": "initializePair()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "CR - Code Repetition", "description": "The contract contains repetitive code segments which can lead to issues like gas efficiency, complexity, readability, security, and maintainability of the source code.", "severity": "Critical", "contract": "Arb Axolotl", "function": "rescueToken, clearStuckBalance, rescueArbax", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "RMBS - Redundant Mint Burn Sequence", "description": "As part of the tokens distribution process, the $ARBAX address mints 20% of tokens, and then it burns the same amount. The balances and the total supply before and after this sequence is exactly the same.", "severity": "N/A", "contract": "Arb Axolotl", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "RTCI - Reward Token Change Inconsistency", "description": "The contract owner has the authority to change the distribution token address by calling the setRewardToken() method, which may produce several issues in the distribution process.", "severity": "Medium", "contract": "N/A", "function": "setRewardToken()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "UFD - Unbalanced Fees Distribution", "description": "During the execution of the swap method, the contract split the amounts that will be distributed on each feature. The fees are not distributed equally since the division does not proceed on the same value but in the deducted.", "severity": "N/A", "contract": "N/A", "function": "swap()", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "RLS - Redundant Liquidation Swaps", "description": "The contract performs redundant liquidation swaps by executing twice the `.swapExactTokensForETH` method with the same path during the execution of the `swapBack` method, increasing gas consumption and decreasing code readability.", "severity": "Medium", "contract": "N/A", "function": "swapBack()", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "RSML - Redundant SafeMath Library", "description": "The usage of the SafeMath library adds complexity, overhead and increases gas consumption unnecessarily since Solidity versions greater than or equal to 0.8.0 provide native functionality for arithmetic operations that revert to underflow and overflow.", "severity": "Critical", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "RSK - Redundant Storage Keyword", "description": "The contract uses the `storage` keyword in a view function which is redundant as view functions do not modify the state of the contract and do not perform any actions that cost gas.", "severity": "Unresolved", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-710"], "2": ["CWE-1061"], "3": ["CWE-766"]}, "title": "IDI - Immutable Declaration Improvement", "description": "The contract is using variables that initialize them only in the constructor and are not mutated by other functions, but these variables are not defined as `immutable`.", "severity": "Unresolved", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-909"], "4": ["CWE-456"]}, "title": "L02 - State Variables could be Declared Constant", "description": "State variables can be declared as constant using the constant keyword to ensure the value cannot be changed after it has been set and decrease gas consumption of the corresponding transaction.", "severity": "Unresolved", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-710"], "2": ["CWE-1076"]}, "title": "L04 - Conformance to Solidity Naming Conventions", "description": "The code does not adhere to the Solidity naming conventions, which can affect readability and maintainability.", "severity": "Unresolved", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-682"]}, "title": "L07 - Missing Events Arithmetic", "description": "Events are a way to record and log information about changes or actions that occur within a contract.", "severity": "Critical", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-710"], "2": ["CWE-1164"], "3": ["CWE-561"]}, "title": "L09 - Dead Code Elimination", "description": "Dead code can make a contract more difficult to understand and maintain, and can also increase the size of the contract and the cost of deploying and interacting with it.", "severity": "Unresolved", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "L16 - Validate Variable Setters", "description": "The contract performs operations on variables configured with user-supplied input without proper checks for zero values, leading to potential problems during execution.", "severity": "Medium", "contract": "Arb Axolotl", "function": "N/A", "lineNumber": "N/A"}, {"id": 16, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "L17 - Usage of Solidity Assembly", "description": "Using assembly can be error-prone and requires careful testing and debugging to ensure correctness.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 17, "category": {"1": ["CWE-682"]}, "title": "L18 - Multiple Pragma Directives", "description": "If the contract includes multiple conflicting pragma directives, it may produce unexpected errors.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Cyberscope/arbax.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0x72949aaf5c685856883c27f9fc4bc5f338e5e1f9"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "ST - Stops Transactions",
+            "description": "As part of the launch process, initially, the transfers are disabled for all the users excluding the authorized addresses. Once the trades are enabled it will not be able to stop again.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-369"
+                ]
+            },
+            "title": "ZD - Zero Division",
+            "description": "The contract uses variables that may be set to zero as denominators, leading to unpredictable and potentially harmful results such as a transaction revert.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "PAP - Pair Address Preexistence",
+            "description": "The contract initializes the pair address in the `initializePair()` method. If a third user creates the pair address prior to the `initializePair()` call, then this method will not be able to be called again since the `createPair()` will revert.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "initializePair()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "CR - Code Repetition",
+            "description": "The contract contains repetitive code segments which can lead to issues like gas efficiency, complexity, readability, security, and maintainability of the source code.",
+            "severity": "Critical",
+            "contract": "Arb Axolotl",
+            "function": "rescueToken, clearStuckBalance, rescueArbax",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "RMBS - Redundant Mint Burn Sequence",
+            "description": "As part of the tokens distribution process, the $ARBAX address mints 20% of tokens, and then it burns the same amount. The balances and the total supply before and after this sequence is exactly the same.",
+            "severity": "N/A",
+            "contract": "Arb Axolotl",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "RTCI - Reward Token Change Inconsistency",
+            "description": "The contract owner has the authority to change the distribution token address by calling the setRewardToken() method, which may produce several issues in the distribution process.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "setRewardToken()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "UFD - Unbalanced Fees Distribution",
+            "description": "During the execution of the swap method, the contract split the amounts that will be distributed on each feature. The fees are not distributed equally since the division does not proceed on the same value but in the deducted.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "swap()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "RLS - Redundant Liquidation Swaps",
+            "description": "The contract performs redundant liquidation swaps by executing twice the `.swapExactTokensForETH` method with the same path during the execution of the `swapBack` method, increasing gas consumption and decreasing code readability.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "swapBack()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "RSML - Redundant SafeMath Library",
+            "description": "The usage of the SafeMath library adds complexity, overhead and increases gas consumption unnecessarily since Solidity versions greater than or equal to 0.8.0 provide native functionality for arithmetic operations that revert to underflow and overflow.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "RSK - Redundant Storage Keyword",
+            "description": "The contract uses the `storage` keyword in a view function which is redundant as view functions do not modify the state of the contract and do not perform any actions that cost gas.",
+            "severity": "Unresolved",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1061"
+                ],
+                "3": [
+                    "CWE-766"
+                ]
+            },
+            "title": "IDI - Immutable Declaration Improvement",
+            "description": "The contract is using variables that initialize them only in the constructor and are not mutated by other functions, but these variables are not defined as `immutable`.",
+            "severity": "Unresolved",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "L02 - State Variables could be Declared Constant",
+            "description": "State variables can be declared as constant using the constant keyword to ensure the value cannot be changed after it has been set and decrease gas consumption of the corresponding transaction.",
+            "severity": "Unresolved",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1076"
+                ]
+            },
+            "title": "L04 - Conformance to Solidity Naming Conventions",
+            "description": "The code does not adhere to the Solidity naming conventions, which can affect readability and maintainability.",
+            "severity": "Unresolved",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "L07 - Missing Events Arithmetic",
+            "description": "Events are a way to record and log information about changes or actions that occur within a contract.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ],
+                "3": [
+                    "CWE-561"
+                ]
+            },
+            "title": "L09 - Dead Code Elimination",
+            "description": "Dead code can make a contract more difficult to understand and maintain, and can also increase the size of the contract and the cost of deploying and interacting with it.",
+            "severity": "Unresolved",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "L16 - Validate Variable Setters",
+            "description": "The contract performs operations on variables configured with user-supplied input without proper checks for zero values, leading to potential problems during execution.",
+            "severity": "Medium",
+            "contract": "Arb Axolotl",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "L17 - Usage of Solidity Assembly",
+            "description": "Using assembly can be error-prone and requires careful testing and debugging to ensure correctness.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "L18 - Multiple Pragma Directives",
+            "description": "If the contract includes multiple conflicting pragma directives, it may produce unexpected errors.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

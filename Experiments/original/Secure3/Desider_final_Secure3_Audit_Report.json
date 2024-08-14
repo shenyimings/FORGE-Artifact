@@ -1,1 +1,196 @@
-{"path": "./Audit_Reports_2024/Secure3/Desider_final_Secure3_Audit_Report.pdf", "project_info": {"url": "https://github.com/teamdesider/contract", "commit_hash": "e66e8464062a9f91d138047482c675a24865e061", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Minting of unlimited number of sundae tokens", "description": "Eventually the problem may lead to `og` users being able to mint tokens without `only use once` limit.", "severity": "High", "contract": "SpaceRander", "function": "ogmint()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Redundant totalSupply() calling in _mintNft function", "description": "The `totalSupply()` function is called redundantly in the `_mintNft` function, which can be optimized by reusing the previously stored value.", "severity": "Informational", "contract": "SpaceRender", "function": "_mintNft", "lineNumber": "128-129"}, {"id": 2, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Redundant judgment code", "description": "The second require code is redundant because it can be ensured by the first require code.", "severity": "Informational", "contract": "SpaceRender", "function": "N/A", "lineNumber": "91, 116"}, {"id": 3, "category": {"1": ["CWE-710"], "2": ["CWE-684"], "3": ["CWE-440"]}, "title": "Reentrancy Risk in SpaceRander Contract ogMint Function", "description": "The `ogMint` function has reentrancy risk because the internal state `_ogmint` is only updated after the external call `_mintNft()`.", "severity": "Critical", "contract": "SpaceRander", "function": "ogMint()", "lineNumber": "77-79"}, {"id": 4, "category": {"1": ["CWE-710"], "2": ["CWE-477"]}, "title": "Use OpenZeppelin 4.x version contracts", "description": "The contract uses OpenZeppelin 3.x which does not support solidity 0.8.13.", "severity": "Informational", "contract": "DesiderNft.sol, SpaceRender.sol", "function": "N/A", "lineNumber": "L1-L3"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"], "4": ["CWE-766"]}, "title": "Use library functions to access", "description": "According to Counters.sol, `Counter._value` should never be directly accessed by users: interactions must be restricted to the library's internal functions.", "severity": "Informational", "contract": "SpaceRender", "function": "N/A", "lineNumber": "54, 130"}, {"id": 6, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "DesiderNft::receiveFromL1ReMint Redundant ERC721 hook function calls and event emission", "description": "_beforeTokenTransfer and _afterTokenTransfer are already called in the _safeMint function, so it is incorrect to call them again in the receiveFromL1ReMint function. Similarly, Transfer event is already emitted in the [_mint](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/release-v3.4/contracts/token/ERC721/ERC721.sol#L343) function.", "severity": "Low", "contract": "DesiderNft", "function": "receiveFromL1ReMint()", "lineNumber": "105, 115, 117"}, {"id": 7, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-233"]}, "title": "Unused Variable", "description": "The variable `endTime` is defined in the `SpaceRander` contract but never used.", "severity": "Medium", "contract": "SpaceRender", "function": "N/A", "lineNumber": "31"}, {"id": 8, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "SpaceRander.wlMint Mint amount not limited", "description": "Whitelisted users can mint any amount of NFTs without restriction.", "severity": "Medium", "contract": "SpaceRender", "function": "wlMint()", "lineNumber": "108-111"}, {"id": 9, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "SpaceRender gas optimization by using constant values", "description": "Using the `constant` keyword for variables that do not change helps to save on gas used.", "severity": "Informational", "contract": "SpaceRender", "function": "N/A", "lineNumber": "L19-L23, L20-L22, L28-L31"}]}
+{
+    "path": "./Audit_Reports_2024/Secure3/Desider_final_Secure3_Audit_Report.pdf",
+    "project_info": {
+        "url": "https://github.com/teamdesider/contract",
+        "commit_hash": "e66e8464062a9f91d138047482c675a24865e061",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Minting of unlimited number of sundae tokens",
+            "description": "Eventually the problem may lead to `og` users being able to mint tokens without `only use once` limit.",
+            "severity": "High",
+            "contract": "SpaceRander",
+            "function": "ogmint()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Redundant totalSupply() calling in _mintNft function",
+            "description": "The `totalSupply()` function is called redundantly in the `_mintNft` function, which can be optimized by reusing the previously stored value.",
+            "severity": "Informational",
+            "contract": "SpaceRender",
+            "function": "_mintNft",
+            "lineNumber": "128-129"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Redundant judgment code",
+            "description": "The second require code is redundant because it can be ensured by the first require code.",
+            "severity": "Informational",
+            "contract": "SpaceRender",
+            "function": "N/A",
+            "lineNumber": "91, 116"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-684"
+                ],
+                "3": [
+                    "CWE-440"
+                ]
+            },
+            "title": "Reentrancy Risk in SpaceRander Contract ogMint Function",
+            "description": "The `ogMint` function has reentrancy risk because the internal state `_ogmint` is only updated after the external call `_mintNft()`.",
+            "severity": "Critical",
+            "contract": "SpaceRander",
+            "function": "ogMint()",
+            "lineNumber": "77-79"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-477"
+                ]
+            },
+            "title": "Use OpenZeppelin 4.x version contracts",
+            "description": "The contract uses OpenZeppelin 3.x which does not support solidity 0.8.13.",
+            "severity": "Informational",
+            "contract": "DesiderNft.sol, SpaceRender.sol",
+            "function": "N/A",
+            "lineNumber": "L1-L3"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ],
+                "4": [
+                    "CWE-766"
+                ]
+            },
+            "title": "Use library functions to access",
+            "description": "According to Counters.sol, `Counter._value` should never be directly accessed by users: interactions must be restricted to the library's internal functions.",
+            "severity": "Informational",
+            "contract": "SpaceRender",
+            "function": "N/A",
+            "lineNumber": "54, 130"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "DesiderNft::receiveFromL1ReMint Redundant ERC721 hook function calls and event emission",
+            "description": "_beforeTokenTransfer and _afterTokenTransfer are already called in the _safeMint function, so it is incorrect to call them again in the receiveFromL1ReMint function. Similarly, Transfer event is already emitted in the [_mint](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/release-v3.4/contracts/token/ERC721/ERC721.sol#L343) function.",
+            "severity": "Low",
+            "contract": "DesiderNft",
+            "function": "receiveFromL1ReMint()",
+            "lineNumber": "105, 115, 117"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-233"
+                ]
+            },
+            "title": "Unused Variable",
+            "description": "The variable `endTime` is defined in the `SpaceRander` contract but never used.",
+            "severity": "Medium",
+            "contract": "SpaceRender",
+            "function": "N/A",
+            "lineNumber": "31"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "SpaceRander.wlMint Mint amount not limited",
+            "description": "Whitelisted users can mint any amount of NFTs without restriction.",
+            "severity": "Medium",
+            "contract": "SpaceRender",
+            "function": "wlMint()",
+            "lineNumber": "108-111"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "SpaceRender gas optimization by using constant values",
+            "description": "Using the `constant` keyword for variables that do not change helps to save on gas used.",
+            "severity": "Informational",
+            "contract": "SpaceRender",
+            "function": "N/A",
+            "lineNumber": "L19-L23, L20-L22, L28-L31"
+        }
+    ]
+}

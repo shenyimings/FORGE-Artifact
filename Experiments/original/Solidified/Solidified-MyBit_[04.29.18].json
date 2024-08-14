@@ -1,1 +1,132 @@
-{"path": "./Audit_Reports_2024/Solidified/Solidified-MyBit_[04.29.18].pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Minting old tokens can deprive existing holders", "description": "The owner of the contract can mint old tokens after the sanity check was made, allowing him/her to claim new tokens. This would result in other users being unable to claim all their tokens, since there would be more old tokens than specified in circulatingSupply.", "severity": "Major", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "ERC20 constructor should trigger a Transfer event", "description": "The ERC20 standard states that a transfer event should be triggered when tokens are being created, using the 0x0 address as from.", "severity": "N/A", "contract": "N/A", "function": "ERC20 constructor", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "sanityCheck() can be improved", "description": "The sanityCheck() function mostly checks for hardcoded values which might not represent real-world values since the old token total supply can be changed.", "severity": "Medium", "contract": "N/A", "function": "sanityCheck()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Derivation of variable oldTotalSupply (awaiting clarification)", "description": "The old token contract does not make any reference to a total supply cap, only to the existing tokens. This variable allows for arbitrary minting of new tokens to the MyBit foundation.", "severity": "Unknown", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-693"], "2": ["CWE-358"]}, "title": "Consider adding a function to retrieve mistakenly sent tokens", "description": "Any token sent directly to the contract (not approving first) will be forever locked. Consider adding a function to retrieve such tokens, since the appropriate usage might be confusing for some users.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Include a swap function in addition to receiveApproval", "description": "Some users may prefer to approve the old token and swap for the new token in separate transactions.", "severity": "Medium", "contract": "N/A", "function": "receiveApproval()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-710"], "2": ["CWE-477"]}, "title": "Update compiler version", "description": "The audit recommends using the latest compiler version (0.4.23) which includes support for less ambiguous constructor syntax, reason strings to communicate why transactions are reverted, and a clearer emit syntax for events.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Solidified/Solidified-MyBit_[04.29.18].pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Minting old tokens can deprive existing holders",
+            "description": "The owner of the contract can mint old tokens after the sanity check was made, allowing him/her to claim new tokens. This would result in other users being unable to claim all their tokens, since there would be more old tokens than specified in circulatingSupply.",
+            "severity": "Major",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "ERC20 constructor should trigger a Transfer event",
+            "description": "The ERC20 standard states that a transfer event should be triggered when tokens are being created, using the 0x0 address as from.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "ERC20 constructor",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "sanityCheck() can be improved",
+            "description": "The sanityCheck() function mostly checks for hardcoded values which might not represent real-world values since the old token total supply can be changed.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "sanityCheck()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Derivation of variable oldTotalSupply (awaiting clarification)",
+            "description": "The old token contract does not make any reference to a total supply cap, only to the existing tokens. This variable allows for arbitrary minting of new tokens to the MyBit foundation.",
+            "severity": "Unknown",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-358"
+                ]
+            },
+            "title": "Consider adding a function to retrieve mistakenly sent tokens",
+            "description": "Any token sent directly to the contract (not approving first) will be forever locked. Consider adding a function to retrieve such tokens, since the appropriate usage might be confusing for some users.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Include a swap function in addition to receiveApproval",
+            "description": "Some users may prefer to approve the old token and swap for the new token in separate transactions.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "receiveApproval()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-477"
+                ]
+            },
+            "title": "Update compiler version",
+            "description": "The audit recommends using the latest compiler version (0.4.23) which includes support for less ambiguous constructor syntax, reason strings to communicate why transactions are reverted, and a clearer emit syntax for events.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

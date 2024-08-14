@@ -1,1 +1,170 @@
-{"path": "./Audit_Reports_2024/Inspex/Inspex_AUDIT2022055_Gold Fever_NFT Game_FullReport_v1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Division Before Multiplication", "description": "The rounding error from the division before multiplication can cause the company's earnings to be slightly miscalculated.", "severity": "Low", "contract": "GoldFeverGovernor", "function": "calculateTaxById()", "lineNumber": "641-665"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-229"]}, "title": "Improper Free Character Validation in createCharacter() Function", "description": "The attacker can mint the free character as an NFT, which conflicts with the business design due to lack of validation for idToCreateCharacterFee and isFreeCharacter state in createCharacter() function.", "severity": "High", "contract": "GoldFeverCharacter", "function": "createCharacter()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Lack of NFT Contract Validation", "description": "The attacker can supply a malicious NFT contract as a parameter in various functions to abuse the business logic, resulting in the loss of users' platform assets.", "severity": "Critical", "contract": "GoldFeverGuild", "function": "N/A", "lineNumber": "933"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Lack of Collateral Ofefr Status Validation", "description": "Unchecked collateral ofefr status validation allows the loanee to claim the collateral asset without paying back the loan.", "severity": "Critical", "contract": "GoldFeverCollateral.sol", "function": "claimCollateral() and counterOffer()", "lineNumber": "259, 292"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "Lack of Investment Status Validation", "description": "The contract does not validate if the investment is already successful before allowing withdrawals.", "severity": "High", "contract": "GoldFeverGuild.sol", "function": "withdrawFailedInvest()", "lineNumber": "885-891"}, {"id": 5, "category": {"1": ["CWE-693"], "2": ["CWE-330"]}, "title": "Insecure Randomness in openBox() Function", "description": "The attacker can control the random result to select a specific NFT when opening the box, giving an unfair advantage to the platform's users.", "severity": "Critical", "contract": "GoldFeverMaskBox", "function": "openBox()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Lack of Closed Arena Validation", "description": "The cancelArenaRegistration() function does not validate if the arena is closed before allowing users to cancel their registration and retrieve upfront fees.", "severity": "High", "contract": "GoldFeverMiningClaim.sol", "function": "cancelArenaRegistration(uint256)", "lineNumber": "388-393, 402"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "Incorrect Change State Operator in finalizeAuction() Function", "description": "The auction status is not changed after it is finalized. The attacker can take advantage of this flaw to drain all $NGL from the contract.", "severity": "Critical", "contract": "GoldFeverAuction", "function": "finalizeAuction(uint256 auctionId)", "lineNumber": "311"}, {"id": 8, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Improper cancelCounterOffer() Function Implementation", "description": "After the cancelCounterOffer() function is called, the counter ofefr is not completely removed, resulting in the collateral NFT being unable to be withdrawn from the contract.", "severity": "Critical", "contract": "GoldFeverCollateral", "function": "cancelCounterOffer(uint256)", "lineNumber": "323-347"}]}
+{
+    "path": "./Audit_Reports_2024/Inspex/Inspex_AUDIT2022055_Gold Fever_NFT Game_FullReport_v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/InspexCo/SCSTG",
+        "commit_hash": "N/A",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Division Before Multiplication",
+            "description": "The rounding error from the division before multiplication can cause the company's earnings to be slightly miscalculated.",
+            "severity": "Low",
+            "contract": "GoldFeverGovernor",
+            "function": "calculateTaxById()",
+            "lineNumber": "641-665"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ]
+            },
+            "title": "Improper Free Character Validation in createCharacter() Function",
+            "description": "The attacker can mint the free character as an NFT, which conflicts with the business design due to lack of validation for idToCreateCharacterFee and isFreeCharacter state in createCharacter() function.",
+            "severity": "High",
+            "contract": "GoldFeverCharacter",
+            "function": "createCharacter()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Lack of NFT Contract Validation",
+            "description": "The attacker can supply a malicious NFT contract as a parameter in various functions to abuse the business logic, resulting in the loss of users' platform assets.",
+            "severity": "Critical",
+            "contract": "GoldFeverGuild",
+            "function": "N/A",
+            "lineNumber": "933"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Lack of Collateral Ofefr Status Validation",
+            "description": "Unchecked collateral ofefr status validation allows the loanee to claim the collateral asset without paying back the loan.",
+            "severity": "Critical",
+            "contract": "GoldFeverCollateral.sol",
+            "function": "claimCollateral() and counterOffer()",
+            "lineNumber": "259, 292"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Lack of Investment Status Validation",
+            "description": "The contract does not validate if the investment is already successful before allowing withdrawals.",
+            "severity": "High",
+            "contract": "GoldFeverGuild.sol",
+            "function": "withdrawFailedInvest()",
+            "lineNumber": "885-891"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-330"
+                ]
+            },
+            "title": "Insecure Randomness in openBox() Function",
+            "description": "The attacker can control the random result to select a specific NFT when opening the box, giving an unfair advantage to the platform's users.",
+            "severity": "Critical",
+            "contract": "GoldFeverMaskBox",
+            "function": "openBox()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Lack of Closed Arena Validation",
+            "description": "The cancelArenaRegistration() function does not validate if the arena is closed before allowing users to cancel their registration and retrieve upfront fees.",
+            "severity": "High",
+            "contract": "GoldFeverMiningClaim.sol",
+            "function": "cancelArenaRegistration(uint256)",
+            "lineNumber": "388-393, 402"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect Change State Operator in finalizeAuction() Function",
+            "description": "The auction status is not changed after it is finalized. The attacker can take advantage of this flaw to drain all $NGL from the contract.",
+            "severity": "Critical",
+            "contract": "GoldFeverAuction",
+            "function": "finalizeAuction(uint256 auctionId)",
+            "lineNumber": "311"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Improper cancelCounterOffer() Function Implementation",
+            "description": "After the cancelCounterOffer() function is called, the counter ofefr is not completely removed, resulting in the collateral NFT being unable to be withdrawn from the contract.",
+            "severity": "Critical",
+            "contract": "GoldFeverCollateral",
+            "function": "cancelCounterOffer(uint256)",
+            "lineNumber": "323-347"
+        }
+    ]
+}

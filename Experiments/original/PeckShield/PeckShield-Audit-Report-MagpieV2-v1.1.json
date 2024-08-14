@@ -1,1 +1,65 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-MagpieV2-v1.1.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Proper Reset of userRewards in _sendReward()", "description": "The `_sendReward()` routine doesn't reset `userRewards[_rewardToken][_account]` when all user rewards are taken as forfeit, allowing a bad actor to claim rewards for fully unlocked `vlMGP` and queue the forfeit again and again to the reward pool.", "severity": "Low", "contract": "vlMGPBaseRewarder", "function": "_sendReward()", "lineNumber": "376-377"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Revisited Logic to Accumulate Rewards for vlMGP", "description": "In the MagpieV2 protocol, the MasterMagpie contract is a customized implementation of MasterChef, which incentivizes user deposits of the supported assets with MGP. In particular, one of the supported assets is vlMGP which is minted to users for their lock of MGP tokens in the VLMGP contract. While examining the MGP rewards calculation for the deposit of vlMGP, we notice the vlMGP in cool down state is not taken into account to share the rewards.", "severity": "Medium", "contract": "MasterMagpie", "function": "_calLpSupply()", "lineNumber": "674, 676"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Trust Issue of Admin Keys", "description": "In the Magpie protocol, there is a privileged account, i.e., owner, that plays a critical role in governing and regulating system-wide operations.", "severity": "Medium", "contract": "WombatStaking", "function": "setBribeManager,setBribe", "lineNumber": "535-540,542-548"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-MagpieV2-v1.1.pdf",
+    "project_info": {
+        "url": "https://github.com/magpiexyz/magpie_contracts/tree/de3168a",
+        "commit_hash": "de3168a",
+        "address": "0xD06716E1Ff2E492Cc5034c2E81805562dd3b45fa",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Proper Reset of userRewards in _sendReward()",
+            "description": "The `_sendReward()` routine doesn't reset `userRewards[_rewardToken][_account]` when all user rewards are taken as forfeit, allowing a bad actor to claim rewards for fully unlocked `vlMGP` and queue the forfeit again and again to the reward pool.",
+            "severity": "Low",
+            "contract": "vlMGPBaseRewarder",
+            "function": "_sendReward()",
+            "lineNumber": "376-377"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Revisited Logic to Accumulate Rewards for vlMGP",
+            "description": "In the MagpieV2 protocol, the MasterMagpie contract is a customized implementation of MasterChef, which incentivizes user deposits of the supported assets with MGP. In particular, one of the supported assets is vlMGP which is minted to users for their lock of MGP tokens in the VLMGP contract. While examining the MGP rewards calculation for the deposit of vlMGP, we notice the vlMGP in cool down state is not taken into account to share the rewards.",
+            "severity": "Medium",
+            "contract": "MasterMagpie",
+            "function": "_calLpSupply()",
+            "lineNumber": "674, 676"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "In the Magpie protocol, there is a privileged account, i.e., owner, that plays a critical role in governing and regulating system-wide operations.",
+            "severity": "Medium",
+            "contract": "WombatStaking",
+            "function": "setBribeManager,setBribe",
+            "lineNumber": "535-540,542-548"
+        }
+    ]
+}

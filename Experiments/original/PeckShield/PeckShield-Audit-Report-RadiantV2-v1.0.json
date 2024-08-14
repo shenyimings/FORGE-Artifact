@@ -1,1 +1,135 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-RadiantV2-v1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"]}, "title": "N/A", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Improper Logic of StargateBorrow::borrowETH()", "description": "The borrowETH() routine in StargateBorrow contract has an improper logic which ignores that router.swap() cannot support native token (i.e., ETH) cross-chain transfer, resulting in transaction reversion.", "severity": "Medium", "contract": "StargateBorrow", "function": "borrowETH()", "lineNumber": "189-200"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Revisited Bridge Fee Calculation in RadiantOFT::_getBridgeFee()", "description": "The `_getBridgeFee()` routine needs improvement to properly calculate the bridge fee during cross-chain token transfers.", "severity": "Medium", "contract": "RadiantOFT", "function": "_getBridgeFee()", "lineNumber": "128, 131"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Revisited Withdrawal Amount Calculation in MultiFeeDistribution::exit()", "description": "The `MultiFeeDistribution` contract's `exit()` function has an incorrect implementation of withdrawal amount calculation, resulting in unexpected earnings for users.", "severity": "High", "contract": "MultiFeeDistribution", "function": "exit()", "lineNumber": "1013-1018"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "Possible Price Manipulation for UniswapPoolHelper::getPrice()/getLpPrice()", "description": "The getPrice() routine in UniswapPoolHelper contract is vulnerable to price manipulation due to the derivation of RDNT token price from wethReserve and rdntReserve, which can be manipulated.", "severity": "High", "contract": "UniswapPoolHelper/BalancerPoolHelper", "function": "getPrice()/getLpPrice()", "lineNumber": "105"}, {"id": 5, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "Possible Sandwich/MEV Attacks for Reduced Returns", "description": "The `claimAndSwapToBase()` function is vulnerable to possible front-running attacks due to lack of slippage control.", "severity": "Medium", "contract": "AutoCompounder", "function": "claimAndSwapToBase()", "lineNumber": "86"}, {"id": 6, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Possible Overflow/Underflow Prevention with SafeMath", "description": "The current implementation can be improved with the use of `SafeMath` to prevent common overflow or underflow issues when working with `uint256` operands.", "severity": "Low", "contract": "Multiple Contracts (including ChefIncentivesController, MultiFeeDistribution, RadiantOFT, LzApp, Disqualifier)", "function": "availableRewards()", "lineNumber": "675-677"}, {"id": 7, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Trust Issue of Admin Keys", "description": "In the Radiant V2 protocol, there is a privileged `owner` account that plays a critical role in governing and regulating system-wide operations.", "severity": "Medium", "contract": "Multiple Contracts", "function": "setDisqualifier,setOnwardIncentives,setRewardsPerSecond", "lineNumber": "137-155"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-RadiantV2-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/radiant-capital/audit/tree/535035451343a1dc6cd7fefd5c9b0815f696bb1c",
+        "commit_hash": "535035451343a1dc6cd7fefd5c9b0815f696bb1c",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "N/A",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improper Logic of StargateBorrow::borrowETH()",
+            "description": "The borrowETH() routine in StargateBorrow contract has an improper logic which ignores that router.swap() cannot support native token (i.e., ETH) cross-chain transfer, resulting in transaction reversion.",
+            "severity": "Medium",
+            "contract": "StargateBorrow",
+            "function": "borrowETH()",
+            "lineNumber": "189-200"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Revisited Bridge Fee Calculation in RadiantOFT::_getBridgeFee()",
+            "description": "The `_getBridgeFee()` routine needs improvement to properly calculate the bridge fee during cross-chain token transfers.",
+            "severity": "Medium",
+            "contract": "RadiantOFT",
+            "function": "_getBridgeFee()",
+            "lineNumber": "128, 131"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Revisited Withdrawal Amount Calculation in MultiFeeDistribution::exit()",
+            "description": "The `MultiFeeDistribution` contract's `exit()` function has an incorrect implementation of withdrawal amount calculation, resulting in unexpected earnings for users.",
+            "severity": "High",
+            "contract": "MultiFeeDistribution",
+            "function": "exit()",
+            "lineNumber": "1013-1018"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Possible Price Manipulation for UniswapPoolHelper::getPrice()/getLpPrice()",
+            "description": "The getPrice() routine in UniswapPoolHelper contract is vulnerable to price manipulation due to the derivation of RDNT token price from wethReserve and rdntReserve, which can be manipulated.",
+            "severity": "High",
+            "contract": "UniswapPoolHelper/BalancerPoolHelper",
+            "function": "getPrice()/getLpPrice()",
+            "lineNumber": "105"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Possible Sandwich/MEV Attacks for Reduced Returns",
+            "description": "The `claimAndSwapToBase()` function is vulnerable to possible front-running attacks due to lack of slippage control.",
+            "severity": "Medium",
+            "contract": "AutoCompounder",
+            "function": "claimAndSwapToBase()",
+            "lineNumber": "86"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Possible Overflow/Underflow Prevention with SafeMath",
+            "description": "The current implementation can be improved with the use of `SafeMath` to prevent common overflow or underflow issues when working with `uint256` operands.",
+            "severity": "Low",
+            "contract": "Multiple Contracts (including ChefIncentivesController, MultiFeeDistribution, RadiantOFT, LzApp, Disqualifier)",
+            "function": "availableRewards()",
+            "lineNumber": "675-677"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "In the Radiant V2 protocol, there is a privileged `owner` account that plays a critical role in governing and regulating system-wide operations.",
+            "severity": "Medium",
+            "contract": "Multiple Contracts",
+            "function": "setDisqualifier,setOnwardIncentives,setRewardsPerSecond",
+            "lineNumber": "137-155"
+        }
+    ]
+}

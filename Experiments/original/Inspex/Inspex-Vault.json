@@ -1,1 +1,192 @@
-{"path": "./Audit_Reports_2024/Inspex/Inspex-Vault.pdf", "project_info": {"url": "https://github.com/aleswap-finance/aleswap-vault", "commit_hash": "efd3f777b2e9aaa2c635d3d0f463f1884e998112", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"]}, "title": "Token Draining Using SetVault() Function", "description": "The owner can steal all the staked LP tokens from the Masterchef contract due to improper access control.", "severity": "High", "contract": "StrategyWardenLP", "function": "setVault()", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-435"]}, "title": "Transaction Ordering Dependence", "description": "The users and the platform will lose a portion of tokens from the front-running attack when compounding a reward.", "severity": "High", "contract": "StrategyWardenLP", "function": "harvest()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "Use of Upgradable Contract", "description": "The logic of affected contracts can be arbitrarily changed by the proxy owner, allowing malicious actions such as stealing users' funds.", "severity": "High", "contract": "AleVault StrategyWardenLP WardenSwapper", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Centralized Control of State Variable", "description": "The controlling authorities can change critical state variables to gain additional profit, which is unfair to other users.", "severity": "Medium", "contract": "StrategyWardenLP", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "Liquidity Token Amount Miscalculation (_swapWBNBToLp)", "description": "A small amount of users' tokens will be stuck in the contract on deposit, resulting in users gaining a lower amount of shares due to business logic errors.", "severity": "Medium", "contract": "WardenSwapper", "function": "_swapWBNBtoCRAFT", "lineNumber": "58-68"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Liquidity Token Amount Miscalculation (addLiquidity)", "description": "A small amount of reward harvested will be left in the contract, resulting in a lower amount of tokens used in compounding.", "severity": "Low", "contract": "StrategyWardenLP", "function": "addLiquidity()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Improper Usage of SafeERC20.safeApprove()", "description": "The functions that require allowance will be unusable due to an unfulfilled condition.", "severity": "Low", "contract": "WardenSwapper", "function": "_approveTokenIfNeeded", "lineNumber": "97-102"}, {"id": 7, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-273"]}, "title": "Insufficient Logging for Privileged Functions", "description": "Privileged functions that are executable by the controlling parties are not logged properly by emitting events.", "severity": "Very Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-682"]}, "title": "Improper Price Tolerance Design", "description": "The finding relates to CWE-362: Concurrent Execution using Shared Resource with Improper Synchronization (\u2018Race Condition\u2019)", "severity": "Info", "contract": "WardenSwapper", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-284"], "2": ["CWE-749"]}, "title": "Improper Function Visibility", "description": "Functions with improper visibility can lead to unintended access and potential security risks.", "severity": "Info", "contract": "AleVault StrategyWardenLP WardenSwapper", "function": "getPricePerFullShare()", "lineNumber": "50-52"}, {"id": 10, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-233"]}, "title": "Inexplicit Solidity Compiler Version", "description": "The Solidity compiler versions declared in the smart contracts were not explicit, which may potentially result in compatibility issues.", "severity": "Info", "contract": "AleVault, StrategyWardenLP, WardenSwapper", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Inspex/Inspex-Vault.pdf",
+    "project_info": {
+        "url": "https://github.com/aleswap-finance/aleswap-vault",
+        "commit_hash": "efd3f777b2e9aaa2c635d3d0f463f1884e998112",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Token Draining Using SetVault() Function",
+            "description": "The owner can steal all the staked LP tokens from the Masterchef contract due to improper access control.",
+            "severity": "High",
+            "contract": "StrategyWardenLP",
+            "function": "setVault()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ]
+            },
+            "title": "Transaction Ordering Dependence",
+            "description": "The users and the platform will lose a portion of tokens from the front-running attack when compounding a reward.",
+            "severity": "High",
+            "contract": "StrategyWardenLP",
+            "function": "harvest()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Use of Upgradable Contract",
+            "description": "The logic of affected contracts can be arbitrarily changed by the proxy owner, allowing malicious actions such as stealing users' funds.",
+            "severity": "High",
+            "contract": "AleVault StrategyWardenLP WardenSwapper",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Centralized Control of State Variable",
+            "description": "The controlling authorities can change critical state variables to gain additional profit, which is unfair to other users.",
+            "severity": "Medium",
+            "contract": "StrategyWardenLP",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Liquidity Token Amount Miscalculation (_swapWBNBToLp)",
+            "description": "A small amount of users' tokens will be stuck in the contract on deposit, resulting in users gaining a lower amount of shares due to business logic errors.",
+            "severity": "Medium",
+            "contract": "WardenSwapper",
+            "function": "_swapWBNBtoCRAFT",
+            "lineNumber": "58-68"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Liquidity Token Amount Miscalculation (addLiquidity)",
+            "description": "A small amount of reward harvested will be left in the contract, resulting in a lower amount of tokens used in compounding.",
+            "severity": "Low",
+            "contract": "StrategyWardenLP",
+            "function": "addLiquidity()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Improper Usage of SafeERC20.safeApprove()",
+            "description": "The functions that require allowance will be unusable due to an unfulfilled condition.",
+            "severity": "Low",
+            "contract": "WardenSwapper",
+            "function": "_approveTokenIfNeeded",
+            "lineNumber": "97-102"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-273"
+                ]
+            },
+            "title": "Insufficient Logging for Privileged Functions",
+            "description": "Privileged functions that are executable by the controlling parties are not logged properly by emitting events.",
+            "severity": "Very Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improper Price Tolerance Design",
+            "description": "The finding relates to CWE-362: Concurrent Execution using Shared Resource with Improper Synchronization (\u2018Race Condition\u2019)",
+            "severity": "Info",
+            "contract": "WardenSwapper",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-749"
+                ]
+            },
+            "title": "Improper Function Visibility",
+            "description": "Functions with improper visibility can lead to unintended access and potential security risks.",
+            "severity": "Info",
+            "contract": "AleVault StrategyWardenLP WardenSwapper",
+            "function": "getPricePerFullShare()",
+            "lineNumber": "50-52"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-233"
+                ]
+            },
+            "title": "Inexplicit Solidity Compiler Version",
+            "description": "The Solidity compiler versions declared in the smart contracts were not explicit, which may potentially result in compatibility issues.",
+            "severity": "Info",
+            "contract": "AleVault, StrategyWardenLP, WardenSwapper",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

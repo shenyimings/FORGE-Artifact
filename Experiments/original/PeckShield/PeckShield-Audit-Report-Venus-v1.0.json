@@ -1,1 +1,111 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Venus-v1.0.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Proper dsrPerBlock() Calculation", "description": "The computation of DAI Savings Rate (DSR) per block assumes 15 seconds per block, which is incorrect for Binance Smart Chain (BSC), where it should be 3 seconds per block.", "severity": "Low", "contract": "DAIInterestRateModelV2", "function": "dsrPerBlock()", "lineNumber": "68-71"}, {"id": 1, "category": {"1": ["CWE-707"], "2": ["CWE-228"]}, "title": "Non ERC20-Compliance Of VToken", "description": "The `VToken` contract does not fully comply with the ERC20 specification, missing some required functions and events.", "severity": "Medium", "contract": "VToken", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "Possible Front-running For Unintended Payment In repayBorrowBehalf()", "description": "The Venus protocol's repayBorrowFresh() function allows for repaying partial or full current borrowing balance and supports the payment on behalf of another borrowing user (via repayBorrowBehalf()). However, this functionality can be taken advantage of to launch a front-running borrow() operation, resulting in a higher borrowing balance for repayment.", "severity": "Low", "contract": "VToken", "function": "repayBorrowFresh()", "lineNumber": "876-877"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Accommodation of Non-ERC20-Compliant Tokens", "description": "The transfer function does not comply with ERC20 standard as it does not revert transaction when balance check fails.", "severity": "Low", "contract": "VTreasury", "function": "transfer()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-435"], "2": ["CWE-436"]}, "title": "Interface Inconsistency Between VBep20 And VBNB", "description": "The interfaces of VBep20 and VBnb types are inconsistent, with differences in error handling and function behavior.", "severity": "Low", "contract": "Multiple Contracts", "function": ["repayBorrow()", "mint()", "liquidateBorrow()"], "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Redundant State/Code Removal", "description": "The Venus protocol has unused code or unnecessary redundancies that can be safely removed, such as local variables defined but not used in VToken contract and internal data structure AccountAmountLocalVars in VAIController contract.", "severity": "Informational", "contract": "Multiple Contracts", "function": "N/A", "lineNumber": "110, 1153, 480-488"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Venus-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/VenusProtocol/venus-protocol/tree/d0e0a70",
+        "commit_hash": "d0e0a70",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Proper dsrPerBlock() Calculation",
+            "description": "The computation of DAI Savings Rate (DSR) per block assumes 15 seconds per block, which is incorrect for Binance Smart Chain (BSC), where it should be 3 seconds per block.",
+            "severity": "Low",
+            "contract": "DAIInterestRateModelV2",
+            "function": "dsrPerBlock()",
+            "lineNumber": "68-71"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-228"
+                ]
+            },
+            "title": "Non ERC20-Compliance Of VToken",
+            "description": "The `VToken` contract does not fully comply with the ERC20 specification, missing some required functions and events.",
+            "severity": "Medium",
+            "contract": "VToken",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Possible Front-running For Unintended Payment In repayBorrowBehalf()",
+            "description": "The Venus protocol's repayBorrowFresh() function allows for repaying partial or full current borrowing balance and supports the payment on behalf of another borrowing user (via repayBorrowBehalf()). However, this functionality can be taken advantage of to launch a front-running borrow() operation, resulting in a higher borrowing balance for repayment.",
+            "severity": "Low",
+            "contract": "VToken",
+            "function": "repayBorrowFresh()",
+            "lineNumber": "876-877"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Accommodation of Non-ERC20-Compliant Tokens",
+            "description": "The transfer function does not comply with ERC20 standard as it does not revert transaction when balance check fails.",
+            "severity": "Low",
+            "contract": "VTreasury",
+            "function": "transfer()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ]
+            },
+            "title": "Interface Inconsistency Between VBep20 And VBNB",
+            "description": "The interfaces of VBep20 and VBnb types are inconsistent, with differences in error handling and function behavior.",
+            "severity": "Low",
+            "contract": "Multiple Contracts",
+            "function": [
+                "repayBorrow()",
+                "mint()",
+                "liquidateBorrow()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Redundant State/Code Removal",
+            "description": "The Venus protocol has unused code or unnecessary redundancies that can be safely removed, such as local variables defined but not used in VToken contract and internal data structure AccountAmountLocalVars in VAIController contract.",
+            "severity": "Informational",
+            "contract": "Multiple Contracts",
+            "function": "N/A",
+            "lineNumber": "110, 1153, 480-488"
+        }
+    ]
+}

@@ -1,1 +1,223 @@
-{"path": "./Audit_Reports_2024/Cyberscope/1-piso.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "0x5639adeca84f7ce291a5f54fad20c200365a8c6b"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "ST - Stop Transactions", "description": "The contract owner has the authority to stop contracts from transactions.", "severity": "critical", "contract": "N/A", "function": "N/A", "lineNumber": "486"}, {"id": 1, "category": {"1": ["CWE-682"], "2": ["CWE-191"]}, "title": "Contract Reverts in Small Amounts", "description": "The contract has a hard limit of 10 * 10**decimals(). The contract is able to stop the transactions if the user\u2019s balance is less than the hard limit. As a result, the transaction will underflow.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "OCTD - Owner Contract Tokens Drain", "description": "Contract Owner is not able to transfer tokens from specific address", "severity": "Minor", "contract": "N/A", "function": "N/A", "lineNumber": "L720"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "ELFM - Exceed Limit Fees Manipulation", "description": "The contract owner has the authority to increase over the allowed limit of 25%. The owner may take advantage of it by calling the setTaxes, setSellTaxes function with a high percentage value.", "severity": "Critical", "contract": "N/A", "function": "setTaxes(), setSellTaxes()", "lineNumber": "362,367"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "ULTW - Unlimited Liquidity to Team Wallet", "description": "The contract owner has the authority to transfer funds without limit to the team wallet, which can lead to price volatility and potential abuse.", "severity": "Minor", "contract": "N/A", "function": "SendtoContract(uint256 weiAmount)", "lineNumber": "contract.sol#L702"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "BC - Blacklisted Contracts", "description": "The contract owner has the authority to stop contracts from transactions by calling updateIsBCheck and BCheck functions, allowing them to massively blacklist addresses.", "severity": "Critical", "contract": "N/A", "function": "updateIsBCheck(), BCheck()", "lineNumber": "672, 676"}, {"id": 6, "category": {"1": ["CWE-682"], "2": ["CWE-369"]}, "title": "ZD - Zero Division", "description": "Performing divisions may cause zero division issues.", "severity": "Critical", "contract": "N/A", "function": "N/A", "lineNumber": "L573"}, {"id": 7, "category": {"1": ["CWE-703"]}, "title": "STC - Succeeded Transfer Check", "description": "The contract should check if the result of the transfer methods is successful.", "severity": "minor", "contract": "N/A", "function": "N/A", "lineNumber": "721"}, {"id": 8, "category": {"1": ["CWE-710"], "2": ["CWE-1126"]}, "title": "L01 - Public Function could be Declared External", "description": "Public functions that are never called by the contract should be declared external to save gas.", "severity": "Minor", "contract": "N/A", "function": "excludeFromFee, name, includeInFee, allowance, approve, symbol, setSellTaxes, isExcludedFromReward, transferOwnership", "lineNumber": "246, 59, 279, 358, 716, 287, 274, 354, 704, 264, 297, 63, 293, 363, 238, 259, 255, 349, 235, 345"}, {"id": 9, "category": {"1": ["CWE-710"], "2": ["CWE-1126"]}, "title": "L02 - State Variables could be Declared Constant", "description": "Constant state variables should be declared constant to save gas.", "severity": "minor", "contract": "PiSoccer", "function": "N/A", "lineNumber": "144"}, {"id": 10, "category": {"1": ["CWE-710"], "2": ["CWE-1076"]}, "title": "L04 - Conformance to Solidity Naming Conventions", "description": "Solidity defines a naming convention that should be followed.", "severity": "Minor", "contract": "N/A", "function": "N/A", "lineNumber": "363,358,159,152,698,716,154,141,642,81,156,672,182,646,158,704"}, {"id": 11, "category": {"1": ["CWE-682"]}, "title": "L07 - Missing Events Arithmetic", "description": "Detected missing events for critical arithmetic parameters. There are functions that have no event emitted, so it is difficult to track off-chain changes.", "severity": "minor", "contract": "N/A", "function": "N/A", "lineNumber": "637, 664, 683, 688"}]}
+{
+    "path": "./Audit_Reports_2024/Cyberscope/1-piso.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0x5639adeca84f7ce291a5f54fad20c200365a8c6b"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "ST - Stop Transactions",
+            "description": "The contract owner has the authority to stop contracts from transactions.",
+            "severity": "critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "486"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-191"
+                ]
+            },
+            "title": "Contract Reverts in Small Amounts",
+            "description": "The contract has a hard limit of 10 * 10**decimals(). The contract is able to stop the transactions if the user\u2019s balance is less than the hard limit. As a result, the transaction will underflow.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "OCTD - Owner Contract Tokens Drain",
+            "description": "Contract Owner is not able to transfer tokens from specific address",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "L720"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "ELFM - Exceed Limit Fees Manipulation",
+            "description": "The contract owner has the authority to increase over the allowed limit of 25%. The owner may take advantage of it by calling the setTaxes, setSellTaxes function with a high percentage value.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "setTaxes(), setSellTaxes()",
+            "lineNumber": "362,367"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "ULTW - Unlimited Liquidity to Team Wallet",
+            "description": "The contract owner has the authority to transfer funds without limit to the team wallet, which can lead to price volatility and potential abuse.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "SendtoContract(uint256 weiAmount)",
+            "lineNumber": "contract.sol#L702"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "BC - Blacklisted Contracts",
+            "description": "The contract owner has the authority to stop contracts from transactions by calling updateIsBCheck and BCheck functions, allowing them to massively blacklist addresses.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "updateIsBCheck(), BCheck()",
+            "lineNumber": "672, 676"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-369"
+                ]
+            },
+            "title": "ZD - Zero Division",
+            "description": "Performing divisions may cause zero division issues.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "L573"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "STC - Succeeded Transfer Check",
+            "description": "The contract should check if the result of the transfer methods is successful.",
+            "severity": "minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "721"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1126"
+                ]
+            },
+            "title": "L01 - Public Function could be Declared External",
+            "description": "Public functions that are never called by the contract should be declared external to save gas.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "excludeFromFee, name, includeInFee, allowance, approve, symbol, setSellTaxes, isExcludedFromReward, transferOwnership",
+            "lineNumber": "246, 59, 279, 358, 716, 287, 274, 354, 704, 264, 297, 63, 293, 363, 238, 259, 255, 349, 235, 345"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1126"
+                ]
+            },
+            "title": "L02 - State Variables could be Declared Constant",
+            "description": "Constant state variables should be declared constant to save gas.",
+            "severity": "minor",
+            "contract": "PiSoccer",
+            "function": "N/A",
+            "lineNumber": "144"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1076"
+                ]
+            },
+            "title": "L04 - Conformance to Solidity Naming Conventions",
+            "description": "Solidity defines a naming convention that should be followed.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "363,358,159,152,698,716,154,141,642,81,156,672,182,646,158,704"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "L07 - Missing Events Arithmetic",
+            "description": "Detected missing events for critical arithmetic parameters. There are functions that have no event emitted, so it is difficult to track off-chain changes.",
+            "severity": "minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "637, 664, 683, 688"
+        }
+    ]
+}

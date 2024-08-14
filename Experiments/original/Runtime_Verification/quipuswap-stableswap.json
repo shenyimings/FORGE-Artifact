@@ -1,1 +1,253 @@
-{"path": "./Audit_Reports_2024/Runtime_V\u0435rification/quipuswap-stableswap.pdf", "project_info": {"url": "https://github.com/madfish-solutions/quipuswap-stable-core", "commit_hash": "13e92f2", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-664"], "2": ["CWE-404"], "3": ["CWE-772"], "4": ["CWE-775"]}, "title": "Divest Entrypoints May Burn All Shares with Tokens Left in Pool", "description": "A sole liquidity provider may unwittingly donate any remaining pool assets to any future liquidity provider if they burn all their shares and there are still assets left in the pool.", "severity": "Medium", "contract": "N/A", "function": ["User_action.Use_dex.Divest_one_coin", "User_action.Use_dex.Invest"], "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Certain Entrypoints Can Take Tokens without Providing Value", "description": "Due to fees or rounding errors, certain entrypoints can accept tokens/shares from a user without minting any LP shares/sending any tokens back to the user because a parameter (min_mint_amount or min_amount_out) can be set to zero.", "severity": "Low", "contract": "N/A", "function": ["User_action.Use_dex.Invest", "User_action.Use_dex.Divest_one_coin"], "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"], "2": ["CWE-1339"]}, "title": "Imprecise Over-approximations of Final Balances", "description": "The contract imprecisely over-approximates 'y' by adding 1, which can lead to dex users exploiting rounding errors for profit. Instead, it should use a provably over-approximating variant of the Newton method.", "severity": "Low", "contract": "Quipuswap Stableswap AMM", "function": ["User_action.Use_dex.Swap", "User_action.Use_dex.Divest_one_coin"], "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"], "2": ["CWE-1339"]}, "title": "Three Contract Computations Unnecessarily Drop Precision", "description": "The functions get_D, get_y, and get_y_D unnecessarily drop the precision of their computed results.", "severity": "Low", "contract": "dex_core/math.ligo", "function": ["count_D_P", "prepare_params"], "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "Liquidity Provider Fee Calculations Can Diverge from Specification", "description": "In the entrypoint 'User_action.Use_dex.Divest_one_coin', the staking fee is not redirected to liquidity providers when total staked value is 0 and is instead burned.", "severity": "Low", "contract": "N/A", "function": "User_action.Use_dex.Divest_one_coin", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Pool Creation Cost Calculation Can Diverge from Specification", "description": "When a user deploys a new dex instance using the factory contract, the contract computes a fee using the logic where the fee amounts are stored in variables `to_burn` and `to_factory`. The issue is that, when the value `burn_rate_f` is set/reset, it is not checked to be below `burn_rate_precision`, resulting in an unboundedly large value for both `to_burn` and `to_factory`.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-707"], "2": ["CWE-170"]}, "title": "Null-valued Storage Map Entries are Not Cleared", "description": "There are several storage maps where a non-existent entry and a null-valued (e.g. zero-valued or empty-set-valued) entry have equivalent semantics, which can lead to griefing attacks by submitting null-valued operations to the contract in order to increase deserialization costs.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-435"], "2": ["CWE-436"]}, "title": "Duplicate Definition of `get_tokens_from_param`", "description": "Both `partials/factory/helpers.ligo` and `partials/admin/standalone/lambdas.ligo` defined the identical function `get_tokens_from_param`.", "severity": "Informative", "contract": "N/A", "function": "get_tokens_from_param", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "FA2 Transfers From Undefined LP Tokens are Not Rejected", "description": "Zero-valued transfers on undefined LP tokens are not rejected when the `User_action.Use_token.Transfer` entrypoint is invoked, which is inconsistent with the FA2 standard and can lead to useless entries in the `storage.ledger` map.", "severity": "Informative", "contract": "N/A", "function": "iterate_transfer", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Update Operators Entrypoint Permits Owners as Operators", "description": "The `User_action.Use_token.Update_operators` entrypoint allows an owner to mark themselves as an operator, which is unnecessary and can lead to wasted storage.", "severity": "Informative", "contract": "Quipuswap Stableswap AMM", "function": "update_operators", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-710"], "2": ["CWE-1059"], "3": ["CWE-1110"]}, "title": "Minor Documentation Issues", "description": "There were some instances where the code-level comments or associated contract documentation were imprecise.", "severity": "Informative", "contract": "N/A", "function": "set_dev_fee, N/A", "lineNumber": "https://github.com/madfish-solutions/quipuswap-stable-core/blob/main/contracts/partials/dev/lambdas.ligo#L18, https://github.com/madfish-solutions/quipuswap-stable-core/blob/13e92f225f6ec8fa92310bc3926319f192146d2d/contracts/partials/constants.ligo#L17, https://github.com/madfish-solutions/quipuswap-stable-core/blob/13e92f225f6ec8fa92310bc3926319f192146d2d/contracts/partials/dex_core/storage.ligo#L28"}, {"id": 11, "category": {"1": ["CWE-682"]}, "title": "Minor Constant Definitions Issues", "description": "Incorrect constant definitions in partials/constants.ligo file, including dex_func_count set to 8n instead of 7n and unused constants max_fee and max_admin_fee.", "severity": "Informative", "contract": "partials/constants.ligo", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-710"], "2": ["CWE-1076"], "3": ["CWE-1078"]}, "title": "Code Style Recommendations", "description": "Suggestions to improve code style, including handling unused cases in lambda functions to satisfy the type checker.", "severity": "Informative", "contract": "N/A", "function": "transfer_ep()", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Runtime_V\u0435rification/quipuswap-stableswap.pdf",
+    "project_info": {
+        "url": "https://github.com/madfish-solutions/quipuswap-stable-core",
+        "commit_hash": "13e92f2",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-775"
+                ]
+            },
+            "title": "Divest Entrypoints May Burn All Shares with Tokens Left in Pool",
+            "description": "A sole liquidity provider may unwittingly donate any remaining pool assets to any future liquidity provider if they burn all their shares and there are still assets left in the pool.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": [
+                "User_action.Use_dex.Divest_one_coin",
+                "User_action.Use_dex.Invest"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Certain Entrypoints Can Take Tokens without Providing Value",
+            "description": "Due to fees or rounding errors, certain entrypoints can accept tokens/shares from a user without minting any LP shares/sending any tokens back to the user because a parameter (min_mint_amount or min_amount_out) can be set to zero.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": [
+                "User_action.Use_dex.Invest",
+                "User_action.Use_dex.Divest_one_coin"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "Imprecise Over-approximations of Final Balances",
+            "description": "The contract imprecisely over-approximates 'y' by adding 1, which can lead to dex users exploiting rounding errors for profit. Instead, it should use a provably over-approximating variant of the Newton method.",
+            "severity": "Low",
+            "contract": "Quipuswap Stableswap AMM",
+            "function": [
+                "User_action.Use_dex.Swap",
+                "User_action.Use_dex.Divest_one_coin"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "Three Contract Computations Unnecessarily Drop Precision",
+            "description": "The functions get_D, get_y, and get_y_D unnecessarily drop the precision of their computed results.",
+            "severity": "Low",
+            "contract": "dex_core/math.ligo",
+            "function": [
+                "count_D_P",
+                "prepare_params"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Liquidity Provider Fee Calculations Can Diverge from Specification",
+            "description": "In the entrypoint 'User_action.Use_dex.Divest_one_coin', the staking fee is not redirected to liquidity providers when total staked value is 0 and is instead burned.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "User_action.Use_dex.Divest_one_coin",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Pool Creation Cost Calculation Can Diverge from Specification",
+            "description": "When a user deploys a new dex instance using the factory contract, the contract computes a fee using the logic where the fee amounts are stored in variables `to_burn` and `to_factory`. The issue is that, when the value `burn_rate_f` is set/reset, it is not checked to be below `burn_rate_precision`, resulting in an unboundedly large value for both `to_burn` and `to_factory`.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-170"
+                ]
+            },
+            "title": "Null-valued Storage Map Entries are Not Cleared",
+            "description": "There are several storage maps where a non-existent entry and a null-valued (e.g. zero-valued or empty-set-valued) entry have equivalent semantics, which can lead to griefing attacks by submitting null-valued operations to the contract in order to increase deserialization costs.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ]
+            },
+            "title": "Duplicate Definition of `get_tokens_from_param`",
+            "description": "Both `partials/factory/helpers.ligo` and `partials/admin/standalone/lambdas.ligo` defined the identical function `get_tokens_from_param`.",
+            "severity": "Informative",
+            "contract": "N/A",
+            "function": "get_tokens_from_param",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "FA2 Transfers From Undefined LP Tokens are Not Rejected",
+            "description": "Zero-valued transfers on undefined LP tokens are not rejected when the `User_action.Use_token.Transfer` entrypoint is invoked, which is inconsistent with the FA2 standard and can lead to useless entries in the `storage.ledger` map.",
+            "severity": "Informative",
+            "contract": "N/A",
+            "function": "iterate_transfer",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Update Operators Entrypoint Permits Owners as Operators",
+            "description": "The `User_action.Use_token.Update_operators` entrypoint allows an owner to mark themselves as an operator, which is unnecessary and can lead to wasted storage.",
+            "severity": "Informative",
+            "contract": "Quipuswap Stableswap AMM",
+            "function": "update_operators",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1059"
+                ],
+                "3": [
+                    "CWE-1110"
+                ]
+            },
+            "title": "Minor Documentation Issues",
+            "description": "There were some instances where the code-level comments or associated contract documentation were imprecise.",
+            "severity": "Informative",
+            "contract": "N/A",
+            "function": "set_dev_fee, N/A",
+            "lineNumber": "https://github.com/madfish-solutions/quipuswap-stable-core/blob/main/contracts/partials/dev/lambdas.ligo#L18, https://github.com/madfish-solutions/quipuswap-stable-core/blob/13e92f225f6ec8fa92310bc3926319f192146d2d/contracts/partials/constants.ligo#L17, https://github.com/madfish-solutions/quipuswap-stable-core/blob/13e92f225f6ec8fa92310bc3926319f192146d2d/contracts/partials/dex_core/storage.ligo#L28"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Minor Constant Definitions Issues",
+            "description": "Incorrect constant definitions in partials/constants.ligo file, including dex_func_count set to 8n instead of 7n and unused constants max_fee and max_admin_fee.",
+            "severity": "Informative",
+            "contract": "partials/constants.ligo",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1076"
+                ],
+                "3": [
+                    "CWE-1078"
+                ]
+            },
+            "title": "Code Style Recommendations",
+            "description": "Suggestions to improve code style, including handling unused cases in lambda functions to satisfy the type checker.",
+            "severity": "Informative",
+            "contract": "N/A",
+            "function": "transfer_ep()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

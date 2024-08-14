@@ -1,1 +1,195 @@
-{"path": "./Audit_Reports_2024/Quantstamp/jpe-gd-part-3.pdf", "project_info": {"url": "https://github.com/jpegd", "commit_hash": "679bb3c", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-691"], "2": ["CWE-1265"]}, "title": "Reentrancy Patterns", "description": "Potential reentrancy patterns have been observed in the code, including situations where external contracts are called before changing the internal state or emitting logging events.", "severity": "Informational", "contract": "TokenSale.sol, NFTVault.sol, LPFarming.sol, yVaultLPFarming.sol, Controller.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Farmed By Contracts", "description": "A frequently observed pattern is using the function isContract() to avoid functionality from being accessed by other contracts.", "severity": "Medium Risk", "contract": ["yVault", "yVaultLPFarming", "LPFarming"], "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Anomalous Borrowing With Self-Transferred NFTs", "description": "The attacker can manipulate borrowing power by transferring NFTs to the NFTVault before calling borrow(), allowing them to bypass expected security conditions.", "severity": "Low Risk", "contract": "N/A", "function": "borrow()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-282"], "3": ["CWE-708"]}, "title": "Accidentally Renouncing The Ownership Is Possible", "description": "Many contracts inherit from some form of Ownable, which means the renounceOwnership function is available to call which would leave the contract in an unrecoverable state.", "severity": "Low Risk", "contract": "yVaultLPFarming.sol, yVault.sol", "function": "renounceOwnership", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "Rate availableTokensRate Not Enforced", "description": "The rate availableTokensRate is supposed to control the ratio of how much should be held in the vault to make small withdrawals cheap. Since earn() can be called by anyone, tokens can repeatedly be transferred to the strategy.", "severity": "Low Risk", "contract": "yVault", "function": "earn()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "DAO Can Revoke Its Role Admin's Role", "description": "The DAO admin can revoke its own permissions to be DAO role admin or other roles, which can leave the NFTVault with limited functionality.", "severity": "Low Risk", "contract": "yVault", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-229"], "4": ["CWE-230"]}, "title": "Missing Input Validations", "description": "The parameters of type address should be checked to be non-zero before being assigned to state variables.", "severity": "Low Risk", "contract": "YVaultLPFarming.sol", "function": "pendingReward(user)", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-435"], "2": ["CWE-436"], "3": ["CWE-437"]}, "title": "Interface Not Explicitly Implemented", "description": "The StrategyPUSDConvex contract implements the IStrategy interface but does not specify this explicitly, which might lead to small deviations in the signatures of what a caller expects and what the contract actually does.", "severity": "Informational", "contract": "StrategyPUSDConvex", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Pausable Feature Concerns", "description": "Some third-party custodians consider Pausable token features a red flag as they cannot always control when to transfer back the tokens under custody to their clients.", "severity": "Informational", "contract": "StableCoin.sol", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Quantstamp/jpe-gd-part-3.pdf",
+    "project_info": {
+        "url": "https://github.com/iceboxup/jpegd/tree/679bb3cc473dbffb65380aaefd6680e83364dc0f",
+        "commit_hash": "679bb3cc473dbffb65380aaefd6680e83364dc0f",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "Reentrancy Patterns",
+            "description": "Potential reentrancy patterns have been observed in the code, including situations where external contracts are called before changing the internal state or emitting logging events.",
+            "severity": "Informational",
+            "contract": "TokenSale.sol, NFTVault.sol, LPFarming.sol, yVaultLPFarming.sol, Controller.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Farmed By Contracts",
+            "description": "A frequently observed pattern is using the function isContract() to avoid functionality from being accessed by other contracts.",
+            "severity": "Medium Risk",
+            "contract": [
+                "yVault",
+                "yVaultLPFarming",
+                "LPFarming"
+            ],
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Anomalous Borrowing With Self-Transferred NFTs",
+            "description": "The attacker can manipulate borrowing power by transferring NFTs to the NFTVault before calling borrow(), allowing them to bypass expected security conditions.",
+            "severity": "Low Risk",
+            "contract": "N/A",
+            "function": "borrow()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-282"
+                ],
+                "3": [
+                    "CWE-708"
+                ]
+            },
+            "title": "Accidentally Renouncing The Ownership Is Possible",
+            "description": "Many contracts inherit from some form of Ownable, which means the renounceOwnership function is available to call which would leave the contract in an unrecoverable state.",
+            "severity": "Low Risk",
+            "contract": "yVaultLPFarming.sol, yVault.sol",
+            "function": "renounceOwnership",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Rate availableTokensRate Not Enforced",
+            "description": "The rate availableTokensRate is supposed to control the ratio of how much should be held in the vault to make small withdrawals cheap. Since earn() can be called by anyone, tokens can repeatedly be transferred to the strategy.",
+            "severity": "Low Risk",
+            "contract": "yVault",
+            "function": "earn()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "DAO Can Revoke Its Role Admin's Role",
+            "description": "The DAO admin can revoke its own permissions to be DAO role admin or other roles, which can leave the NFTVault with limited functionality.",
+            "severity": "Low Risk",
+            "contract": "yVault",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ],
+                "4": [
+                    "CWE-230"
+                ]
+            },
+            "title": "Missing Input Validations",
+            "description": "The parameters of type address should be checked to be non-zero before being assigned to state variables.",
+            "severity": "Low Risk",
+            "contract": "YVaultLPFarming.sol",
+            "function": "pendingReward(user)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-437"
+                ]
+            },
+            "title": "Interface Not Explicitly Implemented",
+            "description": "The StrategyPUSDConvex contract implements the IStrategy interface but does not specify this explicitly, which might lead to small deviations in the signatures of what a caller expects and what the contract actually does.",
+            "severity": "Informational",
+            "contract": "StrategyPUSDConvex",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Pausable Feature Concerns",
+            "description": "Some third-party custodians consider Pausable token features a red flag as they cannot always control when to transfer back the tokens under custody to their clients.",
+            "severity": "Informational",
+            "contract": "StableCoin.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

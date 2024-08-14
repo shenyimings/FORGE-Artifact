@@ -1,1 +1,181 @@
-{"path": "./Audit_Reports_2024/Solidified/Solidified-EthAnchor_[16.06.2021].pdf", "project_info": {"url": "https://github.com/Anchor-Protocol/eth-anchor-contracts/tree/develop", "commit_hash": "785f2cebd32c145687c627471d16f0824499c911", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-435"], "2": ["CWE-436"]}, "title": "Inheritance Mismatch due to duplicate libraries", "description": "Several OpenZeppelin dependencies are included from the module dependencies whilst a separate version from the project\u2019s codebase is also imported.", "severity": "Minor", "contract": ["Ownable.sol", "Proxy.sol"], "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-354"]}, "title": "CurveSwapper.sol: Token swaps does not validate the pool existence", "description": "The function `swapToken()` does not validate if the Curve pool exists and this will skip the token swap and transfer whatever target token the user has specified.", "severity": "Minor", "contract": "CurveSwapper.sol", "function": "swapToken()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Index 0 of an enumerable set is not in any order", "description": "The functions throughout the contract fetch an item at index `0` from an enumerable set which does not guarantee the order of the items and may return the element inserted last, potentially causing unexpected behavior.", "severity": "Minor", "contract": ["OperationFactory", "OperationStore"], "function": ["fetchTerraAddress()", "init()"], "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "OperationStore.sol: allocate() does not check if the operation already exists in other queues", "description": "The method `allocate()` does not check if the input operation address is already present in any other contract.", "severity": "Minor", "contract": "OperationStore.sol", "function": "allocate()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Missing input validations", "description": "The contracts are missing input validation in many functions, specifically the ones where address is passed as a parameter, which can range from simple gas wastage to unintentional ownership renounce.", "severity": "Minor", "contract": ["Operator.sol", "OperationACL.sol", "Router.sol", "RouterV2.sol", "UniswapSwapper.sol", "ConversionPool.sol", "ConversionPoolV2.sol"], "function": ["N/A"], "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-435"], "2": ["CWE-436"], "3": ["CWE-437"]}, "title": "WrappedAsset.sol: Interface not used", "description": "The `WrappedAsset.sol` file defines an interface but it is not used by `WormholeAsset.sol` and `WormholeAssetFactory.sol`, instead, they declare another interface inline.", "severity": "Minor", "contract": "WrappedAsset.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Pragma allows for a wide range of compiler versions", "description": "The `pragma` statement allows for a very large range of compiler versions, including some versions with known bugs.", "severity": "Note", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-664"], "2": ["CWE-404"], "3": ["CWE-772"], "4": ["CWE-775"]}, "title": "Queue.sol: Consider deleting the items from Queue Store", "description": "The queue implementation does not delete the items from the `Queue.store` map once the item is dequeued.", "severity": "Note", "contract": "Queue.sol", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Solidified/Solidified-EthAnchor_[16.06.2021].pdf",
+    "project_info": {
+        "url": "https://github.com/Anchor-Protocol/eth-anchor-contracts/tree/develop",
+        "commit_hash": "785f2cebd32c145687c627471d16f0824499c911",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ]
+            },
+            "title": "Inheritance Mismatch due to duplicate libraries",
+            "description": "Several OpenZeppelin dependencies are included from the module dependencies whilst a separate version from the project\u2019s codebase is also imported.",
+            "severity": "Minor",
+            "contract": [
+                "Ownable.sol",
+                "Proxy.sol"
+            ],
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-354"
+                ]
+            },
+            "title": "CurveSwapper.sol: Token swaps does not validate the pool existence",
+            "description": "The function `swapToken()` does not validate if the Curve pool exists and this will skip the token swap and transfer whatever target token the user has specified.",
+            "severity": "Minor",
+            "contract": "CurveSwapper.sol",
+            "function": "swapToken()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Index 0 of an enumerable set is not in any order",
+            "description": "The functions throughout the contract fetch an item at index `0` from an enumerable set which does not guarantee the order of the items and may return the element inserted last, potentially causing unexpected behavior.",
+            "severity": "Minor",
+            "contract": [
+                "OperationFactory",
+                "OperationStore"
+            ],
+            "function": [
+                "fetchTerraAddress()",
+                "init()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "OperationStore.sol: allocate() does not check if the operation already exists in other queues",
+            "description": "The method `allocate()` does not check if the input operation address is already present in any other contract.",
+            "severity": "Minor",
+            "contract": "OperationStore.sol",
+            "function": "allocate()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Missing input validations",
+            "description": "The contracts are missing input validation in many functions, specifically the ones where address is passed as a parameter, which can range from simple gas wastage to unintentional ownership renounce.",
+            "severity": "Minor",
+            "contract": [
+                "Operator.sol",
+                "OperationACL.sol",
+                "Router.sol",
+                "RouterV2.sol",
+                "UniswapSwapper.sol",
+                "ConversionPool.sol",
+                "ConversionPoolV2.sol"
+            ],
+            "function": [
+                "N/A"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-437"
+                ]
+            },
+            "title": "WrappedAsset.sol: Interface not used",
+            "description": "The `WrappedAsset.sol` file defines an interface but it is not used by `WormholeAsset.sol` and `WormholeAssetFactory.sol`, instead, they declare another interface inline.",
+            "severity": "Minor",
+            "contract": "WrappedAsset.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Pragma allows for a wide range of compiler versions",
+            "description": "The `pragma` statement allows for a very large range of compiler versions, including some versions with known bugs.",
+            "severity": "Note",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-775"
+                ]
+            },
+            "title": "Queue.sol: Consider deleting the items from Queue Store",
+            "description": "The queue implementation does not delete the items from the `Queue.store` map once the item is dequeued.",
+            "severity": "Note",
+            "contract": "Queue.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

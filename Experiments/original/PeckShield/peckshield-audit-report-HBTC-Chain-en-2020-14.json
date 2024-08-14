@@ -1,1 +1,359 @@
-{"path": "./Audit_Reports_2024/PeckShield/peckshield-audit-report-HBTC-Chain-en-2020-14.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-909"], "4": ["CWE-456"]}, "title": "Incomplete Genesis State For Future Upgrades", "description": "Several modules in HBTC Chain do not have thorough genesis-related states properly defined for seamless upgrades.", "severity": "High", "contract": "cu, token, hrc20, order, ...", "function": "InitGenesis, ExportGenesis, ValidateGenesis", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-1419"]}, "title": "Inappropriate Initialization Order of Modules", "description": "The composable modules in HBTC Chain have internal dependencies that need to be honored during initialization and tear-down, otherwise it may cause broken initialization or introduce wrong runtime state.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "240-241"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Free Key Generation in handleMsgKeyGen()", "description": "The `handleMsgKeyGen` handler in the `keygen` module allows for free key generation in the second scenario (`WaitAssignKeyGenOrder`) where the opening fee `feeCoins` has not been deducted from the requesting user.", "severity": "Medium", "contract": "keygen", "function": "handleMsgKeyGen()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Improper Fee Return in handleMsgKeyGenFinish()", "description": "The `handleMsgKeyGenFinish()` function improperly returns back the opening fee to the requesting users and further disseminates the same amount of opening fee to the `distr` module, resulting in an unintended inflation on `hbc`, the HBTC Chain native token.", "severity": "Medium", "contract": "keygen", "function": "handleMsgKeyGenFinish()", "lineNumber": "305"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "Asset Lockdown in OpcuAssetTransfer()", "description": "Among all modules in HBTC Chain, the `transfer` module is one of the most crucial modules and its main functionality is to actually transfer assets inside and outside HBTC Chain.", "severity": "High", "contract": "N/A", "function": "OpcuAssetTransfer()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Unintended Deposit Removal in OpcuAssetTransfer()", "description": "An issue within the `OpcuAssetTransfer` handler could lead to unintended removal of legitimate deposits.", "severity": "High", "contract": "OpcuAssetTransfer", "function": "transfer", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-682"], "2": ["CWE-1339"]}, "title": "Improved Precision Price Calculation in OpcuAssetTransferWaitSign()", "description": "The transaction price calculation may lead to precision loss when handling MsgOpcuAssetTransferWaitSign message type.", "severity": "Low", "contract": "N/A", "function": "transfer", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "Inaccurate Sufficiency Calculation in OpcuAssetTransferWaitSign()", "description": "The gas fee is counted twice in the calculation of sufficient funds available to pay the transaction amount, plus the associated gas fee.", "severity": "Low", "contract": "OpcuAssetTransferWaitSign", "function": "N/A", "lineNumber": "289-295"}, {"id": 8, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Improved Necessity Checks in SysTransfer()", "description": "In the `SysTransfer()` handler, necessity checks are improved to avoid unnecessary gas fee waste by ensuring `toAddr` indeed needs gas fee for future collection or transfers.", "severity": "Informational", "contract": "N/A", "function": "SysTransfer()", "lineNumber": "39-59"}, {"id": 9, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Generation of Meaningful Events for MsgSend/MsgMultiSend", "description": "Event and logs are an important part of blockchain that can greatly facilitate encapsulation and expressiveness of blockchain activities and expose them to external monitoring DApps. During the analysis of the `transfer` module, we notice that two message types handled by the module have not generated meaningful events.", "severity": "Informational", "contract": "N/A", "function": "handleMsgSend", "lineNumber": "92-98"}, {"id": 10, "category": {"1": ["CWE-703"]}, "title": "Tolerant Error-Handling in ConfirmedDeposit()", "description": "In the `processDepositOrderIDs` routine of `ConfirmedDeposit`, if there is an error in handling a confirmed `orderID`, the rest `orderIDs` are simply ignored, which may cause unnecessary delay in the deposit process.", "severity": "Low", "contract": "N/A", "function": "processDepositOrderIDs", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Proper AssetCoins Reduction For Dust Deposits", "description": "When initiating asset transfers under `opcu` custody, there is a need to verify the transferred amount has reached certain threshold. For `Utxo` -based token types, the threshold is defined by `utxoOpcuAstTransferThreshold`, while for `Account` -based token types, the threshold is defined by `tokenInfo.SysTransferAmount`. The purpose is to detect the necessity of not transferring assets only with dust amount. When such a dust amount is detected, HBTC Chain simply considers it burned and reduces the very same dust amount from owned `AssetCoins`. However, for `Utxo` -based token types, the dust amount has been burned, but not reduced from the owned `AssetCoins`.", "severity": "Low", "contract": "N/A", "function": "transfer", "lineNumber": "103"}, {"id": 12, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Possible Flooding Attacks in handleMsgOrderRetry()", "description": "The `handleMsgOrderRetry()` function is vulnerable to flooding attacks due to insufficient checks on the `RetryTimes` field of `MsgOrderRetry` messages, allowing an attacker to occupy storage space arbitrarily.", "severity": "High", "contract": "N/A", "function": "handleMsgOrderRetry()", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Invalid Order Removal in handleMsgDeposit()", "description": "The handling logic of MsgDeposit messages does not rigorously check fields such as OrderID, hash, and index, allowing an attacker to craft multiple MsgDeposit messages with different values, resulting in the creation of multiple NewOrderCollect orders.", "severity": "Informational", "contract": "N/A", "function": "handleMsgDeposit()", "lineNumber": "54-59"}, {"id": 14, "category": {"1": ["CWE-703"]}, "title": "Missing Error Handling in SignedTx Verification", "description": "The `verifyAccountBasedSignedTx` routine in the third stage of internal processing logic misses an error handling (line 112), which is required to block any malicious attempt to corrupt the key signing behavior.", "severity": "Medium", "contract": "N/A", "function": "verifyAccountBasedSignedTx", "lineNumber": "112"}, {"id": 15, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Blackhole Receipt Addresses of MsgSend/MsgMultiSend", "description": "The receipt addresses of `MsgSend` and `MsgMultiSend` messages have not gone through rigorous and thorough validity checks, resulting in unrecoverable funds as well as frustrated users.", "severity": "Informational", "contract": "CKB", "function": "ValidateBasic", "lineNumber": "52-65"}, {"id": 16, "category": {"1": ["CWE-682"]}, "title": "Unrecognized Contract-Sourced ETH Deposits in Chainnode", "description": "The `chainnode` component may miss recognizing `ETH` deposits from internal transactions due to only considering transaction destination at the outer layer.", "severity": "Medium", "contract": "Chainnode", "function": "N/A", "lineNumber": "N/A"}, {"id": 17, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Slashing Non-Cooperating Members in Key Management", "description": "The adopted protocol assumes a threat model, i.e., `dishonest majority`, meaning that the number of players or validators the adversary corrupts can be up to _n_ \u22121 where _n_ is the number of active validators in current epoch. Without `liveness` , assets under custody may not be available, hence leading to serious denial-of-service consequences.", "severity": "Informational", "contract": "N/A", "function": "settle()", "lineNumber": "N/A"}, {"id": 18, "category": {"1": ["CWE-682"]}, "title": "Proper Safe Prime Generation", "description": "The audit report highlights the importance of generating safe primes of desired quality and length, particularly when using Paillier encryption.", "severity": "Medium", "contract": "dsign", "function": "N/A", "lineNumber": "35-56"}, {"id": 19, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1284"]}, "title": "Unconstrained Private Key Range in sssa.Create()", "description": "The lack of constraint on private key range in `sssa` algorithm may lead to unrecoverable loss of secret keys.", "severity": "Medium", "contract": "N/A", "function": "Create() and keyGen()", "lineNumber": "61, 43-44"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/peckshield-audit-report-HBTC-Chain-en-2020-14.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "Incomplete Genesis State For Future Upgrades",
+            "description": "Several modules in HBTC Chain do not have thorough genesis-related states properly defined for seamless upgrades.",
+            "severity": "High",
+            "contract": "cu, token, hrc20, order, ...",
+            "function": "InitGenesis, ExportGenesis, ValidateGenesis",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-1419"
+                ]
+            },
+            "title": "Inappropriate Initialization Order of Modules",
+            "description": "The composable modules in HBTC Chain have internal dependencies that need to be honored during initialization and tear-down, otherwise it may cause broken initialization or introduce wrong runtime state.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "240-241"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Free Key Generation in handleMsgKeyGen()",
+            "description": "The `handleMsgKeyGen` handler in the `keygen` module allows for free key generation in the second scenario (`WaitAssignKeyGenOrder`) where the opening fee `feeCoins` has not been deducted from the requesting user.",
+            "severity": "Medium",
+            "contract": "keygen",
+            "function": "handleMsgKeyGen()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improper Fee Return in handleMsgKeyGenFinish()",
+            "description": "The `handleMsgKeyGenFinish()` function improperly returns back the opening fee to the requesting users and further disseminates the same amount of opening fee to the `distr` module, resulting in an unintended inflation on `hbc`, the HBTC Chain native token.",
+            "severity": "Medium",
+            "contract": "keygen",
+            "function": "handleMsgKeyGenFinish()",
+            "lineNumber": "305"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Asset Lockdown in OpcuAssetTransfer()",
+            "description": "Among all modules in HBTC Chain, the `transfer` module is one of the most crucial modules and its main functionality is to actually transfer assets inside and outside HBTC Chain.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "OpcuAssetTransfer()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Unintended Deposit Removal in OpcuAssetTransfer()",
+            "description": "An issue within the `OpcuAssetTransfer` handler could lead to unintended removal of legitimate deposits.",
+            "severity": "High",
+            "contract": "OpcuAssetTransfer",
+            "function": "transfer",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "Improved Precision Price Calculation in OpcuAssetTransferWaitSign()",
+            "description": "The transaction price calculation may lead to precision loss when handling MsgOpcuAssetTransferWaitSign message type.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "transfer",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Inaccurate Sufficiency Calculation in OpcuAssetTransferWaitSign()",
+            "description": "The gas fee is counted twice in the calculation of sufficient funds available to pay the transaction amount, plus the associated gas fee.",
+            "severity": "Low",
+            "contract": "OpcuAssetTransferWaitSign",
+            "function": "N/A",
+            "lineNumber": "289-295"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Improved Necessity Checks in SysTransfer()",
+            "description": "In the `SysTransfer()` handler, necessity checks are improved to avoid unnecessary gas fee waste by ensuring `toAddr` indeed needs gas fee for future collection or transfers.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "SysTransfer()",
+            "lineNumber": "39-59"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Generation of Meaningful Events for MsgSend/MsgMultiSend",
+            "description": "Event and logs are an important part of blockchain that can greatly facilitate encapsulation and expressiveness of blockchain activities and expose them to external monitoring DApps. During the analysis of the `transfer` module, we notice that two message types handled by the module have not generated meaningful events.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "handleMsgSend",
+            "lineNumber": "92-98"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Tolerant Error-Handling in ConfirmedDeposit()",
+            "description": "In the `processDepositOrderIDs` routine of `ConfirmedDeposit`, if there is an error in handling a confirmed `orderID`, the rest `orderIDs` are simply ignored, which may cause unnecessary delay in the deposit process.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "processDepositOrderIDs",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Proper AssetCoins Reduction For Dust Deposits",
+            "description": "When initiating asset transfers under `opcu` custody, there is a need to verify the transferred amount has reached certain threshold. For `Utxo` -based token types, the threshold is defined by `utxoOpcuAstTransferThreshold`, while for `Account` -based token types, the threshold is defined by `tokenInfo.SysTransferAmount`. The purpose is to detect the necessity of not transferring assets only with dust amount. When such a dust amount is detected, HBTC Chain simply considers it burned and reduces the very same dust amount from owned `AssetCoins`. However, for `Utxo` -based token types, the dust amount has been burned, but not reduced from the owned `AssetCoins`.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "transfer",
+            "lineNumber": "103"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Possible Flooding Attacks in handleMsgOrderRetry()",
+            "description": "The `handleMsgOrderRetry()` function is vulnerable to flooding attacks due to insufficient checks on the `RetryTimes` field of `MsgOrderRetry` messages, allowing an attacker to occupy storage space arbitrarily.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "handleMsgOrderRetry()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Invalid Order Removal in handleMsgDeposit()",
+            "description": "The handling logic of MsgDeposit messages does not rigorously check fields such as OrderID, hash, and index, allowing an attacker to craft multiple MsgDeposit messages with different values, resulting in the creation of multiple NewOrderCollect orders.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "handleMsgDeposit()",
+            "lineNumber": "54-59"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Missing Error Handling in SignedTx Verification",
+            "description": "The `verifyAccountBasedSignedTx` routine in the third stage of internal processing logic misses an error handling (line 112), which is required to block any malicious attempt to corrupt the key signing behavior.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "verifyAccountBasedSignedTx",
+            "lineNumber": "112"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Blackhole Receipt Addresses of MsgSend/MsgMultiSend",
+            "description": "The receipt addresses of `MsgSend` and `MsgMultiSend` messages have not gone through rigorous and thorough validity checks, resulting in unrecoverable funds as well as frustrated users.",
+            "severity": "Informational",
+            "contract": "CKB",
+            "function": "ValidateBasic",
+            "lineNumber": "52-65"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Unrecognized Contract-Sourced ETH Deposits in Chainnode",
+            "description": "The `chainnode` component may miss recognizing `ETH` deposits from internal transactions due to only considering transaction destination at the outer layer.",
+            "severity": "Medium",
+            "contract": "Chainnode",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Slashing Non-Cooperating Members in Key Management",
+            "description": "The adopted protocol assumes a threat model, i.e., `dishonest majority`, meaning that the number of players or validators the adversary corrupts can be up to _n_ \u22121 where _n_ is the number of active validators in current epoch. Without `liveness` , assets under custody may not be available, hence leading to serious denial-of-service consequences.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "settle()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Proper Safe Prime Generation",
+            "description": "The audit report highlights the importance of generating safe primes of desired quality and length, particularly when using Paillier encryption.",
+            "severity": "Medium",
+            "contract": "dsign",
+            "function": "N/A",
+            "lineNumber": "35-56"
+        },
+        {
+            "id": 19,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1284"
+                ]
+            },
+            "title": "Unconstrained Private Key Range in sssa.Create()",
+            "description": "The lack of constraint on private key range in `sssa` algorithm may lead to unrecoverable loss of secret keys.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "Create() and keyGen()",
+            "lineNumber": "61, 43-44"
+        }
+    ]
+}

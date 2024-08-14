@@ -1,1 +1,88 @@
-{"path": "./Audit_Reports_2024/QuillAudits/Handout Smart Contract Audit Report - QuillAudits.pdf", "project_info": {"url": "https://gitlab.com/handout-token/hando/-/blob/main/", "commit_hash": "36e47333f44e4e4646f541b4d170f400c257172c", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-664"], "2": ["CWE-404"], "3": ["CWE-772"], "4": ["CWE-401"]}, "title": "Contract gains to non-withdrawable BNB via the swapAndLiquify function", "description": "The swapAndLiquify function converts half of the contractTokenBalance HANDO tokens to BNB. For every swapAndLiquify function call, a small amount of BNB remains in the contract. This amount grows over time with the swapAndLiquify function being called throughout the life of the contract. The HANDO contract does not contain a method to withdraw these funds, and the BNB will be locked in the HANDO contract forever.", "severity": "Medium", "contract": "HANDO", "function": "swapAndLiquify", "lineNumber": "1031"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Centralized risk in addLiquidity", "description": "The addLiquidity function calls the uniswapV2Router.addLiquidityETH function with the to address specified as owner() for acquiring the generated LP tokens from the Handout pool, resulting in the _owner address accumulating a significant portion of LP tokens over time.", "severity": "Medium", "contract": "Handout", "function": "addLiquidity", "lineNumber": "~1072"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Incorrect fee calculation and deduction", "description": "The fee percentage should be deducted from the principal amount, not the deducted amount.", "severity": "Low", "contract": "N/A", "function": "_transferStandard()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Excluded users from fees can do transactions more than _maxTxAmount", "description": "During transfer(), if the sender or recipient is excluded from fees, then they will not be checked for _maxTxAmount. Thus users, that are excluded from fees, can do transactions more than _maxTxAmount.", "severity": "Low", "contract": "N/A", "function": "transfer()", "lineNumber": "1094"}]}
+{
+    "path": "./Audit_Reports_2024/QuillAudits/Handout Smart Contract Audit Report - QuillAudits.pdf",
+    "project_info": {
+        "url": "https://gitlab.com/handout-token/hando/-/blob/main/",
+        "commit_hash": "36e47333f44e4e4646f541b4d170f400c257172c",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-401"
+                ]
+            },
+            "title": "Contract gains to non-withdrawable BNB via the swapAndLiquify function",
+            "description": "The swapAndLiquify function converts half of the contractTokenBalance HANDO tokens to BNB. For every swapAndLiquify function call, a small amount of BNB remains in the contract. This amount grows over time with the swapAndLiquify function being called throughout the life of the contract. The HANDO contract does not contain a method to withdraw these funds, and the BNB will be locked in the HANDO contract forever.",
+            "severity": "Medium",
+            "contract": "HANDO",
+            "function": "swapAndLiquify",
+            "lineNumber": "1031"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Centralized risk in addLiquidity",
+            "description": "The addLiquidity function calls the uniswapV2Router.addLiquidityETH function with the to address specified as owner() for acquiring the generated LP tokens from the Handout pool, resulting in the _owner address accumulating a significant portion of LP tokens over time.",
+            "severity": "Medium",
+            "contract": "Handout",
+            "function": "addLiquidity",
+            "lineNumber": "~1072"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect fee calculation and deduction",
+            "description": "The fee percentage should be deducted from the principal amount, not the deducted amount.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "_transferStandard()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Excluded users from fees can do transactions more than _maxTxAmount",
+            "description": "During transfer(), if the sender or recipient is excluded from fees, then they will not be checked for _maxTxAmount. Thus users, that are excluded from fees, can do transactions more than _maxTxAmount.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "transfer()",
+            "lineNumber": "1094"
+        }
+    ]
+}

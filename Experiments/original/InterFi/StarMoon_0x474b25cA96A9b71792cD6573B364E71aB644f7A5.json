@@ -1,1 +1,364 @@
-{"path": "./Audit_Reports_2024/InterFi/StarMoon_0x474b25cA96A9b71792cD6573B364E71aB644f7A5.pdf", "project_info": {"url": "https://github.com/interfinetwork/audited-codes/blob/main/STARMOON.sol", "commit_hash": "ce3372c0318329adef99ded4b415c209981bbcab", "address": "0x474b25ca96a9b71792cd6573b364e71ab644f7a5"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Potential unauthorized script upgrade", "description": "The smart contract may allow an unauthorized user to upgrade the script, potentially leading to malicious code execution.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "Minting of unlimited number of sundae tokens", "description": "The _mint function allows minting an unlimited number of sundae tokens.", "severity": "High", "contract": "DividendPayingToken", "function": "_mint", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"]}, "title": "Unprotected approve Function", "description": "The approve function is publicly accessible without any access control, allowing unauthorized users to approve arbitrary spenders and amounts.", "severity": "High", "contract": "SMTDividendTracker", "function": "approve(address,uint256)", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "Transfer", "description": "executes transfers of a specified number of tokens to a specified address", "severity": "Low", "contract": "N/A", "function": "transfer(address,uint256)", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Unprotected transferFrom Function", "description": "The transferFrom function allows a spender to withdraw a set number of tokens from a specified account without proper validation or access control.", "severity": "High", "contract": "N/A", "function": "transferFrom(address,address,uint256)", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "increaseAllowance", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "increaseAllowance(address,uint256)", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Decrease Allowance", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-693"]}, "title": "_transfer", "description": "Potential reentrancy vulnerability in internal _transfer function.", "severity": "High", "contract": "DividendPayingToken", "function": "_transfer()", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "_mint", "description": "Unsecured minting functionality allowing unauthorized token creation.", "severity": "Critical", "contract": "DividendPayingToken", "function": "_mint", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "_burn", "description": "Internal burn function vulnerability", "severity": "High", "contract": "DividendPayingToken/Starmoon", "function": "_burn", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "_approve", "description": "Potential reentrancy vulnerability in _approve function.", "severity": "High", "contract": "DividendPayingToken", "function": "_approve", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-710"], "2": ["CWE-684"], "3": ["CWE-912"]}, "title": "_beforeTokenTransfer", "description": "Potential vulnerability in internal _beforeTokenTransfer function.", "severity": "High", "contract": "DividendPayingToken", "function": "_beforeTokenTransfer", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-284"]}, "title": "Unprotected permit Function", "description": "The permit function is marked as External and has no access control, allowing anyone to call it.", "severity": "High", "contract": "N/A", "function": "permit", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-284"]}, "title": "Unprotected mint Function", "description": "The mint function is declared as external and does not have any access modifiers, making it vulnerable to unauthorized access.", "severity": "High", "contract": "N/A", "function": "mint", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-664"], "2": ["CWE-404"], "3": ["CWE-772"], "4": ["CWE-401"]}, "title": "burn", "description": "Potential burn vulnerability exists in internal _burn function.", "severity": "High", "contract": "Starmoon", "function": "_burn()", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-703"]}, "title": "N/A", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 16, "category": {"1": ["CWE-703"], "2": ["CWE-755"], "3": ["CWE-248"]}, "title": "Skim", "description": "The skim function has been marked as vulnerable.", "severity": "High", "contract": "N/A", "function": "skim", "lineNumber": "N/A"}, {"id": 17, "category": {"1": ["CWE-710"], "2": ["CWE-1164"]}, "title": "Sync", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 18, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-908"], "4": ["CWE-457"]}, "title": "Uninitialized Variables", "description": "The constructor does not initialize state variables.", "severity": "Critical", "contract": "DividendPayingToken", "function": "<Constructor>", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/InterFi/StarMoon_0x474b25cA96A9b71792cD6573B364E71aB644f7A5.pdf",
+    "project_info": {
+        "url": "https://github.com/interfinetwork/audited-codes/blob/main/STARMOON.sol",
+        "commit_hash": "ce3372c0318329adef99ded4b415c209981bbcab",
+        "address": "0x474b25ca96a9b71792cd6573b364e71ab644f7a5",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Potential unauthorized script upgrade",
+            "description": "The smart contract may allow an unauthorized user to upgrade the script, potentially leading to malicious code execution.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Minting of unlimited number of sundae tokens",
+            "description": "The _mint function allows minting an unlimited number of sundae tokens.",
+            "severity": "High",
+            "contract": "DividendPayingToken",
+            "function": "_mint",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected approve Function",
+            "description": "The approve function is publicly accessible without any access control, allowing unauthorized users to approve arbitrary spenders and amounts.",
+            "severity": "High",
+            "contract": "SMTDividendTracker",
+            "function": "approve(address,uint256)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Transfer",
+            "description": "executes transfers of a specified number of tokens to a specified address",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "transfer(address,uint256)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Unprotected transferFrom Function",
+            "description": "The transferFrom function allows a spender to withdraw a set number of tokens from a specified account without proper validation or access control.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "transferFrom(address,address,uint256)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "increaseAllowance",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "increaseAllowance(address,uint256)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Decrease Allowance",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "_transfer",
+            "description": "Potential reentrancy vulnerability in internal _transfer function.",
+            "severity": "High",
+            "contract": "DividendPayingToken",
+            "function": "_transfer()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "_mint",
+            "description": "Unsecured minting functionality allowing unauthorized token creation.",
+            "severity": "Critical",
+            "contract": "DividendPayingToken",
+            "function": "_mint",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "_burn",
+            "description": "Internal burn function vulnerability",
+            "severity": "High",
+            "contract": "DividendPayingToken/Starmoon",
+            "function": "_burn",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "_approve",
+            "description": "Potential reentrancy vulnerability in _approve function.",
+            "severity": "High",
+            "contract": "DividendPayingToken",
+            "function": "_approve",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-684"
+                ],
+                "3": [
+                    "CWE-912"
+                ]
+            },
+            "title": "_beforeTokenTransfer",
+            "description": "Potential vulnerability in internal _beforeTokenTransfer function.",
+            "severity": "High",
+            "contract": "DividendPayingToken",
+            "function": "_beforeTokenTransfer",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected permit Function",
+            "description": "The permit function is marked as External and has no access control, allowing anyone to call it.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "permit",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected mint Function",
+            "description": "The mint function is declared as external and does not have any access modifiers, making it vulnerable to unauthorized access.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "mint",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-401"
+                ]
+            },
+            "title": "burn",
+            "description": "Potential burn vulnerability exists in internal _burn function.",
+            "severity": "High",
+            "contract": "Starmoon",
+            "function": "_burn()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "N/A",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-755"
+                ],
+                "3": [
+                    "CWE-248"
+                ]
+            },
+            "title": "Skim",
+            "description": "The skim function has been marked as vulnerable.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "skim",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ]
+            },
+            "title": "Sync",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-908"
+                ],
+                "4": [
+                    "CWE-457"
+                ]
+            },
+            "title": "Uninitialized Variables",
+            "description": "The constructor does not initialize state variables.",
+            "severity": "Critical",
+            "contract": "DividendPayingToken",
+            "function": "<Constructor>",
+            "lineNumber": "N/A"
+        }
+    ]
+}

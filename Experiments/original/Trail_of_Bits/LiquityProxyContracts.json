@@ -1,1 +1,197 @@
-{"path": "./Audit_Reports_2024/Trail_of_Bits/LiquityProxyContracts.pdf", "project_info": {"url": "N/A", "commit_hash": "b90440d", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-287"]}, "title": "Phishing Attack on Proxy", "description": "An attacker can phish users to execute arbitrary code on their Proxy, resulting in fund theft.", "severity": "High", "contract": "Liquity Proxy", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-693"]}, "title": "Can the user\u2019s proxy be self-destructed?", "description": "The use of `delegatecall` in the DSProxy could result in the proxy being self-destroyed and losing funds.", "severity": "High", "contract": "DSProxy", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-435"], "2": ["CWE-436"]}, "title": "Can an attacker abuse deviations from Maker\u2019s mainnet proxy and Liquity\u2019s Proxy?", "description": "Abuse of deviations between Maker's mainnet proxy and Liquity's Proxy may lead to potential security risks", "severity": "Undetermined", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-693"]}, "title": "Delegatecall Misuse in DSProxy", "description": "High-severity issues due to `delegatecall` usage in DSProxy may lead to self-destruction and fund loss.", "severity": "High", "contract": "DSProxy", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Unsynchronized Dependencies", "description": "Low-severity issues involve dependencies that were copy-pasted in their entirety rather than imported externally, which makes it difficult to keep them in sync with upstream patches which might otherwise fix known vulnerabilities.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Lack of data validation on external user arguments", "description": "Arguments provided by external users are not validated, which may result in a loss of user funds.", "severity": "Low", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Lack of Events for Monitoring", "description": "An informational issue was raised regarding the lack of events for functions in the script, which would be beneficial to have for monitoring purposes as these scripts increase in complexity.", "severity": "Moderate", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Publicly Visible Scripts", "description": "Scripts being publicly visible could make it easier for attackers to write exploits to abuse the Liquity Protocol.", "severity": "Undetermined", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "Revert when LUSD amount is 0", "description": "One minor code-quality issue was raised to revert when the LUSD amount is 0.", "severity": "Minor", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-284"], "2": ["CWE-749"]}, "title": "Arbitrary Script Execution due to Lack of Contract Existence Check", "description": "The contracts contained no assembly usage, but a lack of contract existence check on the proxy and opportunity for arbitrary script execution that could result in a loss of user funds.", "severity": "High", "contract": "DSProxy", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "Missing Test for Proxy Owner Execution", "description": "The function claimCollateralAndOpenTrove lacks a test to verify that only a proxy owner can call it to execute code.", "severity": "High", "contract": "N/A", "function": "claimCollateralAndOpenTrove", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/LiquityProxyContracts.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "b90440d",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-287"
+                ]
+            },
+            "title": "Phishing Attack on Proxy",
+            "description": "An attacker can phish users to execute arbitrary code on their Proxy, resulting in fund theft.",
+            "severity": "High",
+            "contract": "Liquity Proxy",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "Can the user\u2019s proxy be self-destructed?",
+            "description": "The use of `delegatecall` in the DSProxy could result in the proxy being self-destroyed and losing funds.",
+            "severity": "High",
+            "contract": "DSProxy",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ]
+            },
+            "title": "Can an attacker abuse deviations from Maker\u2019s mainnet proxy and Liquity\u2019s Proxy?",
+            "description": "Abuse of deviations between Maker's mainnet proxy and Liquity's Proxy may lead to potential security risks",
+            "severity": "Undetermined",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "Delegatecall Misuse in DSProxy",
+            "description": "High-severity issues due to `delegatecall` usage in DSProxy may lead to self-destruction and fund loss.",
+            "severity": "High",
+            "contract": "DSProxy",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Unsynchronized Dependencies",
+            "description": "Low-severity issues involve dependencies that were copy-pasted in their entirety rather than imported externally, which makes it difficult to keep them in sync with upstream patches which might otherwise fix known vulnerabilities.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Lack of data validation on external user arguments",
+            "description": "Arguments provided by external users are not validated, which may result in a loss of user funds.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Lack of Events for Monitoring",
+            "description": "An informational issue was raised regarding the lack of events for functions in the script, which would be beneficial to have for monitoring purposes as these scripts increase in complexity.",
+            "severity": "Moderate",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Publicly Visible Scripts",
+            "description": "Scripts being publicly visible could make it easier for attackers to write exploits to abuse the Liquity Protocol.",
+            "severity": "Undetermined",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Revert when LUSD amount is 0",
+            "description": "One minor code-quality issue was raised to revert when the LUSD amount is 0.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-749"
+                ]
+            },
+            "title": "Arbitrary Script Execution due to Lack of Contract Existence Check",
+            "description": "The contracts contained no assembly usage, but a lack of contract existence check on the proxy and opportunity for arbitrary script execution that could result in a loss of user funds.",
+            "severity": "High",
+            "contract": "DSProxy",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Missing Test for Proxy Owner Execution",
+            "description": "The function claimCollateralAndOpenTrove lacks a test to verify that only a proxy owner can call it to execute code.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "claimCollateralAndOpenTrove",
+            "lineNumber": "N/A"
+        }
+    ]
+}

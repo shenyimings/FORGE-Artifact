@@ -1,1 +1,181 @@
-{"path": "./Audit_Reports_2024/Trail_of_Bits/2023-08-flux-securityreview.pdf", "project_info": {"url": "https://github.com/fluxcd", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"], "4": ["CWE-324"]}, "title": "SetExpiration does not set the expiration for the given key", "description": "The SetExpiration function does not change the expiration for the given key because it does not store the updated item back in the specific cache item.", "severity": "Low", "contract": "N/A", "function": "SetExpiration", "lineNumber": "163-172"}, {"id": 1, "category": {"1": ["CWE-707"], "2": ["CWE-172"]}, "title": "Inappropriate string trimming function", "description": "The handlePayload function fails to remove a specific substring as intended because its implementation uses the strings.TrimLeft function.", "severity": "Informational", "contract": "N/A", "function": "handlePayload()", "lineNumber": "71-77"}, {"id": 2, "category": {"1": ["CWE-435"], "2": ["CWE-436"], "3": ["CWE-437"]}, "title": "Go's default HTTP client uses a shared value that can be modified by other components", "description": "Go's default HTTP client uses a shared http.DefaultClient value that can be modified by other application components, which leads to unexpected behavior.", "severity": "Low", "contract": "flux2", "function": "GetLatestVersion and ExistingVersion", "lineNumber": "91-97, 118-125"}, {"id": 3, "category": {"1": ["CWE-703"]}, "title": "Unhandled error value", "description": "The getRows function returns a nil value in the rows variable whenever it returns an error, which means the if statement's condition will be satisfied and incorrectly report to the user that no events were found, rather than printing the err value.", "severity": "N/A", "contract": "flux2", "function": "getRows()", "lineNumber": "129-138"}, {"id": 4, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Potential implicit memory aliasing in for loops", "description": "In for loops, references to elements of a list are not permanent and can change during iteration if the function calls preserve their input values.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "1312-1314"}, {"id": 5, "category": {"1": ["CWE-284"]}, "title": "Directories created via os.MkdirAll are not checked for permissions", "description": "Flux creates various directories and files with overly lenient permissions, allowing an attacker with unprivileged access to edit, delete, and read files, interfering with Flux controllers\u2019 operations.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "pkg/tar/tar.go#167"}, {"id": 6, "category": {"1": ["CWE-284"]}, "title": "Directories and files created with overly lenient permissions", "description": "Flux creates various directories and files with overly lenient permissions, allowing an attacker with unprivileged access to edit, delete, and read files, interfering with Flux controllers\u2019 operations.", "severity": "Informational", "contract": "N/A", "function": "WriteFile, MkdirAll", "lineNumber": "167, N/A"}, {"id": 7, "category": {"1": ["CWE-284"]}, "title": "No restriction on minimum SSH RSA public key bit size", "description": "Flux does not restrict a user from creating a Kubernetes secret for Git authentication using a dangerous SSH RSA public key bit size.", "severity": "Informational", "contract": "flux2/internal/flags", "function": "rsa_key_bits.go", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-707"], "2": ["CWE-74"], "3": ["CWE-77"], "4": ["CWE-78"]}, "title": "Flux macOS release binary susceptible to .dylib injection", "description": "An attacker can inject a malicious .dylib file into the Flux process by setting the DYLD_INSERT_LIBRARIES environment variable, allowing them to steal passwords from the standard Flux input.", "severity": "Critical", "contract": "N/A", "function": "bootstrap", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-284"]}, "title": "Path traversal in SecureJoin implementation", "description": "The SecureJoinVFS function is vulnerable to path traversal attacks.", "severity": "High", "contract": "SecureJoinVFS", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/2023-08-flux-securityreview.pdf",
+    "project_info": {
+        "url": "https://github.com/fluxcd/source-controller/tree/7f40be76e90b2d4afe9f8f9d7f53ac719fe1205e",
+        "commit_hash": "7f40be76e90b2d4afe9f8f9d7f53ac719fe1205e",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ],
+                "4": [
+                    "CWE-324"
+                ]
+            },
+            "title": "SetExpiration does not set the expiration for the given key",
+            "description": "The SetExpiration function does not change the expiration for the given key because it does not store the updated item back in the specific cache item.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "SetExpiration",
+            "lineNumber": "163-172"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-172"
+                ]
+            },
+            "title": "Inappropriate string trimming function",
+            "description": "The handlePayload function fails to remove a specific substring as intended because its implementation uses the strings.TrimLeft function.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "handlePayload()",
+            "lineNumber": "71-77"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-437"
+                ]
+            },
+            "title": "Go's default HTTP client uses a shared value that can be modified by other components",
+            "description": "Go's default HTTP client uses a shared http.DefaultClient value that can be modified by other application components, which leads to unexpected behavior.",
+            "severity": "Low",
+            "contract": "flux2",
+            "function": "GetLatestVersion and ExistingVersion",
+            "lineNumber": "91-97, 118-125"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Unhandled error value",
+            "description": "The getRows function returns a nil value in the rows variable whenever it returns an error, which means the if statement's condition will be satisfied and incorrectly report to the user that no events were found, rather than printing the err value.",
+            "severity": "N/A",
+            "contract": "flux2",
+            "function": "getRows()",
+            "lineNumber": "129-138"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Potential implicit memory aliasing in for loops",
+            "description": "In for loops, references to elements of a list are not permanent and can change during iteration if the function calls preserve their input values.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "1312-1314"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Directories created via os.MkdirAll are not checked for permissions",
+            "description": "Flux creates various directories and files with overly lenient permissions, allowing an attacker with unprivileged access to edit, delete, and read files, interfering with Flux controllers\u2019 operations.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "pkg/tar/tar.go#167"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Directories and files created with overly lenient permissions",
+            "description": "Flux creates various directories and files with overly lenient permissions, allowing an attacker with unprivileged access to edit, delete, and read files, interfering with Flux controllers\u2019 operations.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "WriteFile, MkdirAll",
+            "lineNumber": "167, N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "No restriction on minimum SSH RSA public key bit size",
+            "description": "Flux does not restrict a user from creating a Kubernetes secret for Git authentication using a dangerous SSH RSA public key bit size.",
+            "severity": "Informational",
+            "contract": "flux2/internal/flags",
+            "function": "rsa_key_bits.go",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-74"
+                ],
+                "3": [
+                    "CWE-77"
+                ],
+                "4": [
+                    "CWE-78"
+                ]
+            },
+            "title": "Flux macOS release binary susceptible to .dylib injection",
+            "description": "An attacker can inject a malicious .dylib file into the Flux process by setting the DYLD_INSERT_LIBRARIES environment variable, allowing them to steal passwords from the standard Flux input.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "bootstrap",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Path traversal in SecureJoin implementation",
+            "description": "The SecureJoinVFS function is vulnerable to path traversal attacks.",
+            "severity": "High",
+            "contract": "SecureJoinVFS",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

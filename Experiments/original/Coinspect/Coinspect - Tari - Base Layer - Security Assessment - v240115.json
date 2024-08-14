@@ -1,1 +1,358 @@
-{"path": "./Audit_Reports_2024/Coinspect/Coinspect - Tari - Base Layer - Security Assessment - v240115.pdf", "project_info": {"url": "https://github.com/tari-project/tari", "commit_hash": "87c070305951152c62a0179e13fadc55065cc318", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Address all potential overflows by always performing math with safe method", "description": "The code does not use safe methods such as `checked_add`, `wrapped_add` or `saturating_add` for mathematical operations, which can lead to potential overflows.", "severity": "High", "contract": "N/A", "function": "generate_coinbase_transaction", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-693"], "2": ["CWE-807"], "3": ["CWE-302"]}, "title": "Block producer can delay competing miners", "description": "A miner that produces a new best block can deliberately slow down their network communication, forcefully acquiring the new block lock of peers by up to two minutes.", "severity": "High", "contract": "N/A", "function": "handle_block_message", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-691"], "2": ["CWE-841"]}, "title": "Attackers can prevent block processing", "description": "An attacker with no mining power can execute an attack to acquire the new block lock of peers by up to a minute, causing victim nodes to be unable to receive new blocks from the network.", "severity": "High", "contract": "N/A", "function": "InboundNodeCommsHandlers::reconcile_block", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "Attackers can mine several blocks at once by abusing ExtraField data", "description": "An attacker can flood the network and stop long-syncing by inflating block headers using the `MoneroPowData` field.", "severity": "High", "contract": "N/A", "function": "hash()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Attackers can mine several blocks at once by using multiple Monero coinbase transactions", "description": "A miner can mine different blocks at the same height concurrently at no cost by creating invalid Monero blocks that have several `coinbase` transactions in them.", "severity": "High", "contract": "N/A", "function": "verify_header()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Attackers can create the same block with different hashes", "description": "Multiple Tari blocks can be created from a single valid proof of work, allowing an attacker to create several different forks and potentially double spend more easily.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-435"], "2": ["CWE-436"], "3": ["CWE-115"]}, "title": "Attackers can halt long-syncing by inflating block headers", "description": "An attacker can flood the network and stop long-syncing by inflating block headers, making it impossible for nodes to receive blocks during long sync.", "severity": "High", "contract": "N/A", "function": "find_chain_split()", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-707"], "2": ["CWE-116"], "3": ["CWE-838"]}, "title": "Attackers can halt long-sync by appending trailing data to Proof of Work buffer", "description": "An attacker can flood the network and stop long-syncing by inflating block headers by appending trailing data to the MoneroPowData field, which is sent on the network as a raw Vec<u8>, and will be ignored by Borsh but still be appended to the block as a raw buffer.", "severity": "Critical", "contract": "N/A", "function": "hash()", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Attackers can crash nodes by manipulating proof of work data", "description": "Attackers can mine several blocks at once by abusing ExtraField data", "severity": "High", "contract": "base_layer/core/src/proof_of_work/monero_rx/helpers.rs", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-693"], "2": ["CWE-807"], "3": ["CWE-302"]}, "title": "Proof of work can be copy-pasted", "description": "An attacker can create several different forks with the same information but being built on different hashes by modifying a valid Tari block mined with RandomX to create new valid blocks, allowing for easier double spending.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-435"], "2": ["CWE-436"], "3": ["CWE-115"]}, "title": "Attackers can force sync on a peer eternally", "description": "An attacker can lie about their difficulty to a peer and send an amount of headers small enough so that NUM_INITIAL_HEADERS_TO_REQUEST is bigger than pending, but big enough to reach the tip of the local chain. This will place the victim in a state in which it constantly tries to sync from the attacker, making it waste resources and time.", "severity": "High", "contract": "base_node/sync/block_sync/synchronizer.rs", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Miner can ban competition", "description": "A miner can ban blocks from the competition to get a higher percentage of hashing power on the network by leveraging the bad block system and modifying the validator_node_mr field.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-435"], "2": ["CWE-436"], "3": ["CWE-115"]}, "title": "Attackers can halt synchronization", "description": "An attacker can lie about their difficulty to a peer and send an amount of headers small enough so that NUM_INITIAL_HEADERS_TO_REQUEST is bigger than pending, but big enough to reach the tip of the local chain. This will place the victim in a state in which it constantly tries to sync from the attacker, making it waste resources and time.", "severity": "High", "contract": "N/A", "function": "synchronize_headers", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Attackers can crash nodes by broadcasting JOIN messages", "description": "An attacker can send crafted Join messages which crashes the node with an Out Of Memory error.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Attackers can crash miners by sending a block with a high coinbase fee", "description": "Attackers can construct a block that has a coinbase fee of `u64::MAX`. Nodes that receive this block crash due to an overflow when trying to check the coinbase output.", "severity": "High", "contract": "N/A", "function": "calculate_coinbase_and_fees", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-703"]}, "title": "Attackers can crash the node with a malicious Monero coinbase", "description": "Attackers can remotely trigger a panic with malicious messages by manipulating proof of work data.", "severity": "High", "contract": "N/A", "function": "calculate_root()", "lineNumber": "N/A"}, {"id": 16, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Peer can crash horizon-syncing node with a crafted bitmap", "description": "Attackers can crash a peer which is horizon-syncing from them with a crafted bitmap. The bitmap makes the `CRoaring` dependency try to allocate invalid memory.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 17, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Attackers can crash the node with a script", "description": "An attacker can send crafted `Join` messages which crashes the node with an Out Of Memory error.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 18, "category": {"1": ["CWE-682"], "2": ["CWE-190"], "3": ["CWE-680"]}, "title": "Quadratic memory requirement for addresses in the handle_join method", "description": "The quadratic memory requirement for addresses in the handle_join method can cause an Out Of Memory error when processing Join messages with many valid multiaddresses.", "severity": "Critical", "contract": "N/A", "function": "handle_join", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Coinspect/Coinspect - Tari - Base Layer - Security Assessment - v240115.pdf",
+    "project_info": {
+        "url": "https://github.com/tari-project/tari",
+        "commit_hash": "87c070305951152c62a0179e13fadc55065cc318",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Address all potential overflows by always performing math with safe method",
+            "description": "The code does not use safe methods such as `checked_add`, `wrapped_add` or `saturating_add` for mathematical operations, which can lead to potential overflows.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "generate_coinbase_transaction",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ],
+                "3": [
+                    "CWE-302"
+                ]
+            },
+            "title": "Block producer can delay competing miners",
+            "description": "A miner that produces a new best block can deliberately slow down their network communication, forcefully acquiring the new block lock of peers by up to two minutes.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "handle_block_message",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "Attackers can prevent block processing",
+            "description": "An attacker with no mining power can execute an attack to acquire the new block lock of peers by up to a minute, causing victim nodes to be unable to receive new blocks from the network.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "InboundNodeCommsHandlers::reconcile_block",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Attackers can mine several blocks at once by abusing ExtraField data",
+            "description": "An attacker can flood the network and stop long-syncing by inflating block headers using the `MoneroPowData` field.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "hash()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Attackers can mine several blocks at once by using multiple Monero coinbase transactions",
+            "description": "A miner can mine different blocks at the same height concurrently at no cost by creating invalid Monero blocks that have several `coinbase` transactions in them.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "verify_header()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Attackers can create the same block with different hashes",
+            "description": "Multiple Tari blocks can be created from a single valid proof of work, allowing an attacker to create several different forks and potentially double spend more easily.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-115"
+                ]
+            },
+            "title": "Attackers can halt long-syncing by inflating block headers",
+            "description": "An attacker can flood the network and stop long-syncing by inflating block headers, making it impossible for nodes to receive blocks during long sync.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "find_chain_split()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-116"
+                ],
+                "3": [
+                    "CWE-838"
+                ]
+            },
+            "title": "Attackers can halt long-sync by appending trailing data to Proof of Work buffer",
+            "description": "An attacker can flood the network and stop long-syncing by inflating block headers by appending trailing data to the MoneroPowData field, which is sent on the network as a raw Vec<u8>, and will be ignored by Borsh but still be appended to the block as a raw buffer.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "hash()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Attackers can crash nodes by manipulating proof of work data",
+            "description": "Attackers can mine several blocks at once by abusing ExtraField data",
+            "severity": "High",
+            "contract": "base_layer/core/src/proof_of_work/monero_rx/helpers.rs",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ],
+                "3": [
+                    "CWE-302"
+                ]
+            },
+            "title": "Proof of work can be copy-pasted",
+            "description": "An attacker can create several different forks with the same information but being built on different hashes by modifying a valid Tari block mined with RandomX to create new valid blocks, allowing for easier double spending.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-115"
+                ]
+            },
+            "title": "Attackers can force sync on a peer eternally",
+            "description": "An attacker can lie about their difficulty to a peer and send an amount of headers small enough so that NUM_INITIAL_HEADERS_TO_REQUEST is bigger than pending, but big enough to reach the tip of the local chain. This will place the victim in a state in which it constantly tries to sync from the attacker, making it waste resources and time.",
+            "severity": "High",
+            "contract": "base_node/sync/block_sync/synchronizer.rs",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Miner can ban competition",
+            "description": "A miner can ban blocks from the competition to get a higher percentage of hashing power on the network by leveraging the bad block system and modifying the validator_node_mr field.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-115"
+                ]
+            },
+            "title": "Attackers can halt synchronization",
+            "description": "An attacker can lie about their difficulty to a peer and send an amount of headers small enough so that NUM_INITIAL_HEADERS_TO_REQUEST is bigger than pending, but big enough to reach the tip of the local chain. This will place the victim in a state in which it constantly tries to sync from the attacker, making it waste resources and time.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "synchronize_headers",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Attackers can crash nodes by broadcasting JOIN messages",
+            "description": "An attacker can send crafted Join messages which crashes the node with an Out Of Memory error.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Attackers can crash miners by sending a block with a high coinbase fee",
+            "description": "Attackers can construct a block that has a coinbase fee of `u64::MAX`. Nodes that receive this block crash due to an overflow when trying to check the coinbase output.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "calculate_coinbase_and_fees",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Attackers can crash the node with a malicious Monero coinbase",
+            "description": "Attackers can remotely trigger a panic with malicious messages by manipulating proof of work data.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "calculate_root()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Peer can crash horizon-syncing node with a crafted bitmap",
+            "description": "Attackers can crash a peer which is horizon-syncing from them with a crafted bitmap. The bitmap makes the `CRoaring` dependency try to allocate invalid memory.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Attackers can crash the node with a script",
+            "description": "An attacker can send crafted `Join` messages which crashes the node with an Out Of Memory error.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ],
+                "3": [
+                    "CWE-680"
+                ]
+            },
+            "title": "Quadratic memory requirement for addresses in the handle_join method",
+            "description": "The quadratic memory requirement for addresses in the handle_join method can cause an Out Of Memory error when processing Join messages with many valid multiaddresses.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "handle_join",
+            "lineNumber": "N/A"
+        }
+    ]
+}

@@ -1,1 +1,281 @@
-{"path": "./Audit_Reports_2024/InterFi/VirtualEarth_0x7336E35F81F62907C63dB57Fd45bF8df5F98675B.pdf", "project_info": {"url": "https://github.com/interfinetwork/audited-codes/blob/main/VirtualEarth.sol", "commit_hash": "49e3e870fbf0fb1ee71f165e83ad5b51dccef3ab", "address": "0x7336E35F81F62907C63dB57Fd45bF8df5F98675B"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "approve Function Vulnerability", "description": "The approve function has a potential vulnerability.", "severity": "High", "contract": "IERC20", "function": "approve(address,address,uint256)", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Transfer Function Vulnerability", "description": "The transfer function has a vulnerability related to fee on transfer tokens.", "severity": "High", "contract": "VirtualEarth", "function": "transfer(address,uint256)", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "transferFrom", "description": "Potential vulnerability in transferFrom function allowing unauthorized token transfers", "severity": "High", "contract": "VirtualEarth", "function": "transferFrom(address,address,uint256)", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"]}, "title": "Unprotected mint Function", "description": "The mint function is marked as external and does not have any access modifiers, making it vulnerable to unauthorized access.", "severity": "High", "contract": "VirtualEarth", "function": "_mint", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-755"]}, "title": "_burn Function Vulnerability", "description": "Potential vulnerability found in the _burn function.", "severity": "Unknown", "contract": "VirtualEarth", "function": "_burn(address,uint256)", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"]}, "title": "Unprotected Swap Functions", "description": "Multiple unprotected swap functions are present in the contract, which can lead to potential security risks.", "severity": "High", "contract": "N/A", "function": ["swapTokensForExactTokens", "swapExactETHForTokens", "swapTokensForExactETH", "swapExactTokensForETH", "swapETHForExactTokens"], "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Skim Function", "description": "The skim function has been marked as a potential security risk.", "severity": "High", "contract": "UniswapV2Pair", "function": "skim", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-284"]}, "title": "Unprotected Sync Function", "description": "The sync function does not have any access modifiers or reentrancy protection, which can lead to potential security risks.", "severity": "High", "contract": "N/A", "function": "sync", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-908"], "4": ["CWE-457"]}, "title": "Uninitialized Variables", "description": "The constructor does not initialize state variables.", "severity": "High", "contract": "VirtualEarth", "function": "<Constructor>", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-693"]}, "title": "_transfer", "description": "Potential reentrancy vulnerability in internal _transfer function.", "severity": "High", "contract": "VirtualEarth", "function": "_transfer(address,address,uint256)", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "_mint", "description": "Potential security vulnerability in _mint function.", "severity": "High", "contract": "VirtualEarth", "function": "_mint", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "_burn", "description": "Potential reentrancy vulnerability in _burn function.", "severity": "High", "contract": "VirtualEarth", "function": "_burn(address,uint256)", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "_approve", "description": "Potential reentrancy vulnerability in _approve function", "severity": "High", "contract": "VirtualEarth", "function": "_approve(address,address,uint256)", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "_beforeTokenTransfer", "description": "Potential reentrancy vulnerability or unintended behavior due to lack of access control in internal function.", "severity": "High", "contract": "VirtualEarth", "function": "_beforeTokenTransfer", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-284"]}, "title": "<Constructor>", "description": "The constructor function has unrestricted access and can modify state.", "severity": "Critical", "contract": "VirtualEarth, Ownable", "function": "<Constructor>", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/InterFi/VirtualEarth_0x7336E35F81F62907C63dB57Fd45bF8df5F98675B.pdf",
+    "project_info": {
+        "url": "https://github.com/interfinetwork/audited-codes/blob/main/VirtualEarth.sol",
+        "commit_hash": "49e3e870fbf0fb1ee71f165e83ad5b51dccef3ab",
+        "address": "0x7336E35F81F62907C63dB57Fd45bF8df5F98675B",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "approve Function Vulnerability",
+            "description": "The approve function has a potential vulnerability.",
+            "severity": "High",
+            "contract": "IERC20",
+            "function": "approve(address,address,uint256)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Transfer Function Vulnerability",
+            "description": "The transfer function has a vulnerability related to fee on transfer tokens.",
+            "severity": "High",
+            "contract": "VirtualEarth",
+            "function": "transfer(address,uint256)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "transferFrom",
+            "description": "Potential vulnerability in transferFrom function allowing unauthorized token transfers",
+            "severity": "High",
+            "contract": "VirtualEarth",
+            "function": "transferFrom(address,address,uint256)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected mint Function",
+            "description": "The mint function is marked as external and does not have any access modifiers, making it vulnerable to unauthorized access.",
+            "severity": "High",
+            "contract": "VirtualEarth",
+            "function": "_mint",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-755"
+                ]
+            },
+            "title": "_burn Function Vulnerability",
+            "description": "Potential vulnerability found in the _burn function.",
+            "severity": "Unknown",
+            "contract": "VirtualEarth",
+            "function": "_burn(address,uint256)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected Swap Functions",
+            "description": "Multiple unprotected swap functions are present in the contract, which can lead to potential security risks.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": [
+                "swapTokensForExactTokens",
+                "swapExactETHForTokens",
+                "swapTokensForExactETH",
+                "swapExactTokensForETH",
+                "swapETHForExactTokens"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Skim Function",
+            "description": "The skim function has been marked as a potential security risk.",
+            "severity": "High",
+            "contract": "UniswapV2Pair",
+            "function": "skim",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected Sync Function",
+            "description": "The sync function does not have any access modifiers or reentrancy protection, which can lead to potential security risks.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "sync",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-908"
+                ],
+                "4": [
+                    "CWE-457"
+                ]
+            },
+            "title": "Uninitialized Variables",
+            "description": "The constructor does not initialize state variables.",
+            "severity": "High",
+            "contract": "VirtualEarth",
+            "function": "<Constructor>",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "_transfer",
+            "description": "Potential reentrancy vulnerability in internal _transfer function.",
+            "severity": "High",
+            "contract": "VirtualEarth",
+            "function": "_transfer(address,address,uint256)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "_mint",
+            "description": "Potential security vulnerability in _mint function.",
+            "severity": "High",
+            "contract": "VirtualEarth",
+            "function": "_mint",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "_burn",
+            "description": "Potential reentrancy vulnerability in _burn function.",
+            "severity": "High",
+            "contract": "VirtualEarth",
+            "function": "_burn(address,uint256)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "_approve",
+            "description": "Potential reentrancy vulnerability in _approve function",
+            "severity": "High",
+            "contract": "VirtualEarth",
+            "function": "_approve(address,address,uint256)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "_beforeTokenTransfer",
+            "description": "Potential reentrancy vulnerability or unintended behavior due to lack of access control in internal function.",
+            "severity": "High",
+            "contract": "VirtualEarth",
+            "function": "_beforeTokenTransfer",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "<Constructor>",
+            "description": "The constructor function has unrestricted access and can modify state.",
+            "severity": "Critical",
+            "contract": "VirtualEarth, Ownable",
+            "function": "<Constructor>",
+            "lineNumber": "N/A"
+        }
+    ]
+}

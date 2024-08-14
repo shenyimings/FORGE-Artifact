@@ -1,1 +1,215 @@
-{"path": "./Audit_Reports_2024/Spearbit/Velodrome-Spearbit-Security-Review.pdf", "project_info": {"url": "https://github.com/velodrome-finance/contracts", "commit_hash": "ac4a7a419efa40a23b005e09cf9327d215a4f13b", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "balanceOfNFT can be made to return non-zero value via split and merge", "description": "By performing a split and merge, it's possible to make balanceOfNFT return a non-zero value. This could be used by integrators as a way to accurately track their own voting power.", "severity": "Low Risk", "contract": "veNFT", "function": "balanceOfNFT", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-707"], "2": ["CWE-74"], "3": ["CWE-99"]}, "title": "delegateBySig can use malleable signatures", "description": "The delegateBySig function is vulnerable to malleable signatures.", "severity": "High", "contract": "N/A", "function": "delegateBySig", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Slightly Reduced Voting Power due to Rounding Error", "description": "Rounding error causes slightly reduced voting power.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "68"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Some setters cannot be changed by governance", "description": "It was found that some setters, related to `emergencyCouncil` and `Team`, can only be called by the current role owner. It may be best to allow `Governance` to also be able to call such setters as a way to allow it to override or replace a misaligned team.", "severity": "Low Risk", "contract": "Voter.sol, VotingEscrow.sol", "function": "N/A", "lineNumber": "151-155, 241-245"}, {"id": 4, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Rebase Rewards distribution is shifted by one week, allowing new depositors to receive unfair yield initially (which they'll give back after they withdraw)", "description": "A desynchronization in how rewards are distributed will happen due to `Reward` allowing claiming of rewards on the following Epoch and Rebase rewards from the Distributor being distributed based on the balance at the last second of the previous epoch, resulting in new depositors receiving unfair yield initially.", "severity": "Low Risk", "contract": "Reward.sol", "function": "N/A", "lineNumber": "L187-L188"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "AutoCompounder can be created without admin", "description": "Creating an `AutoCompounder` contract without an `_admin` by passing `address(0)` through `AutoCompounderFactory` is possible. This will break certain functionalities in the AutoCompounder.", "severity": "Low Risk", "contract": "AutoCompounderFactory", "function": "N/A", "lineNumber": "L40"}, {"id": 6, "category": {"1": ["CWE-682"]}, "title": "claim and claimMany functions will revert when called in end lock time", "description": "If _timestamp == _locked.end , then depositFor() will be called but this will revert as block.timestamp >= oldLocked.end.", "severity": "High Risk", "contract": "N/A", "function": "depositFor()", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-693"], "2": ["CWE-807"], "3": ["CWE-302"]}, "title": "Malicious Pool Factory can be used to prevent new pools from being voted on as well as brick voting locks", "description": "Governance has the ability to introduce a malicious factory that will revert on command, preventing normal protocol functionality and preventing depositors who voted on these from ever being able to unlock their NFTs.", "severity": "Low Risk", "contract": "Voter.sol", "function": "N/A", "lineNumber": "L322-L381"}, {"id": 8, "category": {"1": ["CWE-664"], "2": ["CWE-410"]}, "title": "Pool will stop working if a pausable / blockable token is blocked", "description": "The pool will stop functioning if a pausable or blockable token is blocked.", "severity": "High Risk", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Fee Sent to Fee Contract Instead of Being Absorbed into Pool", "description": "The fee of the AMM pool is sent to the fee contract instead of being absorbed into the pool.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-682"]}, "title": "Rounding Error in Stable Pool's Curve", "description": "The stable pool's curve x3y + y3x has a larger rounding error compared to uni-v2's constant product formula, which can cause the invariant K to decrease temporarily and potentially lead to serious issues in external protocols.", "severity": "High Risk", "contract": "Pair.sol", "function": "N/A", "lineNumber": "504-514, 353"}, {"id": 11, "category": {"1": ["CWE-682"]}, "title": "Temporary Decrease of Invariant K", "description": "The invariant K in a stable pool can decrease temporarily when a user performs certain actions like minting a token, doing a swap, and withdrawing liquidity. This means that the ratio of K to the total supply of the pool is not monotonously increasing.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Spearbit/Velodrome-Spearbit-Security-Review.pdf",
+    "project_info": {
+        "url": "https://github.com/velodrome-finance/contracts",
+        "commit_hash": "ac4a7a419efa40a23b005e09cf9327d215a4f13b",
+        "address": "N/A",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "balanceOfNFT can be made to return non-zero value via split and merge",
+            "description": "By performing a split and merge, it's possible to make balanceOfNFT return a non-zero value. This could be used by integrators as a way to accurately track their own voting power.",
+            "severity": "Low Risk",
+            "contract": "veNFT",
+            "function": "balanceOfNFT",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-74"
+                ],
+                "3": [
+                    "CWE-99"
+                ]
+            },
+            "title": "delegateBySig can use malleable signatures",
+            "description": "The delegateBySig function is vulnerable to malleable signatures.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "delegateBySig",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Slightly Reduced Voting Power due to Rounding Error",
+            "description": "Rounding error causes slightly reduced voting power.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "68"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Some setters cannot be changed by governance",
+            "description": "It was found that some setters, related to `emergencyCouncil` and `Team`, can only be called by the current role owner. It may be best to allow `Governance` to also be able to call such setters as a way to allow it to override or replace a misaligned team.",
+            "severity": "Low Risk",
+            "contract": "Voter.sol, VotingEscrow.sol",
+            "function": "N/A",
+            "lineNumber": "151-155, 241-245"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Rebase Rewards distribution is shifted by one week, allowing new depositors to receive unfair yield initially (which they'll give back after they withdraw)",
+            "description": "A desynchronization in how rewards are distributed will happen due to `Reward` allowing claiming of rewards on the following Epoch and Rebase rewards from the Distributor being distributed based on the balance at the last second of the previous epoch, resulting in new depositors receiving unfair yield initially.",
+            "severity": "Low Risk",
+            "contract": "Reward.sol",
+            "function": "N/A",
+            "lineNumber": "L187-L188"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "AutoCompounder can be created without admin",
+            "description": "Creating an `AutoCompounder` contract without an `_admin` by passing `address(0)` through `AutoCompounderFactory` is possible. This will break certain functionalities in the AutoCompounder.",
+            "severity": "Low Risk",
+            "contract": "AutoCompounderFactory",
+            "function": "N/A",
+            "lineNumber": "L40"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "claim and claimMany functions will revert when called in end lock time",
+            "description": "If _timestamp == _locked.end , then depositFor() will be called but this will revert as block.timestamp >= oldLocked.end.",
+            "severity": "High Risk",
+            "contract": "N/A",
+            "function": "depositFor()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ],
+                "3": [
+                    "CWE-302"
+                ]
+            },
+            "title": "Malicious Pool Factory can be used to prevent new pools from being voted on as well as brick voting locks",
+            "description": "Governance has the ability to introduce a malicious factory that will revert on command, preventing normal protocol functionality and preventing depositors who voted on these from ever being able to unlock their NFTs.",
+            "severity": "Low Risk",
+            "contract": "Voter.sol",
+            "function": "N/A",
+            "lineNumber": "L322-L381"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-410"
+                ]
+            },
+            "title": "Pool will stop working if a pausable / blockable token is blocked",
+            "description": "The pool will stop functioning if a pausable or blockable token is blocked.",
+            "severity": "High Risk",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Fee Sent to Fee Contract Instead of Being Absorbed into Pool",
+            "description": "The fee of the AMM pool is sent to the fee contract instead of being absorbed into the pool.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Rounding Error in Stable Pool's Curve",
+            "description": "The stable pool's curve x3y + y3x has a larger rounding error compared to uni-v2's constant product formula, which can cause the invariant K to decrease temporarily and potentially lead to serious issues in external protocols.",
+            "severity": "High Risk",
+            "contract": "Pair.sol",
+            "function": "N/A",
+            "lineNumber": "504-514, 353"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Temporary Decrease of Invariant K",
+            "description": "The invariant K in a stable pool can decrease temporarily when a user performs certain actions like minting a token, doing a swap, and withdrawing liquidity. This means that the ratio of K to the total supply of the pool is not monotonously increasing.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

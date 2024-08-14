@@ -1,1 +1,116 @@
-{"path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-UWU-v1.0.pdf", "project_info": {"url": "https://github.com/UwU-Lend/uwu-contracts.git", "commit_hash": "7bf701c", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "Potential Protocol Risk from Low-Liquidity Assets", "description": "A malicious actor may borrow a large amount of an illiquid token and sell it across multiple exchanges to depress the open market price, then withdraw most of the original collateral.", "severity": "Undetermined", "contract": "UWU Protocol", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Fork-Compliant Domain Separator in AToken", "description": "The DOMAIN_SEPARATOR state variable is initialized once inside the initialize() function and used in the permit() function, but it needs to be recalculated inside the permit() function to prevent cross-chain replay attacks.", "severity": "Low", "contract": "AToken", "function": "permit()", "lineNumber": "79-87, 334-352"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Flashloan-assisted Lowered StableBorrowRate for Mode-Switching Users", "description": "The protocol provides rate-rebalancing support to work around dynamic changes in market conditions or increased cost of money within the pool, and users can swap between stable and variable borrow rate modes using the `swapBorrowRateMode()` function.", "severity": "Low", "contract": "LendingPool", "function": "swapBorrowRateMode()", "lineNumber": "297"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Accommodation of Non-ERC20-Compliant Tokens", "description": "The `transferFrom()` routine does not have a return value defined and implemented, which may cause calls to revert.", "severity": "Low", "contract": "Leverager", "function": "transferFrom()", "lineNumber": "171"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Trust Issue of Admin Keys", "description": "Privileged `owner` account has critical roles in governing and regulating system-wide operations, including parameter setting and price oracle adjustment, which needs to be scrutinized.", "severity": "Medium", "contract": "Multiple Contracts (including AaveOracle and LendingPoolAddressesProvider)", "function": "setAssetSources() and setFallbackOracle()", "lineNumber": "581-590"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Revisited Logic of MultiFeeDistribution::withdraw()", "description": "In the `withdraw()` function of `MultiFeeDistribution` contract, there is an improper implementation that needs to be improved. The `bal.earned` (saving the total earned rewards) is not updated accordingly, which makes it possible for the user to get more rewards.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-UWU-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/UwU-Lend/uwu-contracts.git",
+        "commit_hash": "7bf701c",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Potential Protocol Risk from Low-Liquidity Assets",
+            "description": "A malicious actor may borrow a large amount of an illiquid token and sell it across multiple exchanges to depress the open market price, then withdraw most of the original collateral.",
+            "severity": "Undetermined",
+            "contract": "UWU Protocol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Fork-Compliant Domain Separator in AToken",
+            "description": "The DOMAIN_SEPARATOR state variable is initialized once inside the initialize() function and used in the permit() function, but it needs to be recalculated inside the permit() function to prevent cross-chain replay attacks.",
+            "severity": "Low",
+            "contract": "AToken",
+            "function": "permit()",
+            "lineNumber": "79-87, 334-352"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Flashloan-assisted Lowered StableBorrowRate for Mode-Switching Users",
+            "description": "The protocol provides rate-rebalancing support to work around dynamic changes in market conditions or increased cost of money within the pool, and users can swap between stable and variable borrow rate modes using the `swapBorrowRateMode()` function.",
+            "severity": "Low",
+            "contract": "LendingPool",
+            "function": "swapBorrowRateMode()",
+            "lineNumber": "297"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Accommodation of Non-ERC20-Compliant Tokens",
+            "description": "The `transferFrom()` routine does not have a return value defined and implemented, which may cause calls to revert.",
+            "severity": "Low",
+            "contract": "Leverager",
+            "function": "transferFrom()",
+            "lineNumber": "171"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "Privileged `owner` account has critical roles in governing and regulating system-wide operations, including parameter setting and price oracle adjustment, which needs to be scrutinized.",
+            "severity": "Medium",
+            "contract": "Multiple Contracts (including AaveOracle and LendingPoolAddressesProvider)",
+            "function": "setAssetSources() and setFallbackOracle()",
+            "lineNumber": "581-590"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Revisited Logic of MultiFeeDistribution::withdraw()",
+            "description": "In the `withdraw()` function of `MultiFeeDistribution` contract, there is an improper implementation that needs to be improved. The `bal.earned` (saving the total earned rewards) is not updated accordingly, which makes it possible for the user to get more rewards.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

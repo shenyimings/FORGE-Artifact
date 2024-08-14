@@ -1,1 +1,384 @@
-{"path": "./Audit_Reports_2024/Trail_of_Bits/AdvancedBlockchainQ12022.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-691"], "2": ["CWE-841"]}, "title": "Error-prone NFT management in the Summoner contract", "description": "The `Summoner` contract\u2019s ability to hold NFTs in a number of states may create confusion regarding the contracts\u2019 states and the differences between the contracts.", "severity": "Undetermined", "contract": "Summoner", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Excessive ownership privileges throughout the contracts", "description": "Any function that can be invoked by a relayer can also be invoked by a contract owner. In all transactions, owners have complete discretion over the account to which funds are sent and the chain on which funds are sent.", "severity": "Critical", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Widespread lack of data validation", "description": "Certain data returned in function calls to untrusted external smart contracts is not validated. This lack of validation creates denial-of-service (DoS) attack vectors and can result in unsafe typecasting, which may lead to unexpected behavior.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"], "2": ["CWE-269"]}, "title": "Overly complicated contract and system architecture", "description": "The system relies heavily on an off-chain system to manage the most critical operations, while the smart contracts primarily emit events to which the off-chain system responds. The primary concern with this design choice is the lack of on-chain safeguards to limit the abilities of the relayer. Secondarily, the intricate smart contract code makes it difficult to reason about the separation of privileges and abilities.", "severity": "High", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Initialization functions can be front-run", "description": "The `CrosslayerPortal` contracts have initializer functions that can be front-ru, allowing an attacker to incorrectly initialize the contracts.", "severity": "High", "contract": "Multiple Contracts (see list)", "function": "initialize()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "Trades are vulnerable to sandwich attacks", "description": "The `swapToNative` function lacks protections against high slippage and may cause users to lose funds due to sandwich attacks.", "severity": "High", "contract": "MosaicNativeSwapperETH.sol", "function": "swapToNative()", "lineNumber": "44-50"}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "forwardCall creates a denial-of-service attack vector", "description": "The `forwardCall` function is vulnerable to a denial-of-service (DoS) attack, which can cause the queue of pending transactions to grow without bounds, resulting in gas costs.", "severity": "Critical", "contract": "N/A", "function": "approveERC20TokenAndForwardCall", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-284"], "2": ["CWE-282"], "3": ["CWE-708"]}, "title": "Lack of two-step process for contract ownership changes", "description": "The current implementation of transferOwnership function allows the owner to accidentally set the wrong address and lose access to the contract permanently.", "severity": "High", "contract": "OwnableUpgradeable", "function": "transferOwnership()", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-693"]}, "title": "sendFunds is vulnerable to reentrancy by owners", "description": "The `sendFunds` function is vulnerable to reentrancy and can be used by the owner of a token contract to drain the contract of its funds.", "severity": "High", "contract": "FundKeeper", "function": "sendFunds()", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "MosaicVault and MosaicHolding owner has excessive privileges", "description": "The owner of MosaicVault and MosaicHolding contracts has excessive control over the system, creating a single point of failure and increasing the likelihood of being targeted by an attacker.", "severity": "High", "contract": "MosaicVault and MosaicHolding", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "SushiswapLiquidityProvider deposits cannot be used to cover withdrawal requests", "description": "Withdrawal requests that require the removal of liquidity from a Sushiswap liquidity pool will revert and cause a system failure.", "severity": "High", "contract": "SushiswapLiquidityProvider", "function": "N/A", "lineNumber": ":90-113"}, {"id": 11, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "MosaicVault and MosaicHolding owner is controlled by a single private key", "description": "The owner of MosaicVault and MosaicHolding contracts is a single externally owned account (EOA), creating a single point of failure, making the owner a high-value target for attackers, and increasing incentives for the owner to act maliciously.", "severity": "High", "contract": "MosaicVault and MosaicHolding", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-693"]}, "title": "The relayer is a single point of failure", "description": "The relayer constitutes a single point of failure within the Mosaic ecosystem and is responsible for managing withdrawals, transfers, accrued interest, cross-chain message calls, fees, and refunds. Its centralized design makes it a likely target for attackers.", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Project dependencies contain vulnerabilities", "description": "Dependencies used by CrosslayerPortal have known vulnerabilities, including command injection, exposure of sensitive information, and arbitrary code execution.", "severity": "High", "contract": "CrosslayerPortal", "function": "N/A", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "DoS risk created by cross-chain message call requests on certain networks", "description": "Cross-chain message calls that are requested on a low-fee, low-latency network could facilitate a DoS, preventing other users from interacting with the system.", "severity": "Medium", "contract": "CrosslayerPortal/contracts/functionCalls/*", "function": "N/A", "lineNumber": "N/A"}, {"id": 15, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-354"]}, "title": "Missing validation in takeFees function", "description": "The `takeFees` function takes `calldata` from relayers and contract owners but does not validate the `baseFee` value passed to it, allowing relayers and owners to set arbitrarily large `baseFee` values.", "severity": "Medium", "contract": "MosaicVault", "function": "takeFees()", "lineNumber": "548-597"}, {"id": 16, "category": {"1": ["CWE-703"], "2": ["CWE-755"], "3": ["CWE-390"]}, "title": "Unimplemented getAmountsOut function in Balancer V2", "description": "The `getAmountsOut` function is not implemented, preventing users from determining how much DAI they will receive before executing a swap on Balancer.", "severity": "Medium", "contract": "BalancerVaultV2Wrapper", "function": "getAmountsOut()", "lineNumber": "43-50"}, {"id": 17, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-391"]}, "title": "Lack of events for critical operations", "description": "Many functions that perform critical operations do not emit events.", "severity": "Weak", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 18, "category": {"1": ["CWE-693"], "2": ["CWE-311"], "3": ["CWE-312"]}, "title": "Insufficient protection of sensitive information", "description": "Exposure of sensitive information", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 19, "category": {"1": ["CWE-664"], "2": ["CWE-221"], "3": ["CWE-223"]}, "title": "Accrued interest is not attributable to the underlying investor on-chain", "description": "When an investor earns interest-bearing tokens by lending funds through Mosaic's investment strategies, the tokens are not directly attributed to the investor by on-chain data.", "severity": "N/A", "contract": "MosaicHolding", "function": "claim()", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/AdvancedBlockchainQ12022.pdf",
+    "project_info": {
+        "url": "https://github.com/ComposableFi/CrosslayerPortal/tree/4ffd6104b333f67ffe9ef1f4acd069c899ef030f",
+        "commit_hash": "4ffd6104b333f67ffe9ef1f4acd069c899ef030f",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "Error-prone NFT management in the Summoner contract",
+            "description": "The `Summoner` contract\u2019s ability to hold NFTs in a number of states may create confusion regarding the contracts\u2019 states and the differences between the contracts.",
+            "severity": "Undetermined",
+            "contract": "Summoner",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Excessive ownership privileges throughout the contracts",
+            "description": "Any function that can be invoked by a relayer can also be invoked by a contract owner. In all transactions, owners have complete discretion over the account to which funds are sent and the chain on which funds are sent.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Widespread lack of data validation",
+            "description": "Certain data returned in function calls to untrusted external smart contracts is not validated. This lack of validation creates denial-of-service (DoS) attack vectors and can result in unsafe typecasting, which may lead to unexpected behavior.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Overly complicated contract and system architecture",
+            "description": "The system relies heavily on an off-chain system to manage the most critical operations, while the smart contracts primarily emit events to which the off-chain system responds. The primary concern with this design choice is the lack of on-chain safeguards to limit the abilities of the relayer. Secondarily, the intricate smart contract code makes it difficult to reason about the separation of privileges and abilities.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Initialization functions can be front-run",
+            "description": "The `CrosslayerPortal` contracts have initializer functions that can be front-ru, allowing an attacker to incorrectly initialize the contracts.",
+            "severity": "High",
+            "contract": "Multiple Contracts (see list)",
+            "function": "initialize()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Trades are vulnerable to sandwich attacks",
+            "description": "The `swapToNative` function lacks protections against high slippage and may cause users to lose funds due to sandwich attacks.",
+            "severity": "High",
+            "contract": "MosaicNativeSwapperETH.sol",
+            "function": "swapToNative()",
+            "lineNumber": "44-50"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "forwardCall creates a denial-of-service attack vector",
+            "description": "The `forwardCall` function is vulnerable to a denial-of-service (DoS) attack, which can cause the queue of pending transactions to grow without bounds, resulting in gas costs.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "approveERC20TokenAndForwardCall",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-282"
+                ],
+                "3": [
+                    "CWE-708"
+                ]
+            },
+            "title": "Lack of two-step process for contract ownership changes",
+            "description": "The current implementation of transferOwnership function allows the owner to accidentally set the wrong address and lose access to the contract permanently.",
+            "severity": "High",
+            "contract": "OwnableUpgradeable",
+            "function": "transferOwnership()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "sendFunds is vulnerable to reentrancy by owners",
+            "description": "The `sendFunds` function is vulnerable to reentrancy and can be used by the owner of a token contract to drain the contract of its funds.",
+            "severity": "High",
+            "contract": "FundKeeper",
+            "function": "sendFunds()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "MosaicVault and MosaicHolding owner has excessive privileges",
+            "description": "The owner of MosaicVault and MosaicHolding contracts has excessive control over the system, creating a single point of failure and increasing the likelihood of being targeted by an attacker.",
+            "severity": "High",
+            "contract": "MosaicVault and MosaicHolding",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "SushiswapLiquidityProvider deposits cannot be used to cover withdrawal requests",
+            "description": "Withdrawal requests that require the removal of liquidity from a Sushiswap liquidity pool will revert and cause a system failure.",
+            "severity": "High",
+            "contract": "SushiswapLiquidityProvider",
+            "function": "N/A",
+            "lineNumber": ":90-113"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "MosaicVault and MosaicHolding owner is controlled by a single private key",
+            "description": "The owner of MosaicVault and MosaicHolding contracts is a single externally owned account (EOA), creating a single point of failure, making the owner a high-value target for attackers, and increasing incentives for the owner to act maliciously.",
+            "severity": "High",
+            "contract": "MosaicVault and MosaicHolding",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "The relayer is a single point of failure",
+            "description": "The relayer constitutes a single point of failure within the Mosaic ecosystem and is responsible for managing withdrawals, transfers, accrued interest, cross-chain message calls, fees, and refunds. Its centralized design makes it a likely target for attackers.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Project dependencies contain vulnerabilities",
+            "description": "Dependencies used by CrosslayerPortal have known vulnerabilities, including command injection, exposure of sensitive information, and arbitrary code execution.",
+            "severity": "High",
+            "contract": "CrosslayerPortal",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "DoS risk created by cross-chain message call requests on certain networks",
+            "description": "Cross-chain message calls that are requested on a low-fee, low-latency network could facilitate a DoS, preventing other users from interacting with the system.",
+            "severity": "Medium",
+            "contract": "CrosslayerPortal/contracts/functionCalls/*",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-354"
+                ]
+            },
+            "title": "Missing validation in takeFees function",
+            "description": "The `takeFees` function takes `calldata` from relayers and contract owners but does not validate the `baseFee` value passed to it, allowing relayers and owners to set arbitrarily large `baseFee` values.",
+            "severity": "Medium",
+            "contract": "MosaicVault",
+            "function": "takeFees()",
+            "lineNumber": "548-597"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-755"
+                ],
+                "3": [
+                    "CWE-390"
+                ]
+            },
+            "title": "Unimplemented getAmountsOut function in Balancer V2",
+            "description": "The `getAmountsOut` function is not implemented, preventing users from determining how much DAI they will receive before executing a swap on Balancer.",
+            "severity": "Medium",
+            "contract": "BalancerVaultV2Wrapper",
+            "function": "getAmountsOut()",
+            "lineNumber": "43-50"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Lack of events for critical operations",
+            "description": "Many functions that perform critical operations do not emit events.",
+            "severity": "Weak",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-311"
+                ],
+                "3": [
+                    "CWE-312"
+                ]
+            },
+            "title": "Insufficient protection of sensitive information",
+            "description": "Exposure of sensitive information",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 19,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-221"
+                ],
+                "3": [
+                    "CWE-223"
+                ]
+            },
+            "title": "Accrued interest is not attributable to the underlying investor on-chain",
+            "description": "When an investor earns interest-bearing tokens by lending funds through Mosaic's investment strategies, the tokens are not directly attributed to the investor by on-chain data.",
+            "severity": "N/A",
+            "contract": "MosaicHolding",
+            "function": "claim()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

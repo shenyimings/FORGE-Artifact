@@ -1,1 +1,308 @@
-{"path": "./Audit_Reports_2024/InterFi/SquidWorld_0x4eCeACD7FB7b275bC303d518a0bB58d65B66419e.pdf", "project_info": {"url": "https://github.com/interfinetwork/audited-codes/blob/main/SquidWorld.sol", "commit_hash": "f0cd6cab9ea74be92d37502c9ae44b35966b5675", "address": "0x4eCeACD7FB7b275bC303d518a0bB58d65B66419e"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "_approve", "description": "Private function _approve has no description provided.", "severity": "N/A", "contract": "SquidWorld", "function": "_approve", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-284"]}, "title": "Insecure Transfer Functions", "description": "Multiple functions with 'transfer' in their names have been identified, which may pose a security risk if not properly validated.", "severity": "High", "contract": "N/A", "function": ["_tokenTransfer", "_transferStandard", "takeburn", "takeTeam", "takePrize", "_transferToExcluded", "_transferFromExcluded", "multiTransfer_fixed_AirDrop", "multiTransfer_AirDrop"], "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"]}, "title": "_transferFromExcluded", "description": "Private function _transferFromExcluded allows unauthorized access to transfer tokens from excluded addresses.", "severity": "High", "contract": "N/A", "function": "_transferFromExcluded", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-693"]}, "title": "_burn", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "swap", "description": "Potential reentrancy vulnerability in swap functions", "severity": "High", "contract": "SquidWorld", "function": ["swapExactTokensForTokensSupportingFeeOnTransferTokens", "swapExactETHForTokensSupportingFeeOnTransferTokens", "swapExactTokensForETHSupportingFeeOnTransferTokens", "swapTokensForExactTokens", "swapExactETHForTokens", "swapTokensForExactETH", "swapExactTokensForETH"], "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-703"]}, "title": "skim", "description": "N/A", "severity": "High", "contract": "IUniswapV2Router01", "function": "skim", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-284"]}, "title": "Unprotected sync function", "description": "The 'sync' function does not have any access modifier and can be called by anyone, potentially leading to unintended behavior.", "severity": "High", "contract": "SquidWorld", "function": "sync()", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-908"], "4": ["CWE-457"]}, "title": "Uninitialized Variables", "description": "The Ownable contract has an uninitialized owner variable.", "severity": "High", "contract": "Ownable", "function": "<Constructor>", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "<Constructor>", "description": "The constructor function has unrestricted access and lacks proper validation, potentially leading to unauthorized state changes.", "severity": "High", "contract": "N/A", "function": "<Constructor>", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-710"], "2": ["CWE-1164"]}, "title": "deliver", "description": "N/A", "severity": "Critical", "contract": "SQUIDWORLD", "function": "deliver()", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "excludeFromReward", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "excludeFromReward(address)", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Unprotected Function: includeInReward", "description": "The 'includeInReward' function is declared as external and has the 'onlyOwner' modifier, but its functionality and potential risks are not explicitly stated.", "severity": "Medium", "contract": "SquidWorld", "function": "includeInReward()", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "_transferBothExcluded", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "_transferBothExcluded(address,address,uint256)", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-284"]}, "title": "_takeLiquidity", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"], "4": ["CWE-638"], "5": ["CWE-424"], "6": ["CWE-425"]}, "title": "removeAllFee", "description": "N/A", "severity": "N/A", "contract": "SquidWorld", "function": "removeAllFee()", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/InterFi/SquidWorld_0x4eCeACD7FB7b275bC303d518a0bB58d65B66419e.pdf",
+    "project_info": {
+        "url": "https://github.com/interfinetwork/audited-codes/blob/main/SquidWorld.sol",
+        "commit_hash": "f0cd6cab9ea74be92d37502c9ae44b35966b5675",
+        "address": "0x4eCeACD7FB7b275bC303d518a0bB58d65B66419e",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "_approve",
+            "description": "Private function _approve has no description provided.",
+            "severity": "N/A",
+            "contract": "SquidWorld",
+            "function": "_approve",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Insecure Transfer Functions",
+            "description": "Multiple functions with 'transfer' in their names have been identified, which may pose a security risk if not properly validated.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": [
+                "_tokenTransfer",
+                "_transferStandard",
+                "takeburn",
+                "takeTeam",
+                "takePrize",
+                "_transferToExcluded",
+                "_transferFromExcluded",
+                "multiTransfer_fixed_AirDrop",
+                "multiTransfer_AirDrop"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "_transferFromExcluded",
+            "description": "Private function _transferFromExcluded allows unauthorized access to transfer tokens from excluded addresses.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "_transferFromExcluded",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "_burn",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "swap",
+            "description": "Potential reentrancy vulnerability in swap functions",
+            "severity": "High",
+            "contract": "SquidWorld",
+            "function": [
+                "swapExactTokensForTokensSupportingFeeOnTransferTokens",
+                "swapExactETHForTokensSupportingFeeOnTransferTokens",
+                "swapExactTokensForETHSupportingFeeOnTransferTokens",
+                "swapTokensForExactTokens",
+                "swapExactETHForTokens",
+                "swapTokensForExactETH",
+                "swapExactTokensForETH"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "skim",
+            "description": "N/A",
+            "severity": "High",
+            "contract": "IUniswapV2Router01",
+            "function": "skim",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected sync function",
+            "description": "The 'sync' function does not have any access modifier and can be called by anyone, potentially leading to unintended behavior.",
+            "severity": "High",
+            "contract": "SquidWorld",
+            "function": "sync()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-908"
+                ],
+                "4": [
+                    "CWE-457"
+                ]
+            },
+            "title": "Uninitialized Variables",
+            "description": "The Ownable contract has an uninitialized owner variable.",
+            "severity": "High",
+            "contract": "Ownable",
+            "function": "<Constructor>",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "<Constructor>",
+            "description": "The constructor function has unrestricted access and lacks proper validation, potentially leading to unauthorized state changes.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "<Constructor>",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ]
+            },
+            "title": "deliver",
+            "description": "N/A",
+            "severity": "Critical",
+            "contract": "SQUIDWORLD",
+            "function": "deliver()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "excludeFromReward",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "excludeFromReward(address)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Unprotected Function: includeInReward",
+            "description": "The 'includeInReward' function is declared as external and has the 'onlyOwner' modifier, but its functionality and potential risks are not explicitly stated.",
+            "severity": "Medium",
+            "contract": "SquidWorld",
+            "function": "includeInReward()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "_transferBothExcluded",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "_transferBothExcluded(address,address,uint256)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "_takeLiquidity",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ],
+                "4": [
+                    "CWE-638"
+                ],
+                "5": [
+                    "CWE-424"
+                ],
+                "6": [
+                    "CWE-425"
+                ]
+            },
+            "title": "removeAllFee",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "SquidWorld",
+            "function": "removeAllFee()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

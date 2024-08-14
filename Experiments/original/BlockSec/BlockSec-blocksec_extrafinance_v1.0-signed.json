@@ -1,1 +1,107 @@
-{"path": "./Audit_Reports_2024/BlockSec/BlockSec-blocksec_extrafinance_v1.0-signed.pdf", "project_info": {"url": "https://github.com/Extra-Finance/Leverage-Farming", "commit_hash": "b4e76554e3a14f00f99bbdda4ecaab6fdcda6eff", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Unexpected price impact during liquidation", "description": "A manipulated price could differentially affect repaid and removed liquidity values, allowing a malicious liquidator to get more assets from liquidation.", "severity": "High", "contract": "VeloVaultPositionLogic.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "Unfair reward distribution", "description": "In the protocol design, a vault is built on top of a Velodrome pair and corresponding gauge. The vault deposits users' tokens into the pair and stakes the LP tokens in the gauge to earn rewards. However, this could potentially lead to an issue of unfair reward distribution due to Velodrome's gauge reward mechanism.", "severity": "Low", "contract": "VeloVaultPositionLogic.sol", "function": "claimRewardsAndReInvestToLiquidityInternal", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-284"]}, "title": "Potential centralization risks", "description": "The Leverage Farming protocol exhibits a high degree of reliance on delegatecalls to library contracts, with the library addresses fetched from the AddressRegistry contract. This creates a single point of failure. If an attacker were to compromise the owner of the AddressRegistry contract, they could potentially incapacitate the entire system.", "severity": "Note", "contract": "AddressRegistry, VeloSwapPathManager, VeloPositionManager", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1287"]}, "title": "The protocol should not support weird ERC20 tokens", "description": "The lending pool adopted by the Leverage Farming protocol should only support underlying tokens that follow standard ERC20 specifications to mitigate potential security risks.", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "Potential price manipulation risks", "description": "The swapRewardsToBaseToken function in VeloVaultRewardsLogic library swaps claimed reward tokens without specifying amountOutMin parameter, creating a price manipulation attack vector due to the absence of slippage control.", "severity": "High", "contract": "VeloVaultRewardsLogic", "function": "swapRewardsToBaseToken()", "lineNumber": "245"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "Potential inaccurate calculation", "description": "The getSwapAmountForAddLiquidity and getSwapAmountForExactOut functions in VeloLiquidityMath library may produce inaccurate results due to discrepancies between simulated and actual reserves, and incremental increases of amountIn.", "severity": "Medium", "contract": "VeloLiquidityMath", "function": ["getSwapAmountForAddLiquidity()", "getSwapAmountForExactOut()"], "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/BlockSec/BlockSec-blocksec_extrafinance_v1.0-signed.pdf",
+    "project_info": {
+        "url": "https://github.com/Extra-Finance/Leverage-Farming",
+        "commit_hash": "b4e76554e3a14f00f99bbdda4ecaab6fdcda6eff",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Unexpected price impact during liquidation",
+            "description": "A manipulated price could differentially affect repaid and removed liquidity values, allowing a malicious liquidator to get more assets from liquidation.",
+            "severity": "High",
+            "contract": "VeloVaultPositionLogic.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Unfair reward distribution",
+            "description": "In the protocol design, a vault is built on top of a Velodrome pair and corresponding gauge. The vault deposits users' tokens into the pair and stakes the LP tokens in the gauge to earn rewards. However, this could potentially lead to an issue of unfair reward distribution due to Velodrome's gauge reward mechanism.",
+            "severity": "Low",
+            "contract": "VeloVaultPositionLogic.sol",
+            "function": "claimRewardsAndReInvestToLiquidityInternal",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Potential centralization risks",
+            "description": "The Leverage Farming protocol exhibits a high degree of reliance on delegatecalls to library contracts, with the library addresses fetched from the AddressRegistry contract. This creates a single point of failure. If an attacker were to compromise the owner of the AddressRegistry contract, they could potentially incapacitate the entire system.",
+            "severity": "Note",
+            "contract": "AddressRegistry, VeloSwapPathManager, VeloPositionManager",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1287"
+                ]
+            },
+            "title": "The protocol should not support weird ERC20 tokens",
+            "description": "The lending pool adopted by the Leverage Farming protocol should only support underlying tokens that follow standard ERC20 specifications to mitigate potential security risks.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Potential price manipulation risks",
+            "description": "The swapRewardsToBaseToken function in VeloVaultRewardsLogic library swaps claimed reward tokens without specifying amountOutMin parameter, creating a price manipulation attack vector due to the absence of slippage control.",
+            "severity": "High",
+            "contract": "VeloVaultRewardsLogic",
+            "function": "swapRewardsToBaseToken()",
+            "lineNumber": "245"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Potential inaccurate calculation",
+            "description": "The getSwapAmountForAddLiquidity and getSwapAmountForExactOut functions in VeloLiquidityMath library may produce inaccurate results due to discrepancies between simulated and actual reserves, and incremental increases of amountIn.",
+            "severity": "Medium",
+            "contract": "VeloLiquidityMath",
+            "function": [
+                "getSwapAmountForAddLiquidity()",
+                "getSwapAmountForExactOut()"
+            ],
+            "lineNumber": "N/A"
+        }
+    ]
+}

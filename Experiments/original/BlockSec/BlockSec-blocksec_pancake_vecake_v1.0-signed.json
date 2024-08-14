@@ -1,1 +1,153 @@
-{"path": "./Audit_Reports_2024/BlockSec/BlockSec-blocksec_pancake_vecake_v1.0-signed.pdf", "project_info": {"url": "https://github.com/Pancake/VECake-Gauges-Contracts", "commit_hash": "7974a13e369fee4f4eb04143d54cf14535cab3c1", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Potential centralization risk", "description": "The owner of the VECake and GaugeVoting contracts possesses notable privileges to modify critical configurations, introducing a single point of failure.", "severity": "Note", "contract": "VECake and GaugeVoting", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Ensure the proper use of function totalSupplyAtTime and balanceOfAtTime", "description": "The totalSupply function should not return the total supply at a timestamp beyond block.timestamp. However, the contract introduces a totalSupply function without timestamp limitations that accommodates special usages in the GaugeVoting contract.", "severity": "N/A", "contract": "VECake", "function": "totalSupplyAtTime and balanceOfAtTime", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Inconsistent lock time limits", "description": "The MAX_LOCK in the VECake contract is defined as 53 weeks, while the MAX_LOCK_TIME is 104 weeks in the GaugeVoting contract, causing an inconsistency.", "severity": "Low", "contract": "VECake and GaugeVoting", "function": "N/A", "lineNumber": "28"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Incorrect operator precedence", "description": "The _vote1 function in the GaugeVoting contract incorrectly updates the bias value due to incorrect operator precedence.", "severity": "High", "contract": "GaugeVoting", "function": "_vote1, _vote2, _vote3", "lineNumber": "707"}, {"id": 4, "category": {"1": ["CWE-682"], "2": ["CWE-191"]}, "title": "Flawed code logic that cannot update the first added gauge info", "description": "The function requires gaugeIndex[gauge_hash]-1 to be greater than or equal to 0, which will underflow for the first gauge at index 0, causing the function to revert when trying to update gauges[0].", "severity": "Low", "contract": "GaugeVoting", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Lack of sanity check on admin voting weight", "description": "The voteFromAdmin function in the GaugeVoting contract currently lacks a sanity check on the _admin_weight parameter.", "severity": "Low", "contract": "GaugeVoting", "function": "voteFromAdmin", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-664"], "2": ["CWE-665"], "3": ["CWE-909"], "4": ["CWE-456"]}, "title": "Lack of updates on gaugeChangesWeight and gaugeTypeChangesSum", "description": "Two mappings, gaugeChangesWeight and gaugeTypeChangesSum, are never modified within the _vote1, _vote2, and _vote3 functions to track changes in the slope.", "severity": "High", "contract": "GaugeVoting", "function": "_vote1, _vote2, and _vote3", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-682"]}, "title": "Inconsistent designs related to boostMultiplier", "description": "The GaugeVoting contract allocates a boostMultiplier for each gauge to calculate the weights. However, there are some inconsistent designs around the use of boostedMultiplier.", "severity": "High", "contract": "GaugeVoting", "function": "updateGaugeInfo()", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/BlockSec/BlockSec-blocksec_pancake_vecake_v1.0-signed.pdf",
+    "project_info": {
+        "url": "https://github.com/Pancake/VECake-Gauges-Contracts",
+        "commit_hash": "7974a13e369fee4f4eb04143d54cf14535cab3c1",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Potential centralization risk",
+            "description": "The owner of the VECake and GaugeVoting contracts possesses notable privileges to modify critical configurations, introducing a single point of failure.",
+            "severity": "Note",
+            "contract": "VECake and GaugeVoting",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Ensure the proper use of function totalSupplyAtTime and balanceOfAtTime",
+            "description": "The totalSupply function should not return the total supply at a timestamp beyond block.timestamp. However, the contract introduces a totalSupply function without timestamp limitations that accommodates special usages in the GaugeVoting contract.",
+            "severity": "N/A",
+            "contract": "VECake",
+            "function": "totalSupplyAtTime and balanceOfAtTime",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Inconsistent lock time limits",
+            "description": "The MAX_LOCK in the VECake contract is defined as 53 weeks, while the MAX_LOCK_TIME is 104 weeks in the GaugeVoting contract, causing an inconsistency.",
+            "severity": "Low",
+            "contract": "VECake and GaugeVoting",
+            "function": "N/A",
+            "lineNumber": "28"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect operator precedence",
+            "description": "The _vote1 function in the GaugeVoting contract incorrectly updates the bias value due to incorrect operator precedence.",
+            "severity": "High",
+            "contract": "GaugeVoting",
+            "function": "_vote1, _vote2, _vote3",
+            "lineNumber": "707"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-191"
+                ]
+            },
+            "title": "Flawed code logic that cannot update the first added gauge info",
+            "description": "The function requires gaugeIndex[gauge_hash]-1 to be greater than or equal to 0, which will underflow for the first gauge at index 0, causing the function to revert when trying to update gauges[0].",
+            "severity": "Low",
+            "contract": "GaugeVoting",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Lack of sanity check on admin voting weight",
+            "description": "The voteFromAdmin function in the GaugeVoting contract currently lacks a sanity check on the _admin_weight parameter.",
+            "severity": "Low",
+            "contract": "GaugeVoting",
+            "function": "voteFromAdmin",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "Lack of updates on gaugeChangesWeight and gaugeTypeChangesSum",
+            "description": "Two mappings, gaugeChangesWeight and gaugeTypeChangesSum, are never modified within the _vote1, _vote2, and _vote3 functions to track changes in the slope.",
+            "severity": "High",
+            "contract": "GaugeVoting",
+            "function": "_vote1, _vote2, and _vote3",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Inconsistent designs related to boostMultiplier",
+            "description": "The GaugeVoting contract allocates a boostMultiplier for each gauge to calculate the weights. However, there are some inconsistent designs around the use of boostedMultiplier.",
+            "severity": "High",
+            "contract": "GaugeVoting",
+            "function": "updateGaugeInfo()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

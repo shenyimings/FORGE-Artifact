@@ -1,1 +1,256 @@
-{"path": "./Audit_Reports_2024/Trail_of_Bits/2022-10-fraxfinance-fraxlend-fraxferry-securityreview.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-691"], "2": ["CWE-841"]}, "title": "Lack of two-step process for contract ownership changes", "description": "The owner of a contract that inherits from the `FraxlendPairCore` contract can be changed through a call to the `transferOwnership` function, which internally calls the `_setOwner` function and immediately sets the contract\u2019s new owner. Making such a critical change in a single step is error-prone and can lead to irrevocable mistakes.", "severity": "Medium", "contract": "@openzeppelin/contracts/access/Ownable.sol", "function": "transferOwnership(address)", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Missing checks of constructor/initialization parameters", "description": "The Fraxlend system can work with one or two oracles; however, there is no check to ensure that at least one oracle is set.", "severity": "Medium", "contract": "FraxlendPairCore", "function": "constructor()", "lineNumber": "L193-194"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Incorrect application of penalty fee rate", "description": "The penalty rate is incorrectly applied to the time between the last interest accrual and the maturity date, instead of only being subject to the normal interest rate.", "severity": "High", "contract": "N/A", "function": "_addInterest()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "Improper validation of Chainlink data", "description": "Chainlink oracle may cease to work as expected under extreme market conditions causing unexpected behavior in the Fraxlend protocol and incorrect application of penalty interest rate.", "severity": "Informational", "contract": "FraxlendPairCore", "function": "_updateExchangeRate", "lineNumber": "513-544"}, {"id": 4, "category": {"1": ["CWE-664"], "2": ["CWE-400"], "3": ["CWE-770"]}, "title": "Risk of oracle outages", "description": "N/A", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-862"], "4": ["CWE-638"]}, "title": "Unapproved lenders could receive fTokens", "description": "The system does not perform checks when users transfer fTokens; as a result, approved lenders could send fTokens to unapproved addresses.", "severity": "Medium", "contract": "FraxlendPairCore", "function": "deposit", "lineNumber": "587-594"}, {"id": 6, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "FraxlendPairDeployer cannot deploy contracts of fewer than 13,000 bytes", "description": "The setCreationCode function permits the owner of FraxlendPairDeployer to set the bytecode that will be used to create contracts for newly deployed pairs. If the _creationCode size is greater than 13,000 bytes, it will be split into two separate.", "severity": "Undetermined", "contract": "FraxlendPairDeployer", "function": "setCreationCode", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "setCreationCode fails to overwrite _secondHalf slice if updated code size is less than 13,000 bytes", "description": "The `setCreationCode` function permits the owner of `FraxlendPairDeployer` to set the bytecode that will be used to create contracts for newly deployed pairs. If the `_creationCode` size is greater than 13,000 bytes, it will be split into two separate", "severity": "Undetermined", "contract": "FraxlendPairDeployer", "function": "setCreationCode", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Missing checks in setter functions", "description": "The `setFee` and `setMinWaitPeriods` functions do not have appropriate checks.", "severity": "Low", "contract": "Fraxferry.sol", "function": ["setFee", "setMinWaitPeriods"], "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Risk of invalid batches due to unsafe cast in depart function", "description": "The depart function performs an unsafe cast operation when creating a new batch, which can cause an end value greater than 2^64 to be cast to a value lower than the start value, breaking the invariant that end is greater than or equal to start.", "severity": "Critical", "contract": "Fraxferry", "function": "depart(uint,uint,bytes32)", "lineNumber": "L127-L135"}, {"id": 10, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Transactions that were already executed can be canceled", "description": "Canceling a transaction that has already been executed does not cancel its effects, and the call to `jettison` may execute correctly instead of reverting.", "severity": "Medium", "contract": "Fraxferry", "function": "jettison()", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-394"]}, "title": "Lack of contract existence check on low-level call", "description": "The execute function in Fraxferry.sol does not check if the account called exists prior to making a low-level call, which may lead to unexpected behavior as per Solidity documentation.", "severity": "High", "contract": "Fraxferry", "function": "execute()", "lineNumber": "L274-L278"}, {"id": 12, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Events could be improved", "description": "Add 'indexed' keyword to events and modify setter operation events to report previous values.", "severity": "N/A", "contract": "Fraxferry", "function": "N/A", "lineNumber": "L83-L96"}]}
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/2022-10-fraxfinance-fraxlend-fraxferry-securityreview.pdf",
+    "project_info": {
+        "url": "https://github.com/FraxFinance/frax-solidity/tree/df18ee61854f99e38bbc26fba3193f6653458880",
+        "commit_hash": "df18ee61854f99e38bbc26fba3193f6653458880",
+        "address": "0xec72d46011d67a6ac4fa7d3f476fa2049dc807ee",
+        "is_exists": true
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "Lack of two-step process for contract ownership changes",
+            "description": "The owner of a contract that inherits from the `FraxlendPairCore` contract can be changed through a call to the `transferOwnership` function, which internally calls the `_setOwner` function and immediately sets the contract\u2019s new owner. Making such a critical change in a single step is error-prone and can lead to irrevocable mistakes.",
+            "severity": "Medium",
+            "contract": "@openzeppelin/contracts/access/Ownable.sol",
+            "function": "transferOwnership(address)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Missing checks of constructor/initialization parameters",
+            "description": "The Fraxlend system can work with one or two oracles; however, there is no check to ensure that at least one oracle is set.",
+            "severity": "Medium",
+            "contract": "FraxlendPairCore",
+            "function": "constructor()",
+            "lineNumber": "L193-194"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect application of penalty fee rate",
+            "description": "The penalty rate is incorrectly applied to the time between the last interest accrual and the maturity date, instead of only being subject to the normal interest rate.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "_addInterest()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Improper validation of Chainlink data",
+            "description": "Chainlink oracle may cease to work as expected under extreme market conditions causing unexpected behavior in the Fraxlend protocol and incorrect application of penalty interest rate.",
+            "severity": "Informational",
+            "contract": "FraxlendPairCore",
+            "function": "_updateExchangeRate",
+            "lineNumber": "513-544"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "Risk of oracle outages",
+            "description": "N/A",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ],
+                "4": [
+                    "CWE-638"
+                ]
+            },
+            "title": "Unapproved lenders could receive fTokens",
+            "description": "The system does not perform checks when users transfer fTokens; as a result, approved lenders could send fTokens to unapproved addresses.",
+            "severity": "Medium",
+            "contract": "FraxlendPairCore",
+            "function": "deposit",
+            "lineNumber": "587-594"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "FraxlendPairDeployer cannot deploy contracts of fewer than 13,000 bytes",
+            "description": "The setCreationCode function permits the owner of FraxlendPairDeployer to set the bytecode that will be used to create contracts for newly deployed pairs. If the _creationCode size is greater than 13,000 bytes, it will be split into two separate.",
+            "severity": "Undetermined",
+            "contract": "FraxlendPairDeployer",
+            "function": "setCreationCode",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "setCreationCode fails to overwrite _secondHalf slice if updated code size is less than 13,000 bytes",
+            "description": "The `setCreationCode` function permits the owner of `FraxlendPairDeployer` to set the bytecode that will be used to create contracts for newly deployed pairs. If the `_creationCode` size is greater than 13,000 bytes, it will be split into two separate",
+            "severity": "Undetermined",
+            "contract": "FraxlendPairDeployer",
+            "function": "setCreationCode",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Missing checks in setter functions",
+            "description": "The `setFee` and `setMinWaitPeriods` functions do not have appropriate checks.",
+            "severity": "Low",
+            "contract": "Fraxferry.sol",
+            "function": [
+                "setFee",
+                "setMinWaitPeriods"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Risk of invalid batches due to unsafe cast in depart function",
+            "description": "The depart function performs an unsafe cast operation when creating a new batch, which can cause an end value greater than 2^64 to be cast to a value lower than the start value, breaking the invariant that end is greater than or equal to start.",
+            "severity": "Critical",
+            "contract": "Fraxferry",
+            "function": "depart(uint,uint,bytes32)",
+            "lineNumber": "L127-L135"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Transactions that were already executed can be canceled",
+            "description": "Canceling a transaction that has already been executed does not cancel its effects, and the call to `jettison` may execute correctly instead of reverting.",
+            "severity": "Medium",
+            "contract": "Fraxferry",
+            "function": "jettison()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Lack of contract existence check on low-level call",
+            "description": "The execute function in Fraxferry.sol does not check if the account called exists prior to making a low-level call, which may lead to unexpected behavior as per Solidity documentation.",
+            "severity": "High",
+            "contract": "Fraxferry",
+            "function": "execute()",
+            "lineNumber": "L274-L278"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Events could be improved",
+            "description": "Add 'indexed' keyword to events and modify setter operation events to report previous values.",
+            "severity": "N/A",
+            "contract": "Fraxferry",
+            "function": "N/A",
+            "lineNumber": "L83-L96"
+        }
+    ]
+}

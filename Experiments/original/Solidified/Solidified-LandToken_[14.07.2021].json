@@ -1,1 +1,281 @@
-{"path": "./Audit_Reports_2024/Solidified/Solidified-LandToken_[14.07.2021].pdf", "project_info": {"url": "https://github.com/ls-jordan/LS---TEST-ROPSTEN", "commit_hash": "2ee391a13d94d0399fee9f192a68baffc7b393be", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-664"], "2": ["CWE-404"], "3": ["CWE-772"], "4": ["CWE-401"]}, "title": "BuyBack.sol and LandToken.sol: Contracts can lock ETH that cannot be extracted", "description": "The contract implements a payable receive() function without any way to extract the funds, meaning that any value sent to the contract will be stuck forever.", "severity": "Major", "contract": "BuyBack.sol and LandToken.sol", "function": "receive() and constructor", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"], "2": ["CWE-1339"]}, "title": "Order of arithmetic operation may decrease precision", "description": "Multiplications are performed on the result of division throughout the codebase, which decreases precision slightly.", "severity": "Minor", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-703"], "2": ["CWE-754"]}, "title": "LandToken.sol: Missing zero-check in mint role transfer", "description": "The contract allows for just one minter which can be transferred. However, there is no check for the `address(0)` in the `passMinterRole()` function.", "severity": "Minor", "contract": "LandToken.sol", "function": "passMinterRole()", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-284"]}, "title": "Ineffective access protection on read-only functions", "description": "The view functions `getAmountWithdrawn()` and `getStakers()` perform a check that does not prevent reading these variables since nothing on the blockchain is private.", "severity": "Minor", "contract": "stake.sol", "function": "getAmountWithdrawn() and getStakers()", "lineNumber": "N/A"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-269"], "3": ["CWE-266"]}, "title": "Contract owner can manipulate stakers profits by temporarily changing currentAPR and landAPR values", "description": "The contract owner has the ability to temporarily change currentAPR and landAPR values, allowing them to harvest huge APR or prevent certain stakers from earning APR for an accumulated period.", "severity": "Minor", "contract": "stake.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-707"], "2": ["CWE-20"]}, "title": "Pragma allows for a wide range of compiler versions", "description": "The `pragma` statement allows for a very large range of compiler versions, including some versions with known bugs.", "severity": "Informational", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Unnecessary Use of SafeERC20", "description": "The codebase uses `SafeERC20` to interact with `LandToken`, but it's the platform's own trusted token and its behavior is clear. The library can be removed to reduce gas cost.", "severity": "Minor", "contract": "LandTokenStake.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 7, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "Neither Withdraw nor Harvest events are emitted", "description": "The events `Withdraw` and `Harvest` are unused and not emitted in the corresponding functions.", "severity": "Minor", "contract": "stake.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 8, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "Contract.sol: Code Cleanup", "description": "The contract contains many unused variables, unnecessary library associations, magic numbers, strings and addresses, duplicate code, and unwanted mappings which reduces readability and increases the chance of error.", "severity": "Minor", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-229"], "4": ["CWE-230"]}, "title": "Remove any unused variables", "description": "The contract contains many unused variables such as `LandTokenStake.S`, `LandTokensStake.SA`, `stake.thing` and `stake.actives`.", "severity": "Minor", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 10, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "No need to associate a library with the type if it\u2019s not used", "description": "Remove the `SafeMath` association with `uint256` type if it\u2019s not used for better code quality and readability.", "severity": "Minor", "contract": "Contract.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 11, "category": {"1": ["CWE-710"], "2": ["CWE-1126"]}, "title": "Remove all magic numbers, strings and addresses", "description": "The contract contains many hardcoded values which reduces the readability and increases the chance of error. It is recommended to use reusable variables for these.", "severity": "Minor", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 12, "category": {"1": ["CWE-682"], "2": ["CWE-190"]}, "title": "Infinite Approval Simulation Using Large Number", "description": "The method `buyback.approveTokens` uses a very large number to simulate infinite approval, which can be improved by using `UINT_MAX` instead.", "severity": "Minor", "contract": "BuyBack", "function": "approveTokens()", "lineNumber": "N/A"}, {"id": 13, "category": {"1": ["CWE-682"]}, "title": "Duplicate code in `stake.sol`", "description": "It is recommended to extract the interest calculation to a method and reuse it where required.", "severity": "Minor", "contract": "stake.sol", "function": "N/A", "lineNumber": "N/A"}, {"id": 14, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1288"]}, "title": "Unwanted mapping in `stake.sol`", "description": "The mappings `harvestAmountBUSD` and `harvestAmountLand` is not required since the value is only used inside a method and is always set to 0. It is recommended to use local variables instead of state variables for them.", "severity": "Minor", "contract": "stake.sol", "function": "N/A", "lineNumber": "N/A"}]}
+{
+    "path": "./Audit_Reports_2024/Solidified/Solidified-LandToken_[14.07.2021].pdf",
+    "project_info": {
+        "url": "https://github.com/ls-jordan/LS---TEST-ROPSTEN",
+        "commit_hash": "2ee391a13d94d0399fee9f192a68baffc7b393be",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-401"
+                ]
+            },
+            "title": "BuyBack.sol and LandToken.sol: Contracts can lock ETH that cannot be extracted",
+            "description": "The contract implements a payable receive() function without any way to extract the funds, meaning that any value sent to the contract will be stuck forever.",
+            "severity": "Major",
+            "contract": "BuyBack.sol and LandToken.sol",
+            "function": "receive() and constructor",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "Order of arithmetic operation may decrease precision",
+            "description": "Multiplications are performed on the result of division throughout the codebase, which decreases precision slightly.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "LandToken.sol: Missing zero-check in mint role transfer",
+            "description": "The contract allows for just one minter which can be transferred. However, there is no check for the `address(0)` in the `passMinterRole()` function.",
+            "severity": "Minor",
+            "contract": "LandToken.sol",
+            "function": "passMinterRole()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Ineffective access protection on read-only functions",
+            "description": "The view functions `getAmountWithdrawn()` and `getStakers()` perform a check that does not prevent reading these variables since nothing on the blockchain is private.",
+            "severity": "Minor",
+            "contract": "stake.sol",
+            "function": "getAmountWithdrawn() and getStakers()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Contract owner can manipulate stakers profits by temporarily changing currentAPR and landAPR values",
+            "description": "The contract owner has the ability to temporarily change currentAPR and landAPR values, allowing them to harvest huge APR or prevent certain stakers from earning APR for an accumulated period.",
+            "severity": "Minor",
+            "contract": "stake.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Pragma allows for a wide range of compiler versions",
+            "description": "The `pragma` statement allows for a very large range of compiler versions, including some versions with known bugs.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Unnecessary Use of SafeERC20",
+            "description": "The codebase uses `SafeERC20` to interact with `LandToken`, but it's the platform's own trusted token and its behavior is clear. The library can be removed to reduce gas cost.",
+            "severity": "Minor",
+            "contract": "LandTokenStake.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Neither Withdraw nor Harvest events are emitted",
+            "description": "The events `Withdraw` and `Harvest` are unused and not emitted in the corresponding functions.",
+            "severity": "Minor",
+            "contract": "stake.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Contract.sol: Code Cleanup",
+            "description": "The contract contains many unused variables, unnecessary library associations, magic numbers, strings and addresses, duplicate code, and unwanted mappings which reduces readability and increases the chance of error.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ],
+                "4": [
+                    "CWE-230"
+                ]
+            },
+            "title": "Remove any unused variables",
+            "description": "The contract contains many unused variables such as `LandTokenStake.S`, `LandTokensStake.SA`, `stake.thing` and `stake.actives`.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "No need to associate a library with the type if it\u2019s not used",
+            "description": "Remove the `SafeMath` association with `uint256` type if it\u2019s not used for better code quality and readability.",
+            "severity": "Minor",
+            "contract": "Contract.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1126"
+                ]
+            },
+            "title": "Remove all magic numbers, strings and addresses",
+            "description": "The contract contains many hardcoded values which reduces the readability and increases the chance of error. It is recommended to use reusable variables for these.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Infinite Approval Simulation Using Large Number",
+            "description": "The method `buyback.approveTokens` uses a very large number to simulate infinite approval, which can be improved by using `UINT_MAX` instead.",
+            "severity": "Minor",
+            "contract": "BuyBack",
+            "function": "approveTokens()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Duplicate code in `stake.sol`",
+            "description": "It is recommended to extract the interest calculation to a method and reuse it where required.",
+            "severity": "Minor",
+            "contract": "stake.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1288"
+                ]
+            },
+            "title": "Unwanted mapping in `stake.sol`",
+            "description": "The mappings `harvestAmountBUSD` and `harvestAmountLand` is not required since the value is only used inside a method and is always set to 0. It is recommended to use local variables instead of state variables for them.",
+            "severity": "Minor",
+            "contract": "stake.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

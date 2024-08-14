@@ -1,1 +1,118 @@
-{"path": "./Audit_Reports_2024/HAECHI_AUDIT/[HAECHI AUDIT] OneRing Smart Contract Audit Report.pdf", "project_info": {"url": "https://github.com/OneRingUSD/OneRing-Contracts", "commit_hash": "30a7677e1eee63e26cde31bbcaf7d99d66097a2f", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "The minting logic of the vault token fails to work properly", "description": "Due to an error in the ratio calculation logic, the minting of the Vault token may not be performed properly.", "severity": "Major", "contract": "Vault", "function": "N/A", "lineNumber": "N/A"}, {"id": 1, "category": {"1": ["CWE-682"]}, "title": "The MultiStrategy#withdrawAllToVault() function fails to work properly", "description": "The withdrawAllToVault() function of MultiStrategy contract may not operate correctly.", "severity": "Major", "contract": "MultiStrategy", "function": "withdrawAllToVault()", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"], "2": ["CWE-193"]}, "title": "Hardcoded Array Length", "description": "The functions traverse the vault's underlyings and perform specific actions using a hardcoded constant of 3 instead of the actual length of the vault's underlyings array, which can trigger unintended behavior when the length is not 3.", "severity": "Medium", "contract": "MasterChefBaseStrategy/StakingRewardsBaseStrategy", "function": "_investAllAssets()/initializeMasterChefBaseStrategy()/_investAllAssets()", "lineNumber": "216-227"}, {"id": 3, "category": {"1": ["CWE-691"]}, "title": "Improper Strategy Migration", "description": "When changing the active strategy of OneRingVault contract, proper migration from the old strategy to the new strategy may fail to occur due to incorrect function call order.", "severity": "Major", "contract": "OneRingVault", "function": "migrateStrategy()", "lineNumber": "227-235"}, {"id": 4, "category": {"1": ["CWE-682"]}, "title": "Inaccurate Deposit Amount per Strategy with Disabled Strategy", "description": "When a disabled strategy exists during the operation of OneRingVault utilizing MultiStrategy, a small amount of assets is deposited to other enabled strategies because the disabled strategy participates in the calculation of totalAllocPoint.", "severity": "Medium", "contract": "MultiStrategy", "function": "assetToUnderlying()", "lineNumber": "N/A"}, {"id": 5, "category": {"1": ["CWE-682"]}, "title": "The withdrawToVault function withdraws abnormal values to the vault", "description": "The withdrawToVault function withdraws abnormal values to the vault.", "severity": "N/A", "contract": "OneRingVault", "function": "withdrawToVault()", "lineNumber": "N/A"}, {"id": 6, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "No syntax approves the asset to the router in OneRingVault#addUnderlying() function", "description": "The OneRingVault#addUnderlying() function adds a new address to the vault's underlyings without calling IERC20(_asset).safeApprove(router, 0) and IERC20(_asset).safeApprove(router, uint256(-1)) functions in the strategy, which may cause deposit not to be completed normally.", "severity": "High", "contract": "OneRingVault", "function": "addUnderlying()", "lineNumber": "206-210"}]}
+{
+    "path": "./Audit_Reports_2024/HAECHI_AUDIT/[HAECHI AUDIT] OneRing Smart Contract Audit Report.pdf",
+    "project_info": {
+        "url": "https://github.com/OneRingUSD/OneRing-Contracts",
+        "commit_hash": "30a7677e1eee63e26cde31bbcaf7d99d66097a2f",
+        "address": "N/A",
+        "is_exists": false
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "The minting logic of the vault token fails to work properly",
+            "description": "Due to an error in the ratio calculation logic, the minting of the Vault token may not be performed properly.",
+            "severity": "Major",
+            "contract": "Vault",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "The MultiStrategy#withdrawAllToVault() function fails to work properly",
+            "description": "The withdrawAllToVault() function of MultiStrategy contract may not operate correctly.",
+            "severity": "Major",
+            "contract": "MultiStrategy",
+            "function": "withdrawAllToVault()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Hardcoded Array Length",
+            "description": "The functions traverse the vault's underlyings and perform specific actions using a hardcoded constant of 3 instead of the actual length of the vault's underlyings array, which can trigger unintended behavior when the length is not 3.",
+            "severity": "Medium",
+            "contract": "MasterChefBaseStrategy/StakingRewardsBaseStrategy",
+            "function": "_investAllAssets()/initializeMasterChefBaseStrategy()/_investAllAssets()",
+            "lineNumber": "216-227"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ]
+            },
+            "title": "Improper Strategy Migration",
+            "description": "When changing the active strategy of OneRingVault contract, proper migration from the old strategy to the new strategy may fail to occur due to incorrect function call order.",
+            "severity": "Major",
+            "contract": "OneRingVault",
+            "function": "migrateStrategy()",
+            "lineNumber": "227-235"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Inaccurate Deposit Amount per Strategy with Disabled Strategy",
+            "description": "When a disabled strategy exists during the operation of OneRingVault utilizing MultiStrategy, a small amount of assets is deposited to other enabled strategies because the disabled strategy participates in the calculation of totalAllocPoint.",
+            "severity": "Medium",
+            "contract": "MultiStrategy",
+            "function": "assetToUnderlying()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "The withdrawToVault function withdraws abnormal values to the vault",
+            "description": "The withdrawToVault function withdraws abnormal values to the vault.",
+            "severity": "N/A",
+            "contract": "OneRingVault",
+            "function": "withdrawToVault()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "No syntax approves the asset to the router in OneRingVault#addUnderlying() function",
+            "description": "The OneRingVault#addUnderlying() function adds a new address to the vault's underlyings without calling IERC20(_asset).safeApprove(router, 0) and IERC20(_asset).safeApprove(router, uint256(-1)) functions in the strategy, which may cause deposit not to be completed normally.",
+            "severity": "High",
+            "contract": "OneRingVault",
+            "function": "addUnderlying()",
+            "lineNumber": "206-210"
+        }
+    ]
+}

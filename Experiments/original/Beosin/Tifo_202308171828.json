@@ -1,1 +1,218 @@
-{"path": "./Audit_Reports_2024/Beosin/Tifo_202308171828.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-703"], "2": ["CWE-754"], "3": ["CWE-252"]}, "title": "The unstake function does not check for debt", "description": "A process can be executed in the Staking contract involving a claim to generate a StakeAmount record. Following this, within the TifoTreasury contract, an incurDebt function can be invoked for lending, and subsequently, the unstake function can be executed within the Staking contract to collect rewards and principal.", "severity": "High", "contract": "Staking.sol", "function": "unstake()", "lineNumber": "L151-174"}, {"id": 1, "category": {"1": ["CWE-707"], "2": ["CWE-20"], "3": ["CWE-1287"]}, "title": "The ReserveTokens only support USD-type tokens", "description": "ReserveTokens array exclusively contains USDT.", "severity": "Medium", "contract": "TifoTreasury.sol", "function": "N/A", "lineNumber": "#L165-184"}, {"id": 2, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "The maximumDebt can be manipulated by users through sTIFO transfers", "description": "The maximumDebt can be manipulated by users through sTIFO transfers", "severity": "Medium", "contract": "N/A", "function": "N/A", "lineNumber": "N/A"}, {"id": 3, "category": {"1": ["CWE-693"], "2": ["CWE-807"]}, "title": "The centralization risk", "description": "This introduces a certain level of centralization risk. This could potentially lead users to stake at excessively high prices, resulting in a decrease in the amount of TIFO they receive.", "severity": "Low", "contract": "UsdtBondDepository.sol and UsdtTifoBondDepository.sol", "function": "setBondTerms", "lineNumber": "#L305-333"}, {"id": 4, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-732"]}, "title": "The redeem function lacks permission restrictions", "description": "The contracts UsdtBondDepository and UsdtTifoBondDepository lack permission restrictions on the redeem function, allowing anyone to withdraw Tifo or continue staking on behalf of the designated account.", "severity": "Low", "contract": "UsdtBondDepository.sol, UsdtTifoBondDepository.sol", "function": "redeem()", "lineNumber": "L236-303"}, {"id": 5, "category": {"1": ["CWE-284"], "2": ["CWE-285"], "3": ["CWE-863"]}, "title": "Inconsistent rebase function call conditions", "description": "The rebase function can be invoked directly, bypassing the restriction imposed by the isRebaseOpen parameter.", "severity": "Info", "contract": "Staking.sol", "function": "rebase()", "lineNumber": "L180-204"}, {"id": 6, "category": {"1": ["CWE-710"], "2": ["CWE-1076"], "3": ["CWE-1078"], "4": ["CWE-1099"]}, "title": "Variable name convention", "description": "N/A", "severity": "N/A", "contract": "N/A", "function": "N/A", "lineNumber": "23"}, {"id": 7, "category": {"1": ["CWE-691"], "2": ["CWE-841"]}, "title": "Missing event trigger", "description": "The modification of crucial variables within the function lacks event triggering.", "severity": "Info", "contract": "Staking.sol", "function": "N/A", "lineNumber": "L274-297, L316-330"}, {"id": 8, "category": {"1": ["CWE-710"], "2": ["CWE-1041"]}, "title": "The redundant code", "description": "The functions repayDebtWithReserve and repayDebtWithTIFO become redundant, and the totalDebt variable is also unnecessary.", "severity": "Info", "contract": "N/A", "function": "repayDebtWithReserve, repayDebtWithTIFO", "lineNumber": "N/A"}, {"id": 9, "category": {"1": ["CWE-682"]}, "title": "Generating twice the value from a single staking action", "description": "A process can be executed in the Staking contract involving a claim to generate a StakeAmount record. Following this, within the TifoTreasury contract, an incurDebt function can be invoked for lending, and subsequently, the unstake function can be executed within the Staking contract to collect rewards and principal.", "severity": "High", "contract": "Staking.sol, TifoTreasury.sol", "function": "N/A", "lineNumber": "Staking.sol #L151-174, TifoTreasury.sol #L165-184"}, {"id": 10, "category": {"1": ["CWE-703"], "2": ["CWE-228"], "3": ["CWE-241"]}, "title": "Unsupported Token Types in valueOfToken Function", "description": "The valueOfToken function in the TifoTreasury contract only supports USD-type tokens and does not handle other token types.", "severity": "Medium", "contract": "TifoTreasury", "function": "valueOfToken()", "lineNumber": "L273-288"}]}
+{
+    "path": "./Audit_Reports_2024/Beosin/Tifo_202308171828.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "The unstake function does not check for debt",
+            "description": "A process can be executed in the Staking contract involving a claim to generate a StakeAmount record. Following this, within the TifoTreasury contract, an incurDebt function can be invoked for lending, and subsequently, the unstake function can be executed within the Staking contract to collect rewards and principal.",
+            "severity": "High",
+            "contract": "Staking.sol",
+            "function": "unstake()",
+            "lineNumber": "L151-174"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1287"
+                ]
+            },
+            "title": "The ReserveTokens only support USD-type tokens",
+            "description": "ReserveTokens array exclusively contains USDT.",
+            "severity": "Medium",
+            "contract": "TifoTreasury.sol",
+            "function": "N/A",
+            "lineNumber": "#L165-184"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "The maximumDebt can be manipulated by users through sTIFO transfers",
+            "description": "The maximumDebt can be manipulated by users through sTIFO transfers",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "The centralization risk",
+            "description": "This introduces a certain level of centralization risk. This could potentially lead users to stake at excessively high prices, resulting in a decrease in the amount of TIFO they receive.",
+            "severity": "Low",
+            "contract": "UsdtBondDepository.sol and UsdtTifoBondDepository.sol",
+            "function": "setBondTerms",
+            "lineNumber": "#L305-333"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "The redeem function lacks permission restrictions",
+            "description": "The contracts UsdtBondDepository and UsdtTifoBondDepository lack permission restrictions on the redeem function, allowing anyone to withdraw Tifo or continue staking on behalf of the designated account.",
+            "severity": "Low",
+            "contract": "UsdtBondDepository.sol, UsdtTifoBondDepository.sol",
+            "function": "redeem()",
+            "lineNumber": "L236-303"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Inconsistent rebase function call conditions",
+            "description": "The rebase function can be invoked directly, bypassing the restriction imposed by the isRebaseOpen parameter.",
+            "severity": "Info",
+            "contract": "Staking.sol",
+            "function": "rebase()",
+            "lineNumber": "L180-204"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1076"
+                ],
+                "3": [
+                    "CWE-1078"
+                ],
+                "4": [
+                    "CWE-1099"
+                ]
+            },
+            "title": "Variable name convention",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "23"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "Missing event trigger",
+            "description": "The modification of crucial variables within the function lacks event triggering.",
+            "severity": "Info",
+            "contract": "Staking.sol",
+            "function": "N/A",
+            "lineNumber": "L274-297, L316-330"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "The redundant code",
+            "description": "The functions repayDebtWithReserve and repayDebtWithTIFO become redundant, and the totalDebt variable is also unnecessary.",
+            "severity": "Info",
+            "contract": "N/A",
+            "function": "repayDebtWithReserve, repayDebtWithTIFO",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Generating twice the value from a single staking action",
+            "description": "A process can be executed in the Staking contract involving a claim to generate a StakeAmount record. Following this, within the TifoTreasury contract, an incurDebt function can be invoked for lending, and subsequently, the unstake function can be executed within the Staking contract to collect rewards and principal.",
+            "severity": "High",
+            "contract": "Staking.sol, TifoTreasury.sol",
+            "function": "N/A",
+            "lineNumber": "Staking.sol #L151-174, TifoTreasury.sol #L165-184"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-241"
+                ]
+            },
+            "title": "Unsupported Token Types in valueOfToken Function",
+            "description": "The valueOfToken function in the TifoTreasury contract only supports USD-type tokens and does not handle other token types.",
+            "severity": "Medium",
+            "contract": "TifoTreasury",
+            "function": "valueOfToken()",
+            "lineNumber": "L273-288"
+        }
+    ]
+}

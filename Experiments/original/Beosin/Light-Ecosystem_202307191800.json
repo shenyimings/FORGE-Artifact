@@ -1,1 +1,72 @@
-{"path": "./Audit_Reports_2024/Beosin/Light-Ecosystem_202307191800.pdf", "project_info": {"url": "N/A", "commit_hash": "N/A", "address": "N/A"}, "findings": [{"id": 0, "category": {"1": ["CWE-682"]}, "title": "Incorrect implementation of the _kick_ function", "description": "The _kick_ function in the LendingGauge contract incorrectly uses the Htoken contract to get the variableDebtTokenBalance value for the specified address.", "severity": "Low", "contract": "LendingGauge", "function": "_kick_", "lineNumber": "L243"}, {"id": 1, "category": {"1": ["CWE-664"], "2": ["CWE-666"], "3": ["CWE-672"]}, "title": "Missing update allocation in _mintToTreasury_ function", "description": "In the Htoken contract, when calling the _mintToTreasury_ function, a portion of the quantity of _underlyingAsset is transferred to the feeToVault address without updating Allocation.", "severity": "Low", "contract": "Htoken", "function": "_mintToTreasury_", "lineNumber": "N/A"}, {"id": 2, "category": {"1": ["CWE-682"]}, "title": "Wrong use of Htoken to get Debttoken balance", "description": "The _kick_ function in the LendingGauge contract incorrectly uses the Htoken contract to get the variableDebtTokenBalance value for the specified address, which will result in an incorrect implementation of the _kick_ function.", "severity": "Low", "contract": "LendingGauge", "function": "_kick_", "lineNumber": "L243"}, {"id": 3, "category": {"1": ["CWE-682"]}, "title": "Users can still earn rewards after turning off rewards", "description": "The _hvCheckpoint_ function is used to settle rewards, in the _hvCheckpoint_ function the state of isKilled is determined, if isKilled is true, it will make the settled reward zero. Since the reward settlement will be across epochs, the development here uses _st.rate and _st.newRate parameters to calculate the reward. Since after turning on isKilled to true, it doesn't take into account that _st.newRate still has a value, which", "severity": "Medium", "contract": "LendingGauge.sol", "function": "_hvCheckpoint_", "lineNumber": "L156-159"}]}
+{
+    "path": "./Audit_Reports_2024/Beosin/Light-Ecosystem_202307191800.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "N/A"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect implementation of the _kick_ function",
+            "description": "The _kick_ function in the LendingGauge contract incorrectly uses the Htoken contract to get the variableDebtTokenBalance value for the specified address.",
+            "severity": "Low",
+            "contract": "LendingGauge",
+            "function": "_kick_",
+            "lineNumber": "L243"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Missing update allocation in _mintToTreasury_ function",
+            "description": "In the Htoken contract, when calling the _mintToTreasury_ function, a portion of the quantity of _underlyingAsset is transferred to the feeToVault address without updating Allocation.",
+            "severity": "Low",
+            "contract": "Htoken",
+            "function": "_mintToTreasury_",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Wrong use of Htoken to get Debttoken balance",
+            "description": "The _kick_ function in the LendingGauge contract incorrectly uses the Htoken contract to get the variableDebtTokenBalance value for the specified address, which will result in an incorrect implementation of the _kick_ function.",
+            "severity": "Low",
+            "contract": "LendingGauge",
+            "function": "_kick_",
+            "lineNumber": "L243"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Users can still earn rewards after turning off rewards",
+            "description": "The _hvCheckpoint_ function is used to settle rewards, in the _hvCheckpoint_ function the state of isKilled is determined, if isKilled is true, it will make the settled reward zero. Since the reward settlement will be across epochs, the development here uses _st.rate and _st.newRate parameters to calculate the reward. Since after turning on isKilled to true, it doesn't take into account that _st.newRate still has a value, which",
+            "severity": "Medium",
+            "contract": "LendingGauge.sol",
+            "function": "_hvCheckpoint_",
+            "lineNumber": "L156-159"
+        }
+    ]
+}
