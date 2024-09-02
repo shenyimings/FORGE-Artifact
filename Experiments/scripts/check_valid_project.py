@@ -18,6 +18,7 @@ def count_valid_project(source_dir):
     print(f"Total projects: ", len(all_json_files))
     all_valid_project = 0
     valid_github_proj = 0
+    all_defects = 0
     for file_path in all_json_files:
         with open(file_path, "r", encoding="utf-8") as f:
             data = json.load(f)
@@ -32,6 +33,7 @@ def count_valid_project(source_dir):
                 # all_valid_project += 1
                 continue
             else:
+                all_defects += len(data["findings"])
                 all_valid_project += 1
                 # continue
             if url != "N/A" and is_exists:
@@ -40,6 +42,7 @@ def count_valid_project(source_dir):
     print(
         f"Total number of valid GitHub projects in all JSON files: {valid_github_proj}"
     )
+    print(f"Total number of defects in all JSON files: {all_defects}")
 
 
 if __name__ == "__main__":

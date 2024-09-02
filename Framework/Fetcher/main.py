@@ -9,7 +9,8 @@ import requests
 from tqdm import tqdm
 from time import sleep
 
-# from Framework.Fetcher.chain_fetcher import fetch_chain
+from chain_fetcher import Addr_Fetcher
+
 # from Framework.Fetcher.git_fetcher import fetch_git
 from utils import GithubUrl, GithubUrlParser
 
@@ -140,7 +141,83 @@ def edit_json():
                             json.dump(data, f, indent=4)
 
 
+def walk_datasets(name: str, path: str, output_dir: str = "Experiments/contracts"):
+    # result = {"Finished":[path,...],"Warning":[{path:reason},...], "Failed":[{path:reason},...]}
+    if not os.path.exists(f"Framework/Fetcher/{name}_result.json"):
+        with open(f"Framework/Fetcher/{name}_result.json", "w", encoding="utf8") as f:
+            json.dump({"Finished": [], "Warning": [], "Failed": []}, f)
+    with open(f"Framework/Fetcher/{name}_result.json", "r", encoding="utf8") as f:
+        result = json.load(f)
+
+    fetcher = Addr_Fetcher()
+
+    for root, dirs, files in os.walk(path):
+        for f in tqdm(files):
+            # if f != "1-bcp.json":
+            #     continue
+            if f in result["Finished"]:
+                continue
+            if f in result["Failed"]:
+                continue
+            if f.endswith(".json"):
+                try:
+                    with open(os.path.join(root, f), "r", encoding="utf-8") as fj:
+                        data = json.load(fj)
+                        if (
+                            not data["project_info"]["address"]
+                            or data["project_info"]["address"] == "N/A"
+                            or data["project_info"].get("is_exists", False)
+                        ):
+                            continue
+                        addrs = fetcher.parse_address(data["project_info"]["address"])
+                        print("\n", os.path.join(root, f))
+                        print("\n", addrs)
+                        isSuccessful = False
+                        infoToAdd = {}
+                        chain = ""
+                        compilerVersion = set()
+                        for addr in addrs:
+                            res = fetcher.fetch_code(
+                                addr, os.path.join(output_dir, f.split(".")[0])
+                            )
+                            sleep(0.6)
+                            if not res:
+                                continue
+                            isSuccessful = True
+                            # print(res["contractName"])
+                            chain = res["chain"]
+                            compilerVersion.add(res["compilerVersion"])
+                            infoToAdd[res["contractName"]] = res["contractPath"]
+                        if isSuccessful:
+                            data["project_info"]["chain"] = chain
+                            data["project_info"]["compilerVersion"] = list(
+                                compilerVersion
+                            )
+                            data["project_info"]["project_path"] = infoToAdd
+                            # print(data)
+                            write_json(data, os.path.join(root, f))
+                            result["Finished"].append(f)
+                            write_json(result, f"Framework/Fetcher/{name}_result.json")
+                        else:
+                            logging.error(f"Failed to fetch {f}")
+                            result["Failed"].append(f)
+                            write_json(result, f"Framework/Fetcher/{name}_result.json")
+
+                except Exception as e:
+                    result["Failed"].append(f)
+                    result["Warning"].append({f: str(e)})
+                    sleep(1.5)
+                    write_json(result, f"Framework/Fetcher/{name}_result.json")
+                    # 抛出异常
+                    print(e)
+                    continue
+
+
 if __name__ == "__main__":
     dotenv.load_dotenv()
-    
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format="%(asctime)s - %(levelname)s - %(message)s",
+    )
+    walk_datasets("validate_address", "Experiments/original")
     # fetch_stars("Experiments/original")
