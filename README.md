@@ -1,2 +1,2 @@
-# SmartCWE-Artifact
-The artifacts for empowering large-scale smart contract weakness datasets with LLMs
+# FORGE-Artifact
+The artifacts for **F**ramework of **R**esearch dataset **G**eneration and **E**valuation (FORGE)
