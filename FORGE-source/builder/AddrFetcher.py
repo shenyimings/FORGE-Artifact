@@ -7,7 +7,7 @@ import logging
 from typing import Literal
 
 
-class Addr_Fetcher:
+class AddrFetcher:
     """
     input an address
     determine the type of the address by check the csv list(ETH or BSC)
@@ -108,6 +108,8 @@ class Addr_Fetcher:
                         sol += ".sol"
                     if not data["contractName"]:
                         data["contractName"] = "unknown"
+                    sol = sol.strip("/")
+                    sol = sol.strip("../")
                     os.makedirs(
                         os.path.dirname(
                             os.path.join(output_dir, data["contractName"], sol)

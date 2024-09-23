@@ -7,7 +7,7 @@ from tqdm import tqdm
 from urllib.parse import urlparse
 from dataclasses import dataclass
 from collections import Counter
-from Framework.Fetcher.utils import GithubUrlParser, GithubUrl
+from fetch.utils import GithubUrlParser, GithubUrl
 
 
 # Define regex constants
@@ -47,6 +47,11 @@ WRONG_LIST = [
     "hardhat",
     "rustsec",
     "vyper",
+    "SkeletonEcosystem",
+    "Synthetixio",
+    "Smart-Contract-Audit-Reports",
+    "SCSTG",
+    "ic",
 ]
 # https://github.com/traderjoe-xyz/joe-core/tree/27c7c77c392e4c644d3c7d23f700e088e9a2903e
 

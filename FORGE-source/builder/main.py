@@ -8,8 +8,7 @@ import logging
 import requests
 from tqdm import tqdm
 from time import sleep
-
-from chain_fetcher import Addr_Fetcher
+from builder.AddrFetcher import AddrFetcher
 
 # from Framework.Fetcher.git_fetcher import fetch_git
 from utils import GithubUrl, GithubUrlParser
@@ -53,7 +52,7 @@ def write_json(data, path):
 def fetch_stars(path: str):
     # result = {"Finished":[path,...],"Warning":[{path:reason},...], "Failed":[{path:reason},...]}
     private_count = 0
-    with open("Framework/Fetcher/result.json", "r", encoding="utf8") as f:
+    with open("builder/logs/result.json", "r", encoding="utf8") as f:
         result = json.load(f)
     for root, dirs, files in os.walk(path):
         for f in tqdm(files):
@@ -89,7 +88,7 @@ def fetch_stars(path: str):
                                 }
                             )
                             result["Finished"].append(f)
-                            write_json(result, "Framework/Fetcher/result.json")
+                            write_json(result, "builder/logs/result.json")
                             continue
                         if star_count == -1:
                             # data["project_info"]["url"] = "N/A"
@@ -100,20 +99,20 @@ def fetch_stars(path: str):
                             print(f"{f}\nRepo not found or private: {url}")
                             print(f"Invalid count: {private_count}")
                             result["Finished"].append(f)
-                            write_json(result, "Framework/Fetcher/result.json")
+                            write_json(result, "builder/logs/result.json")
                             write_json(data, os.path.join(root, f))
                             continue
                         if star_count == -2:
                             result["Failed"].append(
                                 {str(os.path.join(root, f)): "Failed to fetch"}
                             )
-                            write_json(result, "Framework/Fetcher/result.json")
+                            write_json(result, "builder/logs/result.json")
                             continue
 
                         data["project_info"]["is_exists"] = True
                         write_json(data, os.path.join(root, f))
                         result["Finished"].append(f)
-                        write_json(result, "Framework/Fetcher/result.json")
+                        write_json(result, "builder/logs/result.json")
 
                 except Exception as e:
                     result["Failed"].append({f: str(e)})
@@ -143,13 +142,13 @@ def edit_json():
 
 def walk_datasets(name: str, path: str, output_dir: str = "Experiments/contracts"):
     # result = {"Finished":[path,...],"Warning":[{path:reason},...], "Failed":[{path:reason},...]}
-    if not os.path.exists(f"Framework/Fetcher/{name}_result.json"):
-        with open(f"Framework/Fetcher/{name}_result.json", "w", encoding="utf8") as f:
+    if not os.path.exists(f"builder/logs/{name}_result.json"):
+        with open(f"builder/logs/{name}_result.json", "w", encoding="utf8") as f:
             json.dump({"Finished": [], "Warning": [], "Failed": []}, f)
-    with open(f"Framework/Fetcher/{name}_result.json", "r", encoding="utf8") as f:
+    with open(f"builder/logs/{name}_result.json", "r", encoding="utf8") as f:
         result = json.load(f)
 
-    fetcher = Addr_Fetcher()
+    fetcher = AddrFetcher()
 
     for root, dirs, files in os.walk(path):
         for f in tqdm(files):
@@ -197,17 +196,17 @@ def walk_datasets(name: str, path: str, output_dir: str = "Experiments/contracts
                             # print(data)
                             write_json(data, os.path.join(root, f))
                             result["Finished"].append(f)
-                            write_json(result, f"Framework/Fetcher/{name}_result.json")
+                            write_json(result, f"builder/logs/{name}_result.json")
                         else:
                             logging.error(f"Failed to fetch {f}")
                             result["Failed"].append(f)
-                            write_json(result, f"Framework/Fetcher/{name}_result.json")
+                            write_json(result, f"builder/logs/{name}_result.json")
 
                 except Exception as e:
                     result["Failed"].append(f)
                     result["Warning"].append({f: str(e)})
                     sleep(1.5)
-                    write_json(result, f"Framework/Fetcher/{name}_result.json")
+                    write_json(result, f"builder/logs/{name}_result.json")
                     # 抛出异常
                     print(e)
                     continue
@@ -219,5 +218,5 @@ if __name__ == "__main__":
         level=logging.DEBUG,
         format="%(asctime)s - %(levelname)s - %(message)s",
     )
-    walk_datasets("validate_address", "Experiments/original")
+    walk_datasets("validate_address", "../Experiments/original")
     # fetch_stars("Experiments/original")
