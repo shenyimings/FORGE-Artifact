@@ -1,0 +1,547 @@
+{
+    "path": "./Audit_Reports_2024/Statemind/2023-05-17_Lido_Polygon_v2.pdf",
+    "project_info": {
+        "url": "https://github.com/lidofinance/polygon-contracts/tree/eb197c6c189a07c1f30b72206ccb41ae02b639fc",
+        "commit_hash": "eb197c6c189a07c1f30b72206ccb41ae02b639fc",
+        "address": "0x60a91E2B7A1568f0848f3D43353C453730082E46",
+        "is_exists": true,
+        "chain": "polygon",
+        "compiler_version": [
+            "v0.8.7+commit.e28d00a7"
+        ],
+        "project_path": {
+            "RateProvider": "Experiments/contracts/2023-05-17_Lido_Polygon_v2/RateProvider"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "Reentrancy in StMATIC._claimTokens",
+            "description": "The function _claimTokens in contract StMATIC has reentrancy vulnerabilities due to external calls and state variable modifications.",
+            "severity": "Medium",
+            "contract": "StMATIC",
+            "function": "_claimTokens",
+            "lineNumber": "L483-L522"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "Reentrancy in StMATIC._requestWithdraw",
+            "description": "The function _requestWithdraw in contract StMATIC is vulnerable to reentrancy due to external calls and state variable modifications.",
+            "severity": "N/A",
+            "contract": "StMATIC",
+            "function": "_requestWithdraw",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Incorrect minimum calculation",
+            "description": "The NodeOperatorRegistry contract has several places where the minimum value minAmount might be calculated wrong due to incorrect handling of 0 values in arrays.",
+            "severity": "HIGH",
+            "contract": "NodeOperatorRegistry",
+            "function": [
+                "_getValidatorsDelegationInfos",
+                "_getValidatorsRequestWithdraw",
+                "getProtocolStats"
+            ],
+            "lineNumber": [
+                "457",
+                "668",
+                "940"
+            ]
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Broken delegated flag",
+            "description": "In some configurations getValidatorsRebalanceAmount and getValidatorsDelegationAmount would recognize both Balanced and Not balanced due to incorrect calculation of isTheSystemBalanced.",
+            "severity": "Medium",
+            "contract": "NodeOperatorRegistry",
+            "function": "N/A",
+            "lineNumber": "L597"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-221"
+                ],
+                "3": [
+                    "CWE-223"
+                ]
+            },
+            "title": "Excessive return data",
+            "description": "**NodeOperatorRegistry::_getValidatorsRequestWithdraw** should return only non **Inactive** validators. At the same time, there is no check for status value during a loop combining return data.",
+            "severity": "Medium",
+            "contract": "NodeOperatorRegistry",
+            "function": "_getValidatorsRequestWithdraw",
+            "lineNumber": "635,655"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Insufficient input validation",
+            "description": "Validator could brake contract logic by passing his own address to the NodeOperatorRegistry's setRewardAddress function.",
+            "severity": "Medium",
+            "contract": "NodeOperatorRegistry",
+            "function": "setRewardAddress()",
+            "lineNumber": "239"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Wrong calculation of the minAmount variable",
+            "description": "The contract miscalculates the variable minAmount in the _getValidatorsRequestWithdraw function due to incorrect if-clauses.",
+            "severity": "Medium",
+            "contract": "NodeOperatorRegistry",
+            "function": "_getValidatorsRequestWithdraw",
+            "lineNumber": "L689, L710, L777"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect delegate allocation",
+            "description": "The condition if (totalRatio == 0) is used to check that the system is in a balanced state, but this is an incorrect check and there may be cases where the system is unbalanced but tokens will be delegated as the system is balanced.",
+            "severity": "Medium",
+            "contract": "StMATIC",
+            "function": "delegate()",
+            "lineNumber": "400"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Optimize mint function",
+            "description": "The current implementation of the mint function can be optimized by changing tokenIdIndex only once.",
+            "severity": "Informational",
+            "contract": "PoLidoNFT.sol",
+            "function": "mint()",
+            "lineNumber": "63"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ]
+            },
+            "title": "Bad comments",
+            "description": "Same comments are used for different variables.",
+            "severity": "Informational",
+            "contract": "NodeOperatorRegistry",
+            "function": "N/A",
+            "lineNumber": "633-634"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-182"
+                ]
+            },
+            "title": "Differences in naming of Matic",
+            "description": "Two variables **stMATIC, MATIC** are used in FxStateChildTunnel.sol but named as **uint256 stMatic, uint256 matic** in RateProvider.sol.",
+            "severity": "Informational",
+            "contract": "FxStateChildTunnel and RateProvider",
+            "function": "N/A",
+            "lineNumber": "L33 in FxStateChildTunnel.sol, L19 in RateProvider.sol"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Zero-valued activeValidators during requestWithdraw",
+            "description": "The _getValidatorsRequestWithdraw function iterates over all validators and skips invalid ones, but does not remove them from the list, resulting in zero-valued activeValidators. This can lead to reverting during _requestWithdrawBalanced.",
+            "severity": "Informational",
+            "contract": "NodeOperatorRegistry",
+            "function": "_getValidatorsRequestWithdraw",
+            "lineNumber": "L650"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ],
+                "4": [
+                    "CWE-789"
+                ]
+            },
+            "title": "Excessive memory usage",
+            "description": "In the getValidatorsDelegationAmount function, DISTANCE_THRESHOLD_PERCENTS storage variable is saved into the memory variable and used only one time.",
+            "severity": "Informational",
+            "contract": "NodeOperatorRegistry",
+            "function": [
+                "getValidatorsDelegationAmount",
+                "getProtocolStats",
+                "getStats"
+            ],
+            "lineNumber": [
+                "521",
+                "543",
+                "934",
+                "980"
+            ]
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ]
+            },
+            "title": "Gas optimization via trimming memory arrays",
+            "description": "If a return array has more allocated size than it uses, then we can reduce gas consumption by trimming such an array.",
+            "severity": "Informational",
+            "contract": "NodeOperatorRegistry",
+            "function": [
+                "listDelegatedNodeOperators::activeValidators",
+                "listWithdrawNodeOperators::withdrawValidators",
+                "_getValidatorsDelegationInfos::validators and _getValidatorsDelegationInfos::stakePerOperator",
+                "bigNodeOperatorIds",
+                "smallNodeOperatorIds"
+            ],
+            "lineNumber": [
+                "342",
+                "375",
+                "410",
+                "798",
+                "799"
+            ]
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Redundant SLOADs",
+            "description": "The internal _removeApproval function reads _tokenApprovals mapping to get an approved address using getApproved. At the same time, every _removeApproval is called inside an if statement getApproved(_tokenId) != address(0). Essentially, if getApproved(_tokenId) != address(0) then we would make two SLOAD operations consecutively for the same slot.",
+            "severity": "Informational",
+            "contract": "PoLidoNFT",
+            "function": "_removeApproval",
+            "lineNumber": "234-236"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ],
+                "4": [
+                    "CWE-789"
+                ]
+            },
+            "title": "Excessive SLOAD",
+            "description": "The internal _beforeTokenTransfer function saves ownerTokens[lastOwnerTokensIndex] into memory as lastOwnerTokenId, but reads the same slot while saving ownerTokens[burnedTokenIndexInOwnerTokens].",
+            "severity": "Informational",
+            "contract": "PoLidoNFT",
+            "function": "_beforeTokenTransfer",
+            "lineNumber": "100"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Variable mismatching",
+            "description": "There are instances where an expression used 2 variables with the same value but different names.",
+            "severity": "Informational",
+            "contract": "StMATIC",
+            "function": "N/A",
+            "lineNumber": "343"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Code duplication for a minimum of two values",
+            "description": "The protocol calculates a minimum of two values using a ternary operator, which could be replaced with a simple function call.",
+            "severity": "Informational",
+            "contract": [
+                "StMATIC",
+                "NodeOperatorRegistry"
+            ],
+            "function": "N/A",
+            "lineNumber": [
+                "305",
+                "348",
+                "751",
+                "779"
+            ]
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "N/A",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 19,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Extra calculations",
+            "description": "In case of totalRatio equals 0, variable amountT oDelegatePerOperator is calculated every iteration, but it can be calculated once.",
+            "severity": "Informational",
+            "contract": "StMATIC",
+            "function": "N/A",
+            "lineNumber": "434-437"
+        },
+        {
+            "id": 20,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-775"
+                ]
+            },
+            "title": "Storage clearing",
+            "description": "At Line 492 poLidoNFT is burned, but token2WithdrawRequests[_tokenId] is still in storage.",
+            "severity": "Informational",
+            "contract": "StMATIC.sol",
+            "function": "N/A",
+            "lineNumber": "492"
+        },
+        {
+            "id": 21,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Wrong return value",
+            "description": "In some cases there can be a wrong return value minAmount. In case there are no validators return value minAmount will be equal to the type(uint256).max value.",
+            "severity": "Informational",
+            "contract": "NodeOperatorRegistry",
+            "function": "getProtocolStats",
+            "lineNumber": "934"
+        },
+        {
+            "id": 22,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-920"
+                ]
+            },
+            "title": "Gas optimization via trimming memory arrays",
+            "description": "Trimming memory arrays can reduce gas consumption by removing redundant operations and setting new length's value as realLength.",
+            "severity": "Informational",
+            "contract": "NodeOperatorRegistry",
+            "function": [
+                "listDelegatedNodeOperators::activeValidators",
+                "listWithdrawNodeOperators::withdrawValidators",
+                "_getValidatorsDelegationInfos::validators",
+                "_getValidatorsDelegationInfos::stakePerOperator"
+            ],
+            "lineNumber": [
+                "L342",
+                "L375",
+                "L410",
+                "L798",
+                "L799"
+            ]
+        },
+        {
+            "id": 23,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Code duplication",
+            "description": "The protocol calculates a minimum of two values using a ternary operator, which could be replaced with a simple function call.",
+            "severity": "Informational",
+            "contract": [
+                "StMATIC",
+                "NodeOperatorRegistry"
+            ],
+            "function": "N/A",
+            "lineNumber": [
+                "L305",
+                "L348",
+                "L751",
+                "L779"
+            ]
+        },
+        {
+            "id": 24,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "The minAmount variable can be bigger than the actual amount",
+            "description": "In the contract NodeOperatorRegistry in the function _getValidatorsRequestWithdraw on line 677, there is a conversion of the minAmount variable. This variable can be equal to 1 even if the minimum amount is 0.",
+            "severity": "Informational",
+            "contract": "NodeOperatorRegistry",
+            "function": "_getValidatorsRequestWithdraw",
+            "lineNumber": "L677"
+        },
+        {
+            "id": 25,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "N/A",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 26,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1061"
+                ],
+                "3": [
+                    "CWE-766"
+                ]
+            },
+            "title": "Better naming of global variables",
+            "description": "Global variables are not properly named and one variable is cast to uint8 each time which is more expensive.",
+            "severity": "Informational",
+            "contract": "NodeOperatorRegistry",
+            "function": "N/A",
+            "lineNumber": "40, 43, 47"
+        },
+        {
+            "id": 27,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ]
+            },
+            "title": "Redundant inheritance",
+            "description": "The PoLidoNFT contract inherits ERC721Upgradeable and ERC721PausableUpgradeable while ERC721PausableUpgradeable inherits ERC721Upgradeable.",
+            "severity": "Informational",
+            "contract": "PoLidoNFT",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

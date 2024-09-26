@@ -1,0 +1,80 @@
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Phuture-FRPVault-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/Phuture-Finance/phuture-frp-contracts/tree/401bd34",
+        "commit_hash": "401bd34",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/PeckShield-Audit-Report-Phuture-FRPVault-v1/phuture-frp-contracts"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect Redeem Share Distribution",
+            "description": "The `FRPVault` contract has an incorrect distribution of shares between the user and the fee recipient in the `redeem()` function.",
+            "severity": "Medium",
+            "contract": "FRPVault",
+            "function": "redeem()",
+            "lineNumber": "177-183"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect Deposit Share Distribution",
+            "description": "The distribution of new minted shares between the user and the fee recipient is incorrect in the `FRPVault` contract.",
+            "severity": "Medium",
+            "contract": "FRPVault",
+            "function": "deposit() and previewDeposit()",
+            "lineNumber": "206-215, 238-243"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incompatibility with Deflationary/Rebasing Tokens",
+            "description": "The `FRPVault` contract's asset-transferring routines work as expected with standard ERC20 tokens but may not accurately handle deflationary/rebasing tokens, potentially leading to inconsistent internal asset balances.",
+            "severity": "Low",
+            "contract": "FRPVault",
+            "function": "deposit()",
+            "lineNumber": "203-215"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "In the `FRPVault` contract, there is a `VAULT_MANAGER_ROLE` that plays a critical role in governing and regulating system-wide operations. This privileged role needs to be scrutinized.",
+            "severity": "Medium",
+            "contract": "FRPVault",
+            "function": [
+                "setMaxLoss(uint16 _maxLoss)",
+                "_authorizeUpgrade(address _newImpl)"
+            ],
+            "lineNumber": [
+                "145-148",
+                "151-153"
+            ]
+        }
+    ]
+}

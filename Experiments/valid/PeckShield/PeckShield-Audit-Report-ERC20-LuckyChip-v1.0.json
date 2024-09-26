@@ -1,0 +1,66 @@
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-ERC20-LuckyChip-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/luckychip-io/core/tree/ba58987249458e1ea80596e8b69bdd24499b97d2",
+        "commit_hash": "ba58987249458e1ea80596e8b69bdd24499b97d2",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/PeckShield-Audit-Report-ERC20-LuckyChip-v1/core"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue Of Admin Roles",
+            "description": "In the `LCToken` token contract, there is a privileged `owner` account (assigned in the `constructor`) that plays a critical role in governing and regulating the token-related operations (e.g., add/remove minters)",
+            "severity": "Medium",
+            "contract": "LCToken",
+            "function": "addMinter()/delMinter()",
+            "lineNumber": "14-22"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Voting Amplification With Sybil Attacks",
+            "description": "The `LCToken` contract allows for dynamic delegation of a voter to another, though the delegation is not transitive. When a submitted proposal is being tallied, the number of votes are counted via `getPriorVotes()`. The current governance functionality is vulnerable to a new type of so-called `Sybil` attacks.",
+            "severity": "High",
+            "contract": "LCToken",
+            "function": "_delegate()",
+            "lineNumber": "196-200"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Consistency Between Function Definitions And Return Statements",
+            "description": "In the `LCToken` contract, the `delegate()` and `delegateBySig()` functions are used to delegate votes from `msg.sender` or an intended signatory to the given `delegatee`. The `return` keyword is not needed as the function is declared without any return value.",
+            "severity": "Informational",
+            "contract": "LCToken",
+            "function": "delegate() and delegateBySig()",
+            "lineNumber": "108"
+        }
+    ]
+}

@@ -1,0 +1,96 @@
+{
+    "path": "./Audit_Reports_2024/QuillAudits/Big League Smart Contract Audit Report - QuillAudits.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0xea01d8d9eacca9996db6bb3377c1fe64308e7328",
+        "chain": "bsc",
+        "compiler_version": [
+            "v0.8.5+commit.a4f2e591"
+        ],
+        "project_path": {
+            "StandardToken": "Experiments/contracts/Big League Smart Contract Audit Report - QuillAudits/StandardToken"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Backdoor in transferFrom function",
+            "description": "If a user gives an allowance of the maximum value of uint256, the spender can spend an infinite amount of tokens on the user's behalf. Allowance won\u2019t change on transfer as it should.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "transferFrom()",
+            "lineNumber": "131"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Possible denial of service for transfer functionality",
+            "description": "Anyone can add more ether to the contract; if there is a disparity between ether and tokens when adding ether liquidity, it can result in reverting of tx. And all successive transfers will revert until enough tokens/ether are not added to the contract.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "transfer",
+            "lineNumber": "167"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Using the approve function of the token standard",
+            "description": "Proper events are not getting emitted for many of the critical operations; these are highly sensitive administrative operations.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Tokens can be burned at the Owner behest",
+            "description": "The owner can burn tokens anytime as there is no restriction in the burn function like MINT_FORBIDDEN used for minting.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "burn()",
+            "lineNumber": "213"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Lack of unit tests",
+            "description": "The code lacks unit tests which are essential for contracts handling thousands of user funds.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

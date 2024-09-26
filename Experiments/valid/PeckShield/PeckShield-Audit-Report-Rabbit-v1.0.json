@@ -1,0 +1,163 @@
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Rabbit-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/RabbitFinanceProtocol/rabbit_finance_bsc/tree/94d87ec",
+        "commit_hash": "94d87ec",
+        "address": "0x5085c49828b0b8e69bae99d96a8e0fcf0a033369",
+        "is_exists": true,
+        "chain": "bsc",
+        "compiler_version": [
+            "v0.6.12+commit.27d51765"
+        ],
+        "project_path": {
+            "StrategyLiquidate": "Experiments/contracts/PeckShield-Audit-Report-Rabbit-v1/StrategyLiquidate"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "Force Investment Risk in Bank",
+            "description": "The `Bank` contract does not have a stability check on the liquidity pool into which the borrowed funds will be added, leading to potential force investment risk.",
+            "severity": "High",
+            "contract": "Bank",
+            "function": "work()",
+            "lineNumber": "945-954, 1001-1002"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Use Of Proper Prize Recipient in kill()",
+            "description": "The collected 'prize' is returned back to the devAddr instead of the liquidator in the kill() function.",
+            "severity": "Low",
+            "contract": "Bank",
+            "function": "kill(uint256 posId)",
+            "lineNumber": "1009-1015,1040-1042"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Proper totalReserve Accounting in calInterest() And withdrawReserve()",
+            "description": "The `totalReserve` state is not properly accounted for in the `calInterest()` and `withdrawReserve()` functions, affecting the share calculation for supplying users.",
+            "severity": "Medium",
+            "contract": "Bank",
+            "function": "calInterest() and withdrawReserve()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Timely massUpdatePools During Pool Updates",
+            "description": "The `massUpdatePools()` function needs to be timely invoked before updating pool weights to prevent unfair reward distribution and hidden pools claiming unreasonable shares of rewarded tokens.",
+            "severity": "Medium",
+            "contract": "FairLaunch",
+            "function": "setPool()",
+            "lineNumber": "805-816"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "In the `Rabbit` protocol, all debt positions are managed by the `Bank` contract and there is a privileged `governor` account that plays a critical role in governing and regulating system-wide operations.",
+            "severity": "Medium",
+            "contract": "Bank",
+            "function": "kill()",
+            "lineNumber": "1010-1012"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Trading Fee Discrepancy In PancakeGoblin And EspAddStrategy",
+            "description": "In the Rabbit protocol, a number of situations require the real-time swap of one token to another. However, PancakeGoblin has implicitly assumed the trading fee is 0.3% instead of 0.25%, which may skew the optimal allocation of assets in developed strategies.",
+            "severity": "Medium",
+            "contract": "PancakeGoblin",
+            "function": "getMktSellAmount()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Suggested Adherence Of Checks-Effects-Interactions Pattern",
+            "description": "Violation of `checks-effects-interactions` principle, which can lead to re-entrancy attacks.",
+            "severity": "Low",
+            "contract": "Boardroom",
+            "function": "claimReward()",
+            "lineNumber": "906"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Accommodation of Non-ERC20-Compliant Tokens",
+            "description": "The `transfer` function does not comply with the ERC20 standard, as it does not revert the transaction when the sender's balance is insufficient.",
+            "severity": "Low",
+            "contract": "Multiple Contracts",
+            "function": "transfer()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

@@ -1,0 +1,98 @@
+{
+    "path": "./Audit_Reports_2024/MixBytes/Curve Voter Proxy.md",
+    "project_info": {
+        "url": "https://github.com/orbxball/curve-voter-proxy",
+        "commit_hash": "78c92e4ffc0f76651914565744a3607d0248d254",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/Curve Voter Proxy/curve-voter-proxy"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ],
+                "4": [
+                    "CWE-232"
+                ]
+            },
+            "title": "Variables used but not declared",
+            "description": "The Strategy contract uses address type variables such as `curve`, `gauge`, `reward` and `target` without initialization.",
+            "severity": "Warning",
+            "contract": "Strategy",
+            "function": "N/A",
+            "lineNumber": "226-227, 230, 287"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Events are probably missing",
+            "description": "The methods `setKeepCRV()` and `switchDex()` in Strategy.sol contract should probably emit events `newKeepCRV` and `newDex` respectively.",
+            "severity": "Medium",
+            "contract": "Strategy",
+            "function": [
+                "setKeepCRV()",
+                "switchDex()"
+            ],
+            "lineNumber": [
+                "157",
+                "165"
+            ]
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ]
+            },
+            "title": "Unobvious exchange on Uniswap",
+            "description": "The code calls `swapExactTokensForTokens` of `dex` when `_crv > 0`, but makes the same call for `uniswap` when `_reward > 0`, without a clear reason why.",
+            "severity": "N/A",
+            "contract": "Strategy.sol",
+            "function": "N/A",
+            "lineNumber": "263, 278"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1120"
+                ],
+                "3": [
+                    "CWE-1080"
+                ]
+            },
+            "title": "Code smell",
+            "description": "The function has several problems at once, including being too long, collecting various logic, and duplication of code.",
+            "severity": "Medium",
+            "contract": "Strategy",
+            "function": "N/A",
+            "lineNumber": "239-300"
+        }
+    ]
+}

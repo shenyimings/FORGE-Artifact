@@ -1,0 +1,239 @@
+{
+    "path": "./Audit_Reports_2024/Solidified/Solidified-Uniswap_V3_Liquidity_Manager_[24.06.2021].pdf",
+    "project_info": {
+        "url": "https://github.com/reflexer-labs/geb-uni-v3-manager",
+        "commit_hash": "5d15f33bed17e7b6606de940e87c00f7b61ec0b1",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/Solidified-Uniswap_V3_Liquidity_Manager_[24/geb-uni-v3-manager"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected unwrapWETH9() Function",
+            "description": "The public function unwrapWETH9() can be called by anyone, potentially draining the entire contract WETH balance.",
+            "severity": "Critical",
+            "contract": "PeripheryPayments.sol",
+            "function": "unwrapWETH9()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "GebUniswapV3ManagerBase.sol: Function removeAuthorization() does not check for self deauthorization",
+            "description": "The function `removeAuthorization()` does not check that the passed `account` is not the same as the calling account, potentially leading to the last authorized account accidentally deauthorizing themselves.",
+            "severity": "Minor",
+            "contract": "GebUniswapV3ManagerBase.sol",
+            "function": "removeAuthorization()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Function modifyParameters() does not revert on invalid parameter",
+            "description": "The function `modifyParameters(bytes32,address)` does not revert when passed an invalid parameter name and proceeds to emit the `ModifyParameters` event regardless of whether a parameter was actually modified.",
+            "severity": "Minor",
+            "contract": "GebUniswapV3ManagerBase.sol",
+            "function": "modifyParameters(bytes32,address)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Multiple castings between different integers sizes without result check",
+            "description": "Multiple castings between different signed and unsigned integer sizes without check can lead to over or under flows.",
+            "severity": "Minor",
+            "contract": [
+                {
+                    "name": "GebUniswapV3ManagerBase.sol",
+                    "functions": [
+                        {
+                            "function": "getTargetTick()",
+                            "lineNumber": "N/A"
+                        },
+                        {
+                            "function": "getTicksWithThreshold()",
+                            "lineNumber": "N/A"
+                        },
+                        {
+                            "function": "_getTokenAmountsFromLiquidity()",
+                            "lineNumber": "N/A"
+                        }
+                    ]
+                },
+                {
+                    "name": "GebUniswapV3LiquidityManager.sol",
+                    "functions": [
+                        {
+                            "function": "deposit()",
+                            "lineNumber": "N/A"
+                        }
+                    ]
+                },
+                {
+                    "name": "GebUniswapV3TwoTrancheManager.sol",
+                    "functions": [
+                        {
+                            "function": "getAmountFromRatio()",
+                            "lineNumber": "N/A"
+                        },
+                        {
+                            "function": "getTokenAmountsFromLiquidity()",
+                            "lineNumber": "N/A"
+                        }
+                    ]
+                }
+            ],
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Redundant value check for delay_ in constructor",
+            "description": "The value for `delay_` is already checked in `GebUniswapV3ManagerBase`'s constructor and does not need to be rechecked in `GebUniswapV3LiquidityManager`.",
+            "severity": "Note",
+            "contract": "GebUniswapV3LiquidityManager",
+            "function": "constructor",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Inconsistent Data Type in authorizedAccounts Mapping",
+            "description": "The authorizedAccounts mapping uses uint256 instead of bool, which may lead to inconsistencies and potential security issues.",
+            "severity": "Minor",
+            "contract": "GebUniswapV3ManagerBase.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-393"
+                ]
+            },
+            "title": "Documentation mismatch for function _getTokenAmountsFromLiquidity()",
+            "description": "The documentation states that function `_getTokenAmountsFromLiquidity()` is a `view` function, while in actuality it\u2019s state modifying.",
+            "severity": "Minor",
+            "contract": "GebUniswapV3ManagerBase.sol",
+            "function": "_getTokenAmountsFromLiquidity()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1173"
+                ]
+            },
+            "title": "GebUniswapV3ManagerBase.sol: Contract does not explicitly import ERC20",
+            "description": "The `GebUniswapV3ManagerBase` contract inherits from `ERC20` without explicitly importing it.",
+            "severity": "Note",
+            "contract": "GebUniswapV3ManagerBase",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1061"
+                ]
+            },
+            "title": "Multiple spelling mistakes exist in both code and comments",
+            "description": "Spelling mistakes are present in code and comments across multiple contracts.",
+            "severity": "Minor",
+            "contract": [
+                "GebUniswapV3ManagerBase",
+                "GebUniswapV3LiquidityManager",
+                "GebUniswapV3TwoTrancheManager",
+                "PherypheryPayments"
+            ],
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-233"
+                ]
+            },
+            "title": "Magic Numbers in getTargetTick()",
+            "description": "Consider using named constants instead of magic numbers for the `scale` variable and bit shift amounts in getTargetTick() function.",
+            "severity": "Minor",
+            "contract": "GebUniswapV3ManagerBase.sol",
+            "function": "getTargetTick()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

@@ -1,0 +1,152 @@
+{
+    "path": "./Audit_Reports_2024/Hacken/MarshaSC-Audit-ReportSA-2039_final.pdf",
+    "project_info": {
+        "url": "https://github.com/IziumenkoViacheslav/MarshaPlusSolidityContract",
+        "commit_hash": "3194e22652cca3e7fa13485676a05be066c28ae4",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/MarshaSC-Audit-ReportSA-2039_final/MarshaPlusSolidityContract"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "C01. Funds lock because of denial of transfer service",
+            "description": "This issue arises because the teamRewardAfter3Years() function is triggered each time the transfer() or transferFrom() function is called, leading to denial of transfer service: users will not be able to transfer tokens anymore.",
+            "severity": "High",
+            "contract": "MarshaPlus",
+            "function": [
+                "transfer()",
+                "transferFrom()",
+                "teamRewardAfter3Years()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "M01. Overriding inherited functions violation",
+            "description": "The contract overrides the transfer() and transferFrom() functions, introducing extra functionality, which can cause a significant additional Gas cost and dependency on good implementation of these functions.",
+            "severity": "Medium",
+            "contract": "MarshaPlus",
+            "function": [
+                "transfer()",
+                "transferFrom()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "L01. Missing zero address validation",
+            "description": "The zero address validation check is not implemented for the constructor() function, which can result in breaking main business flow if an address passed into the constructor() would be the zero address.",
+            "severity": "Medium",
+            "contract": "MarshaPlus",
+            "function": "constructor()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "L02. Incorrect state variables updating",
+            "description": "N/A",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "I01. Floating pragma used in the contract",
+            "description": "The project uses floating pragma ^0.8.0 which may result in contracts being deployed using the wrong pragma version, different from the one they were tested with.",
+            "severity": "Informational",
+            "contract": "MarshaPlus",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1061"
+                ],
+                "3": [
+                    "CWE-766"
+                ]
+            },
+            "title": "I02. State variables can be declared immutable",
+            "description": "Declare the mentioned variables as immutable to reduce gas costs during deployment.",
+            "severity": "Informational",
+            "contract": "MarshaPlus",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "I03. State variable default visibility is not set",
+            "description": "Labeling the visibility explicitly makes it easier to catch incorrect assumptions about who can access the variable.",
+            "severity": "Informational",
+            "contract": "MarshaPlus",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ]
+            },
+            "title": "I04. Style guide violation",
+            "description": "Inconsistent adherence to Solidity's official style guide, affecting code readability and maintainability.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

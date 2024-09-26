@@ -3,3 +3,4 @@
 from .GitFetcher import GitFetcher
 from .AddrFetcher import AddrFetcher
 from .utils import GithubUrlParser, GithubUrl
+from .JsonFileProcessor import JsonFileProcessor

@@ -1,0 +1,77 @@
+{
+    "path": "./Audit_Reports_2024/QuillAudits/TRUSTxGAMING Smart Contract Audit Report - QuillAudits.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0x9f46ecf92e7f6ee8c03f393adf04c2e17b8cd0b0",
+        "chain": "bsc",
+        "compiler_version": [
+            "v0.5.17+commit.d19bba13"
+        ],
+        "project_path": {
+            "TRUSTxGAMING": "Experiments/contracts/TRUSTxGAMING Smart Contract Audit Report - QuillAudits/TRUSTxGAMING"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Centralization Risk",
+            "description": "The contract owner has privileges to call some functions due to the use of the Ownable contract inherited in the contract, allowing them to perform actions such as burning tokens from any account, freezing accounts, pausing and unpausing the token contract, and withdrawing tokens sent into the contract.",
+            "severity": "Medium",
+            "contract": "TRUSTxGAMING.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Contract Owner Can Increase Its Balance When Burning Tokens in Any Account and Causing an Inconsistency with the Total Supply",
+            "description": "The burn function can only be called by the contract owner. This implies that the owner can burn tokens from any user account, increasing the balance of the contract owner but also reduces the total supply value.",
+            "severity": "High",
+            "contract": "TRUSTxGAMING.sol",
+            "function": "_burn()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Double Frozen Account Require Check in the Approve Function",
+            "description": "There is a frozenAccount mapping in the contract used to identify accounts that have been frozen. This is however added in some functions to prevent the continuous activity of the frozen account. In the approve and _approve functions, there was a check that appears in both functions.",
+            "severity": "Informational",
+            "contract": "TRUSTxGAMING.sol",
+            "function": "approve()/_approve()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

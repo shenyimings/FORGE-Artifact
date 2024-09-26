@@ -1,0 +1,157 @@
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-BancorV3-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/bancorprotocol/contracts-v3/tree/4b75ec4",
+        "commit_hash": "4b75ec4",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/PeckShield-Audit-Report-BancorV3-v1/contracts-v3"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-923"
+                ],
+                "3": [
+                    "CWE-300"
+                ]
+            },
+            "title": "Possible Denial-Of-Service in Pool Creation",
+            "description": "The current implementation of dynamic pool creation may exhibit a denial-of-service situation where a malicious actor can pre-create a pool with a different poolType, blocking the intended poolType.",
+            "severity": "Low",
+            "contract": "BancorNetwork",
+            "function": "createPool()",
+            "lineNumber": "472-495"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect targetBalance Calculation in Token Swaps",
+            "description": "The current implementation of token swaps in Bancor V3 protocol does not properly take into account the network fee when updating the pool's target balance.",
+            "severity": "High",
+            "contract": "PoolCollection",
+            "function": "_processTrade() and _processNetworkFee()",
+            "lineNumber": "1043, 1377, 1441-1444"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "Improved Logic in Cancelling Pending Withdrawals",
+            "description": "The current implementation of cancelling pending withdrawals can be improved by avoiding unnecessary storage reads and inter-contract calls. The reserve token information is readily available without the cost of making an extra inter-contract call and an extra storage read.",
+            "severity": "Informational",
+            "contract": "PendingWithdrawals",
+            "function": "_cancelWithdrawal()",
+            "lineNumber": "358-373"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Proper TotalLiquidityUpdated Event Generation",
+            "description": "The emitted event in `TotalLiquidityUpdated` includes the current pool token's total supply `poolTokenSupply`, but uses the old total supply before the liquidity change, which needs to be corrected.",
+            "severity": "Low",
+            "contract": "BNTPool",
+            "function": "requestFunding()",
+            "lineNumber": "409-412"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Improved Initialization Logic in AutoCompoundingStakingRewards",
+            "description": "Abuse of initializer() modifier needs to be corrected by protecting subcalls with onlyInitializing() modifier.",
+            "severity": "Low",
+            "contract": "AutoCompoundingStakingRewards",
+            "function": "initialize()",
+            "lineNumber": "135, 144-145"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-775"
+                ]
+            },
+            "title": "Proper Removal Of _programByPool In terminateProgram()",
+            "description": "When a program is terminated, there is also a need to properly remove the associated `_programByPool[pool]` mapping.",
+            "severity": "Low",
+            "contract": "AutoCompoundingStakingRewards",
+            "function": "terminateProgram()",
+            "lineNumber": "293-299"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Proper Enforcement of depositingEnabled in PoolCollection",
+            "description": "The `depositingEnabled` parameter is defined but not enforced in the `PoolCollection` contract, which can lead to unauthorized user deposits.",
+            "severity": "Low",
+            "contract": "PoolCollection",
+            "function": "enableDepositing()",
+            "lineNumber": "536-546"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Proper Fee Collection in BancorNetwork::_tradeBNT()",
+            "description": "The current implementation of `_tradeBNT()` routine may reduce the trade fee attribution to the liquidity providers due to incorrect calculation of collected fees.",
+            "severity": "Medium",
+            "contract": "BancorNetwork",
+            "function": "_tradeBNT()",
+            "lineNumber": "1218, 1184-1209"
+        }
+    ]
+}

@@ -1,0 +1,219 @@
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/compound-3.pdf",
+    "project_info": {
+        "url": "https://github.com/zeppelinos/zos/tree/master",
+        "commit_hash": "master",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/compound-3/zos"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Solidity compiler optimizations can be dangerous",
+            "description": "Compiler optimizations are still enabled in the Truffle build configuration which can be dangerous.",
+            "severity": "Undetermined",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Token migration results in orphaned balances",
+            "description": "No remedy if the ERC20 token contract of an underlying asset is migrated to a new address",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "Race condition in the ERC20 approve function may lead to token theft",
+            "description": "This is a problem inherent in the ERC20 standard itself. It has been mitigated by Compound to the extent possible.",
+            "severity": "High",
+            "contract": "ERC20",
+            "function": "approve()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Unnecessary non-Reentrant modifiers waste gas",
+            "description": "Removing unnecessary nonReentrant modifiers can reduce gas overhead.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1287"
+                ]
+            },
+            "title": "Using CTokens as underlying assets may have unintended side effects",
+            "description": "No check in CErc20 to determine whether the underlying asset is itself a C Token",
+            "severity": "Undetermined",
+            "contract": "CErc20",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Malicious Contract Can Re-entrantly Bypass Administrative Checks",
+            "description": "A malicious contract can re-entrantly bypass administrative checks in the Comptroller",
+            "severity": "High",
+            "contract": "Comptroller",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "Variable shadowing between the Unitroller and Comptroller",
+            "description": "Storage variable shadowing occurs between the Unitroller and Comptroller, requiring all future implementations of the Comptroller to extend from UnitrollerAdminStorage.",
+            "severity": "Medium",
+            "contract": "Comptroller",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Large error codes will invalidate error messages",
+            "description": "The internal function requireNoError generates human-readable log messages containing both the error message and the error number. However, large error codes (>= 2080) can cause overflow and bits loss, resulting in an incorrect error code.",
+            "severity": "Low",
+            "contract": "CEther",
+            "function": "requireNoError",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Failure information changes could cause on- and off-chain repercussions",
+            "description": "Compound uses the ErrorReporter contract to generate errors throughout the system. However, documentation within the ErrorReporter indicates that FailureInfo is kept in alphabetical order. If new information codes are added, they will be inserted arbitrarily into the enumeration, based on alphabetical order.",
+            "severity": "Medium",
+            "contract": "ErrorReporter.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-354"
+                ]
+            },
+            "title": "Lack of newOracle validation when setting a price oracle",
+            "description": "The requirement of isPriceOracle is commented out, resulting in no validation of the newOracle.",
+            "severity": "High",
+            "contract": "Comptroller.sol",
+            "function": "_setPriceOracle()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Invalid documentation regarding upper-bounds error checks",
+            "description": "Across the contracts, there are several areas which refer to the constant value -1 in documentation, but, in fact, refer to uint(-1), which is the maximum value of a uint. This could result in improper assumptions about functionality and lead to misunderstanding developer intent.",
+            "severity": "Low",
+            "contract": "CToken.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Missing tests and functionality for checking senders when setting allowSeize",
+            "description": "The BoolComptroller contract lacks tests to ensure callers are properly checked when setting allowSeize.",
+            "severity": "Undetermined",
+            "contract": "BoolComptroller",
+            "function": "setSeizeAllowed",
+            "lineNumber": "N/A"
+        }
+    ]
+}

@@ -1,0 +1,88 @@
+{
+    "path": "./Audit_Reports_2024/PeckShield/peckshield-audit-report-dyp-v1.0.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0x961C8c0B1aaD0c0b10a51FeF6a867E3091BCef17",
+        "chain": "eth",
+        "compiler_version": [
+            "v0.6.12+commit.27d51765"
+        ],
+        "project_path": {
+            "DeFiYieldProtocol": "Experiments/contracts/peckshield-audit-report-dyp-v1/DeFiYieldProtocol"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Unnecessary Return Statements in delegate() And delegateBySig()",
+            "description": "In the DeFiYieldProtocol contract, the delegate()/delegateBySig() functions are used to delegate votes from msg.sender or an intended signatory to the given delegatee. The return keyword is not needed as the function is declared without any return value.",
+            "severity": "Informational",
+            "contract": "DeFiYieldProtocol",
+            "function": "delegate() and delegateBySig()",
+            "lineNumber": "856"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Unnecessary safe32() Check in _writeCheckpoint()",
+            "description": "The `safe32()` check in `_writeCheckpoint()` function is unnecessary as Ethereum block number would not exceed 2**32 in any foreseeable future.",
+            "severity": "Informational",
+            "contract": "DeFiYieldProtocol",
+            "function": "_writeCheckpoint()",
+            "lineNumber": "1010"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Added Zero-Address Check in getCurrentVotes()",
+            "description": "In the `DeFiYieldProtocol` contract, the `getCurrentVotes()` function does not check if the given `account` is a zero address, which could lead to unexpected behavior.",
+            "severity": "Informational",
+            "contract": "DeFiYieldProtocol",
+            "function": "getCurrentVotes()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-923"
+                ],
+                "3": [
+                    "CWE-300"
+                ]
+            },
+            "title": "Voting Amplification With Sybil Attacks",
+            "description": "The `DYP` tokens can be used for governance in allowing for users to cast and record the votes. The current governance functionality is vulnerable to a new type of so-called `Sybil` attacks.",
+            "severity": "High",
+            "contract": "DeFiYieldProtocol",
+            "function": "_delegate",
+            "lineNumber": "970-974"
+        }
+    ]
+}

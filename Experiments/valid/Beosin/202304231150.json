@@ -1,0 +1,102 @@
+{
+    "path": "./Audit_Reports_2024/Beosin/202304231150.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0x89c6f3422d6633F3fC3A077b42fBb6053D20e728",
+        "chain": "bsc",
+        "compilerVersion": [
+            "v0.8.19+commit.7dd6d404"
+        ],
+        "project_path": {
+            "RESDAO": "Experiments/contracts\\202304231150\\RESDAO"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Centralization Risk",
+            "description": "The _rescueToken_ function can withdraw the fees used for rewards in the contract, resulting in the user not receiving rewards.",
+            "severity": "Low",
+            "contract": "RESDAO.sol",
+            "function": "_rescueToken",
+            "lineNumber": "L1159-1165"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "The rewards are unevenly distributed and there is a possibility of double receipt",
+            "description": "In _transfer_ when the dividend conditions are met, a dividend will be paid to all users who hold LP tokens that meet the minimum dividend based on the current balance of the contract. However, the maximum number of bonus holders at one time is 20. When there are too many users, the contract balance used in calculating the bonus may be different for each starting group of 20 users.",
+            "severity": "Low",
+            "contract": "RESDAO.sol",
+            "function": "_transfer",
+            "lineNumber": "L1210-1252"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Conditions for charging handling fees are easily bypassed",
+            "description": "The conditions for charging handling fees can be easily bypassed due to the lack of decimals in the judgment value, allowing users to transfer a very small amount to pair address before swapping and add/remove liquidity to avoid handling fees.",
+            "severity": "Low",
+            "contract": "RESDAO.sol",
+            "function": "_isAddLiquidityV1_ and _isDelLiquidityV1_",
+            "lineNumber": "L1167-1206"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "Owner modifies key parameters without triggering an event",
+            "description": "In the contract, the event is not triggered when the owner modifies key parameters.",
+            "severity": "Info",
+            "contract": "RESDAO.sol",
+            "function": "N/A",
+            "lineNumber": "L1077-1101"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Redundant codes",
+            "description": "In the contract, the code related to automatedMarketMakerPairs and swapTokensAtAmount is a redundant code.",
+            "severity": "Info",
+            "contract": "RESDAO.sol",
+            "function": "N/A",
+            "lineNumber": "L1048-1105"
+        }
+    ]
+}

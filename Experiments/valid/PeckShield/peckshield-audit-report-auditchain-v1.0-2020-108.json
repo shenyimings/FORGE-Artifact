@@ -1,0 +1,365 @@
+{
+    "path": "./Audit_Reports_2024/PeckShield/peckshield-audit-report-auditchain-v1.0-2020-108.pdf",
+    "project_info": {
+        "url": "https://github.com/DAOCapsule/AUDT-Capsule-Lift-Off/tree/c69e52f33fe53a92a004bd5c36c26f2e81f64b60",
+        "commit_hash": "c69e52f33fe53a92a004bd5c36c26f2e81f64b60",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/peckshield-audit-report-auditchain-v1/AUDT-Capsule-Lift-Off"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Oversized totalReward May Lock User Stakes",
+            "description": "If redeemed before the expiration, the user will get their staked amount back. If we examine the redemption logic after the staking expiration, the users can expect to receive additional rewards beyond the previously staked amounts.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "redeem()",
+            "lineNumber": "252"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Improved Sanity Checks For System Parameters",
+            "description": "The update logic on system parameters can be improved by applying more rigorous sanity checks to prevent undesirable consequences such as locking user stakes due to mis-configuration.",
+            "severity": "Low",
+            "contract": "AlphaPerp",
+            "function": "updateStakingPeriods()",
+            "lineNumber": "115-116"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ]
+            },
+            "title": "AUDT/DCAP Tokens Pausable For Migration, But Not Transfer",
+            "description": "Both AUDT token and DCAP are ERC20-compliant tokens but have inconsistencies or incompatibilities in their implementation or inherent business logic.",
+            "severity": "Informational",
+            "contract": "Token, GovernanceToken",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Burnability of Locked Accounts",
+            "description": "The locked account may still be able to burn their tokens due to lack of locking-related validation checks in ERC20Burnable.",
+            "severity": "Medium",
+            "contract": "ERC20Burnable",
+            "function": [
+                "burn(uint256)",
+                "burnFrom(address,uint256)"
+            ],
+            "lineNumber": "825-827, 840-845"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Suggested Uses of SafeMath",
+            "description": "The audit suggests using `SafeMath` library to prevent common overflow or underflow issues when working with `uint256` operands.",
+            "severity": "Low",
+            "contract": "Staking",
+            "function": "returnEarningsPerAmount()",
+            "lineNumber": "164, 202, 216, 283"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Constructor Mismatch",
+            "description": "Whether the contract name and its constructor are not identical to each other.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-282"
+                ],
+                "3": [
+                    "CWE-708"
+                ]
+            },
+            "title": "Ownership Takeover",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Deflationary",
+            "description": "Part of the tokens are burned or transferred as fee while on transfer()/transferFrom() calls",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "transfer()/transferFrom()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "N/A",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Pausible",
+            "description": "The token contract allows the owner or privileged users to pause the token transfers and other operations",
+            "severity": "N/A",
+            "contract": "AUDT/DCAP Tokens",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "N/A",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Mintable",
+            "description": "The token contract allows the owner or privileged users to mint tokens to a specific address",
+            "severity": "Medium",
+            "contract": "Token",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Burnability of Locked Accounts",
+            "description": "The locked account may still be able to burn their tokens due to lack of locking-related validation checks in ERC20Burnable.",
+            "severity": "Medium",
+            "contract": "ERC20Burnable",
+            "function": [
+                "burn()",
+                "burnFrom()"
+            ],
+            "lineNumber": "825-827, 840-845"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "N/A",
+            "description": "The finding 'Hookable' was not found in the provided audit report fragments.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Permittable",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1284"
+                ]
+            },
+            "title": "Avoid Use of Variadic Byte Array",
+            "description": "Use fixed-size byte array is better than that of `byte[]`, as the latter is a waste of space.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1061"
+                ],
+                "3": [
+                    "CWE-766"
+                ]
+            },
+            "title": "Make Visibility Level Explicit",
+            "description": "Assign explicit visibility specifiers for functions and state variables.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Make Type Inference Explicit",
+            "description": "Do not use keyword `var` to specify the type, i.e., it asks the compiler to deduce the type, which is not safe especially in a loop.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-237"
+                ],
+                "4": [
+                    "CWE-239"
+                ]
+            },
+            "title": "Adhere To Function Declaration Strictly",
+            "description": "Solidity compiler (version 0._._4._._23) enforces strict ABI length checks for return data from `calls()` which may break the execution if the function implementation does NOT follow its declaration (e.g., no return in implementing `transfer()` of ERC20 tokens).",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

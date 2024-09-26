@@ -1,0 +1,111 @@
+{
+    "path": "./Audit_Reports_2024/Iosiro/Iosiro-Synthetix Phase 2 Smart Contract Audit.pdf",
+    "project_info": {
+        "url": "https://github.com/Synthetixio/synthetix/tree/fdd4782ebebd7b4892c8a68000f76708d5d1aa7b",
+        "commit_hash": "fdd4782ebebd7b4892c8a68000f76708d5d1aa7b",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/Iosiro-Synthetix Phase 2 Smart Contract Audit/synthetix"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Unclaimed Mint Tokens are Lost After One Year",
+            "description": "When calling `updateMintValues()` to establish the number of tokens that could be minted, the function `_remainingSupplyFromPreviousYear(...)` was used to calculate whether any tokens were unclaimed from the previous period. If `updateMintValues()` is not called at least once in a period, any unclaimed tokens would not be included in the calculation and be lost.",
+            "severity": "Low Risk",
+            "contract": "SupplySchedule.sol",
+            "function": "updateMintValues()",
+            "lineNumber": "213, 218"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Not minting the correct number of tokens proposed by the release schedule",
+            "description": "The implementation of `updateMintValues()` and `_remainingSupplyFromPreviousYear(...)` may cause unclaimed tokens from previous periods to be lost if `updateMintValues()` is not called at least once in a period.",
+            "severity": "Low Risk",
+            "contract": "SupplySchedule.sol",
+            "function": "updateMintValues()",
+            "lineNumber": "213, 218"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Setting an exchange rate above the hard-coded maximum",
+            "description": "The `setExchangeFeeRate(uint _exchangeFeeRate)` function does not enforce the maximum exchange fee rate, allowing the owner to set an exchange rate above the maximum exchange rate limit.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "setExchangeFeeRate(uint _exchangeFeeRate)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Potential issues regarding the algorithm used to calculate the value of Synthetix Drawing Rights (XDRs)",
+            "description": "The current method for maintaining XDR rate is dangerous and may lead to potential future functional or security issues.",
+            "severity": "Low Risk",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Excessive owner and oracle privileges",
+            "description": "The owners of the contracts have excessive control over the system, introducing risk in the form of single points of failure throughout the system, including being able to arbitrarily update and control the oracle. The oracle role also holds substantial influence over the system.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "Slashing defense mechanism could inadvertently result in the loss of legitimate user funds",
+            "description": "The 'Protection Circuit' defense mechanism used to protect against front-running was found to be an overly aggressive approach that could lead to loss of user funds due to network interruptions or latency delaying the oracle broadcasting the transaction to disable the protection circuit.",
+            "severity": "High Risk",
+            "contract": "N/A",
+            "function": "exchange(...)",
+            "lineNumber": "N/A"
+        }
+    ]
+}

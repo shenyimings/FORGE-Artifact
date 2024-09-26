@@ -1,0 +1,284 @@
+{
+    "path": "./Audit_Reports_2024/Cyberscope/2-dox.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "main",
+        "address": "0xb5c50edd218569d7a19fab89ca6b85ec30bd1eb0",
+        "chain": "bsc",
+        "compilerVersion": [
+            "v0.8.17+commit.8df45f5f"
+        ],
+        "project_path": {
+            "Twelve_Days_Of_Xmas": "Experiments/contracts\\2-dox\\Twelve_Days_Of_Xmas"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "ST - Stops Transactions",
+            "description": "The contract owner can exert significant control over the sales process by setting total transaction fees to zero or designating a contract address as the fee recipient, effectively transforming the contract into a honeypot and locking user funds.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-369"
+                ]
+            },
+            "title": "ZD - Zero Division",
+            "description": "The contract uses variables that may be set to zero as denominators, leading to unpredictable and potentially harmful results, such as a transaction revert.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "PTRP - Potential Transfer Revert Propagation",
+            "description": "The contract sends funds to the `marketingFeeReceiver` and `otherFeeReceiver` addresses as part of the transfer flow. This address can either be a wallet address or a contract. If the address belongs to a contract then it may revert from incoming payment. As a result, the error will propagate to the token\u2019s contract and revert the transfer.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "UMU - Unoptimized Multiplier Usage",
+            "description": "The contract defines three separate multipliers (sellMultiplier, buyMultiplier, and transferMultiplier) with a constant value of 100. This redundancy consumes unnecessary storage space and adds complexity to the contract.",
+            "severity": "Optimization",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "FSA - Fixed Swap Address",
+            "description": "The swap address is assigned once and cannot be changed, which may prevent the contract from migrating to a new liquidity pool pair or decentralized exchange.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "IFV - Inconsistent Fee Visibility",
+            "description": "The contract has inconsistent visibility of fee variables (`marketingFee` is public and `otherFee` is private), leading to a lack of transparency and confusion for users.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "RFU - Redundant Function Usage",
+            "description": "The contract contains an `update_fees` function solely used for emitting the `UpdateFee` event, which introduces an extra layer of function calls that could be streamlined.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "setMultipliers and setFees",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "RES - Redundant Event Statement",
+            "description": "The contract contains several `event` statements that are not used in the contract's implementation.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "DDP - Decimal Division Precision",
+            "description": "Division of decimal (fixed point) numbers can result in rounding errors due to the way that division is implemented in Solidity, leading to issues with precise calculations with decimal numbers.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "PVC - Price Volatility Concern",
+            "description": "The contract accumulates tokens from taxes to swap them for ETH, but the `swapThreshold` variable can be set up to 10% of the total supply, leading to significant price volatility due to token price fluctuations.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-179"
+                ]
+            },
+            "title": "RRS - Redundant Require Statement",
+            "description": "The contract utilizes a `require` statement within the `add` function aiming to prevent overflow errors, which is redundant since Solidity version 0.8.0 and later revert on overflow and underflow.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "add()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "RSML - Redundant SafeMath Library",
+            "description": "The usage of the SafeMath library adds complexity, overhead and increases gas consumption unnecessarily since Solidity versions 0.8.0 and later have native functionality for arithmetic operations that revert to underflow and overflow.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1126"
+                ]
+            },
+            "title": "L02 - State Variables could be Declared Constant",
+            "description": "State variables can be declared as constant using the constant keyword to decrease gas consumption of the corresponding transaction.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1076"
+                ],
+                "3": [
+                    "CWE-1078"
+                ],
+                "4": [
+                    "CWE-1099"
+                ]
+            },
+            "title": "L04 - Conformance to Solidity Naming Conventions",
+            "description": "Non-conformity to Solidity naming conventions can lead to decreased readability and maintainability of the code.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "L07 - Missing Events Arithmetic",
+            "description": "Events are a way to record and log information about changes or actions that occur within a contract. They are often used to notify external parties or clients about events that have occurred within the contract, such as the transfer of tokens or the completion of a task.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "24"
+        }
+    ]
+}

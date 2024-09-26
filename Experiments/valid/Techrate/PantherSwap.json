@@ -1,0 +1,82 @@
+{
+    "path": "./Audit_Reports_2024/Techrate/PantherSwap.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0xbb688307a13e5abbd99ee4d6229272a17d60fe34",
+        "chain": "bsc",
+        "compiler_version": [
+            "v0.6.12+commit.27d51765"
+        ],
+        "project_path": {
+            "PantherReferral": "Experiments/contracts/PantherSwap/PantherReferral"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Wrong burning",
+            "description": "Sending tokens to the dead address instead of burning them in token contract.",
+            "severity": "Medium",
+            "contract": "PantherSwap",
+            "function": "_transfer",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Block gas limit",
+            "description": "The updateEmissionRate function can fail due to block gas limit if the pool size is too big.",
+            "severity": "Low",
+            "contract": "PantherSwap",
+            "function": "updateEmissionRate()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "add function issue",
+            "description": "If some LP token is added to the contract twice using function add, then the total amount of reward pantherReward in function updatePool will be incorrect.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "add()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Owner privileges",
+            "description": "Operator can change transfer tax rate, burn rate and router contract address. Owner can withdraw tokens from Referral contract.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

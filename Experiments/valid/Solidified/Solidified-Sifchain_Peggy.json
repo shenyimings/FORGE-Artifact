@@ -1,0 +1,279 @@
+{
+    "path": "./Audit_Reports_2024/Solidified/Solidified-Sifchain_Peggy.pdf",
+    "project_info": {
+        "url": "https://github.com/Sifchain/sifnode",
+        "commit_hash": "289a0fdb2c6d41c545a2e87054b9d306980f6174",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/Solidified-Sifchain_Peggy/sifnode"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Potential namespace collisions through token symbol",
+            "description": "Tokens are identified by their symbol in both EthereumBank.sol and CosmosBank.sol, leading to namespace collisions and potentially being exploited by copycat tokens.",
+            "severity": "Major",
+            "contract": "EthereumBank.sol, CosmosBank.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Missing checks for maximum consensus threshold",
+            "description": "`Oracle.sol` declares a consensus threshold as a `unit256`. Whilst this is meant to be a percentage no maximum is enforced. Numbers above 100 will lead to consensus not being achievable.",
+            "severity": "Minor",
+            "contract": "Oracle.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-327"
+                ]
+            },
+            "title": "Malleable signatures",
+            "description": "The `verify()` function in `Valset.sol` uses the built-in `ecrecover()` function which still allows malleable signatures for backward compatibility reasons.",
+            "severity": "Minor",
+            "contract": "Valset.sol",
+            "function": "verify()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Duplicate validators are accepted in validator set",
+            "description": "The Valset.sol contract does not check for duplicate validator additions, which may produce inconsistencies related to voting power and consensus.",
+            "severity": "Minor",
+            "contract": "Valset.sol",
+            "function": "addValidator()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ],
+                "4": [
+                    "CWE-613"
+                ]
+            },
+            "title": "Ether transfers depending on gas stipend may not work if the recipient is a smart contract",
+            "description": "The transfer() function used to transfer ETH in EthereumBank.sol (line 158) may not work if the recipient is a smart contract due to insufficient forwarded gas after the Istanbul hard fork.",
+            "severity": "Minor",
+            "contract": "EthereumBank.sol",
+            "function": "transfer()",
+            "lineNumber": "158"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-354"
+                ]
+            },
+            "title": "Compiler version",
+            "description": "The code uses pragma solidity ^0.5.0; to define the compiler version to be used, but it is recommended to lock the pragma to version 0.5.17 due to bug fixes.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Misleading behavior for recoverGas function",
+            "description": "Refunds are capped at the half of the transaction cost, so it only reduces gas cost if run within a bigger transaction to reduce the overall cost, otherwise there will be a net loss in executing the function, which is misleading from what the name implies.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "recoverGas()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Bridge bank can receive ETH directly",
+            "description": "The bridge bank can receive ETH directly.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "16"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Unnecessary modifier",
+            "description": "The EthereumBank.sol contract implements a modifier for avoiding nonce overflow which is unnecessary since new nonces are always generated using the safeMath library.",
+            "severity": "Informational",
+            "contract": "EthereumBank.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "Unnecessary protection in view function",
+            "description": "The `checkBridgeProphecy()` function checks that the caller is an operator, even though it does not change the state and all information is public.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "checkBridgeProphecy()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1120"
+                ],
+                "3": [
+                    "CWE-1060"
+                ]
+            },
+            "title": "Optimization on token deployment costs",
+            "description": "Since peggy Tokens are deployed by a transaction on-chain, using a proxy pattern might decrease the gas usage significantly, instead of deploying a full token contract every time.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-354"
+                ]
+            },
+            "title": "Outdated indirect dependency with multiple known security vulnerabilities",
+            "description": "The codebase uses an outdated version of the ecdt library (versions 3.3.13), which includes a number of known vulnerabilities, including TLS authentication issues, TCP proxy discovery issues and missing password length verifications.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Relayer quits silently on failure to connect to subscribe to Ethereum events",
+            "description": "The launch code of relayer terminates the process if the Ethereum connection is not available, which may cause issues in deployment scenarios and does not permit monitoring an automatic relaunching easily.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "SetupWebsocketEthClient",
+            "lineNumber": "cmd/ebrelayer/main.go:163-164, cmd/ebrelayer/relayer/ethereum.go:119"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Missing default case in switch statement",
+            "description": "The switch statement for processing Ethereum event data lacks a default case.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "158-168"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Empty code blocks",
+            "description": "The codebase contains several places where unimplemented functions are marked as TODO.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "x/ethbridge/module.go: 108, 145; x/oracle/module.go: 33, 48, 89, 124"
+        }
+    ]
+}

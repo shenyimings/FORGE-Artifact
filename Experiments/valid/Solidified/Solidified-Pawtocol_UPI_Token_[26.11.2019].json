@@ -1,0 +1,97 @@
+{
+    "path": "./Audit_Reports_2024/Solidified/Solidified-Pawtocol_UPI_Token_[26.11.2019].pdf",
+    "project_info": {
+        "url": "https://github.com/pawtocol/Token",
+        "commit_hash": "19e42b9eba9af4c75b0af46649efa0d8fb95c4eb",
+        "address": "0x70D2b7C19352bB76e4409858FF5746e500f2B67c",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/Solidified-Pawtocol_UPI_Token_[26/Token"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "UPIToken's variables name, symbol and decimals overshadow variables in OpenZeppelin's ERC20Detailed",
+            "description": "The private variables declared on `UPIToken` with the goal of initializing the contract overshadow the ones in OpenZeppelin's implementation, increasing the cost of deployment.",
+            "severity": "Low",
+            "contract": "UPIToken",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Consider optimizing the minting function",
+            "description": "The minting function can be optimized by removing ERC20Mintable and minting on UPIToken's constructor using ERC20's internal _mint() function instead.",
+            "severity": "Medium",
+            "contract": "UPIToken",
+            "function": "constructor",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "The Fallback function doesn't guarantee that the contract won't receive ETH",
+            "description": "The fallback function reverts by default but does not prevent the contract from receiving ether from a self-destructed contract.",
+            "severity": "Note",
+            "contract": "N/A",
+            "function": "fallback()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "ERC20 does not need to be imported from UPIToken",
+            "description": "ERC20 is inherited by both ERC20Mintable and ERC20Burnable, so there is no need to import it in UPIToken.",
+            "severity": "Informational",
+            "contract": "UPIToken",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Consider using the keyword ether to improve readability of INITIAL_SUPPLY",
+            "description": "The line could be `uint256 private INITIAL_SUPPLY = 1000000000 ether;` making it easier to read and to reason about. The INITIAL_SUPPLY variable is also written to state, but used only once, passing the value directly in the constructor will provide minor gas savings.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "Constructor",
+            "lineNumber": "N/A"
+        }
+    ]
+}

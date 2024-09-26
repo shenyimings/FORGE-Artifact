@@ -1,0 +1,120 @@
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-DackieSwap-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/DackieSwap/dackieswap-contracts-v3/tree/0b1c8c8",
+        "commit_hash": "0b1c8c8",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/PeckShield-Audit-Report-DackieSwap-v1/dackieswap-contracts-v3"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-191"
+                ]
+            },
+            "title": "Incorrect Liquidity Mining in DackieV3LmPool",
+            "description": "The `getRewardGrowthInside()` function does not consider a possible underflow situation that may make the associated `MasterChef V3` smart contract unable to calculate reward for the positions whose initial `rewardGrowthInsideX128` values were negative underflow.",
+            "severity": "Medium",
+            "contract": "DackieV3LmPool",
+            "function": "getRewardGrowthInside()",
+            "lineNumber": "34-47"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ],
+                "4": [
+                    "CWE-638"
+                ],
+                "5": [
+                    "CWE-424"
+                ],
+                "6": [
+                    "CWE-425"
+                ]
+            },
+            "title": "Lack of Timelocked finalWithdraw() in DackiePadInitializableV5/V6",
+            "description": "The admin function finalWithdraw() lacks a timelock, allowing it to withdraw all funds from IDO contracts without restriction.",
+            "severity": "High",
+            "contract": "DackiePadInitializableV5/V6",
+            "function": "finalWithdraw()",
+            "lineNumber": "316-318"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Incorrect NFT Removal Logic in SmartChefNFT",
+            "description": "The removeTokenId() function in SmartChefNFT contract has a potential issue where it can be abused to withdraw a tokenId that does not belong to the withdrawing user.",
+            "severity": "High",
+            "contract": "SmartChefNFT",
+            "function": "removeTokenId()",
+            "lineNumber": "304-313"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Improved Ether Transfer With Necessary Reentrancy Guard",
+            "description": "The `withdraw()` routine directly calls the native `transfer()` routine to transfer ETH, which may fail due to Out-of-Gas issue and cause ETH to be locked in the contract.",
+            "severity": "Low",
+            "contract": "DackieNFT, DackiEggNFT",
+            "function": "withdraw()",
+            "lineNumber": "126"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "In the DackieSwap protocol, there is a privileged `owner` account that plays a critical role in governing and regulating the protocol-wide operations.",
+            "severity": "Medium",
+            "contract": "Multiple Contracts",
+            "function": [
+                "setEmergency(bool)",
+                "setReceiver(address)",
+                "setLMPoolDeployer(ILMPoolDeployer)"
+            ],
+            "lineNumber": [
+                "247-249",
+                "252-256",
+                "259-262"
+            ]
+        }
+    ]
+}

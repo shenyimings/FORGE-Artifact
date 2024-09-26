@@ -1,0 +1,174 @@
+{
+    "path": "./Audit_Reports_2024/ConsenSys_Diligence/tokenize-it-audit-2023-11.pdf",
+    "project_info": {
+        "url": "https://github.com/corpus-io/tokenize.it-smart-contracts/tree/9973fc31043e8500bc187d852fc50494f1007f96",
+        "commit_hash": "9973fc31043e8500bc187d852fc50494f1007f96",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/tokenize-it-audit-2023-11/tokenize.it-smart-contracts"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Limiting the Price in the buy",
+            "description": "The buy function does not allow to limit the amount of tokens that can be spent during a particular transaction, allowing the owner of the price oracle to front-run the transaction and twist the price.",
+            "severity": "High",
+            "contract": "Crowdinvesting",
+            "function": "buy()",
+            "lineNumber": "L277-L279"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "Potential Re\u2011Entrancy Attack",
+            "description": "A potential re-entrancy attack exists in the Crowdinvesting contract where an owner can exploit a token transfer by changing the currency and re-entering during the fee transfer, resulting in victims transferring more expensive currencies.",
+            "severity": "Minor",
+            "contract": "Crowdinvesting",
+            "function": "N/A",
+            "lineNumber": "277-290"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-233"
+                ]
+            },
+            "title": "Lack of Validation of Private Offer Initialization Parameters",
+            "description": "The initialize() function in the PrivateOffer contract does not validate parameters during initialization, including tokenAmount, token, and currency.",
+            "severity": "High",
+            "contract": "PrivateOffer",
+            "function": "initialize()",
+            "lineNumber": "81-84"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-354"
+                ]
+            },
+            "title": "Lack of Validation of Crowdinvesting Initialization Parameters",
+            "description": "The initialize() function receives parameters to set up the Crowdinvesting contract accordingly, but lacks validation during initialization for tokenPrice, minAmountPerBuyer, lastBuyDate, and currency.",
+            "severity": "High",
+            "contract": "Crowdinvesting",
+            "function": "initialize()",
+            "lineNumber": "L156-L159, L160, L172, L249-L265"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Keeping Denominators of Fees Is Redundant",
+            "description": "Storing fees as numerators and denominators increases code size and makes comparisons more complicated.",
+            "severity": "N/A",
+            "contract": "FeeSettings.sol",
+            "function": "_isFractionAGreater",
+            "lineNumber": "264-269, 306-313"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Non\u2011Normalized Salt Computation",
+            "description": "The salt computation for contract deployment using create2 opcode is not consistent across different contracts, which can lead to unpredictable contract addresses.",
+            "severity": "N/A",
+            "contract": [
+                "CrowdinvestingCloneFactory",
+                "PriceLinearCloneFactory"
+            ],
+            "function": [
+                "N/A",
+                "N/A"
+            ],
+            "lineNumber": [
+                "62-69",
+                "122-147"
+            ]
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Unused or Redundant Imports in Multiple Contracts",
+            "description": "Multiple contracts import unused or redundant libraries.",
+            "severity": "Medium",
+            "contract": [
+                "PrivateOffer",
+                "PriceLinear",
+                "VestingCloneFactory",
+                "PrivateOfferFactory",
+                "PriceLinearCloneFactory",
+                "CrowdinvestingCloneFactory"
+            ],
+            "function": "N/A",
+            "lineNumber": [
+                "L4",
+                "L6",
+                "L7",
+                "L4-L5",
+                "L7",
+                "L7"
+            ]
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-778"
+                ]
+            },
+            "title": "Missing Events on Important State Changes",
+            "description": "The setLastBuyDate() function from Crowdinvesting contract updates the lastBuyDate state variable without emitting an event.",
+            "severity": "N/A",
+            "contract": "Crowdinvesting",
+            "function": "setLastBuyDate()",
+            "lineNumber": "390-393"
+        }
+    ]
+}

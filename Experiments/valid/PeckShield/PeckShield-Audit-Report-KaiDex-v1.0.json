@@ -1,0 +1,120 @@
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-KaiDex-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/kardia-solutions/kaidex-core/tree/f6d596966f61e6a124c3749b0463af9adff4e990",
+        "commit_hash": "f6d596966f61e6a124c3749b0463af9adff4e990",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/PeckShield-Audit-Report-KaiDex-v1/kaidex-core"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incompatibility with Deflationary Tokens",
+            "description": "The KaidexMasterChef contract uses safeTransferFrom() to transfer assets into or out of its pool, which may cause inconsistent asset balances with deflationary tokens.",
+            "severity": "Low",
+            "contract": "KaidexMasterChef",
+            "function": "_deposit()",
+            "lineNumber": "209-219"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "Reentrancy Risk in KaidexMasterChef",
+            "description": "The `emergencyWithdraw()` function in `KaidexMasterChef` contract does not adhere to the `checks-effects-interactions` principle, making it vulnerable to re-entrancy attacks.",
+            "severity": "Low",
+            "contract": "KaidexMasterChef",
+            "function": "emergencyWithdraw()",
+            "lineNumber": "264"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-253"
+                ]
+            },
+            "title": "Implicit Assumption Enforcement In AddLiquidity()",
+            "description": "The `addLiquidity()` function in `KaiDexRouter` has implicit assumptions on `_addLiquidity()` routine without explicitly checking conditions `amountADesired >= amountAMin` and `amountBDesired >= amountBMin`, which may lead to uncontrolled slippage for some trades.",
+            "severity": "Low",
+            "contract": "KaiDexRouter",
+            "function": "addLiquidity()",
+            "lineNumber": "80-111"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Possible Sandwich/MEV Attacks For Reduced Returns",
+            "description": "The `KaidexMaker` contract has a helper routine `_convert()` that is designed to swap `token0` for `token1`. It has a rather straightforward logic in removing liquidity and transferring the funds to specific pairs to actually perform the intended token swap by `_convertStep()`. This might be vulnerable to sandwich/MEV attacks, potentially reducing returns.",
+            "severity": "Low",
+            "contract": "KaidexMaker",
+            "function": "_convert()",
+            "lineNumber": "97-117"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "In the KaiDex protocol, there is a special administrative account, i.e., `owner`. This `owner` account plays a critical role in governing and regulating the protocol-wide operations. It also has the privilege to control or govern the flow of assets managed by this protocol.",
+            "severity": "Medium",
+            "contract": "WhitelistRaising()",
+            "function": "emergencyWithdraw()",
+            "lineNumber": "51-63"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-1419"
+                ]
+            },
+            "title": "Possible Costly LPs From Improper StKDX Initialization",
+            "description": "The `StKDX` contract's improper initialization can cause extremely expensive shares and lead to precision issues, allowing malicious actors to manipulate the share value.",
+            "severity": "Medium",
+            "contract": "StKDX",
+            "function": "enter()",
+            "lineNumber": "40-43, 46"
+        }
+    ]
+}

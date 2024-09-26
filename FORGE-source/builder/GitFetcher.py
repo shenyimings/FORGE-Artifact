@@ -47,6 +47,11 @@ WRONG_LIST = [
     "Smart-Contract-Audit-Reports",
     "SCSTG",
     "ic",
+    "Audits",
+    "audits",
+    "Audit-Reports",
+    "Audit_Reports",
+    "Smart_Contract_Audit_Reports"
 ]
 
 
@@ -67,27 +72,43 @@ class GitFetcher:
         return self.g
 
     def parse_url(self, original_url: str, branch_id: str = "") -> GithubUrl:
-        url = GithubUrlParser(original_url).info
+        url = GithubUrlParser(original_url)
 
-        if url.branch is None and branch_id is not "":
-            GithubUrlParser.add_branch(branch_id)
-        if url is None:
+        if url.info.branch is "" and branch_id is not "":
+            url.add_branch(branch_id)
+        if url.info is None:
             logging.error("Invalid URL")
             return None
-        if url.repo in WRONG_LIST:
-            logging.error("Abandoned Github Repo (Wrong List)")
+        if url.info.repo in WRONG_LIST:
+            logging.warning("Abandoned Github Repo (Wrong List)")
             return None
-        return url
+        return url.info
 
     def clone_repo(self, url: GithubUrl, output_path: str) -> Literal[0, 1]:
         if url is None:
             return 0
         if not os.path.exists(output_path):
-            os.makedirs(output_path)
+            os.makedirs(output_path, exist_ok=True)
         try:
             git.Repo.clone_from(url.git_url, output_path)
         except Exception as e:
-            logging.error(f"Failed to clone the repo: {e}")
-            return 0
+            logging.warning(f"Failed to clone the repo: {e}")
+            # check if the output_path is empty
+            if not os.listdir(output_path):
+                os.rmdir(output_path)
+                return 0
+            return 1
 
+        return 1
+
+    # checkout to specify commit_id
+    def check_out(self, repo_path: str, commit_id: str) -> Literal[0, 1]:
+        if commit_id == "N/A" or commit_id is None or commit_id == "":
+            return 0
+        try:
+            repo = git.Repo(repo_path)
+            repo.git.checkout(commit_id)
+        except Exception as e:
+            logging.error(f"Failed to checkout: {e}")
+            return 0
         return 1

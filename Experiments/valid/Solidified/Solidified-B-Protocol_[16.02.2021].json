@@ -1,0 +1,109 @@
+{
+    "path": "./Audit_Reports_2024/Solidified/Solidified-B-Protocol_[16.02.2021].pdf",
+    "project_info": {
+        "url": "https://github.com/backstop-protocol/BCompound",
+        "commit_hash": "c824d34b202a63ec5a00e0b34a07c83d0366557a",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/Solidified-B-Protocol_[16/BCompound"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ],
+                "3": [
+                    "CWE-680"
+                ]
+            },
+            "title": "Use of send() for Ether transfers may run out of gas",
+            "description": "In AbsAvatarBase.sol, using `send()` to transfer Ether may run out of gas since the Istanbul hard fork, as the gas stipend forwarded with this function may not be enough on the receiver\u2019s side to perform basic operations.",
+            "severity": "Minor",
+            "contract": "AbsAvatarBase.sol",
+            "function": "N/A",
+            "lineNumber": "204"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Explicit check without pre-defined modifier",
+            "description": "The function `_doLiquidateBorrow()` checks whether the caller is the pool contract but does not use the `onlyPool()` modifier defined for the purpose.",
+            "severity": "Medium",
+            "contract": "AbsAvatarBase.sol",
+            "function": "_doLiquidateBorrow()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ],
+                "3": [
+                    "CWE-561"
+                ]
+            },
+            "title": "Unused modifier",
+            "description": "The `onlyPool()` modifier is defined but never used in this contract.",
+            "severity": "Medium",
+            "contract": "AvbBToken.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1068"
+                ]
+            },
+            "title": "Incorrect comments",
+            "description": "The comments document the code incorrectly in a couple of places.",
+            "severity": "Note",
+            "contract": "_AbsAvatarBase, _Pool.sol",
+            "function": "_untop(), N/A",
+            "lineNumber": "L182-L211, L50"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-826"
+                ]
+            },
+            "title": "Delegations are always revoked after single executions",
+            "description": "The function `delegateAndExecuteOnce()` always revokes `delegate()` at the end, even in the case when the delegation had been granted earlier for this `msg.sender`. This invalidates any previous delegations.",
+            "severity": "Note",
+            "contract": "Registry.sol",
+            "function": "delegateAndExecuteOnce()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

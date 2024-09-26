@@ -1,0 +1,100 @@
+{
+    "path": "./Audit_Reports_2024/Verichains_Lab/Verichains Public Audit Report - FCO BSC - v1.1.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0x9049c073b9c3f32f204e0255cec09d09e0d9b6cf",
+        "chain": "bsc",
+        "compiler_version": [
+            "v0.8.19+commit.7dd6d404"
+        ],
+        "project_path": {
+            "FCOToken": "Experiments/contracts/Verichains Public Audit Report - FCO BSC - v1/FCOToken"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-358"
+                ]
+            },
+            "title": "Should have a `require` statement to check for duplicates when setting a payment token",
+            "description": "Admin may add a duplicated address in `setPaymentToken()` function",
+            "severity": "LOW",
+            "contract": "N/A",
+            "function": "setPaymentToken()",
+            "lineNumber": "19"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Consider adding the `cancelCollect()` function",
+            "description": "Should consider adding the `cancelCollect()` function to allow the owner to change the price or stop `collect()` by blacklisting the old signature (add a nonce field to the `CollectData` struct and blacklist the message hash).",
+            "severity": "LOW",
+            "contract": "PublicationHub",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "epochsState.unlocked has not been updated in the _unlock() function",
+            "description": "The epochsState.unlocked variable is not updated properly in the _unlock() function when a user unlocks and then locks within the same epoch, leading to potential loss of tokens.",
+            "severity": "LOW",
+            "contract": "FCOToken",
+            "function": "_unlock()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Missing logic to check msg.value in the mint() and collect() functions",
+            "description": "When users choose to pay with native tokens, there is no check to verify how many native tokens they provide or if it matches the specified price.",
+            "severity": "LOW",
+            "contract": "PublicationHub",
+            "function": [
+                "mint()",
+                "collect()"
+            ],
+            "lineNumber": [
+                "147",
+                "291"
+            ]
+        }
+    ]
+}

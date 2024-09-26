@@ -1,0 +1,102 @@
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Symmetry-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/symmetrytrade/symmetry-contracts/tree/6ce6c8255b8cc869b4a04f4636917250204e6804",
+        "commit_hash": "6ce6c8255b8cc869b4a04f4636917250204e6804",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/PeckShield-Audit-Report-Symmetry-v1/symmetry-contracts"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Revisited Deficit Loss Payment in PositionManager::liquidatePosition()",
+            "description": "In the `liquidatePosition()` routine of `PositionManager` contract, it may pay the deficit for the user\u2019s open position, which is against the protocol design and user expectation.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Revisited Logic of Market::_logTrade()",
+            "description": "In the `Symmetry` protocol, the `Market` contract is one of the main entries for user interactions. In particular, one entry routine, i.e., `trade()`, is designed to open/close a `LONG/SHORT` position. While examining its logic, we notice a common internal `_logTrade()` routine needs to be improved.",
+            "severity": "Medium",
+            "contract": "Market",
+            "function": "_logTrade()",
+            "lineNumber": "399"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1287"
+                ]
+            },
+            "title": "Accommodation of Non-ERC20-Compliant Tokens",
+            "description": "The transfer function does not follow ERC20 standard and may cause issues if not handled properly.",
+            "severity": "Low",
+            "contract": "VotingEscrow",
+            "function": "transfer()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-372"
+                ]
+            },
+            "title": "Meaningful Events for Important State Changes",
+            "description": "Several privileged routines lack meaningful events to reflect their changes.",
+            "severity": "Informational",
+            "contract": "Multiple Contracts",
+            "function": "setOperator, setOracle, setSetting",
+            "lineNumber": "77-87"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "In the Symmetry protocol, there are a series of privileged accounts that play a critical role in governing and regulating the protocol-wide operations, which is worrisome if the privileged account is a plain EOA account.",
+            "severity": "Medium",
+            "contract": "Multiple Contracts",
+            "function": [
+                "mint()",
+                "setOperator()",
+                "setOracle()",
+                "setSetting()"
+            ],
+            "lineNumber": "N/A"
+        }
+    ]
+}

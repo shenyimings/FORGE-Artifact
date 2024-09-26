@@ -1,0 +1,238 @@
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/2022-09-incrementprotocol-fixreview.pdf",
+    "project_info": {
+        "url": "https://github.com/Increment-Finance/increment-protocol",
+        "commit_hash": "9368b23ac2d2f5dc954cc849d20cdeca21d627c6",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/2022-09-incrementprotocol-fixreview/increment-protocol"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Calculations can lead to unexpected overflows",
+            "description": "These calculations can lead to unexpected overflows or cause the system to enter an undefined state.",
+            "severity": "N/A",
+            "contract": "Perpetual",
+            "function": "_getUnrealizedPnL",
+            "lineNumber": "1175-1183"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-369"
+                ]
+            },
+            "title": "Liquidations are vulnerable to sandwich attacks",
+            "description": "Token swaps that are performed to liquidate a position use a hard-coded zero as the \u201cminimum-amount-out\u201d value, making them vulnerable to sandwich attacks.",
+            "severity": "Medium",
+            "contract": "contracts/ClearingHouse.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "Governance role is a single point of failure",
+            "description": "Because the governance role is centralized and responsible for critical functionalities, it constitutes a single point of failure within the Increment Protocol.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Inconsistent lower bounds on collateral weights",
+            "description": "The lower bound on a collateral asset\u2019s initial weight (when the collateral is first whitelisted) is different from that enforced if the weight is updated; this discrepancy increases the likelihood of collateral seizures by liquidators.",
+            "severity": "Medium",
+            "contract": "Vault.sol",
+            "function": "N/A",
+            "lineNumber": "254-259"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Solidity compiler optimizations can be problematic",
+            "description": "The Increment Protocol contracts have enabled optional compiler optimizations in Solidity which may lead to security implications due to optimization bugs.",
+            "severity": "Informational",
+            "contract": "Increment Protocol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Support for multiple reserve tokens allows for arbitrage",
+            "description": "The `UA` token contract supports multiple reserve tokens, enabling users to swap one reserve token for another at a ratio of 1:1, creating an arbitrage opportunity.",
+            "severity": "Informational",
+            "contract": "UA",
+            "function": [
+                "mintWithReserve(uint256,uint256)",
+                "withdraw(uint256,uint256)"
+            ],
+            "lineNumber": [
+                "38-51",
+                "N/A"
+            ]
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-362"
+                ]
+            },
+            "title": "Ownership transfers can be front-run",
+            "description": "If the call were front-run, the Perpetual contract would not own the vBase or vQuote tokens, and any attempts to mint/burn tokens would revert.",
+            "severity": "High",
+            "contract": "PerpOwnable",
+            "function": "transferPerpOwner()",
+            "lineNumber": "L29-35"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Funding payments are made in the wrong token",
+            "description": "The fundingPayments value calculated in _settleUserFundingPayments is expressed in vBase, but the settlePnL function internally updates the user\u2019s balance of UA, not vBase. This causes incorrect user balances and affects collateral reserve totals.",
+            "severity": "Critical",
+            "contract": "Perpetual",
+            "function": "_getFundingPayments",
+            "lineNumber": "1152-1173"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Excessive dust collection may lead to premature closures of long positions",
+            "description": "The upper bound on the amount of funds considered dust by the protocol may lead to the premature closure of long positions.",
+            "severity": "Medium",
+            "contract": "Perpetual",
+            "function": "_reducePositionOnMarket",
+            "lineNumber": "L876-921"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Problematic use of primitive operations on fixed-point integers",
+            "description": "The protocol's use of primitive operations over fixed-point signed and unsigned integers increases the risk of overflows and undefined behavior.",
+            "severity": "N/A",
+            "contract": "LibMath",
+            "function": "_updateTwap",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "Accuracy of market and oracle TWAPs is tied to the frequency of user interactions",
+            "description": "The oracle and market TWAPs can be updated only during traders\u2019 and liquidity providers\u2019 interactions with the protocol; a downtick in user interactions will result in less accurate TWAPs that are more susceptible to manipulation.",
+            "severity": "Informational",
+            "contract": "contracts/Perpetual.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-191"
+                ]
+            },
+            "title": "Liquidations of short positions may fail because of insufficient dust collection",
+            "description": "The protocol does not collect leftover dust from short positions, leading to potential liquidation failures as netBasePosition value may be less than zero.",
+            "severity": "N/A",
+            "contract": "Perpetual",
+            "function": "_settleLpPosition",
+            "lineNumber": "L1005-1030"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Project dependencies contain vulnerabilities",
+            "description": "The project's dependencies underscore, async, lodash, and node-fetch contain high-severity vulnerabilities including arbitrary code injection, prototype pollution, command injection, and exposure of sensitive information to an unauthorized actor.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Risks associated with oracle outages",
+            "description": "Under extreme market conditions, the Chainlink oracle may cease to work as expected, causing unexpected behavior in the Increment Protocol.",
+            "severity": "Informational",
+            "contract": "increment-protocol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

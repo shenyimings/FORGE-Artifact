@@ -1,0 +1,223 @@
+{
+    "path": "./Audit_Reports_2024/Hacken/Hacken_PHPT_SCA-PHPT_Token_Dec2023_P-2023-075_1_20240112-13_51.pdf",
+    "project_info": {
+        "url": "https://github.com/PHPT-COM/PHPToken",
+        "commit_hash": "476400faa7e15a2823cdf0ce569ad4052946104e",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/Hacken_PHPT_SCA-PHPT_Token_Dec2023_P-2023-075_1_20240112-13_51/PHPToken"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-437"
+                ]
+            },
+            "title": "Rates And Coefficients Setters Could Be Frontrunned",
+            "description": "An attacker can monitor ongoing transactions that are in the process of updating exchange rates or coefficients and expedite their own exchange transaction by strategically increasing their transaction's gas price, allowing them to execute their exchange using outdated rates or coefficients.",
+            "severity": "Medium",
+            "contract": "ExchangeV4.sol",
+            "function": "exchange()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "F-2023-0251 - Owner Can Frontrun The User Exchange Transaction",
+            "description": "The owner can submit a transaction to adjust exchange rates concurrently with user transactions, allowing them to engage in front-running and exploit their ability to preempt user transactions.",
+            "severity": "Medium",
+            "contract": "ExchangeV4.sol",
+            "function": "exchange()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "F-2023-0203 - Missing Checks For Zero Address",
+            "description": "The contract does not properly check or prevent interactions with the zero address, leading to unintended behavior.",
+            "severity": "Low",
+            "contract": "ExchangeV4",
+            "function": "initialize()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "F-2023-0199 - Floating Pragma",
+            "description": "Using a pragma statement without specifying a fixed compiler version allows the contract to be compiled with any compatible compiler version, leading to potential compatibility and stability issues.",
+            "severity": "Info",
+            "contract": "Phptoken.sol, Blacklist.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ],
+                "4": [
+                    "CWE-766"
+                ]
+            },
+            "title": "Public Functions That Should Be External",
+            "description": "Functions that are meant to be exclusively invoked from external sources should be designated as 'external' rather than 'public'. This is essential to enhance both the gas efficiency and the overall security of the contract.",
+            "severity": "Info",
+            "contract": [
+                "PHPToken",
+                "Blacklist",
+                "ExchangeV4"
+            ],
+            "function": [
+                "initialize()",
+                "pause()",
+                "unpause()",
+                "mint()",
+                "addBlacklist()",
+                "removeBlacklist()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "F-2023-0201 - Redundant Imports",
+            "description": "Redundant imports were observed, resulting in unnecessary gas consumption during deployment and impacting code quality.",
+            "severity": "Info",
+            "contract": [
+                "PHPToken",
+                "ExchangeV4"
+            ],
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "F-2023-0206 - Missing Events",
+            "description": "Events for critical state changes should be emitted for tracking actions off-chain.",
+            "severity": "Info",
+            "contract": "ExchangeV4",
+            "function": [
+                "setWatcher()",
+                "setPhptToUsdtThresholdInWei()",
+                "setUsdtToPhptThresholdInWei()",
+                "setPhptMinimalExchangeThresholdInWei()",
+                "setUsdtMinimalExchangeThresholdInWei()",
+                "setPhptToUsdtStandartRateInWei()",
+                "setPhptToUsdtBulkCoefficient()",
+                "setUsdtToPhptStandartRateInWei()",
+                "setUsdtToPhptBulkCoefficient()",
+                "withdrawPhpt()",
+                "withdrawUsdt()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "F-2023-0208 - Events Emitted Inside Loops",
+            "description": "Emitting events inside loops incurs an overhead of 375 gas per iteration. It is recommended to emit a single event after the loop completes.",
+            "severity": "N/A",
+            "contract": "common/Blacklist.sol",
+            "function": "addBlacklist() and removeBlacklist()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Out-Of-Gas Error Due To Excessive Loop Iterations",
+            "description": "The addBlacklist() and removeBlacklist() functions iterate through user-supplied arrays to modify the blacklist status of accounts, which may exceed the maximum block Gas limit, leading to out-of-gas errors.",
+            "severity": "Info",
+            "contract": "common/Blacklist.sol",
+            "function": [
+                "addBlacklist()",
+                "removeBlacklist()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ]
+            },
+            "title": "F-2024-0396 - Testing Features",
+            "description": "ExchangeV4.sol contract contains testing features that should not be present in production code.",
+            "severity": "Info",
+            "contract": "ExchangeV4.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

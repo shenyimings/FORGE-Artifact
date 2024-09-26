@@ -1,0 +1,142 @@
+{
+    "path": "./Audit_Reports_2024/InterFi/SquidWorldStaking_AuditReport_InterFi.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0xe6Cad28f74Ce8Da96309B45eD9a5ad7fddc9A0b7",
+        "chain": "bsc",
+        "compiler_version": [
+            "v0.8.16+commit.07a7930e"
+        ],
+        "project_path": {
+            "Squidworld7days": "Experiments/contracts/SquidWorldStaking_AuditReport_InterFi/Squidworld7days"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Unprotected constructor",
+            "description": "The constructor of the contract is unprotected, allowing anyone to call it and potentially cause unintended behavior.",
+            "severity": "High",
+            "contract": "SquidStake, ReentrancyGuard",
+            "function": "<Constructor>",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Unprotected owner variable",
+            "description": "The 'owner' variable is declared as public and can be modified by anyone, which may lead to unauthorized changes to the contract's ownership.",
+            "severity": "High",
+            "contract": "SquidStake",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "Reentrancy risk in transferOwnership function",
+            "description": "Smart contract utilizes redundant code for transferOwnership(). Ideal transfer ownership code should look be written like:",
+            "severity": "High",
+            "contract": "SquidWorldStaking",
+            "function": "transferOwnership()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "Reentrancy risk in claimPool function",
+            "description": "The claimPool function has a reentrancy risk due to the nonReentrant modifier.",
+            "severity": "High",
+            "contract": "SquidStake",
+            "function": "claimPool()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "Reentrancy risk in retrieveEthStuck function",
+            "description": "N/A",
+            "severity": "High",
+            "contract": "SquidWorld Staking Contract",
+            "function": "retrieveEthStuck()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Reentrancy risk in retrieveERC20TokenStuck function",
+            "description": "The function retrieveERC20TokenStuck has a reentrancy risk.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "retrieveERC20TokenStuck()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Centralization risk due to owner's ability to activate stake pool and change pool limit",
+            "description": "The smart contract has an active ownership which poses a centralization risk, allowing the owner to activate stake pool and change pool limit.",
+            "severity": "High",
+            "contract": "SquidStake",
+            "function": [
+                "poolActivation",
+                "changePoolLimit"
+            ],
+            "lineNumber": "N/A"
+        }
+    ]
+}

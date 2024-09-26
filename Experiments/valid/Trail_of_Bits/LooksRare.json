@@ -1,0 +1,294 @@
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/LooksRare.pdf",
+    "project_info": {
+        "url": "https://github.com/LooksRare/looksrare-contracts",
+        "commit_hash": "N/A",
+        "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "is_exists": false,
+        "chain": "eth",
+        "compiler_version": [
+            "v0.4.18+commit.9cf6e910"
+        ],
+        "project_path": {
+            "TetherToken": "Experiments/contracts/LooksRare/TetherToken"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Risk of reuse of signatures across forks due to lack of chainID validation",
+            "description": "At construction, the `LooksRareExchange` contract computes the domain separator using the network\u2019s `chainID`, which is fixed at the time of deployment. In the event of a post-deployment chain fork, the `chainID` cannot be updated, and the signatures may be replayed across both versions of the chain.",
+            "severity": "High",
+            "contract": "LooksRareExchange",
+            "function": "constructor()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-282"
+                ],
+                "3": [
+                    "CWE-708"
+                ]
+            },
+            "title": "Lack of two-step process for contract ownership changes",
+            "description": "The contract does not have a two-step process for changing ownership, which can lead to irrevocable mistakes.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": [
+                "renounceOwnership()",
+                "transferOwnership(address)"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-74"
+                ],
+                "3": [
+                    "CWE-94"
+                ]
+            },
+            "title": "Project dependencies contain vulnerabilities",
+            "description": "The project's dependencies, specifically underscore, contain vulnerabilities such as arbitrary code injection (CVE-2021-23358), which can lead to exploitation by malicious actors.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Users that create ask orders cannot modify minPercentageToAsk",
+            "description": "The default value of minPercentageToAsk is set to 85%, and users creating ask orders cannot modify it, which may result in them receiving less of a sale's value than expected due to changes in royalty fees.",
+            "severity": "N/A",
+            "contract": "LooksRareExchange",
+            "function": "_transferFeesAndFunds",
+            "lineNumber": "422-466"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-250"
+                ]
+            },
+            "title": "Excessive privileges of RoyaltyFeeSetter and RoyaltyFeeRegistry owners",
+            "description": "The contract owners of `RoyaltyFeeSetter` and `RoyaltyFeeRegistry` have excessive privileges to manipulate an NFT collection's royalty information, violating the principle of least privilege.",
+            "severity": "Low",
+            "contract": "RoyaltyFeeSetter and RoyaltyFeeRegistry",
+            "function": "updateRoyaltyInfoForCollection",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-311"
+                ],
+                "3": [
+                    "CWE-312"
+                ]
+            },
+            "title": "Insufficient protection of sensitive information",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-439"
+                ]
+            },
+            "title": "Contracts used as dependencies do not track upstream changes",
+            "description": "The LooksRare contracts may not reliably reflect updates or security fixes implemented in their dependencies, as those updates must be manually integrated into the contracts.",
+            "severity": "N/A",
+            "contract": "LooksRare",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Missing event for a critical operation",
+            "description": "The contract does not emit an event for a critical operation.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1173"
+                ]
+            },
+            "title": "Taker orders are not EIP-712 signatures",
+            "description": "The TakerOrder struct does not implement EIP-712 signatures, creating an asymmetry between the user experience of makers and takers, making users dependent on UI information and limited by wallet software UX.",
+            "severity": "Informational",
+            "contract": "OrderTypes",
+            "function": "N/A",
+            "lineNumber": "31-38"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Solidity compiler optimizations can be problematic",
+            "description": "The LooksRare contracts have enabled optional compiler optimizations in Solidity which can lead to security implications due to optimization bugs.",
+            "severity": "Informational",
+            "contract": "LooksRare protocol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "isContract may behave unexpectedly",
+            "description": "The `isContract` function in Address.sol may return unexpected results due to edge cases in which the underlying `extcodesize` function can return 0 for contracts in construction, leading to potential validation issues.",
+            "severity": "Informational",
+            "contract": "Address",
+            "function": "isContract(address)",
+            "lineNumber": "L27-37"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "tokenId and amount fully controlled by the order strategy when matching two orders",
+            "description": "The LooksRareExchange contract does not verify tokenId and amount returned by the strategy call, allowing a faulty or malicious strategy to cause a loss of funds.",
+            "severity": "N/A",
+            "contract": "LooksRareExchange",
+            "function": "matchAskWithTakerBidUsingETHAndWETH",
+            "lineNumber": "186-212, 217-228"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-74"
+                ]
+            },
+            "title": "Risk of phishing due to data stored in maker order params field",
+            "description": "The storage of data in the MakerOrder struct's params field may increase the chance that users could be phished.",
+            "severity": "Medium",
+            "contract": "MakerOrder",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1173"
+                ]
+            },
+            "title": "Use of legacy openssl version in solidity-coverage plugin",
+            "description": "The `LooksRare` codebase uses a version of `solidity-coverage` that relies on a legacy version of `openssl` to run.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "TypeScript compiler errors during deployment",
+            "description": "TypeScript throws an error while trying to compile scripts during the deployment process.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "deploy-exchange.ts",
+            "lineNumber": "29"
+        }
+    ]
+}

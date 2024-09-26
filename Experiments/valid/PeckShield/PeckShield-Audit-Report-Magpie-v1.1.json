@@ -1,0 +1,140 @@
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Magpie-v1.1.pdf",
+    "project_info": {
+        "url": "https://github.com/magpiexyz/magpie_contracts/tree/4c0677d",
+        "commit_hash": "4c0677d",
+        "address": "0xD06716E1Ff2E492Cc5034c2E81805562dd3b45fa",
+        "is_exists": false,
+        "chain": "bsc",
+        "compiler_version": [
+            "v0.8.4+commit.c7e474f2"
+        ],
+        "project_path": {
+            "MGP": "Experiments/contracts/PeckShield-Audit-Report-Magpie-v1/MGP"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-354"
+                ]
+            },
+            "title": "Improved Sanity Checks For Function Parameters",
+            "description": "The `set()` function in the `MasterMagpie` contract does not validate the input pool before updating the weight, rewarder and locker for the pool, which can lead to unfair reward distribution to stake holders.",
+            "severity": "Low",
+            "contract": "MasterMagpie",
+            "function": "set()",
+            "lineNumber": "615-617"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Incorrect Token Flow in withdraw()",
+            "description": "The `WombatPoolHelper` has an incorrect token flow between `WombatPoolHelper` and `WombatStaking` which needs to be corrected during assets withdrawal.",
+            "severity": "High",
+            "contract": "WombatPoolHelper/WombatStaking",
+            "function": "withdraw()",
+            "lineNumber": "137, 140"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "In the Magpie protocol, there is a privileged account, i.e., owner, that plays a critical role in governing and regulating the system-wide operations.",
+            "severity": "Medium",
+            "contract": "MasterMagpie",
+            "function": "setPoolManagerStatus()",
+            "lineNumber": "95-102"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Revisited Logic To Calculate The Rewards",
+            "description": "The current logic in reward calculation needs to be improved in `WombatStaking` contract's `harvest()` function.",
+            "severity": "Medium",
+            "contract": "WombatStaking",
+            "function": "harvest()",
+            "lineNumber": "347-348"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Revisited Logic in cancelUnlock()",
+            "description": "In the `cancelUnlock()` function of VLMGP contract, re-depositing MGP back into MasterMagpie causes users' vlMGP balances to be doubled, allowing them to gain as many vlMGP as they want and drain all the locked MGP from the contract.",
+            "severity": "High",
+            "contract": "VLMGP",
+            "function": "cancelUnlock()",
+            "lineNumber": "280"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1287"
+                ]
+            },
+            "title": "Accommodation of Non-ERC20-Compliant Tokens",
+            "description": "The `transfer` function does not comply with ERC20 standard, allowing transactions to proceed successfully without being reverted when checks fail.",
+            "severity": "Low",
+            "contract": "Multiple Contracts",
+            "function": "transfer()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improved Quote Between depositToken and LP",
+            "description": "The amount returned from the getDepositTokenAmtByLP() routine is in WAD, not in the decimals of the depositToken.",
+            "severity": "Medium",
+            "contract": "WombatStaking",
+            "function": "depositLP()",
+            "lineNumber": "348"
+        }
+    ]
+}

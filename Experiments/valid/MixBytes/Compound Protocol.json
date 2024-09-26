@@ -1,0 +1,43 @@
+{
+    "path": "./Audit_Reports_2024/MixBytes/Compound Protocol.md",
+    "project_info": {
+        "url": "https://github.com/CreamFi/compound-protocol",
+        "commit_hash": "23a4ae93adc70334553f5a83429a4e967c1eefaa",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/Compound Protocol/compound-protocol"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Possible value truncation issues",
+            "description": "In `CCollateralCapErc20.sol` at line 513, the `div_ScalarByExpTruncate()` may round the result down to the next nearest integer if it is calculated to be a non-integer number of cToken units, sufficiently small loans may be affected, however, the loss should never be more than one indivisible unit of a token used",
+            "severity": "Medium",
+            "contract": "CCollateralCapErc20",
+            "function": "div_ScalarByExpTruncate()",
+            "lineNumber": "513"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-369"
+                ]
+            },
+            "title": "Allowed zero `mintFresh`",
+            "description": "Zero `mintFresh` doesn't change the state of supply and collateral tokens. It only consumes gas and emits an \"empty\" event.",
+            "severity": "Warning",
+            "contract": "CCollateralCapErc20",
+            "function": "mintFresh()",
+            "lineNumber": "476"
+        }
+    ]
+}

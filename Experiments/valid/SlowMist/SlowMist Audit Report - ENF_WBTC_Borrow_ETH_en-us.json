@@ -1,0 +1,174 @@
+{
+    "path": "./Audit_Reports_2024/SlowMist/SlowMist Audit Report - ENF_WBTC_Borrow_ETH_en-us.pdf",
+    "project_info": {
+        "url": "https://github.com/Shata-Capital/ENF_WBTC_Borrow_ETH",
+        "commit_hash": "31edacafb1e3b59ead110184d1e25b333235c5d2",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/SlowMist Audit Report - ENF_WBTC_Borrow_ETH_en-us/ENF_WBTC_Borrow_ETH"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Redundant parameter issue",
+            "description": "In the PriceOracle contract, the getAssetPrice function receives an _asset parameter that is not used.",
+            "severity": "Suggestion",
+            "contract": "PriceOracle",
+            "function": "getAssetPrice(address _asset)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Token swap defect when withdrawing",
+            "description": "In the _withdraw function of WBTCBorrowETH contract, when ethWithdrawn < ethDebt , the contract will withdraw WBTC tokens from AAVE and swap them into ETH to repay the loan. If the amount of ETH is greater than",
+            "severity": "Medium",
+            "contract": "WBTCBorrowETH",
+            "function": "_withdraw",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-401"
+                ]
+            },
+            "title": "Swap balance has not been processed",
+            "description": "In the _withdraw function of the WBTCBorrowETH contract, when ethWithdrawn < ethDebt , the contract will withdraw WBTC tokens from AAVE and swap them into ETH to repay the loan. If the amount of ETH is greater than the debt required to be repaid (ethBal > ethDebt), the contract will swap the excess part into WBTC, but these excess WBTC tokens have not been sent to the user, nor have they been re-staked into AAVE.",
+            "severity": "Medium",
+            "contract": "WBTCBorrowETH",
+            "function": "_withdraw",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Slippage check issue with _swapExactInput operation",
+            "description": "The _swapExactInput function does not perform a slippage check, which will result in a high probability of being subjected to a sandwich attack by MEV Bot when performing withdraw and emergencyWithdraw operations.",
+            "severity": "Low",
+            "contract": "WBTCBorrowETH",
+            "function": "_swapExactInput",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Defects in LTV operation",
+            "description": "In the reduceLTV operation, the contract will first extract x amount of WBTC from AAVE and exchange it into WETH for repayment. In this operation, although the liabilities of the contract are reduced, the amount of collateral of the contract is also reduced. At the same time, due to the impact of the slippage of the swap operation, the reduceLTV operation may not be able to effectively control the risk as expected.",
+            "severity": "Medium",
+            "contract": "WBTC_Borrow_ETH.sol",
+            "function": "reduceLTV()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "Reduced availability for LTV operations",
+            "description": "The protocol does not manage LTV properly, leading to risks such as bad debts of the agreement due to multiple leverages and market instability.",
+            "severity": "High",
+            "contract": "WBTC_Borrow_ETH",
+            "function": "reduceLTV()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "[N7] The withdraw function will not work when the market is extreme",
+            "description": "In extreme market conditions, if the protocol's liabilities are fully liquidated (getDebt becomes 0), ethDebt will be 0, causing the _withdraw function to fail and users' funds to be locked in the protocol.",
+            "severity": "Medium",
+            "contract": "WBTC_Borrow_ETH.sol",
+            "function": "_withdraw",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Risk of multiple leverages in unilateral market conditions",
+            "description": "The protocol deposits WBTC tokens deposited by users into AAVE and lends ETH, and then deposits the loaned ETH into the ENF_ETH_Leverage protocol. The ENF_ETH_Leverage protocol also creates positions in AAVE via ETH/stETH. This makes the ENF_WBTC_Borrow_ETH protocol have multiple leverages, which means it is extremely sensitive to market stability.",
+            "severity": "Suggestion",
+            "contract": "WBTC_Borrow_ETH.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Risk of excessive authority",
+            "description": "In the protocol, the owner role has many permissions, such as setting sensitive parameters, suspending the contract, making emergency withdrawals, etc., which will greatly increase the single point of risk.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

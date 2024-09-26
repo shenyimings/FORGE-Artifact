@@ -1,0 +1,74 @@
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-ERC20-FAT-v1.0.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0x73280e2951785f17acc6cb2a1d0c4d65031d54b3",
+        "chain": "bsc",
+        "compiler_version": [
+            "v0.6.12+commit.27d51765"
+        ],
+        "project_path": {
+            "FatAnimalToken": "Experiments/contracts/PeckShield-Audit-Report-ERC20-FAT-v1/FatAnimalToken"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-923"
+                ],
+                "3": [
+                    "CWE-300"
+                ]
+            },
+            "title": "Voting Amplification With Sybil Attacks",
+            "description": "The `FAT` tokens can be used for governance in allowing for users to cast and record the votes. The current governance functionality is vulnerable to a new type of so-called `Sybil` attacks.",
+            "severity": "High",
+            "contract": "FatAnimalToken",
+            "function": "_delegate(address delegator, address delegatee)",
+            "lineNumber": "1029-1033"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue Of Admin Roles",
+            "description": "In the FatAnimalToken token contract, there is a privileged owner account (assigned in the constructor) that plays a critical role in governing and regulating the token-related operations (e.g., mints tokens). To elaborate, we show below the mint() function in the FatAnimalToken contract. This function allows the owner to mint any amount of FATs to any user account.",
+            "severity": "Medium",
+            "contract": "FatAnimalToken",
+            "function": "mint()",
+            "lineNumber": "855-858"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Consistency Between Function Definitions And Return Statements",
+            "description": "In the `FatAnimalToken` contract, the `delegate()` and `delegateBySig()` functions are used to delegate votes from `msg.sender` or an intended signatory to the given `delegatee`. The functions return by calling the internal routine `_delegate()`, and the `return` keyword is not needed as the function is declared without any return value.",
+            "severity": "Informational",
+            "contract": "FatAnimalToken",
+            "function": "delegate()",
+            "lineNumber": "914"
+        }
+    ]
+}

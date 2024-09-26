@@ -1,0 +1,198 @@
+{
+    "path": "./Audit_Reports_2024/Spearbit/LiquidCollectivePR-Spearbit-Security-Review-Sept.pdf",
+    "project_info": {
+        "url": "https://github.com/liquid-collective/liquid-collective-protocol",
+        "commit_hash": "4618fe9826f972bdfb71bccf71148bdb2a224454",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/LiquidCollectivePR-Spearbit-Security-Review-Sept/liquid-collective-protocol"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Use msg.sender whenever possible",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ]
+            },
+            "title": "Test function testMigrate uses outdated values for assertion",
+            "description": "The test function testMigrate compares schedule.lockDuration to outdated newLockDuration values, resulting in failing assertions.",
+            "severity": "Informational",
+            "contract": "TLC_globalUnlockScheduleMigration.t.sol",
+            "function": "testMigrate()",
+            "lineNumber": "L26-L108"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Rounding Error in Unlocked Token Amount Calculation",
+            "description": "There is a rounding error in calculating the unlocked amount, which may lead to minor discrepancies in the tokens available for release.",
+            "severity": "Informational",
+            "contract": "ERC20VestableVotesUpgradeable.1",
+            "function": "N/A",
+            "lineNumber": "L458"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "It might take longer than 2 years to release all the vested schedule amount after the lock period ends",
+            "description": "The logic in _releaseVestingSchedule(_index) needs to be updated to consider the updated effective vested amount at the end of the schedule and not the original schedule amount, otherwise it may take longer than 2 years to release all the vested schedule amount after the lock period ends.",
+            "severity": "Low Risk",
+            "contract": "N/A",
+            "function": "_releaseVestingSchedule(_index)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "_computeVestingReleasableAmount 's _time input parameter can be removed/inlined",
+            "description": "At both call sites to _computeVestingReleasableAmount(...), time is _getCurrentTime(). One can remove the _time input parameter from _computeVestingReleasableAmount and instead inline _getCurrentTime() in its implementation.",
+            "severity": "Informational",
+            "contract": "ERC20VestableVotesUpgradeable.1.sol",
+            "function": "_computeVestingReleasableAmount",
+            "lineNumber": "L341-L348, L400-L404"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Comments and NatSpec",
+            "description": "Might be more accurate to say: [ERC20VestableVotesUpgradeable.1.sol#L343] that could have been released at the current timestamp.",
+            "severity": "Informational",
+            "contract": "ERC20VestableVotesUpgradeable.1",
+            "function": "N/A",
+            "lineNumber": "343, 396-404, 441"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Schedule amounts cannot be revoked or released",
+            "description": "The migration for schedule ids 9 to 12 has parameters that cause _computeVestedAmount(...) to always return 0, preventing tokens from being released. Also, these tokens cannot be revoked since the set [start, end] where end < start would be empty.",
+            "severity": "Low Risk",
+            "contract": "ERC20VestableVotesUpgradeable.1.sol",
+            "function": "N/A",
+            "lineNumber": "L303-L306, L432-L434"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-826"
+                ]
+            },
+            "title": "A revoked schedule might be able to be fully released before the 2 year global lock period",
+            "description": "If a creator revokes its revocable vesting schedule and changes the end time to a new earlier date, the unlockedAmount calculated in _computeGlobalUnlocked(...) is based on the original formula does not use the new effective amount (the total vested amount at the new end date).",
+            "severity": "Low Risk",
+            "contract": "ERC20VestableVotesUpgradeable.1.sol",
+            "function": "_computeGlobalUnlocked",
+            "lineNumber": "L410-L412, L458"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Unlock date of certain vesting schedules does not meet the requirement",
+            "description": "All vesting schedules should have the unlock date (start + lockDuration) set to 16/10/2024 0:00 GMT+0 post-migration. The following is the list of vesting schedules whose unlock date does not meet the requirement post-migration.",
+            "severity": "Low Risk",
+            "contract": "TLC_globalUnlockScheduleMigration.sol",
+            "function": "N/A",
+            "lineNumber": "359"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Temporary Denial of Service due to VestingSchedule.releasedAmount > globalUnlocked",
+            "description": "Users with VestingSchedule.releasedAmount > globalUnlocked will be temporarily denied of service due to an accounting error caused by a wrong implicit assumption during the execution of VestingSchedule.amount / 24.",
+            "severity": "Low Risk",
+            "contract": "ERC20VestableVotesUpgradeableV1",
+            "function": "_computeVestingReleasableAmount",
+            "lineNumber": "L413"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "TlcMigration.migrate : Missing input validation",
+            "description": "The migrate function is missing necessary validation checks to ensure no erroneous values are inserted.",
+            "severity": "Low Risk",
+            "contract": "TLC_globalUnlockScheduleMigration.sol",
+            "function": "migrate()",
+            "lineNumber": "L365-L386"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Optimise the release amount calculation",
+            "description": "In the presence of a global lock schedule one calculates the release amount as: LibUint256.min(vestedAmount - releasedAmount, globalUnlocked - releasedAmount). Recommendation is to avoid one subtraction by moving the releasedAmount out of the min function.",
+            "severity": "Gas Optimization",
+            "contract": "ERC20VestableVotesUpgradeable.1.sol",
+            "function": "N/A",
+            "lineNumber": "L413"
+        }
+    ]
+}

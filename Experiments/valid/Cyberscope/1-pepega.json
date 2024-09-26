@@ -1,0 +1,233 @@
+{
+    "path": "./Audit_Reports_2024/Cyberscope/1-pepega.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "main",
+        "address": "0xb9f037300c04693eff1514d94627ab86bb55b56e",
+        "chain": "bsc",
+        "compilerVersion": [
+            "v0.8.18+commit.87f61d96"
+        ],
+        "project_path": {
+            "Pepega": "Experiments/contracts\\1-pepega\\Pepega"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "ST - Stops Transactions",
+            "description": "The contract's transactions are disabled by default and cannot be disabled again once enabled.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "PVC - Price Volatility Concern",
+            "description": "The contract accumulates tokens from taxes to swap them for ETH, but the variable updateSwapTokensAtAmount sets a threshold that can trigger a huge amount of token swaps, potentially leading to significant price volatility.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ],
+                "4": [
+                    "CWE-910"
+                ]
+            },
+            "title": "PTRP - Potential Transfer Revert Propagation",
+            "description": "The contract sends funds to a `marketingWallet` as part of the transfer flow. This address can either be a wallet address or a contract. If the address belongs to a contract then it may revert from incoming payment. As a result, the error will propagate to the token\u2019s contract and revert the transfer.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "transfer()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "FAI - Fees Amount Inconsistency",
+            "description": "The state variable `tokensForMarketing` accumulates transaction fees. During the `swap()` flow, the accumulated fees are swapped for ETH and the `tokensForMarketing` is reset. If the contract owner executes the `withdrawToken()` method, the accumulated fees will be transferred to the owner's address but the `tokensForMarketing` will not be updated.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "swap() and withdrawToken()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "RSML - Redundant SafeMath Library",
+            "description": "The usage of the SafeMath library adds complexity and overhead, increasing gas consumption unnecessarily.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ]
+            },
+            "title": "L04 - Conformance to Solidity Naming Conventions",
+            "description": "The code does not adhere to the Solidity style guide, which can affect readability and maintainability.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "L07 - Missing Events Arithmetic",
+            "description": "Events are a way to record and log information about changes or actions that occur within a contract. They are often used to notify external parties or clients about events that have occurred within the contract, such as the transfer of tokens or the completion of a task.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ],
+                "3": [
+                    "CWE-561"
+                ]
+            },
+            "title": "L09 - Dead Code Elimination",
+            "description": "Dead code can make a contract more difficult to understand and maintain, and can also increase the size of the contract and the cost of deploying and interacting with it.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "L15 - Local Scope Variable Shadowing",
+            "description": "Local scope variable shadowing occurs when a local variable with the same name as a variable in an outer scope is declared within a function or code block.",
+            "severity": "N/A",
+            "contract": "Pepega",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "L16 - Validate Variable Setters",
+            "description": "The contract performs operations on variables configured by user-supplied input without proper checks for zero values, leading to potential problems during execution.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "L19 - Stable Compiler Version",
+            "description": "The `^` symbol indicates that any version of Solidity that is compatible with the specified version (i.e., any version that is a higher minor or patch version) can be used to compile the contract. The version lock is a mechanism that allows the author to specify a minimum version of the Solidity compiler that must be used to compile the contract code.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "L20 - Succeeded Transfer Check",
+            "description": "According to the ERC20 specification, the transfer methods should be checked if the result is successful. Otherwise, the contract may wrongly assume that the transfer has been established.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

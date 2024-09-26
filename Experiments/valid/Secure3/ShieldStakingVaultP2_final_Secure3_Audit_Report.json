@@ -1,0 +1,119 @@
+{
+    "path": "./Audit_Reports_2024/Secure3/ShieldStakingVaultP2_final_Secure3_Audit_Report.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "4338af5d9e2494a7689e023aa60cd3086c299fd6",
+        "address": "0x182b723a58739a9c974cfdb385ceadb237453c28",
+        "chain": "eth",
+        "compiler_version": [
+            "vyper:0.2.8"
+        ],
+        "project_path": {
+            "Vyper_contract": "Experiments/contracts/ShieldStakingVaultP2_final_Secure3_Audit_Report/Vyper_contract"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Events not emitted for important state changes",
+            "description": "When critical state variables are changed, events are not emitted, which is against best practice.",
+            "severity": "Informational",
+            "contract": "StakingVault",
+            "function": "setCurveEnable",
+            "lineNumber": "804"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Logic error in StakingVault contract getAllEtherInvested function",
+            "description": "Only the amount of claimable LDO Token is read, not real claim. Cannot use so many tokens to swap on exchange.",
+            "severity": "Medium",
+            "contract": "StakingVault",
+            "function": "getAllEtherInvested()",
+            "lineNumber": "716"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Missing error message in require statements",
+            "description": "require can be used to check for conditions and throw an exception if the condition is not met, in which case the error message provided by the developer will appear. This is why a very descriptive error message is needed.",
+            "severity": "Informational",
+            "contract": "StakingVault",
+            "function": "N/A",
+            "lineNumber": "809"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Redundant logic in StakingVault contract settlement function",
+            "description": "The redundant logic in the settlement function of StakingVault contract can be simplified to `steNeeded = steBalance` in the else block.",
+            "severity": "Low",
+            "contract": "StakingVault",
+            "function": "settlement()",
+            "lineNumber": "516-518"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Variable `broker` can never be changed in StakingVault contract",
+            "description": "The variable `broker` is always empty and cannot be changed because the function `addBrokerRelationship` can never be called.",
+            "severity": "Medium",
+            "contract": "StakingVault",
+            "function": "deposit()",
+            "lineNumber": "148"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "settlement function is vulnerable to MEV attack",
+            "description": "The settlement function has a modifier 'onlyGovernance' but it's still vulnerable to MEV attack due to imbalanced pool STETH_ETH causing incorrect calculation of min amount received, making '_min_amount' parameter useless for slippage protection.",
+            "severity": "Medium",
+            "contract": "StakingVault",
+            "function": "settlement()",
+            "lineNumber": "482"
+        }
+    ]
+}

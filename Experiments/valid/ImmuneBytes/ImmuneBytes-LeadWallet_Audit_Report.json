@@ -1,0 +1,123 @@
+{
+    "path": "./Audit_Reports_2024/ImmuneBytes/ImmuneBytes-LeadWallet_Audit_Report.pdf",
+    "project_info": {
+        "url": "https://github.com/leadwallet/LEAD-Stake-DApp-Backend",
+        "commit_hash": "1099c116912516f60e4fd78bc5fba3148b5c8676",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/ImmuneBytes-LeadWallet_Audit_Report/LEAD-Stake-DApp-Backend"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Spamming by staking minimum value of Lead Token",
+            "description": "Users can spam the LeadStake contract by staking the minimumStakeValue and yielding the referral bonus, potentially elevating a DoS issue.",
+            "severity": "Low",
+            "contract": "LeadStake",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "CanApprove modifier",
+            "description": "The Lead token (ERC20) contract has a canApprove modifier which contains an unnecessary check balances[msg.sender] >= value.",
+            "severity": "Low",
+            "contract": "Lead Token",
+            "function": "approve()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "No address check for to variable in ERC20\u2019s transfer",
+            "description": "The transfer() function in ERC20.sol does not check the validity of input addresses by the user, which can lead to unintentional situations.",
+            "severity": "Medium",
+            "contract": "ERC20",
+            "function": "transfer()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "No check for address inputs variables in ERC20 transfer",
+            "description": "The transfer() function in ERC20.sol does not check the validity of input addresses by the user, which can lead to unintentional situations.",
+            "severity": "Medium",
+            "contract": "ERC20",
+            "function": "transfer()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "No check for referrer address",
+            "description": "In registerAndStake() function, referrer address is taken as input from the user, but its validity is not checked which can be misused. Any address passed as referrer address collects referral rewards.",
+            "severity": "Medium",
+            "contract": "LeadStake",
+            "function": "registerAndStake()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Too much Admin controls",
+            "description": "Admin has too many rights to change crucial parameters of smart contract like stakingTaxRate, registrationTax, weeklyROI, unstakingTaxRate, minimumStakeValue and referralTaxAllocation.",
+            "severity": "High",
+            "contract": "LeadStaker",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

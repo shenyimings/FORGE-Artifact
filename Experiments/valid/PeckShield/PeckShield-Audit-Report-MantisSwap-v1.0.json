@@ -1,0 +1,83 @@
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-MantisSwap-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/Mantissa-Finance/audit-v2/tree/99c074e5",
+        "commit_hash": "99c074e5",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/PeckShield-Audit-Report-MantisSwap-v1/audit-v2"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-684"
+                ]
+            },
+            "title": "Potential Reentrancy Risk in Rewarder::onMntReward()",
+            "description": "The `checks-effects-interactions` principle is violated in the `Rewarder` contract's `onMntReward()` function, which can lead to a reentrancy risk when interacting with an external token contract.",
+            "severity": "Medium",
+            "contract": "MasterMantis/Rewarder",
+            "function": "onMntReward()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Proper Update of user.lastClaim in veMNT::deposit()",
+            "description": "In the MantisSwap protocol, the veMNT contract does not update the lastClaim variable based on the new veMntRate and total deposit amount, allowing users to claim more veMNT than expected.",
+            "severity": "High",
+            "contract": "veMNT",
+            "function": "deposit()",
+            "lineNumber": "100-105"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Improved Validation of Unclaimed List in claimAuctionBid()",
+            "description": "In the `claimAuctionBid()` routine, there is a lack of validation for the list state, allowing a sold list to be claimed more than once.",
+            "severity": "Medium",
+            "contract": "Marketplace",
+            "function": "claimAuctionBid()",
+            "lineNumber": "216-232"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "In the MantisSwap protocol, there is a privileged account, i.e., owner, that plays a critical role in governing and regulating system-wide operations.",
+            "severity": "Low",
+            "contract": "MasterMantis",
+            "function": [
+                "setGaugeUpdateInterval",
+                "setGaugeWeights"
+            ],
+            "lineNumber": "125-129, 131"
+        }
+    ]
+}

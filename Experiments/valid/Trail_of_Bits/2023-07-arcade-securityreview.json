@@ -1,0 +1,388 @@
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/2023-07-arcade-securityreview.pdf",
+    "project_info": {
+        "url": "https://github.com/arcadexyz/arcade-protocol",
+        "commit_hash": "4f510e0e2287901abb21265f72aa4465166ab09d",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/2023-07-arcade-securityreview/arcade-protocol"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ],
+                "2": [
+                    "CWE-1025"
+                ],
+                "3": [
+                    "CWE-595"
+                ],
+                "4": [
+                    "CWE-597"
+                ]
+            },
+            "title": "Different zero-address errors thrown by single and batch NFT withdrawal functions",
+            "description": "The `withdrawBatch` function throws a custom error (`AV_ZeroAddress`) if the `to` parameter is set to the zero address, whereas the single NFT withdrawal functions (`withdrawERC721`, `withdrawERC1155`) do not explicitly check the `to` parameter and will revert with a different error message.",
+            "severity": "Informational",
+            "contract": "AssetVault",
+            "function": [
+                "withdrawBatch",
+                "withdrawERC721",
+                "withdrawERC1155"
+            ],
+            "lineNumber": "193-196, 203, 206"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Solidity compiler optimizations can be problematic",
+            "description": "Enabling optional compiler optimizations in Solidity may lead to undefined behavior and security vulnerabilities due to past optimization bugs.",
+            "severity": "Undetermined",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1061"
+                ]
+            },
+            "title": "callApprove does not follow approval best practices",
+            "description": "The `AssetVault.callApprove` function has undocumented behaviors and lacks the increase/decrease approval functions, which might impede third-party integrations.",
+            "severity": "Informational",
+            "contract": "contracts/vault/AssetVault.sol",
+            "function": "callApprove()",
+            "lineNumber": "282-286"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Risk of confusing events due to missing checks in whitelist contracts",
+            "description": "The `CallWhitelist` contract lacks validation in its `add`, `remove`, and `setRegistry` functions, leading to potential emission of confusing events.",
+            "severity": "Medium",
+            "contract": "CallWhitelist",
+            "function": "add, remove, setRegistry",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Missing checks of _exists() return value",
+            "description": "The ERC-721 `_exists()` function returns a Boolean value indicating whether a token with the specified `tokenId` exists. In two instances in Arcade's codebase, the function is called but its return value is not checked, bypassing the intended result of the existence check.",
+            "severity": "Informational",
+            "contract": "PromissoryNote and VaultFactory",
+            "function": "tokenURI()",
+            "lineNumber": "165-169"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Incorrect deployers in integration tests",
+            "description": "The incorrect deployers in integration test cases were changed from `signers[0]` to `admin`. A new test was implemented to check that the correct permissions are set when the protocol is deployed.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Risk of out-of-gas revert due to use of transfer() in claimFees",
+            "description": "The use of `transfer()` in `claimFees` could lead to an out-of-gas revert, potentially causing issues with claiming fees.",
+            "severity": "Medium",
+            "contract": "VaultFactory",
+            "function": "claimFees()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Risk of lost funds due to lack of zero-address check in functions",
+            "description": "The VaultFactory.claimFees, RepaymentController.redeemNote, LoanCore.withdraw, and LoanCore.withdrawProtocolFees functions are all missing a check to ensure that the `to` argument does not equal the zero address. As a result, these functions could transfer funds to the zero address.",
+            "severity": "Medium",
+            "contract": "VaultFactory.sol, RepaymentController.sol, LoanCore.sol",
+            "function": "claimFees(), redeemNote(), withdraw(), withdrawProtocolFees()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "The maximum value for FL_09 is not set by FeeController",
+            "description": "The FeeController contract does not properly set the maximum value for FL_09.",
+            "severity": "Low",
+            "contract": "FeeController",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Fees can be changed while a loan is active",
+            "description": "All fees in the protocol are calculated using the current fees, as informed by the `FeeController` contract. However, fees can be changed by the team at any time, so the effective rollover and closure fees that the users will pay can change once their loans are already initialized; therefore, these fees are impossible to know in advance.",
+            "severity": "Low",
+            "contract": "FeeController",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Asset vault nesting can lead to loss of assets",
+            "description": "The nesting of asset vaults can result in the loss of assets due to potential reentrancy or recursive calls.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Risk of locked assets due to use of _mint instead of _safeMint",
+            "description": "The asset vault and promissory note ERC-721 tokens are minted via the `_mint` function rather than the `_safeMint` function, which can cause tokens to become irretrievable.",
+            "severity": "Medium",
+            "contract": "VaultFactory.sol, PromissoryNote.sol",
+            "function": "initializeBundle",
+            "lineNumber": "171"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Borrowers cannot realize full loan value without risking default",
+            "description": "The valuation complexity of tokens used as collateral can lead to borrowers being unable to realize the full loan value without risking default due to potential changes in the token's value during the loan period.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "itemPredicates encoded incorrectly according to EIP-712",
+            "description": "The `itemPredicates` parameter is not encoded correctly according to EIP-712 guidelines, which can lead to security issues in the lending transaction.",
+            "severity": "Critical",
+            "contract": "OriginationController",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "The fee values can distort the incentives for the borrowers and lenders",
+            "description": "Having fine control over possible fee settings introduces hard-to-predict incentive scenarios that can scare users away or cause users who do not account for fees to inadvertently lose profits.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Malicious borrowers can use forceRepay to grief lenders",
+            "description": "A malicious borrower can grief a lender by calling the `forceRepay` function instead of the `repay` function; doing so would allow the borrower to pay less in gas fees and require the lender to perform a separate transaction to retrieve their funds and to pay a redeem fee.",
+            "severity": "Medium",
+            "contract": "contracts/RepaymentController.sol",
+            "function": "forceRepay()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Token does not allow flash minting",
+            "description": "Flash minting can lead to substantial swings in the balance and the total supply, which necessitate strict and comprehensive overflow checks in the operation of the token.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Supply is owned by more than a few users",
+            "description": "If a few users own most of the tokens, they can influence operations based on the tokens\u2019 repartition.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Total supply is sufficient",
+            "description": "Tokens with a low total supply can be easily manipulated.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 19,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ],
+                "3": [
+                    "CWE-302"
+                ]
+            },
+            "title": "Tokens are located in more than a few exchanges",
+            "description": "If all the tokens are in one exchange, a compromise of the exchange could compromise the contract relying on the token.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 20,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Users understand the risks associated with a large amount of funds or flash loans",
+            "description": "This finding highlights the importance of users being aware of potential risks when dealing with significant amounts of funds or utilizing flash loans.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

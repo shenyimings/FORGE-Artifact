@@ -1,0 +1,80 @@
+{
+    "path": "./Audit_Reports_2024/Hacken/Diverse_Solutions_SC-Audit-Report_15062023_SA-1275.pdf",
+    "project_info": {
+        "url": "https://github.com/DiverseSolutions/ardmoney-staking-smart-contracts",
+        "commit_hash": "71b0b2e7d5aaa4db31652574cdb48f2081e045a2",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/Diverse_Solutions_SC-Audit-Report_15062023_SA-1275/ardmoney-staking-smart-contracts"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "C01. Highly Permissive Role Access",
+            "description": "The XARDM token contract has a mint() function that can be accessed by any account with MINTER_ROLE assigned, including the XARDMStaking contract and _adminAddress, compromising user funds staked in the contract.",
+            "severity": "Critical",
+            "contract": "XARDM",
+            "function": "mint()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "C02. Highly Permissive Role Access",
+            "description": "The owner of the XARDMStaking contract can withdraw the users' deposited ARDM tokens by using the resetRewards() function.",
+            "severity": "Critical",
+            "contract": "XARDMStaking",
+            "function": "resetRewards()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1173"
+                ]
+            },
+            "title": "M01. Unchecked Transfer",
+            "description": "The deposit(), withdraw() and resetRewards() functions do not use the SafeERC20 library for checking the result of ERC20 token transfers.",
+            "severity": "Medium",
+            "contract": "XARDMStaking",
+            "function": "deposit(), withdraw(), resetRewards()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "M02. Highly Permissive Role Access",
+            "description": "Highly permissive role access issue in a contract",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

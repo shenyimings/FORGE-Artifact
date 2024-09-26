@@ -1,0 +1,74 @@
+{
+    "path": "./Audit_Reports_2024/Verichains_Lab/Verichains Public Audit Report - HeroFi Token And Reward - v1.1.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0x3244b3b6030f374bafa5f8f80ec2f06aaf104b64",
+        "chain": "bsc",
+        "compiler_version": [
+            "v0.6.12+commit.27d51765"
+        ],
+        "project_path": {
+            "ROFIToken": "Experiments/contracts/Verichains Public Audit Report - HeroFi Token And Reward - v1/ROFIToken"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Zero locked amount when mintReward with very small _reward",
+            "description": "In the mintReward function, the locked amount is calculated by a percentage with _reward, but solidity does not support floating point numbers, so if _reward is less than 100, locked will become zero instead of lockedPercentage.",
+            "severity": "LOW",
+            "contract": "Reward.sol",
+            "function": "mintReward()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1120"
+                ],
+                "3": [
+                    "CWE-1060"
+                ]
+            },
+            "title": "Use calldata instead of memory for gas saving",
+            "description": "In external function with array arguments, using memory will force solidity to copy that array to memory thus wasting more gas than using directly from calldata.",
+            "severity": "INFORMATIVE",
+            "contract": "Reward",
+            "function": "claimReward and claimRewards",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ],
+                "3": [
+                    "CWE-563"
+                ]
+            },
+            "title": "Unused claimLimit storage variable",
+            "description": "The 'claimLimit' storage variable in Reward.sol is unused and can be removed.",
+            "severity": "Informative",
+            "contract": "Reward",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

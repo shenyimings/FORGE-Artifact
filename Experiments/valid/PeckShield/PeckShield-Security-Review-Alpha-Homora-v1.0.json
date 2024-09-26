@@ -1,0 +1,91 @@
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Security-Review-Alpha-Homora-v1.0.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0x431ad2ff6a9c365805ebad47ee021148d6f7dbe0",
+        "chain": "eth",
+        "compiler_version": [
+            "v0.5.2+commit.1df8f40c"
+        ],
+        "project_path": {
+            "DSToken": "Experiments/contracts/PeckShield-Security-Review-Alpha-Homora-v1/DSToken"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "PVE-001: Missed approve(spender, 0) Call",
+            "description": "Alpha Homora fails to `approve(spender,0)` before approving the `router` contract to spend the `fToken`. This can cause compatibility issues with certain ERC20 tokens.",
+            "severity": "Low",
+            "contract": "StrategyLiquidate and StrategyAllETHOnly",
+            "function": "execute()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-116"
+                ],
+                "3": [
+                    "CWE-838"
+                ]
+            },
+            "title": "PVE-002: Improved Ether Transfer Call",
+            "description": "In `Gringotts::reducio()` function, using `msg.sender.transfer()` instead of `SafeToken.SafeTransferETH()` for ether transfer calls can cause compatibility issues.",
+            "severity": "Low",
+            "contract": "Gringotts",
+            "function": "reducio()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "PVE-003: Randomly Received Ether Interfere With the Calculation",
+            "description": "Random users could send ether into the Gringotts contract without permission check, causing inaccurate calculations in engorgio() and reducio() functions.",
+            "severity": "Informational",
+            "contract": "Gringotts",
+            "function": "fallback, engorgio(), reducio()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-358"
+                ]
+            },
+            "title": "Known Issue in Solidity v0.5.16",
+            "description": "There is a known compiler issue where a private function can be overridden in a derived contract by a private function of the same name and types.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

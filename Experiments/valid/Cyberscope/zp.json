@@ -1,0 +1,316 @@
+{
+    "path": "./Audit_Reports_2024/Cyberscope/zp.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0x1f93d8952b80a819ba16957f6682c7d94b8d3add",
+        "chain": "polygon",
+        "compiler_version": [
+            "v0.8.18+commit.87f61d96"
+        ],
+        "project_path": {
+            "ZodiacPuppy": "Experiments/contracts/zp/ZodiacPuppy"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-923"
+                ],
+                "3": [
+                    "CWE-300"
+                ]
+            },
+            "title": "CCR - Contract Centralization Risk",
+            "description": "The contract's functionality and behavior are heavily dependent on external parameters or configurations, posing centralization risks such as Single Point of Control, Vulnerability to Attacks, Operational Delays, Trust Dependencies, and Decentralization Erosion.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "MDA - Misleading Decimals Adjustment",
+            "description": "The contract's `setDecimals` function allows modification of the `decimals` variable, which can lead to a discrepancy between the set decimal value and the token's inherent decimal structure, causing confusion and errors in transactions and calculations.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "setDecimals()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "MSB - Max Supply Bypass",
+            "description": "The contract allows the owner to potentially exceed the predefined `MAX_SUPPLY` limit of tokens through the `preMintNFTs` function.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "preMintNFTs",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "ISA - Inconsistent Supply Allocation",
+            "description": "The contract's design flaw leads to a situation where the actual NFT supply minted will be lower than the desired MAX_SUPPLY value due to gaps between token IDs across different price sections.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "preMintNFTs()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "MC - Missing Check",
+            "description": "The contract processes variables without proper sanitization and checks, leading to potential logical errors or inconsistencies.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": [
+                "mint",
+                "setSectionPrice",
+                "setMax_per_wallet",
+                "setMax_per_txn",
+                "setBulkSetPrice"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "MEE - Missing Events Emission",
+            "description": "The contract performs actions and state mutations from external methods that do not result in the emission of events.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "DPI - Decimals Precision Inconsistency",
+            "description": "Inconsistency in handling decimals field of ERC20 token can cause problems when interacting with contracts, as it is not always clear how the decimals field should be interpreted.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "RPF - Redundant Payable Function",
+            "description": "The contract's function `mint` has the `payable` modifier which means that the users pay with the native token. The function does not use the `msg.value` variable anywhere inside the function to indicate the usage of the payable modifier.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "mint",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1284"
+                ]
+            },
+            "title": "EIS - Excessively Integer Size",
+            "description": "The contract uses a bigger unsigned integer data type than necessary, consuming more storage space and requiring additional computational resources, resulting in higher transaction costs, longer execution times, and potential scalability bottlenecks.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "Multiple functions (not specified)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "L02 - State Variables could be Declared Constant",
+            "description": "State variables can be declared as constant using the constant keyword to ensure that the value of the state variable cannot be changed after it has been set.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1076"
+                ],
+                "3": [
+                    "CWE-1078"
+                ],
+                "4": [
+                    "CWE-1099"
+                ]
+            },
+            "title": "L04 - Conformance to Solidity Naming Conventions",
+            "description": "Non-conformance to Solidity naming conventions can lead to reduced code readability and maintainability.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "L07 - Missing Events Arithmetic",
+            "description": "Events are a way to record and log information about changes or actions that occur within a contract.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-369"
+                ]
+            },
+            "title": "L13 - Divide before Multiply Operation",
+            "description": "Performing divisions before multiplications may cause loss of precision.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "L14 - Uninitialized Variables in Local Scope",
+            "description": "Using an uninitialized local variable can lead to unpredictable behavior and potentially cause errors in the contract.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "L16 - Validate Variable Setters",
+            "description": "The contract performs operations on variables configured by user-supplied input without proper checks for zero values, leading to potential problems during execution.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": [
+                "mint",
+                "setSectionPrice",
+                "setMax_per_wallet",
+                "setMax_per_txn",
+                "setBulkSetPrice"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "L19 - Stable Compiler Version",
+            "description": "The `^` symbol indicates that any version of Solidity that is compatible with the specified version (i.e., any version that is a higher minor or patch version) can be used to compile the contract. The version lock is a mechanism that allows the author to specify a minimum version of the Solidity compiler that must be used to compile the contract code.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

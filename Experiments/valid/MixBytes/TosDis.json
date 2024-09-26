@@ -1,0 +1,46 @@
+{
+    "path": "./Audit_Reports_2024/MixBytes/TosDis.md",
+    "project_info": {
+        "url": "https://github.com/tosdis/TosDisFinance",
+        "commit_hash": "be50dbf8a52a8f919694498bf30394d328d88fbb",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/TosDis/TosDisFinance"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Restrict deflationary tokens",
+            "description": "The contract receives token by `safeTransferFrom` and increases `user.amount` by `_amountToStake`, but this approach doesn't work with deflationary tokens because the real received amount will be less than requested, breaking the whole logic of the contract.",
+            "severity": "Warning",
+            "contract": "StakingPool",
+            "function": "N/A",
+            "lineNumber": "124"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Unrestricted emergency withdrawal",
+            "description": "The unrestricted emergency withdrawal function can be called anytime, burning all earned rewards.",
+            "severity": "High",
+            "contract": "StakingPool",
+            "function": "N/A",
+            "lineNumber": "170"
+        }
+    ]
+}

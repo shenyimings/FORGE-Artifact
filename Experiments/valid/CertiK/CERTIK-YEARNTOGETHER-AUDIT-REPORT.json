@@ -1,0 +1,140 @@
+{
+    "path": "./Audit_Reports_2024/CertiK/CERTIK-YEARNTOGETHER-AUDIT-REPORT.pdf",
+    "project_info": {
+        "url": "https://github.com/yearntogether/platform-contracts/tree/d1e20147a4cc5797a51baa0f966353e4bedc201a",
+        "commit_hash": "d1e20147a4cc5797a51baa0f966353e4bedc201a",
+        "address": "0x0614CBfb5C0e9c9Be5A460f383EddDF884080C99",
+        "is_exists": false,
+        "chain": "bsc",
+        "compilerVersion": [
+            "v0.8.4+commit.c7e474f2"
+        ],
+        "project_path": {
+            "AntiBotStandardToken": "Experiments/contracts\\CERTIK-YEARNTOGETHER-AUDIT-REPORT\\AntiBotStandardToken"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "GLOBAL-01 : Centralization Risks",
+            "description": "**Centralization / Privilege**",
+            "severity": "Major",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "D1E-01: Incompatibility with Deflationary Tokens",
+            "description": "When transferring deflationary ERC20 tokens, the input amount may not be equal to the received amount due to the charged transaction fee.",
+            "severity": "Medium",
+            "contract": [
+                "LottoAdmin.sol",
+                "LottoCore.sol"
+            ],
+            "function": "N/A",
+            "lineNumber": "21, 23, 33, 35, 45, 47, 57, 59; 230, 237, 292, 308"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "LAB-01 : Missing Zero Address Validation",
+            "description": "Addresses should be checked before assignment or external call to make sure they are not zero addresses.",
+            "severity": "Minor",
+            "contract": "LottoAdmin",
+            "function": "N/A",
+            "lineNumber": "159, 160, 161, 162, 163, 164, 165, 169, 180, 206"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "LCB-03 : Unsafe Cast",
+            "description": "In the statement `uint40(block.timestamp);`, it casts a `uint256` value to an `uint40` without evaluating its bounds.",
+            "severity": "Minor",
+            "contract": "LottoCore.sol",
+            "function": "N/A",
+            "lineNumber": "69"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "LCB-02 : Missing Validation",
+            "description": "In the `_drawReferralPayout()` function, a certain amount of token will be transferred to `referrer` as a bonus without validation to check if `bonus` is 0, resulting in unnecessary gas fees and token transfers.",
+            "severity": "Informational",
+            "contract": "LottoCore",
+            "function": "_drawReferralPayout()",
+            "lineNumber": "405"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "LCB-04: Lack Of self-reference Check in the `_setReferrer()`",
+            "description": "In function `_setReferrer()` there's no validation to check if `_referrer` could be `msg.sender` address itself. This may potentially violate the design.",
+            "severity": "Informational",
+            "contract": "LottoCore.sol",
+            "function": "_setReferrer()",
+            "lineNumber": "133, 291"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "LCB-05: User Can Favor USDT and Depreciate YTG token",
+            "description": "The user can withdraw USDT tokens instead of YTG tokens under certain conditions, potentially depreciating YTG tokens and draining deposited USDT tokens in the LottoCore deployment.",
+            "severity": "Informational",
+            "contract": "LottoCore",
+            "function": "claimToken() and claimAmount()",
+            "lineNumber": "311, 325"
+        }
+    ]
+}

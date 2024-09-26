@@ -1,0 +1,289 @@
+{
+    "path": "./Audit_Reports_2024/Solidified/Audit Report - Kresko [2024-01-12].pdf",
+    "project_info": {
+        "url": "https://github.com/kreskohq/kresko-protocol",
+        "commit_hash": "cbbc4c365e544a765a74554b9857a3ec0cf58252",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/Audit Report - Kresko [2024-01-12]/kresko-protocol"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ],
+                "2": [
+                    "CWE-1024"
+                ]
+            },
+            "title": "Inability to fully repay and liquidate debt due to the incorrect comparison of rebased and normalized token amounts",
+            "description": "The `repaySCDP` and `liquidateSCDP` functions in the `SCDPFacet` contract check if the specified `_repayAmount` does not exceed the debt of the repaid asset, but the asset's debt is a normalized value while the compared `_repayAmount` is potentially rebased, resulting in an incorrect comparison.",
+            "severity": "Critical",
+            "contract": "SCDPFacet",
+            "function": [
+                "repaySCDP()",
+                "liquidateSCDP()"
+            ],
+            "lineNumber": [
+                "68-75",
+                "142-144"
+            ]
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-410"
+                ]
+            },
+            "title": "Wrapping and unwrapping Kresko asset tokens results in insufficient backing",
+            "description": "Users can drain underlying tokens by wrapping and unwrapping Kresko asset tokens due to minting Kresko asset tokens before anchor tokens, resulting in insufficient backing.",
+            "severity": "Critical",
+            "contract": "KreskoAsset",
+            "function": [
+                "wrap",
+                "unwrap"
+            ],
+            "lineNumber": "260-262"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Liquidations can leave SCDP below the minimum debt value",
+            "description": "The liquidateSCDP function never checks if the position will be left below the minimum debt value after repayment, potentially leaving SCDP with a debt value lower than the minimum.",
+            "severity": "Major",
+            "contract": "SCDPFacet",
+            "function": "liquidateSCDP",
+            "lineNumber": "149"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Inability to swap assets with the SCDPSwapFacet.swapSCDP function in case of insufficient liquidity of the fee token",
+            "description": "The `swapSCDP` function uses `SSwap.handleAssetsOut`, which can return an `amountOut` value greater than the contract's asset balance, causing the transaction to revert when `_assetOutAddr` is the `feeAsset` and the `amountOut` may possibly be greater than the current liquidity.",
+            "severity": "Major",
+            "contract": "SCDPSwapFacet",
+            "function": "swapSCDP",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Users are double charged fees in the Vault redeem function",
+            "description": "The `redeem` function in the `Vault` contract uses the contract's balance to repay the user when the amount of assets to be returned plus the fee is greater than the balance, resulting in users being double charged fees.",
+            "severity": "Major",
+            "contract": "Vault",
+            "function": "redeem",
+            "lineNumber": "151, 158"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-369"
+                ]
+            },
+            "title": "SCDP depositors are unable to withdraw their fair share of the remaining collateral if their deposited collateral token's liquidity is fully seized during liquidation",
+            "description": "Depositors of a collateral token whose liquidity is fully seized during liquidation cannot withdraw funds, including for other collateral tokens. This is because the `liquidityIndexSCDP` index is set to zero, causing a division by zero error in the `handleDepositSCDP` function.",
+            "severity": "Major",
+            "contract": "SDeposits",
+            "function": "handleSeizeSCDP",
+            "lineNumber": "122-124"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "SCDP depositors of non-fee collateral tokens are not able to accumulate fees",
+            "description": "Depositors who deposited collateral in the shared CDP are unable to withdraw their share of the accumulated fees if their deposited collateral token is not the configured fee asset token.",
+            "severity": "Major",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "KreskoAssetAnchor shares can be increased by supplying Kresko assets",
+            "description": "The `mint` function from the inherited `ERC4626Upgradeable` contract allows supplying kresko assets in return for newly minted anchor tokens, leading to a broken invariant between the `KreskoAssetAnchor` anchor contract and the `KreskoAsset` contract.",
+            "severity": "Major",
+            "contract": "KreskoAssetAnchor",
+            "function": "mint()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Vault shares can be manipulated after emptying",
+            "description": "The functions previewDeposit, previewMint, previewRedeem, and previewWithdraw reset the vault token supply or total underlying assets to 1e18 during calculations whenever either one reaches zero. This leads to two scenarios where vault shares can be manipulated: when totalSupply() == 0 && totalAssets() > 0, and when totalSupply() > 0 && totalAssets() == 0.",
+            "severity": "Major",
+            "contract": "Vault.sol",
+            "function": "previewDeposit, previewMint, previewRedeem, previewWithdraw",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ],
+                "2": [
+                    "CWE-1025"
+                ],
+                "3": [
+                    "CWE-595"
+                ],
+                "4": [
+                    "CWE-597"
+                ]
+            },
+            "title": "Inconsistent check for minimum collateral ratio and liquidation threshold",
+            "description": "The validateMinCollateralRatio function checks if _minCollateralRatio is less than _liqThreshold before reverting, while the validateLiquidationThreshold function checks if _liquidationThreshold is greater than or equal to _minCollateralRatio before reverting, leading to inconsistent checks.",
+            "severity": "Minor",
+            "contract": "Validations.sol",
+            "function": "validateMinCollateralRatio and validateLiquidationThreshold",
+            "lineNumber": "54, 60"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1076"
+                ],
+                "3": [
+                    "CWE-1078"
+                ],
+                "4": [
+                    "CWE-1099"
+                ]
+            },
+            "title": "Naming conventions",
+            "description": "Improper naming conventions used in multiple contracts, including Errors.sol, Validations.sol, Modifiers.sol, and Assets.sol.",
+            "severity": "Informational",
+            "contract": [
+                "Errors.sol",
+                "Validations.sol",
+                "Modifiers.sol",
+                "Assets.sol"
+            ],
+            "function": [
+                "N/A",
+                "validateCollateralArgs",
+                "onlyRoleIf",
+                "marketStatus"
+            ],
+            "lineNumber": [
+                "N/A"
+            ]
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Potential revert with Errors.ELEMENT_DOES_NOT_MATCH_PROVIDED_INDEX",
+            "description": "The validateCollateralArgs function may revert with Errors.ELEMENT_DOES_NOT_MATCH_PROVIDED_INDEX, indicating that the element does not match the index, while the check validates that the index is greater than the array length.",
+            "severity": "N/A",
+            "contract": "Validations.sol",
+            "function": "validateCollateralArgs",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Modifier onlyRoleIf is generic enough to receive any boolean parameter",
+            "description": "The modifier onlyRoleIf has a NatSpec documentation stating it ensures 'only trusted contracts can act on behalf of _account', but it's generic enough to receive any boolean parameter.",
+            "severity": "Informational",
+            "contract": "Modifiers.sol",
+            "function": "onlyRoleIf",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1068"
+                ]
+            },
+            "title": "Inconsistent Naming Convention in MarketStatus Function",
+            "description": "The marketStatus function returns a boolean value indicating whether the market is open or not, but its naming suggests it could return different options or enumeration values.",
+            "severity": "Minor",
+            "contract": "Assets.sol",
+            "function": "marketStatus()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

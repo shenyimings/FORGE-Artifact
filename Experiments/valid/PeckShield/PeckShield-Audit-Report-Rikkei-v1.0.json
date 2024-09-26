@@ -1,0 +1,218 @@
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Rikkei-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/rikkei-finance/rifi-protocol/tree/f4ef622",
+        "commit_hash": "f4ef622",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/PeckShield-Audit-Report-Rikkei-v1/rifi-protocol"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Suggested Adherence Of Checks-Effects-Interactions Pattern",
+            "description": "The principle of checks-effects-interactions is effective in mitigating a serious attack vector known as re-entrancy, where a malicious contract can be reentering a vulnerable contract in a nested manner.",
+            "severity": "Low",
+            "contract": "RToken",
+            "function": "borrowFresh()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Proper dsrPerBlock() Calculation",
+            "description": "The `dsrPerBlock()` function assumes a block time of 15 seconds per block, but it should be 3 seconds per block on Binance Smart Chain (BSC).",
+            "severity": "Low",
+            "contract": "DAIInterestRateModel",
+            "function": "dsrPerBlock()",
+            "lineNumber": "83-87"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-437"
+                ]
+            },
+            "title": "3.3 Non ERC20-Compliance Of RToken",
+            "description": "The `RToken` contract does not fully comply with the ERC20 specification, which may lead to inconsistencies or incompatibilities in its implementation.",
+            "severity": "Medium",
+            "contract": "RToken",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ],
+                "3": [
+                    "CWE-302"
+                ]
+            },
+            "title": "Possible Front-running For Unintended Payment In repayBorrowBehalf()",
+            "description": "The `repayBorrowFresh()` function allows for repaying partial or full current borrowing balance and supports the corner case when the given amount is larger than the current borrowing balance, but this assumption may be taken advantage of to launch a front-running `borrow()` operation, resulting in a higher borrowing balance for repayment.",
+            "severity": "Low",
+            "contract": "RToken",
+            "function": "repayBorrowFresh()",
+            "lineNumber": "852"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ]
+            },
+            "title": "Interface Inconsistency Between RBep20 And RBinance",
+            "description": "The interfaces of RBep20 and RBinance are inconsistent, with differences in error handling and function behavior.",
+            "severity": "Low",
+            "contract": "Multiple Contracts",
+            "function": [
+                "repayBorrow()",
+                "mint()",
+                "borrow()",
+                "repay()",
+                "liquidate()",
+                "transfer()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Improved Sanity Checks in System/Function Arguments",
+            "description": "DeFi protocols have system-wide parameters that can be dynamically configured on demand. The update logic of certain protocol-wide risk parameters can be improved by applying more rigorous sanity checks.",
+            "severity": "Low",
+            "contract": "Cointroller",
+            "function": "_setCloseFactor()",
+            "lineNumber": "841"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "Privileged `admin` account has critical role in governing system-wide operations and controlling asset flow, posing counter-party risk if it's a plain EOA account.",
+            "severity": "Medium",
+            "contract": "GovernorBravoDelegate",
+            "function": "_setVotingDelay()/_setVotingPeriod()",
+            "lineNumber": "282-284, 298-302"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "3.8 Improved Handling of Corner Cases in Proposal Submission",
+            "description": "In GovernorAlpha contract, the proposer qualification requires a sufficient number of votes, including from the proposer herself and other voters. The threshold is specified by proposalThreshold().",
+            "severity": "Low",
+            "contract": "GovernorAlpha",
+            "function": "propose()",
+            "lineNumber": "136-137"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Redundant State/Code Removal",
+            "description": "The `Rifi lending` protocol has unused code or unnecessary redundancies that can be safely removed.",
+            "severity": "Informational",
+            "contract": "Multiple Contracts",
+            "function": "_acceptAdmin()",
+            "lineNumber": "110, 1132"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Proper Initialization of Cointroller",
+            "description": "The `initialize()` function can be initialized by anyone, which may lead to unnecessary re-deployment from mis-initialization. It is suggested to guard this function by ensuring the caller is from an authorized caller.",
+            "severity": "Low",
+            "contract": "Cointroller",
+            "function": "initialize()",
+            "lineNumber": "86-89"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1287"
+                ]
+            },
+            "title": "Accommodation of Non-ERC20-Compliant Tokens",
+            "description": "The transfer function does not follow ERC-20 specification and may cause issues if not handled properly.",
+            "severity": "Low",
+            "contract": "Multiple Contracts",
+            "function": "transfer()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

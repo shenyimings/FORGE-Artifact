@@ -1,0 +1,159 @@
+{
+    "path": "./Audit_Reports_2024/Ackee_Blockchain/ackee-blockchain-axelar-report.pdf",
+    "project_info": {
+        "url": "https://github.com/axelarnetwork/axelar-cgp-solidity/tree/c6f8c7c",
+        "commit_hash": "c6f8c7c",
+        "address": "0x39d3E4d2fCAD60014779B3C82879807b572Fd419",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/ackee-blockchain-axelar-report/axelar-cgp-solidity"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ]
+            },
+            "title": "Insufficient data validation in the upgrade function",
+            "description": "The `upgrade` function does not validate its input data, which can lead to incorrect `newImplementation` being passed and the call succeeding instead of reverting.",
+            "severity": "High",
+            "contract": "AxelarGateway.sol",
+            "function": "upgrade()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Unchecked transfer for external tokens",
+            "description": "A return value of an external transfer call is not checked, which can cause successful transfers without transferring the amount or other unexpected behavior.",
+            "severity": "High",
+            "contract": "AxelarGateway.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "_containsDuplicates function can be optimized",
+            "description": "The `_containsDuplicates` function runs in O(n^2) which might be very costly in gas if a larger number of signatures were provided and it can potentially cause a Denial of Service.",
+            "severity": "Medium",
+            "contract": "AxelarGatewayMultisig",
+            "function": "_containsDuplicates",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "ERC20 is missing basic arithmetic checks",
+            "description": "ERC20 functions for token manipulation don\u2019t have basic arithmetic checks for manipulating funds.",
+            "severity": "Low",
+            "contract": "ERC20.sol",
+            "function": "_transfer, transferFrom, decreaseAllowance",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Usage of `solc` optimizer",
+            "description": "The Solidity compiler was audited in November 2018, and the audit concluded that the optimizer may not be safe. A few months after deployment, a vulnerability is discovered in the optimizer.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Floating pragma",
+            "description": "The project uses Solidity version specified in `waffle.json` (0.8.9), but contracts have a following pragma `>= 0.8.0 < 0.9.0`, which can cause a version mismatch and an unexpected bug.",
+            "severity": "Warning",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ],
+                "3": [
+                    "CWE-302"
+                ]
+            },
+            "title": "Transaction replay",
+            "description": "In AxelarGatewayMultisig and AxelarGatewaySinglesig contracts, an attacker can re-execute a command by copying a transaction's payload with valid signatures if the initial call fails due to exceptions like Out of gas.",
+            "severity": "Warning",
+            "contract": "AxelarGatewayMultisig,AxelarGatewaySinglesig",
+            "function": "_execute",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Pitfalls of upgradeability",
+            "description": "The setup function in logic contracts has no access controls, except the check if `implementation` is equal to zero-address. This approach is safe until a mistake occurs (e.g., calling `upgrade` on the logic contract), and `implementation` address will be changed to something else in the contract\u2019s storage.",
+            "severity": "Warning",
+            "contract": "Logic Contract",
+            "function": "setup()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-191"
+                ]
+            },
+            "title": "Integer underflow if the owner epoch is 0",
+            "description": "An integer underflow occurs if the owner epoch is 0 in the `_isValidPreviousOwner` function, which can cause unexpected behavior.",
+            "severity": "Informational",
+            "contract": "AxelarGatewaySinglesig.sol",
+            "function": "_isValidPreviousOwner(address)",
+            "lineNumber": "N/A"
+        }
+    ]
+}

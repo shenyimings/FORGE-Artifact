@@ -1,0 +1,151 @@
+{
+    "path": "./Audit_Reports_2024/Coinspect/Sovryn Security Audit Smart Contracts v201218.pdf",
+    "project_info": {
+        "url": "https://github.com/DistributedCollective/oracle-based-amm",
+        "commit_hash": "N/A",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/Sovryn Security Audit Smart Contracts v201218/oracle-based-amm"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Price feed oracle fake timestamp",
+            "description": "The `latestTimestamp` function in the MoCBTCToUSDOracle contract returns the current block's timestamp instead of the actual update time from the oracle, making the `lastUpdateTime` and `lastRateAndUpdateTime` functions in PriceOracle.sol useless.",
+            "severity": "High",
+            "contract": "MoCBTCToUSDOracle",
+            "function": "latestTimestamp()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ],
+                "3": [
+                    "CWE-302"
+                ]
+            },
+            "title": "WRBTC ERC20 approve front running",
+            "description": "The wrapped RBTC token contract suffers from a well known ERC20 standard security vulnerability that takes place when the token transfer allowance is modified: an attacker can front run the approve transaction to transfer the original allowed amount of tokens (N) before the allowance is changed, and then, after the approve transaction takes place, the attacker can again transfer more tokens (M), obtaining as a result more tokens than the token owner intended (N+M instead of M).",
+            "severity": "High",
+            "contract": "WRBTC",
+            "function": "approve()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-357"
+                ],
+                "3": [
+                    "CWE-450"
+                ]
+            },
+            "title": "internalSwap function name is misleading",
+            "description": "Using _internal_ in a public function name is confusing and could result in a developer incorrectly assuming the function can not be accessed from outside the contract, leading to security vulnerability.",
+            "severity": "Medium",
+            "contract": "SwapsImplSovrynSwap",
+            "function": "internalSwap",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Infinite transfer allowance",
+            "description": "The `SwapsImplSovrynSwap` contract allows the oracle-based AMM component to transfer unlimited amounts of its tokens without revoking the allowance.",
+            "severity": "Medium",
+            "contract": "SwapsImplSovrynSwap",
+            "function": "allowTransfer",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-393"
+                ]
+            },
+            "title": "Missing or numeric non descriptive error messages",
+            "description": "Error messages returned to users are missing or numeric and not self-explanatory, making it hard for users to understand and debug issues.",
+            "severity": "N/A",
+            "contract": "LoanTokenLogicStandard.sol",
+            "function": [
+                "_safeTransfer",
+                "_safeTransferFrom"
+            ],
+            "lineNumber": "Multiple lines"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Transaction size and slippage limits not enforced for external swaps",
+            "description": "The SwapsExternal contract permits unbounded swaps with no slippage checks enforced, allowing arbitrary transaction sizes and slippage conditions.",
+            "severity": "High",
+            "contract": "SwapsExternal",
+            "function": "swapExternal",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ]
+            },
+            "title": "Leftover code from debugging",
+            "description": "The function `_updateCheckpoints` emits a `Debug` event which is likely leftover from a debug session and was not intended to be committed to the git repository.",
+            "severity": "Info",
+            "contract": "LoanTokenLogicStandard",
+            "function": "_updateCheckpoints",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Function _totalDeposit doesn\u2019t revert when the precision is 0",
+            "description": "The function `_totalDeposit` does not revert when `sourceToDestPrecision` is 0, which can cause unexpected behavior.",
+            "severity": "Low",
+            "contract": "LoanTokenLogicStandard",
+            "function": "_totalDeposit",
+            "lineNumber": "N/A"
+        }
+    ]
+}

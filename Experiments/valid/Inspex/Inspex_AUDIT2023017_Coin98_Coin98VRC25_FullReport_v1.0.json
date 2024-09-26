@@ -1,0 +1,105 @@
+{
+    "path": "./Audit_Reports_2024/Inspex/Inspex_AUDIT2023017_Coin98_Coin98VRC25_FullReport_v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/coin98/coin98-token-contract",
+        "commit_hash": "99506cbcf9917f19d4db225434034db44c4909e3",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/Inspex_AUDIT2023017_Coin98_Coin98VRC25_FullReport_v1/coin98-token-contract"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Centralized Control of State Variable",
+            "description": "Critical state variables can be updated at any time by the controlling authorities without notifying the users.",
+            "severity": "High",
+            "contract": "Coin98Token.sol",
+            "function": [
+                "mint()",
+                "setFee()",
+                "transferOwnership()"
+            ],
+            "lineNumber": [
+                "911",
+                "971",
+                "1192"
+            ]
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Unusable Token via Contract Freezing",
+            "description": "The owner of Coin98VRC25 contract can invoke the freeze() function, which sets the _frozen state to true and prevents all token holders from utilizing their tokens. This results in loss of opportunities to gain profit from using the token.",
+            "severity": "Medium",
+            "contract": "Coin98VRC25",
+            "function": [
+                "freeze()",
+                "_freeze()",
+                "_beforeTokenTransfer()"
+            ],
+            "lineNumber": [
+                "954-956",
+                "1253-1256",
+                "1135-1137"
+            ]
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ],
+                "4": [
+                    "CWE-232"
+                ]
+            },
+            "title": "Inexplicit Solidity Compiler Version",
+            "description": "The solidity compiler version is not explicitly stated.",
+            "severity": "Info",
+            "contract": "Coin98VRC25",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-749"
+                ]
+            },
+            "title": "Improper Function Visibility",
+            "description": "Functions with improper visibility can lead to potential security issues.",
+            "severity": "Info",
+            "contract": "Coin98Token, Coin98VRC25",
+            "function": "mint(address, uint256)",
+            "lineNumber": "911-913"
+        }
+    ]
+}

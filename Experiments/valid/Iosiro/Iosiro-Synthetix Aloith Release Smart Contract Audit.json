@@ -1,0 +1,66 @@
+{
+    "path": "./Audit_Reports_2024/Iosiro/Iosiro-Synthetix Aloith Release Smart Contract Audit.pdf",
+    "project_info": {
+        "url": "https://github.com/Synthetixio/synthetix",
+        "commit_hash": "1159c8aad0a1880d71e77e3b14f3a17826819136",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/Iosiro-Synthetix Aloith Release Smart Contract Audit/synthetix"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect invalid rate logic (low risk)",
+            "description": "During debt calculations, when determining whether any rates were invalid, the logical `AND` operator was used on different invalid rates, which would determine whether both variables were invalid. However, in order to correctly determine whether any rates were invalid the `OR` operator should have been used.",
+            "severity": "Low",
+            "contract": "BaseDebtCache.sol, DebtCache.sol",
+            "function": "N/A",
+            "lineNumber": "154, 200, 218, 96"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-354"
+                ]
+            },
+            "title": "sETH rate may be invalid when remitting fee (low)",
+            "description": "When remitting the fee, the `exchangeRates().effectiveValue(...)` function is used to determine the USD amount of the sETH being remitted. However, the sETH rate is not validated to ensure that it is valid.",
+            "severity": "Low",
+            "contract": "EtherWrapper",
+            "function": "N/A",
+            "lineNumber": "228"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Use of transfer function (low risk)",
+            "description": "The `burn()` function uses the `transfer()` function to send ether, which relies on the receiving contract to have a fallback function below the 2300 gas limit. However, gas costs can change, potentially leading to incompatibility with the system.",
+            "severity": "Low",
+            "contract": "NativeEtherWrapper.sol",
+            "function": "burn()",
+            "lineNumber": "L81"
+        }
+    ]
+}

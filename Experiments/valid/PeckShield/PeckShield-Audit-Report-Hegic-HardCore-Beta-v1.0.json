@@ -1,0 +1,145 @@
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Hegic-HardCore-Beta-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/hegic/hegic-hardcore-beta/tree/2da5c7d",
+        "commit_hash": "2da5c7d",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/PeckShield-Audit-Report-Hegic-HardCore-Beta-v1/hegic-hardcore-beta"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Inconsistent Implementation Of _calculatePeriodFee()",
+            "description": "Inconsistency exists in the implementation of `_calculatePeriodFee()` function between `PriceCalculator` and `PriceCalculatorUtilization` contracts.",
+            "severity": "Low",
+            "contract": "PriceCalculator/PriceCalculatorUtilization",
+            "function": "_calculatePeriodFee()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Non-Functional Logic Of HegicStakeAndCover::provide()",
+            "description": "The `HegicStakeAndCover` contract provides an external `provide()` function for users to deposit tokens into the contract. The amount of `hegicToken` to be deposited is provided by the user and the amount of `baseToken` to be deposited relies on the amount of `hegicToken` to be deposited. However, the current implementation logic may not work as expected.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-191"
+                ]
+            },
+            "title": "Arithmetic Underflow Avoidance In HegicOperationalTreasury::_replenish()",
+            "description": "The current implementation logic of `_replenish()` function can be improved to avoid arithmetic underflow by calculating addition before subtraction without introducing any extra overflows.",
+            "severity": "Low",
+            "contract": "HegicOperationalTreasury",
+            "function": "_replenish()",
+            "lineNumber": "181"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect lockedPremium Update In HegicOperationalTreasury::lockLiquidityFor()",
+            "description": "The `HegicOperationalTreasury` contract's `lockLiquidityFor()` function has an incorrect implementation, where the state variable `lockedPremium` is not updated in the correct order.",
+            "severity": "High",
+            "contract": "HegicOperationalTreasury",
+            "function": "lockLiquidityFor()",
+            "lineNumber": "91-92"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect withdraw Logic In HegicOperationalTreasury",
+            "description": "The `withdraw()` function in `HegicOperationalTreasury` contract has incorrect logic, specifically the requirement `require (amount + totalLocked <= totalBalance)` should be revised to `require (amount + totalLocked + lockedPremium <= totalBalance + stakeandcoverPool.availableBalance())`.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-237"
+                ],
+                "4": [
+                    "CWE-238"
+                ]
+            },
+            "title": "Accommodation of Non-ERC20-Compliant Tokens",
+            "description": "The finding highlights potential issues with token contracts that do not strictly follow the ERC-20 specification or have additional functionalities beyond the specification, which may cause problems if not handled properly.",
+            "severity": "Informational",
+            "contract": "Multiple contracts",
+            "function": "transfer()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "In the Hegic protocol, there are five privileged accounts (owner, DEFAULT_ADMIN_ROLE, HEGIC_POOL_ROLE, STRATEGY_ROLE, and SELLER_ROLE) that play a critical role in governing and regulating protocol-wide operations.",
+            "severity": "Medium",
+            "contract": "HegicOperationalTreasury",
+            "function": "withdraw(address to, uint256 amount)",
+            "lineNumber": "63-68"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Improved Sanity Checks For System/Function Parameters",
+            "description": "The HegicPool contract has defined a number of protocol-wide risk parameters, such as maxDepositAmount, collateralizationRatio, and pricer, which can be dynamically configured on demand.",
+            "severity": "Low",
+            "contract": "HegicPool",
+            "function": "setMaxDepositAmount()",
+            "lineNumber": "105-110"
+        }
+    ]
+}

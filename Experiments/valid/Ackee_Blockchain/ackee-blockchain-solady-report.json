@@ -1,0 +1,196 @@
+{
+    "path": "./Audit_Reports_2024/Ackee_Blockchain/ackee-blockchain-solady-report.pdf",
+    "project_info": {
+        "url": "https://github.com/Vectorized/solady/tree/e158762ba98db40a06411db7f80a54b93e951818",
+        "commit_hash": "e158762ba98db40a06411db7f80a54b93e951818",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/ackee-blockchain-solady-report/solady"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "H1: ERC-1155 _setApprovalForAll emits incorrect owner",
+            "description": "The function _setApprovalForAll emits incorrect owner in the ApprovalForAll event, leading to incorrect behavior of off-chain services relying on this event.",
+            "severity": "High",
+            "contract": "ERC1155",
+            "function": "_setApprovalForAll",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "M1: ERC-1155 safe transfer re-entrancy",
+            "description": "Re-entrancy issue in ERC1155 contract's _safeTransfer and _safeBatchTransfer functions.",
+            "severity": "Medium",
+            "contract": "ERC1155",
+            "function": "_safeTransfer, _safeBatchTransfer",
+            "lineNumber": "827-830"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ]
+            },
+            "title": "W1: ERC-1155 safe transfer hooks order inconsistency",
+            "description": "Inconsistency in the order of safe transfer hooks in ERC1155 contract",
+            "severity": "Warning",
+            "contract": "ERC1155",
+            "function": "_safeTransfer and _safeBatchTransfer",
+            "lineNumber": "827-830"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ]
+            },
+            "title": "W2: EIP-712 parameters cannot be set",
+            "description": "EIP-712 parameters cannot be set due to standards deviation",
+            "severity": "Warning",
+            "contract": "utils/EIP712.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "W3: ERC-20 mint to zero address",
+            "description": "The ERC20 contract allows minting tokens to the zero address which contrasts with the OpenZeppelin implementation.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-188"
+                ]
+            },
+            "title": "W4: Execution order of Yul arguments relied on",
+            "description": "Solady relies on an undocumented behavior of the `solc` compiler that arguments of Yul internal functions are evaluated from the last to the first.",
+            "severity": "Warning",
+            "contract": "SignatureCheckerLib, SafeTransferLib",
+            "function": "isValidSignatureNow, safeTransferFrom",
+            "lineNumber": "88-106, 164-171"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-237"
+                ],
+                "4": [
+                    "CWE-238"
+                ]
+            },
+            "title": "I1: MerkleProofLib duplicated code",
+            "description": "The MerkleProofLib library implements `emptyProof` and `emptyLeafs` helper functions, both returning an empty `calldata` array of `bytes32`. The functionality of both functions is the same, with names of functions and variables being the only difference.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ]
+            },
+            "title": "I2: Token revert checks order inconsistency",
+            "description": "Revert checks are performed in a different order across ERC1155 and ERC721 functions. This is an inconsistency.",
+            "severity": "Info",
+            "contract": "ERC721, ERC1155",
+            "function": "safeTransferFrom, safeBatchTransferFrom",
+            "lineNumber": "196-207, 305-316"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "I3: Token approvals to self allowed",
+            "description": "The ERC721 and ERC1155 contracts allow calling `approve` and `setApprovalForAll` with `by` and `account` pointing to the same address, effectively giving approval to self.",
+            "severity": "Info",
+            "contract": "ERC721, ERC1155",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ]
+            },
+            "title": "I4: Misleading comments referring to delegatecall",
+            "description": "In the ERC721 and ERC1155 contracts, multiple comments refer to 'delegatecall', but there is no 'delegatecall' instruction and the 'call' instruction is used instead.",
+            "severity": "Info",
+            "contract": "ERC721, ERC1155",
+            "function": "_checkOnERC721Received, safeTransferFrom",
+            "lineNumber": "856-862, 252-258"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "I5: Increase balance comment in burn function",
+            "description": "In the `_batchBurn` function of the ERC1155 contract, there is a comment describing an increase in balance, but the function decreases the balance.",
+            "severity": "Info",
+            "contract": "ERC1155",
+            "function": "_batchBurn()",
+            "lineNumber": "684-694"
+        }
+    ]
+}

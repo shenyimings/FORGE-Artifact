@@ -1,0 +1,137 @@
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/BalancerCore.pdf",
+    "project_info": {
+        "url": "https://github.com/balancer-labs/balancer-core",
+        "commit_hash": "942a51e202cc5bf9158bad77162bc72aa0a8afaf",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/BalancerCore/balancer-core"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Rounding issues in joinPool/exitPool allow for a negligible amount of free pool tokens",
+            "description": "Due to rounding issues caused by Solidity's integer arithmetic when depositing and withdrawing an asset, it is possible for an attacker to generate free pool tokens.",
+            "severity": "Undetermined",
+            "contract": "BPool.sol",
+            "function": [
+                "joinPool",
+                "exitPool"
+            ],
+            "lineNumber": [
+                "368-382",
+                "392-412"
+            ]
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Assets with low decimals or low liquidity lead to withdraw a negligible amount of assets for free",
+            "description": "A rounding issue caused by Solidity's integer arithmetic in `joinPool` allows users to receive free tokens if one of the assets has a low decimal or low liquidity.",
+            "severity": "Medium",
+            "contract": "BPool.sol",
+            "function": "joinPool()",
+            "lineNumber": "L368-L382"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Attacker with large funds can steal the pool's assets",
+            "description": "A pool with an empty asset balance allows anyone to generate unlimited free share tokens.",
+            "severity": "High",
+            "contract": "BPool.sol",
+            "function": "joinswapPoolAmountOut",
+            "lineNumber": "582-604"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "The normalized sum of the weight is not always equal to 1",
+            "description": "Inherent rounding issues in the division performed by the `getNormalizedWeight` function can accumulate in the sum and result in a value less than 1.",
+            "severity": "Informational",
+            "contract": "BPool.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Pools with a large total supply cause SWAP functions to always revert",
+            "description": "A revert that occurs during the computations performed of SWAP functions can stop users from calling these functions, if the initial supply of tokens is large.",
+            "severity": "Low",
+            "contract": "BPool.sol",
+            "function": "finalize() and joinswapExternAmountIn()",
+            "lineNumber": "224-238, 142"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Token balance limits are declared but not enforced",
+            "description": "Although the documentation states that there are maximum and minimum values for token balances, there is no code to enforce such limits.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "The swap-in and swap-out ratios are not correctly enforced",
+            "description": "The limits on the ratios to swap in and swap out tokens are not always correctly enforced.",
+            "severity": "Low",
+            "contract": "BPool.sol",
+            "function": [
+                "swapExactAmountIn",
+                "swapExactAmountOut"
+            ],
+            "lineNumber": [
+                "L442",
+                "L39-40"
+            ]
+        }
+    ]
+}

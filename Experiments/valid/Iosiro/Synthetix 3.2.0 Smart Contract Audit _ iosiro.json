@@ -1,0 +1,77 @@
+{
+    "path": "./Audit_Reports_2024/Iosiro/Synthetix 3.2.0 Smart Contract Audit _ iosiro.md",
+    "project_info": {
+        "url": "https://github.com/Synthetixio/synthetix-v3",
+        "commit_hash": "ce5edb2f96d466fe42a0f714e8d0334adc112b7a",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/Synthetix 3/synthetix-v3"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ],
+                "2": [
+                    "CWE-1024"
+                ]
+            },
+            "title": "Incorrect collateral reference",
+            "description": "The contract mistakenly interacts with `collateralType` instead of the intended `USD_TOKEN`.",
+            "severity": "High",
+            "contract": "IssueUSDModule.sol",
+            "function": "burnUsd()",
+            "lineNumber": "L158"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Burning tokens from the wrong address",
+            "description": "Instead of burning the sUSD tokens from the system, the tokens are burned from the `msg.sender`.",
+            "severity": "High risk",
+            "contract": "IssueUSDModule.sol",
+            "function": "burnUsd()",
+            "lineNumber": "158"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Increasing collateral balance",
+            "description": "Collateral balances are incorrectly updated when calling `burnUsd`",
+            "severity": "High risk",
+            "contract": "IssueUSDModule.sol",
+            "function": "N/A",
+            "lineNumber": "L158"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Collateral balances are incorrectly updated when calling `burnUsd`",
+            "description": "The changes to `burnUsd` did not align with the specification provided and would cause accounts to have incorrect balances. The following issues were explicitly identified: Incorrect collateral reference, Burning tokens from the wrong address, Increasing collateral balance.",
+            "severity": "High risk",
+            "contract": "IssueUSDModule.sol",
+            "function": "burnUsd()",
+            "lineNumber": "158"
+        }
+    ]
+}

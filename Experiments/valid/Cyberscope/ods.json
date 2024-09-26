@@ -1,0 +1,329 @@
+{
+    "path": "./Audit_Reports_2024/Cyberscope/ods.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0xa68d77d85b24257adae0bc9ca96edcbcba5f03ea",
+        "chain": "bsc",
+        "compiler_version": [
+            "v0.8.19+commit.7dd6d404"
+        ],
+        "project_path": {
+            "Odesis": "Experiments/contracts/ods/Odesis"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "ST - Stops Transactions",
+            "description": "Initially, the contract does not allow non-excluded addresses to transfer tokens.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "TSD - Total Supply Diversion",
+            "description": "The total supply of a token and the balances of individual accounts are two separate concepts that are managed by different variables in a smart contract. However, the amount added to the total supply does not equal the amount added to the balances, resulting in a discrepancy between the sum of balances and the total supply.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "RCS - Redundant Code Segment",
+            "description": "There are code segments that could be optimized. The variables `dividendsFromBuy` and `dividendsFromSell` are initialized with no given value, hence their value will be zero, making the `if` statement never execute.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-369"
+                ]
+            },
+            "title": "ZD - Zero Division",
+            "description": "The contract uses variables that may be set to zero as denominators, leading to unpredictable and potentially harmful results, such as a transaction revert.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ],
+                "2": [
+                    "CWE-1025"
+                ],
+                "3": [
+                    "CWE-595"
+                ]
+            },
+            "title": "LED - Lacking Event Details",
+            "description": "The contract emits an event during the swap functionality but lacks sufficient information to identify the cause of a failed transfer.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "swap()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "ISA - Inaccurate Swap Amount",
+            "description": "The contract calculates the amount of tokens that have been bought and sold in preparation for the swap functionality using the `liquidityFee` variable instead of `sellLiquidityFee`, resulting in an inaccurate amount of tokens being swapped.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "AOI - Arithmetic Operations Inconsistency",
+            "description": "The contract demonstrates an inconsistency in arithmetic operations by using native arithmetic expressions instead of the SafeMath library methods.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "TUU - Time Units Usage",
+            "description": "The contract is using arbitrary numbers to form time-related values which decreases readability of the codebase and prevents compiler optimization.",
+            "severity": "Unresolved",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "RED - Redundant Event Declaration",
+            "description": "The contract declares the event `UpdateDividendTracker` but it is not being used in the contract.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ],
+                "3": [
+                    "CWE-680"
+                ]
+            },
+            "title": "PVC - Price Volatility Concern",
+            "description": "The contract accumulates tokens from taxes to swap them for ETH. If the variable `swapTokensAtAmount` is set to a big number, then the contract will swap a huge amount of tokens for ETH, potentially leading to significant price volatility.",
+            "severity": "N/A",
+            "contract": "Odesis",
+            "function": "setSwapTriggerAmount()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "DDP - Decimal Division Precision",
+            "description": "Division of decimal (fixed point) numbers can result in rounding errors due to the way that division is implemented in Solidity.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1287"
+                ]
+            },
+            "title": "RVD - Redundant Variable Declaration",
+            "description": "The contract declares the `burntokens` variable and subtracts it from the amount. It is initialized with a value of zero, hence it does not impact the result of the subtraction in any way.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "MAL - Misused Algorithmic Logic",
+            "description": "The algorithmic flow does not follow the required business logic. The contract checks if the transaction is a sale and adds the fees to the `sellAmount` variable, else it adds the fees to the `buyAmount` variable. The else block contains transactions that are not buys, such as simple transfers. As a result, the `buyAmount` will have a misleading value.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "MC - Missing Check",
+            "description": "The contract is processing variables that have not been properly sanitized and checked that they form the proper shape.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ]
+            },
+            "title": "RS - Redundant Swaps",
+            "description": "The `swapTokensAtAmount` variable can be set to zero since there is no input validation, resulting in redundant swaps.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "RSML - Redundant SafeMath Library",
+            "description": "The usage of the SafeMath library adds complexity and overhead, increasing gas consumption unnecessarily since Solidity versions greater than or equal to 0.8.0 provide native functionality for arithmetic operations that revert to underflow and overflow.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "RSK - Redundant Storage Keyword",
+            "description": "The contract uses the `storage` keyword in a view function which is redundant as view functions do not modify the state of the contract and do not perform any actions that cost gas.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "L02 - State Variables could be Declared Constant",
+            "description": "State variables can be declared as constant using the constant keyword to ensure that the value of the state variable cannot be changed after it has been set.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

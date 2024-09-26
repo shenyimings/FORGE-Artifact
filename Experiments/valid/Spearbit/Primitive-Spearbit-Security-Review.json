@@ -1,0 +1,218 @@
+{
+    "path": "./Audit_Reports_2024/Spearbit/Primitive-Spearbit-Security-Review.pdf",
+    "project_info": {
+        "url": "https://github.com/primitivefinance/portfolio",
+        "commit_hash": "b920d50d88763d112c73ed05ef7dc6c422dbceb2",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/Primitive-Spearbit-Security-Review/portfolio"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Liquidity can be (de-)allocated at a bad price",
+            "description": "LPs will incur a loss, especially if the asset is currently far more valuable than the quote.",
+            "severity": "Medium Risk",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1335"
+                ]
+            },
+            "title": "Missing `signextend` when dealing with non-full word signed integers",
+            "description": "The AssemblyLib is using non-full word signed integers operations. If the signed data in the stack have not been signextended the two\u2019s complement arithmetic will not work properly, most probably reverting.",
+            "severity": "Medium Risk",
+            "contract": "AssemblyLib.sol",
+            "function": "N/A",
+            "lineNumber": "L83"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Tokens With Multiple Addresses Can Be Stolen Due to Reliance on `balanceOf`",
+            "description": "Some ERC20 tokens have multiple valid contract addresses that serve as entrypoints for manipulating the same underlying storage. Because the FVM holds all tokens for all pools in the same contract, assumes that a contract address is a unique identifier for a token, and relies on the return value of `balanceOf` for manipulated tokens to determine what transfers are needed during transaction settlement, multiple entrypoint tokens are not safe to be used in pools.",
+            "severity": "Medium Risk",
+            "contract": "AccountLib.sol",
+            "function": "N/A",
+            "lineNumber": "L230"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Swap amounts are always estimated with priority fee",
+            "description": "A pool can have a priority fee that is only applied when the pool controller (contract) performs a swap. However, when estimating a swap with `getAmountOut` the priority fee will always be applied as long as there.",
+            "severity": "Medium Risk",
+            "contract": "RMM01Lib.sol",
+            "function": "getAmountOut()",
+            "lineNumber": "L70"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Rounding functions are wrong for negative integers",
+            "description": "The rounding functions scaleFromWadDownSigned and scaleFromWadUpSigned do not properly round negative integers towards negative infinity and positive infinity respectively. This can cause issues when checking invariants, leading to potential violations.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "scaleFromWadDownSigned and scaleFromWadUpSigned",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "LPs can lose fees if fee growth accumulator overflows their checkpoint",
+            "description": "Fees (that are not reinvested in the pool) are currently tracked through an accumulator value `pool.feeGrowthGlobalAsset` and `pool.feeGrowthGlobalQuote`, computed as asset or quote per liquidity. Each user providing liquidity has a checkpoint of these values from their last sync (`claim`). When syncing new fees, the distance from the current value to the user\u2019s checkpoint is computed and multiplied by their liquidity. The accumulator values are deliberately allowed to overflow as only the distance matters. However, if an LP does not sync its fees and the accumulator grows, overflows, and grows larger than their last checkpoint, the LP loses all fees.",
+            "severity": "Medium Risk",
+            "contract": "N/A",
+            "function": "claim()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1335"
+                ]
+            },
+            "title": "Unnecessary left shift in `encodePoolId`",
+            "description": "The `encodePoolId` performs a left shift of `0`. This is a noop.",
+            "severity": "Low Risk",
+            "contract": "FVMLib.sol",
+            "function": "encodePoolId()",
+            "lineNumber": "L220"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "_syncPool performs unnecessary pool state updates",
+            "description": "The _syncPool function is only called during a swap. During a swap the liquidity never changes and the pool\u2019s last timestamp has already been updated in _beforeSwapEffects.",
+            "severity": "Gas Optimization",
+            "contract": "Portfolio.sol",
+            "function": "_syncPool",
+            "lineNumber": "638-639"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "`Portfolio.sol` gas optimizations",
+            "description": "Throughout the contract we\u2019ve identified a number of minor gas optimizations that can be performed.",
+            "severity": "Gas Optimization",
+            "contract": "Portfolio.sol",
+            "function": "N/A",
+            "lineNumber": "L750, L262, L376, L444-L445, L436-L443"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Token amounts are in wrong decimals if `useMax` parameter is used",
+            "description": "The `allocate` and `swap` functions have a `useMax` parameter that sets the token amounts to be used to the net balance of the contract. This net balance is the return value of a `getNetBalance` call, which is in _token_ decimals. The code that follows ( `getPoolMaxLiquidity` for `allocate` , `iteration.input` for `swap` ) expects these amounts to be in WAD units.",
+            "severity": "High Risk",
+            "contract": "Portfolio.sol",
+            "function": [
+                "allocate",
+                "swap"
+            ],
+            "lineNumber": [
+                "227-237",
+                "444-448"
+            ]
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Bisection can be optimized",
+            "description": "The Bisection algorithm tries to find a root of the monotonic function. Evaluating the expensive invariant function at the lower point on each iteration can be avoided by caching the output function value whenever a new lower bound is set.",
+            "severity": "N/A",
+            "contract": "BisectionLib.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Pool existence check in `swap` should happen earlier",
+            "description": "The pool existence check in the swap function should occur earlier to prevent potential issues.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "swap()",
+            "lineNumber": "28"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Pool creation in test uses wrong duration and volatility",
+            "description": "The second path with `pairId != 0` in `HelperConfigsLib`'s pool creation calls the `createPool` method with the volatility and duration parameters swapped, leading to wrong pool creations used in tests that use this path.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

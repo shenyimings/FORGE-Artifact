@@ -1,0 +1,177 @@
+{
+    "path": "./Audit_Reports_2024/Inspex/Inspex-WSwap.pdf",
+    "project_info": {
+        "url": "https://github.com/WaultFinance/WAULT",
+        "commit_hash": "9f4ab8afc581d74ab881522c14c2a4d23cd0f6eb",
+        "address": "0xb42e3fe71b7e0673335b3331b3e1053bd9822570, 0xd48745e39bbed146eec15b79cbf964884f9877c2",
+        "is_exists": true,
+        "chain": "bsc",
+        "compiler_version": [
+            "v0.5.16+commit.9c3226ce",
+            "v0.6.6+commit.6c089d02"
+        ],
+        "project_path": {
+            "WaultSwapFactory": "Experiments/contracts/Inspex-WSwap/WaultSwapFactory",
+            "WaultSwapRouter": "Experiments/contracts/Inspex-WSwap/WaultSwapRouter"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "WEX Reward Miscalculation (wexPerBlock)",
+            "description": "The `wexPerBlock` variable is used to determine the total number of WEX tokens to be minted as a reward per block, but modifying it without updating the pending rewards first causes incorrect calculation of each pool's reward.",
+            "severity": "Medium",
+            "contract": "WaxMaster.sol",
+            "function": "setWexPerBlock(uint256 _wexPerBlock)",
+            "lineNumber": "1456-1459"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "WEX Reward Miscalculation (totalAllocPoint)",
+            "description": "The WEX reward miscalculation can lead to unfair WEX token distribution due to incorrect calculation of total rewards allocated to pool 0 during block updates.",
+            "severity": "Medium",
+            "contract": "WaxMaster.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ]
+            },
+            "title": "Design Flaw in massUpdatePools() Function",
+            "description": "The massUpdatePools() function will eventually be unusable due to excessive gas usage because it calls updatePool() for all added pools and disabled pools are still updated, leading to uncontrolled resource consumption.",
+            "severity": "Low",
+            "contract": "WaxMaster.sol",
+            "function": "massUpdatePools()",
+            "lineNumber": "1351-1356"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improper Deduction of User's Pending Reward",
+            "description": "The user will lose only the pending WEX token rewards due to improper deduction.",
+            "severity": "Very Low",
+            "contract": "WexMaster.sol",
+            "function": "emergencyWithdraw()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improper Handling of Transfer Amount",
+            "description": "The safeWexTransfer function transfers all WEX tokens if the claim amount exceeds the current WEX balance, resulting in users receiving fewer WEX tokens than claimed.",
+            "severity": "Very Low",
+            "contract": "WexMaster.sol",
+            "function": [
+                "claim(uint256 _pid)",
+                "safeWexTransfer(address _to, uint256 _amount)"
+            ],
+            "lineNumber": [
+                "1442-1454",
+                "1456-1463"
+            ]
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-477"
+                ]
+            },
+            "title": "Outdated Compiler Version",
+            "description": "The Solidity compiler versions specified in the smart contracts were outdated, which have publicly known inherent bugs that may potentially cause damage to the smart contracts or users.",
+            "severity": "High",
+            "contract": [
+                "WswapV2Router02.sol",
+                "WswapV2Factory.sol"
+            ],
+            "function": "N/A",
+            "lineNumber": "1-3"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-749"
+                ]
+            },
+            "title": "Improper Function Visibility",
+            "description": "Functions with improper visibility can lead to unintended access and potential security risks.",
+            "severity": "Info",
+            "contract": "WEX.sol, WexMaster.sol",
+            "function": "N/A",
+            "lineNumber": "909-912"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Unnecessary Function Calling",
+            "description": "Functions with public visibility copy calldata to memory when being executed, while external functions can read directly from calldata.",
+            "severity": "Info",
+            "contract": "WEX.sol and WexMaster.sol",
+            "function": [
+                "mint()",
+                "setBurnrate()",
+                "addWhitelistedAddress()",
+                "removeWhitelistedAddress()",
+                "add()",
+                "set()",
+                "deposit()",
+                "withdraw()",
+                "emergencyWithdraw()",
+                "claim()",
+                "setWexPerBlock()"
+            ],
+            "lineNumber": [
+                "905",
+                "909",
+                "914",
+                "919",
+                "1289",
+                "1311",
+                "1380",
+                "1409",
+                "1436",
+                "1442",
+                "1465"
+            ]
+        }
+    ]
+}

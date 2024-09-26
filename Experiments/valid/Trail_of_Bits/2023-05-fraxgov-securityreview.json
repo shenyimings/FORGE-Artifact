@@ -1,0 +1,163 @@
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/2023-05-fraxgov-securityreview.pdf",
+    "project_info": {
+        "url": "https://github.com/FraxFinance/frax-governance/tree/ed4e7083fe1b71af34f400ca67090e7123e4e053",
+        "commit_hash": "ed4e7083fe1b71af34f400ca67090e7123e4e053",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/2023-05-fraxgov-securityreview/frax-governance"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-362"
+                ]
+            },
+            "title": "Race condition in FraxGovernorOmega target validation",
+            "description": "A race condition exists in the target validation of the propose function in FraxGovernorOmega contract, allowing a proposal to interact with a pending safe that has not been added to the allowlist.",
+            "severity": "High",
+            "contract": "FraxGovernorOmega",
+            "function": "propose",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1173"
+                ]
+            },
+            "title": "Vulnerable project dependency",
+            "description": "The `yaml` library has a known vulnerability (CVE-2023-2251) which could impact the project system.",
+            "severity": "Undetermined",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-345"
+                ],
+                "3": [
+                    "CWE-353"
+                ]
+            },
+            "title": "Replay protection missing in castVoteWithReasonAndParamsBySig",
+            "description": "The `castVoteWithReasonAndParamsBySig` function does not include a voter nonce, so transactions involving the function can be replayed by anyone.",
+            "severity": "Medium",
+            "contract": "Governor",
+            "function": "castVoteWithReasonAndParamsBySig",
+            "lineNumber": "L508-535"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Ability to lock any user\u2019s tokens using deposit_for",
+            "description": "The `deposit_for` function can be used by anyone (even a smart contract) to lock someone else's tokens, potentially leading to unauthorized token locking.",
+            "severity": "High",
+            "contract": "veFXS",
+            "function": "deposit_for",
+            "lineNumber": "458-474"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "The relay function can be used to call critical safe functions",
+            "description": "An unauthorized user can utilize the relay function to invoke critical safe functions, posing a potential security risk.",
+            "severity": "Critical",
+            "contract": "Governor",
+            "function": "relay()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Votes can be delegated to contracts",
+            "description": "Votes can be delegated to smart contracts which contrasts with the fact that FXS tokens can be locked only in whitelisted contracts, potentially leading to unexpected behavior.",
+            "severity": "Informational",
+            "contract": "VeFxsVotingDelegation",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Lack of public documentation regarding voting power expiry",
+            "description": "The audit report lacks clear documentation on how voting power expires, which can lead to confusion and potential security issues.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "_calculateVotingWeight",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Spamming risk in propose functions",
+            "description": "The propose function has been updated in the FraxGovernanceOmega contract to revert whenever it is called, but in the FraxGovernanceAlpha contract, a user can still spam the propose function as long as the caller meets the proposal threshold.",
+            "severity": "Medium",
+            "contract": "FraxGovernanceAlpha and FraxGovernanceOmega",
+            "function": "propose()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

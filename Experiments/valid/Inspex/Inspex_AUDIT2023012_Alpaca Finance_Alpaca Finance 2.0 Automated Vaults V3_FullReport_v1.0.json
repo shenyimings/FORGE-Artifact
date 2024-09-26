@@ -1,0 +1,142 @@
+{
+    "path": "./Audit_Reports_2024/Inspex/Inspex_AUDIT2023012_Alpaca Finance_Alpaca Finance 2.0 Automated Vaults V3_FullReport_v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/alpaca-finance/alpaca-v2-automated-vault",
+        "commit_hash": "44c9da92226effb4368ce45832909890e538dab5",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/Inspex_AUDIT2023012_Alpaca Finance_Alpaca Finance 2/alpaca-v2-automated-vault"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Centralized Control of State Variable",
+            "description": "Critical state variables can be updated at any time by the controlling authorities without notifying users.",
+            "severity": "High",
+            "contract": "AutomatedVaultManager, PCSV3Executor01, PCSV3StableExecutor",
+            "function": [
+                "openVault",
+                "setVaultTokenImplementation",
+                "setManagementFeePerSec",
+                "setManagementFeeTreasury",
+                "setWithdrawalFeeTreasury",
+                "setVaultManager",
+                "setAllowToken",
+                "setToleranceBps",
+                "setMaxLeverage",
+                "setMinimumDeposit",
+                "setWithdrawalFeeBps",
+                "setCapacity",
+                "setRepurchaseSlippageBps",
+                "setVaultOracle",
+                "setRepurchaseThreshold"
+            ],
+            "lineNumber": [
+                "421",
+                "467",
+                "472",
+                "483",
+                "492",
+                "504",
+                "511",
+                "519",
+                "526",
+                "535",
+                "546",
+                "557",
+                "422",
+                "430"
+            ]
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Denial of Service on Withdrawal",
+            "description": "Due to the revert in the decreased liquidity process, the user will be unable to withdraw their funds.",
+            "severity": "High",
+            "contract": "PancakeV3Worker",
+            "function": "_decreaseLiquidity()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Force Decrease Liquidity on Withdrawal",
+            "description": "The liquidity provided to PancakeSwap V3 can be forcefully decreased, resulting in platform users receiving less reward.",
+            "severity": "Medium",
+            "contract": "PCSV3Executor01 PCSV3StableExecutor",
+            "function": "onWithdraw()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-437"
+                ]
+            },
+            "title": "Transaction Ordering Dependence",
+            "description": "The front-running attack can be performed, resulting in a bad swapping rate and loss of user reward.",
+            "severity": "Low",
+            "contract": "PancakeV3Worker",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "PancakeSwap V3 Pair Price Manipulation",
+            "description": "Several uses of returns from the PancakeV3Pool.slot0() function can be easily manipulated, resulting in unexpected behavior on the platform.",
+            "severity": "Low",
+            "contract": "PCSV3StableExecutor, PancakeV3VaultOracle, PancakeV3Worker",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Slippage Tolerance Exceed Price Range",
+            "description": "The increasePosition() function call may be reverted due to a large volume shifting the price across the position range, resulting in an invalid amount to add liquidity and potentially leading to operation failure.",
+            "severity": "Very Low",
+            "contract": "PancakeV3Worker",
+            "function": "increasePosition()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

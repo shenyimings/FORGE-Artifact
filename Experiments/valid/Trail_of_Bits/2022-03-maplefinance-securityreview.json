@@ -1,0 +1,128 @@
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/2022-03-maplefinance-securityreview.pdf",
+    "project_info": {
+        "url": "https://github.com/maple-labs/erc20",
+        "commit_hash": "N/A",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/2022-03-maplefinance-securityreview/erc20"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ],
+                "3": [
+                    "CWE-302"
+                ]
+            },
+            "title": "Risk of reuse of signatures across forks due to lack of chain ID validation",
+            "description": "The `ERC20Permit` contract implements EIP-2612 functionality, but the chain ID is fixed at deployment and cannot be updated in case of a post-deployment hard fork, allowing signatures to be replayed across both versions of the chain.",
+            "severity": "High",
+            "contract": "ERC20Permit",
+            "function": "permit()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-362"
+                ]
+            },
+            "title": "Risk of token theft due to race condition in ERC20\u2019s approve function",
+            "description": "A known race condition in the ERC20 standard\u2019s `approve` function could lead to token theft.",
+            "severity": "High",
+            "contract": "ERC20",
+            "function": "approve()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Missing check on newAsset's decimals",
+            "description": "In the Migrator contract, there is no verification of newAsset's decimals being equal to the old asset's decimals during migration, which can lead to incorrect amounts for users.",
+            "severity": "N/A",
+            "contract": "Migrator",
+            "function": "performMigration",
+            "lineNumber": "L11-14"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Lack of zero address checks",
+            "description": "The recipient's wallet incorrectly validates a zero address, causing token loss due to lack of zero address checks in parameters.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Possibility that users could receive more assets than the amount due",
+            "description": "In the withdraw function of RevenueDistributionToken, there is a possibility that users could receive more assets than the amount due.",
+            "severity": "High",
+            "contract": "RevenueDistributionToken",
+            "function": "withdraw()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-345"
+                ],
+                "3": [
+                    "CWE-347"
+                ]
+            },
+            "title": "Signature malleability due to use of ecrecover",
+            "description": "The use of ecrecover can lead to signature malleability issues if appropriate checks are not implemented on the 's' and 'v' values.",
+            "severity": "N/A",
+            "contract": "ERC20Permit",
+            "function": "N/A",
+            "lineNumber": "L72-84"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Solidity compiler optimizations can be problematic",
+            "description": "The Maple contracts have enabled optional compiler optimizations in Solidity which can lead to security implications due to optimization bugs.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "foundry.toml"
+        }
+    ]
+}

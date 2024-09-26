@@ -1,0 +1,102 @@
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-NBC-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/TrustlessMarket/alpha-keys-contract/tree/375e78f",
+        "commit_hash": "375e78f",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/PeckShield-Audit-Report-NBC-v1/alpha-keys-contract"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Revisited Price Calculation in AlphaKeysToken",
+            "description": "The trade price calculation should be improved in the getPriceV2() function to compute sum1 as 0 when supply<= NUMBER_UNIT_PER_ETHER and make the same adjustment for sum2.",
+            "severity": "Medium",
+            "contract": "AlphaKeysToken",
+            "function": "getPriceV2()",
+            "lineNumber": "172,179"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Incorrect Order Locking Validation in AlphaKeysFactory",
+            "description": "In the threeThreeTrade() function of AlphaKeysFactory contract, validating with requirement (!order.locked) should be revised as (order.locked)",
+            "severity": "Low",
+            "contract": "AlphaKeysFactory",
+            "function": "threeThreeTrade()",
+            "lineNumber": "699"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Revisited TokenA Buy Price in threeThreeTradeBTC()",
+            "description": "The `threeThreeTradeBTC()` function in `AlphaKeysFactory` uses a wrong price, charging more than intended for the buying user.",
+            "severity": "High",
+            "contract": "AlphaKeysFactory",
+            "function": "threeThreeTradeBTC()",
+            "lineNumber": "877"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-233"
+                ]
+            },
+            "title": "Improved Parameter Validations in AlphaKeysFactory",
+            "description": "DeFi protocols typically have a number of system- wide parameters that can be dynamically configured on demand. The `AlphaKeysFactory` contract has defined a number of protocol-wide risk parameters, such as `_protocolFeeRatio` and `_playerFeeRatio`. In the following, we show the corresponding routines that allow for their changes.",
+            "severity": "Low",
+            "contract": "AlphaKeysFactory",
+            "function": "setProtocolFeeRatio() and setPlayerFeeRatio()",
+            "lineNumber": "150-160"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "In NBC, there is a privileged administrative account, i.e., owner. The administrative account plays a critical role in governing and regulating the protocol-wide operations.",
+            "severity": "Medium",
+            "contract": "AlphaKeysFactory",
+            "function": [
+                "setAlphaKeysTokenImplementation()",
+                "setAdmin(address)",
+                "setBTC(address)",
+                "setVault(address)"
+            ],
+            "lineNumber": "94-112"
+        }
+    ]
+}

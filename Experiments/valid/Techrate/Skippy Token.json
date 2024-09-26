@@ -1,0 +1,102 @@
+{
+    "path": "./Audit_Reports_2024/Techrate/Skippy Token.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0x41AD669F988Ca0E5996cE8391159F367Fe95C0c7",
+        "chain": "bsc",
+        "compiler_version": [
+            "v0.8.0+commit.c7dfd78e"
+        ],
+        "project_path": {
+            "SkippyToken": "Experiments/contracts/Skippy Token/SkippyToken"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Owner privileges (In the period when the owner is not renounced)",
+            "description": "The contract owner has excessive privileges to include/exclude addresses from rewards and fees, burn tokens, enable/disable swap and liquify, change burn fee and liquidity threshold, exclude from maximum transaction limit and time limit, set time lock for whitelisted addresses.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "OUT_OF_GAS exception in includeInReward() function",
+            "description": "The function includeInReward() uses a loop to find and remove addresses from the _excluded list, which may cause an OUT_OF_GAS exception if there is a long excluded addresses list.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "includeInReward()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "OUT_OF_GAS exception in _getCurrentSupply() function",
+            "description": "The function _getCurrentSupply() uses a loop to evaluate total supply and could be aborted with an OUT_OF_GAS exception if there is a long excluded addresses list.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "_getCurrentSupply()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Swap and liquify function will never be called if maximum transaction limit is less than liquidity threshold",
+            "description": "The swap and liquify function will never be executed if the maximum transaction limit is set to a value lower than the liquidity threshold, resulting in unintended behavior.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "swap and liquify",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "Only one sell operation is allowed in timeLimit value",
+            "description": "The function allows only one sell operation within a specified time limit.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

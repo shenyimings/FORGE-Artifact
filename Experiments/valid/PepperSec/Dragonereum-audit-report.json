@@ -1,0 +1,63 @@
+{
+    "path": "./Audit_Reports_2024/PepperSec/Dragonereum-audit-report.pdf",
+    "project_info": {
+        "url": "https://github.com/dragonereum/dragonereum-contracts",
+        "commit_hash": "2faadda1e23156141b4265c4c8ce878a5c8d9b08",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/Dragonereum-audit-report/dragonereum-contracts"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Redundant modifier",
+            "description": "The onlyController modifier is used for many views, which is redundant and can be harmful for the frontend.",
+            "severity": "MEDIUM",
+            "contract": "EggCore.sol",
+            "function": "N/A",
+            "lineNumber": "9, 13"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Contract doesn't prevent zero amount Gold buying",
+            "description": "The buyGold function does not require(_amount !=0), allowing a user to buy Gold with a zero amount.",
+            "severity": "MEDIUM",
+            "contract": "MainBase",
+            "function": "buyGold(address _seller, uint256 _amount)",
+            "lineNumber": "203"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Attacker can use rounding to buy Gold for free",
+            "description": "An attacker can get free GOLD tokens due to rounding issues when _amount is less than 99999 * 10^18.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

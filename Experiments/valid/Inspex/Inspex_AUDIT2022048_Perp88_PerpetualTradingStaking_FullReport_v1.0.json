@@ -1,0 +1,426 @@
+{
+    "path": "./Audit_Reports_2024/Inspex/Inspex_AUDIT2022048_Perp88_PerpetualTradingStaking_FullReport_v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/perp88/contracts",
+        "commit_hash": "95e6e456fd170b480935c6df547a23b14e5c0d9f",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/Inspex_AUDIT2022048_Perp88_PerpetualTradingStaking_FullReport_v1/contracts"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "Improper Flashloan Implementation",
+            "description": "The attacker can use the flashLoan() function to drain the tokens from the pool without repaying the loan due to improper enforcement of behavioral workflow.",
+            "severity": "Critical",
+            "contract": "LiquidityFacet",
+            "function": "flashLoan()",
+            "lineNumber": "487, 490-493"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Insufficient Pool Address Check",
+            "description": "The attacker can abuse the PoolRouter contract flow, resulting in the drain of all approved tokens from the platform user who approved tokens for the PoolRouter contract.",
+            "severity": "Critical",
+            "contract": "PoolRouter",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Lack of Position Healthy Check",
+            "description": "The liquidate function lacks a position state validation, allowing healthy positions to be liquidated.",
+            "severity": "High",
+            "contract": "PerpTradeFacet.sol",
+            "function": "liquidate()",
+            "lineNumber": "826"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Missing Update for totalOf state in Farm Function",
+            "description": "A mismatch between the actual token balance in the pool and totalOf state can cause miscalculations in a function that uses these values. An attacker could take advantage of state mismatch to pass the check between token balance and totalOf, which could impact platform and user funds.",
+            "severity": "Critical",
+            "contract": "FarmFacet",
+            "function": "farm()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Missing Update for lastFundingTimeOf of Collateral Token",
+            "description": "In the FundingRateFacet contract, the poolV1ds.lastFundingTimeOf[collateralToken] is not updated in the updateFundingRate() function, which allows the attacker to repeatedly call this function for adding borrowingRate to poolV1ds.sumBorrowingRateOf[collateralToken] countlessly.",
+            "severity": "Critical",
+            "contract": "FundingRateFacet",
+            "function": "updateFundingRate(address,address)",
+            "lineNumber": "47"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Use of Upgradable Contract Design",
+            "description": "The logic of affected contracts can be arbitrarily changed by the proxy owner, allowing malicious actions such as stealing users' funds.",
+            "severity": "High",
+            "contract": "Multiple (PoolOracle Orderbook PoolDiamond AccessControlFacet AdminFacet DiamondCutFacet DiamondLoupeFacet FarmFacet FundingRateFacet GetterFacet LiquidityFacet OwnershipFacet PerpTradeFacet TransparentUpgradeableProxy AdHocMintRewarder Compounder FeedableRewarder PLPStaking RewardDistributor WFeedableRewarder PLP Vester)",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Improper Profit Transfer",
+            "description": "The profit will be sent to the Farmkeeper rather than the pool when the Farmkeeper uses the farm() function to rebalance.",
+            "severity": "High",
+            "contract": "FarmFacet",
+            "function": "farm()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Centralized Control of State Variable",
+            "description": "Critical state variables can be updated at any time by the controlling authorities without notifying users.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Arbitrary PLP Token Minting",
+            "description": "The contract owner can mint unlimited PLP token by adding an arbitrary minter address to the contract.",
+            "severity": "High",
+            "contract": "PLP",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "External Call to Untrusted Third Party Component",
+            "description": "The untrusted third party smart contract may harm the user's funds that are deposited by strategy.",
+            "severity": "High",
+            "contract": "FarmFacet",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Denial of Service from Rewarders Configuration",
+            "description": "The users cannot deposit or withdraw their capital from the contract if there is an address that does not conform with a rewarder contract in the rewarder list or the amount of the registered rewarder contracts is too high.",
+            "severity": "Medium",
+            "contract": "PLPStaking",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improper Share Calculation",
+            "description": "The number of tokens is used to calculate shares, implying that high value or low decimal tokens receive a smaller share than they should, resulting in incorrect available rewards for platform users.",
+            "severity": "Medium",
+            "contract": "PLPStaking",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Improper Sanity Check",
+            "description": "The price oracle contract can be later changed by the facet owner, and if a defective price oracle is added, it cannot be changed anymore and every contract that depends on the oracle will always be reverted.",
+            "severity": "Medium",
+            "contract": "AdminFacet",
+            "function": "setPoolOracle(PoolOracle newPoolOracle)",
+            "lineNumber": "118-128"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "User Reward Miscalculation",
+            "description": "When the onDeposit() or onHarvest() function is called for the first time, the userLastRewards[user] is still 0 which causes the calculateUserAccReward(user) to be miscalculated by (block.timestamp - userLastRewards[user]). Resulting in a very large reward amount.",
+            "severity": "Medium",
+            "contract": "AdHocMintRewarder",
+            "function": [
+                "onHarvest",
+                "pendingReward"
+            ],
+            "lineNumber": "80-105"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Arbitrary Reward Rate Set",
+            "description": "The claimAndFeedProtocolRevenue() function in the RewardDistributor contract can be called by anyone and indirectly manipulate the reward rate by changing the new reward period.",
+            "severity": "Medium",
+            "contract": "RewardDistributor",
+            "function": "claimAndFeedProtocolRevenue()",
+            "lineNumber": "102-114"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Insufficient roundDepth Input Validation",
+            "description": "The attacker could easily perform the arbitrage action against the liquidity pool to gain the profit from the price gap. This results in loss of liquidity pool value.",
+            "severity": "Medium",
+            "contract": "PoolOracle",
+            "function": [
+                "initialize(uint80 _roundDepth)",
+                "setRoundDepth(uint80 _roundDepth)"
+            ],
+            "lineNumber": [
+                "40-45",
+                "162-167"
+            ]
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ],
+                "3": [
+                    "CWE-302"
+                ]
+            },
+            "title": "Design Flaw in Fixed Rate Token Swap",
+            "description": "The attacker could perform the arbitrage swap between the DEX and Perp88's liquidity pool to gain the profit from the fixed rate swap. All profitable assets in the pool will be swapped out.",
+            "severity": "Medium",
+            "contract": "PoolOracle",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Arbitrary Resetting PLP Transfer Cooldown",
+            "description": "The attacker can call the addLiquidity() function with the victim's address as a receiver to reset the PLP token transfer cooldown on the target. However, the victim can still use the PLP token with the platform as normal since the platform address should be whitelisted from the transfer cooldown.",
+            "severity": "Low",
+            "contract": "LiquidityFacet",
+            "function": "addLiquidity()",
+            "lineNumber": "197"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improper Parameter Control of Calculation Parameter",
+            "description": "The reward rate can be changed to any desired amount, allowing users to claim their entire reward in a single block.",
+            "severity": "Low",
+            "contract": "FeedableRewarder WFeedableRewarder",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 19,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect Order Book Swap Rate",
+            "description": "When the three paths swap order is executed, the swap rate will always be worse than the trigger rate.",
+            "severity": "Low",
+            "contract": "OrderBook.sol",
+            "function": "validateSwapOrderPriceWithTriggerAboveThreshold() and _swap()",
+            "lineNumber": "427-437, 1056-1078"
+        },
+        {
+            "id": 20,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-221"
+                ],
+                "3": [
+                    "CWE-223"
+                ]
+            },
+            "title": "Reward Loss When Using onWithdraw() Function",
+            "description": "The reward will be reset when the onWithdraw() function is called without harvesting the reward for the user.",
+            "severity": "Low",
+            "contract": "AdHocMintRewarder",
+            "function": "onWithdraw(address, uint256)",
+            "lineNumber": "69-79"
+        },
+        {
+            "id": 21,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "N/A",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 22,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Missing Duplication Check",
+            "description": "The `PLPStaking` contract's `addStakingToken()` and `addRewarder()` functions lack duplication checks for staking tokens and rewarders, leading to improper user share value calculation and impact on cumulative rewards.",
+            "severity": "Very Low",
+            "contract": "PLPStaking",
+            "function": "addStakingToken() and addRewarder()",
+            "lineNumber": "39-55, 56-65"
+        },
+        {
+            "id": 23,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-477"
+                ]
+            },
+            "title": "Use of Deprecated Function",
+            "description": "The Perp88 team has resolved this issue by changing the deprecated function to the current available function.",
+            "severity": "Info",
+            "contract": "PoolOracle",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

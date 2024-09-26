@@ -1,0 +1,59 @@
+{
+    "path": "./Audit_Reports_2024/QuillAudits/Fundum Smart Contract Audit Report - QuillAudits.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0x19434Bae46D74854318fFec043775De2F6f961d4",
+        "chain": "bsc",
+        "compiler_version": [
+            "v0.8.0+commit.c7dfd78e"
+        ],
+        "project_path": {
+            "Fundum": "Experiments/contracts/Fundum Smart Contract Audit Report - QuillAudits/Fundum"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-437"
+                ]
+            },
+            "title": "Approve Race",
+            "description": "The standard ERC20 implementation contains a widely-known racing condition in its approve function, wherein a spender is able to witness the token owner broadcast a transaction altering their approval and quickly sign and broadcast a transaction using transferFrom to move the current approved amount from the owner\u2019s balance to the spender.",
+            "severity": "Low",
+            "contract": "Fundum",
+            "function": "_approve(address, address, uint256)",
+            "lineNumber": "74"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Usage of block.timestamp",
+            "description": "The variable block.timestamp does not always reflect the current time and may be inaccurate, as it can be influenced by miners.",
+            "severity": "Low",
+            "contract": "Fundum",
+            "function": [
+                "addLiquidity(uint256,uint256)",
+                "swapTokensForETH(uint256)",
+                "swapTokensForBUSD(address,uint256)"
+            ],
+            "lineNumber": [
+                "66",
+                "71",
+                "83"
+            ]
+        }
+    ]
+}

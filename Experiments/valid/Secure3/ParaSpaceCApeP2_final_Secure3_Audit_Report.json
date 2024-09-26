@@ -1,0 +1,236 @@
+{
+    "path": "./Audit_Reports_2024/Secure3/ParaSpaceCApeP2_final_Secure3_Audit_Report.pdf",
+    "project_info": {
+        "url": "https://github.com/para-space/paraspace-core",
+        "commit_hash": "684dd70b9c76c47c9742ae4bbcf4d645090c58cf",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/ParaSpaceCApeP2_final_Secure3_Audit_Report/paraspace-core"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Additional yield does not match bufferStakingBalance",
+            "description": "In the temporary repair function for exchange rate, a fixed amount is used for withdrawal to update bufferStakingBalance. If other users still stake for the cAPE contract before the repair is completed, the cAPE contract will receive additional benefits. This part of the income will be distributed to users, so the amount that all users can withdraw in cAPE will be larger than expected.",
+            "severity": "Medium",
+            "contract": "AutoCompoundApe",
+            "function": "_withdrawFromApeCoinStaking",
+            "lineNumber": "111"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "be allowed once",
+            "description": "The function tmp_fix_withdrawFromApeCoinStaking is supposed to only be called one time to set the initial value of stakingBalance by calling withdrawApeCoin to get the current snapshot the amount of APE staked in the apeStaking. As there is no setter function for stakingBalance, mistakenly calling this twice would permanently set the stakingBalance value to a wrong value.",
+            "severity": "Low",
+            "contract": "AutoCompoundApe",
+            "function": "tmp_fix_withdrawFromApeCoinStaking(address receiver)",
+            "lineNumber": "195-L202"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Did not judge the actual payment reward",
+            "description": "When the reward is claimed through the _harvest() function, the contract balance change is not determined to be consistent with rewardAmount. When there is any change or malfunction to the pledge agreement of APE, bufferBalance will update error.",
+            "severity": "Medium",
+            "contract": "AutoCompoundApe",
+            "function": "_harvest()",
+            "lineNumber": "134-L144"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "Potential Reentrancy Attack",
+            "description": "In the contract AutoCompoundApe, there are a large number of potential token transfers. In this case, if there is a received hook logic, the attacker may use this to carry out re-entry attacks.",
+            "severity": "Low",
+            "contract": "AutoCompoundApe",
+            "function": "N/A",
+            "lineNumber": "14"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Unchecked Return Value",
+            "description": "Not using the return values from functions can potentially lead to issues with error handling or tracking the state of the tokens being burned or minted.",
+            "severity": "Medium",
+            "contract": "AutoCompoundApe",
+            "function": "_compound() and _harvest()",
+            "lineNumber": "125-145"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Unused return value",
+            "description": "Not using the return values from functions can potentially lead to issues with error handling or tracking the state of the tokens being burned or minted.",
+            "severity": "Informational",
+            "contract": "SupplyLogic, PoolCore",
+            "function": "burn(), executeLiquidateERC20(), executeLiquidateERC721()",
+            "lineNumber": "118-122, 504-522, 535-553"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ]
+            },
+            "title": "Use of unified fund withdrawal function",
+            "description": "No uniform fund withdrawal function is used, tmp_fix_withdrawFromApeCoinStaking() function and _withdrawFromApeCoinStaking() function money back call interface not consistent.",
+            "severity": "Low",
+            "contract": "AutoCompoundApe",
+            "function": "tmp_fix_withdrawFromApeCoinStaking()",
+            "lineNumber": "200"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "_getTotalPooledApeBalance may be manipulated by rewardAmount",
+            "description": "The `_getTotalPooledApeBalance` function can be manipulated because `rewardAmount` is calculated using `apeStaking.pendingRewards()` which can be influenced by the `depositApeCoin` operation, allowing a potential attacker to manipulate `position.stakedAmount`.",
+            "severity": "Medium",
+            "contract": "AutoCompoundApe",
+            "function": "_getTotalPooledApeBalance()",
+            "lineNumber": "92-104"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "stakingBalance should use realWithdraw value, not use the input param amount",
+            "description": "Using 'realWithdraw' is safer than using 'amount' due to unknown and non-deterministic execution result of apeStaking.withdrawSelfApeCoin(amount);",
+            "severity": "Informational",
+            "contract": "AutoCompoundApe",
+            "function": "_withdrawFromApeCoinStaking(uint256 amount)",
+            "lineNumber": "111"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "tmp_fix_withdrawFromApeCoinStaking should only be allowed once",
+            "description": "The function tmp_fix_withdrawFromApeCoinStaking is supposed to only be called one time to set the initial value of stakingBalance by calling withdrawApeCoin to get the current snapshot the amount of APE staked in the apeStaking. As there is no setter function for stakingBalance, mistakenly calling this twice would permanently set the stakingBalance value to a wrong value.",
+            "severity": "Logical",
+            "contract": "AutoCompoundApe",
+            "function": "tmp_fix_withdrawFromApeCoinStaking(address receiver)",
+            "lineNumber": "195-202"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Event Duplicate in AutoCompoundApe.sol",
+            "description": "The deposit function emits two events (Transfer and Deposit) with similar information, which may lead to unnecessary gas consumption.",
+            "severity": "Informational",
+            "contract": "AutoCompoundApe",
+            "function": "deposit(address,uint256)",
+            "lineNumber": "62-63"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "liquidate the hacker for profit",
+            "description": "To patch the bug, all pToken and debt Token owned by the hackers were transferred to the target address, allowing a normal user to liquidate it and gain a profit.",
+            "severity": "Low",
+            "contract": "AutoCompoundApe",
+            "function": "N/A",
+            "lineNumber": "101"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "tmp_fix_withdrawFromApeCoinStaking may be suffering from front-run attack",
+            "description": "The function tmp_fix_withdrawFromApeCoinStaking uses a hard-coded 'amount' variable and can be vulnerable to front-run attacks, allowing an attacker to manipulate the exchangeRate.",
+            "severity": "Low",
+            "contract": "AutoCompoundApe",
+            "function": "tmp_fix_withdrawFromApeCoinStaking(address receiver)",
+            "lineNumber": "195-202"
+        }
+    ]
+}

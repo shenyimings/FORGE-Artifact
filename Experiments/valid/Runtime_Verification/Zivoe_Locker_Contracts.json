@@ -1,0 +1,80 @@
+{
+    "path": "./Audit_Reports_2024/Runtime_V\u0435rification/Zivoe_Locker_Contracts.pdf",
+    "project_info": {
+        "url": "https://github.com/Zivoe/zivoe-core-foundry",
+        "commit_hash": "c35d3e114cbf9376104d325178f986359b0fa4ce,c6a13971c1ed2c24e2fa2640833e4a8e9146d404",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/Zivoe_Locker_Contracts/zivoe-core-foundry"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Yield generated in OCY_OUSD may not be distributed over token holders",
+            "description": "In `OCY_OUSD` contract, it is possible to call the `pullFromLocker` function and transfer the accrued yield even though there exists a separate `forwardYield` function which transfers this yield to `OCT_YDL`.",
+            "severity": "Medium",
+            "contract": "OCY_OUSD",
+            "function": "pullFromLocker",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "Precision of portion in processRequest is not correct",
+            "description": "In the OCR_Modular contract, during the calculation of the amount of tranche tokens to be burned, the proportion of the balance of stable coins owned by the locker to the amount of total redemptions is used without considering precision differences between stable coin and redemption values.",
+            "severity": "High",
+            "contract": "OCR_Modular",
+            "function": "processRequest()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ]
+            },
+            "title": "Inconsistent behavior in pullFromLocker functions",
+            "description": "In the `OCY_Convex_B` contract, pull functions call `claimRewards` before the pull operations are done. However, in `OCY_Convex_A`, a similar call is not performed and the invocation of `claimRewards` is left to user initiative.",
+            "severity": "-",
+            "contract": "OCY_Convex_B, OCY_Convex_A",
+            "function": "pullFromLocker functions",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Outdated documentation in processPayment function",
+            "description": "In the OCC_Modular contract, the documentation relative to the function processPayment is outdated. But, in fact, only underwriter or keepers are allowed to call this function. Besides, the function can be called up to 12 hours before the paymentDueBy.",
+            "severity": "Informative",
+            "contract": "OCC_Modular",
+            "function": "processPayment()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

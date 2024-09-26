@@ -1,0 +1,163 @@
+{
+    "path": "./Audit_Reports_2024/Quantstamp/stake-hound.pdf",
+    "project_info": {
+        "url": "https://github.com/stakehound/stakehound-core/tree/0f1d6e4d35b841bcf09d3b66f62c62bebb67308a",
+        "commit_hash": "0f1d6e4d35b841bcf09d3b66f62c62bebb67308a",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/stake-hound/stakehound-core"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "QSP-1 Token Distribution",
+            "description": "The requirement that restricts the supplyController from minting more than _maxSupply is implicit and can be cancelled by distributeTokens, allowing the supplyController to mint more tokens than _maxSupply or restricting the total supply from reaching _maxSupply.",
+            "severity": "Low Risk",
+            "contract": "StakedToken",
+            "function": "mint() and distributeTokens()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "QSP-2 Gas Consumption",
+            "description": "Depending on `DownstreamCaller.transactions` array length, the gas consumed during a call to `executeTransactions` can be excessively high potentially throwing the transaction for out of gas or block gas limit.",
+            "severity": "Low Risk",
+            "contract": "DownstreamCaller, StakedToken",
+            "function": "executeTransactions",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "QSP-3 Execute Transactions",
+            "description": "DownstreamCaller.executeTransactions is a public function. Depending on the listed transactions, allowing it to be called by a non-owner or by any other address than StakedToken can be a risk.",
+            "severity": "Low Risk",
+            "contract": "DownstreamCaller",
+            "function": "executeTransactions()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "QSP-4 Unlocked Pragma",
+            "description": "Every Solidity file specifies in the header a version number of the format `pragma solidity (^)0.6.*` . The caret ( `^` ) before the version number implies an unlocked pragma, meaning that the compiler will use the specified version _and above_ , hence the term \"unlocked.\"",
+            "severity": "Informational",
+            "contract": "DownstreamCaller, StakedToken",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "QSP-5 Allowance Double-Spend Exploit",
+            "description": "The contract is vulnerable to the allowance double-spend exploit as with other ERC20 tokens.",
+            "severity": "Informational",
+            "contract": "StakedToken",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "QSP-6 DownstreamCaller Update",
+            "description": "DownstreamCaller is deployed when StakedToken is initialized. However, the contract can be modified by the owner using setDownstreamCaller, this does not guarantee that the already listed transactions will be migrated to the new contract.",
+            "severity": "Informational",
+            "contract": "StakedToken",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "QSP-7 Privileged Roles and Ownership",
+            "description": "The owner has privileged roles to pause transfer, transferFrom, approve, increaseAllowance, decreaseAllowance, and mint functions, allowing selective blacklisting of addresses. The mint function also allows the supply controller to change the token supply arbitrarily.",
+            "severity": "Informational",
+            "contract": "StakedToken",
+            "function": "transfer, transferFrom, approve, increaseAllowance, decreaseAllowance, mint",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "QSP-8 Token Burning",
+            "description": "Only the supply controller is allowed to burn tokens through `StakedToken.burn`, however, `msg.sender` is used to set the `account` from where the tokens are burned.",
+            "severity": "Informational",
+            "contract": "StakedToken",
+            "function": "burn()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

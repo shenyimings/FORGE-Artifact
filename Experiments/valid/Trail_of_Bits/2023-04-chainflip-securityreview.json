@@ -1,0 +1,336 @@
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/2023-04-chainflip-securityreview.pdf",
+    "project_info": {
+        "url": "https://github.com/chainflip-io/chainflip-eth-contracts",
+        "commit_hash": "55402af70f6f68636b4bac424bd75c1b90d339fd",
+        "address": "0x4ed848684aa07be818da85923ca701e0e36ef602",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/2023-04-chainflip-securityreview/chainflip-eth-contracts"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ],
+                "3": [
+                    "CWE-302"
+                ]
+            },
+            "title": "Step 2 of the handover protocol can be forged",
+            "description": "In step 2 of the handover protocol, the participant \ud835\udd39 needs to signal agreement that participant \ud835\udd38 performed step 1 correctly and that \ud835\udd39 has correctly recovered the ephemeral key \ud835\udc61. However, the hash calculation does not include the commitment \ud835\udc41, which means that anyone can generate a random \ud835\udc67 and compute \ud835\udc41 = \ud835\udc54 \ud835\udc35.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-327"
+                ],
+                "3": [
+                    "CWE-328"
+                ]
+            },
+            "title": "Hash function is used as KDF in handover protocol",
+            "description": "In step 1 of the key handover protocol, participant \ud835\udd38 performs a DH key exchange with participant \ud835\udd39 \u2019s public key and applies a cryptographic hash function to the resulting shared secret. The resulting value is used as a keystream to encrypt the ephemeral key \ud835\udc61 as if using a stream cipher.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "Ceremony participants can send many delayed messages",
+            "description": "The ceremony runner allows participants to send ceremony data that arrives at the runner one round early, which would cause the runner to discard the previously stored data.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "add_delayed",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-369"
+                ]
+            },
+            "title": "Binding value can be zero",
+            "description": "The `gen_rho_i` function does not check that the return value is nonzero.",
+            "severity": "N/A",
+            "contract": "multisig/client/signing",
+            "function": "gen_rho_i",
+            "lineNumber": "84-109"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "The Chainflip back end and smart contracts have vulnerable dependencies",
+            "description": "Several dependencies with known vulnerabilities were found in the back-end and smart contract dependencies.",
+            "severity": "Moderate",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Potential panic in KeyId::from_bytes",
+            "description": "The `KeyId::from_bytes` method panics if the input is shorter than the value of the `size_of_epoch_index` variable, opening the node to denial-of-service attacks from malicious users.",
+            "severity": "Informational",
+            "contract": "state-chain/primitives/src/lib.rs",
+            "function": "KeyId::from_bytes",
+            "lineNumber": "133-139"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Solidity compiler optimizations can be problematic",
+            "description": "Optimization bugs have occurred in the past and may occur in the future, potentially causing security vulnerabilities.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-253"
+                ]
+            },
+            "title": "ERC-20 token transfer fails for certain tokens",
+            "description": "Due to an incorrect check, nonstandard ERC-20 tokens that do not return a Boolean value when transferred could be stuck in the protocol.",
+            "severity": "High",
+            "contract": "Vault",
+            "function": "_transfer()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "addGasNative is missing check for nonzero value",
+            "description": "The `addGasNative` function does not check for nonzero `msg.value` amounts.",
+            "severity": "Informational",
+            "contract": "Vault",
+            "function": "addGasNative()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "StakeManager contains unnecessary receive function",
+            "description": "The StakeManager contract contains a receive function, despite not requiring ether interactions.",
+            "severity": "Informational",
+            "contract": "contracts/StakeManager.sol",
+            "function": "receive()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Missing events for important operations",
+            "description": "Inconsistent use of events to signal processing step completion or failure.",
+            "severity": "Moderate",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-253"
+                ]
+            },
+            "title": "Nonstandard ERC-20 tokens get stuck when depositing",
+            "description": "Due to an incorrect check, nonstandard ERC-20 tokens that do not return a Boolean value when transferred could be stuck in the protocol.",
+            "severity": "High",
+            "contract": "Vault",
+            "function": "_transfer",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "Transfer can fail due to a fixed gas stipend",
+            "description": "The function govWithdrawNative has a fixed gas stipend of 2300, which may cause transfer to fail if the recipient is a proxy contract.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "govWithdrawNative()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "Low number of block confirmations configured for external blockchains",
+            "description": "The chosen number of block confirmations is not adequate and can lead to exploits where a user's stake value is recorded on the State Chain but no stake is locked on Ethereum.",
+            "severity": "High",
+            "contract": "StakeManager",
+            "function": "stake()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Hard to diagnose error from default behavior during signer nomination",
+            "description": "Error occurs due to default behavior during signer nomination making it hard to diagnose.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "threshold_nomination_with_seed()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Failed broadcast nominees are not punished if epoch ends during broadcast",
+            "description": "Nominated validators who want to delay certain broadcast transactions near the end of an epoch can do so without punishment.",
+            "severity": "Low",
+            "contract": "cf-broadcast",
+            "function": "clean_up_broadcast_storage",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Nominated broadcast signer does not always report failures in engine",
+            "description": "The Chainflip engine does not report transaction broadcast failures to the State Chain, which forces validators to wait for a timeout before attempting to rebroadcast the corresponding transaction.",
+            "severity": "Informational",
+            "contract": "engine/src/state_chain_observer/sc_observer/mod.rs",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Threshold signature liveness protection does not account for previously punished validators",
+            "description": "The implementation of threshold signature liveness protection does not consider previously punished validators, which can lead to a situation where two-thirds of the authority set are suspended and the protocol cannot progress.",
+            "severity": "N/A",
+            "contract": "cf-Threshold-Signature",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

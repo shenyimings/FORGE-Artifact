@@ -1,0 +1,162 @@
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/2023-08-scrollL2geth-initial-securityreview.pdf",
+    "project_info": {
+        "url": "https://github.com/scroll-tech/go-ethereum",
+        "commit_hash": "2dcc60a082ff89d1c57e497f23daad4823b2fdea",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/2023-08-scrollL2geth-initial-securityreview/go-ethereum"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Transaction pool fails to drop transactions that cannot afford L1 fees",
+            "description": "The code fails to account for L1 fees; as a result, transactions that cannot afford the combined L1 and L2 fees may be included in a block rather than demoted, as intended.",
+            "severity": "Informational",
+            "contract": "core/types/transaction.go",
+            "function": "Cost()",
+            "lineNumber": "318-323"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Multiple instances of unchecked errors",
+            "description": "The system is vulnerable to denial-of-service attacks and could allow attackers to trigger nil dereference panics in the sequencer node due to unhandled Go errors.",
+            "severity": "N/A",
+            "contract": "trie",
+            "function": [
+                "underlayerDb.Put()",
+                "db.Put()",
+                "s.commit()",
+                "tr.TryUpdate()",
+                "proofDb.Put()",
+                "c.onleaf()",
+                "c.sha.Write()",
+                "c.sha.Read()",
+                "db.preimages.commit()",
+                "batch.Put()",
+                "batch.Replay()",
+                "db.saveCache()"
+            ],
+            "lineNumber": [
+                "226",
+                "57",
+                "297",
+                "279",
+                "567",
+                "497",
+                "86",
+                "229",
+                "235",
+                "245",
+                "256",
+                "581",
+                "659",
+                "676",
+                "695",
+                "743",
+                "850"
+            ]
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-923"
+                ],
+                "3": [
+                    "CWE-300"
+                ]
+            },
+            "title": "Risk of double-spend attacks due to use of single-node Clique consensus without finality API",
+            "description": "l2geth runs using a centralized sequencer, which represents a single point of failure. Using a single sequencer with Clique consensus can expose off-chain applications to double-spend attacks.",
+            "severity": "Moderate",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Improper use of panic",
+            "description": "The codebase overuses Go's `panic` mechanism instead of error propagation system, introducing opportunities for denial of service.",
+            "severity": "N/A",
+            "contract": "l2geth",
+            "function": [
+                "sanityCheckByte32Key",
+                "MarkDeletion"
+            ],
+            "lineNumber": [
+                "N/A",
+                "120-130"
+            ]
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Risk of panic from nil dereference due to flawed error reporting in addressToKey",
+            "description": "The `addressToKey` function returns a `nil` pointer instead of a Go error when an error is returned by the `preImage.Hash()` function, which will cause a `nil` dereference panic in the `NewZkTrieProofWriter` function.",
+            "severity": "Critical",
+            "contract": "trie/zkproof/writer.go",
+            "function": "addressToKey() and NewZkTrieProofWriter()",
+            "lineNumber": "31-41"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Risk of transaction pool admission denial of service",
+            "description": "An attacker generates a denial-of-service attack against the sequencer by submitting extraordinarily large transactions. Because ECDSA recovery is a CPU-intensive operation and is executed before the transaction size is checked, the attacker is able to exhaust the memory resources of the sequencer.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "add() validateTx()",
+            "lineNumber": "198-202"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Syncing nodes fail to check consensus rule for L1 message count",
+            "description": "l2geth adds a consensus rule requiring that there be no more than L1Config.NumL1MessagesPerBlock number of L1 messages per L2 block. This rule is checked by the sequencer when building new blocks but is not checked by syncing nodes through the ValidateL1Messages function.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "ValidateL1Messages",
+            "lineNumber": "145-147"
+        }
+    ]
+}

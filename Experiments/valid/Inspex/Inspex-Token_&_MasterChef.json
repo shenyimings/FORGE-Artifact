@@ -1,0 +1,211 @@
+{
+    "path": "./Audit_Reports_2024/Inspex/Inspex-Token_&_MasterChef.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0x5D21D02378670119453530478288AEe67b807e2a",
+        "chain": "bsc",
+        "compiler_version": [
+            "v0.8.4+commit.c7e474f2"
+        ],
+        "project_path": {
+            "SamoyedMasterChef": "Experiments/contracts/Inspex-Token_&_MasterChef/SamoyedMasterChef"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Improper Delegation Handling",
+            "description": "The delegate mechanism will only activate when the delegator calls the `delegate()` function, allowing $KENNEL to be used for double spending attack in an aspect of voting mechanism.",
+            "severity": "High",
+            "contract": "KennelClub.sol",
+            "function": "_moveDelegates() and delegate()",
+            "lineNumber": "184-206"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improper Reward Calculation (Duplicated LP Token)",
+            "description": "The $SMOY reward miscalculation can lead to an unfair $SMOY token distribution to the users.",
+            "severity": "Medium",
+            "contract": "SamoyedMasterChef",
+            "function": "deposit(uint256 _pid, uint256 _amount)",
+            "lineNumber": "208"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improper Reward Calculation (BONUS_MULTIPLIER)",
+            "description": "Whenever the BONUS_MULTIPLIER variable is modified without updating the pending reward first, the reward of each pool will be incorrectly calculated.",
+            "severity": "Medium",
+            "contract": "SamoyedMasterChef.sol",
+            "function": "updateMultiplier(uint256)",
+            "lineNumber": "100-102"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improper Reward Calculation (smoyPerBlock)",
+            "description": "The `smoyPerBlock` variable is modified without updating the pending reward first, leading to incorrect calculation of each pool's reward.",
+            "severity": "High",
+            "contract": "SamoyedMasterChef.sol",
+            "function": "updateSmoyPerBlock(uint256 _smoyPerBlock)",
+            "lineNumber": "333-335"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improper Reward Calculation (_withUpdate)",
+            "description": "The $SMOY reward miscalculation can lead to an unfair $SMOY token distribution to the users due to incorrect calculation of rewards when `BONUS_MULTIPLIER` is modified without updating the pending reward first.",
+            "severity": "Medium",
+            "contract": "SamoyedMasterChef",
+            "function": "updateMultiplier()",
+            "lineNumber": "100-102"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Centralized Control of State Variable",
+            "description": "Critical state variables can be updated any time by the controlling authorities without notifying users.",
+            "severity": "Medium",
+            "contract": "SamoyedMasterChef",
+            "function": [
+                "updateMultiplier()",
+                "add()",
+                "set()",
+                "updateMinimumSmoy()",
+                "updateSmoyPerBlock()",
+                "renounceOwnership()",
+                "transferOwnership()"
+            ],
+            "lineNumber": [
+                "100",
+                "110",
+                "135",
+                "328",
+                "333",
+                "53",
+                "61"
+            ]
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Design Flaw in massUpdatePools() Function",
+            "description": "The `massUpdatePools()` function will eventually be unusable due to excessive gas usage because it calls `updatePool()` for all added pools, even if they are disabled.",
+            "severity": "Low",
+            "contract": "SamoyedMasterChef",
+            "function": "massUpdatePools()",
+            "lineNumber": "174-179"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Unchecked Deposit Fee Value",
+            "description": "The deposit() function uses the value of _amount parameter directly without validating the amount of the received token from the user.",
+            "severity": "High",
+            "contract": "SamoyedMasterChef.sol",
+            "function": "deposit(uint256, uint256)",
+            "lineNumber": "201-222"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-273"
+                ]
+            },
+            "title": "Insufficient Logging for Privileged Functions",
+            "description": "Privileged functions that are executable by the controlling parties are not logged properly by emitting events.",
+            "severity": "Very Low",
+            "contract": "SamoyedMasterChef",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Unsupported Design for Deflationary Token",
+            "description": "Business Logic Errors related to deflationary token design",
+            "severity": "Info",
+            "contract": "SamoyedMasterChef",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "N/A",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

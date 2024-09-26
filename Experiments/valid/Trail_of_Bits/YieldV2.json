@@ -1,0 +1,291 @@
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/YieldV2.pdf",
+    "project_info": {
+        "url": "https://github.com/yieldprotocol/vault-v2/tree/e46a3ae",
+        "commit_hash": "e46a3ae",
+        "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/YieldV2/vault-v2"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Lack of contract existence check on delegatecall may lead to unexpected behavior",
+            "description": "The `Ladle` contract uses the `delegatecall` proxy pattern without performing a contract existence check prior to executing a `delegatecall`, which may lead to failed executions if the implementation contract is incorrectly set or self-destructed.",
+            "severity": "High",
+            "contract": "vault-v2/contracts/Ladle.sol",
+            "function": "moduleCall()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Use of delegatecall in a payable function inside a loop",
+            "description": "The Ladle contract uses the delegatecall proxy pattern (which takes user-provided call data) in a payable function within a loop.",
+            "severity": "High",
+            "contract": "Ladle",
+            "function": "batch",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "Lack of two-step process for critical operations",
+            "description": "The protocol's functions emit events for critical operations but lack a two-step process.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-116"
+                ],
+                "3": [
+                    "CWE-838"
+                ]
+            },
+            "title": "Risks associated with use of ABIEncoderV2",
+            "description": "The contracts use Solidity's `ABIEncoderV2`, which is enabled by default in Solidity version 0.8 and has caused numerous issues in the past.",
+            "severity": "Undetermined",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Project dependencies contain vulnerabilities",
+            "description": "The project's dependencies have known vulnerabilities which can lead to arbitrary code execution, regular expression denial of service, and arbitrary file creation/overwrite.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Witch's buy and payAll functions allow users to buy collateral from vaults not undergoing auctions",
+            "description": "The Witch contract's buy and payAll functions do not check for active auctions on vaults, allowing users to buy collateral at below-market prices and creating an arbitrage opportunity.",
+            "severity": "N/A",
+            "contract": "Witch",
+            "function": "buy() and payAll()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Solidity compiler optimizations can be problematic",
+            "description": "High-severity security issues due to optimization bugs have occurred in the past and may occur in the future, causing security vulnerabilities in smart contracts.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Risks associated with EIP-2612",
+            "description": "The use of EIP-2612 increases the risk of `permit` function front-running as well as phishing attacks.",
+            "severity": "Informational",
+            "contract": "yield-utils-v2",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-923"
+                ],
+                "3": [
+                    "CWE-300"
+                ]
+            },
+            "title": "Failure to use the batched transaction follow may enable theft through front-running",
+            "description": "When users deviate from the batched transaction flow, they may lose their funds through front-running, for example, an attacker could front-run the `startPool()` function to steal the initial mint of strategy tokens.",
+            "severity": "High",
+            "contract": "Strategy",
+            "function": "startPool()",
+            "lineNumber": "146-194"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Strategy contract\u2019s balance-tracking system could facilitate theft",
+            "description": "The `Strategy` contract functions use the contract\u2019s balance to determine how many liquidity or base tokens to provide to a user minting or burning tokens.",
+            "severity": "High",
+            "contract": "strategy-v2/contracts/Strategy.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-311"
+                ],
+                "3": [
+                    "CWE-312"
+                ]
+            },
+            "title": "Insufficient protection of sensitive keys",
+            "description": "Sensitive keys are not properly protected.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "Lack of limits on the total amount of collateral sold at auction",
+            "description": "The protocol does not have global and type-specific limits on the amount of collateral that can be auctioned off at the same time, which may lead to total liquidation caused by bugs or attacks.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "auction()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Lack of incentives for calls to Witch.auction",
+            "description": "The Yield Protocol system does not provide users with a direct incentive to call `Witch.auction`, which may lead to delayed auctions and greater losses.",
+            "severity": "Undetermined",
+            "contract": "Witch.sol",
+            "function": "auction()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-439"
+                ]
+            },
+            "title": "Contracts used as dependencies do not track upstream changes",
+            "description": "The master branch of one repository of the protocol is not compatible with the master branch of another, leading to problems when a new version of the protocol is deployed.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Cauldron\u2019s give and tweak functions lack vault existence checks",
+            "description": "The Cauldron's give and tweak functions do not check if a vault exists before operating on it, which can lead to unintended consequences for the protocol.",
+            "severity": "High",
+            "contract": "Cauldron",
+            "function": "_give, _tweak",
+            "lineNumber": "N/A"
+        }
+    ]
+}

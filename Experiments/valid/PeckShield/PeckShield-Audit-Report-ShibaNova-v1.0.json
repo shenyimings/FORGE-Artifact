@@ -1,0 +1,134 @@
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-ShibaNova-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/ShibaNova/Contracts/tree/e7041e5",
+        "commit_hash": "e7041e5",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/PeckShield-Audit-Report-ShibaNova-v1/Contracts"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Trading Fee Discrepancy Between ShibaSwap And ShibaNova",
+            "description": "The trading fee in `ShibaPair` is assumed to be 0.2%, but it's actually 0.16% in `ShibaLibrary`, which may deviate the normal operations of helper routines in `ShibaRouter`.",
+            "severity": "High",
+            "contract": "Multiple Contracts",
+            "function": "getAmountOut() and swap()",
+            "lineNumber": "43-44, 179-188"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Sybil Attacks on sNova Voting",
+            "description": "The `sNova` token contract is vulnerable to Sybil attacks, allowing a malicious actor to manipulate votes by dynamically delegating voters.",
+            "severity": "Low",
+            "contract": "SNovaToken",
+            "function": "_delegate(address,address)",
+            "lineNumber": "319-330"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Accommodation of Non-Compliant ERC20 Tokens",
+            "description": "The `transfer` function does not have a return value defined and implemented, which may cause calls to it to expect a return value and unfortunately revert.",
+            "severity": "Low",
+            "contract": "Multiple Contracts",
+            "function": "transfer() and transferFrom()",
+            "lineNumber": "126-134, 172, 176"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "In the ShibaNova protocol, there is a special `owner` account that plays a critical role in governing and regulating the protocol-wide operations (e.g., set various parameters and add/remove reward pools). It also has the privilege to control or govern the flow of assets managed by this protocol.",
+            "severity": "Medium",
+            "contract": "ShibaNova",
+            "function": "setFeeAmount() and set()",
+            "lineNumber": "66-69"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Timely massUpdatePools During Pool Weight Changes",
+            "description": "The `set()` function does not timely invoke `massUpdatePools()` when updating pool weights, which may lead to unfair reward distribution.",
+            "severity": "Low",
+            "contract": "MasterShiba",
+            "function": "set()",
+            "lineNumber": "158-171"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1068"
+                ]
+            },
+            "title": "Inconsistency Between Document and Implementation",
+            "description": "There is a misleading comment embedded in the `ShibaPair` contract, which brings unnecessary hurdles to understand and/or maintain the software.",
+            "severity": "Informational",
+            "contract": "ShibaPair",
+            "function": "_mintFee",
+            "lineNumber": "98-103"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "Reentrancy Risk in deposit()/withdraw()/harvestReward()",
+            "description": "Violating the `checks-effects-interactions` principle can lead to reentrancy attacks, allowing malicious contracts to re-enter a vulnerable contract in a nested manner.",
+            "severity": "Low",
+            "contract": "MasterShiba",
+            "function": "withdraw()",
+            "lineNumber": "339, 342"
+        }
+    ]
+}

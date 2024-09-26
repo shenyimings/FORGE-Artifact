@@ -1,0 +1,99 @@
+{
+    "path": "./Audit_Reports_2024/HAECHI_AUDIT/HAECHI_AUDIT-IMETA.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0xa430e30ad770DCA9e64F5F95b07F7A8656a93723",
+        "chain": "eth",
+        "compiler_version": [
+            "v0.8.7+commit.e28d00a7"
+        ],
+        "project_path": {
+            "IMETACoin223Token_13": "Experiments/contracts/HAECHI_AUDIT-IMETA/IMETACoin223Token_13"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "IMETACoin223Token_13#transfer() and IMETACoin223Token_13#transferFrom() functions do not work normally",
+            "description": "The transfer() and transferFrom() functions of IMETACoin223Token_13 contract do not function as intended.",
+            "severity": "Critical",
+            "contract": "IMETACoin223Token_13",
+            "function": "transfer() and transferFrom()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Potential out-of-gas in IMETACoin223Token_13#getLast24hSendingValue() function",
+            "description": "The getLast24hSendingValue() function may cause an out-of-gas error.",
+            "severity": "Major",
+            "contract": "IMETACoin223Token_13",
+            "function": "getLast24hSendingValue()",
+            "lineNumber": "416-432"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Only 99 token transfers are possible within 24 hours instead of 100",
+            "description": "The getLast24hSendingValue function limits the number of loops to 99, allowing only 99 token transfers within 24 hours instead of the intended 100.",
+            "severity": "Medium",
+            "contract": "METACoin223Token_13",
+            "function": "getLast24hSendingValue()",
+            "lineNumber": "423"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Missing Event",
+            "description": "\ub204\ub77d\ub41c Event\uac00 \uc788\uc2b5\ub2c8\ub2e4.",
+            "severity": "Minor",
+            "contract": "IMETACoin223Token_13",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-191"
+                ]
+            },
+            "title": "Underflow issue in IMETACoin223Token_13#getLast24hSendingValue() function",
+            "description": "The getLast24hSendingValue() function has an underflow issue due to the for loop starting from i = tc - 1 and decrementing by 1, causing a revert when i reaches 0. This is because Solidity version 0.8.0 and above do not allow underflows and instead revert.",
+            "severity": "Critical",
+            "contract": "IMETACoin223Token_13",
+            "function": "getLast24hSendingValue()",
+            "lineNumber": "421-422"
+        }
+    ]
+}

@@ -1,0 +1,60 @@
+{
+    "path": "./Audit_Reports_2024/MixBytes/protocol v2.md",
+    "project_info": {
+        "url": "https://github.com/aave/protocol-v2",
+        "commit_hash": "750920303e33b66bc29862ea3b85206dda9ce786",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/protocol v2/protocol-v2"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrectly set `ltv` and `liquidationThreshold` lead to fund losses.",
+            "description": "The incorrect setting of liquidationThreshold and liquidationBonus can cause fund losses due to insufficient margin for liquidators to receive bonuses, leading to potential collateral value being up to 100 times the debt value.",
+            "severity": "High",
+            "contract": "LendingPoolConfigurator",
+            "function": "N/A",
+            "lineNumber": "376"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Decimals Update Inconsistency",
+            "description": "Changing the decimals in setReserveDecimals function does not automatically update the decimals in aToken or debt tokens, potentially leading to mispricing and liquidations.",
+            "severity": "MAJOR",
+            "contract": "LendingPoolConfigurator",
+            "function": "setReserveDecimals(address,uint256)",
+            "lineNumber": "533"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "Inheritance and storage layout issues",
+            "description": "The field order is determined by the inheritance order, any addition of new non-mapping fields in a new version would overwrite the existing fields.",
+            "severity": "Warning",
+            "contract": "VersionedInitializable",
+            "function": "N/A",
+            "lineNumber": "L19-L27"
+        }
+    ]
+}

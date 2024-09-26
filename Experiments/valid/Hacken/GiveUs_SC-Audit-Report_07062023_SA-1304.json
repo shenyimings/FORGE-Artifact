@@ -1,0 +1,392 @@
+{
+    "path": "./Audit_Reports_2024/Hacken/GiveUs_SC-Audit-Report_07062023_SA-1304.pdf",
+    "project_info": {
+        "url": "https://github.com/Krayt78/GiveUsContracts",
+        "commit_hash": "af8ce9eb0405098f53ed3d6584ec4bd3271c1941",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/GiveUs_SC-Audit-Report_07062023_SA-1304/GiveUsContracts"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-401"
+                ]
+            },
+            "title": "C01. Funds Lock / Undocumented Behavior",
+            "description": "Several functions accept native coins (with payable modifier) to Smart Contract, but there is no withdrawn mechanism for these funds. If, for some reason, a user sends native coins to contract, these coins will be locked there. The contract accepts token deposits but lacks a withdrawal mechanism, which can result in funds being locked in the contract and is not documented.",
+            "severity": "Critical",
+            "contract": "Crowdfunding",
+            "function": [
+                "createProject()",
+                "pause()",
+                "unpause()",
+                "endTresholdVoting()",
+                "addNewSupportedToken()",
+                "setDonationFee()",
+                "updateProjectStatus()",
+                "updateProjectVoteCooldown()",
+                "withdrawFundsToOtherProject()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "C02. Funds Lock",
+            "description": "If a given project has set donationFee > 0, when the user is donating tokens to a given project, transactionFee value is calculated but not saved to the variable. Amount(function parameter) is transferred to contract, but only donationAmount(amount -transactionFee) is tracked. These funds will be locked inside the contract without being able to withdraw them.",
+            "severity": "Critical",
+            "contract": "./contracts/Crowdfunding.sol",
+            "function": "donateToProject()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "H01. Unchecked Transfer",
+            "description": "Tokens may not follow ERC20 standard and return false in case of transfer failure or not returning any value at all. This can lead to denial of service vulnerabilities during interactions with non-standard tokens.",
+            "severity": "High",
+            "contract": "Crowdfunding",
+            "function": "donateToProject(), withdrawFunds()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Undocumented Mathematical Operation",
+            "description": "N/A",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "H03. Highly Permissive Role Access / Token Balance Manipulation",
+            "description": "The UPDATER_ROLE role has access to user project owner funds and can move the funds between projects without any restrictions.",
+            "severity": "High",
+            "contract": "Crowdfunding",
+            "function": "withdrawFundsToOtherProject()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "M01. Non-Finalized Code",
+            "description": "The code should not contain TODO comments. Otherwise, it means that the code is not finalized and additional changes will be introduced in the future.",
+            "severity": "Medium",
+            "contract": "Crowdfunding",
+            "function": "createProject()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "M02. Contradiction - Missing Validation",
+            "description": "The project lacks validation in functions, leading to potential contradictions and unexpected behavior.",
+            "severity": "Medium",
+            "contract": "Crowdfunding",
+            "function": "createProject()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-908"
+                ],
+                "4": [
+                    "CWE-457"
+                ]
+            },
+            "title": "M03. Uninitialized Inheritance",
+            "description": "Uninitialized inheritance can lead to unexpected behavior and potential security vulnerabilities.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "13"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "M04. Contradiction",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "L01. Missing Zero Address Validation",
+            "description": "The contract does not validate if addresses are zero, which may lead to unexpected behavior.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ],
+                "3": [
+                    "CWE-561"
+                ]
+            },
+            "title": "L02. Functions that Can Be Declared External",
+            "description": "In order to save Gas, public functions that are never called in the contract should be declared as external.",
+            "severity": "Low",
+            "contract": "Crowdfunding",
+            "function": "initialize()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1126"
+                ]
+            },
+            "title": "L03. Variables that Can Be Boolean",
+            "description": "Some of the variables in Crowdfunding.sol are only used as 0s or 1s like flags and could be declared as bool to increase readability and optimize storage.",
+            "severity": "Low",
+            "contract": "Crowdfunding",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "L04. Redundant Modifier Usage",
+            "description": "Redundant modifier usage in a function or variable declaration.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "15"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "I01. Typos in Code",
+            "description": "There are typos in several places in Crowdfunding and ICrowdfunding.",
+            "severity": "Informational",
+            "contract": "Crowdfunding, ICrowdfunding",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ]
+            },
+            "title": "Style Guide Violation - Order of Layout",
+            "description": "The project should follow the official code style guidelines.",
+            "severity": "Informational",
+            "contract": "Crowdfunding",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "I03. Unused Variable",
+            "description": "Unused variables should be removed from the contracts as they can cause an increase in computations and unnecessary Gas consumption, and decrease readability.",
+            "severity": "Low",
+            "contract": "./contracts/Crowdfunding.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1076"
+                ],
+                "3": [
+                    "CWE-1078"
+                ],
+                "4": [
+                    "CWE-1099"
+                ]
+            },
+            "title": "I04. Style Guide Violation - Naming Conventions",
+            "description": "Naming conventions are not followed according to the style guide.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Flashloan Attack",
+            "description": "When working with exchange rates, they should be received from a trusted source and not be vulnerable to short-term rate changes that can be achieved by using flash loans. Oracles should be used.",
+            "severity": "Not Relevant",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Token Balance Manipulation",
+            "description": "The UPDATER_ROLE role has access to user project owner funds and can move the funds between projects without any restrictions.",
+            "severity": "High",
+            "contract": "Crowdfunding",
+            "function": "withdrawFundsToOtherProject()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 19,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ]
+            },
+            "title": "Style Guide Violation - Order of Layout",
+            "description": "The project should follow the official code style guidelines.",
+            "severity": "Informational",
+            "contract": "Crowdfunding",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

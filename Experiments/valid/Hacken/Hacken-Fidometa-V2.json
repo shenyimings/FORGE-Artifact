@@ -1,0 +1,151 @@
+{
+    "path": "./Audit_Reports_2024/Hacken/Hacken-Fidometa-V2.pdf",
+    "project_info": {
+        "url": "https://github.com/fidometa/Smart_Contract",
+        "commit_hash": "ad56b0ce678f77d162752dbb5d987d2f4a29fddf",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/Hacken-Fidometa-V2/Smart_Contract"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "A new vesting period may not be created",
+            "description": "Locks mapping may not be cleared on finishing of the vesting period due to rounding division to the floor, so the owner will not be able to set new vesting for the same user.",
+            "severity": "High",
+            "contract": "FidoMeta.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "No checks to prevent percentage overflow",
+            "description": "Fees may become more than 100%. Every fee could be up to 100%, and their sum is 500%. This could lead to reverting of all transactions.",
+            "severity": "High",
+            "contract": "FidoMeta.sol",
+            "function": "setCommunityCharge, setEcoSysFee, setSurcharge1, setSurcharge2, setSurcharge3",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "User balance may exceed the total supply",
+            "description": "If the owner excludes himself from rewards and then burns all tokens, the total supply will be lower than the sum of user balances. This may lead to wrong rates calculation and unexpected behavior of taking charges logic.",
+            "severity": "High",
+            "contract": "FidoMeta.sol",
+            "function": "burn",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-191"
+                ]
+            },
+            "title": "4. Integer Underflow",
+            "description": "In sixth month or later, transaction will be reverted due to underflow leading to total unavailability to unlock vestings.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Possible Gas exceeding",
+            "description": "The contract can exceed the gas limit in long cycles.",
+            "severity": "Medium",
+            "contract": "FidoMeta.sol",
+            "function": "includeInReward",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Unnecessary Use of SafeMath after 0.8.0",
+            "description": "The contract uses SafeMath library which is unnecessary since Solidity version 0.8.0 has built-in math checks.",
+            "severity": "N/A",
+            "contract": "FidoMeta.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Initial minting event skipped",
+            "description": "N/A",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Burn wallet could be changed",
+            "description": "The burn wallet (surcharge1) should never be changed as it is only for unused fees and the owner should not have the ability to change it and claim the next fees that should be burned.",
+            "severity": "Critical",
+            "contract": "FidoMeta.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

@@ -1,0 +1,72 @@
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Stader-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/stader-labs/bnbX/tree/a35c48b",
+        "commit_hash": "a35c48b",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/PeckShield-Audit-Report-Stader-v1/bnbX"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Improved Roles Management in Stader",
+            "description": "The BnbX contract implements a role-based access control mechanism which is inherited from the openzeppelin AccessControlUpgradeable contract. However, it is suggested to set the admin role for each role explicitly.",
+            "severity": "Low",
+            "contract": "BnbX",
+            "function": "initialize()",
+            "lineNumber": "19"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Suggested Event Generations",
+            "description": "In Ethereum, events are an indispensable part of a contract and are mainly used to record runtime dynamics. In particular, when an event is emitted, it stores the arguments passed in transaction logs and these logs are made accessible to external analytics and reporting tools. Events can be emitted in a number of scenarios. One particular case is when system-wide parameters or settings are being changed. Another case is when tokens are being minted, transferred, or burned. While examining the events that reflect the minDelegateThreshold dynamics in the setMinDelegateThreshold() routine, we notice there is a lack of emitting an event to reflect minDelegateThreshold changes.",
+            "severity": "Informational",
+            "contract": "StakeManager",
+            "function": "setMinDelegateThreshold()",
+            "lineNumber": "397-399"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "In the Stader protocol, there is a privileged manager account (with DEFAULT_ADMIN_ROLE) that plays a critical role in governing and regulating system-wide operations, but it needs to be scrutinized.",
+            "severity": "Low",
+            "contract": "StakeManager, BnbX",
+            "function": "setBotAddress()",
+            "lineNumber": "363-376"
+        }
+    ]
+}

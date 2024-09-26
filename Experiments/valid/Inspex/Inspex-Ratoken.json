@@ -1,0 +1,164 @@
+{
+    "path": "./Audit_Reports_2024/Inspex/Inspex-Ratoken.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0x43c612590Ad7Ac3f5fc217Bf71487B49A034E195",
+        "chain": "bsc",
+        "compiler_version": [
+            "v0.8.6+commit.11564f7e"
+        ],
+        "project_path": {
+            "Token": "Experiments/contracts/Inspex-Ratoken/Token"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Improper Ownership Locking Mechanism",
+            "description": "The previous contract owner can reclaim the ownership of the contract when the ownership is transferred to another address or renounced, giving that address the ability to perform privileged actions again.",
+            "severity": "High",
+            "contract": "Token",
+            "function": "unlock()",
+            "lineNumber": "530-537"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improper Balance Calculation",
+            "description": "The balance of a previously excluded address can be inflated by using the includeInReward() function, which is unfair to the token holders.",
+            "severity": "Medium",
+            "contract": "Token",
+            "function": "includeInReward()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Centralized Control of State Variable",
+            "description": "Critical state variables can be updated any time by the controlling authorities without notifying users.",
+            "severity": "Low",
+            "contract": "Token",
+            "function": [
+                "renounceOwnership()",
+                "transferOwnership()",
+                "lock()",
+                "excludeFromReward()",
+                "includeInReward()",
+                "excludeFromFee()",
+                "includeInFee()",
+                "setAllFeePercent()",
+                "setBuybackUpperLimit()",
+                "setMaxTxPercent()",
+                "setMaxWalletPercent()",
+                "setSwapAndLiquifyEnabled()",
+                "setFeeWallet()"
+            ],
+            "lineNumber": [
+                "503",
+                "512",
+                "523",
+                "904",
+                "913",
+                "927",
+                "931",
+                "935",
+                "952",
+                "956",
+                "963",
+                "970",
+                "975"
+            ]
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Division Before Multiplication",
+            "description": "The division of integers can result in a value with decimal points, which will be rounded off. This rounding error can cause the calculation to be different from what it should be, especially when that value is later multiplied with another value.",
+            "severity": "Low",
+            "contract": "Token.sol",
+            "function": "swapAndLiquify(uint256 contractTokenBalance)",
+            "lineNumber": "1153"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-273"
+                ]
+            },
+            "title": "Insufficient Logging for Privileged Functions",
+            "description": "Privileged functions that are executable by the controlling parties are not logged properly by emitting events, making it difficult for users to monitor their execution.",
+            "severity": "Very Low",
+            "contract": "Token",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-393"
+                ]
+            },
+            "title": "Unchecked Return Value of ERC20 Transfer",
+            "description": "The return value of an ERC20 transfer function is not checked.",
+            "severity": "Info",
+            "contract": "Token",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-749"
+                ]
+            },
+            "title": "Improper Function Visibility",
+            "description": "Functions have incorrect visibility settings, potentially exposing internal functionality to external callers.",
+            "severity": "Info",
+            "contract": "Token",
+            "function": "transfer(address, uint256)",
+            "lineNumber": "840-843"
+        }
+    ]
+}

@@ -1,0 +1,123 @@
+{
+    "path": "./Audit_Reports_2024/ImmuneBytes/ImmuneBytes-Sheesha_Finance_Audit_Report.pdf",
+    "project_info": {
+        "url": "https://github.com/smartchain2030/sheesha-finance",
+        "commit_hash": "36adeff12204228c1473b00199c1a35bfb61e943",
+        "address": "0x75b7524c355F67cff7D16e51f0C5CdF26bBBb2fe",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/ImmuneBytes-Sheesha_Finance_Audit_Report/sheesha-finance"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "transferVaultRewards() and transferVaultLPewards() can be called with any address as input",
+            "description": "The functions transferVaultRewards() and transferVaultLPewards() take an address variable as input, to which SHEESHA tokens are sent. Any address can be given as input, creating room for human error.",
+            "severity": "Medium",
+            "contract": "SHEESHA.sol",
+            "function": "transferVaultRewards() and transferVaultLPewards()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Funds can be drained by emergencyDrain24hAfterLiquidityGenerationEventIsDone() function",
+            "description": "The admin-protected function emergencyDrain24hAfterLiquidityGenerationEventIsDone() can be used to transfer all ETH and SHEESHA tokens from the LGE contract to the admin wallet in case of compromised admin's private key.",
+            "severity": "Medium",
+            "contract": "SHEESHA.sol",
+            "function": "emergencyDrain24hAfterLiquidityGenerationEventIsDone()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Updation of userCount and userList are not handled properly",
+            "description": "In the addLiquidity() function of LGE smart contract, userCount uint variable and userList mapping are updated whenever a user adds ETH liquidity to the contract. However, if a user adds liquidity more than once, the userCount variable will be incremented and the user's address will get stored with more than one uint key in userList mapping.",
+            "severity": "Low",
+            "contract": "LGE",
+            "function": "addLiquidity()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1288"
+                ]
+            },
+            "title": "Redundant variables stored in SHEESHA smart contract",
+            "description": "The SHEESHA smart contract stores state variables devAddress, teamAddress, marketingAddress and reserveAddress that are never used inside the smart contract.",
+            "severity": "Low",
+            "contract": "SHEESHA",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-358"
+                ]
+            },
+            "title": "SHEESHA contract should be marked as abstract",
+            "description": "The SHEESHA contract should be marked as abstract since it fetches other contracts' addresses using the SHEESHAGlobals instance on ISHEESHAGlobals interface.",
+            "severity": "Low",
+            "contract": "SHEESHA",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "No unit tests were provided",
+            "description": "The Sheesha Finance team did not provide any unit tests for their smart contracts.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

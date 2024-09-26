@@ -1,0 +1,111 @@
+{
+    "path": "./Audit_Reports_2024/SmcAuditors/SmcAuditors-Gods_Unchained_Audit.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0x0e3a2a1f2146d86a604adc220b4967a898d7fe07",
+        "chain": "eth",
+        "compiler_version": [
+            "v0.5.11+commit.c082d0b4"
+        ],
+        "project_path": {
+            "BatchWrapper": "Experiments/contracts/SmcAuditors-Gods_Unchained_Audit/BatchWrapper"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Out of bounds enum inputs can trigger invalid opcode",
+            "description": "When used as an argument in the following functions __validateProtos_ and _copyNextBatch_, an out-of-range enum value triggers an INVALID opcode that burns all gas in transactions.",
+            "severity": "Medium",
+            "contract": "BatchWrapper.sol",
+            "function": "__validateProtos_ and _copyNextBatch_",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "State access in event emitted after _cardsminted_ call",
+            "description": "Accessing state after an untrusted external call brings potential risk for reentrancy.",
+            "severity": "Medium",
+            "contract": "BatchWrapper.sol",
+            "function": "_mintCards_ ()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Duplicate values possible in series array",
+            "description": "The function _updateProtos()_ will accept duplicate values for the Series[] array. Correct trait initialization relies on external validation.",
+            "severity": "Low",
+            "contract": "BatchWrapper.sol",
+            "function": "_updateProtos()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ],
+                "4": [
+                    "CWE-690"
+                ]
+            },
+            "title": "_updateprotos()_ function does not check for null addresses",
+            "description": "It's possible for a sysAdmin to accidentally or maliciously set the address of a new contract into address(0) when calling the _updateProtos_ (). Consider adding null validation to the _updateProtos()_ function.",
+            "severity": "Low",
+            "contract": "BatchWrapper.sol",
+            "function": "_updateProtos()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ],
+                "3": [
+                    "CWE-561"
+                ]
+            },
+            "title": "_burnAll_ () and _isTradable_ () functions are not used internally",
+            "description": "The _burnAll_ () and _isTradable_ () functions can safely be changed from public to external as they are not used internally.",
+            "severity": "Low",
+            "contract": "BatchWrapper.sol",
+            "function": "_burnAll_ (), _isTradable_ ()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

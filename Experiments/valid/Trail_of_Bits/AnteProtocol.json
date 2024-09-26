@@ -1,0 +1,155 @@
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/AnteProtocol.pdf",
+    "project_info": {
+        "url": "https://github.com/antefinance/ante-v0-core",
+        "commit_hash": "fdd0d8d68a5697415cde511aa5dc98c469871bb7",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/AnteProtocol/ante-v0-core"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "AntePoolFactory does not validate create2 return addresses",
+            "description": "The AntePoolFactory uses the create2 instruction to deploy an AntePool and then initializes it with an already-deployed AnteTest address. However, the AntePoolFactory does not validate the address returned by create2, which will be the zero address if the deployment operation fails.",
+            "severity": "Informational",
+            "contract": "AntePoolFactory",
+            "function": "N/A",
+            "lineNumber": "35-47"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-221"
+                ],
+                "3": [
+                    "CWE-223"
+                ],
+                "4": [
+                    "CWE-778"
+                ]
+            },
+            "title": "Events emitted during critical operations omit certain details",
+            "description": "Critical state-changing operations do not trigger events sufficient to form an audit trail in the event of a system failure.",
+            "severity": "High",
+            "contract": "AntePoolFactory/AntePool",
+            "function": "updateDecay/AntePoolCreated",
+            "lineNumber": "47/N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Insufficient gas can cause AnteTests to produce false positives",
+            "description": "In a small number of cases, an attacker could force an `AnteTest` to fail by providing an insufficient amount of gas.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "_checkTestNoRevert()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Looping over an array of unbounded size can cause a denial of service",
+            "description": "If an `AnteTest` fails, the `_checkTestNoRevert` function will return `false`, causing the `checkTest` function to call `_calculateChallengerEligibility` to compute `eligibleAmount`; this value is the total stake of the eligible challengers and is used to calculate the proportion of `_remainingStake` owed to each challenger. To calculate `eligibleAmoun` t, the `_calculateChallengerEligibility` function loops through an unbounded array of challenger addresses. When the number of challengers is large, the function will consume a large quantity of gas in this operation.",
+            "severity": "Medium",
+            "contract": "AntePool",
+            "function": "_calculateChallengerEligibility()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-684"
+                ],
+                "3": [
+                    "CWE-440"
+                ]
+            },
+            "title": "Reentrancy into AntePool.checkTest scales challenger eligibility amount",
+            "description": "A malicious `AnteTest` or underlying contract being tested can trigger multiple failed `checkTest` calls by reentering the `AntePool.checkTest` function, causing the `_calculateChallengerEligibility` method to increase the `eligibleAmount` instead of resetting it.",
+            "severity": "High",
+            "contract": "contracts/AntePool.sol",
+            "function": "checkTest()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1120"
+                ],
+                "3": [
+                    "CWE-1060"
+                ]
+            },
+            "title": "Pack `AntePool`'s `pendingFailure`, `verifier`, and `_initialized` variables into a single storage slot.",
+            "description": "This will reduce the gas cost of performing storage load operations by packing `pendingFailure`, `verifier`, and `_initialized` variables into a single storage slot.",
+            "severity": "Low",
+            "contract": "AntePool",
+            "function": "N/A",
+            "lineNumber": "contracts/AntePool.sol#L85-102"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "Immutable Variables",
+            "description": "The `factory` and `anteTest` variables within `AntePool` should be made immutable.",
+            "severity": "Medium",
+            "contract": "AntePool",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

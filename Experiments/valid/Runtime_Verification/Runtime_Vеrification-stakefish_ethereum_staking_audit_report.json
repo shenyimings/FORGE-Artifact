@@ -1,0 +1,311 @@
+{
+    "path": "./Audit_Reports_2024/Runtime_V\u0435rification/Runtime_V\u0435rification-stakefish_ethereum_staking_audit_report.pdf",
+    "project_info": {
+        "url": "https://github.com/stakefish/eth2-validation-services-contract",
+        "commit_hash": "d91928f3a270f6115831fe3a21a69eb98bf57b26",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/Runtime_V\u0435rification-stakefish_ethereum_staking_audit_report/eth2-validation-services-contract"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "Transaction Order Dependence",
+            "description": "The `approve` and `approveWithdrawal` methods of `StakefishServicesContract.sol` suffer from a race-condition vulnerability where an attacker can front-run a transaction to withdraw more funds than intended.",
+            "severity": "Medium",
+            "contract": "StakefishServicesContract",
+            "function": "approve() and approveWithdrawal()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Possibility of disproportional payments after services end",
+            "description": "Depositors may receive disproportional shares if they withdraw too early before ServiceContract receives its collateral and staking rewards.",
+            "severity": "High",
+            "contract": "StakefishServicesContract",
+            "function": "endOperatorServices()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "StakefishERC721Wrapper non-conformance with ERC721",
+            "description": "The StakefishERC721Wrapper contract does not conform to the ERC721 specification by not throwing when `_to` is the zero-address in `safeTransferFrom`, `transferFrom`, and other methods, leading to unintentional burning of tokens.",
+            "severity": "High",
+            "contract": "StakefishERC721Wrapper",
+            "function": [
+                "safeTransferFrom",
+                "transferFrom"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Vulnerability in StakefishServicesContract.receive()",
+            "description": "The receive() function allows users to deposit via a plain Ether transfer transaction instead of calling the deposit() function, which can lead to the loss of user funds.",
+            "severity": "Medium to High",
+            "contract": "StakefishServicesContract",
+            "function": "receive()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "Initialization of the logic contract of StakefishServicesContract",
+            "description": "In the constructor() of the StakefishServicesContractFactory contract, an instance of the StakefishServicesContract contract is deployed but never initialized. This may open other attack surfaces and lead to undesired situations.",
+            "severity": "Unknown",
+            "contract": "StakefishServicesContractFactory",
+            "function": "constructor()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "DoS with failed calls for endOperatorServices",
+            "description": "Operators could become incapable of receiving ethers, which could lock user funds indefinitely due to failed calls in endOperatorServices() function.",
+            "severity": "N/A",
+            "contract": "StakefishServicesContract",
+            "function": "endOperatorServices()",
+            "lineNumber": "184"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ],
+                "3": [
+                    "CWE-563"
+                ]
+            },
+            "title": "Unused Constant",
+            "description": "`StakefishServicesContract` defines a constant `MAX_TIME_TO_WITHDRAW` that is never used.",
+            "severity": "N/A",
+            "contract": "StakefishServicesContract",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Missing check for exit date during endOperatorServices",
+            "description": "The implementation of the `endOperatorServices` function lacks a proper check to prevent the operator from accidentally signaling a voluntary exit message before the intended exit date has passed.",
+            "severity": "N/A",
+            "contract": "StakefishServicesContract",
+            "function": "endOperatorServices()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ]
+            },
+            "title": "Dependency between salt and operatorDataCommitment",
+            "description": "The parameters of `StakefishServicesContractFactory.deployContract` are not independent: The `operatorDataCommitment` depends on the `saltValue`, because the `salt` is used to compute the deterministic address of the about-to-be deployed contract, and the `operatorDataCommitment` depends on the address.",
+            "severity": "N/A",
+            "contract": "StakefishServicesContractFactory",
+            "function": "deployContract",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Exit date change after user\u2019s verification",
+            "description": "The operator can change the exit date to an earlier date even after the validator has been created and users have verified it.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Input validation for commission rate",
+            "description": "It is recommended to check the validity of `_commissionRate` in the `StakefishServicesContract.initialize()` function.",
+            "severity": "N/A",
+            "contract": "StakefishServicesContract",
+            "function": "initialize()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-775"
+                ]
+            },
+            "title": "Recycling unused storage slots in ERC721 wrappers",
+            "description": "Unused storage slots are not deleted in StakefishERC721Wrapper.redeemTo(), making storage corruption attacks easier.",
+            "severity": "N/A",
+            "contract": "StakefishERC721Wrapper",
+            "function": "redeemTo()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Input validation for StakefishERC721Wrapper.approve()",
+            "description": "It can be considered to have an extra check for the existence of `_owners[tokenId]` in StakefishERC721Wrapper.approve(). Although there exist no logical paths that can pass the following second require clause in case of `_owners[tokenId] == 0`, it is still a better defensive programming practice to have an explicit check and revert earlier in case of unexpected catastrophic failures due to hidden bugs.",
+            "severity": "N/A",
+            "contract": "StakefishERC721Wrapper",
+            "function": "approve()",
+            "lineNumber": "149-152"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "Missing setters or immutable annotations in StakefishServicesContractFactory",
+            "description": "The `_servicesContractImpl` variable cannot be updated later after initialization and is not declared as `immutable`. It is recommended to add a setter or the `immutable` annotation.",
+            "severity": "N/A",
+            "contract": "StakefishServicesContractFactory",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-923"
+                ],
+                "3": [
+                    "CWE-300"
+                ]
+            },
+            "title": "Griefing attacks for contract creations in StakefishServicesContractFactory",
+            "description": "Salt values are revealed in the createContract() or createMultipleContracts() calls, which can be exploited for griefing attacks.",
+            "severity": "N/A",
+            "contract": "StakefishServicesContractFactory",
+            "function": "createContract() or createMultipleContracts()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-684"
+                ],
+                "3": [
+                    "CWE-440"
+                ]
+            },
+            "title": "Potential reentrancy vulnerability in ERC721 wrappers",
+            "description": "In the mintTo() function of the ERC721 wrapper, the _safeMint() call is made before the transferDepositFrom() call, which may introduce a potential attack surface of reentrancy.",
+            "severity": "N/A",
+            "contract": "StakefishERC721Wrapper",
+            "function": "mintTo()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

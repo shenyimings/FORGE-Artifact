@@ -5,6 +5,7 @@ import json
 import requests
 import logging
 from typing import Literal
+from retry import retry
 
 
 class AddrFetcher:
@@ -60,6 +61,7 @@ class AddrFetcher:
             result[contract_name + ".sol"] = {"content": source_code}
             return result
 
+    @retry(tries=3, delay=5)
     def call_api(self, address: str, chain: Literal["bsc", "eth", "polygon"]):
         params = {
             "module": "contract",
@@ -80,12 +82,20 @@ class AddrFetcher:
         if response.status_code == 200:
 
             data = response.json()
+            # print(data)
             data = data["result"]
-            if len(data) > 1:
+
+            if not type(data) == list:
+
+                return None
+            if type(data) == list and len(data) > 1:
+                print(data)
                 exit("Multiple contracts found!")
             if not data[0].get("SourceCode", False):
+
                 return None
             sourceCode = self.parse_code(data[0]["ContractName"], data[0]["SourceCode"])
+
             return {
                 "chain": chain,
                 "contractName": data[0]["ContractName"],
@@ -94,14 +104,16 @@ class AddrFetcher:
             }
         else:
             # 处理错误情况
-            print(f"Failed to get data, status code: {response.status_code}")
+            logging.error(f"Failed to get data, status code: {response.status_code}")
             return None
 
-    def fetch_code(self, address, output_dir: str) -> dict:
-        chain_list = ["eth", "bsc", "polygon"]
+    def fetch_code(self, address: str, output_dir: str) -> dict:
+        chain_list = ["eth"]
         for chain in chain_list:
             data = self.call_api(address, chain)
+            # print(chain)
             if data:
+
                 # save to local
                 for sol in data["sourceCode"].keys():
                     if sol.split(".")[-1] != "sol":
@@ -126,6 +138,9 @@ class AddrFetcher:
                 data.pop("sourceCode")
                 data["contractPath"] = os.path.join(output_dir, data["contractName"])
                 return data
+
+        logging.info(f"Address {address} not found in verified contract list")
+        return None
 
     def get_verified_address(self):
         # check if the address is a contract and which chain it belongs to

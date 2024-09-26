@@ -1,0 +1,74 @@
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-3WM.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0xd065ca6460ae6d379c93ec0422084c2bc7048d77",
+        "chain": "bsc",
+        "compiler_version": [
+            "v0.8.7+commit.e28d00a7"
+        ],
+        "project_path": {
+            "BEP20TokenContract": "Experiments/contracts/PeckShield-3WM/BEP20TokenContract"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Non ERC20-Compliance Of Transfer Event",
+            "description": "In the `mint()` function of `BEP20TokenContract`, the `Transfer` event is emitted with the contract itself as the `_from` address instead of `0x0` when tokens are created, which is not compliant with the ERC20 standard.",
+            "severity": "Informational",
+            "contract": "BEP20TokenContract",
+            "function": "mint()",
+            "lineNumber": "243"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue Of Admin Keys",
+            "description": "Privileged `owner` account has critical role in governing and regulating token-related operations with functions like `mint()`, `lockToken()`, and `setICO()`.",
+            "severity": "Medium",
+            "contract": "BEP20TokenContract",
+            "function": "mint()",
+            "lineNumber": "243"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "isVestedlisted Logic Bypass Via transferFrom()",
+            "description": "The vestedlist feature can be bypassed by accounts in vestedlist through non-vestedlist accounts by calling approve(), followed by transferFrom().",
+            "severity": "Informational",
+            "contract": "BEP20TokenContract",
+            "function": "transferFrom()",
+            "lineNumber": "268, 332"
+        }
+    ]
+}

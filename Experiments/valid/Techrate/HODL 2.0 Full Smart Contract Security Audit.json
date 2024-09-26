@@ -1,0 +1,77 @@
+{
+    "path": "./Audit_Reports_2024/Techrate/HODL 2.0 Full Smart Contract Security Audit.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0x6D5023CBF2073eb4f0C78A59040826c8F2FDe050",
+        "chain": "bsc",
+        "compiler_version": [
+            "v0.5.16+commit.9c3226ce"
+        ],
+        "project_path": {
+            "PancakePair": "Experiments/contracts/HODL 2/PancakePair"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Out of gas",
+            "description": "The functions includeInReward() and _getCurrentSupply() use loops to find and remove addresses from the _excluded list, which can cause an OUT_OF_GAS exception if the excluded addresses list is too long.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": [
+                "includeInReward()",
+                "_getCurrentSupply()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Wrong reward transfer",
+            "description": "The functions redeemRewards() and migrateToken() use _transferStandard(only reflection transfer) function to send expected token amount to user or contract balance values to address from the argument. If this address or contract address would be excluded from reward, it will be a high issue.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": [
+                "redeemRewards()",
+                "migrateToken()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Owner privileges (In the period when the owner is not renounced)",
+            "description": "The contract owner has excessive privileges to change various parameters and settings, including tax rates, liquidity fees, transaction amounts, and more.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "Multiple functions",
+            "lineNumber": "N/A"
+        }
+    ]
+}

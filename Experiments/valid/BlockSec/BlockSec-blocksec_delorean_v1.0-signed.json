@@ -1,0 +1,180 @@
+{
+    "path": "./Audit_Reports_2024/BlockSec/BlockSec-blocksec_delorean_v1.0-signed.pdf",
+    "project_info": {
+        "url": "https://github.com/delorean-exchange/siv-contracts/tree/initial",
+        "commit_hash": "initial",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/BlockSec-blocksec_delorean_v1/siv-contracts"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1287"
+                ]
+            },
+            "title": "Lack of validation for duplicated reward tokens",
+            "description": "The function addRewardToken does not verify the existence of the input rewardToken, which can lead to duplicated reward tokens if the admin mistakenly adds an existing token. This causes the function claimRewards to always fail.",
+            "severity": "Medium",
+            "contract": "SelfInsuredVault.sol",
+            "function": "addRewardToken() and claimRewards()",
+            "lineNumber": "462"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1288"
+                ]
+            },
+            "title": "Lack of validation for duplicated insurance providers",
+            "description": "The function addInsuranceProvicer does not verify the existence of the input provider in the list providers, allowing duplicated providers if the admin mistakenly adds the existing provider.",
+            "severity": "Medium",
+            "contract": "SelfInsuredVault.sol",
+            "function": "addInsuranceProvider",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect payout assignment",
+            "description": "N/A",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improper update of \u2018totalShares\u2019",
+            "description": "The function _updateProviderEpochs updates providerEpochs if it is unsynchronized with vault.epochs(). However, this update could be problematic if there are no pending epochs, allowing malicious users to amplify their ratio of shares in the last epoch and claim all payouts with a flash loan.",
+            "severity": "High",
+            "contract": "SelfInsuredVault.sol",
+            "function": "_updateProviderEpochs",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1288"
+                ]
+            },
+            "title": "Remove unused code from the function '_purchaseForNextEpoch'",
+            "description": "The variable assigned at line 601 of listing 2.7 is unused.",
+            "severity": "Medium",
+            "contract": "SelfInsuredVault.sol",
+            "function": "_purchaseForNextEpoch",
+            "lineNumber": "601"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-253"
+                ]
+            },
+            "title": "Remove redundant check for the function \u2018claimRewards\u2019",
+            "description": "The first require check in the function claimRewards is redundant, since the variable owed is constructed based on rewardTokens.length in the function previewClaimRewards.",
+            "severity": "Low",
+            "contract": "SelfInsuredVault",
+            "function": "claimRewards()",
+            "lineNumber": "456"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ],
+                "3": [
+                    "CWE-561"
+                ]
+            },
+            "title": "Remove unused code regarding the function '_projectEpochYield'",
+            "description": "The function _projectEpochYield is not used in the contract anymore and can be removed along with related functions and variables regarding YieldOracle.",
+            "severity": "Medium",
+            "contract": "SelfInsuredVault.sol",
+            "function": "_projectEpochYield",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-233"
+                ]
+            },
+            "title": "Remove unused variable \u2018nextEpochId\u2019 from the function \u2018_computeAccumulatePayouts\u2019",
+            "description": "The variable nextEpochId at line 354 of listing 2.11 is not used and has no effect on the logic.",
+            "severity": "Low",
+            "contract": "SelfInsuredVault.sol",
+            "function": "_computeAccumulatePayouts",
+            "lineNumber": "354"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Improper update for \u2018claimedEpochIndex\u2019",
+            "description": "The function claimPayouts possibly invokes _claimPayoutForEpoch multiple times, resulting in repeated updates of claimedEpochIndex in _claimPayoutForEpoch.",
+            "severity": "Medium",
+            "contract": "Y2KEarthquakeV1InsuranceProvider.sol",
+            "function": "_claimPayoutForEpoch() and claimPayouts()",
+            "lineNumber": "137"
+        }
+    ]
+}

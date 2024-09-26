@@ -1,0 +1,254 @@
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/2023-10-saltyio-securityreview.pdf",
+    "project_info": {
+        "url": "https://github.com/othernet-global/salty-io/tree/9dbd6c0c963ff5cfb177e106a5c470a39fb0bb5f",
+        "commit_hash": "9dbd6c0c963ff5cfb177e106a5c470a39fb0bb5f",
+        "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/2023-10-saltyio-securityreview/salty-io"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Risk of denial-of-service attacks on token whitelisting process",
+            "description": "The token whitelisting process can be disrupted by a malicious user submitting spurious proposals, potentially leading to denial-of-service attacks.",
+            "severity": "High",
+            "contract": "Proposal",
+            "function": "proposeTokenWhitelisting()",
+            "lineNumber": "121-133"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Insufficient event generation",
+            "description": "The protocol does not use any events and lacks mechanisms for monitoring system behavior and tracking critical component updates.",
+            "severity": "Weak",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-437"
+                ]
+            },
+            "title": "Transactions to add liquidity may be front run",
+            "description": "The function `addLiquidity` can be front-run by malicious actors, potentially leading to loss of funds for users who provide liquidity for the pool.",
+            "severity": "High",
+            "contract": "Pools.sol",
+            "function": "addLiquidity()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Whitelisted pools may exceed the maximum allowed",
+            "description": "The number of whitelisted pools may exceed the maximum number allowed because there is no check against the current length of `whitelistedPools` when the maximum number of `whitelistedPools` is decreased via a proposal.",
+            "severity": "Low",
+            "contract": "PoolsConfig",
+            "function": "changeMaximumWhitelistedPools",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Any user can add liquidity to any pool and bypass the token whitelist",
+            "description": "The lack of authorization checks on the addLiquidity function allows users from blacklisted regions to directly call addLiquidity on a pool, bypassing the AccessManager access control and associated geolocation check.",
+            "severity": "High",
+            "contract": "Pools",
+            "function": "addLiquidity()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Liquidation fee is volatile and may be manipulated",
+            "description": "The liquidation reward is intended to be 5% of the liquidity seized, but in actuality, it may range from close to 0% to close to 10%. ",
+            "severity": "Medium",
+            "contract": "CollateralAndLiquidity",
+            "function": "liquidateUser()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Collateral contract deployment results in permanent loss of rewards",
+            "description": "Anyone who provides liquidity to the collateral pool will not earn rewards, and any arbitrage profits allocated to the pool will be permanently lost due to the `Collateral` contract being deployed separately from the `Liquidity` contract.",
+            "severity": "High",
+            "contract": "RewardsEmitter",
+            "function": "performUpkeep",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Collateral can be withdrawn without repaying USDS loan",
+            "description": "The withdraw functionality in _withdrawLiquidityAndClaim allows withdrawing collateral without repaying the associated USDS loan.",
+            "severity": "Critical",
+            "contract": "CollateralAndLiquidity",
+            "function": "_withdrawLiquidityAndClaim",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1287"
+                ]
+            },
+            "title": "Lack of chain ID validation allows signature reuse across forks",
+            "description": "The signature schema does not account for the contract\u2019s chain, allowing one valid signature to be reusable across all of the available forks if the protocol is deployed on multiple chains.",
+            "severity": "N/A",
+            "contract": [
+                "AccessManager",
+                "BootstrapBallot"
+            ],
+            "function": [
+                "_verifyAccess",
+                "vote"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-908"
+                ]
+            },
+            "title": "Chainlink oracles could return stale price data",
+            "description": "The `latestRoundData()` function does not check the `updatedAt` value to ensure recent data, which may result in stale price data being returned.",
+            "severity": "High",
+            "contract": "PriceAggregator",
+            "function": "performUpkeep()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Lack of timely price feed updates may result in loss of funds",
+            "description": "The prices used to check loan health and maximum borrowable value are updated manually by calling `performUpkeep` on the `PriceAggregator` contract, which may lead to loss of funds if not updated timely.",
+            "severity": "High",
+            "contract": "PriceAggregator",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "USDS stablecoin may become undercollateralized",
+            "description": "In a downtrending market, a black swan type event could cause the USDS stablecoin to become undercollateralized.",
+            "severity": "High",
+            "contract": "src/stable/USDS.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Zap operations may approve an incorrect number of tokens, leading to reversion",
+            "description": "Approvals happen before zapping is done, but zapping can adjust the deposited amounts above the initial maxAmounts, in which case the addLiquidity call will fail with insufficient allowance.",
+            "severity": "Critical",
+            "contract": "Liquidity",
+            "function": "addLiquidityAndIncreaseShare()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

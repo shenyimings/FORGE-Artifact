@@ -1,0 +1,109 @@
+{
+    "path": "./Audit_Reports_2024/Numen_Cyber_Technology/Knoknok-Smart-Contract-Audit-Report - Numen.pdf",
+    "project_info": {
+        "url": "https://github.com/Knoknok/chaindata/blob/main",
+        "commit_hash": "489daf31ce76db8ff59f9053db0397c11abcbf0b",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/Knoknok-Smart-Contract-Audit-Report - Numen/chaindata"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Minting of unlimited number of sundae tokens",
+            "description": "The address with minter permissions can call the '_mint' function to mint the specified amount of tokens 'amount' to the specified address 'to', and there is no limitation.",
+            "severity": "Low",
+            "contract": "AnyswapV6ERC20.sol",
+            "function": "_mint",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Token burn function",
+            "description": "The addresses with minter permission can call the '_burn' function to burn the tokens of the specified amount 'amount' in the specified address 'from', it may affect the security of user assets.",
+            "severity": "Medium",
+            "contract": "AnyswapV6ERC20",
+            "function": "_burn()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ]
+            },
+            "title": "Similar Mechanisms on set the vault function",
+            "description": "There are two similar mechanisms when modifying the 'vault' address which is not necessary.",
+            "severity": "Low",
+            "contract": "AnyswapV6ERC20.sol",
+            "function": "_setVault and _changeVault",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-775"
+                ]
+            },
+            "title": "REVOKE MINTER FUNCTION",
+            "description": "When the 'vault' address calls the '_revokeMinter' function to remove the minter permission of the specified address '_auth', only the status is changed to false, and '_auth' is not removed from the minters array.",
+            "severity": "Informational",
+            "contract": "AnyswapV6ERC20.sol",
+            "function": "_revokeMinter",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Deposit and withdraw function",
+            "description": "According to the design of the project party, as long as the underlying is 0 address, the deposit and withdraw functions cannot be used, and there is no security risk.",
+            "severity": "Informational",
+            "contract": "AnyswapV6ERC20.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

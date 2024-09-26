@@ -1,0 +1,209 @@
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/MesonProtocolDesignReview.pdf",
+    "project_info": {
+        "url": "https://github.com/MesonFi/meson-contracts-solidity",
+        "commit_hash": "b1fe6bc055f670e7b3f4fd14ce4b340dbc480e95",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/MesonProtocolDesignReview/meson-contracts-solidity"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Front-Running Risks",
+            "description": "Transactions are broadcast to a public mempool before they are successfully added and executed on-chain, making it susceptible to front-running attacks that involve DOS attacks and griefing users by preventing their transactions from going through.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": [
+                "cancel()",
+                "executeSwap()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-923"
+                ],
+                "3": [
+                    "CWE-300"
+                ]
+            },
+            "title": "Risks associated with the possible front-running of user transactions and with denial-of-service (DOS) attacks",
+            "description": "The protocol is susceptible to front-running attacks due to public mempool, allowing malicious users to monitor and grief other users by preventing their transactions from going through. Additionally, the use of signatures could be used to conduct DOS attacks.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": [
+                "cancel()",
+                "executeSwap()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-358"
+                ]
+            },
+            "title": "The use of UUPS proxy contracts to make the Meson contracts upgradeable",
+            "description": "The use of UUPS proxy pattern makes the Meson contracts upgradeable but has concerns regarding front-running during deployment and error-prone delegatecall usage, potentially leading to ownership and token control issues.",
+            "severity": "High",
+            "contract": "Meson",
+            "function": "initialize()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-775"
+                ]
+            },
+            "title": "The allocation of infinite token approvals",
+            "description": "Infinite approvals for ERC20 tokens are allocated to the Meson contract but never revoked, posing major security risks and putting all funds at risk in the event of a vulnerability.",
+            "severity": "Critical",
+            "contract": "Meson",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1335"
+                ]
+            },
+            "title": "Hard-Coded Bit Shifts Throughout the Codebase",
+            "description": "The use of hard-coded bit shifts in helper methods throughout the codebase could be problematic when interacting with different tokens due to variable decimals.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-327"
+                ]
+            },
+            "title": "Risks associated with the use of ECDSA signatures throughout the codebase",
+            "description": "The use of ECDSA signatures is vulnerable to signature malleability attacks due to lack of restriction on the 's' parameter when signatures are verified, and can also be used for DOS attacks.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-115"
+                ]
+            },
+            "title": "Risks associated with misbehaving LPs",
+            "description": "Misbehaving LPs can refuse to accept transactions leading to DOS or bond to a swap and refuse to lock their funds, causing users to wait until the swap expires to reclaim assets.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-237"
+                ],
+                "4": [
+                    "CWE-239"
+                ]
+            },
+            "title": "Insufficient documentation",
+            "description": "The provided documentation does not cover all system components and lacks information on user-facing risks, technical diagrams, P2P component details, roles, privileges, system invariants, and build/deployment process.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-345"
+                ],
+                "3": [
+                    "CWE-347"
+                ]
+            },
+            "title": "Signature Malleability",
+            "description": "The use of signatures in meta-transactions makes them vulnerable to signature malleability attacks due to the lack of restriction on the 's' parameter when signatures are verified.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "LP Misbehavior",
+            "description": "Misbehaving LPs can refuse to accept transactions leading to DOS or bond to a swap and refuse to lock their funds, causing users to wait until the swap expires to reclaim assets.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

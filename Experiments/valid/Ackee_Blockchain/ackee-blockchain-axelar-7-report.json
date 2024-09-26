@@ -1,0 +1,167 @@
+{
+    "path": "./Audit_Reports_2024/Ackee_Blockchain/ackee-blockchain-axelar-7-report.pdf",
+    "project_info": {
+        "url": "https://github.com/axelarnetwork/axelar-cgp-solidity",
+        "commit_hash": "1cd26b36a4757d300b18834cffd448808a98b225",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/ackee-blockchain-axelar-7-report/axelar-cgp-solidity"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ]
+            },
+            "title": "I2: Confusing naming of errors",
+            "description": "Confusing naming for errors is used in multiple places in the codebase, implying different issues or behavior and thus confusing for the entity that reviews the code.",
+            "severity": "Info",
+            "contract": "AxelarDepositService",
+            "function": "_transferOperatorship, _validateSignatures",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-282"
+                ],
+                "3": [
+                    "CWE-283"
+                ]
+            },
+            "title": "M1: Dangerous ownership transfer",
+            "description": "Multiple contracts in the codebase use the `owner` pattern for access control and allow for ownership transfer without a robust verification mechanism for the new proposed owner, leading to irrecoverable mistakes.",
+            "severity": "Medium",
+            "contract": "Upgradable.sol, Ownable.sol",
+            "function": "transferOwnership()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "M2: Unauthorized sending of tokens",
+            "description": "Unauthorized token transfer",
+            "severity": "Medium",
+            "contract": [
+                "AxelarDepositServiceProxy.sol",
+                "AxelarDepositService.sol",
+                "ReceiverImplementation.sol"
+            ],
+            "function": [
+                "sendTokenDeposit",
+                "receiveAndSendToken"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "W1: Usage of solc optimizer",
+            "description": "Vulnerability discovered in the optimizer, making it possible to attack the protocol.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "W2: Stealing tokens from Deposit Proxy",
+            "description": "The `AxelarDepositServiceProxy` uses a `delegatecall` to the implementation contract; thus, the execution happens in its context. The implementation contract is `AxelarDepositService`, which inherits from `ReceiverImplementation`. This allows an attacker to steal funds from the proxy contract by directly calling the `receiveAndSendToken` function.",
+            "severity": "Warning",
+            "contract": "AxelarDepositServiceProxy",
+            "function": "receiveAndSendToken()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "W3: High privileged owner and single point of failure",
+            "description": "Both Upgradable and AxelarAuthWeighted contracts use the owner address for access control, which could lead to dire consequences if the owner's account was hacked or the corresponding private key lost.",
+            "severity": "Warning",
+            "contract": "Upgradable.sol, AxelarAuthWeighted.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "W4: Pitfalls of upgradeability",
+            "description": "The setup function in the implementation contract has no access controls, except the check if `implementation` is equal to zero-address. This approach is safe until a mistake occurs.",
+            "severity": "Warning",
+            "contract": "Upgradable.sol",
+            "function": "_setup(data)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ],
+                "3": [
+                    "CWE-561"
+                ]
+            },
+            "title": "I1: Public functions without internal calls",
+            "description": "Some functions are declared public even though they are not called internally anywhere, which goes against recommended best practices and costs more gas.",
+            "severity": "Info",
+            "contract": "AxelarDepositService",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

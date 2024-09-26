@@ -1,0 +1,117 @@
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/2023-07-sandclock-securityreview.pdf",
+    "project_info": {
+        "url": "https://github.com/lindy-labs/sandclock-contracts",
+        "commit_hash": "a100f21a30dd332b69351d1e05d98dbc748c6ddc",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/2023-07-sandclock-securityreview/sandclock-contracts"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "receiveFlashLoan does not account for fees",
+            "description": "The `receiveFlashLoan` functions of the `scWETHv2` and `scUSDCv2` vaults ignore the Balancer flash loan fees and repay exactly the amount that was loaned.",
+            "severity": "High",
+            "contract": "src/steth/scWETHv2.sol, src/steth/scUSDCv2.sol",
+            "function": "receiveFlashLoan()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Reward token distribution rate can diverge from reward token balance",
+            "description": "The notifyRewardAmount method does not ensure the number of reward tokens transferred equals the _reward parameter provided, potentially causing a divergence between the reward token distribution rate and the actual reward token balance.",
+            "severity": "N/A",
+            "contract": "RewardTracker",
+            "function": "_notifyRewardAmount",
+            "lineNumber": "185-195"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Miscalculation in beforeWithdraw can leave the vault with less than minimum float",
+            "description": "The calculation of the `missing` amount to be withdrawn does not guarantee that the `float` value remaining after withdrawal is at least the value of the `minimumFloatAmount` parameter, potentially leaving the vault with less than the minimum float and causing users to waste gas when withdrawing small amounts.",
+            "severity": "Low",
+            "contract": "scWETHv2",
+            "function": "beforeWithdraw()",
+            "lineNumber": "393"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-775"
+                ]
+            },
+            "title": "Last user in scWETHv2 vault will not be able to withdraw their funds",
+            "description": "The last user in a scWETHv2 vault may not be able to withdraw their remaining balance due to normal float requirements, causing them to lose access to their funds.",
+            "severity": "N/A",
+            "contract": "scWETHv2",
+            "function": "_withdrawToVault",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Lido stake rate limit could lead to unexpected reverts",
+            "description": "The `lidoSwapWethToWstEth` method of the `Swapper` library ignores the Lido stake rate limit, potentially leading to unexpected reverts.",
+            "severity": "N/A",
+            "contract": "Swapper",
+            "function": "lidoSwapWethToWstEth",
+            "lineNumber": "130-142"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-908"
+                ]
+            },
+            "title": "Chainlink oracles could return stale price data",
+            "description": "The Chainlink oracles used by the scLiquity vault's lusd2eth price feed may return stale price data due to deprecated 'latestAnswer' method, leading to possible MEV sandwich attacks or denial of service.",
+            "severity": "High",
+            "contract": "scLiquity",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

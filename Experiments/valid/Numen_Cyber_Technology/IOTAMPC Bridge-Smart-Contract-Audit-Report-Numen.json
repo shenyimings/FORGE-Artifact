@@ -1,0 +1,206 @@
+{
+    "path": "./Audit_Reports_2024/Numen_Cyber_Technology/IOTAMPC Bridge-Smart-Contract-Audit-Report-Numen.pdf",
+    "project_info": {
+        "url": "https://github.com/TanglePay/bridge",
+        "commit_hash": "48ad2ac76b5d226502a3c8d7b96c9536c4dd3fa4",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/IOTAMPC Bridge-Smart-Contract-Audit-Report-Numen/bridge"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "A signatory can remove multiple signatures",
+            "description": "A malicious signer address can remove signers with zero signers[index] by calling the removeSigner method multiple times.",
+            "severity": "High",
+            "contract": "multiSign",
+            "function": "removeSigner",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "A signatory can update the number of signatures to zero",
+            "description": "Any signatory can change the number of signatures to zero by calling the changeRequireCount method multiple times, and if there is a malicious signatory, any signatory can call the signature implementation method individually when the number of signatures is changed to zero.",
+            "severity": "High",
+            "contract": "multiSign.sol",
+            "function": "changeRequireCount",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Addsigner address cannot be changed after it has been added",
+            "description": "addSigner method is used to add a new signer, any signer submitted to addSigner address is not address(0), the remaining signature address also can not set other addresses for the signer, if there is a malicious signer to submit a signature, the rest of the benign signer can only agree to sign, otherwise the addSigner add signature method will not work properly, once the signature provided by a malicious signer is added, it will cause the risk of the existence of multiple malicious signatures.",
+            "severity": "Medium",
+            "contract": "multiSign",
+            "function": "addSigner",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "Removesigner address cannot be changed after it has been added",
+            "description": "removeSigner method is used to remove existing signers, any signer submitted to add removingIndex address is not address(0), the remaining signature address can not remove other signers, if there is a malicious signer to remove the signature, the remaining benign signers can only agree to sign, otherwise the removeSigner method to remove the signature will not work properly, once the removal of the signature provided by the malicious signer, it will cause the risk of multiple benign signers removed.",
+            "severity": "Medium",
+            "contract": "multiSign",
+            "function": "removeSigner",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "The changerequirecount number cannot be changed again after it has been updated",
+            "description": "After any signer submits a non-zero newRequireCount value, the remaining signature addresses cannot be changed to other values either. If there is a malicious signer changing the number of signatures, the remaining benign signers can only agree to change their signatures, otherwise the changeRequireCount method to update the number of signatures will not work properly.",
+            "severity": "Medium",
+            "contract": "multiSign",
+            "function": "changeRequireCount",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Fee Extraction Security",
+            "description": "The withdrawFee method may steal the team fee when the owner privileged role is malicious.",
+            "severity": "Low",
+            "contract": "wrap.sol",
+            "function": "withdrawFee",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Redundant codes",
+            "description": "The addSigner method uses a for loop statement to make a judgement that has no real meaning and it is recommended to remove the for loop statement here to avoid wasting Gas.",
+            "severity": "Information",
+            "contract": "multiSign",
+            "function": "addSigner",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "Newowner may be a zero address",
+            "description": "The transferOwner method can accidentally set newOwner to address(0), but it can also be called again to modify the newOwner address to a normal address.",
+            "severity": "Information",
+            "contract": "Ownable",
+            "function": "transferOwner",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Signer address and number cannot be too small",
+            "description": "As a multiSign contract, if the number of signatories or signatures is small, it may lead to one address controlling the signature and there is a security risk.",
+            "severity": "Information",
+            "contract": "multiSign",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Any signer can add address(0) as a signer",
+            "description": "The addSigner method allows any arbitrary signer to add address(0) as a signer by calling the method multiple times with the ADDRESS(0) address, which has no significant effect on the overall signing mechanism.",
+            "severity": "Information",
+            "contract": "multiSign",
+            "function": "addSigner",
+            "lineNumber": "N/A"
+        }
+    ]
+}

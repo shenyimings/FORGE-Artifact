@@ -1,0 +1,60 @@
+{
+    "path": "./Audit_Reports_2024/MixBytes/Fixed Rate Swap.md",
+    "project_info": {
+        "url": "https://github.com/1inch/fixed-rate-swap",
+        "commit_hash": "0b5a75e9f56e7d21c290dd28c59dc140dcbcc1d5",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/Fixed Rate Swap/fixed-rate-swap"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "Withdraw \"with ratio\" without fee via reentrancy",
+            "description": "Tokens with callback e.g. ERC-777 allow easy reentrancy. Users can exploit reentrancy to withdraw with non-equal proportions without fees when call `withdraw` after the first transfer of `depositFor` or `_swap`.",
+            "severity": "MAJOR",
+            "contract": "FixedRateSwap",
+            "function": "withdraw()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-362"
+                ]
+            },
+            "title": "Token exchange blocking",
+            "description": "There are two tokens on the balance of the contract. The exchange of token 0 for token 1 is possible when there is token 1 on the contract balance. You can block the exchange functionality if you constantly make a small balance of one of the tokens.",
+            "severity": "Warning",
+            "contract": "FixedRateSwap",
+            "function": "N/A",
+            "lineNumber": "92"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Duplicate code",
+            "description": "Duplicate code structures impair the perception of the program logic and can easily lead to errors in subsequent code edits.",
+            "severity": "N/A",
+            "contract": "FixedRateSwap.sol",
+            "function": "N/A",
+            "lineNumber": "171-178, 212-220, 346-358, 388-400"
+        }
+    ]
+}

@@ -1,0 +1,82 @@
+{
+    "path": "./Audit_Reports_2024/Techrate/BetaPulsar.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "78f9",
+        "address": "0x1398d3a7d433dce5d5AAC65Ec5017de2bDfD78f9",
+        "chain": "bsc",
+        "compiler_version": [
+            "v0.6.12+commit.27d51765"
+        ],
+        "project_path": {
+            "BetaPulsarToken": "Experiments/contracts/BetaPulsar/BetaPulsarToken"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Wrong burning",
+            "description": "Sending tokens to the dead address instead of burning them in token contract.",
+            "severity": "Medium",
+            "contract": "BetaPulsar",
+            "function": "_transfer()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Fee burn address",
+            "description": "Fee burn address is not the zero or dead address, so deposit fee will be transferred directly to some account, but will not be burnt.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Block gas limit",
+            "description": "The updateEmissionRate function can fail due to the block gas limit if the pool size is too big.",
+            "severity": "Low",
+            "contract": "BetaPulsar",
+            "function": "updateEmissionRate()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "add function issue",
+            "description": "If some LP token is added to the contract twice using function add, then the total amount of reward in function updatePool will be incorrect.",
+            "severity": "High",
+            "contract": "BetaPulsar",
+            "function": "add()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

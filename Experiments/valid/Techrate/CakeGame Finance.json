@@ -1,0 +1,68 @@
+{
+    "path": "./Audit_Reports_2024/Techrate/CakeGame Finance.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0x28d25e63ab535040aaab1ab4b0c6e457aa7dbfac",
+        "chain": "bsc",
+        "compiler_version": [
+            "v0.4.26+commit.4563c3fc"
+        ],
+        "project_path": {
+            "CakeGameFinance": "Experiments/contracts/CakeGame Finance/CakeGameFinance"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Wrong total supply restriction",
+            "description": "The function Distribute() checks that totalDistributed < totalSupply, but should check totalDistributed + _amount < totalSupply.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "Distribute()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Out of gas",
+            "description": "The function DistributeAirdropMultiple() uses a loop for distributing tokens as airdrop which may cause out of gas issue if the addresses array length is too big.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "DistributeAirdropMultiple()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Owner privileges (In the period when the owner is not renounced)",
+            "description": "The contract owner has excessive privileges including increasing totalSupply, burning tokens, withdrawing BNBs and tokens, stopping distribution, distributing tokens, and changing tokensPerBsc value.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "add(), burn(), withdraw(), stopDistribution(), distribute(), changeTokensPerBsc()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

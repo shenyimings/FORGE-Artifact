@@ -1,0 +1,40 @@
+{
+    "path": "./Audit_Reports_2024/Quantstamp/reflexer-rai-curve-pool.pdf",
+    "project_info": {
+        "url": "https://github.com/stobiewan/curve-contract/tree/314dde1dc810209c2b80b58162134ff6fdd85937",
+        "commit_hash": "314dde1dc810209c2b80b58162134ff6fdd85937",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/reflexer-rai-curve-pool/curve-contract"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "QSP-3 Unlimited Allowance",
+            "description": "The function `ERC20(coin).approve` is called with the maximum value, which is considered a security anti-pattern and could lead to end-user wallet funds being drained if the contract is exploited.",
+            "severity": "Low Risk",
+            "contract": "MetaRAI.vy, DepsoitRAI.vy",
+            "function": "ERC20(coin).approve",
+            "lineNumber": "L178 (MetaRAI), L88 (DepositRAI)"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "QSP-10 Inconsistent Constants Between Code and Curve Specs",
+            "description": "The `Curve` interface uses the `BASE_N_COINS` constant with functions `calc_token_amount` and `add_liquidity`, but the specs show that `N_COINS` constant is used, which may lead to issues since the values of these 2 constants are different for the RAI pool.",
+            "severity": "Undetermined",
+            "contract": "MetaRAI.vy, StableSwapRAI.vy",
+            "function": "calc_token_amount, add_liquidity",
+            "lineNumber": "L20, L26"
+        }
+    ]
+}

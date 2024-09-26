@@ -1,0 +1,49 @@
+{
+    "path": "./Audit_Reports_2024/SlowMist/SlowMist Audit Report - ioTube_en-us.pdf",
+    "project_info": {
+        "url": "https://github.com/iotubeproject/iotube-contracts/tree/master/contracts",
+        "commit_hash": "2de0aedb74c04cd08ecb69a1378e1efd0ae81aaf",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/SlowMist Audit Report - ioTube_en-us/iotube-contracts"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-749"
+                ]
+            },
+            "title": "unsafe external call risk",
+            "description": "The withdraw function in the contract code does not check the whitelist of _recipient and _data. There is an unsafe external call (success,) = _recipient.call(_data); . The attacker can use _recipient.call(_data); to call any function of the lord contract, or transfer the token approved by the user to the Tube contract.",
+            "severity": "Critical",
+            "contract": "Tube.sol",
+            "function": "withdraw()",
+            "lineNumber": "L179-L207"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Potential losing authority when transferring minting authority",
+            "description": "The owner of the Lord contract can be changed, and the owner of the Lord contract can execute mint and burn arbitrarily, which will affect the user's assets.",
+            "severity": "High",
+            "contract": "Lord",
+            "function": "burn()",
+            "lineNumber": "94-131"
+        }
+    ]
+}

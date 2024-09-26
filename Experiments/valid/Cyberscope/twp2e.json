@@ -1,0 +1,202 @@
+{
+    "path": "./Audit_Reports_2024/Cyberscope/twp2e.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "1a1a428b90fa0ca7e0d7a3a465fe434a552de7a5cd31f256970f43d722cee2f7",
+        "address": "0x78f3f9b522241a6146208c36e3ae900f1ba1e328",
+        "chain": "bsc",
+        "compiler_version": [
+            "v0.8.0+commit.c7dfd78e"
+        ],
+        "project_path": {
+            "TwP2E": "Experiments/contracts/twp2e/TwP2E"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "PVC - Price Volatility Concern",
+            "description": "The contract accumulates tokens from taxes to swap them for ETH, but if the variable `minimumTokensBeforeSwap` is set to a big number, it could lead to significant price volatility. The contract should ensure that it will not sell more than a reasonable amount of tokens in a single transaction.",
+            "severity": "Minor / Informative",
+            "contract": "TwP2E.sol",
+            "function": "N/A",
+            "lineNumber": "L511"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ],
+                "4": [
+                    "CWE-910"
+                ]
+            },
+            "title": "PTRP - Potential Transfer Revert Propagation",
+            "description": "The contract sends funds to a `marketingWallet` as part of the transfer flow. This address can either be a wallet address or a contract. If the address is a contract then it may revert from incoming payment. As a result, the error will propagate to the token\u2019s contract and revert the transfer.",
+            "severity": "Minor / Informative",
+            "contract": "TwP2E.sol",
+            "function": "N/A",
+            "lineNumber": "L535"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "RSML - Redundant SafeMath Library",
+            "description": "The usage of the SafeMath library adds complexity, overhead and increases unnecessarily the gas consumption since Solidity versions greater than or equal to 0.8.0 provide native functionality for arithmetic operations that revert on underflow and overflow.",
+            "severity": "Minor / Informative",
+            "contract": "TwP2E.sol",
+            "function": "N/A",
+            "lineNumber": "L28"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "L02 - State Variables could be Declared Constant",
+            "description": "State variables can be declared as constant using the constant keyword to ensure that the value of the state variable cannot be changed after it has been set and decrease gas consumption.",
+            "severity": "Minor / Informative",
+            "contract": "TwP2E.sol",
+            "function": "N/A",
+            "lineNumber": "L376,377,378,382,403,404"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ]
+            },
+            "title": "L04 - Conformance to Solidity Naming Conventions",
+            "description": "The Solidity style guide is a set of guidelines for writing clean and consistent Solidity code. Adhering to a style guide can help improve the readability and maintainability of the Solidity code, making it easier for others to understand and work with.",
+            "severity": "Minor / Informative",
+            "contract": "TwP2E.sol",
+            "function": "N/A",
+            "lineNumber": "202,203,219,238,384,390,392,525"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "L07 - Missing Events Arithmetic",
+            "description": "Events are a way to record and log information about changes or actions that occur within a contract. They are often used to notify external parties or clients about events that have occurred within the contract, such as the transfer of tokens or the completion of a task.",
+            "severity": "Minor / Informative",
+            "contract": "TwP2E.sol",
+            "function": "N/A",
+            "lineNumber": "L512,516"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ],
+                "3": [
+                    "CWE-561"
+                ]
+            },
+            "title": "L09 - Dead Code Elimination",
+            "description": "Dead code can make a contract more difficult to understand and maintain, and can also increase the size of the contract and the cost of deploying and interacting with it.",
+            "severity": "Minor / Informative",
+            "contract": "TwP2E.sol",
+            "function": "N/A",
+            "lineNumber": "L83,94,102,106,110,114,119"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "L16 - Validate Variable Setters",
+            "description": "The contract performs operations on variables configured from user-supplied input without proper checks for zero values, leading to potential problems during execution.",
+            "severity": "Minor / Informative",
+            "contract": "TwP2E.sol",
+            "function": "N/A",
+            "lineNumber": "L522"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "L17 - Usage of Solidity Assembly",
+            "description": "Using assembly can be useful for optimizing code, but it can also be error-prone.",
+            "severity": "Minor / Informative",
+            "contract": "TwP2E.sol",
+            "function": "N/A",
+            "lineNumber": "90, 128"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-237"
+                ],
+                "4": [
+                    "CWE-238"
+                ]
+            },
+            "title": "L19 - Stable Compiler Version",
+            "description": "The `^` symbol indicates that any version of Solidity that is compatible with the specified version can be used to compile the contract. The version lock is a mechanism that allows the author to specify a minimum version of the Solidity compiler that must be used to compile the contract code.",
+            "severity": "Minor / Informative",
+            "contract": "TwP2E.sol",
+            "function": "N/A",
+            "lineNumber": "L2"
+        }
+    ]
+}

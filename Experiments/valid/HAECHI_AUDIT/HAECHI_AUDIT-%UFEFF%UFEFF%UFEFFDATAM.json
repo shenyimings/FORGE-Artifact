@@ -1,0 +1,94 @@
+{
+    "path": "./Audit_Reports_2024/HAECHI_AUDIT/HAECHI_AUDIT-%UFEFF%UFEFF%UFEFFDATAM.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0x2eed6e51c2a40c8a348861dd17bcfd7a320782e4",
+        "chain": "eth",
+        "compiler_version": [
+            "v0.4.21+commit.dfe3193c"
+        ],
+        "project_path": {
+            "DATAM": "Experiments/contracts/HAECHI_AUDIT-%UFEFF%UFEFF%UFEFFDATAM/DATAM"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Owner can burn tokens of another account",
+            "description": "The Owner role has the ability to call the setFrozen() function of FreezingToken, allowing them to restrict token transfer for other accounts.",
+            "severity": "MAJOR",
+            "contract": "FreezingToken",
+            "function": "setFrozen()",
+            "lineNumber": "240"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "\uc815\ubcf4\uc758 \ud638\uc120\uc785\ub2c8\ub77c\uc74c FreezingToken#transferFrom() \uc138\ubd95",
+            "description": "The frozen address can still transfer tokens using the FreezingToken#transferFrom() function, bypassing the freezing mechanism.",
+            "severity": "CRITICAL",
+            "contract": "FreezingToken",
+            "function": "transferFrom()",
+            "lineNumber": "287"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Owner can restrict token transfer to other accounts",
+            "description": "The Owner role has the capability to call the setFrozen() function of FreezingToken, which allows them to restrict token transfers to other accounts.",
+            "severity": "MAJOR",
+            "contract": "FreezingToken",
+            "function": "setFrozen()",
+            "lineNumber": "240"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-778"
+                ]
+            },
+            "title": "\uc870\ub808\uc5d0\uc73c \uac00 \uae30\uadc8",
+            "description": "The transferFrom function lacks an Approval event, making it difficult to track changes and function calls in real-time.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "transferFrom",
+            "lineNumber": "N/A"
+        }
+    ]
+}

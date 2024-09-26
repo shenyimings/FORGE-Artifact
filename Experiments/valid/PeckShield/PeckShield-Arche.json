@@ -1,0 +1,126 @@
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Arche.pdf",
+    "project_info": {
+        "url": "https://github.com/Archenetwork/Arche_v1.0_Eros/tree/7c6b673378e1a5d73fea41c328528733e86a1f91",
+        "commit_hash": "7c6b673378e1a5d73fea41c328528733e86a1f91",
+        "address": "0x2815d3272baE3ebde5D7c128Eea5f4A8da402783",
+        "is_exists": true,
+        "chain": "eth",
+        "compiler_version": [
+            "v0.6.12+commit.27d51765"
+        ],
+        "project_path": {
+            "FFI_ERC20": "Experiments/contracts/PeckShield-Arche/FFI_ERC20"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ]
+            },
+            "title": "Incompatibility With Deflationary Tokens",
+            "description": "The `D_Swap` contract's `Receive_Token()` function is incompatible with deflationary tokens that charge fees for transfer or transferFrom, causing balance inconsistencies and affecting protocol-wide operation.",
+            "severity": "Low",
+            "contract": "D_Swap",
+            "function": "Receive_Token()",
+            "lineNumber": "259"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Safe-Version Replacement With safeTransfer() And safeTransferFrom()",
+            "description": "The 'transfer' function does not have a return value, which may cause calls to revert. It is suggested to use the safe version, i.e., 'safeTransfer()' and 'safeTransferFrom()', which are wrappers around ERC20 operations that may either throw on failure or return false without reverts.",
+            "severity": "Medium",
+            "contract": "Multiple Contracts",
+            "function": "transfer()",
+            "lineNumber": "121-139"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Possible Overflow Prevention With SafeMath",
+            "description": "The `D_Swap` contract can be improved by using `SafeMath` to prevent common overflow or underflow issues when working with `uint256` operands.",
+            "severity": "Low",
+            "contract": "D_Swap",
+            "function": "Deposit_For_Tail()",
+            "lineNumber": "276-290"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "In the Arche_v1.0_Eros protocol, there is a privileged `owner` account of `D_Swap_Main` contract that plays a critical role in governing and regulating the system-wide operations.",
+            "severity": "Medium",
+            "contract": "D_Swap_Main",
+            "function": [
+                "Set_Arche_Address()",
+                "Set_Arche_Amount_Per_Deal()"
+            ],
+            "lineNumber": "177-180, 181-184"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Suggested Adherence Of Checks-Effects-Interactions Pattern",
+            "description": "The principle of checks-effects-interactions is effective in mitigating a serious attack vector known as re-entrancy.",
+            "severity": "High",
+            "contract": "D_Swap",
+            "function": "Impl_Delivery()",
+            "lineNumber": "366"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "Improved Precision By Multiplication-Before-Division",
+            "description": "The lack of float support in Solidity may introduce precision loss when both multiplication and division are involved. In particular, this finding examines one possible precision loss source that stems from the different orders when both operations are used.",
+            "severity": "Low",
+            "contract": "Trading_Charge",
+            "function": "Amount(uint256,address)",
+            "lineNumber": "5-6"
+        }
+    ]
+}

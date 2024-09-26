@@ -1,0 +1,100 @@
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-HOPE-v1.2.pdf",
+    "project_info": {
+        "url": "https://github.com/Light-Ecosystem/light-dao/tree/audit_2",
+        "commit_hash": "562847a",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/PeckShield-Audit-Report-HOPE-v1/light-dao"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Revisited Slippage Control in SwapFeeToVault",
+            "description": "The current implementation of `SwapFeeToVault` contract lacks an effective slippage control that occurs in the conversion from the fees to `HOPE`. The caller can provide any value for the `amountOutMin` parameter, resulting in no effective slippage control for the conversion.",
+            "severity": "Low",
+            "contract": "SwapFeeToVault",
+            "function": "burn()",
+            "lineNumber": "54"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Accommodation of Non-ERC20-Compliant Tokens",
+            "description": "The `transfer` function does not have a return value defined and implemented, which may cause reversion when called with an expectation of a return value.",
+            "severity": "Low",
+            "contract": "Multiple Contracts",
+            "function": "transfer()",
+            "lineNumber": "126"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Revised Selection of bestRouter in HopeSwapBurner::burn()",
+            "description": "In the `HopeSwapBurner` contract, the selection of the best router does not use the correct return value from the query, leading to incorrect selection.",
+            "severity": "Medium",
+            "contract": "HopeSwapBurner",
+            "function": "burn()",
+            "lineNumber": "66"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "In the LightDAO governance protocol, there is a special owner account that plays a critical role in governing and regulating the protocol-wide operations. The privileged functions in GaugeController allow for the owner to add a gauge type with any weight, add a gauge with any weight to a gauge type, change the weight of a gauge type, change the weight of a gauge, etc.",
+            "severity": "Medium",
+            "contract": "GaugeController",
+            "function": "addGauge()",
+            "lineNumber": "139"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Proper Claim of Fee in claimableTokens()",
+            "description": "In the LightDAO governance protocol, the admin fees withdrawn from the SwapPair are transferred to the GaugeFeeDistributor and the FeeDistributor in the format of HOPE . The HOPE can be claimed by the community for their holding of veLT and the voting for the gauges. However, the claimableTokens() routine updates user's claim state but does not transfer the claimable rewards to the user.",
+            "severity": "Medium",
+            "contract": "GaugeFeeDistributor/FeeDistributor",
+            "function": "claimableTokens()/_claim()",
+            "lineNumber": "267-268, 287"
+        }
+    ]
+}

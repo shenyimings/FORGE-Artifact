@@ -1,0 +1,50 @@
+{
+    "path": "./Audit_Reports_2024/Techrate/basedrate.pdf",
+    "project_info": {
+        "url": "https://github.com/basedrate/contracts",
+        "commit_hash": "fe3aecffa52933c9f53adb8e9152c408e1f5f0a9",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/basedrate/contracts"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Out of gas",
+            "description": "The functions add(uint256 _allocPoint, \u2026), set(uint256 _pid, \u2026) and updateEmissionRate(uint256 _sharesPerSecond) in BaseShareRewardPool could invoke massUpdatePools() function that can fail due to block gas limit if the pool size is too big. Also, getTotalValues(), updateUsers() and updateAllUsers() in presaleDistributor use a loop to iterate through users list which could be aborted with OUT_OF_GAS exception if there will be a long user list.",
+            "severity": "Low",
+            "contract": [
+                "BaseShareRewardPool",
+                "presaleDistributor"
+            ],
+            "function": [
+                "add(uint256 _allocPoint, \u2026)",
+                "set(uint256 _pid, \u2026)",
+                "updateEmissionRate(uint256 _sharesPerSecond)",
+                "getTotalValues()",
+                "updateUsers()",
+                "updateAllUsers()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "add() function issue (BaseShareRewardPool)",
+            "description": "If some LP token is added to the contract twice using function add, then the total amount of reward in function updatePool() will be incorrect.",
+            "severity": "Low",
+            "contract": "BaseShareRewardPool",
+            "function": "add(uint256 _allocPoint, \u2026)",
+            "lineNumber": "N/A"
+        }
+    ]
+}

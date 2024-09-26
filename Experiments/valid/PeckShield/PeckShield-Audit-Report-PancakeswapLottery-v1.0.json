@@ -1,0 +1,91 @@
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-PancakeswapLottery-v1.0.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0x8c6375Aab6e5B26a30bF241EBBf29AD6e6c503c2",
+        "chain": "bsc",
+        "compiler_version": [
+            "v0.8.4+commit.c7e474f2"
+        ],
+        "project_path": {
+            "RandomNumberGenerator": "Experiments/contracts/PeckShield-Audit-Report-PancakeswapLottery-v1/RandomNumberGenerator"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1061"
+                ]
+            },
+            "title": "Improved Variable Naming in _calculateRewardsForTicketId()",
+            "description": "The internal variables `winningTicketNumber` and `userNumber` can be exchanged to better present their intended semantic meanings.",
+            "severity": "Low",
+            "contract": "PancakeSwapLottery",
+            "function": "_calculateRewardsForTicketId()",
+            "lineNumber": "1300, 1303"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improved Logic Of claimTickets()",
+            "description": "The `claimTickets()` function does not consider the situation when the higher bracket has 0 as its reward breakdown.",
+            "severity": "Low",
+            "contract": "PancakeSwapLottery",
+            "function": "claimTickets()",
+            "lineNumber": "873"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Improved Corner Case Handling In changeRandomGenerator()",
+            "description": "The `changeRandomGenerator()` function has an entry requirement that disallows the change when the current lottery is not in the claimable status, but it also blocks the change when there is no lottery yet.",
+            "severity": "Low",
+            "contract": "PancakeSwapLottery",
+            "function": "changeRandomGenerator()",
+            "lineNumber": "994-1008"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue Of Admin Keys",
+            "description": "In the PancakeSwap Lottery protocol, there is a privileged owner account that plays a critical role in governing and regulating protocol-wide operations.",
+            "severity": "Medium",
+            "contract": "PancakeSwapLottery",
+            "function": [
+                "setMinAndMaxTicketPriceInCake()",
+                "setMaxNumberTicketsPerBuy()"
+            ],
+            "lineNumber": [
+                "1119-1127",
+                "1133"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,91 @@
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/LiquityProtocolandStabilityPoolFinalReport.pdf",
+    "project_info": {
+        "url": "https://github.com/liquity/dev/tree/8cec3fda04b8c71994dc14858386bf6a161164fc",
+        "commit_hash": "8cec3fda04b8c71994dc14858386bf6a161164fc",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/LiquityProtocolandStabilityPoolFinalReport/dev"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "exit reverts if there are no claimable rewards",
+            "description": "If the liquidity pool lacks claimable staker rewards (which is possible under certain conditions), `exit` will always revert. Such cases are likely to surprise users and cause them to waste gas.",
+            "severity": "Informational",
+            "contract": "Unipool.sol",
+            "function": "exit()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Chainlink may report erroneous prices when unfrozen",
+            "description": "When the `PriceFeed` is in the `usingTellorChainlinkFrozen` state, if it detects that Chainlink has started working again, it will report that price without validating that it is in the expected range.",
+            "severity": "Medium",
+            "contract": "PriceFeed.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Chainlink may report erroneous prices when Tellor remains untrusted after the last update",
+            "description": "When `PriceFeed` is in `usingChainlinkTellorUntrusted` state and Tellor is frozen or broken, `fetchPrice` will return Chainlink price without validating whether it changed by >50% between last 2 rounds.",
+            "severity": "Medium",
+            "contract": "PriceFeed.sol",
+            "function": "fetchPrice()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-357"
+                ],
+                "3": [
+                    "CWE-450"
+                ]
+            },
+            "title": "frontEnd mechanism may confuse users",
+            "description": "An undocumented cache of the `_frontEndTag` in `provideToSP` may lead users to misuse the function.",
+            "severity": "Low",
+            "contract": "StabilityPool.sol",
+            "function": "provideToSP()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-191"
+                ]
+            },
+            "title": "Underflow in _computeRewardsPerUnitStaked might cause DoS during liquidations",
+            "description": "The rounding feedback mechanism of the `_computeRewardsPerUnitStaked` function might cause an underflow, leading the liquidation process to revert.",
+            "severity": "Low",
+            "contract": "StabilityPool.sol",
+            "function": "_computeRewardsPerUnitStaked()",
+            "lineNumber": "L535-549"
+        }
+    ]
+}

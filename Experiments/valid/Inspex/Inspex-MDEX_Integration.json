@@ -1,0 +1,190 @@
+{
+    "path": "./Audit_Reports_2024/Inspex/Inspex-MDEX_Integration.pdf",
+    "project_info": {
+        "url": "https://github.com/alpaca-finance/bsc-alpaca-contract",
+        "commit_hash": "6c973dd091d1d0da87c555e22a6cd865153b72f4",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/Inspex-MDEX_Integration/bsc-alpaca-contract"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Use of Upgradable Contract Design",
+            "description": "The logic of affected contracts can be arbitrarily changed, allowing the proxy contract owner to perform malicious actions such as stealing users' funds.",
+            "severity": "High",
+            "contract": "MdexRestrictedStrategyAddBaseTokenOnly, MdexRestrictedStrategyWithdrawMinimizeTrading, MdexRestrictedStrategyAddTwosidesOptimal, MdexRestrictedStrategyLiquidate, MdexRestrictedStrategyPartialCloseLiquidate, MdexRestrictedStrategyPartialCloseMinimizeTrading, MdexWorker02",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Improper Condition Checking in setRewardPath() Function",
+            "description": "The work() function will be unusable since the _reinvest() function will revert the transaction due to the swapping of invalid tokens, resulting in failed executions on all strategies, including the users' close position transactions.",
+            "severity": "Medium",
+            "contract": "MdexWorker02",
+            "function": "setRewardPath()",
+            "lineNumber": "510-522"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Centralized Control of State Variable",
+            "description": "The controlling authorities can change critical state variables to gain additional profit, which is unfair to other users.",
+            "severity": "Medium",
+            "contract": "MdexRestrictedStrategyAddBaseTokenOnly, MdexRestrictedStrategyWithdrawMinimizeTrading, MdexRestrictedStrategyAddTwosidesOptimal, MdexRestrictedStrategyLiquidate, MdexRestrictedStrategyPartialCloseLiquidate, MdexRestrictedStrategyPartialCloseMinimizeTrading, MdexWorker02",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-437"
+                ]
+            },
+            "title": "Transaction Ordering Dependence for Beneficial Vault Bounty",
+            "description": "The front-running attack can be performed, resulting in a bad swapping rate for the beneficial vault bounty.",
+            "severity": "Low",
+            "contract": "MdexWorker02",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-437"
+                ]
+            },
+            "title": "Transaction Ordering Dependence for Reinvestment Balance",
+            "description": "The front-running attack can be performed, resulting in a bad swapping rate for the reinvestment and lower reward for the platform users.",
+            "severity": "Low",
+            "contract": "MdexWorker02",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Improper Transfer of Reinvest Token",
+            "description": "A small part of the $MDX token used for the reinvestment can be transferred out by the contract owner, resulting in less reward for the platform users.",
+            "severity": "Low",
+            "contract": "MdexWorker02",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-477"
+                ]
+            },
+            "title": "Outdated Compiler Version",
+            "description": "The Solidity compiler versions specified in the smart contracts were outdated, which may potentially cause damage to the smart contracts or users due to publicly known inherent bugs.",
+            "severity": "High",
+            "contract": [
+                "MdexWorker02",
+                "MdexRestrictedStrategyAddBaseTokenOnly",
+                "MdexRestrictedStrategyWithdrawMinimizeTrading",
+                "MdexRestrictedStrategyAddTwosidesOptimal",
+                "MdexRestrictedStrategyLiquidate",
+                "MdexRestrictedStrategyPartialCloseLiquidate",
+                "MdexRestrictedStrategyPartialCloseMinimizeTrading"
+            ],
+            "function": "N/A",
+            "lineNumber": [
+                "14"
+            ]
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-273"
+                ]
+            },
+            "title": "Insufficient Logging for Privileged Functions",
+            "description": "Privileged functions that are executable by the controlling parties are not logged properly by emitting events.",
+            "severity": "Very Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-749"
+                ]
+            },
+            "title": "Improper Function Visibility",
+            "description": "The initialize() function's visibility should be changed to external if it is not called from any internal function.",
+            "severity": "Info",
+            "contract": "MdexRestrictedStrategyPartialCloseLiquidate.sol",
+            "function": "initialize(IMdexRouter, address)",
+            "lineNumber": "57-63"
+        }
+    ]
+}

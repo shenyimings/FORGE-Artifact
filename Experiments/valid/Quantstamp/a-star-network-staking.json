@@ -1,0 +1,73 @@
+{
+    "path": "./Audit_Reports_2024/Quantstamp/a-star-network-staking.pdf",
+    "project_info": {
+        "url": "https://github.com/PlasmNetwork/Astar/tree/6d8c38a0c3a9f7d24e0f11cab2fff65c0e5558ec",
+        "commit_hash": "6d8c38a0c3a9f7d24e0f11cab2fff65c0e5558ec",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/a-star-network-staking/Astar"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Potential segfault in `localtime_r` invocations",
+            "description": "In the Cargo.lock file the package `chrono` with the version `0.4.19` is used, which is affected by a data race between `localtime_r` and `setenv`.",
+            "severity": "Medium Risk",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Mathematical Operations That Lead To Overflow",
+            "description": "In the `on_initialize` function (file `/dapps-staking/src/pallet/mod.rs`, L244), the `next_era` variable is incremented using the `+` operator, which can cause an overflow.",
+            "severity": "Medium Risk",
+            "contract": "/dapps-staking/src/pallet/mod.rs",
+            "function": "on_initialize",
+            "lineNumber": "244, 393, 408, 413, 549, 552, 593, 683"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Missing Validation In Some Variables",
+            "description": "The `unregister` function executes a loop N times without limiting the length of the variable `stakers`, which can cause a denial of service. Also, the `bond_and_stake` function does not properly verify if the value `value_to_stake` is greater than 0.",
+            "severity": "Low Risk",
+            "contract": "N/A",
+            "function": [
+                "unregister",
+                "bond_and_stake"
+            ],
+            "lineNumber": [
+                "L327",
+                "L390",
+                "L578"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,255 @@
+{
+    "path": "./Audit_Reports_2024/Quantstamp/idex.pdf",
+    "project_info": {
+        "url": "https://github.com/idexio/idex-contracts/tree/master",
+        "commit_hash": "master",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/idex/idex-contracts"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Integer Overflow / Underflow",
+            "description": "Integer overflow/underflow occur when an integer hits its bit-size limit, causing unexpected behavior.",
+            "severity": "Low Risk",
+            "contract": [
+                "AssetUnitConversions.sol",
+                "UUID.sol"
+            ],
+            "function": [
+                "N/A",
+                "invalidateOrderNonce()"
+            ],
+            "lineNumber": [
+                "L22",
+                "L26"
+            ]
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Missing Input Validation",
+            "description": "N/A",
+            "severity": "Low Risk",
+            "contract": [
+                "Exchange.sol",
+                "Governance.sol",
+                "AssetRegistry.sol"
+            ],
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-775"
+                ]
+            },
+            "title": "Users Cannot Withdraw their Fractional Part of Ether Deposits",
+            "description": "The depositEther() function locks fractional parts of ether deposits (dust) in the Exchange contract without allowing users to withdraw them.",
+            "severity": "Low Risk",
+            "contract": "Exchange.sol",
+            "function": "depositEther()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Some Functions Lack Unit Tests",
+            "description": "All functions in Signatures.sol and AssetTransfers.sol lack unit tests; however, they are being indirectly checked by deposit and withdraw testing flows in the test suite.",
+            "severity": "Informational",
+            "contract": "Signatures.sol, AssetTransfers.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Old ERC20 Tokens May Not Work With IDEX",
+            "description": "Since Solidity 0.4.22, some non-ERC20 compliant token contracts that used to work in older versions no longer work now.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "transfer()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-354"
+                ]
+            },
+            "title": "Unlocked Pragma",
+            "description": "Every Solidity file specifies a version number of the format `pragma solidity (^)0.4.*` which implies an unlocked pragma, meaning that the compiler will use the specified version and above.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-362"
+                ]
+            },
+            "title": "Race Conditions / Front-Running",
+            "description": "Contrary to the comment on L546, calling `exitWallet` does not immediately disable deposits. Deposits may still occur after one calls `exitWallet` if deposit transactions are mined first (e.g, if they are given higher gas).",
+            "severity": "Informational",
+            "contract": "Exchange",
+            "function": "exitWallet()",
+            "lineNumber": "546"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ],
+                "3": [
+                    "CWE-563"
+                ]
+            },
+            "title": "Unused Imports",
+            "description": "SafeMath is imported but never used; IERC20 is imported but never used.",
+            "severity": "Informational",
+            "contract": "AssetUnitConversions",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Gas Usage / for Loop Concerns",
+            "description": "The `loadAssetBySymbol` function inside `AssetRegistry.sol` contains a for-loop over all assets registered with the same symbol. If there are too many assets registered with the same symbol, this function would revert due to reaching the block-gas-limit.",
+            "severity": "Informational",
+            "contract": "AssetRegistry.sol",
+            "function": "loadAssetBySymbol",
+            "lineNumber": "L100"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-282"
+                ],
+                "3": [
+                    "CWE-708"
+                ]
+            },
+            "title": "Privileged Roles and Ownership",
+            "description": "Smart contracts will often have `owner` and/or `admin` roles to designate the person with special privileges to make modifications to the smart contract and/or other components.",
+            "severity": "Informational",
+            "contract": "Exchange.sol, Governance.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Token De-registration Not Possible",
+            "description": "Currently, after registering a new token, it cannot be de-registered. Thus, if an incorrect token registration occurs, it cannot be undone unless one performs a new contract deployment and migrates all correctly registered tokens.",
+            "severity": "Informational",
+            "contract": "AssetRegistry.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ]
+            },
+            "title": "Typo in code comment",
+            "description": "Typo in code comment on L964; registerAsset -> registerToken.",
+            "severity": "N/A",
+            "contract": "Exchange.sol",
+            "function": "N/A",
+            "lineNumber": "L964"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1061"
+                ]
+            },
+            "title": "Unnamed magic numbers should be avoided",
+            "description": "Unnamed magic numbers don't convey any meaning to the reader who is new to the code.",
+            "severity": "N/A",
+            "contract": "Exchange.sol",
+            "function": "N/A",
+            "lineNumber": "273, 301, 356, 821, 1040"
+        }
+    ]
+}

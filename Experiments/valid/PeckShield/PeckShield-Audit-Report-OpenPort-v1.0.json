@@ -1,0 +1,154 @@
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-OpenPort-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/OpenPortProject/openport/tree/0858e36",
+        "commit_hash": "0858e36",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/PeckShield-Audit-Report-OpenPort-v1/openport"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Proper Logic in LockRewards::withdrawLocked()",
+            "description": "The withdraw logic needs to properly reduct the withdrawn amount from the recorded staking token balance and boosted balance. However, the reduction from the boosted balance fails to take into consideration of lockup period.",
+            "severity": "Medium",
+            "contract": "LockRewards",
+            "function": "withdrawLocked()",
+            "lineNumber": "187, 191, 200"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ],
+                "4": [
+                    "CWE-232"
+                ]
+            },
+            "title": "Accommodation of Non-ERC20-Compliant Tokens",
+            "description": "The transfer function does not follow the ERC-20 standard specification and may cause issues if not handled properly.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Timely updateReward() Upon the rewardRate Change",
+            "description": "The rewards may not be accrued using the right rewardRate if the call to updateReward() is not immediately invoked before updating the new rewardRate.",
+            "severity": "Medium",
+            "contract": "StakingRewards",
+            "function": "setRewardRate()",
+            "lineNumber": "405-407"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ]
+            },
+            "title": "Inconsistency Between GuStableCoin And Xau",
+            "description": "The `OpenPort` protocol has two built-in fractional-algorithmic stablecoins `Gu` and `Xau`. These two stablecoins share the same logic but have unnecessary inconsistency in their implementation, specifically in the `pool_burn_from()` function.",
+            "severity": "Low",
+            "contract": "GuStableCoin, Xau",
+            "function": "pool_burn_from()",
+            "lineNumber": "226-230, 220-224"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "In the OpenPort protocol, there is a privileged `owner` account that plays a critical role in governing and regulating system-wide operations, which may pose counter-party risk to exchange users.",
+            "severity": "Medium",
+            "contract": "GrShares",
+            "function": "setTimelock() and setSynthAddress()",
+            "lineNumber": "88-99"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect Trading Fee in UniswapV2Library",
+            "description": "The library contract `UniswapV2Library` has implicitly assumed the trading fee is 0.3%, instead of 0.25% which may skew the token conversion calculation.",
+            "severity": "Low",
+            "contract": "UniswapV2Library",
+            "function": "getAmountOut() / getAmountIn()",
+            "lineNumber": "61-67"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "Simplified Logic of Pool::availableExcessGrDV()",
+            "description": "Precision loss due to different orders of multiplication and division operations in `Pool::availableExcessGrDV()` function.",
+            "severity": "Low",
+            "contract": "Pool",
+            "function": "availableExcessGrDV()",
+            "lineNumber": "203"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Improved Sanity Checks For System Parameters",
+            "description": "DeFi protocols typically have a number of system-wide parameters that can be dynamically configured on demand.",
+            "severity": "Low",
+            "contract": "Pool",
+            "function": "setPoolParameters",
+            "lineNumber": "537-547"
+        }
+    ]
+}

@@ -1,0 +1,355 @@
+{
+    "path": "./Audit_Reports_2024/PepperSec/POA-DPOS-audit-report.pdf",
+    "project_info": {
+        "url": "https://github.com/poanetwork/posdao-contracts",
+        "commit_hash": "fdaa685de851378b35741bdab986414dfd9042b1",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/POA-DPOS-audit-report/posdao-contracts"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Redundant modifier",
+            "description": "Redundant onlyValidatorSetContract modifier forbids using getCurrentSeed by any DApp in the network.",
+            "severity": "MAJOR",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Reward mechanism",
+            "description": "Paying block rewards in loops is not the safest thing to do.",
+            "severity": "MAJOR",
+            "contract": "N/A",
+            "function": "_setSnapshot",
+            "lineNumber": "10-15"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "Rounding errors",
+            "description": "The code uses integer division which can lead to precision loss and incorrect results.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "_setSnapshot",
+            "lineNumber": "12, 24"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Random validators algorithm problem",
+            "description": "The random validators algorithm used has a problem which may lead to unfair distribution of rewards.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "5-11"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "collectRoundLength should have more restrictions",
+            "description": "According to the code, the _collectRoundLength variable should be even and more than zero. Consider adding a couple more restrictions to facilitate system hardening.",
+            "severity": "MEDIUM",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Possible weak random using _getRandomIndex",
+            "description": "The _getRandomIndex function may return 0 for some range of _randomNumber values if _likelihoodSum is a small negative value.",
+            "severity": "MEDIUM",
+            "contract": "ValidatorSetBase",
+            "function": "_getRandomIndex",
+            "lineNumber": "683-696"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ],
+                "4": [
+                    "CWE-766"
+                ]
+            },
+            "title": "Members' hashes access",
+            "description": "The constants with the hashes of members' names are used unsafely in multiple smart contracts. In every method, we should not forget about a proxy pattern, which leads to unexpected mistakes.",
+            "severity": "MEDIUM",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Reward function optimization",
+            "description": "This logic can be executed as a part of other calculations later.",
+            "severity": "MEDIUM",
+            "contract": "BlockRewardAuRa",
+            "function": "N/A",
+            "lineNumber": "L265-L267"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Token stake and withdraw methods",
+            "description": "The token implementation contains special methods for staking contract interaction. While the stake() method allows for performing transferFrom without approve() to the staking contract, the second method is just an equal to transfer.",
+            "severity": "MINOR",
+            "contract": "N/A",
+            "function": [
+                "stake(address _staker , uint256 _amount )",
+                "withdraw(address _staker , uint256 _amount )"
+            ],
+            "lineNumber": "1-7, 9-15"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-237"
+                ]
+            },
+            "title": "Consider extracting pool structure",
+            "description": "Pools are stored in the map and have reverse lookup. Perhaps it is worth trying to extract this behavior into a separate struct and keeping it proxy-compatible?",
+            "severity": "MINOR",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-282"
+                ],
+                "3": [
+                    "CWE-708"
+                ]
+            },
+            "title": "transferOwnership + claimOwnership",
+            "description": "Perhaps, it will make sense to implement the transferOwnership + claimOwnership scheme instead of just transferOwnership without proper knowledge.",
+            "severity": "MEDIUM",
+            "contract": "EternalStorageProxy",
+            "function": "N/A",
+            "lineNumber": "L70-L74"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Require for upgradeTo",
+            "description": "Using 'return false' instead of 'require(someCheck(), \"useful message\")' for upgradeTo method.",
+            "severity": "MINOR",
+            "contract": "EternalStorageProxy",
+            "function": "upgradeTo()",
+            "lineNumber": "L78-L95"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Allowed senders storing",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1177"
+                ]
+            },
+            "title": "Hardcoded value",
+            "description": "The REWARD_PERCENT_MULTIPLIER variable is hardcoded with a value of 1000000.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "_setSnapshot",
+            "lineNumber": "1"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "TransferAndCall does not restrict transfers to stakingContract",
+            "description": "The transferAndCall function does not restrict transfers to the staking contract, similar to transfer and transferFrom.",
+            "severity": "MAJOR",
+            "contract": "ERC677BridgeTokenRewardableMock",
+            "function": "transferAndCall",
+            "lineNumber": "L475-L491"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1120"
+                ],
+                "3": [
+                    "CWE-1080"
+                ]
+            },
+            "title": "Logic separation",
+            "description": "To avoid too deep stack situations and increase readability, keep functions less than 50 lines of code.",
+            "severity": "N/A",
+            "contract": "BlockRewardAuRa",
+            "function": [
+                "reward",
+                "_distributeRewards"
+            ],
+            "lineNumber": [
+                "L210-L394"
+            ]
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Signature parsing",
+            "description": "The code could be replaced with a more efficient assembly code to parse signatures.",
+            "severity": "N/A",
+            "contract": "TxPermission.sol",
+            "function": "N/A",
+            "lineNumber": "139-141"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Argument parsing",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Reasons in require",
+            "description": "Is there any purpose of using \u201c return false in case of fail\u201d instead of require(someCheck(), \u201cuseful message\u201d) for upgradeTo method?",
+            "severity": "MINOR",
+            "contract": "EternalStorageProxy",
+            "function": "upgradeTo",
+            "lineNumber": "78-95"
+        }
+    ]
+}

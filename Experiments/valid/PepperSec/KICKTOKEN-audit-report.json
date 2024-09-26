@@ -1,0 +1,315 @@
+{
+    "path": "./Audit_Reports_2024/PepperSec/KICKTOKEN-audit-report.pdf",
+    "project_info": {
+        "url": "https://github.com/peppersec/public-audit-reports/tree/master/sources/KIKCICO",
+        "commit_hash": "8d864a16877f4050c7d41de62049c127852a6dec",
+        "address": "0xc12d1c73ee7dc3615ba4e37e4abfdbddfa38907e",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/KICKTOKEN-audit-report/public-audit-reports"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Frozen and active token balance desynchronization",
+            "description": "The destroy method doesn\u2019t destroy frozen_balance, which can lead to complex issues.",
+            "severity": "CRITICAL",
+            "contract": "kickico_token_v1.sol",
+            "function": "destroy",
+            "lineNumber": "L228"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Lack of access separation",
+            "description": "The meltTokens function has onlyOwner access modifier but it's used by a separate melting service, which is not necessary and may lead to greater exposure if the service is compromised.",
+            "severity": "MAJOR",
+            "contract": "kickico_token_v1.sol",
+            "function": "meltTokens()",
+            "lineNumber": "L320"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-358"
+                ]
+            },
+            "title": "Wrong modifiers usage",
+            "description": "The onlyWhitelisted modifier is used incorrectly.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "addWhitelisted/removeWhitelisted",
+            "lineNumber": "7-13"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ]
+            },
+            "title": "Require Check Typo",
+            "description": "Duplicate require from present when it should be: require (to != address ( 0 ), \u201cERC20: transfer to the zero address\u201d )",
+            "severity": "MEDIUM",
+            "contract": "kickico_token_v1.sol",
+            "function": "N/A",
+            "lineNumber": "299"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Expensive token migration",
+            "description": "According to current architecture, KICKICO team will take a snapshot of old KICKICO token holders and propagate their balances to the new token. Since there are 18.5k addresses in there, it\u2019s going to cost 6-16 ETH on average.",
+            "severity": "MEDIUM",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Risky implementation of changeOwner functionality",
+            "description": "Current changeOwner implementation does not validate newOwner.",
+            "severity": "MEDIUM",
+            "contract": "kickico_token_v1.sol",
+            "function": "changeOwner(address)",
+            "lineNumber": "105"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Transfer event usage for mint and burn operations",
+            "description": "The contract should emit Transfer event from and to address(0) respectively during mint and burn operations.",
+            "severity": "MEDIUM",
+            "contract": "kickico_token_v1",
+            "function": "mint() and burn()",
+            "lineNumber": "L188, L203"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-749"
+                ]
+            },
+            "title": "The approveAndCall feature",
+            "description": "The current version does not have a way to send tokens to a smart contract and trigger some functionality of it.",
+            "severity": "MINOR",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "pauseTrigger and burnTrigger methods simplification",
+            "description": "The token contract has functionality that stops and starts token transfer and destruction. These methods can be optimized to better the interface.",
+            "severity": "MINOR",
+            "contract": "kickico_token_v1.sol",
+            "function": "N/A",
+            "lineNumber": "L83-L85, L110-L112"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Frozen token storage issue",
+            "description": "In the current implementation, _frozen_balanceOf shows how many tokens of the total user balance are frozen, which requires to change _balances mapping in all of the methods that work with frozen tokens.",
+            "severity": "MINOR",
+            "contract": "kickico_token_v1.sol",
+            "function": "_frozen_balanceOf",
+            "lineNumber": "L35-L37"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Lack of the Transfer event for the _mintfrozen method",
+            "description": "The _mintfrozen method emits a Transfer event with incorrect arguments, missing the event to indicate that freezing took place.",
+            "severity": "MINOR",
+            "contract": "kickico_token_v1.sol",
+            "function": "_mintfrozen",
+            "lineNumber": "262"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Redundant require check",
+            "description": "The redundant require check can cause SafeMath overflow exception.",
+            "severity": "Medium",
+            "contract": "kickico_token_v1.sol",
+            "function": "N/A",
+            "lineNumber": "L30-L32"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "The approveAndCall method does not validate spender contract",
+            "description": "The second version of the token contract has ApproveAndCall, but it does not validate the boolean value that spender contract returns.",
+            "severity": "MINOR",
+            "contract": "kickico_token_v2.sol",
+            "function": "ApproveAndCall",
+            "lineNumber": "191"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "N/A",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "The accountBalance and _frozen_balanceOf methods obfuscate useful information",
+            "description": "Users should be able to see the frozen amount of their tokens. Otherwise, they are unable to properly consider the amount of active tokens.",
+            "severity": "MINOR",
+            "contract": "kickico_token_v1",
+            "function": "_frozen_balanceOf",
+            "lineNumber": "L35"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Unused functionality",
+            "description": "These methods are not used anywhere.",
+            "severity": "MINOR",
+            "contract": "kickico_token_v1.sol",
+            "function": "_whitelisted",
+            "lineNumber": "L70-L81"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Lack of access separation",
+            "description": "The meltTokens function has onlyOwner access modifier but it's used by a separate melting service, which may cause greater exposure if the service is compromised.",
+            "severity": "MAJOR",
+            "contract": "kickico_token_v1.sol",
+            "function": "meltTokens()",
+            "lineNumber": "L320"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-358"
+                ]
+            },
+            "title": "Wrong modifiers usage",
+            "description": "The onlyWhitelisted modifier is used incorrectly.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "addWhitelisted/removeWhitelisted",
+            "lineNumber": "7-13"
+        }
+    ]
+}

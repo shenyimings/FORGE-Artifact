@@ -1,0 +1,145 @@
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Thena-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/ThenafiBNB/THENA-Contracts/tree/07106e7",
+        "commit_hash": "07106e7",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/PeckShield-Audit-Report-Thena-v1/THENA-Contracts"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect Delegate/Voting Balance Accounting in VotingEscrow",
+            "description": "The current implementation of delegation feature in `VotingEscrow` contract is flawed, leading to incorrect voting balance calculation due to duplicated NFTs in `srcRepNew` when `nextSrcRepNum = srcRepNum-1`.",
+            "severity": "Low",
+            "contract": "VotingEscrow",
+            "function": "_moveAllDelegates()",
+            "lineNumber": "1310-1314"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improper VotingEscrow Query in RewardsDistributor",
+            "description": "In the `ve_for_at()` function of `RewardsDistributor` contract, incorrect calculation of voting power occurs due to type casting from negative int256 to uint, leading to incorrect results.",
+            "severity": "Low",
+            "contract": "RewardsDistributor",
+            "function": "ve_for_at()",
+            "lineNumber": "140"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Revisited Proposal State For Cancellation in Governor",
+            "description": "The protocol cancellation operation makes use of an incorrect protocol state, specifically using 'Expired' instead of 'Defeated'.",
+            "severity": "Low",
+            "contract": "Governor, L2Governor",
+            "function": "_cancel()",
+            "lineNumber": "383-384"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Accommodation of Non-ERC20-Compliant Tokens",
+            "description": "The finding highlights the importance of accommodating non-ERC20-compliant tokens, specifically citing the example of USDT stablecoin and its `approve()` function, which has a specific requirement to mitigate the known `approve()/transferFrom()` race condition.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "approve()",
+            "lineNumber": "194-195"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improved Airdrop Logic in AirdropClaim::setUserInfo()",
+            "description": "The current logic to compute airdropped amount parts can be improved in the setUserInfo() function of AirdropClaim contract.",
+            "severity": "Medium",
+            "contract": "AirdropClaim",
+            "function": "setUserInfo()",
+            "lineNumber": "101-103"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Suggested Adherence Of Checks-Effects-Interactions Pattern",
+            "description": "A common coding best practice in Solidity is the adherence of `checks-effects-interactions` principle to mitigate re-entrancy attacks.",
+            "severity": "Low",
+            "contract": "MerkleTree/ThenNFT",
+            "function": "withdrawStakingFees()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Killed Gauges Still Eligible For Rewards",
+            "description": "The `killGaugeTotally()` function does not remove the associated `supplyIndex` and `weights`, making a killed gauge still eligible for rewards.",
+            "severity": "Medium",
+            "contract": "VoterV2_1",
+            "function": "killGaugeTotally()",
+            "lineNumber": "440-454"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "In the Thena protocol, there is a privileged `owner` account that plays a critical role in governing and regulating system-wide operations, which needs to be scrutinized.",
+            "severity": "Medium",
+            "contract": "Multiple Contracts",
+            "function": "setDistribution() and setGaugeRewarder()",
+            "lineNumber": "94-98, 101-105"
+        }
+    ]
+}

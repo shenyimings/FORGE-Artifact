@@ -1,0 +1,600 @@
+{
+    "path": "./Audit_Reports_2024/Runtime_V\u0435rification/Element_Finance_Governance_Security_Audit_Report.pdf",
+    "project_info": {
+        "url": "https://github.com/element-fi/elf-council",
+        "commit_hash": "6ad776533a190b4364d5ddf450f36e3668d3f8ce",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/Element_Finance_Governance_Security_Audit_Report/elf-council"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Condition for proposal approval",
+            "description": "The approval of a proposal does not require the majority YES votes but merely to have more YES votes than NO votes.",
+            "severity": "Unknown",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Event ProposalExecuted",
+            "description": "The `ProposalExecuted` event can emit true even if the given proposal is _not_ executed.",
+            "severity": "N/A",
+            "contract": "CoreVoting.sol",
+            "function": "N/A",
+            "lineNumber": "226"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ]
+            },
+            "title": "Non-atomic batch execution",
+            "description": "The batch of calls in proposals is executed non-atomically, which means the execution will terminate normally and also delete the proposal even if some of the calls fail or no calls succeed.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "execute()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-170"
+                ]
+            },
+            "title": "Validation of proposal hashes",
+            "description": "abi.encodePacked() omits size information of given arrays, making it possible to pass hash checks with hand-crafted targets calldata whose length field is different than the original.",
+            "severity": "High",
+            "contract": "CoreVoting.sol",
+            "function": "N/A",
+            "lineNumber": "246-251"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ],
+                "4": [
+                    "CWE-230"
+                ]
+            },
+            "title": "Input validation in proposal()",
+            "description": "Calling proposal() with an empty targets array always succeeds and increases proposalCount, allowing a malicious user to repeat this action to increase proposalCount arbitrarily.",
+            "severity": "Unknown",
+            "contract": "N/A",
+            "function": "proposal()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Changes of approved vaults during voting period",
+            "description": "The vote counting process does not take into account potential changes of the list of associated vaults in the middle of the voting period. The vote tally that has already been counted will never be recounted even if the vault list is changed in the middle.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Asynchronous updates of voting power in VestingVault",
+            "description": "In VestingVault, some changes in voting powers are not immediately reflected in the voting power record, until users explicitly synchronize them. This causes inconsistency between the actual voting power and the recorded value.",
+            "severity": "Unknown",
+            "contract": "VestingVault",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Self delegation in VestingVault",
+            "description": "VestingVault.delegate() doesn't work correctly if `_to` is equal to `grant.delegatee`, allowing adversaries to increase their voting power almost double.",
+            "severity": "High",
+            "contract": "VestingVault",
+            "function": "delegate()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Duplicated leaves in MerkleRewards trees",
+            "description": "MerkleRewards may not work correctly if the associated Merkle tree contains multiple leaves for the same user.",
+            "severity": "Medium",
+            "contract": "MerkleRewards.sol",
+            "function": "N/A",
+            "lineNumber": "92"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Potential flash loan vulnerability",
+            "description": "Malicious proposers can use a flash loan to temporarily increase voting power and vote for their proposals.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "Upgradable proxy pattern for VestingVault",
+            "description": "VestingVault employs the upgradable proxy pattern but misses a storage initialization function, preventing proper initialization once created.",
+            "severity": "High",
+            "contract": "VestingVault",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-191"
+                ]
+            },
+            "title": "Underflow in History.sol",
+            "description": "The `History._find()` function reverts when the given `length` parameter is 0, due to the underflow in the following: `uint256 maxIndex = length - 1 ;`. This underflow leads to `History.find()` or `History.findAndClear()` reverting because the `storageMapping[who]` array is empty and thus the `History._find()` function is called with the `length` argument being zero, triggering the underflow.",
+            "severity": "Low",
+            "contract": "History.sol",
+            "function": "_find()",
+            "lineNumber": "224"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Validity of voting period",
+            "description": "The voting period (i.e., 'lockDuration + extraVoteTime' in CoreVoting) is required to be smaller than the period for which the historical voting power is recorded (i.e., the 'staleBlockLag' value of all the associated vaults.) However, this requirement is not enforced by the code.",
+            "severity": "Low",
+            "contract": "CoreVoting",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "Reentrancy vulnerability",
+            "description": "There exist reentrancy vulnerabilities. Alice can execute the approved proposal multiple times by upgrading the target contract so that it can reenter the CoreVoting.execute() or Timelock.execute() function upon receiving funds.",
+            "severity": "High",
+            "contract": "CoreVoting/Timelock",
+            "function": "execute()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Griefing attacks for high-profile delegates",
+            "description": "Adversaries can increase an array size arbitrarily large by repeatedly depositing a tiny amount to LockingVault, causing `History._clear()` function to revert due to exceeding the block gas limit. This can be exploited to delay approval for certain proposals.",
+            "severity": "Low",
+            "contract": "LockingVault",
+            "function": "_clear()",
+            "lineNumber": "102-103"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Double execution vulnerability in Timelock",
+            "description": "A batch of calls may be doubly executed in Timelock due to increaseTime() being called after execute() for the same callHash.",
+            "severity": "High",
+            "contract": "Timelock",
+            "function": "increaseTime()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ]
+            },
+            "title": "Differentiation of identical Timelock proposals",
+            "description": "The Timelock contract may not properly work when multiple identical Timelock proposals are approved in a short time period.",
+            "severity": "High",
+            "contract": "Timelock",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Unchecked generic calls in Treasury",
+            "description": "The Treasury.genericCall() function does not check the status of sub-calls and will normally return even if a call fails, which may lead to undesired results.",
+            "severity": "High",
+            "contract": "Treasury",
+            "function": "genericCall()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Mapping quorums",
+            "description": "The mapping returns 0 for default, while the default quorum size is non-zero.",
+            "severity": "N/A",
+            "contract": "CoreVoting.sol",
+            "function": "N/A",
+            "lineNumber": "L20"
+        },
+        {
+            "id": 19,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "Recycling garbage proposals",
+            "description": "Unapproved proposals are never deleted, which occupies storage slots and can lead to non-negligible gas refund benefits if recycled.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 20,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Packed storage update in LockingVault",
+            "description": "The current Solidity compiler optimization does not support complex assignment patterns, leading to unpacked storage updates and increased gas fees.",
+            "severity": "N/A",
+            "contract": "LockingVault",
+            "function": "N/A",
+            "lineNumber": "125-129"
+        },
+        {
+            "id": 21,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Code readability in History.sol",
+            "description": "The code can be simplified for better readability, but it may trade off with robustness.",
+            "severity": "N/A",
+            "contract": "History.sol",
+            "function": "N/A",
+            "lineNumber": "238"
+        },
+        {
+            "id": 22,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-358"
+                ]
+            },
+            "title": "Cancellation of votes",
+            "description": "Calling vote() with an empty list of vaults will effectively cancel the previous vote, if any.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "vote()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 23,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ]
+            },
+            "title": "Input validation in VestingVault",
+            "description": "The following sanity checks are desired but missing: For addGrantAndDelegate(): `require` `(_cliff <= _expiration);`, and for changeUnvestedMultiplier(): `require` `(_multiplier <= 100);`.",
+            "severity": "Medium",
+            "contract": "VestingVault",
+            "function": [
+                "addGrantAndDelegate()",
+                "changeUnvestedMultiplier()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 24,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ],
+                "4": [
+                    "CWE-231"
+                ]
+            },
+            "title": "Input validation in Timelock",
+            "description": "It is recommended to have sanity checks: require `(targets.length == calldatas.length);` for `Timelock.execute()`.",
+            "severity": "N/A",
+            "contract": "Timelock",
+            "function": "execute()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 25,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Systematic sanity checks for explicit type conversions",
+            "description": "It is a defensive programming practice to systematically add a sanity check for every explicit type conversion to a smaller-sized type, unless it is logically clear that the value is sufficiently small.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 26,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "Unsafe type conversions",
+            "description": "Explicit type conversion from `uint128` to `int256` can cause precision loss if input value is larger than or equal to 2^127.",
+            "severity": "N/A",
+            "contract": "VestingVault.sol",
+            "function": "N/A",
+            "lineNumber": "190,224,268,329"
+        },
+        {
+            "id": 27,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Redetermination of membership in GSCVault",
+            "description": "The setter functions in GSCVault contract do not enforce redetermination of membership based on updated criteria, allowing existing committee members to stay and vote despite no longer satisfying the requirements.",
+            "severity": "N/A",
+            "contract": "GSCVault",
+            "function": "setCoreVoting(), setVotePowerBound(), setIdleDuration()",
+            "lineNumber": "177-192"
+        },
+        {
+            "id": 28,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1068"
+                ]
+            },
+            "title": "Inconsistent owner initialization in CoreVoting",
+            "description": "It is a better practice to use the setOwner() function provided by the Authorizable library, rather than explicit assignment.",
+            "severity": "N/A",
+            "contract": "CoreVoting",
+            "function": "N/A",
+            "lineNumber": "118"
+        },
+        {
+            "id": 29,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1068"
+                ]
+            },
+            "title": "Inconsistent Solidity version requirements",
+            "description": "Multiple versions of Solidity (0.8.0 and 0.8.3) are used throughout the codebase, which is a best practice to unify the compiler version.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 30,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Sanity check for proposal IDs",
+            "description": "It is recommended to have an explicit check 'require(proposalID < proposalCount);' for both vote() and execute() in CoreVoting.sol. This helps prevent error propagation in case of storage corruption.",
+            "severity": "N/A",
+            "contract": "CoreVoting",
+            "function": "vote() and execute()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 31,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-459"
+                ]
+            },
+            "title": "Inconsistent storage cleanup in Timelock",
+            "description": "It is recommended to also delete `timeIncreases[callHash]` whenever `callTimestamps[callHash]` is deleted (in both execute() and stopCall()). It improves the code readability and gas efficiency.",
+            "severity": "N/A",
+            "contract": "Timelock",
+            "function": "execute(), stopCall()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 32,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Code duplication in History.sol",
+            "description": "The find() and findAndClear() functions duplicate a code block that can be factored out to avoid the code duplication.",
+            "severity": "N/A",
+            "contract": "History.sol",
+            "function": "find() and findAndClear()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

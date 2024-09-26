@@ -1,0 +1,143 @@
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-StackerVC-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/jack0x-tech/StackerVC_VentureFund001/tree/2c9d64b",
+        "commit_hash": "2c9d64b",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/PeckShield-Audit-Report-StackerVC-v1/StackerVC_VentureFund001"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Incompatibility with Deflationary/Rebasing Tokens",
+            "description": "The GaugeD1 contract's asset-transferring routines may not work correctly with deflationary/rebasing tokens due to inconsistent internal asset balances and actual token balances maintained in individual ERC20 token contracts.",
+            "severity": "Informational",
+            "contract": "GaugeD1",
+            "function": "deposit()",
+            "lineNumber": "99-102"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Safe-Version Replacement of safeTransfer()/safeTransferFrom()",
+            "description": "Using safe version of transfer() and transferFrom() to handle tokens that do not follow ERC20 standard, as some token contracts may not revert on failure.",
+            "severity": "Medium",
+            "contract": "GaugeD1",
+            "function": "deposit()",
+            "lineNumber": "122"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Suggested Adherence of Checks-Effects-Interactions",
+            "description": "A common coding best practice in Solidity is the adherence of `checks-effects-interactions` principle. This principle is effective in mitigating a serious attack vector known as `re-entrancy`. Via this particular attack vector, a malicious contract can be reentering a vulnerable contract in a nested manner.",
+            "severity": "Low",
+            "contract": "LPGuarge",
+            "function": "deposit()",
+            "lineNumber": "80"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Non-Functional setEndBlock()/deposit() in LPGauge",
+            "description": "The update logic on system-wide risk parameters in LPGauge contract can be improved by applying more rigorous sanity checks. The hardcoded startBlock value causes every call of setEndBlock() and deposit() to fail.",
+            "severity": "Low",
+            "contract": "LPGauge",
+            "function": [
+                "setEndBlock()",
+                "deposit()"
+            ],
+            "lineNumber": "67-73, 75-89"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Asset Consistency in VaultGaugeBridge::newBridge()",
+            "description": "The `VaultGaugeBridge` contract does not enforce asset consistency between a `yEarn vault` and its associated `gauge`, which may cause unintended consequences, including possible asset loss.",
+            "severity": "Low",
+            "contract": "VaultGaugeBridge",
+            "function": "newBridge()",
+            "lineNumber": "51-56"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "Improved Precision By Multiplication And Division Reordering",
+            "description": "In Stacker.VC, there is a `VCTreasuryV1` contract that creates full functionality for a trust-minimized, decentralized VC investment fund. Within this contract, there is a routine, i.e., `startFund()` which computes the `maxInvestment` threshold as `maxInvestment = msg.value.div(max).mul(investmentCap)` (line 180) with potential precision loss.",
+            "severity": "Low",
+            "contract": "VCTreasuryV1",
+            "function": "startFund()",
+            "lineNumber": "180"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1068"
+                ]
+            },
+            "title": "Inconsistency Between Document and Implementation",
+            "description": "There exist a misleading comment embedded among lines of solidity code, which brings unnecessary hurdles to understand and/or maintain the software.",
+            "severity": "Informational",
+            "contract": "VCTreasuryV1",
+            "function": "startFund()",
+            "lineNumber": "170-177"
+        }
+    ]
+}

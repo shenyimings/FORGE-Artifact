@@ -1,0 +1,214 @@
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-TranchessV1.1-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/tranchess/contract-core/tree/9cf2a5d",
+        "commit_hash": "9cf2a5d",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/PeckShield-Audit-Report-TranchessV1/contract-core"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "Reentrancy",
+            "description": "Violation of checks-effects-interactions principle leading to re-entrancy attack vector.",
+            "severity": "Low",
+            "contract": "StakingV2",
+            "function": "deposit()",
+            "lineNumber": "339, 344, 346, and 348"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Non-lockable user withdrawals in VotingEscrowV2",
+            "description": "The withdraw() function in VotingEscrowV2 contract can be paused with the addition of the new whenNotPaused modifier, which may cause non-custodial design issues.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ]
+            },
+            "title": "Suggested Adherence Of Checks-Effects-Interactions Pattern",
+            "description": "A common coding best practice in Solidity is the adherence of `checks-effects-interactions` principle. This principle is effective in mitigating a serious attack vector known as `re-entrancy`. ",
+            "severity": "Low",
+            "contract": "Multiple Contracts",
+            "function": "deposit()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1126"
+                ]
+            },
+            "title": "Suggested Constant/Immutable Usages For Gas Efficiency",
+            "description": "Declare state variables as constants or immutable for gas efficiency, particularly stepSize, minRange, and maxOption can be declared as constant while votingEscrow can be defined as immutable.",
+            "severity": "Informational",
+            "contract": "InterestRateBallot",
+            "function": "N/A",
+            "lineNumber": "27-31"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-253"
+                ]
+            },
+            "title": "Proper dailyProtocolFeeRate validation in Fund constructor",
+            "description": "The `constructor` function evaluates the current `dailyProtocolFeeRate` against the `MAX_ DAILY_PROTOCOL_FEE_RATE` before it has been initialized, and the proper validation should be `require(dailyProtocolFeeRate_ <= MAX_DAILY_PROTOCOL_FEE_RATE)`.",
+            "severity": "Low",
+            "contract": "Fund",
+            "function": "constructor()",
+            "lineNumber": "151"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Generation of meaningful events in fund",
+            "description": "The Fund contract lacks emitting important events that reflect state changes when tranche tokens are being minted or burned.",
+            "severity": "Low",
+            "contract": "Fund",
+            "function": "_mint",
+            "lineNumber": "693-697"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-287"
+                ]
+            },
+            "title": "Improper Authentication",
+            "description": "The initializeV2 function does not properly restrict access to only the trusted owner.",
+            "severity": "Critical",
+            "contract": "VotingEscrowV2",
+            "function": "initializeV2()",
+            "lineNumber": "106-116"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-487"
+                ]
+            },
+            "title": "Declaration of variable with unnecessarily wide scope",
+            "description": "Some variables such as stepSize, minRange, and maxOption can be declared as constant while votingEscrow can be defined as immutable for gas efficiency.",
+            "severity": "N/A",
+            "contract": "InterestRateBallot",
+            "function": "N/A",
+            "lineNumber": "27-29"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1076"
+                ],
+                "3": [
+                    "CWE-1078"
+                ],
+                "4": [
+                    "CWE-1099"
+                ]
+            },
+            "title": "Inconsistent naming conventions for identifiers",
+            "description": "The function initializeV2 has inconsistent naming conventions for its identifiers.",
+            "severity": "Medium",
+            "contract": "VotingEscrowV2",
+            "function": "initializeV2()",
+            "lineNumber": "106-116"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "Use of a non-reentrant function in a concurrent context",
+            "description": "The `deposit()` function in `StakingV2` contract violates the `checks-effects-interactions` principle, making it vulnerable to re-entrancy attacks.",
+            "severity": "Low",
+            "contract": "StakingV2",
+            "function": "deposit()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Improper Enforcement of a Single, Unique Action",
+            "description": "This CWE describes the scenario where a single action is not properly enforced.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

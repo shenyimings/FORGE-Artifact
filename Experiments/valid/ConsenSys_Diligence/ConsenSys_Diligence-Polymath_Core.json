@@ -1,0 +1,434 @@
+{
+    "path": "./Audit_Reports_2024/ConsenSys_Diligence/ConsenSys_Diligence-Polymath_Core.pdf",
+    "project_info": {
+        "url": "https://github.com/PolymathNetwork/polymath-core/tree/3.0.0-audit",
+        "commit_hash": "3.0.0-audit",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/ConsenSys_Diligence-Polymath_Core/polymath-core"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ],
+                "4": [
+                    "CWE-766"
+                ]
+            },
+            "title": "Mark functions as `external` instead of `public`",
+            "description": "Functions should be marked as `external` instead of `public` wherever possible to reduce the size of the calling contract.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-369"
+                ]
+            },
+            "title": "Division by Zero",
+            "description": "The actual totalSupply for the dividend is calculated by subtracting balances of excluded addresses, which can lead to division by zero.",
+            "severity": "Minor",
+            "contract": "EtherDividendCheckpoint and ERC20DividendCheckpoint",
+            "function": "N/A",
+            "lineNumber": "L134, L152-L158"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "Storage layout is hard to maintain",
+            "description": "Maintaining the relationship between SecurityToken and STGetter's contract storage is both difficult and critical from a security perspective.",
+            "severity": "Minor",
+            "contract": "STGetter",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "SecurityToken contract should always be initialized",
+            "description": "The SecurityToken contract should be initialized to prevent opportunities for destruction or malicious use.",
+            "severity": "Critical",
+            "contract": "SecurityToken",
+            "function": "constructor",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "Unpredictable behavior due to front running or general bad timing",
+            "description": "Polymath could update or upgrade things in the system without warning, potentially violating a security goal of the system: once a security token has been created, Polymath shouldn't be able to interfere with that token's functioning. This can lead to unpredictable behavior due to front running or general bad timing.",
+            "severity": "Critical",
+            "contract": "PolymathRegistry",
+            "function": "SecurityToken.updateFromRegistry",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Polymath can arbitrarily change prices during a token sale",
+            "description": "The `USDTieredSTO` token sale uses oracles to convert from USD to ETH or POLY. The oracle addresses come from the `PolymathRegistry`, which means that Polymath has the ability to swap out those oracles at any time. This enables Polymath to set an arbitrary price for themselves to participate in an STO, including a price of `0`.",
+            "severity": "Critical",
+            "contract": "USDTieredSTO",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "No new ST can be created after implementation upgrade",
+            "description": "After upgrading SecurityToken implementation by creating a new security token contract and setting a link to the new version in STFactory contract, `initializationData` is not set for the latest version of the logic contract. This means that all new security tokens will not have init data and they will not be initialized and most probably will revert on creation.",
+            "severity": "Critical",
+            "contract": "STFactory",
+            "function": "setLogicContract",
+            "lineNumber": "L139-L148"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "ModuleRegistry - Custom modules can block their own removal",
+            "description": "Custom modules can be enabled in the feature registry, allowing potentially untrusted entities to register modules while remaining in control of the module factory. This has several security implications.",
+            "severity": "Major",
+            "contract": "ModuleRegistry",
+            "function": "removeModule()",
+            "lineNumber": "L207-L214"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Transfer decisions by default should be consistent",
+            "description": "Inconsistent transfer decisions by default when there are no active modules or all modules say NA.",
+            "severity": "Major",
+            "contract": "SecurityToken",
+            "function": "_executeTransfer()",
+            "lineNumber": "L661-L696"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "ModuleRegistry - Custom module verification should be bounded to module version",
+            "description": "Verification of custom modules is only bounded to module factory regardless of module version, allowing a verified factory owner to upgrade a module to a malicious one.",
+            "severity": "Major",
+            "contract": "ModuleRegistry",
+            "function": "N/A",
+            "lineNumber": "L245"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-749"
+                ]
+            },
+            "title": "ModuleRegistry - Risks of allowing custom modules in the system",
+            "description": "Allowing custom modules in the ModuleRegistry poses several security implications, including potential griefing attacks and increased complexity.",
+            "severity": "Major",
+            "contract": "ModuleRegistry",
+            "function": [
+                "registerModule",
+                "removeModule"
+            ],
+            "lineNumber": [
+                "L171-L180",
+                "L207-L214"
+            ]
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "_balanceOfByPartition",
+            "description": "This function returns the maximum of the balances from all transfer managers. It should not be the case for UNLOCKED partition because GTM may return all balance, while LTM can have half of the balance locked.",
+            "severity": "Major",
+            "contract": "SecurityToken.sol",
+            "function": "_balanceOfByPartition",
+            "lineNumber": "L490"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Security token upgrade info should be editable",
+            "description": "Polymath admins can upgrade security token implementation but if they do it wrong, there is no way to edit that data and all tokens of lower versions will become non-upgradable.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-191"
+                ]
+            },
+            "title": "VestingEscrowWallet - Integer Underflow and unchecked array access",
+            "description": "`pushAvailableTokensMulti()` attempts to check if the argument `_toIndex` is within bounds of `beneficiaries[]`. However, the check already underflows at line **436** if `beneficiaries` is empty allowing the caller ( `withPerm(OPERATOR)` ) to provide any value for `_toIndex` that is smaller or equal to `UINT256_MAX`. The failed check may also lead to an invalid array access at line **438** causing an exception.",
+            "severity": "Medium",
+            "contract": "VestingEscrowWallet",
+            "function": "pushAvailableTokensMulti()",
+            "lineNumber": "435-441"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "SecurityToken - security token name change may cause inconsistency",
+            "description": "When generating registering a ticker and generating a security token a name for the security token is specified. The token name is stored in the security token registry while registering the ticker name, however an issuer can unilaterally change the name of the token stored in the security token causing an inconsistency with the security token.",
+            "severity": "Minor",
+            "contract": "SecurityTokenRegistry",
+            "function": "_storeTickerDetails()",
+            "lineNumber": "L462-L482"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1287"
+                ]
+            },
+            "title": "Where possible, a specific contract type should be used rather than address",
+            "description": "Rather than storing addresses and then casting to the known contract type, it's better to use the best type available so the compiler can check for type safety.",
+            "severity": "Minor",
+            "contract": "ModuleStorage",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1068"
+                ]
+            },
+            "title": "Improve Code Reusability - Use const variables instead of literals for EIP-1066 status codes",
+            "description": "EIP-1066 Status code literals are used throughout the codebase which makes it hard to maintain and understand the codebase.",
+            "severity": "Minor",
+            "contract": "TokenLib.sol",
+            "function": "N/A",
+            "lineNumber": "L458-L483"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ]
+            },
+            "title": "TokenLib - Unused Import KindMath",
+            "description": "Unused import of 3rd party library KindMath in TokenLib",
+            "severity": "Minor",
+            "contract": "TokenLib",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-287"
+                ],
+                "3": [
+                    "CWE-306"
+                ]
+            },
+            "title": "Unused Authentication Modifiers `onlyFactoryOwner` and `onlyFactoryOrOwner`",
+            "description": "The modifiers `onlyFactoryOwner` and `onlyFactoryOrOwner` are defined in `Module` but never used, which can indicate a lack of authentication control for methods exposed by any of the modules inheriting from `Module`.",
+            "severity": "Minor",
+            "contract": "Module",
+            "function": "N/A",
+            "lineNumber": "L48-L56"
+        },
+        {
+            "id": 19,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-1270"
+                ]
+            },
+            "title": "SecurityToken - authentication modifier onlyTokenFactory is never used",
+            "description": "`tokenFactory` that has been set while initializing the contract.",
+            "severity": "Minor",
+            "contract": "SecurityToken",
+            "function": "N/A",
+            "lineNumber": "L169-L172"
+        },
+        {
+            "id": 20,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "SecurityToken/STGetter (ERC1643) getAllDocuments - can cause gas or memory issues if used",
+            "description": "The function `getAllDocuments()` can be blocked if too many documents are added. Contracts interacting with it may run out of gas, causing problems with other code that relies on the result value.",
+            "severity": "Minor",
+            "contract": "SecurityToken/STGetter (ERC1643)",
+            "function": "getAllDocuments()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 21,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-115"
+                ]
+            },
+            "title": "PolyToken - events are redefined in the implementation",
+            "description": "Defining events again can lead to mistakes or confusion because somebody reading the contract needs to check if the specified event in the implementation matches the one defined in the interface.",
+            "severity": "Minor",
+            "contract": "PolyToken",
+            "function": "N/A",
+            "lineNumber": "L80-L81"
+        }
+    ]
+}

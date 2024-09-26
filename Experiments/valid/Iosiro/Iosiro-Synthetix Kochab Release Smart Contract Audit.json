@@ -1,0 +1,80 @@
+{
+    "path": "./Audit_Reports_2024/Iosiro/Iosiro-Synthetix Kochab Release Smart Contract Audit.pdf",
+    "project_info": {
+        "url": "https://github.com/Synthetixio/synthetix",
+        "commit_hash": "d45b36d4c171674a7a0d87554339beeea0d5912a",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/Iosiro-Synthetix Kochab Release Smart Contract Audit/synthetix"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Collateral accumulation in CollateralShort contract",
+            "description": "The `_repayWithCollateral` function in `CollateralShort` contract did not burn the collateral used for repayment, resulting in users receiving more collateral than they should. This excess collateral could allow a malicious user to drain the underlying collateral from the contract.",
+            "severity": "Critical",
+            "contract": "CollateralShort",
+            "function": "_repayWithCollateral",
+            "lineNumber": "L544"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Excess collateral reception by users",
+            "description": "The `_repayWithCollateral` function did not burn the collateral used for repayment, resulting in users receiving more collateral than they should. This excess collateral could allow a malicious user to drain the underlying collateral from the contract.",
+            "severity": "High",
+            "contract": "CollateralShort",
+            "function": "_repayWithCollateral",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Malicious user draining underlying collateral from contract",
+            "description": "A malicious user could drain the underlying collateral from the contract by exploiting an issue in the `_repayWithCollateral` function where exchange fees were not properly calculated, resulting in users receiving more collateral than they should.",
+            "severity": "Critical",
+            "contract": "CollateralShort",
+            "function": "_repayWithCollateral",
+            "lineNumber": "544"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Marginally undercalculated exchange fees",
+            "description": "The exchange fee was added to the expectedAmount received after exchange, resulting in the exchange fee being marginally undercalculated.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

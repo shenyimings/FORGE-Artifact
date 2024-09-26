@@ -1,0 +1,147 @@
+{
+    "path": "./Audit_Reports_2024/Inspex/Inspex-Otoro.pdf",
+    "project_info": {
+        "url": "https://github.com/0xstudio/Otoro-Audit",
+        "commit_hash": "441f0995a86a421d7062f30abcdf654d86d0013c",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/Inspex-Otoro/Otoro-Audit"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Centralized Control of State Variable",
+            "description": "The controlling authorities can change critical state variables to gain additional profit, which is unfair to other users.",
+            "severity": "Low",
+            "contract": "BlockbasedSale, RequestSigning, Revealable",
+            "function": "setOverrideFinalDAPrice(), setDutchAuctionParam(), setTransactionLimit(), setPublicSalePrice(), setPrivateSaleCapPrice(), setReserve(), setDutchAuctionCap(), setWhitelistSigningKey(), setOgSigningKey(), setRevealedBaseURI()",
+            "lineNumber": "145, 150, 161, 170, 175, 195, 200, 50, 58, 48"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ],
+                "3": [
+                    "CWE-680"
+                ]
+            },
+            "title": "Loop Over Unbounded Data Structure",
+            "description": "The tokenURI() function will be unusable due to excessive gas usage.",
+            "severity": "Low",
+            "contract": "Otoro Revealable",
+            "function": "tokenURI()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-273"
+                ]
+            },
+            "title": "Insufficient Logging for Privileged Functions",
+            "description": "Privileged functions that are executable by the controlling parties are not logged properly by emitting events.",
+            "severity": "Very Low",
+            "contract": [
+                "Revealable",
+                "Otoro"
+            ],
+            "function": [
+                "setDefaultURI()",
+                "setRevealBlock()",
+                "setRevealedBaseURI()",
+                "release()"
+            ],
+            "lineNumber": [
+                "38",
+                "44",
+                "48",
+                "286"
+            ]
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-477"
+                ]
+            },
+            "title": "Outdated Compiler Version",
+            "description": "Using an outdated Solidity compiler version can lead to potential vulnerabilities from known bugs.",
+            "severity": "Very Low",
+            "contract": "Otoro BlockbasedSale RequestSigning Revealable Roles",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-749"
+                ]
+            },
+            "title": "Improper Function Visibility",
+            "description": "Functions with improper visibility can lead to unintended access and potential security risks.",
+            "severity": "Info",
+            "contract": "Otoro",
+            "function": "dutchAuctionInfo(address user)",
+            "lineNumber": "247-253"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Unnecessary Condition Checking",
+            "description": "There are some condition checking statements that always result in `true` regardless of the function or the contract states.",
+            "severity": "Info",
+            "contract": [
+                "Otoro",
+                "Revealable"
+            ],
+            "function": [
+                "mintOg()",
+                "mintToken()",
+                "getShuffledId()"
+            ],
+            "lineNumber": [
+                "127",
+                "209-213",
+                "102"
+            ]
+        }
+    ]
+}

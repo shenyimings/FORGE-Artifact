@@ -1,0 +1,165 @@
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-TestaSpace-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/Testamex/testa/tree/6d501e4275cfce800e2b2e50d98893fd2a8077dd",
+        "commit_hash": "6d501e4275cfce800e2b2e50d98893fd2a8077dd",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/PeckShield-Audit-Report-TestaSpace-v1/testa"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Timely massUpdatePools During Pool Weight Changes",
+            "description": "The pool weight update routine set() requires timely invoking massUpdatePools() to update the reward distribution before the new pool weight becomes effective.",
+            "severity": "Low",
+            "contract": "Multiple Contracts",
+            "function": "set()",
+            "lineNumber": "1221-1228"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Timely Conversion Of Staking Rewards To lpTokens",
+            "description": "The current implementation does not timely convert staking rewards to lpTokens, leading to unfair reward distribution.",
+            "severity": "Low",
+            "contract": "UniswapOrbit",
+            "function": "destroy()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Improved PlanetFarm::payToEntry() Logic",
+            "description": "The payment requirement with the exact amount causes unnecessary friction and it is suggested to revise the current logic to allow anyone who paid at least the specified amount to participate in the farming pool.",
+            "severity": "Low",
+            "contract": "PlanetFarm",
+            "function": "payToEntry()",
+            "lineNumber": "1007-1013"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "Business Logic Design In withdraw() of PlanetFarm And SpaceFarm",
+            "description": "In Section 3.2 , the `PlanetFarm` contract is a farming pool that utilizes collateral token generated from using the protocol. Users can stake in required tokens to collect rewards. There are two main functions participating users can interact, i.e., `deposit()` and `withdraw()`. The first function directly moves the depositing assets from the staking user to the protocol while the second one withdraws the staked funds back.",
+            "severity": "Informational",
+            "contract": "PlanetFarm, SpaceFarm",
+            "function": "withdraw()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Reward Loss With Zero-Withdrawal In harvestAndWithdraw()",
+            "description": "Participating users in the `PlanetFarm` pool are supposed to claim their rewards via `harvest()` / `harvestAndWithdraw()`, not via `withdraw()`. However, there is a possibility of reward loss with zero-withdrawal in `harvestAndWithdraw()`.",
+            "severity": "Medium",
+            "contract": "PlanetFarm",
+            "function": "harvestAndWithdraw()",
+            "lineNumber": "1015-1040"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Potential Sandwich Attacks To Maximize getTestaReward()/Minimize getTestaFee()",
+            "description": "The protocol is vulnerable to sandwich attacks, allowing users to maximize getTestaReward() and minimize getTestaFee(), which can be exploited by front-running attacks.",
+            "severity": "Medium",
+            "contract": "TestaFarm, SpaceFarm",
+            "function": "activate(), firstActivate(), getTestaFee()",
+            "lineNumber": "1062-1063, 1067"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Improved Sanity Checks For System/Function Parameters",
+            "description": "DeFi protocols typically have system-wide parameters that can be dynamically configured on demand and need extra care when configuring or updating them to avoid undesirable consequences.",
+            "severity": "Informational",
+            "contract": "SpaceFarm",
+            "function": "setTestaPerBlock, setProgressive, setNumberOfBlock, setActiveReward",
+            "lineNumber": "1047-1058"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Duplicate Pool Detection and Prevention",
+            "description": "The Testa Finance protocol's add() function does not perform necessary sanity checks to prevent a new pool with a duplicate token from being added.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "add()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Recommended Explicit Pool Validity Checks",
+            "description": "The implementation relies on implicit bound-checks of arrays to ensure pool index stays within array range, but introducing explicit sanity checks with a new modifier 'validatePool' would provide semantically meaningful information when a pool is not valid.",
+            "severity": "Informational",
+            "contract": "SpaceFarm",
+            "function": "deposit()",
+            "lineNumber": "1287-1288"
+        }
+    ]
+}

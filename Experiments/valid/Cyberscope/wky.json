@@ -1,0 +1,323 @@
+{
+    "path": "./Audit_Reports_2024/Cyberscope/wky.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0xa957e99ef9c61b44ffc3a50acc3c69e4f0eee81f",
+        "chain": "bsc",
+        "compiler_version": [
+            "v0.8.15+commit.e14f2714"
+        ],
+        "project_path": {
+            "Wacky": "Experiments/contracts/wky/Wacky"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "TSD - Total Supply Diversion",
+            "description": "The total supply of a token and the balances of individual accounts are two separate concepts that are managed by different variables in a smart contract. These two entities should be equal to each other. However, in the contract, the amount that is added to the total supply does not equal the amount that is added to the balances.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "SFO - Sell Fee Oversight",
+            "description": "The contract logic neglects to account for sell fees within the `else if (isSelling)` condition when `stakingEnabled` is active, leading to inconsistencies in fee application and enforcement.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "RTCI - Reward Token Change Inconsistency",
+            "description": "The contract owner can change the distribution token address using the `updatePayoutToken` method, but this may lead to discrepancies if the internal state of the distributor is not reset, resulting in inaccurate reward distributions or failures.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "updatePayoutToken()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "UCL - Unoptimized Calculation Logic",
+            "description": "The contract performs separate calculations for buy and sell fees, subsequently adding these amounts together to determine the total swap tokens, introducing unnecessary complexity and redundancy in calculations.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "RC - Repetitive Calculations",
+            "description": "The contract contains methods with multiple occurrences of the same calculation being performed. The calculation is repeated without utilizing a variable to store its result, which leads to redundant code, hinders code readability, and increases gas consumption.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "RSD - Redundant Swap Duplication",
+            "description": "The contract contains multiple swap methods that individually perform token swaps and transfer promotional amounts to specific addresses and features, introducing unnecessary complexity and increasing gas consumption.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "DDP - Decimal Division Precision",
+            "description": "Division of decimal (fixed point) numbers can result in rounding errors due to the way that division is implemented in Solidity, leading to issues with precise calculations with decimal numbers.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "AOI - Arithmetic Operations Inconsistency",
+            "description": "The contract uses both SafeMath library and native arithmetic operations, which can introduce inconsistencies and undermine safety measures, increasing the risk of unintended consequences.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "RSW - Redundant Storage Writes",
+            "description": "The contract modifies the state of variables without checking if their current value is the same as the one given as an argument, leading to redundant storage writes and unnecessary gas consumption.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "IMC - Ineffective MaxWallet Check",
+            "description": "The contract includes a validation step where the balance of the recipient in a transaction must not exceed a predefined `maxWallet` limit. However, the `maxWallet` value is set equal to the total supply of tokens and is not dynamically updated or configured to reflect a different value at any point in the contract.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "RFV - Redundant Fee Variable",
+            "description": "The contract's `transferFee` variable is initialized to zero and never updated, making it non-functional and redundant, increasing complexity and consuming gas unnecessarily.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "PVC - Price Volatility Concern",
+            "description": "The contract accumulates tokens from taxes to swap them for ETH, but the variable `swapTokensAtAmount` sets a threshold where the contract will trigger the swap functionality. If the variable is set to a big number, then the contract will swap a huge amount of tokens for ETH, potentially leading to significant price volatility.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "RES - Redundant Event Statement",
+            "description": "The contract contains some events statements that are not used in the contract's implementation.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1284"
+                ]
+            },
+            "title": "RRS - Redundant Require Statement",
+            "description": "The contract utilizes a `require` statement within the `add` function aiming to prevent overflow errors, which is redundant due to Solidity version 0.8.0 and later reverting on overflow and underflow.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "add()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "RSML - Redundant SafeMath Library",
+            "description": "The usage of SafeMath library adds complexity, overhead and increases gas consumption unnecessarily since Solidity versions greater than or equal to 0.8.0 have native functionality that replaces it.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "MEM - Misleading Error Messages",
+            "description": "The contract is using misleading error messages which do not accurately reflect the problem, making it difficult to identify and fix the issue.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "L02 - State Variables could be Declared Constant",
+            "description": "State variables can be declared as constant using the constant keyword, which ensures the value cannot be changed after it has been set and decreases gas consumption of the corresponding transaction.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ]
+            },
+            "title": "L04 - Conformance to Solidity Naming Conventions",
+            "description": "The Solidity style guide is a set of guidelines for writing clean and consistent Solidity code. Adhering to a style guide can help improve the readability and maintainability of the Solidity code, making it easier for others to understand and work with.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "31"
+        }
+    ]
+}

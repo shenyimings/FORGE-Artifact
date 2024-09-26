@@ -1,0 +1,120 @@
+{
+    "path": "./Audit_Reports_2024/Verichains_Lab/Verichains Public Audit Report - GameJam Airdrop and Topup - v1.1.pdf",
+    "project_info": {
+        "url": "https://github.com/gamejamco/jam-contract-core/blob/develop/contracts/",
+        "commit_hash": "0ccabafefcaf040bb8a2ea17f015dac0db893a8f",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/Verichains Public Audit Report - GameJam Airdrop and Topup - v1/jam-contract-core"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Operator may re-airdrop asset.availableAmount equals 0",
+            "description": "The operator can re-airdrop an asset with availableAmount set to 0, potentially leading to unintended consequences.",
+            "severity": "Medium",
+            "contract": "Gamejam AirDrop Smart Contracts",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1120"
+                ],
+                "3": [
+                    "CWE-1060"
+                ]
+            },
+            "title": "Consider using EnumerableMap instead of nested for-loops",
+            "description": "The whitelistCurrencies function uses nested for-loops to modify the _whitelistedCurrencies state, which may result in high gas costs; consider replacing with EnumerableMap for gas-saving",
+            "severity": "INFORMATIVE",
+            "contract": "JamPlatformTopUp.sol",
+            "function": "whitelistCurrencies()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Centralized mechanism",
+            "description": "The contract uses a centralized mechanism to allow the `owner` to withdraw `AirdropFee` anytime and control roles in the contract.",
+            "severity": "INFORMATIVE",
+            "contract": "PlaylinkAidrop.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Mistake in enum value",
+            "description": "The contract declares 'AssetType' as an enum type with 3 values but the range of the 'AssetType' when inferred to 'uint256' is from 0 to 2, and the require statements in contract are set to 3.",
+            "severity": "INFORMATIVE",
+            "contract": "PlaylinkAirdrop.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-758"
+                ],
+                "3": [
+                    "CWE-1038"
+                ],
+                "4": [
+                    "CWE-733"
+                ],
+                "5": [
+                    "CWE-14"
+                ]
+            },
+            "title": "Use calldata instead of memory for gas saving",
+            "description": "In external functions with array arguments, using 'memory' will force solidity to copy that array to memory thus wasting more gas than using directly from calldata.",
+            "severity": "INFORMATIVE",
+            "contract": "PlaylinkAirdrop",
+            "function": [
+                "setOperators",
+                "createAirdropCampaign",
+                "updateCampaign",
+                "airdrop"
+            ],
+            "lineNumber": "N/A"
+        }
+    ]
+}

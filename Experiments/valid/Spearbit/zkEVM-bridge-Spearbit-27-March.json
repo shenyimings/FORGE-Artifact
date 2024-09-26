@@ -1,0 +1,418 @@
+{
+    "path": "./Audit_Reports_2024/Spearbit/zkEVM-bridge-Spearbit-27-March.pdf",
+    "project_info": {
+        "url": "https://github.com/0xPolygonHermez/zkevm-contracts",
+        "commit_hash": "5de59e18690e877a10e3f1ed679969166313f899",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/zkEVM-bridge-Spearbit-27-March/zkevm-contracts"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-358"
+                ]
+            },
+            "title": "ETH honeypot on L2",
+            "description": "The initial ETH allocation to the Bridge contract on L2 is rather large: 2E8 ETH on the test network and 1E11 ETH on the production network according to the documentation. This would make the bridge a large honey pot, even more than other bridges.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Allowance is not required to burn wrapped tokens",
+            "description": "The burn of tokens of the deployed TokenWrapped doesn\u2019t use up any allowance, because the Bridge has the right to burn the wrapped token.",
+            "severity": "Informational",
+            "contract": "TokenWrapped.sol",
+            "function": "N/A",
+            "lineNumber": "62-64"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-221"
+                ],
+                "3": [
+                    "CWE-223"
+                ]
+            },
+            "title": "Messages are lost when delivered to EOA by claimMessage()",
+            "description": "When messages are delivered to an Externally Owned Account (EOA) using the claimMessage() function, they are essentially lost for the originator and recipient.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "claimMessage()",
+            "lineNumber": "32"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Replace assembly of _getSelector() with Solidity",
+            "description": "The function _getSelector() gets the first four bytes of a series of bytes and used assembly. This can also be implemented in Solidity, which is easier to read.",
+            "severity": "Informational",
+            "contract": "PolygonZkEVMBridge.sol",
+            "function": "_getSelector()",
+            "lineNumber": "L611-L736"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1059"
+                ]
+            },
+            "title": "Improvement suggestions for Verifier.sol",
+            "description": "There are some details that can be improved on this contract.",
+            "severity": "Informational",
+            "contract": "Verifier.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ]
+            },
+            "title": "Variable named incorrectly",
+            "description": "There are a few typos and grammatical mistakes that can be corrected in the codebase. Some functions could also be renamed to better reflect their purposes.",
+            "severity": "Informational",
+            "contract": "PolygonZkEVM.sol, PolygonZkEVMBridge.sol, TokenWrapped.sol",
+            "function": "_verifyBatches(), N/A, N/A",
+            "lineNumber": "L671, L37, L53"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Add additional comments to function forceBatch()",
+            "description": "The function forceBatch() contains a comment about synch attacks but it\u2019s not immediately clear what is meant by that. The team explained that getting call data from an EOA is easy/cheap so no need to put the transactions in the event (which is expensive), and getting internal call data from internal transactions is complicated and worth putting the transactions in the event.",
+            "severity": "Informational",
+            "contract": "PolygonZkEVM.sol",
+            "function": "forceBatch()",
+            "lineNumber": "L920-L966"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Check against MAX_VERIFY_BATCHES",
+            "description": "N/A",
+            "severity": "Informational",
+            "contract": "PolygonZkEVM",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ]
+            },
+            "title": "Prepare for multiple aggregators/sequencers to improve availability",
+            "description": "As long as there is one (trusted) sequencer and one (trusted) aggregator the availability risks are relatively high. However, the current code isn\u2019t optimized to support multiple trusted sequencers and multiple trusted aggregators.",
+            "severity": "Informational",
+            "contract": "PolygonZkEVM",
+            "function": "N/A",
+            "lineNumber": "L377-L391"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ]
+            },
+            "title": "Temporary Fund freeze on using Multiple Rollups",
+            "description": "The transactions could originate from another rollup with low gas costs, leading to a temporary fund freeze.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "claimAsset()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ]
+            },
+            "title": "Off by one error when comparing with MAX_TRANSACTIONS_BYTE_LENGTH constant",
+            "description": "When comparing against MAX_TRANSACTIONS_BYTE_LENGTH , the valid range should be <= instead of < .",
+            "severity": "Informational",
+            "contract": "PolygonZkEVM",
+            "function": "N/A",
+            "lineNumber": "L933, L471"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "trustedAggregatorTimeout value may impact batchFees",
+            "description": "If trustedAggregatorTimeout and veryBatchTimeTarget are valued nearby then all batches verified by 3rd party will be above target (totalBatchesAboveTarget) and this would impact batch fees.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "_updateBatchFee",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Largest allowed batch fee multiplier is 1023 instead of 1024",
+            "description": "Per the setMultiplierBatchFee function, the largest allowed batch fee multiplier is 1023. However, the comment mentioned that the largest allowed is 1024.",
+            "severity": "Informational",
+            "contract": "PolygonZkEVM",
+            "function": "setMultiplierBatchFee",
+            "lineNumber": "L1155,L133"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Deposit token associated Risk Awareness",
+            "description": "N/A",
+            "severity": "Medium Risk",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Fees might get stuck when Aggregator is unable to verify",
+            "description": "The collected fees from Sequencer will be stuck in the contract if Aggregator is unable to verify the batch.",
+            "severity": "Informational",
+            "contract": "PolygonZkEVM",
+            "function": "N/A",
+            "lineNumber": "L523"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Consider using OpenZeppelin\u2019s ECDSA library over ecrecover",
+            "description": "ecrecover is vulnerable to a signature malleability attack. It's recommended to use OpenZeppelin\u2019s ECDSA library which does the malleability safety check and signer != address(0) check.",
+            "severity": "Informational",
+            "contract": "TokenWrapped.sol",
+            "function": "N/A",
+            "lineNumber": "100"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Risk of transactions not yet in Consolidated state on L2",
+            "description": "There is a risk for high-value transactions (especially for transactions that can\u2019t be undone) to be between Trusted and Consolidated states on L2, which may take up to 2 weeks. Users should be aware of this risk.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Delay of bridging from L2 to L1",
+            "description": "The bridge uses the Consolidated state while bridging from L2 to L1 and the user interface shows 'Waiting for validity proof. It can take between 15 min and 1 hour.' Other (optimistic) bridges use liquidity providers who take the risk and allow users to retrieve funds in a shorter amount of time (for a fee).",
+            "severity": "Informational",
+            "contract": "PolygonZkEVMBridge.sol",
+            "function": "N/A",
+            "lineNumber": "L540-L548"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-166"
+                ]
+            },
+            "title": "Missing Natspec documentation",
+            "description": "Some NatSpec comments are either missing or are incomplete.",
+            "severity": "Informational",
+            "contract": "PolygonZkEVM",
+            "function": "N/A",
+            "lineNumber": "L672, L98"
+        },
+        {
+            "id": 19,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "_minDelay could be 0 without emergency",
+            "description": "Normally min delay is only supposed to be 0 when in an emergency state. But this could be made to 0 even in nonemergency mode as shown below: Proposer can propose an operation for changing _minDelay to 0 via updateDelay function.",
+            "severity": "Informational",
+            "contract": "PolygonZkEVMTimelock.sol",
+            "function": "updateDelay",
+            "lineNumber": "40-46"
+        },
+        {
+            "id": 20,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-237"
+                ],
+                "4": [
+                    "CWE-239"
+                ]
+            },
+            "title": "Incorrect/incomplete comment",
+            "description": "Some NatSpec comments are either missing or are incomplete.",
+            "severity": "Informational",
+            "contract": "PolygonZkEVM",
+            "function": "N/A",
+            "lineNumber": "L672, L98"
+        },
+        {
+            "id": 21,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ]
+            },
+            "title": "Typos, grammatical and styling errors",
+            "description": "There are a few typos and grammatical mistakes that can be corrected in the codebase. Some functions could also be renamed to better reflect their purposes.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 22,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Enforce parameters limits in initialize() of PolygonZkEVM",
+            "description": "The function initialize() doesn't enforce limits on setTrustedAggregatorTimeout() and pendingStateTimeout, whereas the update functions of PolygonZkEVM do.",
+            "severity": "Informational",
+            "contract": "PolygonZkEVM",
+            "function": "initialize()",
+            "lineNumber": "L337-L370,L1110-L1149"
+        }
+    ]
+}

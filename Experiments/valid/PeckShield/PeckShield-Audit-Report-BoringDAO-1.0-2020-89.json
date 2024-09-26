@@ -1,0 +1,154 @@
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-BoringDAO-1.0-2020-89.pdf",
+    "project_info": {
+        "url": "https://github.com/BoringDAO/boringDAO-contract/tree/8f3dc2e74c0099435a16e6e22055f205c9b96c20",
+        "commit_hash": "8f3dc2e74c0099435a16e6e22055f205c9b96c20",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/PeckShield-Audit-Report-BoringDAO-1/boringDAO-contract"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Business Logic Error in unpauseSatellitePool()",
+            "description": "The current implementation of unpauseSatellitePool() fails to check if the trustee has called the function with a specific pool already, allowing a malicious trustee to call the function multiple times and unpause any pool. Additionally, there is a typo in line 99.",
+            "severity": "Medium",
+            "contract": "Liquidation",
+            "function": "unpauseSatellitePool()",
+            "lineNumber": "95-107"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Missed Sanity Checks in Liquidation:pause()",
+            "description": "The `pause()` function in the `Liquidation` contract does not check whether the dev and trustee want to pause the same list of `pools`, leading to a back-running issue.",
+            "severity": "Informational",
+            "contract": "BoringDAO",
+            "function": "pause()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-282"
+                ],
+                "3": [
+                    "CWE-708"
+                ]
+            },
+            "title": "Unsafe Ownership Transition in SatellitePool",
+            "description": "The privileged function `liquidate()` allows the `liquidation` address to transfer all `stakingToken` out to an arbitrary `account`. The `setLiquidation()` public function can be used by the `owner` to set the `liquidation` address. Additionally, the `transferOwnership()` function allows the current `owner` to set a `newOwner`, but if the `newOwner` is not the exact address of the new owner, nobody could own that contract anymore.",
+            "severity": "Informational",
+            "contract": "SatellitePool",
+            "function": [
+                "liquidate()",
+                "setLiquidation()",
+                "transferOwnership()"
+            ],
+            "lineNumber": [
+                "43-45",
+                "65-67",
+                "79-81"
+            ]
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1288"
+                ]
+            },
+            "title": "Unused Interfaces",
+            "description": "The interface `TimelockInterface` declared in the `GovernorAlpha` contract is not fully utilized, with the `acceptAdmin()` function being unused.",
+            "severity": "Informational",
+            "contract": "GovernorAlpha",
+            "function": "acceptAdmin()",
+            "lineNumber": "298-305"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-330"
+                ],
+                "3": [
+                    "CWE-1241"
+                ]
+            },
+            "title": "Weak Randomness in Tunnel::burn()",
+            "description": "The `getRandomTrustee()` function uses the hash of the timestamp and difficulty of the current block to generate a pseudo-random index, which can be easily derived by a malicious contract.",
+            "severity": "Low",
+            "contract": "Tunnel",
+            "function": "burn()",
+            "lineNumber": "303"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Constructor Mismatch",
+            "description": "Whether the contract name and its constructor are not identical to each other.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-282"
+                ],
+                "3": [
+                    "CWE-708"
+                ]
+            },
+            "title": "Ownership Takeover",
+            "description": "The contract's ownership can be taken over if the `newOwner` is not set correctly due to a typo or other reasons, allowing nobody to own that contract anymore.",
+            "severity": "Informational",
+            "contract": "SatellitePool",
+            "function": "transferOwnership()",
+            "lineNumber": "79-82"
+        }
+    ]
+}

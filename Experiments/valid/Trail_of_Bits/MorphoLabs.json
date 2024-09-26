@@ -1,0 +1,236 @@
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/MorphoLabs.pdf",
+    "project_info": {
+        "url": "https://github.com/morpho-labs/morpho-contracts",
+        "commit_hash": "N/A",
+        "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/MorphoLabs/morpho-contracts"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "Lack of two-step process for contract ownership changes",
+            "description": "The owner of the `IncentivesVault` contract and other `Ownable` Morpho contracts can be changed by calling the `transferOwnership` function, which internally calls the `_transferOwnership` function, immediately setting the contract\u2019s new owner. Making such a critical change in a single step is error-prone and can lead to irrevocable mistakes.",
+            "severity": "High",
+            "contract": "IncentivesVault",
+            "function": "transferOwnership()",
+            "lineNumber": "62-65"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Incomplete information provided in Withdrawn and Repaid events",
+            "description": "The Withdrawn and Repaid events do not provide sufficient information.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "_safeWithdrawLogic, _safeRepayLogic",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ],
+                "4": [
+                    "CWE-638"
+                ]
+            },
+            "title": "Missing access control check in withdrawLogic",
+            "description": "The `PositionsManager` contract\u2019s `withdrawLogic` function does not perform any access control checks.",
+            "severity": "Informational",
+            "contract": "PositionsManager",
+            "function": "withdrawLogic()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Lack of zero address checks in setter functions",
+            "description": "In MorphoGovernance contract, important address setters lack zero-value checks, allowing owners to accidentally set addresses to incorrect values, misconfiguring the system.",
+            "severity": "N/A",
+            "contract": "MorphoGovernance",
+            "function": [
+                "setPositionsManager",
+                "setRewardsManager",
+                "setInterestRates",
+                "setTreasuryVault",
+                "setIncentivesVault",
+                "_cETH",
+                "_cWeth"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "Risky use of toggle functions",
+            "description": "The toggle functions (togglePauseStatus, togglePartialPauseStatus, toggleP2P, and toggleCompRewardsActivation) can lead to a failure to pause the system, resulting in further loss of funds.",
+            "severity": "High",
+            "contract": "MorphoGovernance, IncentivesVault",
+            "function": "togglePauseStatus, togglePartialPauseStatus, toggleP2P, toggleCompRewardsActivation",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Anyone can destroy Morpho\u2019s implementation",
+            "description": "An incorrect access control on the initialize function for Morpho\u2019s implementation contract allows anyone to destroy the contract.",
+            "severity": "High",
+            "contract": "MorphoStorage",
+            "function": "initialize()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Lack of return value checks during token transfers",
+            "description": "In certain parts of the codebase, contracts that execute transfers of the Morpho token do not check the values returned from those transfers, which could result in undefined behavior, including the loss of funds.",
+            "severity": "Undetermined",
+            "contract": "IncentivesVault",
+            "function": "transferMorphoTokensToDao(uint256 _amount)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "Risk of loss of precision in division operations",
+            "description": "Loss of precision in division operation can cause an attacker to extract small amounts of underlying tokens sitting in the Morpho contract.",
+            "severity": "Critical",
+            "contract": "Morpho",
+            "function": "borrowLogic()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-1329"
+                ]
+            },
+            "title": "The token is not upgradeable.",
+            "description": "Upgradeable contracts may change their rules over time.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "The owner has limited minting capabilities.",
+            "description": "Malicious or compromised owners can abuse minting capabilities.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "The token is not pausable.",
+            "description": "The token does not have a pause functionality which can lead to failure to pause a market in case of an emergency or incident.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "togglePauseStatus",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "The owner cannot blacklist the contract.",
+            "description": "Malicious or compromised owners can trap contracts relying on tokens with a blacklist. Identify blacklisting features by hand.",
+            "severity": "Medium",
+            "contract": "Morpho Protocol V1",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

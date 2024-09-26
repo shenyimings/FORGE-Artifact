@@ -1,0 +1,297 @@
+{
+    "path": "./Audit_Reports_2024/Spearbit/Overlay-Spearbit-Security-Review.pdf",
+    "project_info": {
+        "url": "https://github.com/overlay-market/v1-core",
+        "commit_hash": "5208a322c976dabe5e9f1d7ce6476c54267d0c1f",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/Overlay-Spearbit-Security-Review/v1-core"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Use `unchecked` in `TickMath.sol` and `FullMath.sol`",
+            "description": "Uniswap math libraries rely on wrapping behaviour for conducting arithmetic operations. Solidity version `0.8.0` introduced checked arithmetic by default where operations that cause an overflow would revert.",
+            "severity": "High Risk",
+            "contract": [
+                "TickMath",
+                "FullMath"
+            ],
+            "function": [
+                "getSqrtRatioAtTick()",
+                "getTickAtSqrtRatio()",
+                "mulDiv()",
+                "mulDivRoundingUp()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Liquidation might fail",
+            "description": "The liquidate() function checks if a position can be liquidated and via liquidatable(), uses maintenanceMarginFraction as a factor to determine if enough value is left. However, in the rest of the liquidate() function liquidationFeeRate is used to determine the fee paid to the liquidator.",
+            "severity": "High Risk",
+            "contract": "OverlayV1Market.sol",
+            "function": "liquidate()",
+            "lineNumber": "L345-L376"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Rounding down of `snapAccumulator` might influence calculations",
+            "description": "The function `transform()` lowers `snapAccumulator` with an equation that can cause rounding down to 0 when `snapAccumulator * dt` is smaller than `snapWindow`, potentially influencing calculations and diverging from formulas written in the whitepaper.",
+            "severity": "Medium Risk",
+            "contract": "Roller.sol",
+            "function": "transform()",
+            "lineNumber": "L23-L78"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Verify pool legitimacy",
+            "description": "The constructor in OverlayV1UniswapV3Factory.sol and OverlayV1UniswapV3Feed.sol only does a partial check to see if the pool corresponds to the supplied tokens. This is accomplished by calling the pool\u2019s functions but if the pool were to be malicious, it could return any token.",
+            "severity": "Medium Risk",
+            "contract": "OverlayV1UniswapV3Factory, OverlayV1UniswapV3Feed",
+            "function": "constructor",
+            "lineNumber": "L19-L40, L30-L78"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Liquidatable positions can be unwound by the owner of the position",
+            "description": "The owner of a liquidatable position can unwind it, which may lead to unintended consequences.",
+            "severity": "N/A",
+            "contract": "OverlayV1Market",
+            "function": [
+                "liquidation",
+                "unwind"
+            ],
+            "lineNumber": [
+                "L363",
+                "L264"
+            ]
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Remove unused / redundant functions and variables",
+            "description": "Unused or redundant functions and variables can increase gas costs and make the code harder to read.",
+            "severity": "Informational",
+            "contract": "LogExpMath.sol",
+            "function": "ln()",
+            "lineNumber": "297-334"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Optimize power functions",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "16"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Redundant `Math.min()`",
+            "description": "Function `Math.min()` is used in two ways: to get the smallest of two values and to make sure the resulting value is `>=0`. It is easy to make a mistake because both constructs are rather similar.",
+            "severity": "Informational",
+            "contract": "OverlayV1Market.sol, Position.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Replace square with multiplication",
+            "description": "The contract OverlayV1Market.sol contains the expression x.powDown(2 * ONE) which computes the square of x. However, it can also be calculated in a more gas efficient way.",
+            "severity": "Gas Optimization",
+            "contract": "OverlayV1Market.sol",
+            "function": "N/A",
+            "lineNumber": "L515-L518"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Retrieve roles via constants in import",
+            "description": "Roles can be retrieved as constants via import instead of external function calls to save gas.",
+            "severity": "Gas Optimization",
+            "contract": "OverlayV1Factory.sol, IOverlayV1Token.sol, OverlayV1Token.sol, AccessControl.sol",
+            "function": "N/A",
+            "lineNumber": "L117, L156-L157, L9-L15, L10-L21, L57"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-369"
+                ]
+            },
+            "title": "Double check action when `snapAccumulator == 0` in `transform()`",
+            "description": "The function `transform()` does a check for `snapAccumulator + value == 0` to prevent division by `0` later on. The recommendation is to double-check that `windowNow` should indeed be reset to `window` when `accumulatorNow == 0`.",
+            "severity": "Informational",
+            "contract": "Roller.sol",
+            "function": "transform()",
+            "lineNumber": "L23-L78"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Add `unchecked` in natural log ( `ln` ) function or remove the functions",
+            "description": "The function `ln()` in contract `LogExpMath.sol` does not use `unchecked`, while the function `log()` does.",
+            "severity": "Informational",
+            "contract": "LogExpMath.sol",
+            "function": "ln()",
+            "lineNumber": "L297-L334"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ]
+            },
+            "title": "Specialized functions for the long and short side",
+            "description": "contain a large percentage of code that is different for the `long` The functions and `short` side. `build()`, `unwind()` and `liquidate()`",
+            "severity": "Informational",
+            "contract": "OverlayV1Market.sol",
+            "function": "N/A",
+            "lineNumber": "L145-L427"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-439"
+                ]
+            },
+            "title": "Beware of chain dependencies",
+            "description": "The contracts have a few dependencies/assumptions which aren\u2019t future proof and/or limit on which chain the code can be deployed.",
+            "severity": "Informational",
+            "contract": "OverlayV1Market, OverlayV1UniswapV3Feed",
+            "function": "N/A",
+            "lineNumber": "L25, L14"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1061"
+                ]
+            },
+            "title": "Move `_registerMint()` closer to `mint()` and `burn()`",
+            "description": "Within functions `unwind()` and `liquidate()` there is a call to `_registerMint()` as well as calls to `ovl.mint()` and `ovl.burn()`. However these two are quite a few lines apart so it is not immediately obvious they are related and operate on the same values. Additionally `_registerMint()` also registers burns.",
+            "severity": "Informational",
+            "contract": "OverlayV1Market.sol",
+            "function": "unwind() and liquidate()",
+            "lineNumber": "L240-L427"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Use of `Math.min()` is error-prone",
+            "description": "Function `Math.min()` is used in two ways: to get the smallest of two values and to make sure the resulting value is >=0. It is easy to make a mistake because both constructs are rather similar.",
+            "severity": "Informational",
+            "contract": "OverlayV1Market.sol, Position.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Confusing use of term `burn`",
+            "description": "The term `burn` can be confused with burning of `OVL`. However, it actually means decreasing the total aggregate open interest outstanding.",
+            "severity": "Informational",
+            "contract": "OverlayV1Market.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

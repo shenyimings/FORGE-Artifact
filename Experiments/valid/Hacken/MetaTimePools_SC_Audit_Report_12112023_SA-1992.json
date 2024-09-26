@@ -1,0 +1,245 @@
+{
+    "path": "./Audit_Reports_2024/Hacken/MetaTimePools_SC_Audit_Report_12112023_SA-1992.pdf",
+    "project_info": {
+        "url": "https://github.com/Metatime-Technology-Inc/pool-contracts/",
+        "commit_hash": "692f9732352da63878e983a3be663dffbec39c01",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/MetaTimePools_SC_Audit_Report_12112023_SA-1992/pool-contracts"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-233"
+                ]
+            },
+            "title": "L01. Lack of parameter validation on Distributor initialization",
+            "description": "The Distributor contract does not validate parameters lastClaimTime, claimableAmount and leftClaimableAmount during initialization, which can result in unexpected reverts during contract execution.",
+            "severity": "Low",
+            "contract": "Distributor",
+            "function": "initialize()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1065"
+                ]
+            },
+            "title": "I01. Use Custom Errors",
+            "description": "Custom errors from Solidity 0.8.4 are cheaper than revert strings (cheaper deployment cost and runtime cost when the revert condition is met).",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Initialized Variable to Default Value",
+            "description": "Initializing variables to default value executes an extra order that is not required.",
+            "severity": "Medium",
+            "contract": [
+                "Distributor",
+                "StrategicPool",
+                "TokenDistributor"
+            ],
+            "function": [
+                "calculateClaimableAmount()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-393"
+                ]
+            },
+            "title": "Return value on _withdraw function of LiquidityPool contract not used",
+            "description": "The _withdraw function returns a boolean value that is never used on the transferFunds function that calls it.",
+            "severity": "Informational",
+            "contract": "LiquidityPool",
+            "function": "_withdraw",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-282"
+                ],
+                "3": [
+                    "CWE-708"
+                ]
+            },
+            "title": "I04. Use two step ownership transfer pattern",
+            "description": "The two step ownership transfer pattern ensures a more robust approach to change the ownership of the contract.",
+            "severity": "Medium",
+            "contract": [
+                "Distributor.sol",
+                "TokenDistributor.sol",
+                "TokenDistributorWithNoVesting.sol",
+                "PoolFactory.sol"
+            ],
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "PoolFactory Implementation Contracts Can Be Set to Zero or Incorrect Values",
+            "description": "The initialize function of the PoolFactory contract sets the global state address variables for the implementation contracts to clone without performing any validation on the received input, leaving the contract non functional.",
+            "severity": "Medium",
+            "contract": "PoolFactory",
+            "function": "initialize()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-908"
+                ],
+                "4": [
+                    "CWE-457"
+                ]
+            },
+            "title": "I06. Change return value to avoid extra SLOAD",
+            "description": "The current implementation of the functions createDistributor and createTokenDistributor use a global variable twice when it is not required.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "createDistributor, createTokenDistributor",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1287"
+                ]
+            },
+            "title": "lastBurnedAmount of StrategicPool is redundant",
+            "description": "The global state variable lastBurnedAmount of the StrategicPool contract is never used and the value is emitted on an event.",
+            "severity": "Medium",
+            "contract": "StrategicPool",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Consider controlling casting overflow on StrategicPool",
+            "description": "The functions burn and burnWithFormula of the StrategicPool contract perform cast from unsigned integer to signed integer which can potentially result in a negative number due to overflow.",
+            "severity": "N/A",
+            "contract": "StrategicPool",
+            "function": "burn() and burnWithFormula()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-166"
+                ]
+            },
+            "title": "I09. Missing NatSpec documentation for leftClaimableAmount",
+            "description": "The parameter leftClaimableAmount does not contain NatSpec documentation.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "I10. Owner Can Renounce Itself",
+            "description": "The owner can renounce itself creating a problem to operate with high privileged functions.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "I11. Centralization Risk",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

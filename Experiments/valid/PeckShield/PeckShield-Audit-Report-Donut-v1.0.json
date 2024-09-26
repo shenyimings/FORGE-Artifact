@@ -1,0 +1,91 @@
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Donut-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/donutcrypto/crossroad/tree/1f4b53355d794e9a8d0ca49d16dddd7583a2aa5f",
+        "commit_hash": "1f4b53355d794e9a8d0ca49d16dddd7583a2aa5f",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/PeckShield-Audit-Report-Donut-v1/crossroad"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Proper Refund of The Excess BNB",
+            "description": "In Crossroad.gold, there is a handy contract `LiquidityProxy` which provides a number of convenience routines for liquidation addition/removal. During the analysis of these convenience routines, we notice that `addLiquidityBnb()` does not refund the excess `BNB` properly.",
+            "severity": "Medium",
+            "contract": "LiquidityProxy",
+            "function": "addLiquidityBnb()",
+            "lineNumber": "85-114"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Possible Sandwich/MEV Attack For Reduced Returns",
+            "description": "The `DjinnAutoBuyer` contract has a helper routine, i.e., `buyTokenFromBnb()` , that is designed to swap fee token `DJINN` by `BNB`. This may lead to a possible sandwich/MEV attack for reduced returns.",
+            "severity": "Medium",
+            "contract": "DjinnAutoBuyer",
+            "function": "buyTokenFromBnb()",
+            "lineNumber": "154-159"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Redundant State/Code Removal",
+            "description": "Unused code or unnecessary redundancies can be safely removed for better gas efficiency.",
+            "severity": "Informational",
+            "contract": "Multiple Contracts",
+            "function": "addLiquidity()",
+            "lineNumber": "57-83"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Gas Efficient Replacement of amountIn() and amountOut()",
+            "description": "Replace implementation of `amountIn()` / `amountOut()` by `getAmountIn()` / `getAmountsOut()` for gas efficiency.",
+            "severity": "Low",
+            "contract": "DjinnAutoBuyer",
+            "function": "amountIn() / amountOut()",
+            "lineNumber": "67-83, 94"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Inconsistent Fee Rate Between PancakeSwap And DjinnAutoBuyer",
+            "description": "The fee rate using in the `PancakeSwap BUSD-WBNB` pair is different from the fee rate using in `DjinnAutoBuyer`, which will lead to more `BNB` spend for the same amount of fee tokens.",
+            "severity": "High",
+            "contract": "DjinnAutoBuyer",
+            "function": "buyTokenFixed()",
+            "lineNumber": "127-137"
+        }
+    ]
+}

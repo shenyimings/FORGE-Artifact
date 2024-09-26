@@ -1,0 +1,77 @@
+{
+    "path": "./Audit_Reports_2024/HAECHI_AUDIT/[HAECHI AUDIT] Pangea Protocol_Stone Staking Audit Report.pdf",
+    "project_info": {
+        "url": "https://github.com/pangea-protocol/stone-staking",
+        "commit_hash": "c601bc412a390924086686bf6f2b95b08f5aa75c",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/[HAECHI AUDIT] Pangea Protocol_Stone Staking Audit Report/stone-staking"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Dividend miscalculation when user share is updated after dividend record",
+            "description": "The user's share is updated to the wrong dividend epoch leading to a miscalculation of the dividend when the user's share is updated between the dividend record time and execution time.",
+            "severity": "High",
+            "contract": "contracts/StakedStone.sol",
+            "function": "_updateUserShare(address owner)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "CollectByPage, collectFrom DOS",
+            "description": "A malicious token developer can block the fee that should be distributed to Pangea users and use it as liquidity in the swap pool.",
+            "severity": "High",
+            "contract": "ProtocolRevenueShare.sol",
+            "function": "collectByPage(uint256,uint256)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ]
+            },
+            "title": "Check-Effect-Interaction pattern is not followed",
+            "description": "StakedStone.sol#withdraw() and StakedStone.sol#claimDividend() functions have outbound contract call, however, the check-effect-interaction(CEI) pattern is not followed.",
+            "severity": "Tips",
+            "contract": "StakedStone.sol",
+            "function": [
+                "withdraw()",
+                "claimDividend()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "The pendingReward sweep issue",
+            "description": "The first person to stake tokens can monopolize pendingReward as it is not distributed per user but can be swept by a single user.",
+            "severity": "Tips",
+            "contract": "ProtocolRevenueShare.sol",
+            "function": "_updateGrowthGlobal() and _updatePendingReward()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

@@ -1,0 +1,177 @@
+{
+    "path": "./Audit_Reports_2024/SlowMist/SlowMist Audit Report - Earning.Farm v3_en-us.pdf",
+    "project_info": {
+        "url": "https://github.com/Shata-Capital/ENF_V3",
+        "commit_hash": "3686154870acbffc1a846781574abdd0b5295bd5",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/SlowMist Audit Report - Earning/ENF_V3"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "INVALID_LP_TOKEN",
+            "description": "The setController, setLPToken, and setCurvePool functions do not properly validate the LP token address, allowing for a zero address to be set.",
+            "severity": "Critical",
+            "contract": "Multiple contracts in subStrategies/convex/*.sol and cusdc.sol",
+            "function": [
+                "setController",
+                "setLPToken",
+                "setCurvePool"
+            ],
+            "lineNumber": [
+                "N/A"
+            ]
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-354"
+                ]
+            },
+            "title": "Invalid Slippage",
+            "description": "The setDepositSlippage and setWithdrawSlippage functions do not properly validate the slippage value, which can lead to unexpected behavior.",
+            "severity": "Medium",
+            "contract": "cusdc.sol, convex/*.sol",
+            "function": "setDepositSlippage, setWithdrawSlippage",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-354"
+                ]
+            },
+            "title": "INVALID_POOL_ID",
+            "description": "The setPoolId function does not properly validate the _pId parameter, which can lead to an invalid pool ID being set.",
+            "severity": "Medium",
+            "contract": "convex",
+            "function": "setPoolId(uint256)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ]
+            },
+            "title": "ZERO_ADDRESS",
+            "description": "The require statement checks if an address is not equal to zero, preventing the assignment of a zero address.",
+            "severity": "Medium",
+            "contract": [
+                "contracts/core/controller.sol",
+                "contracts/exchanges/*.sol",
+                "contracts/subStrategies/notional/cusdc.sol"
+            ],
+            "function": [
+                "setTreasury",
+                "setExchange",
+                "removeRewardToken",
+                "setController"
+            ],
+            "lineNumber": [
+                "N/A"
+            ]
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1288"
+                ]
+            },
+            "title": "DUPLICATE_REWARD_TOKEN",
+            "description": "The addRewardToken function does not prevent duplicate reward tokens from being added.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "addRewardToken",
+            "lineNumber": "5-7"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "REMOVE_REWARD_TOKEN_FAIL",
+            "description": "The removeRewardToken function may fail to remove a reward token if it is not found in the rewardTokens array.",
+            "severity": "High",
+            "contract": "cusdc.sol",
+            "function": "removeRewardToken(address _token)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "INVALID_HARVEST_GAP",
+            "description": "The harvest gap must be greater than 0 to prevent potential issues.",
+            "severity": "Critical",
+            "contract": "Multiple contracts (e.g., cusdc.sol, convex/*.sol)",
+            "function": "setHarvestGap(uint256 _harvestGap)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ]
+            },
+            "title": "INVALID_MAX_DEPOSIT",
+            "description": "The setMaxDeposit function does not properly validate the _maxDeposit parameter, allowing an invalid max deposit amount to be set.",
+            "severity": "Low",
+            "contract": "cusdc.sol",
+            "function": "setMaxDeposit(uint256 _maxDeposit)",
+            "lineNumber": "N/A"
+        }
+    ]
+}

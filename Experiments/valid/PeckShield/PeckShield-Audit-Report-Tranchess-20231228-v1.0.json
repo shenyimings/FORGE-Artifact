@@ -1,0 +1,106 @@
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Tranchess-20231228-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/tranchess/contract-core/tree/d74714d",
+        "commit_hash": "d74714d",
+        "address": "0x4BB3AeB5Ba75bC6A44177907B54911b19d1cF8f7",
+        "is_exists": true,
+        "chain": "bsc",
+        "compiler_version": [
+            "v0.6.12+commit.27d51765"
+        ],
+        "project_path": {
+            "TimelockController": "Experiments/contracts/PeckShield-Audit-Report-Tranchess-20231228-v1/TimelockController"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Lack of frozen Update in FundV5",
+            "description": "The `frozen` flag behind the `onlyNotFrozen` modifier is never updated, causing the fund contract to not be able to perform any settlement when it's frozen.",
+            "severity": "Medium",
+            "contract": "FundV5",
+            "function": "settle()",
+            "lineNumber": "712-729"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Timely Fee Distribution Checkpoint Upon Fee Rate Change",
+            "description": "The `FeeDistributor` contract's admin fee rate change does not timely checkpoint fee distribution, suggesting to call `_checkpoint()` before applying the new admin fee rate.",
+            "severity": "Low",
+            "contract": "FeeDistributor",
+            "function": "_updateAdminFeeRate()",
+            "lineNumber": "297-301"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1076"
+                ],
+                "3": [
+                    "CWE-1078"
+                ],
+                "4": [
+                    "CWE-1099"
+                ]
+            },
+            "title": "Suggested Variable Renaming in WstETHPrimaryMarketRouter And VestingEscrow",
+            "description": "Rename function arguments and variables for improved code readability in WstETHPrimaryMarketRouter and VestingEscrow contracts.",
+            "severity": "Informational",
+            "contract": "WstETHPrimaryMarketRouter, VestingEscrow",
+            "function": "create()",
+            "lineNumber": "44-47"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "In the Tranchess protocol, there is a privileged `owner` account that plays a critical role in governing and regulating the protocol-wide operations. It also has the privilege to control or govern the flow of assets managed by this protocol.",
+            "severity": "Low",
+            "contract": "Multiple Contracts",
+            "function": [
+                "proposePrimaryMarketUpdate",
+                "applyPrimaryMarketUpdate",
+                "proposeStrategyUpdate",
+                "applyStrategyUpdate"
+            ],
+            "lineNumber": "802-812, 814-818"
+        }
+    ]
+}

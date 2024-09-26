@@ -1,0 +1,167 @@
+{
+    "path": "./Audit_Reports_2024/Cyberscope/exohood.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0xbd8005612124dc30601e22d8b5d188a89767c640",
+        "chain": "eth",
+        "compilerVersion": [
+            "v0.4.24+commit.e67f0147"
+        ],
+        "project_path": {
+            "MainToken": "Experiments/contracts\\exohood\\MainToken"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "RCC - Redundant Constant Checks",
+            "description": "The `MainToken` contract incorporates checks for two constants, `PAUSED` and `CONTINUE_MINTING`, within its initialization logic to conditionally trigger actions based on these values. However, these constants are defined with immutable values that negate the necessity for such conditional checks.",
+            "severity": "N/A",
+            "contract": "MainToken",
+            "function": "Initialization Logic (N/A)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "TSD - Total Supply Diversion",
+            "description": "In the `freezeTo` function, tokens are transferred from the sender's balance to a frozen state, effectively reducing the sender's balance. However, this operation overlooks the adjustment of the total supply, leading to a situation where the sum of balances is diverse from the total supply.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "freezeTo",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "CO - Code Optimization",
+            "description": "Several inefficiencies and unnecessary operations have been identified around the freeze functionality in the `init` function that impact the contract's overall efficiency and clarity.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "init()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-393"
+                ]
+            },
+            "title": "MEM - Misleading Error Messages",
+            "description": "The contract is using misleading error messages. These error messages do not accurately reflect the problem, making it difficult to identify and fix the issue.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ]
+            },
+            "title": "RM - Redundant Modifier",
+            "description": "The `MintableToken` contract defines a modifier named `hasMintPermission`, which imposes a requirement that the caller must be the contract's owner. This modifier performs a check to ensure that `msg.sender == owner`, mirroring the functionality provided by the `onlyOwner` modifier inherited from the `Ownable` contract.",
+            "severity": "Medium",
+            "contract": "MintableToken",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "UIC - Unnecessary Initialization Check",
+            "description": "The `MainToken` smart contract employs an unnecessary initialization check and sets an `initialized` state variable within a private `init` function, introducing redundancy and gas inefficiencies during deployment.",
+            "severity": "Medium",
+            "contract": "MainToken",
+            "function": "constructor",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ]
+            },
+            "title": "L04 - Conformance to Solidity Naming Conventions",
+            "description": "The code does not adhere to the Solidity style guide, which can affect readability and maintainability.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "L17 - Usage of Solidity Assembly",
+            "description": "Using assembly can be useful for optimizing code, but it can also be error-prone. It's important to carefully test and debug assembly code to ensure that it is correct and does not contain any errors.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "L19 - Stable Compiler Version",
+            "description": "The `^` symbol indicates that any version of Solidity that is compatible with the specified version can be used to compile the contract. The version lock is a mechanism that allows the author to specify a minimum version of the Solidity compiler that must be used to compile the contract code.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

@@ -1,0 +1,214 @@
+{
+    "path": "./Audit_Reports_2024/MixBytes/Voting Connectors.md",
+    "project_info": {
+        "url": "https://github.com/aragonone/voting-connectors",
+        "commit_hash": "ae01814ef63f795469ab0647a640388d140ef4b7",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/Voting Connectors/voting-connectors"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Power source weight is not checkpointed",
+            "description": "Vote manipulation possible due to uncheckpointed power source weight.",
+            "severity": "Major",
+            "contract": "VotingAggregator.sol",
+            "function": "N/A",
+            "lineNumber": "L299"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Unbound Loop with External Calls",
+            "description": "An unbound loop with external calls can have high gas consumption, potentially preventing some transactions from being executed due to block gas limit.",
+            "severity": "High",
+            "contract": "VotingAggregator",
+            "function": "N/A",
+            "lineNumber": "291"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-369"
+                ]
+            },
+            "title": "_weight can be set to zero",
+            "description": "`_weight` can be set to zero which implies unfavourable behavior according to a similar check.",
+            "severity": "Warning",
+            "contract": "VotingAggregator",
+            "function": "changeSourceWeight",
+            "lineNumber": "L131"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Missing Check for Period Existence",
+            "description": "A check should be added to ensure a period with a given index exists.",
+            "severity": "Medium",
+            "contract": "ActivePeriod",
+            "function": "N/A",
+            "lineNumber": "L78"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1287"
+                ]
+            },
+            "title": "Implicit Data Types in Checkpointing and ActivePeriod Libraries",
+            "description": "APIs of the Checkpointing and ActivePeriod libraries can be made more explicit in terms of the supported data types (uint64 for time-like values and uint192 for numeric values). We suggest using exact data types and forcing users of the libraries to acknowledge that by using type casts.",
+            "severity": "Medium",
+            "contract": "Checkpointing, ActivePeriod",
+            "function": "N/A",
+            "lineNumber": "Checkpointing.sol#L33, ActivePeriod.sol#L36, ActivePeriod.sol#L56"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "MAX_UINT192 Value Exceedance Warning",
+            "description": "Add a warning to TokenWrapper contract documentation stating that neither totalSupply nor any balance of the token can exceed MAX_UINT192 value.",
+            "severity": "N/A",
+            "contract": "TokenWrapper",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Typo in the word activation.",
+            "description": "A typo exists in the word 'activation'.",
+            "severity": "N/A",
+            "contract": "VotingAggregator",
+            "function": "N/A",
+            "lineNumber": "L271"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Many power sources with the same address can be added",
+            "description": "Make sure that this is the expected scenario.",
+            "severity": "Warning",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Function Execution with Disabled Power Source",
+            "description": "The function can be executed even for a disabled power source, which may lead to unintended behavior.",
+            "severity": "Medium",
+            "contract": "VotingAggregator.sol",
+            "function": "N/A",
+            "lineNumber": "L131"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "The _aggregateAt function can be temporarily blocked by a malicious power source.",
+            "description": "A malicious power source can temporarily block the _aggregateAt function.",
+            "severity": "N/A",
+            "contract": "VotingAggregator",
+            "function": "_aggregateAt",
+            "lineNumber": "L325"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Improper Error Handling",
+            "description": "Using revert instead of assert can lead to inconsistent code behavior and affect smart contract reliability.",
+            "severity": "Medium",
+            "contract": "VotingAggregator.sol",
+            "function": "N/A",
+            "lineNumber": "L325"
+        }
+    ]
+}

@@ -1,0 +1,173 @@
+{
+    "path": "./Audit_Reports_2024/Cyberscope/2-ddt.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0x4c287a968189dB50170f7E2b1F0284786F3448A7",
+        "chain": "bsc",
+        "compilerVersion": [
+            "v0.8.9+commit.e5eed63a"
+        ],
+        "project_path": {
+            "DiamondDexToken": "Experiments/contracts\\2-ddt\\DiamondDexToken"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "ST - Stops Transactions",
+            "description": "The contract owner has the authority to stop the transactions for all users excluding the owner by setting the _maxTxAmount to zero.",
+            "severity": "Medium",
+            "contract": "DiamondDexToken.sol",
+            "function": "N/A",
+            "lineNumber": "L1350"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "ELFM - Exceeds Fees Limit",
+            "description": "The contract owner has the authority to increase over the allowed limit of 25%. The owner may take advantage of it by calling functions setTaxFeePercent(), setLiquidityFeePercent(), and setMarketingFeePercent() with a high percentage value.",
+            "severity": "Critical",
+            "contract": "DiamondDexToken.sol",
+            "function": "N/A",
+            "lineNumber": "1168,1172,1180"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "PVC - Price Volatility Concern",
+            "description": "The numTokensSellToAddToLiquidity could produce a dramatically price volatility. If the variable set to a high number, then the contract will sell a huge amount of tokens in a single transaction.",
+            "severity": "Minor",
+            "contract": "DiamondDexToken",
+            "function": "N/A",
+            "lineNumber": "1195"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "RSML - Redundant SafeMath Library",
+            "description": "The usage of the SafeMath library produces unnecessary additional gas as Solidity versions greater than or equal to 0.8.0 do not need it.",
+            "severity": "Minor",
+            "contract": "DiamondDexToken.sol",
+            "function": "N/A",
+            "lineNumber": "L103"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1126"
+                ]
+            },
+            "title": "L02 - State Variables could be Declared Constant",
+            "description": "Constant state variables should be declared constant to save gas.",
+            "severity": "minor",
+            "contract": "DiamondDexToken.sol",
+            "function": "N/A",
+            "lineNumber": "913,917-919"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1076"
+                ]
+            },
+            "title": "L04 - Conformance to Solidity Naming Conventions",
+            "description": "Solidity defines a naming convention that should be followed.",
+            "severity": "Minor",
+            "contract": "DiamondDexToken.sol",
+            "function": "N/A",
+            "lineNumber": "921, 1298, 611, 1195, 642, 936, 924, 609, 900, 935, 690, 927, 1185, 1302, 1190"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "L07 - Missing Events Arithmetic",
+            "description": "Detected missing events for critical arithmetic parameters. There are functions that have no event emitted, so it is difficult to track off-chain changes.",
+            "severity": "Minor",
+            "contract": "DiamondDexToken",
+            "function": "N/A",
+            "lineNumber": "1168,1172,1176,1180,1195"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "L09 - Dead Code Elimination",
+            "description": "Dead code elimination is a critical optimization technique to remove unreachable or redundant code.",
+            "severity": "Minor",
+            "contract": "DiamondDexToken",
+            "function": "N/A",
+            "lineNumber": "320,384,404,417,290,365,352"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "L10 - State Variables in Loop",
+            "description": "Costly operations inside a loop might waste gas, so optimizations are justified. Incrementing state variables in a loop incurs a lot of gas because of expensive SSTOREs, which might lead to an out-of-gas.",
+            "severity": "minor",
+            "contract": "DiamondDexToken.sol",
+            "function": "N/A",
+            "lineNumber": "L1125"
+        }
+    ]
+}

@@ -1,0 +1,114 @@
+{
+    "path": "./Audit_Reports_2024/HAECHI_AUDIT/[KALOS] ZeroDev Wallet Kernel 2.1 Audit Report-v1.0 (ENG).pdf",
+    "project_info": {
+        "url": "https://github.com/zerodevapp/kernel",
+        "commit_hash": "199ae7d838f21b37f069267c86e8eeb6f0175a69",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/[KALOS] ZeroDev Wallet Kernel 2/kernel"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Violation of Storage Access Rule in ECDSAKernelFactory",
+            "description": "The ECDSAKernelFactory does not stake a certain amount in the EntryPoint due to the Storage Access rules, which will cause the Bundler to not execute transactions.",
+            "severity": "High",
+            "contract": "ECDSAKernelFactory",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Bypass Permission Check in ValidateUserOp of the SessionKeyValidator Contract",
+            "description": "The ValidateUserOp function in the SessionKeyValidator contract does not properly check user parameters within a specified range when calling a specific contract function, allowing for potential bypass of permission checks.",
+            "severity": "Medium",
+            "contract": "SessionKeyValidator",
+            "function": "validateUserOp",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Wrong Parameter for _packValidationData upon Successful Merkle Proof in validateUserOp of SessionKeyValidator",
+            "description": "In the validateUserOp function of SessionKeyValidator, setting the first parameter of _packValidationData to 1 (true) upon a successful Merkle Proof leads to a conflict in logic as EntryPoint interprets it as a failure of signature validation.",
+            "severity": "Medium",
+            "contract": "SessionKeyValidator",
+            "function": "validateUserOp",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Wrong dataOffset Calculation in ValidateUserOp within SessionKeyValidator",
+            "description": "The SessionKeyValidator smart contract's validateUserOp function has a logic error where it misinterprets the data offset due to the removal of leading 4 bytes, potentially causing a revert event during Kernel Execute Function execution.",
+            "severity": "Medium",
+            "contract": "SessionKeyValidator",
+            "function": "validateUserOp",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Discrepancies in Parsing validUntil and validAfter",
+            "description": "The Kernel smart contract incorrectly parses validUntil and validAfter values, leading to a situation where validUntil is less than validAfter, causing UserOperation to consistently revert.",
+            "severity": "Medium",
+            "contract": "Kernel",
+            "function": "_approveValidator() and validateUserOp()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-923"
+                ],
+                "3": [
+                    "CWE-940"
+                ]
+            },
+            "title": "Replay Attack in Setting DefaultValidator in KillSwitchValidator",
+            "description": "A malicious user can reuse a previously used UserOperation to make a direct call to the validateUserOp function of the KillSwitchValidator contract, bypassing the EntryPoint, and reset the validator by msg.sender, leading to a wallet takeover.",
+            "severity": "Critical",
+            "contract": "KillSwitchValidator",
+            "function": "validateUserOp",
+            "lineNumber": "N/A"
+        }
+    ]
+}

@@ -1,0 +1,447 @@
+{
+    "path": "./Audit_Reports_2024/CertiK/CertiK Audit Report 280321.pdf",
+    "project_info": {
+        "url": "https://github.com/autofarm-network/AutofarmV2_CrossChain/tree/f32a71e96e080c46c6f0c9a61bd06ad1f643397e",
+        "commit_hash": "f32a71e96e080c46c6f0c9a61bd06ad1f643397e",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/CertiK Audit Report 280321/AutofarmV2_CrossChain"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "AFV-06: Missing Return Value Handling",
+            "description": "IStrategy.withdraw and IERC20.transfer are not void-returning functions. Ignoring the return value might cause some unexpected exception, especially if the callee function doesn\u2019t revert automatically when failing.",
+            "severity": "Minor",
+            "contract": "AutoFarmV2.sol",
+            "function": "N/A",
+            "lineNumber": "L335, L347, L349"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "AFV-07: Centralization Risks",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "SVL-08: Unable to Withdraw Earned Token When Paused",
+            "description": "Function earn is restricted to whenNotPaused. It means when the contract is paused, users are allowed to withdraw token already in this contract's account, but they are not allowed to withdraw pending earned token.",
+            "severity": "Informational",
+            "contract": "StratVLEV2.sol",
+            "function": "earn()",
+            "lineNumber": "L435"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "AFT-01: Functions Should Be Declared External",
+            "description": "Functions which are never called internally within the contract should have external visibility.",
+            "severity": "Informational",
+            "contract": "AutoFarmTimelock",
+            "function": [
+                "getTimestamp",
+                "getMinDelay",
+                "schedule",
+                "scheduleBatch",
+                "cancel",
+                "execute",
+                "executeBatch",
+                "setDevWalletAddress",
+                "scheduleSet",
+                "executeSet",
+                "withdrawBNB",
+                "withdrawBEP20",
+                "add",
+                "earn",
+                "farm",
+                "pause",
+                "unpause",
+                "rebalance",
+                "deleverageOnce",
+                "wrapBNB",
+                "noTimeLockFunc1",
+                "noTimeLockFunc2",
+                "noTimeLockFunc3"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "AFT-02: Missing Checks for Reentrancy",
+            "description": "Function execute , executeBatch , _call and executeSet have state updates or event emits after external calls and thus are vulnerable to reentrancy attack.",
+            "severity": "Major",
+            "contract": "AutoFarmTimelock",
+            "function": "execute, executeBatch, _call, executeSet",
+            "lineNumber": "L374, L396, L447, L538"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-221"
+                ],
+                "3": [
+                    "CWE-223"
+                ],
+                "4": [
+                    "CWE-778"
+                ]
+            },
+            "title": "AFT-03: Missing Events for Significant Transactions",
+            "description": "Function setDevWalletAddress updates devWalletAddress which is a key role of contract TimelockController. Missing event makes it difficult to track off-chain role changes.",
+            "severity": "Informational",
+            "contract": "AutoFarmTimelock",
+            "function": "setDevWalletAddress",
+            "lineNumber": "L489"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "AFT-04: Missing Return Value Handling",
+            "description": "transfer is not a void-returning function per IERC20 interface. Ignoring the return value might cause some unexpected exception, especially if the callee function doesn\u2019t revert automatically when failing.",
+            "severity": "Minor",
+            "contract": "AutoFarmTimelock",
+            "function": "N/A",
+            "lineNumber": "L575"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1076"
+                ],
+                "3": [
+                    "CWE-1078"
+                ],
+                "4": [
+                    "CWE-1099"
+                ]
+            },
+            "title": "AFT-05: Bad Naming Convention",
+            "description": "Function name add collides with SafeMath.add. Solidity suggests a naming convention that should be followed.",
+            "severity": "Informational",
+            "contract": "AutoFarmTimelock",
+            "function": "add()",
+            "lineNumber": "L578"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1061"
+                ],
+                "3": [
+                    "CWE-766"
+                ]
+            },
+            "title": "AFV-01: Variables Should Be Declared Constant",
+            "description": "Some variables are not modified within contracts and thus could be declared constant.",
+            "severity": "Informational",
+            "contract": "AutoFarmV2",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "AFV-02: Functions Should Be Declared External",
+            "description": "Functions which are never called internally within the contract should have external visibility.",
+            "severity": "Informational",
+            "contract": "AutoFarmV2",
+            "function": "add, set, deposit, withdrawAll, emergencyWithdraw and inCaseTokensGetStuck",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "AFV-03: Missing Checks for Reentrancy",
+            "description": "Function add, set and updatePool have state updates or event emits after external calls and thus are vulnerable to reentrancy attack.",
+            "severity": "Major",
+            "contract": "AutoFarmV2",
+            "function": "add, set, updatePool",
+            "lineNumber": "L110, L134, L211"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1076"
+                ],
+                "3": [
+                    "CWE-1078"
+                ],
+                "4": [
+                    "CWE-1099"
+                ]
+            },
+            "title": "AFV-04: Bad Naming Convention",
+            "description": "Function name add collides with SafeMath.add. Solidity suggests a naming convention that should be followed.",
+            "severity": "Informational",
+            "contract": "AutoFarmV2",
+            "function": "add()",
+            "lineNumber": "L110"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "AFV-05: Missing Checks for Human Errors",
+            "description": "Missing checks to prevent human errors.",
+            "severity": "Informational",
+            "contract": "AutoFarmV2",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "AFC-01: Redundant Variables, Data Structures and Functions",
+            "description": "There is no reward calculation based on accumulated AUTO per share within the contract AutoFarmV2_CrossChain, so all variables, data structures and functions related to it could be removed.",
+            "severity": "Informational",
+            "contract": "AutoFarmV2_CrossChain",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ],
+                "4": [
+                    "CWE-766"
+                ]
+            },
+            "title": "Functions Should Be Declared External",
+            "description": "Functions which are never called internally within the contract should have external visibility.",
+            "severity": "Informational",
+            "contract": "AutoFarmV2",
+            "function": "add, set, deposit, withdrawAll, emergencyWithdraw and inCaseTokensGetStuck",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1076"
+                ],
+                "3": [
+                    "CWE-1078"
+                ],
+                "4": [
+                    "CWE-1099"
+                ]
+            },
+            "title": "AFC-03: Bad Naming Convention",
+            "description": "Function name add collides with SafeMath.add. Solidity suggests a naming convention that should be followed.",
+            "severity": "Informational",
+            "contract": "AutoFarmV2_CrossChain",
+            "function": "add()",
+            "lineNumber": "L81"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "AFC-04: Missing Checks for Human Errors",
+            "description": "Missing checks to prevent human errors.",
+            "severity": "Informational",
+            "contract": "AutoFarmV2_CrossChain",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 19,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "AFC-05: Missing Return Value Handling",
+            "description": "Functions called are not void-returning functions. Ignoring the return value might cause some unexpected exception, especially if the callee function doesn\u2019t revert automatically when failing.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 20,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "AFC-06: Centralization Risks",
+            "description": "Function inCaseTokensGetStuck at line 238 allows the owner to drain tokens from the contract.",
+            "severity": "Major",
+            "contract": "AutoFarmV2_CrossChain",
+            "function": "inCaseTokensGetStuck",
+            "lineNumber": "L238"
+        },
+        {
+            "id": 21,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-393"
+                ]
+            },
+            "title": "SVL-01: Missing Return Value Handling",
+            "description": "N/A",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 22,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "No Entrance Fees When Vault Is Empty",
+            "description": "entranceFeeFactor/entranceFeeFactorMax will not be applied to _wantAmt when wantLockedTotal == 0 or sharesTotal == 0 . Is this an intended design?",
+            "severity": "Informational",
+            "contract": "StratX2",
+            "function": "N/A",
+            "lineNumber": "L146"
+        }
+    ]
+}

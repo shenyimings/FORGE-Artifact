@@ -1,0 +1,94 @@
+{
+    "path": "./Audit_Reports_2024/Solidified/Solidified-Sandbox_Reward_Pool_[22.10.2020].pdf",
+    "project_info": {
+        "url": "https://github.com/thesandboxgame/sandbox-private-contracts",
+        "commit_hash": "1768142603a948bd7492cc87a66e19160489043f",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/Solidified-Sandbox_Reward_Pool_[22/sandbox-private-contracts"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Total contribution is not reduced when stakes are withdrawn",
+            "description": "The `withdraw()` function reduces the contribution of `msg.sender`, but fails to update the `_totalContributions` variable. This leads to incorrect pool shares and, therefore, incorrect reward distributions.",
+            "severity": "Major",
+            "contract": "N/A",
+            "function": "withdraw()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Land owned may not be accurate during reward calculation",
+            "description": "Contributions are calculated using the number of land NFT at the time of staking, which can change anytime and be exploited by transferring land between addresses to increase individual contributions.",
+            "severity": "Major",
+            "contract": "LandWeighterSANDRewardPool.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Potential reentrancy from token contract",
+            "description": "The stake() and withdraw() functions call their equivalents in the LPTokenWrapper contract, which in turn calls the external token, potentially leading to a reentrancy vulnerability if the token is untrusted or allows untrusted code execution.",
+            "severity": "Major",
+            "contract": "LandWeighterSANDRewardPool.sol",
+            "function": [
+                "stake()",
+                "withdraw()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "No Check for notifyRewardAmount",
+            "description": "It is possible for this function to be called with a different amount than what was sent to the contract, possibly making rewards insufficient for all stakers.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "notifyRewardAmount",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Reward calculation performed twice",
+            "description": "The function `getReward()` calls the `earned()` function twice, once through the `updateReward()` modifier and then again immediately, introducing unnecessary logic to be executed.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "getReward()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

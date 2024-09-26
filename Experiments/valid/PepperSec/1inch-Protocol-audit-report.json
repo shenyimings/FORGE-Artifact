@@ -1,0 +1,100 @@
+{
+    "path": "./Audit_Reports_2024/PepperSec/1inch-Protocol-audit-report.pdf",
+    "project_info": {
+        "url": "https://github.com/1inch/1inchProtocol",
+        "commit_hash": "6d9a3e7c8b190d4f4896a56b69f61248cbf9fa55",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/1inch-Protocol-audit-report/1inchProtocol"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-354"
+                ]
+            },
+            "title": "msg.value validation",
+            "description": "N/A",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Token balances validation",
+            "description": "The swap method expects fromToken and toToken balances to be zero, which negatively affects the security of the smart contract.",
+            "severity": "MEDIUM",
+            "contract": "OneSplitAudit",
+            "function": "swap",
+            "lineNumber": "L52"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Claim stuck and spam tokens",
+            "description": "It is assumed the contract does not have any tokens before and after a swap. In any case, it is useful to have a special method that allows retrieving stuck tokens.",
+            "severity": "MEDIUM",
+            "contract": "N/A",
+            "function": "swap",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ]
+            },
+            "title": "fromToken is not equal to toToken check",
+            "description": "The logic underlying the swap method checks that fromToken != toToken . However, the swap method itself is a better place for that kind of require.",
+            "severity": "MEDIUM",
+            "contract": "OneSplitAudit",
+            "function": "swap",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Redundant goodSwap method",
+            "description": "The goodSwap method is a combination of the getExpectedReturn and swap methods. Since getExpectedReturn is supposed to be called from the DApp frontend rather than from a smart contract, it can be confusing for developers who utilize OneSplit.",
+            "severity": "MINOR",
+            "contract": "N/A",
+            "function": "goodSwap",
+            "lineNumber": "N/A"
+        }
+    ]
+}

@@ -1,0 +1,81 @@
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-DeriV4-1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/deri-protocol/deriprotocol-v4/tree/a23ba59",
+        "commit_hash": "a23ba59",
+        "address": "0xa07c5b74c9b40447a954e1466938b865b6bbea36",
+        "is_exists": true,
+        "chain": "bsc",
+        "compiler_version": [
+            "v0.5.17+commit.d19bba13"
+        ],
+        "project_path": {
+            "VBNB": "Experiments/contracts/PeckShield-Audit-Report-DeriV4-1/VBNB"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "Possible Precision Issue in DToken Redemption",
+            "description": "The `redeem()` function may unintentionally introduce a precision issue by computing the `burnedSt` number against the protocol using flooring-based division instead of ceiling-based division.",
+            "severity": "Low",
+            "contract": "VaultImplementationNone",
+            "function": "redeem()",
+            "lineNumber": "252"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-1419"
+                ],
+                "4": [
+                    "CWE-1188"
+                ],
+                "5": [
+                    "CWE-453"
+                ]
+            },
+            "title": "Possible Costly DToken From Improper Vault Initialization",
+            "description": "The issue occurs when the pool is being initialized under the assumption that the current pool is empty, which may unnecessarily make the pool share extremely expensive and bring hurdles (or even causes loss) for later depositors.",
+            "severity": "Low",
+            "contract": "Multiple Contracts",
+            "function": "deposit()",
+            "lineNumber": "90-95"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "In the `Deri-V4` protocol, there is a special administrative account, i.e., `admin`, which plays a critical role in governing and regulating the system-wide operations.",
+            "severity": "Medium",
+            "contract": "Multiple Contracts",
+            "function": "setParameterOfId",
+            "lineNumber": "N/A"
+        }
+    ]
+}

@@ -1,0 +1,130 @@
+{
+    "path": "./Audit_Reports_2024/Inspex/Inspex-Admin_&_Poll.pdf",
+    "project_info": {
+        "url": "https://github.com/inspex-archive/iAM-Admin-Poll-Token",
+        "commit_hash": "0f8bb7a04c439286a5dffa223c3b30265acb4b5c",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/Inspex-Admin_&_Poll/iAM-Admin-Poll-Token"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Missing Approval Validation",
+            "description": "One of the admins in the BigOwner contract can remove other admins and add new admins without any approval from other admins.",
+            "severity": "Low",
+            "contract": "BigOwner",
+            "function": "acceptAdmin()",
+            "lineNumber": "77"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-273"
+                ]
+            },
+            "title": "Insufficient Logging for Privileged Functions",
+            "description": "Privileged functions that are executable by the controlling parties are not logged properly by emitting events.",
+            "severity": "Very Low",
+            "contract": "AdminManage",
+            "function": [
+                "addAdmin()",
+                "addSuperAdmin()",
+                "removeAdmin()",
+                "removeSuperAdmin()"
+            ],
+            "lineNumber": [
+                "83",
+                "99",
+                "115",
+                "143"
+            ]
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-477"
+                ]
+            },
+            "title": "Outdated Solidity Compiler Version",
+            "description": "The solidity compiler versions declared in the smart contracts were outdated, which have publicly known inherent bugs that may potentially be used to cause damage to the smart contracts or the users of the smart contracts.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ]
+            },
+            "title": "Unnecessary Assert Statement",
+            "description": "The condition values of the assert statement in the `PollFactory` contract is always `true`. So, it is not necessary to check and can be removed to reduce the gas usage.",
+            "severity": "Info",
+            "contract": "PollFactory",
+            "function": "createPoll",
+            "lineNumber": "51"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-749"
+                ]
+            },
+            "title": "Improper Function Visibility",
+            "description": "Functions with improper visibility can lead to unintended access and usage.",
+            "severity": "Info",
+            "contract": "AdminManage",
+            "function": "addAdmin(address _newAdmin)",
+            "lineNumber": "99-113"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Incorrect Logging Parameter for Privileged Functions",
+            "description": "The event parameter pendingRemoveAdmin_ was incorrectly set to pendingAdmin_, preventing correct logging of privileged function executions.",
+            "severity": "Info",
+            "contract": "BigOwner",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

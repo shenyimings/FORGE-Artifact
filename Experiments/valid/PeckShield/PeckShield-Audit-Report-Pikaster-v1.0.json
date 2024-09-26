@@ -1,0 +1,77 @@
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Pikaster-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/pikasterdev/pikaster/tree/a6088fe",
+        "commit_hash": "a6088fe",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/PeckShield-Audit-Report-Pikaster-v1/pikaster"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect Logic Of ERC721Template::remint()",
+            "description": "The `remint()` function in `ERC721Template` does not properly reassign an existing `ERC721` token to another owner due to incorrect logic, which can cause the `_mint(to, tokenId)` operation to always be reverted if the `tokenId` was not burned before by the `MINTER_ROLE`. ",
+            "severity": "Low",
+            "contract": "ERC721Template",
+            "function": "remint()",
+            "lineNumber": "158-161"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "5.2 Safe-Version Replacement With safeTransfer()",
+            "description": "The transfer function does not have a return value, but the IERC20 interface has defined the transfer function with a bool return value, which may cause the call to revert if using the normal version of transfer(). It is suggested to use the safe version, i.e., safeTransfer(), which is a wrapper around ERC20 operations that may either throw on failure or return false without reverts.",
+            "severity": "Low",
+            "contract": "ERC20Template",
+            "function": "withdrawERC20()",
+            "lineNumber": "123"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue Of Admin Keys",
+            "description": "Privileged accounts (DEFAULT_ADMIN_ROLE/MINTER/BURNER) need to be scrutinized due to their critical role in governing and regulating system-wide operations.",
+            "severity": "Medium",
+            "contract": "ERC20Template, ERC721Template",
+            "function": "mint(), pause(), unpause(), blacklistAccount(), unblackListAccount()",
+            "lineNumber": "70-81,83-86"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "N/A",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

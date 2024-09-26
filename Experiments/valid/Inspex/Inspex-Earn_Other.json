@@ -1,0 +1,122 @@
+{
+    "path": "./Audit_Reports_2024/Inspex/Inspex-Earn_Other.pdf",
+    "project_info": {
+        "url": "https://github.com/Evry-Finance/evry-finance-farm",
+        "commit_hash": "b1b534ee02aa5001b9aee52b7730d88590e30812",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/Inspex-Earn_Other/evry-finance-farm"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "Division Before Multiplication",
+            "description": "The value of rewardPerBlock will be slightly miscalculated due to the loss of precision, causing the reward to be slightly miscalculated, which may result in minor loss of funds for the users and loss of reputation to the platform.",
+            "severity": "Medium",
+            "contract": "EarnOtherFixedAPR EarnOtherFixedAPRLockReward",
+            "function": "constructor()",
+            "lineNumber": "82"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Centralized Control of State Variable",
+            "description": "The controlling authorities can change the state variable without any prior notification, resulting in monetary impact to users and loss of reputation to the platform.",
+            "severity": "Medium",
+            "contract": "EarnOtherFixedAPR, EarnOtherFixedAPRLockReward, EarnOtherNoFixedAPR",
+            "function": "setRewardPerBlock(), renounceOwnership(), transferOwnership()",
+            "lineNumber": "173, 54, 63"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improper Reward Amount Verification in EarnOtherFixedAPR",
+            "description": "When the contract owner has not transferred sufficient reward token into the contract, the staking token can not be withdrawn by calling the withdraw() function, and the reward can not be harvested by calling the harvest() function.",
+            "severity": "Low",
+            "contract": "EarnOtherFixedAPR",
+            "function": [
+                "withdraw()",
+                "harvest()",
+                "emergencyWithdraw()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Improper Reward Amount Verification in EarnOtherFixedAPRLockReward",
+            "description": "When the contract owner has not transferred sufficient reward token into the contract, the staking token can not be withdrawn together with the reward token by calling the withdraw() function.",
+            "severity": "Low",
+            "contract": "EarnOtherFixedAPRLockReward",
+            "function": "withdraw()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improper Reward Amount Verification in EarnOtherNoFixedAPR",
+            "description": "When the balance of the reward in the contract is insufficient, users will lose the opportunity to invest with their staking token without being rewarded.",
+            "severity": "Low",
+            "contract": "EarnOtherNoFixedAPR",
+            "function": [
+                "withdraw()",
+                "harvest()",
+                "emergencyWithdraw()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Unnecessary Condition Checking",
+            "description": "Removing unnecessary condition checking as suggested by Inspex to adhere to coding standards.",
+            "severity": "Info",
+            "contract": "EarnOtherFixedAPRLockReward",
+            "function": "deposit(uint256 _amount)",
+            "lineNumber": "88-112"
+        }
+    ]
+}

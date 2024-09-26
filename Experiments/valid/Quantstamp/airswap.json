@@ -1,0 +1,171 @@
+{
+    "path": "./Audit_Reports_2024/Quantstamp/airswap.pdf",
+    "project_info": {
+        "url": "https://github.com/airswap/airswap-protocols",
+        "commit_hash": "b87d292",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/airswap/airswap-protocols"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-437"
+                ]
+            },
+            "title": "Funds may be locked if `setRuleAndIntent` is called multiple times",
+            "description": "The function `Delegate.setRuleAndIntent` sets the stake of the delegate owner in the `Indexer` contract by transferring staking tokens from the user to the indexer, through the `Delegate` contract. However, if the function is called a second time, the underlying `Indexer.setIntent` will only transfer a partial amount of the total transferred tokens (i.e., the delta of the previously set intent value versus the currently set intent value). Since the behavior of the `Delegate` and the `Indexer` differ in this regard, tokens can become stuck in the Delegate.",
+            "severity": "High Risk",
+            "contract": "Delegate.sol, Indexer.sol",
+            "function": "setRuleAndIntent()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Centralization of Power",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Integer arithmetic may cause incorrect pricing logic",
+            "description": "Due to integer arithmetic truncation issues, equations A and B may not relate as expected, leading to incorrect pricing logic.",
+            "severity": "Medium",
+            "contract": "Swap.sol",
+            "function": "N/A",
+            "lineNumber": "L233, L290"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "transferFrom() success should not be checked by querying token balances",
+            "description": "The transferFrom function's success should not be verified by checking token balances.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "transferFrom()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1287"
+                ]
+            },
+            "title": "QSP-5 `isValid()` does not check that the `validator` contract is correct",
+            "description": "The `isValid()` function does not check that the intended `Swap` contract, as denoted by the `Order.signature.validator` field, corresponds to the correct `Swap` contract.",
+            "severity": "Low Risk",
+            "contract": "Swap.sol",
+            "function": "isValid()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Unchecked Return Value",
+            "description": "The external call.value() result should be checked for success to prevent ether transfers to the user from failing.",
+            "severity": "Low Risk",
+            "contract": "Wrapper.sol, Swap.sol",
+            "function": "N/A",
+            "lineNumber": "L151 of Wrapper, L127 of Wrapper, L340 of Swap"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Gas Usage / `for` Loop Concerns",
+            "description": "Gas usage is a main concern for smart contract developers and users, since high gas costs may prevent users from wanting to use the smart contract. Even worse, some gas usage issues may prevent the contract from providing services entirely.",
+            "severity": "Low Risk",
+            "contract": "Swap.sol, Index.sol",
+            "function": "Swap.cancel(), _getEntryLowerThan(), setLocator()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Return values of ERC20 function calls are not checked",
+            "description": "The boolean return values of ERC20 functions such as transfer() and transferFrom() are not checked.",
+            "severity": "Low Risk",
+            "contract": "Swap.sol",
+            "function": "transferToken()",
+            "lineNumber": "346"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Unchecked constructor argument",
+            "description": "The constructor of a contract does not check its arguments, which can lead to unexpected behavior or security vulnerabilities.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

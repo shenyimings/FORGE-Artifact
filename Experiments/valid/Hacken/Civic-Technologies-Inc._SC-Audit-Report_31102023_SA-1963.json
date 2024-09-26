@@ -1,0 +1,188 @@
+{
+    "path": "./Audit_Reports_2024/Hacken/Civic-Technologies-Inc._SC-Audit-Report_31102023_SA-1963.pdf",
+    "project_info": {
+        "url": "https://github.com/identity-com/on-chain-identity-gateway/tree/release/v2-upgrade-full/ethereum",
+        "commit_hash": "b7bc57e40497b44e694b75b76603f046de7bbaa",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/Civic-Technologies-Inc/on-chain-identity-gateway"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "M01. Super admin can delete all other super admins causing inability to manage GatewayToken contract",
+            "description": "Super admin has the capability to remove all other super admins, resulting in no one being able to manage the GatewayToken contract.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "L01. Missing zero address validation",
+            "description": "This oversight could result in accidentally adding an incorrect address to the contract, potentially leading to unexpected behavior or vulnerabilities.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "L02. ERC-2771 implementation differ from proposal - underflow risk",
+            "description": "The implementation of ERC-2771 deviates from the accepted proposal, omitting checks for msg.data length, which can result in an underflow error when msg.data's length is less than 20.",
+            "severity": "Low",
+            "contract": [
+                "MultiERC2771Context",
+                "MultiERC2771ContextUpgradeable",
+                "GatewayToken",
+                "GatedERC2771",
+                "GatedERC2771Upgradeable"
+            ],
+            "function": [
+                "_msgSender()",
+                "updateFlagsStorage()",
+                "constructor()",
+                "__GatedERC2771Upgradeable_init()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "I01. Floating pragma",
+            "description": "The project uses floating pragma (>=0.8.19) which may result in contracts being deployed using the wrong pragma version, different from the one they were tested with.",
+            "severity": "Informational",
+            "contract": "./contracts/*",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "I02. Redundant check of user allowance",
+            "description": "Redundant check of user allowance is performed twice, which increases Gas consumption.",
+            "severity": "N/A",
+            "contract": "ChargeHandler",
+            "function": "_handleERC20Charge()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "I03. Redundant imports",
+            "description": "Redundant import of OwnableUpgradeable contract in FlagsStorage contract but never used, resulting in unnecessary Gas consumption during deployment and impacting code quality.",
+            "severity": "N/A",
+            "contract": "FlagsStorage",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-908"
+                ],
+                "4": [
+                    "CWE-457"
+                ]
+            },
+            "title": "I04. State variables can be declared immutable",
+            "description": "Immutable variables are evaluated once at construction time and their value is copied to all the places in the code where they are accessed, resulting in lower Gas costs compared to regular state variables.",
+            "severity": "Informational",
+            "contract": "Gated, GatedERC2771",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "I05. Missing validation if a DaoManager is a contract account",
+            "description": "The transferDAOManager() function does not validate if the new DAO manager address is a contract account, allowing externally owned addresses (EOA) to receive the DAO_MANAGER_ROLE and NETWORK_AUTHORITY_ROLE roles.",
+            "severity": "N/A",
+            "contract": "GatewayToken",
+            "function": "transferDAOManager()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "I06. Missing event for critical value updation",
+            "description": "Event emission is missing for tracking changes in critical functions within the GatewayToken contract.",
+            "severity": "N/A",
+            "contract": "GatewayToken",
+            "function": "initialize(), addForwarder(), removeForwarder()",
+            "lineNumber": "./contracts/GatewayToken.sol"
+        }
+    ]
+}

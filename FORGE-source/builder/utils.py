@@ -1,5 +1,8 @@
 from dataclasses import dataclass
 from urllib.parse import urlparse
+from typing import Literal
+import json
+import os
 
 
 @dataclass
@@ -20,6 +23,11 @@ class GithubUrl:
     dir_name: str = ""
     file_name: str = ""
     fragment: str = ""
+
+
+class StopIteration(Exception):
+    # exit
+    pass
 
 
 # GithubUrl(
@@ -109,3 +117,40 @@ class GithubUrlParser:
         self.info.git_url = (
             f"https://{self.parsed_url.netloc}/{self.info.owner}/{self.info.repo}"
         )
+
+
+def write_json(data, path):
+    with open(path, "w", encoding="utf-8") as fj:
+        json.dump(data, fj, indent=4)
+
+
+def read_json(path):
+    with open(path, "r", encoding="utf-8") as fj:
+        return json.load(fj)
+
+
+def path_handle(input_path: str, dataset_path: str):
+    common_path = os.path.commonpath([input_path, dataset_path])
+    display_path = os.path.relpath(dataset_path, common_path)
+    display_path = os.path.join(os.path.basename(common_path), display_path)
+    return display_path
+
+
+def get_log_status(log_path: str):
+    if not os.path.exists(log_path):
+        return {"info": [], "error": [], "warning": []}
+    else:
+        log_info = read_json(log_path)
+        return log_info
+
+
+def log_to_file(
+    log_path: str, log_type: Literal["info", "error", "warning"], message: str
+):
+
+    if not os.path.exists(log_path):
+        write_json({"info": [], "error": [], "warning": []}, log_path)
+    log_info = read_json(log_path)
+    log_info[log_type] = log_info.get(log_type, [])
+    log_info[log_type].append(message)
+    write_json(log_info, log_path)

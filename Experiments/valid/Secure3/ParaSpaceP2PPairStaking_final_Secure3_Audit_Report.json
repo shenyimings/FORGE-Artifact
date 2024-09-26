@@ -1,0 +1,140 @@
+{
+    "path": "./Audit_Reports_2024/Secure3/ParaSpaceP2PPairStaking_final_Secure3_Audit_Report.pdf",
+    "project_info": {
+        "url": "https://github.com/para-space/paraspace-core",
+        "commit_hash": "cf85f96d53b66eee72cdd2f168092d1d1a1aa167",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/ParaSpaceP2PPairStaking_final_Secure3_Audit_Report/paraspace-core"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Centralization risk",
+            "description": "The owner can arbitrarily take the user's income CAPEcoin.",
+            "severity": "Informational",
+            "contract": "P2PPairStaking",
+            "function": "claimCompoundFee() and rescueERC20()",
+            "lineNumber": "606-617"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Fetch the length of array before the loop to save gas",
+            "description": "Cache array length into memory to reduce GAS consumption by defining a variable and using it in the for loop instead of calling the length method every time.",
+            "severity": "Informational",
+            "contract": "P2PPairStaking",
+            "function": "claimForMatchedOrderAndCompound",
+            "lineNumber": "344"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "Missing Protection against Signature Replay Attacks in P2PPairStaking contract",
+            "description": "The contract does not protect against signature replay attacks, allowing a malicious user to reuse a previously used message hash and potentially prevent ApeCoin from being withdrawn.",
+            "severity": "Critical",
+            "contract": "P2PPairStaking",
+            "function": "_validateOrderBasicInfo() and _validateOrderSignature()",
+            "lineNumber": "493-520"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "NFT's owner can prevent other matchers from calling breakUpMatchedOrder",
+            "description": "The NFT's owner can control whether the contract is allowed to receive NFTs sent via safeTransferFrom by setting a flag, preventing other matchers from breaking up the matched order.",
+            "severity": "Medium",
+            "contract": "P2PPairStaking",
+            "function": "breakUpMatchedOrder",
+            "lineNumber": "319-334"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "The user's assets are at risk of being permanently locked in the contract",
+            "description": "Assets can be permanently locked due to incorrect usage of claimForMatchedOrderAndCompound function.",
+            "severity": "Informational",
+            "contract": "P2PPairStaking",
+            "function": "_claimForMatchedOrderAndCompound",
+            "lineNumber": "283"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1120"
+                ],
+                "3": [
+                    "CWE-1060"
+                ]
+            },
+            "title": "P2PPairStaking Gas Optimization by using custom errors",
+            "description": "The finding suggests optimizing gas usage in P2PPairStaking by utilizing custom errors.",
+            "severity": "Informational",
+            "contract": "P2PPairStaking",
+            "function": "N/A",
+            "lineNumber": "107, 109, 124, 128, 132, 196, 200"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "P2PPairStaking Gas Optimization for constant hashes",
+            "description": "Gas optimization opportunity by using constant hashes in P2PPairStaking contract.",
+            "severity": "Informational",
+            "contract": "P2PPairStaking",
+            "function": "N/A",
+            "lineNumber": "27-39"
+        }
+    ]
+}

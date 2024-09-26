@@ -1,0 +1,123 @@
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-Tetu-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/tetu-io/tetu-contracts",
+        "commit_hash": "N/A",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/PeckShield-Audit-Report-Tetu-v1/tetu-contracts"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Gas-Efficient Vault/Strategy Removal",
+            "description": "The `removeFromVaults()` and `removeFromStrategies()` functions can be optimized for gas efficiency by using a 'swap-and-pop' strategy instead of repeatedly moving up the rest indexes.",
+            "severity": "Low",
+            "contract": "Bookkeeper",
+            "function": [
+                "removeFromVaults()",
+                "removeFromStrategies()"
+            ],
+            "lineNumber": "292-314"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Deduplicate Checks in setDevFunds() Logic",
+            "description": "The current implementation of setDevFunds() function makes an implicit assumption that the given funds are distinct, but it's not enforced, which can lead to issues if duplicate fund addresses are present.",
+            "severity": "Low",
+            "contract": "MintHelper",
+            "function": "setDevFunds()",
+            "lineNumber": "135-149"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Possible Costly Vault Share From Improper Initialization",
+            "description": "The `Tetu` protocol allows users to deposit supported assets and get in return the share to represent the pool ownership. While examining the share calculation with the given deposits, we notice an issue that may unnecessarily make the pool share extremely expensive and bring hurdles (or even causes loss) for later depositors.",
+            "severity": "Medium",
+            "contract": "SmartVault",
+            "function": "_deposit()",
+            "lineNumber": "352-353"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Same Controller Enforcement Between Vault & Strategy",
+            "description": "In the Tetu protocol, there is a one-to-one mapping between a vault and its strategy. To properly link a vault with its strategy, it is natural for the two to operate on the same underlying asset and share the same controller.",
+            "severity": "Low",
+            "contract": "SmartVault",
+            "function": "setStrategy()",
+            "lineNumber": "575-583"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "In the Tetu protocol, there is a special administrative contract, i.e., Controller. This Controller contract plays a critical role in governing and regulating the system-wide operations (e.g., vault/strategy addition, reward adjustment, and parameter setting). It also has the privilege to control or govern the flow of assets for investment or full withdrawal among vault, controller, and strategy.",
+            "severity": "Medium",
+            "contract": "Controller",
+            "function": "fundKeeperTokenMove()",
+            "lineNumber": "427"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Consistency in Book Keeping Actions",
+            "description": "The `Bookkeeper` contract allows for registration of user actions, but the consistency of bookkeeping actions can be improved, particularly with regards to handling failures.",
+            "severity": "Low",
+            "contract": "SmartVault",
+            "function": "_withdraw",
+            "lineNumber": "325-327"
+        }
+    ]
+}

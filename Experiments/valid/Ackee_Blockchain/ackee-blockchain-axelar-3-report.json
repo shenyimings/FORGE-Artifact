@@ -1,0 +1,160 @@
+{
+    "path": "./Audit_Reports_2024/Ackee_Blockchain/ackee-blockchain-axelar-3-report.pdf",
+    "project_info": {
+        "url": "https://github.com/axelarnetwork/token-linker/tree/5e1d4bb648f15c8579bdaa1d93e8eba958a8a05e",
+        "commit_hash": "5e1d4bb648f15c8579bdaa1d93e8eba958a8a05e",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/ackee-blockchain-axelar-3-report/token-linker"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ],
+                "4": [
+                    "CWE-231"
+                ]
+            },
+            "title": "The forecall and forecallWithToken can be called repeatedly with a same payload",
+            "description": "High severity issue related to data validation",
+            "severity": "High",
+            "contract": "AxelarForecallable",
+            "function": "forecall/forecallWithToken",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-166"
+                ]
+            },
+            "title": "M1: The tokenAddress is missing zero-address check",
+            "description": "The contract does not perform any data validation of `tokenAddress` in its constructor.",
+            "severity": "Medium",
+            "contract": "TokenLinkerLockUnlock",
+            "function": "constructor()",
+            "lineNumber": "14-19"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "M2: TokenLinker has insufficient data validation",
+            "description": "TokenLinker has insufficient data validation",
+            "severity": "Medium",
+            "contract": "Token Linker/contracts/TokenLinker.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "W1: Usage of solc optimizer",
+            "description": "The project uses `solc` optimizer which may lead to unexpected bugs and vulnerabilities.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "W2: Floating dependency on AxelarGateway",
+            "description": "The configuration file `package.json` is holding a floating dependency on AxelarGateway which can lead to deployment with an unwanted version if minor or patch updates are not properly tested.",
+            "severity": "Warning",
+            "contract": "Token Linker",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-362"
+                ]
+            },
+            "title": "W3: Mulitple ways to receive ether can lead to loss of funds",
+            "description": "The contract uses two balances, a real balance and a storage slot balance, which can cause inconsistency between transactions if not atomic, leading to potential fund loss.",
+            "severity": "Warning",
+            "contract": "Token Linker/contracts/TokenLinker Native.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "W4: The forecall function is missing any checks by default",
+            "description": "The contract is abstract and the `_checkForecall` function is left unimplemented, presenting a risk because there are no default checks, allowing execution logic to be arbitrarily triggered by anyone.",
+            "severity": "Warning",
+            "contract": "AxelarForecallable",
+            "function": "forecall()",
+            "lineNumber": "43-53"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "I1: Typo in the error name",
+            "description": "The error name `TranferFromNativeFailed` should be probably `TransferFromNativeFailed`. Fix the typo.",
+            "severity": "Info",
+            "contract": "TokenLinker Native",
+            "function": "_takeToken",
+            "lineNumber": "40"
+        }
+    ]
+}

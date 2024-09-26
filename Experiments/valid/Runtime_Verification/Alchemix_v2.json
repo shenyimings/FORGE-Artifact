@@ -1,0 +1,228 @@
+{
+    "path": "./Audit_Reports_2024/Runtime_V\u0435rification/Alchemix_v2.pdf",
+    "project_info": {
+        "url": "https://github.com/alchemix-finance/alchemix-v2-auditable/tree/annotations",
+        "commit_hash": "annotations",
+        "address": "0xee69bd81bd056339368c97c4b2837b4dc4b796e7",
+        "is_exists": false,
+        "chain": "eth",
+        "compiler_version": [
+            "v0.6.12+commit.27d51765"
+        ],
+        "project_path": {
+            "TransmuterB": "Experiments/contracts/Alchemix_v2/TransmuterB"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "A01: Whitelisting allows admins to block withdrawals",
+            "description": "Admins can disable or enable whitelisting at any time, allowing them to block withdrawals from non-whitelisted contracts with Alchemist or Transmuter deposits, requiring a great deal of trust in the admins.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "A02: Incorrect update when removing AddressSet element",
+            "description": "In the `Sets` library, the `AddressSet` structure has an incorrect update when removing an element, leading to incorrect behavior of the `AddressSet` structure.",
+            "severity": "High",
+            "contract": "Sets",
+            "function": "remove()",
+            "lineNumber": "49"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "A03: mintFrom does not check or decrease the minting limit",
+            "description": "The `mintFrom` function does not check or decrease the minting limit, allowing users to circumvent the limits by calling `approveMint` and then using `mintFrom`.",
+            "severity": "Low",
+            "contract": "Alchemist",
+            "function": "mintFrom",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "A04: Harvest can cause balance == 0",
+            "description": "If a sufficiently-high number of shares are burned from the Alchemist after the price of a yield token has increased but before a harvest, the `expectedValue` of the token can become `0`, causing the next harvest to harvest the entire balance of the token in the Alchemist and blocking users from depositing, withdrawing, or liquidating.",
+            "severity": "High",
+            "contract": "Alchemist",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "A05: donate does not call lowerHasMinted",
+            "description": "The `donate` function does not call `lowerHasMinted` to decrease the count of tokens minted after burning debt tokens.",
+            "severity": "Low",
+            "contract": "Alchemist",
+            "function": "donate()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "A06: refreshStrategies iterates over the wrong bounds",
+            "description": "The function refreshStrategies() in TransmuterBuffer uses the list of underlying tokens in Alchemist to iterate over all registered assets in TransmuterBuffer, which may lead to incorrect iteration if the number of underlying tokens in TransmuterBuffer and Alchemist are not the same.",
+            "severity": "Low",
+            "contract": "TransmuterBuffer",
+            "function": "refreshStrategies()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-437"
+                ]
+            },
+            "title": "registerAsset and deRegisterAsset can drift out of sync with Alchemist",
+            "description": "The TransmuterBuffer maintains a list of registered underlying tokens but does not enforce staying in sync with the Alchemist, allowing governance to add arbitrary tokens with unintended consequences.",
+            "severity": "Low",
+            "contract": "TransmuterBuffer",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "A08: Price drop events can block claims from the Transmuter",
+            "description": "If a price drop event happens that causes the total value of the TransmuterBuffer's CDP to fall below the current claimable amount in all its Transmuters, then the Transmuter cannot honor all its claims.",
+            "severity": "Medium",
+            "contract": "TransmuterBuffer",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "A09: Short-term whaling of the Alchemist",
+            "description": "A whale can snag most of the gains between two harvests without contributing to the actual yield earned, affecting users' rightful returns.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "A10: deRegisterAsset in TransmuterBuffer always fails",
+            "description": "The function `deRegisterAsset` in the TransmuterBuffer always reverts because the variable `success` is never modified in the loop and remains false, causing it to revert with an error.",
+            "severity": "Medium",
+            "contract": "TransmuterBuffer",
+            "function": "deRegisterAsset(IDetailedERC20)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Yield token attack may be incentivized to leverage through Alchemix to boost their takeaway",
+            "description": "An attacker can manipulate yield token price and cash out before the price drops, leveraging Alchemix to siphon off funds. This relies on the unprivileged `depositFunds` function of the TransmuterBuffer.",
+            "severity": "High",
+            "contract": "TransmuterBuffer",
+            "function": "depositFunds",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "A12: Minting before a harvest can leave a CDP undercollateralized",
+            "description": "If a user mints from a CDP where the yield tokens have appreciated but the yield has not yet been harvested, the CDP might become undercollateralized after the next harvest, even though it was not undercollateralized immediately after minting.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

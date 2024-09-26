@@ -1,0 +1,114 @@
+{
+    "path": "./Audit_Reports_2024/HAECHI_AUDIT/HAECHI_AUDIT-Badger.pdf",
+    "project_info": {
+        "url": "https://github.com/badger-finance/badger-system/",
+        "commit_hash": "537ef9c44196893cb9760beca2dcc501952e9a4a",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/HAECHI_AUDIT-Badger/badger-system"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "RewardPool#notifyRewardAmount() does not check if it received reward",
+            "description": "The notifyRewardAmount function in RewardPool contract does not verify if a reward was received, which can lead to issues.",
+            "severity": "MINOR",
+            "contract": "RewardPool",
+            "function": "notifyRewardAmount()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "StakingRewards#notifyRewardAmount() can decrease rewardRate",
+            "description": "The notifyRewardAmount function does not check if the rewardRate decreases after notification, allowing admin to continuously decrease the reward rate by notifying with zero rewards.",
+            "severity": "MINOR",
+            "contract": "StakingRewards",
+            "function": "notifyRewardAmount()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Numerators can be larger than denominators",
+            "description": "Multiple functions do not check if the numerator can be larger than the denominator, leading to contracts reverting on normal interactions.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "Controller#revokeStrategy() can be called on active strategy",
+            "description": "The revokeStrategy function can be called on an active strategy, which may lead to unintended consequences.",
+            "severity": "Medium",
+            "contract": "Controller",
+            "function": "revokeStrategy()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Unused Variables",
+            "description": "Controller#{split,max} is defined but not used in contract. Consider removing the variables.",
+            "severity": "Minor",
+            "contract": "Controller",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ]
+            },
+            "title": "Remove Test events in StakingRewards",
+            "description": "The StakingRewards contract emits 'Test' events used for testing and should be removed before deployment.",
+            "severity": "Informational",
+            "contract": "StakingRewards",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

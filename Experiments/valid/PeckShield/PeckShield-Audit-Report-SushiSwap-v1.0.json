@@ -1,0 +1,49 @@
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-SushiSwap-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/sushiswap/sushiswap/tree/d76898b603aed60a776fc0ac529b199e1a6c8c9e",
+        "commit_hash": "d76898b603aed60a776fc0ac529b199e1a6c8c9e",
+        "address": "0xc2edad668740f1aa35e4d8f227fb8e17dca888cd",
+        "is_exists": true,
+        "chain": "eth",
+        "compiler_version": [
+            "v0.6.12+commit.27d51765"
+        ],
+        "project_path": {
+            "MasterChef": "Experiments/contracts/PeckShield-Audit-Report-SushiSwap-v1/MasterChef"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Avoidance of Unnecessary (Small) Loss During Migration",
+            "description": "The loss is caused in the `mint()` function of the revised `UniswapV2Pair` contract. In particular, the first-time minting (with `_totalSupply == 0`) will take the `then` branch (line 124) that executes code statements in lines 126-128, followed by `_mint(address(0), MINIMUM_LIQUIDITY)` in line 133.",
+            "severity": "Low",
+            "contract": "UniswapV2Pair",
+            "function": "mint()",
+            "lineNumber": "124, 126-128, 133"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ]
+            },
+            "title": "Incompatibility With Deflationary Tokens",
+            "description": "The MasterChef contract operates as the main entry for interaction with staking users and is incompatible with deflationary tokens.",
+            "severity": "Low",
+            "contract": "MasterChef",
+            "function": "deposit() and withdraw()",
+            "lineNumber": "210, 211, 212"
+        }
+    ]
+}

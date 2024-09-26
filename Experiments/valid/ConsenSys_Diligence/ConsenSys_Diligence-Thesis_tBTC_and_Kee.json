@@ -1,0 +1,66 @@
+{
+    "path": "./Audit_Reports_2024/ConsenSys_Diligence/ConsenSys_Diligence-Thesis_tBTC_and_Kee.pdf",
+    "project_info": {
+        "url": "https://github.com/keep-network/tbtc/tree/dcb1148025d6a1238b49a80fd56d8ca0beb93781",
+        "commit_hash": "dcb1148025d6a1238b49a80fd56d8ca0beb93781",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/ConsenSys_Diligence-Thesis_tBTC_and_Kee/tbtc"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Disallow signatures with high-s values in tbtc",
+            "description": "The function provideRedemptionSignature accepts a signature s value in the upper half of the secp256k1 curve, which is no longer used in Bitcoin and may cause redemption process to enter a fee increase loop.",
+            "severity": "Medium",
+            "contract": "DepositRedemption",
+            "function": "provideRedemptionSignature()",
+            "lineNumber": "L183-L202"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "distributeERC20ToMembers not using safeTransferFrom",
+            "description": "The function distributeERC20ToMembers is not using safeTransferFrom which can lead to potential issues with token transfers.",
+            "severity": "Medium",
+            "contract": "BondedECDSAKeep",
+            "function": "distributeERC20ToMembers",
+            "lineNumber": "L459-L463"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1173"
+                ]
+            },
+            "title": "Consistently use SafeERC20 to support potentially broken tokens external to the system",
+            "description": "Use SafeERC20 features to interact with potentially broken tokens used in the system.",
+            "severity": "Medium",
+            "contract": "TokenStaking, BondedECDSAKeep",
+            "function": "transfer(), transferFrom(), safeTransfer()",
+            "lineNumber": "L193-L193, L459-L463, L75-L75, L103-L103"
+        }
+    ]
+}

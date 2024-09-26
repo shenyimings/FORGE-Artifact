@@ -1,0 +1,413 @@
+{
+    "path": "./Audit_Reports_2024/Runtime_V\u0435rification/Runtime_V\u0435rification-Tracer_Perpetual_Pools_V2.pdf",
+    "project_info": {
+        "url": "https://github.com/tracer-protocol/perpetual-pools-contracts",
+        "commit_hash": "846bbf62652d7c83aee1cf3766275c4d08b00c8a",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/Runtime_V\u0435rification-Tracer_Perpetual_Pools_V2/perpetual-pools-contracts"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "A01: Unsafe transfer of ERC20 tokens",
+            "description": "The USDT token does not conform to the ERC20 standard, particularly its transfer functions do not return boolean values, causing transfers initiated by the contract to revert.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "A02: SMAOracle.update() never updates lastUpdate timestamp",
+            "description": "The update() function does not update the lastUpdate variable, allowing malicious users to exploit this vulnerability for price manipulations.",
+            "severity": "High",
+            "contract": "SMAOracle",
+            "function": "update()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-684"
+                ]
+            },
+            "title": "A03: PoolCommitter.claim() Potential reentrancy vulnerability",
+            "description": "The `claim()` function allows a user to withdraw his locked-in settlement-, short- and long-tokens. The settlement token can be an arbitrary ERC20-token, which may lead to potential reentrancy vulnerability.",
+            "severity": "High",
+            "contract": "PoolCommitter",
+            "function": "claim()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "A04: PoolCommitter.claim() griefing vulnerability",
+            "description": "The PoolCommitter offers two features that can be abused by an attacker to cause grief on other users, allowing them to withdraw balances on behalf of others and hinder minting operations.",
+            "severity": "Low",
+            "contract": "PoolCommitter",
+            "function": "claim()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "A05: PoolCommitter.executeCommitments() - Potential DoS due to unbounded loop",
+            "description": "The executeGivenCommitments() function of the PoolCommitter contract contains an unbounded loop that iterates over the pending commitments. If the lastPriceTimestamp becomes very old, this could lead to a condition where the loop can no longer be executed because its gas consumption exceeds the block gas limit.",
+            "severity": "High",
+            "contract": "PoolCommitter",
+            "function": "executeGivenCommitments()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ]
+            },
+            "title": "A06: PoolCommitter.claim(address user) updates the aggregate balance of the wrong user",
+            "description": "The `PoolCommitter` contract updates the message sender's balance instead of the target user's when a user claims his balance, potentially resulting in users receiving less than their total balance.",
+            "severity": "Low",
+            "contract": "PoolCommitter",
+            "function": "claim(address user)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "A07: PoolCommitter - Bypass front-running interval",
+            "description": "The PoolContract defines a front-running interval to prevent users from observing the price oracle and committing to a predictable price. However, if the front-running interval is lower than the update interval and the pool keeper fails to execute pending commitments timely, it is possible to bypass the front-running interval.",
+            "severity": "High",
+            "contract": "PoolContract",
+            "function": "commit()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "A08: PoolCommitter - incorrect calculation of shadow balances",
+            "description": "If the front-running interval is higher than the update interval, and the pool keeper fails to execute pending commits on time, the shadow balance is calculated incorrectly and pending commits might be executed at a wrong price.",
+            "severity": "High",
+            "contract": "PoolCommitter",
+            "function": "executeCommitments()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "A09: SMAOracle.getPrice() returns the wrong price when not enough prices are observed",
+            "description": "In SMAOracle.SMA(), `xs.length` always returns `24`, even if xs is partially filled. Consequently, `getPrice()` will return an incorrect value if the number of observed prices is less than `24`.",
+            "severity": "High",
+            "contract": "SMAOracle",
+            "function": "SMA()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "B01: Vesting - Recycling of canceled schedules",
+            "description": "The owner of the vesting contract can cancel vesting schedules if they\u2019re not flagged as `isFixed`. Currently, the implementation of `rug()` sets `schedule.totalAmount = 0` and keeps the schedule in storage, which may lead to potential recycling attacks.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "rug()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "B02: Vesting - Sanity check of scheduleId",
+            "description": "The vesting contract does not handle explicitly the case where a schedule identifier points to a non-existent schedule, which can lead to undefined behavior.",
+            "severity": "Low",
+            "contract": "Vesting Contract",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "B03: Vesting - Bounds checking in calcDistribution()",
+            "description": "The vesting contract's function `calcDistribution()` does not take into account the `cliffTime` and `endTime` boundaries of a schedule. Although currently used correctly by the `claim()` method, bounds-checking must be re-implemented if reused in future revisions.",
+            "severity": "Low",
+            "contract": "Vesting",
+            "function": "calcDistribution()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ],
+                "4": [
+                    "CWE-638"
+                ],
+                "5": [
+                    "CWE-424"
+                ],
+                "6": [
+                    "CWE-425"
+                ]
+            },
+            "title": "B04: Vesting - Possible front-running of rug()",
+            "description": "Users can observe the mempool to see if they\u2019re going to be rugged and claim their outstanding vested tokens before they get rugged.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "rug()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ]
+            },
+            "title": "Unused Import of prb-math Library",
+            "description": "The SMAOracle.sol file imports a third-party library called PRBMathSD59x18.sol, which is never used.",
+            "severity": "Low",
+            "contract": "SMAOracle",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1287"
+                ]
+            },
+            "title": "B06: SMAOracle.update() directly refers to PriceObserver implementation rather than the interface",
+            "description": "The `SMAOracle` contract holds a storage variable `priceObserver` that points to the implementation address of an `IPriceObserver` interface. The `update()` function casts the address to a `PriceObserver` contract, which is a specific implementation of the interface mentioned above.",
+            "severity": "Low",
+            "contract": "SMAOracle",
+            "function": "update()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-233"
+                ]
+            },
+            "title": "Unused Function SMAOracle.toWad()",
+            "description": "The `SMAOracle` contract defines a private function `toWad()` which is never used internally and not part of the interface specification of `IOracleWrapper`, containing unreachable code.",
+            "severity": "Low",
+            "contract": "SMAOracle",
+            "function": "toWad()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1288"
+                ]
+            },
+            "title": "Unused Storage Variable SMAOracle.price",
+            "description": "The `SMAOracle` contract defines a storage variable `price` that is never used, which might be confusing to readers of the code and can lead to unintended semantics.",
+            "severity": "Mid",
+            "contract": "SMAOracle",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "B09: SMAOracle.constructor() missing zero-check for _deployer argument",
+            "description": "The `SMAOracle` contract's constructor is missing a zero-check for the `_deployer` argument, which can lead to the deployment of oracles that cannot be used for pool deployment.",
+            "severity": "Low",
+            "contract": "SMAOracle",
+            "function": "constructor()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "ChainlinkOracleWrapper.constructor() missing zero-check for _deployer argument",
+            "description": "The ChainlinkOracleWrapper contract's constructor is missing a zero-check for the _deployer argument, which can lead to the deployment of oracles that cannot be used for pool deployment.",
+            "severity": "Low",
+            "contract": "ChainlinkOracleWrapper",
+            "function": "constructor()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 19,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "B11: PoolCommitter.executeCommitments() Missing check for updateInterval",
+            "description": "The executeCommitments() function always executes the first totalCommitment without checking if lastPriceTimestamp + updateInterval has passed.",
+            "severity": "Mid",
+            "contract": "PoolCommitter",
+            "function": "executeCommitments()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 20,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-253"
+                ]
+            },
+            "title": "B12: PoolCommitter - Recycling of personal commit histories",
+            "description": "The removal operation to decrease the attack surface of potential recycling attacks is present in the code but called with wrong parameters.",
+            "severity": "Low",
+            "contract": "PoolCommitter",
+            "function": "updateAggregateBalance",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 21,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Unnecessary Approval of Quote Token",
+            "description": "The setQuoteAndPool() function of the PoolCommitter contract unnecessarily approves the pool to spend an unlimited amount of settlement tokens on its behalf.",
+            "severity": "Low",
+            "contract": "PoolCommitter",
+            "function": "setQuoteAndPool()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

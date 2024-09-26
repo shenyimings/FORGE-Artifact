@@ -1,0 +1,451 @@
+{
+    "path": "./Audit_Reports_2024/ConsenSys_Diligence/ConsenSys_Diligence-0x_v3_Staking.pdf",
+    "project_info": {
+        "url": "https://github.com/0xProject/0x-monorepo",
+        "commit_hash": "b8e01d7be535196a3145a431291183ecfbb333c6",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/ConsenSys_Diligence-0x_v3_Staking/0x-monorepo"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Pool IDs can just be incrementing integers",
+            "description": "Pool IDs are currently bytes32 values that increment by 2**128. However, it is recommended to make Pool IDs uint256 values and simply add 1 to generate the next ID.",
+            "severity": "Minor",
+            "contract": "MixinConstants.sol",
+            "function": "_computeNextStakingPoolId",
+            "lineNumber": "L30-L34, L271-L280"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Anyone can remove a maker\u2019s pending pool join status",
+            "description": "Using behavior described in issue 5.6, it is possible to delete the _pending_ join status of any maker in any pool by passing NIL_POOL_ID to removeMakerFromStakingPool.",
+            "severity": "Major",
+            "contract": "MixinStakingPool",
+            "function": "removeMakerFromStakingPool",
+            "lineNumber": "L262, L166-L173"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Delegated stake weight reduction can be bypassed by using an external contract",
+            "description": "Staking pools allow ZRX holders to delegate their staked ZRX to a market maker in exchange for a configurable percentage of the stakereward. Using an external smart contract, it is possible to represent ZRX owned by any number of parties as ZRX staked by a single party.",
+            "severity": "Major",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "MixinParams.setParams bypasses safety checks made by standard",
+            "description": "The staking contracts use a set of configurable parameters to determine the behavior of various parts of the system. The parameters dictate the duration of epochs, the ratio of delegated stake weight vs operator stake, the minimum pool stake, and the Cobb-Douglas numerator and denominator. These parameters can be configured in two ways.",
+            "severity": "N/A",
+            "contract": "StakingProxy",
+            "function": "setParams()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Authorized addresses can indefinitely stall ZrxVaultBackstop catastrophic failure mode",
+            "description": "The ZrxVaultBackstop contract was added to allow anyone to activate the staking last timestamp at which \u201cread-only\u201d mode was activated. This is done by way of StakingProxy.setReadOnlyMode.",
+            "severity": "Medium",
+            "contract": "StakingProxy",
+            "function": "setReadOnlyMode",
+            "lineNumber": "L92-L104"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Pool 0 can be used to temporarily prevent makers from joining another pool",
+            "description": "An attacker can set a victim's MakerPoolJoinStatus.confirmed field to true and increase the number of makers in pool 0 to 1, then call removeMakerFromStakingPool(NIL_POOL_ID, randomAddress) to decrease the number of makers in pool 0 back to 0, temporarily preventing makers from joining another pool.",
+            "severity": "N/A",
+            "contract": "MixinStakingPool",
+            "function": [
+                "removeMakerFromStakingPool",
+                "poolJoinStatus"
+            ],
+            "lineNumber": [
+                "L177",
+                "L257-L262",
+                "L176-L177"
+            ]
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Fix weak assertions in MixinStakingPool stemming from use of NIL_POOL_ID",
+            "description": "The modifier onlyStakingPoolOperatorOrMaker(poolId) is used to authorize actions taken on a given pool. The sender must be either the operator or a confirmed maker of the implicitly makes anyone a maker of the non-existent \u201cpool0\u201d.",
+            "severity": "N/A",
+            "contract": "MixinStakingPool",
+            "function": "getStakingPoolIdOfMaker",
+            "lineNumber": "L189-L200"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "LibFixedMath functions fail to catch a number of overflows",
+            "description": "The __add(), __mul(), and __div() functions perform arithmetic on 256-bit signed integers and miss some specific overflow cases.",
+            "severity": "High",
+            "contract": "LibFixedMath",
+            "function": "_add, _mul, _div",
+            "lineNumber": "L359-L376, L332-L345, L347-L357"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Remove MixinAbstract and fold",
+            "description": "After implementing issues 5.12, 5.11, 5.10, and 5.9, MixinAbstract serves little utility except as a way to pull functionality from MixinFinalizer into MixinStakingPoolRewards. The abstract pattern adds unnecessary cognitive overhead and should be eliminated if possible.",
+            "severity": "N/A",
+            "contract": "MixinStakingPoolRewards",
+            "function": "withdrawDelegatorRewards",
+            "lineNumber": "L35-L56"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Remove confusing access to activePoolsThisEpoch",
+            "description": "MixinFinalizer provides two functions to access activePoolsThisEpoch: _getActivePoolsFromEpoch and _getActivePoolFromEpoch. These functions are syntax sugar for activePoolsThisEpoch[epoch%2], with the latter also accessing a value within the mapping.",
+            "severity": "Minor",
+            "contract": "MixinFinalizer",
+            "function": "_getActivePoolsFromEpoch, _getActivePoolFromEpoch",
+            "lineNumber": "L211-L225, L195-L209"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Remove MixinFinalizer._getUnfinalizedPoolRewardsFromState",
+            "description": "MixinFinalizer._getUnfinalizedPoolRewardsFromState is a simple wrapper around the library function LibCobbDouglas.cobbDouglas.",
+            "severity": "Minor",
+            "contract": "MixinFinalizer.sol",
+            "function": "_getUnfinalizedPoolRewardsFromState",
+            "lineNumber": "L250-L286"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1120"
+                ]
+            },
+            "title": "Remove complicating getters from MixinStakingPoolRewards",
+            "description": "MixinStakingPoolRewards has two external view functions that contribute complexity to essential functions, as well as the overall inheritance tree.",
+            "severity": "Minor",
+            "contract": "MixinStakingPoolRewards",
+            "function": [
+                "computeRewardBalanceOfOperator",
+                "computeRewardBalanceOfDelegator"
+            ],
+            "lineNumber": [
+                "L55-L69",
+                "L80-L99"
+            ]
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Misleading MoveStake event when moving stake from UNDELEGATED to UNDELEGATED",
+            "description": "Although moving stake between the same status (UNDELEGATED <=> UNDELEGATED) should be a no-op, calls to moveStake succeed even for invalid amount and nonsensical poolId. The resulting MoveStake event can log garbage, potentially confusing those observing events.",
+            "severity": "N/A",
+            "contract": "MixinStake",
+            "function": "_moveStake",
+            "lineNumber": "L141-L148"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1164"
+                ]
+            },
+            "title": "The staking contracts contain several artifacts of a quickly-changing codebase",
+            "description": "The contracts have multiple instances of address payable being used repeatedly but payments use WETH, identifiers are used multiple times for different purposes, and comments are out of date.",
+            "severity": "Minor",
+            "contract": [
+                "MixinStakingPool.sol",
+                "ZrxVault.sol",
+                "IZrxVault.sol",
+                "MixinStake.sol",
+                "MixinStorage.sol",
+                "MixinStakingPoolRewards.sol",
+                "IStructs.sol"
+            ],
+            "function": [
+                "createStakingPool",
+                "stakingProxyAddress",
+                "setStakingProxy",
+                "stake",
+                "unstake",
+                "moveStake",
+                "_delegateStake",
+                "_undelegateStake",
+                "N/A"
+            ],
+            "lineNumber": [
+                "L54",
+                "L38",
+                "L76",
+                "L53",
+                "L38",
+                "L63",
+                "L119",
+                "L181",
+                "L210",
+                "L86",
+                "N/A",
+                "L62",
+                "L36-L38",
+                "L41",
+                "L42"
+            ]
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1287"
+                ]
+            },
+            "title": "Remove unneeded fields from StoredBalance and Pool structs",
+            "description": "Both structs have fields that are only written to, and never read.",
+            "severity": "N/A",
+            "contract": "IStructs.sol",
+            "function": "N/A",
+            "lineNumber": "L61, L113"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1286"
+                ],
+                "4": [
+                    "CWE-112"
+                ]
+            },
+            "title": "Remove unnecessary fallback function in Staking contract",
+            "description": "The Staking contract has a payable fallback function that is never used. Because it is used with a proxy contract, this pattern introduces silent failures when calls are made to the contract with no matching function selector.",
+            "severity": "Minor",
+            "contract": "Staking",
+            "function": "fallback()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-410"
+                ]
+            },
+            "title": "Pool Existence Error",
+            "description": "The pool existence error occurs when a staking pool does not exist or is not properly initialized.",
+            "severity": "High",
+            "contract": "MixinStakingPool",
+            "function": "_assertStakingPoolExists",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Invalid Protocol Fee Payment Error",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Invalid Stake Status Error",
+            "description": "The MoveStake event can log completely invalid values for stake status.",
+            "severity": "High",
+            "contract": "MixinStake",
+            "function": "_moveStake",
+            "lineNumber": "L141-L148"
+        },
+        {
+            "id": 19,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Initialization Error",
+            "description": "An unauthorized address can call MixinParams.setParams at any time and set the contract's parameters to arbitrary values.",
+            "severity": "Critical",
+            "contract": "MixinParams",
+            "function": "setParams",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 20,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Invalid Param Value Error",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "MixinParams",
+            "function": "setParams()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 21,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Previous Epoch Not Finalized Error",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "MixinStake",
+            "function": "_delegateStake/_undelegateStake/moveStake/stake/unstake",
+            "lineNumber": "N/A"
+        }
+    ]
+}

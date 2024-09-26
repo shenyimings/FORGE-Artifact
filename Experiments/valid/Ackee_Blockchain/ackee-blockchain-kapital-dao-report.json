@@ -1,0 +1,174 @@
+{
+    "path": "./Audit_Reports_2024/Ackee_Blockchain/ackee-blockchain-kapital-dao-report.pdf",
+    "project_info": {
+        "url": "https://github.com/kapital-dao/kapital-dao/tree/a8fe3c9c6eeb56759c447a00c7d88ed356c1b5d7",
+        "commit_hash": "a8fe3c9c6eeb56759c447a00c7d88ed356c1b5d7",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/ackee-blockchain-kapital-dao-report/kapital-dao"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "M1: The VESTING_CREATOR role can vote multiple times",
+            "description": "Vesting Creator can create vesting for a short period with a beneficiary address that he/she owns and then vote for the proposal from the beneficiary address, allowing them to vote multiple times for the same proposal.",
+            "severity": "Medium",
+            "contract": "GovernanceV2",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-358"
+                ]
+            },
+            "title": "M2: Governance can lock funds forever",
+            "description": "Governance has the ability to lock funds permanently due to incorrect settings of the Timelock lock period and Voting Period.",
+            "severity": "Medium",
+            "contract": "TimeLock.sol",
+            "function": "updateLockPeriod",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "M3: Dynamic changes of the lock period",
+            "description": "Dynamic changes to the lock period can cause a denial-of-service (DoS) issue.",
+            "severity": "Medium",
+            "contract": "TimeLock.sol",
+            "function": "updateLockPeriod()",
+            "lineNumber": "96-104"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "L1: Lack of project identifier for address validation",
+            "description": "The contracts in constructors are only checked against the zero address, which is not sufficient to ensure deep address validation. Further validation can be done by using contract/project identifiers.",
+            "severity": "Low",
+            "contract": "Governance",
+            "function": "constructor()",
+            "lineNumber": "36-45"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "W1: Pitfalls of upgradeability",
+            "description": "The employed upgradeability system uses a GovernanceRegistry contract which holds the current active governance contract. When a new upgrade is needed, a new separate Governance contract is deployed, and only the address in the registry is changed. This approach to upgradeability can lead to double spending on the old governance.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "W2: Execute could not be triggered if there are burned a lot of KAP tokens",
+            "description": "The QUORUM constant is set to 4% of the total supply of KAP tokens and does not update when KAP token is burned, which can cause the execute function to not be triggered in a basic scenario.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "I1: Boost can only be turned off",
+            "description": "The Staking contract allows users to accumulate additional rewards through a boost. However, after turning it off, it is not possible to set it back on.",
+            "severity": "Info",
+            "contract": "Staking.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1059"
+                ]
+            },
+            "title": "I2: Missing code comments",
+            "description": "The contracts Delegator.sol and Timelock.sol are missing code comments which are important to easily understand the code, thus making it easier to audit and maintain.",
+            "severity": "Info",
+            "contract": "Delegator.sol, Timelock.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "I3: Ambiguous error messages",
+            "description": "Many places in the code base contain ambiguous error messages which do not contain enough information to easily parse why the given transaction failed.",
+            "severity": "Info",
+            "contract": "Staking",
+            "function": "_boost",
+            "lineNumber": "184, 194-195"
+        }
+    ]
+}

@@ -1,0 +1,427 @@
+{
+    "path": "./Audit_Reports_2024/Hacken/MetaGenesis_SC-Audit-Report_07112023_SA-1991.pdf",
+    "project_info": {
+        "url": "https://github.com/Metatime-Technology-Inc/genesis-contracts",
+        "commit_hash": "e187053ae4654e4ff25e6b55c5a7435e9fc2bb34",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/MetaGenesis_SC-Audit-Report_07112023_SA-1991/genesis-contracts"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "C01. Drain of funds by calling unsubscribe() function due to reentrancy",
+            "description": "Any user can drain all stakes from the Metaminer contract by making a reentrant call via unsubscribe() function, which lacks Check-Effect-Interaction pattern application or missing reentrancy protection mutex.",
+            "severity": "Critical",
+            "contract": "Metaminer",
+            "function": "_unsubscribe(address)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "C02. Over-rewarding users due to inconsistency on MinerFormulas",
+            "description": "The protocol does not follow some significant rules on the code base, leading to incorrect definitions for hardcap calculations in the MinerFormulas contract, resulting in over-rewarding users.",
+            "severity": "Critical",
+            "contract": "MinerFormulas",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "C03. Vote functionality in TxValidator is open to manipulation",
+            "description": "The vote point calculation formula in TxValidator allows users to have full authority on all types of voting in a very short time.",
+            "severity": "High",
+            "contract": "TxValidator",
+            "function": "_calculateVotePoint()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Macrominer nodes can gain full authority over reward decisions in short period",
+            "description": "Macrominer nodes can gain full authority over voting and influence the reward mechanism by becoming all types of Macrominer nodes, reaching a MetaPoint balance of 100, and staying active for 33 days.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "H02. Unpaid validators can getting paid and deny unsubscribe() right of paid validators",
+            "description": "Unpaid validators can get paid and deny the unsubscribe() right of paid validators",
+            "severity": "N/A",
+            "contract": "Metaminer",
+            "function": "_unsubscribe",
+            "lineNumber": "L119-123, L155-158, L326, L165-174"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "H03. Macrominers can cast unlimited votes to kick inactive miners",
+            "description": "Macrominer nodes can vote to kick other inactive nodes out of the protocol and influence the reward mechanism by continuously calling the Macrominer.checkMinerStatus() function, allowing them to reach VOTE_POINT_LIMIT and gain full authority over voting.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "checkMinerStatus()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "Loss of voting weight due to precision loss",
+            "description": "Precision loss possibility in vote point calculation formula",
+            "severity": "Medium",
+            "contract": "utils/TxValidator.sol",
+            "function": "N/A",
+            "lineNumber": "266-269"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "M02. Shareholder incomes set by admin can be eliminated by paying ANNUAL_AMOUNT",
+            "description": "The Metaminer.setMiner() function allows a node operator to eliminate shareholder incomes set by the protocol owner and gain control over income distribution by repaying the ANNUAL_AMOUNT.",
+            "severity": "High",
+            "contract": "Metaminer",
+            "function": "setMiner()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "M03. Malicious validator can drain all Metaminer funds via Reentrancy on _shareIncome() function",
+            "description": "The _shareIncome() function poses a reentrancy vulnerability due to missing reentrancy guard and incorrect Check-Effect-Interaction pattern, allowing a malicious validator to drain all Metaminer funds.",
+            "severity": "High",
+            "contract": "Metaminer",
+            "function": "_shareIncome()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Macrominer nodes can gain full authority over kicking inactive nodes in short period",
+            "description": "Macrominer nodes can vote to kick other inactive nodes out of the protocol and influence the reward mechanism by accumulating enough votes through their MetaPoint balance, allowing them to gain full authority over voting within a short period.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "_kickMiner()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "M05. Share incomes may not be distributed due to incorrect allocation",
+            "description": "Incorrect share allocation calculation can prevent distribution of share incomes.",
+            "severity": "High",
+            "contract": "Metaminer",
+            "function": "_addShareHolder()",
+            "lineNumber": "L137-141, L196-199"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "L01. Centralization risks",
+            "description": "Centralization risk in smart contract security refers to the potential for a smart contract or decentralized application to become centralized in some aspect, which can pose security and trust issues.",
+            "severity": "High Impact",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "L02. VoteId can be incremented with ghost votes",
+            "description": "It is possible to create ghost votes on Macrominer contract voting functionality due to a missing sanity check.",
+            "severity": "Low",
+            "contract": "Macrominer",
+            "function": "checkMinerStatus()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "L03. Inactive Macrominer nodes are entitled to vote",
+            "description": "The Macrominer contract does not include a sanity check to prevent inactive miners from voting.",
+            "severity": "Low",
+            "contract": "Macrominer",
+            "function": "checkMinerStatus()",
+            "lineNumber": "utils/Macrominer.sol#L148"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "L04. Missing sanity checks on adding and deleting miner functionalities",
+            "description": "The MinerList contract lacks sanity checks when adding or removing miners, leading to potential unexpected results on the protocol.",
+            "severity": "Low",
+            "contract": "MinerList",
+            "function": "_addMiner() and _deleteMiner()",
+            "lineNumber": "87, 103"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "L05. Ignored return values",
+            "description": "The MinerHealthCheck contract does not check any of the return variables from functions such as _incrementDailyActiveTimes(), _incrementDailyTotalActiveTimes() and claimMacroDailyReward(). This can break any integrations or composability in case of silent failures.",
+            "severity": "Low",
+            "contract": "MinerHealthCheck",
+            "function": "_incrementDailyActiveTimes(), _incrementDailyTotalActiveTimes(), claimMacroDailyReward()",
+            "lineNumber": "101-103"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-1419"
+                ],
+                "4": [
+                    "CWE-1188"
+                ],
+                "5": [
+                    "CWE-453"
+                ]
+            },
+            "title": "L06. Bridge contracts are frozen by default",
+            "description": "Bridge contracts inherit the Freezable contract and are frozen by default due to the initialization of the frozen variable as true, preventing their bridge() functionalities.",
+            "severity": "Low",
+            "contract": "Freezeable",
+            "function": "N/A",
+            "lineNumber": "helpers/Freezeable.sol#L12, utils/Bridge.sol#L34, utils/MainnetBridge.sol#L58"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Unneeded initializations of uint256 and bool variable to 0/false",
+            "description": "Initializing uint256 variables to 0 and bool variables to false when they are not subsequently used in the code can lead to unnecessary gas consumption and code clutter.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "I02. Missing reentrancy guard",
+            "description": "The protocol lacks a reentrancy guard, allowing malicious contracts to repeatedly call back into another contract, causing unexpected and harmful behavior.",
+            "severity": "Critical",
+            "contract": [
+                "RewardsPool",
+                "MinerPool"
+            ],
+            "function": [
+                "claim()",
+                "claimTxReward()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 19,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1120"
+                ],
+                "3": [
+                    "CWE-1060"
+                ]
+            },
+            "title": "I03. Revert string size optimization",
+            "description": "Shortening revert strings to fit within 32 bytes will decrease deployment time gas and decrease runtime gas when the revert condition is met.",
+            "severity": "N/A",
+            "contract": [
+                "BlockValidator",
+                "Microminer"
+            ],
+            "function": "N/A",
+            "lineNumber": [
+                "#L73",
+                "#L77",
+                "#L95",
+                "#L33",
+                "#L45",
+                "#L68",
+                "#L84"
+            ]
+        },
+        {
+            "id": 20,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Splitting require() statements that use && saves gas",
+            "description": "Using multiple require statements with 1 condition per require() statement instead of using the && operator in a single require statement to check multiple conditions can save 3 GAS per &&.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 21,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Over-rewarding users due to incorrect definition of hardcap calculations",
+            "description": "Incorrect definitions of hardcap calculations in MinerFormulas contract allow users to earn more rewards than expected.",
+            "severity": "High",
+            "contract": "MinerFormulas",
+            "function": "N/A",
+            "lineNumber": "utils/MinerFormulas.sol"
+        }
+    ]
+}

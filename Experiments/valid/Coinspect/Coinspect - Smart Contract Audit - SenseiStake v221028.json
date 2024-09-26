@@ -1,0 +1,232 @@
+{
+    "path": "./Audit_Reports_2024/Coinspect/Coinspect - Smart Contract Audit - SenseiStake v221028.pdf",
+    "project_info": {
+        "url": "https://github.com/Sensei-Node/SenseiStake",
+        "commit_hash": "1661cddc1b484a900c884b0ee93b837e7348fb89",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/Coinspect - Smart Contract Audit - SenseiStake v221028/SenseiStake"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Platform owner can extend exitDate for an indefinite period",
+            "description": "The platform owner can tempt users to acquire a validator with appealing arbitrage conditions and then indefinitely modify the contracts\u2019 `exitDate` to maximize their commission gains.",
+            "severity": "Medium",
+            "contract": "SenseistakeServicesContract.sol",
+            "function": "updateExitDate(uint64)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Platform owner can force users into accepting a higher commission rate",
+            "description": "The platform owner can front-run users to force them to accept a higher commission rate than expected when calling the `createContract` function.",
+            "severity": "Medium",
+            "contract": "SenseiStake.sol",
+            "function": "changeCommissionRate() and createContract()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-241"
+                ]
+            },
+            "title": "Invalid BLS signature can lead to funds loss",
+            "description": "A malformed BLS signature will cause all funds to be lost forever during the deposit process if it is not validated before adding a new validator.",
+            "severity": "Medium",
+            "contract": "SenseiStake.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Users' funds can be lost after re-funding validator",
+            "description": "If duplicate validators are used, multiple stakers will have an NFT backed by the same validator and staking position. In the case of such an event, the second user will be topping the first user position, causing the user to lose all funds.",
+            "severity": "Medium",
+            "contract": "SenseiStake",
+            "function": "addValidator",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Deposit to pre funded validator will cause funds loss",
+            "description": "Users could deposit funds to a validator that has been previously staked, not necessarily staked via the SenseiStake contract. This prevents users from getting a brand new validator and puts their funds at risk in the withdrawal process.",
+            "severity": "High",
+            "contract": "SenseiStake.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ],
+                "2": [
+                    "CWE-1025"
+                ],
+                "3": [
+                    "CWE-595"
+                ]
+            },
+            "title": "NFT key parameters not displayed on marketplaces",
+            "description": "The `tokenURI` function does not include key parameters of the backed validator, such as the `commissionRate` and `exitDate`, which could deceive users when purchasing these NFTs on standard marketplaces.",
+            "severity": "Medium",
+            "contract": "SenseiStake.sol",
+            "function": "tokenURI()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Check ERC721 allowance instead of ownership",
+            "description": "The `endOperationService` and `withdraw` functions require the caller to be the owner, which is an uncommon practice. Owners can approve other addresses to operate with the token which is allowed in the Open Zeppelin `ERC721` token contract implementation used.",
+            "severity": "Low",
+            "contract": "SenseiStake.sol",
+            "function": [
+                "endOperationService",
+                "withdraw"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Users can fund an unexpected validator with different conditions",
+            "description": "Users could deposit funds to a validator that has been previously staked, not necessarily staked via the `SenseiStake` contract. This prevents users from getting a brand new validator and puts their funds at risk in the withdrawal process.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "addValidator",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Hardcoded value (32 ETH)",
+            "description": "Hardcoded constants used across the codebase for comparisons and checks are sometimes difficult to understand without having a context or reading the documentation.",
+            "severity": "Info",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-775"
+                ]
+            },
+            "title": "404 on tokenURI link",
+            "description": "The link provided in the `tokenURI` returns a `404` error when opening.",
+            "severity": "Info",
+            "contract": "SenseiStake.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "SenseiStake can lose staking commission",
+            "description": "If the validator does not unstake before the exitDate is reached, SenseiStake could lose the service commission.",
+            "severity": "N/A",
+            "contract": "SenseistakeServicesContract",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

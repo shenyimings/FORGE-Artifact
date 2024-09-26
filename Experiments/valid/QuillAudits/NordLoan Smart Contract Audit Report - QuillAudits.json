@@ -1,0 +1,55 @@
+{
+    "path": "./Audit_Reports_2024/QuillAudits/NordLoan Smart Contract Audit Report - QuillAudits.pdf",
+    "project_info": {
+        "url": "https://github.com/nordfinance/nord-nft-loans/tree/development",
+        "commit_hash": "development",
+        "address": "0xe41d2489571d322189246dafa5ebde1f4699f498",
+        "is_exists": false,
+        "chain": "eth",
+        "compiler_version": [
+            "v0.4.11+commit.68ef5810"
+        ],
+        "project_path": {
+            "ZRXToken": "Experiments/contracts/NordLoan Smart Contract Audit Report - QuillAudits/ZRXToken"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Failing low-level call",
+            "description": "The _attemptTransferFrom function performs a low-level call operation over NFT contract involved, approving contract address itself as spender of NFT Id and transferring NFT Id from contract address to recipient. However, this is unnecessary and may fail if the NFT contract follows Openzeppelin's ERC721 implementation.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "_attemptTransferFrom",
+            "lineNumber": "#L594"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Missing return value checks for ERC20 transfer operations",
+            "description": "The functions ignore the return value for ERC20 transfer operations which can lead to unintended behavior with certain tokens that do not follow OpenZeppelin's ERC20 implementation.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "beginLoan",
+            "lineNumber": "N/A"
+        }
+    ]
+}

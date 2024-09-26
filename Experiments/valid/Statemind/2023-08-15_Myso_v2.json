@@ -1,0 +1,473 @@
+{
+    "path": "./Audit_Reports_2024/Statemind/2023-08-15_Myso_v2.pdf",
+    "project_info": {
+        "url": "https://github.com/mysofinance/v2/tree/c0536c1ad650805bdf5d68390de0434eb570e694",
+        "commit_hash": "c0536c1ad650805bdf5d68390de0434eb570e694",
+        "address": "0x3EAf1BA2C14B2d353fd63c3881bbcc7583E665f9",
+        "is_exists": true,
+        "chain": "bsc",
+        "compiler_version": [
+            "v0.8.19+commit.7dd6d404"
+        ],
+        "project_path": {
+            "LenderVaultImpl": "Experiments/contracts/2023-08-15_Myso_v2/LenderVaultImpl"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Impossible to swap when protocolFee is set",
+            "description": "During the swap process, there are two conditions that need to be met as part of the validation, but due to the calculation of upfrontFee and the requirement for protocolFeeAmount and borrowInstructions.expectedTransferFee to be 0, it becomes impossible to process the swap when there are any transfer fees or if the protocol fee is set.",
+            "severity": "High",
+            "contract": "LenderVaultImpl.sol, BorrowerGateway.sol",
+            "function": "N/A",
+            "lineNumber": "L137-L142, L276-L280"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Inability to Disable Whitelist for Borrowers When Granted Using Signatures",
+            "description": "Borrowers can update their whitelist status using a signature and preserve their existing whitelist status by backrunning the authority's call.",
+            "severity": "High",
+            "contract": "AddressRegistry",
+            "function": "N/A",
+            "lineNumber": "169, 254"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ],
+                "3": [
+                    "CWE-302"
+                ]
+            },
+            "title": "Reuse signature mechanic",
+            "description": "The smart contract does not prevent reusing signatures, which can lead to security vulnerabilities.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "claimBorrowerWhitelistStatus",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Collateral can be locked forever, if the loan amount is zero",
+            "description": "If a borrower tries to borrow a loan using a quote with specific parameters (GeneralQuoteInfo.minLoan and QuoteTuple.loanPerCollUnitOrLtv equal to zero) and sets BorrowTransferInstructions.minLoanAmount to zero, the collateral can be locked forever.",
+            "severity": "HIGH",
+            "contract": "BorrowerGateway",
+            "function": [
+                "borrowWithOnChainQuote",
+                "borrowWithOffChainQuote"
+            ],
+            "lineNumber": [
+                "L87",
+                "L32"
+            ]
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Potential reclaiming of whitelist through signature reuse | P2Pool",
+            "description": "Within the Factory contract, the claimLenderWhitelistStatus() function enables claiming a whitelist status using whitelistAuthority's signature. Concurrently, whitelistAuthority can update the whitelist status via updateLenderWhitelist(). A lender can reclaim a revoked whitelist status using a previously issued signature.",
+            "severity": "Medium",
+            "contract": "Factory",
+            "function": "claimLenderWhitelistStatus()",
+            "lineNumber": "129"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Misuse of _repaymentScheduleCheck function",
+            "description": "The _repaymentScheduleCheck function is used improperly in the acceptLoanTerms() function of LoanProposalImpl contract for two reasons: it performs a redundant check and includes a conditional clause that mistakenly verifies if the first repayment dueTimestamp is in the correct timeframe, leading to perpetual failure.",
+            "severity": "Medium",
+            "contract": "LoanProposalImpl",
+            "function": "acceptLoanTerms()",
+            "lineNumber": "140"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Insufficient check in _checkAndReturnLatestRoundData",
+            "description": "In the function _checkAndReturnLatestRoundData there are checks to ensure that the data is recent enough. However, there is no check for the lower bound of updatedAt, and the other checks do not cover it at all.",
+            "severity": "Medium",
+            "contract": "ChainlinkBasic",
+            "function": "_checkAndReturnLatestRoundData()",
+            "lineNumber": "80"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Requirment to set Sequncer if project will be multichain",
+            "description": "Layer 2 solutions require an additional Sequencer contract to provide data.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Transfers in Erc721 wrapper can be blocked",
+            "description": "A user with allowance to the WrappedERC721 would have to transfer wrapped tokens to himself before redeeming underlying tokens.",
+            "severity": "Informational",
+            "contract": "WrappedERC721Impl",
+            "function": "N/A",
+            "lineNumber": "L44"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "Griefing wrapping tokens",
+            "description": "Any participant can wrap ERC20/ERC721 tokens via AddressRegistry createWrappedTokenForERC721s/createWrappedTokenForERC20s functions. However, a griefer can call ERC721Wrapper createWrappedToken/ERC20Wrapper createWrappedToken directly.",
+            "severity": "Medium",
+            "contract": "AddressRegistry",
+            "function": [
+                "createWrappedTokenForERC721s",
+                "createWrappedTokenForERC20s"
+            ],
+            "lineNumber": [
+                "206",
+                "228"
+            ]
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Last repayment can be blocked",
+            "description": "A borrower can repay the loan using BorrowerGateway repay function. However, if a borrower returns almost a loan, the last repayment can be blocked due to the calculation of reclaimCollAmount.",
+            "severity": "Medium",
+            "contract": "LenderVaultImpl",
+            "function": "validateRepayInfo",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-179"
+                ]
+            },
+            "title": "transferFrom with IERC20 interface unsupports early ERC20 implementation",
+            "description": "The 'safeTransferFrom' function is used with the IERC20Metadata interface which may not support early ERC20 implementations.",
+            "severity": "High",
+            "contract": "BorrowerGateway",
+            "function": "_processTransfers",
+            "lineNumber": "L274-L278, L301-L305"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Users can lose tokens when minting a wrapped token",
+            "description": "Any user can mint wrapper token using WrappedERC20Impl::mint() function, allowing an attacker to front-run victim transaction and increase underlying token balance by a mint amount.",
+            "severity": "Medium",
+            "contract": "WrappedERC20Impl",
+            "function": "mint()",
+            "lineNumber": "L101"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Compartment access after a loan default",
+            "description": "A borrower has full access to the compartment's token functionality even after the loan expires.",
+            "severity": "MEDIUM-10",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Using SafeERC20 library for tokens approve",
+            "description": "N/A",
+            "severity": "N/A",
+            "contract": "WrappedERC20Impl",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-908"
+                ],
+                "4": [
+                    "CWE-457"
+                ]
+            },
+            "title": "Singleton state violation",
+            "description": "N/A",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Meaningless condition in the rollback function",
+            "description": "The condition 'block.timestamp < lenderInOrOutCutoffTime' doesn't make sense because if a borrower doesn't want to accept a loan proposal after 'lenderInOrOutCutoffTime', he won't call the 'finalizeLoanTermsAndTransferColl' function, and because only he can do it, everybody will have to wait for 'Constants.LOAN_EXECUTION_GRACE_PERIOD' amount of time after 'lenderInOrOutCutoffTime' to call the 'rollback' function and unsubscribe from this loan proposal.",
+            "severity": "Medium",
+            "contract": "LoanProposalImpl",
+            "function": "rollback",
+            "lineNumber": "277-278"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "UniswapV2 LP-Token price oracle can be manipulated",
+            "description": "The UniswapV2 Pair contract allows arbitrary transfer of tokens to reserve without minting new LP-Tokens or adhering to constant product formula via sync() function, which can be exploited by an attacker to increase the amount of tokens in one of the reserves and consecutively the price of LP-Token.",
+            "severity": "Medium",
+            "contract": "UniswapV2 Pair",
+            "function": "sync()",
+            "lineNumber": "198"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Rounding error in repayAmount calculation",
+            "description": "In the _getLoanAndRepayAmount method of LenderVaultImpl contract, there is a rounding error in the price calculation due to division being performed before multiplication.",
+            "severity": "MEDIUM",
+            "contract": "LenderVaultImpl",
+            "function": "_getLoanAndRepayAmount",
+            "lineNumber": "418"
+        },
+        {
+            "id": 19,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Possible lose of money by lenders",
+            "description": "Lenders may lose money due to incorrect handling of loan repayment and collateral tokens.",
+            "severity": "High",
+            "contract": "ILenderVaultImpl",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 20,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "Reentrancy in borrowing process",
+            "description": "The LenderVaultImpl contract contains a reentrancy vulnerability that allows an owner to spend a borrower's locked funds by using Compartment implementation, that makes call to owner address in its initializer.",
+            "severity": "Medium",
+            "contract": "LenderVaultImpl",
+            "function": "processQuote",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 21,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Potential DOS of repay due to open repayCallback",
+            "description": "The function repayCallback is open and can be called by anyone, leading to a Denial-of-Service (DOS) vulnerability if it is called after token transfer to the contract and before its call in BorrowerGateway contract.",
+            "severity": "Medium",
+            "contract": "BalancerV2Looping, UniV3Looping",
+            "function": "repayCallback",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 22,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-358"
+                ]
+            },
+            "title": "Harmful condition in acceptLoanTerms",
+            "description": "In the function LoanProposalImpl.acceptLoanTerms there is a condition that isn't required and is harmful because many lenders may not subscribe to proposal until it is accepted.",
+            "severity": "Medium",
+            "contract": "LoanProposalImpl",
+            "function": "acceptLoanTerms(uint256 _loanTermsUpdateTime)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 23,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Borrower can avoid repayment",
+            "description": "A borrower can repay the loan using BorrowerGateway repay function and manipulate the reclaim amount to block the last repayment or create a proposal with incorrect loanTokenDue, totalSubscription which truncates the absolute value for loanTokenDue, allowing the borrower to avoid repayment.",
+            "severity": "Medium",
+            "contract": "LoanProposalImpl",
+            "function": "getAbsoluteLoanTerms",
+            "lineNumber": "L544"
+        },
+        {
+            "id": 24,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "Tokens being unintentionally sent to this vault due to user error or other reasons",
+            "description": "There is a possibility of tokens being unintentionally sent to this vault due to user error or other reasons.",
+            "severity": "High",
+            "contract": "WrappedERC20Impl",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

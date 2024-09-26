@@ -1,0 +1,205 @@
+{
+    "path": "./Audit_Reports_2024/MixBytes/WTToken.md",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0xde36e50674078fadb52ce1fd2121158fbd01cf86",
+        "chain": "eth",
+        "compiler_version": [
+            "v0.4.13+commit.fb4cb1a"
+        ],
+        "project_path": {
+            "WTToken": "Experiments/contracts/WTToken/WTToken"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "approve \u043d\u0430 transfer \u043d\u0443\u043b\u044f \u0442\u043e\u043a\u0435\u043d\u043e\u0432",
+            "description": "There's a possibility to make an approve call with zero tokens transferred, not only when changing the allowed token count value. It is recommended to add a check: if (_value == 0 && allowed[msg.sender][_spender] == 0) revert();",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "approve",
+            "lineNumber": "151"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Redundant Expression *_addr = _addr;",
+            "description": "The expression *_addr = _addr; appears to be redundant and can potentially lead to unnecessary gas consumption.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "123"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Add onlyPayloadSize Modifier to approve Method",
+            "description": "It is recommended to add the onlyPayloadSize(2 * 32) modifier to the approve method.",
+            "severity": "Warning",
+            "contract": "N/A",
+            "function": "approve",
+            "lineNumber": "145"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Insufficient Privileged Balance Increase",
+            "description": "It is suggested to increase *previligedBalances[_to]* in this method, as the logic of privileged balances and their difference from regular balances is unclear.",
+            "severity": "Warning",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "441"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ]
+            },
+            "title": "\u041b\u044e\u0431\u043e\u0439 \u043c\u043e\u0436\u0435\u0442 \u0441\u0436\u0435\u0447\u044c \u0442\u043e\u043a\u0435\u043d\u044b",
+            "description": "Anyone can burn tokens. If the team planned to use the *burn()* function for one-time token burning, this could be a problem.",
+            "severity": "\u0421\u0415\u0420\u042c\u0415\u0417\u041d\u042b\u0415",
+            "contract": "N/A",
+            "function": "*burn()*",
+            "lineNumber": "370"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1120"
+                ],
+                "3": [
+                    "CWE-1060"
+                ]
+            },
+            "title": "Replace *public* with *external*",
+            "description": "Recommendation to replace *public* with *external* to save gas.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "451, 463, 436"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Add Check: _upgradeMaster Initialization",
+            "description": "The contract does not check if _upgradeMaster is initialized before usage, which can lead to unexpected behavior.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "284"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Add Owner Address Validation",
+            "description": "The code lacks a check to ensure the _owner variable is not set to address(0), which can lead to unintended behavior.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "2418"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Unvalidated User Input Before Safe Function Calls",
+            "description": "Before calling safe functions, user input should be validated using require/revert to prevent gas waste in case of incorrect user input.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "214"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-357"
+                ],
+                "3": [
+                    "CWE-450"
+                ]
+            },
+            "title": "Misleading Naming: Parameter named '_owner'",
+            "description": "The parameter '_owner' is misleadingly named as it can be any user.",
+            "severity": "Warning",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "431"
+        }
+    ]
+}

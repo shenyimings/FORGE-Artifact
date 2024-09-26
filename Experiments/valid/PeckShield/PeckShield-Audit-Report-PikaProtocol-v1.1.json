@@ -1,0 +1,83 @@
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-PikaProtocol-v1.1.pdf",
+    "project_info": {
+        "url": "https://github.com/PikaProtocol/PikaPerpV2",
+        "commit_hash": "1eac910",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/PeckShield-Audit-Report-PikaProtocol-v1/PikaPerpV2"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improved claimable Calculation in claimable()",
+            "description": "In the `claimable()` function of `Vester` contract, calculating claimable amount without considering dedicated vestingPeriod may return an unexpected amount for the given `_depositId`. ",
+            "severity": "Medium",
+            "contract": "Vester",
+            "function": "claimable()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-354"
+                ]
+            },
+            "title": "3.2 Improper Validation of Function Arguments",
+            "description": "In the `PikaPriceFeed` contract, the `setPriceDuration()` function does not validate the input parameter `_priceDuration`, which can lead to updating the `priceDuration` with a value bigger than `MAX_PRICE_DURATION`, causing manually set prices for tokens to remain valid for an unexpected duration.",
+            "severity": "Low",
+            "contract": "PikaPriceFeed",
+            "function": "setPriceDuration()",
+            "lineNumber": "106"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "In the Pika protocol, there exist certain privileged accounts that play critical roles in governing and regulating the system-wide operations.",
+            "severity": "Medium",
+            "contract": "Pika",
+            "function": [
+                "mint()",
+                "setTransfersAllowed()"
+            ],
+            "lineNumber": "66-71, 73-78"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect ETH tokenBase Used in OrderBook",
+            "description": "In the `OrderBook` contract, incorrect token base used for `ETH` in the `cancelOpenOrder()` routine, using `tokenBase` instead of 1e18.",
+            "severity": "Medium",
+            "contract": "OrderBook",
+            "function": "cancelOpenOrder()",
+            "lineNumber": "377"
+        }
+    ]
+}

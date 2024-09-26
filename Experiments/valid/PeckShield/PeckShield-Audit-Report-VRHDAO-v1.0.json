@@ -1,0 +1,157 @@
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-VRHDAO-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/Versailles-heroes-com/versailles-heroes-DAO/tree/8b0940b",
+        "commit_hash": "8b0940b",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/PeckShield-Audit-Report-VRHDAO-v1/versailles-heroes-DAO"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Better Handling of Privilege Transfers",
+            "description": "The `VRH DAO` protocol implements a basic access control mechanism allowing a privileged account (`admin`) to grant exclusive access to sensitive functions. However, the current implementation of privilege transfers can lead to unintentional errors in the owner transfer process.",
+            "severity": "Low",
+            "contract": "GuildController",
+            "function": "commit_transfer_ownership() and apply_transfer_ownership()",
+            "lineNumber": "190-210"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Improper Funding Source In VotingEscrow::_deposit_for()",
+            "description": "The `_deposit_for()` helper routine uses the same `addr` as the first and second arguments, allowing abuse to lock tokens from users who have approved the locking contract before without their notice.",
+            "severity": "Medium",
+            "contract": "VotingEscrow",
+            "function": "_deposit_for()",
+            "lineNumber": "366"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Improved Binary Search In find_block_epoch()",
+            "description": "The current implementation of binary search algorithm in `find_block_epoch()` can be improved by iterating one round less.",
+            "severity": "Low",
+            "contract": "VotingEscrow",
+            "function": "find__block_epoch()",
+            "lineNumber": "529"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1287"
+                ]
+            },
+            "title": "Accommodation Of Non-ERC20-Compliant Tokens",
+            "description": "The transfer function does not follow the ERC20 standard and may cause issues if not handled properly.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ],
+                "3": [
+                    "CWE-680"
+                ]
+            },
+            "title": "Lack of Protection Against Oversized Gauge/Type Weights",
+            "description": "Potential pitfall when a new oversized guild (or type) weight is updated on current pools, leading to an undesirable overflow in the multiplication of three uint256 integers in GuildController contract.",
+            "severity": "Medium",
+            "contract": "GuildController",
+            "function": "_change_type_weight()",
+            "lineNumber": "456"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Implicit Threshold On Supported Distinct Guild Types",
+            "description": "In VRH DAO, there is an implicit restriction on the number of guild types that can be supported. However, this restriction is not enforced when a new guild type is being added.",
+            "severity": "Medium",
+            "contract": "GuildController",
+            "function": "_get_total()",
+            "lineNumber": "305-315"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Improved AddType() Event Generation",
+            "description": "The event generation can be improved by correctly emitting related events when they are being changed and encoding weight information.",
+            "severity": "Informational",
+            "contract": "GuildController",
+            "function": "add_type()",
+            "lineNumber": "530, 547-551"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Improved Sanity Checks Of Guild/Type Weight Updates",
+            "description": "The update logic of guild and type weights can be improved by applying more rigorous sanity checks to prevent corner cases that may lead to undesirable consequences.",
+            "severity": "Low",
+            "contract": "GuildController",
+            "function": "_change_type_weight() and _change_guild_weight()",
+            "lineNumber": "509"
+        }
+    ]
+}

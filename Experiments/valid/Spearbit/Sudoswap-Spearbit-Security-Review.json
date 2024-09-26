@@ -1,0 +1,319 @@
+{
+    "path": "./Audit_Reports_2024/Spearbit/Sudoswap-Spearbit-Security-Review.pdf",
+    "project_info": {
+        "url": "https://github.com/sudoswap/lssvm",
+        "commit_hash": "N/A",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/Sudoswap-Spearbit-Security-Review/lssvm"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Clones with malicious `extradata` are also considered valid clones",
+            "description": "An attacker could deploy a contract that starts with the first 54 bytes of proxy code but have a malicious payload, and these functions will still verify it as a legitimate clone.",
+            "severity": "Critical Risk",
+            "contract": "LSSVMPairCloner.sol, LSSVMPair.sol, LSSVMRoute, LSSVMPairFactory.sol",
+            "function": "N/A",
+            "lineNumber": "L121, L687-695, L206232, L574-594, L223-257"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Factory Owner can steal user funds approved to the Router",
+            "description": "A pair owner can make arbitrary calls to any contract that has been approved by the factory owner, allowing them to steal user funds.",
+            "severity": "High Risk",
+            "contract": "LSSVMPair.sol",
+            "function": "call()",
+            "lineNumber": "687-695"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Missing check in the number of Received Tokens when tokens are transferred directly",
+            "description": "Within the function `_validateTokenInput()` of `LSSVMPairERC20`, two methods exist to transfer tokens. In the first method via `router.pairTransferERC20From()` a check is performed on the number of received tokens. In the second method no checks are done.",
+            "severity": "Medium Risk",
+            "contract": "LSSVMPairERC20",
+            "function": "_validateTokenInput()",
+            "lineNumber": "41-78"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Malicious `assetRecipient` could get an unfair amount of tokens",
+            "description": "A malicious assetRecipient can manipulate its NFT balance by buying additional ERC721Received NFTs via Pair and sending or selling them back to Pair, enabling the malicious actor to obtain an unfair amount of tokens via routerSwapNFTsForToken().",
+            "severity": "Medium Risk",
+            "contract": "Pair",
+            "function": "routerSwapNFTsForToken()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Malicious Router can exploit `cacheAssetRecipientNFTBalance` to drain pair funds",
+            "description": "A malicious router could be whitelisted by an inattentive or a malicious factory owner and drain pair funds.",
+            "severity": "Medium Risk",
+            "contract": "LSSVMPair.sol",
+            "function": "cache",
+            "lineNumber": "L371-379, L318-366"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "Malicious Router can steal NFTs via Re-Entrancy attack",
+            "description": "A malicious router could exploit reentrancy to steal NFTs.",
+            "severity": "Medium Risk",
+            "contract": "Router",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Denial of Service Attack in getAllHeldIds()",
+            "description": "The function getAllHeldIds() is vulnerable to a denial of service attack due to inaccurate checks performed with _nft.balanceOf() in combination with LSSVMPairMissingEnumerable.",
+            "severity": "Medium Risk",
+            "contract": "LSSVMPairMissingEnumerable",
+            "function": "getAllHeldIds()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Protocol Fees Sent to assetRecipient Instead of _factory",
+            "description": "When an NFT pool with assetRecipient set has received funds sent directly to the assetRecipient, the protocol fees end up at assetRecipient instead of at the _factory due to the function _payProtocolFee() attempting to send fees from the pair contract which does not have any funds.",
+            "severity": "Critical",
+            "contract": "LSSVMPair",
+            "function": "_payProtocolFee() and _validateTokenInput()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Error codes of Quote functions are unchecked",
+            "description": "The error return values from functions getBuyNFTQuote() and getSellNFTQuote() are not checked in contract LSSVMRouter.sol.",
+            "severity": "Medium Risk",
+            "contract": "LSSVMRouter",
+            "function": [
+                "getBuyNFTQuote()",
+                "getSellNFTQuote()"
+            ],
+            "lineNumber": "L389-431, L526"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Swaps can be front run by Pair Owner to extract any profit",
+            "description": "If the user adds a nonzero slippage allowance, the pair owner can front run the swap to increase the fee/spot price and steal all of the slippage allowance.",
+            "severity": "Low Risk",
+            "contract": "LSSVMPair.sol",
+            "function": "N/A",
+            "lineNumber": "630, 644, 660"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "Remove Code Duplication",
+            "description": "N/A",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ]
+            },
+            "title": "Unclear Function Name",
+            "description": "The functions `_validateTokenInput()` of both `LSSVMPairETH` and `LSSVMPairERC20` do not only validate the token input but also transfer `ETH` / `ERC20`. The function name does not reasonably imply this and therefore can create some confusion.",
+            "severity": "Informational",
+            "contract": "LSSVMPairETH, LSSVMPairERC20",
+            "function": "_validateTokenInput()",
+            "lineNumber": "L23-36, L41-78"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Inaccurate Message About `MAX_FEE`",
+            "description": "The message about MAX_FEE is inaccurate because MAX_FEE == 90%.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "changeFee()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Inaccurate comment for `assetRecipientNFTBalanceAtTransferStart`",
+            "description": "No description provided.",
+            "severity": "N/A",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "41"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1288"
+                ]
+            },
+            "title": "`IERC1155` not utilized",
+            "description": "Unused import of `IERC1155` in `LSSVMPair.sol` and unused struct `TokenToTokenTrade` in `LSSVMRouter.sol`.",
+            "severity": "Informational",
+            "contract": "LSSVMPair, LSSVMRouter",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "Use Fractions",
+            "description": "N/A",
+            "severity": "Low Risk",
+            "contract": "LSSVMPair",
+            "function": "N/A",
+            "lineNumber": "258-310, 318-366, 413-431"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ]
+            },
+            "title": "Two families of token libraries used",
+            "description": "The Sudoswap contract imports token libraries from both OpenZeppelin and Solmate.",
+            "severity": "Informational",
+            "contract": "LSSVMPairFactory.sol",
+            "function": "N/A",
+            "lineNumber": "4-10"
+        }
+    ]
+}

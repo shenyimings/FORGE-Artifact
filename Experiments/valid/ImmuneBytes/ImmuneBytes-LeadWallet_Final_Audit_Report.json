@@ -1,0 +1,137 @@
+{
+    "path": "./Audit_Reports_2024/ImmuneBytes/ImmuneBytes-LeadWallet_Final_Audit_Report.pdf",
+    "project_info": {
+        "url": "https://github.com/leadwallet/LEAD-Stake-DApp-Backend",
+        "commit_hash": "1099c116912516f60e4fd78bc5fba3148b5c8676",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/ImmuneBytes-LeadWallet_Final_Audit_Report/LEAD-Stake-DApp-Backend"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Spamming by staking minimum value of Lead Token",
+            "description": "Users can spam the LeadStake contract by staking the minimumStakeValue and yielding the referral bonus, potentially leading to a DoS issue.",
+            "severity": "Low",
+            "contract": "LeadStake",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "CanApprove modifier",
+            "description": "The Lead token (ERC20) contract has a canApprove modifier which contains an unnecessary check balances[msg.sender] >= value.",
+            "severity": "Low",
+            "contract": "Lead Token",
+            "function": "approve()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "No address check for to variable in ERC20's transfer",
+            "description": "The transfer() function in ERC20.sol does not check the validity of input addresses by the user, which can lead to unintentional situations.",
+            "severity": "Medium",
+            "contract": "ERC20",
+            "function": "transfer()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ]
+            },
+            "title": "Events are not as standards",
+            "description": "In LeadStake contract event names are not as standards and there is no use of indexed variables in the events.",
+            "severity": "Low",
+            "contract": "LeadStake",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ],
+                "3": [
+                    "CWE-302"
+                ]
+            },
+            "title": "No separate functions to increase/decrease ERC20 allowances",
+            "description": "Follow the standard ERC20 pattern to increase/decrease allowance amount by using separate functions to overcome the frontrun attack.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "No mechanism to deal with unforeseen bugs",
+            "description": "There is no logic implemented in Lead smart contracts to deal with future unforeseen bugs/upgrades.",
+            "severity": "High",
+            "contract": "Lead",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1288"
+                ]
+            },
+            "title": "Unused variable - totalDistributed",
+            "description": "In the LeadStake contract, totalDistributed variable is declared but never used.",
+            "severity": "Low",
+            "contract": "LeadStake",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

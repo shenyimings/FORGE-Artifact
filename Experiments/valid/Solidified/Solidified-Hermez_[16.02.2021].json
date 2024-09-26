@@ -1,0 +1,151 @@
+{
+    "path": "./Audit_Reports_2024/Solidified/Solidified-Hermez_[16.02.2021].pdf",
+    "project_info": {
+        "url": "https://github.com/hermeznetwork/contracts",
+        "commit_hash": "42996993491b81638d3dcd3b7d0cf7ce0f90c993",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/Solidified-Hermez_[16/contracts"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Potential Shortcomings with exchange rates",
+            "description": "Unclear governance process for setting token exchange values can lead to potential issues such as instant withdrawals of recently registered tokens and deposited tokens exceeding max amount due to price variance.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Donation Address can be 0, leading to burned tokens",
+            "description": "In `HermezAuctionProtocol.sol`, the `setDonationAddress()` function does not verify that the donation address is not set to 0, which may lead to inconsistent distribution ratios with additional tokens being burned.",
+            "severity": "Minor",
+            "contract": "HermezAuctionProtocol",
+            "function": "setDonationAddress()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Tokens charging token transfer fee would cause balances accounting discrepancy",
+            "description": "Some tokens charge a transfer fee, resulting in accounting discrepancies between Hermez.sol and WithdrawalDelayer.sol, potentially causing withdrawal problems.",
+            "severity": "Minor",
+            "contract": "Hermez.sol, WithdrawalDelayer.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-327"
+                ]
+            },
+            "title": "Malleable signatures accepted",
+            "description": "The `_checkSig()` function in `HermezHelpers.sol` uses the built-in `ecrecover()` function which still allows malleable signatures for backward compatibility reasons.",
+            "severity": "Note",
+            "contract": "HermezHelpers.sol",
+            "function": "_checkSig()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-923"
+                ],
+                "3": [
+                    "CWE-940"
+                ]
+            },
+            "title": "Endpoint Information for Coordinators is not Enforced",
+            "description": "The `setCoordinator()` function in the auction contract allows the URL parameter to be left unset without checking for a valid endpoint string.",
+            "severity": "Note",
+            "contract": "HermezAuctionProtocol.sol",
+            "function": "setCoordinator()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Roles in WithdrawlDelayer can be set to address 0",
+            "description": "The addresses of the DAO, white hack group, and Hermez keeper can be set to 0. This may be intentional in some cases, to allow for certain roles to be retired eventually.",
+            "severity": "Note",
+            "contract": "WithdrawlDelayer",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Saving constants with the hash result is cheaper than saving the hashing operation",
+            "description": "Pre-calculating hashes and saving them as constants could save gas.",
+            "severity": "Note",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Exit timestamps are only recorded for the last exist",
+            "description": "The `deposit()` function in `WithdrawalDelayer.sol` updates `depositTimestamp` to a new value every time the deposit is made. If a user makes another `deposit()` before the previously deposited funds are withdrawn, the user would not be able to withdraw the previously deposited tokens until the `_withdrawalDelay` has passed after the second `deposit()`.",
+            "severity": "Note",
+            "contract": "WithdrawalDelayer.sol",
+            "function": "deposit()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

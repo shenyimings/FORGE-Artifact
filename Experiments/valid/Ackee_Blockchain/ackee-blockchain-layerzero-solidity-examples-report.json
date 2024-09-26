@@ -1,0 +1,143 @@
+{
+    "path": "./Audit_Reports_2024/Ackee_Blockchain/ackee-blockchain-layerzero-solidity-examples-report.pdf",
+    "project_info": {
+        "url": "https://github.com/LayerZero-Labs/solidity-examples",
+        "commit_hash": "N/A",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/ackee-blockchain-layerzero-solidity-examples-report/solidity-examples"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "W4: Lack of existence check",
+            "description": "Lack of data validation in _safeCallOnOFTReceived function of ComposableOFTCore contract leading to potential security risks.",
+            "severity": "Warning",
+            "contract": "ComposableOFTCore",
+            "function": "_safeCallOnOFTReceived()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "W5: Order of event emission and reentrancy",
+            "description": "The retryOFTReceived function may log events in the wrong order in case of reentrancy due to the call to onOFTReceived() function, which can result in reentering the contract via the same function.",
+            "severity": "Warning",
+            "contract": "ComposableOFTCore",
+            "function": "retryOFTReceived()",
+            "lineNumber": "42-44"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-354"
+                ]
+            },
+            "title": "W6: Lack of cross-chain token ID validation",
+            "description": "The UniversalONFT721 uses id ranges to allow for safe minting, but this mechanism is not enforced on the smart-contract level, which could lead to critical mistakes such as DoS of the mint function.",
+            "severity": "Warning",
+            "contract": "UniversalONFT721",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "W7: Mint without price require",
+            "description": "In the contract, mint function is declared as payable without any requirement on the price of NFT.",
+            "severity": "Warning",
+            "contract": "UniversalONFT721",
+            "function": "mint()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "I1: Gas optimization in mint function",
+            "description": "In UniversalONFT721 in mint function post-inc is used, which can be optimized to pre-inc for gas efficiency.",
+            "severity": "Info",
+            "contract": "UniversalONFT721",
+            "function": "mint()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1173"
+                ]
+            },
+            "title": "I2: Unused SafeERC20",
+            "description": "The NativeOFT contract uses the SafeERC20 library for the IERC20 interface but it is never used.",
+            "severity": "Info",
+            "contract": "NativeOFT",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1068"
+                ]
+            },
+            "title": "I3: Bad coding practices",
+            "description": "Across the project, there are several code inconsistencies including inaccurate NatSpec comments, misleading comments, unresolved TODOs, and useless transfers.",
+            "severity": "Info",
+            "contract": "UniversalONFT721, ExcessivelySafeCall, NativeOFT",
+            "function": "constructor, excessivelySafeCall, _debitMsgFrom",
+            "lineNumber": "N/A"
+        }
+    ]
+}

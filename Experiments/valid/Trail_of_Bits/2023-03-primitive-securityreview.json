@@ -1,0 +1,305 @@
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/2023-03-primitive-securityreview.pdf",
+    "project_info": {
+        "url": "https://github.com/primitivefinance/hyper",
+        "commit_hash": "0bcadb708272276dd77a99f58e57f9f8dfed3c79",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/2023-03-primitive-securityreview/hyper"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Lack of zero-value checks on functions",
+            "description": "Certain setter functions fail to validate incoming arguments; therefore, callers of these functions can accidentally set important state variables to the zero address.",
+            "severity": "Informational",
+            "contract": "Hyper",
+            "function": "constructor",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Documentation discrepancy in computePriceWithChangeInTau",
+            "description": "The NatSpec comment for the computePriceWithChangeInTau function in Price.sol does not match its actual implementation.",
+            "severity": "Medium",
+            "contract": "Price",
+            "function": "computePriceWithChangeInTau()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-191"
+                ]
+            },
+            "title": "Risk of token theft due to possible integer underflow in slt",
+            "description": "There is a risk of token theft due to possible integer underflow in the slt function.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "slt",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Risk of token theft due to unchecked type conversion",
+            "description": "Missing checks on type conversions could allow attackers to steal funds.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Users can swap without paying any fees",
+            "description": "The `swap` function allows users to swap tokens without paying fees when the requested amount exceeds the `maxInput` amount.",
+            "severity": "Medium",
+            "contract": "Hyper.sol",
+            "function": "_swapExactIn()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Swap function returns incorrectly scaled output token amount",
+            "description": "The swap function calculates the output token value using the difference between liveDependent and nextDependent variables without multiplying by the total liquidity value of the pool, resulting in an incorrectly scaled output amount.",
+            "severity": "High",
+            "contract": "Hyper.sol",
+            "function": "_swap",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Liquidity providers can withdraw total fees earned by a pool",
+            "description": "The syncPositionFees function distributes the total fees earned by the pool to every liquidity provider, resulting in the distribution of more tokens in fees than earned by the pool.",
+            "severity": "High",
+            "contract": "HyperPosition",
+            "function": "syncPositionFees()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Asset token price deviates from the price curve of the pool",
+            "description": "The price of the asset token increases by a factor with each swap operation, causing it to deviate from the price curve of the pool, leading to assets becoming stuck in the contract.",
+            "severity": "High",
+            "contract": "Hyper.sol",
+            "function": "_swapExactIn",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "New pair creation can overwrite existing pairs",
+            "description": "The `_createPair()` function uses an unchecked block to compute and cast the value of `getPairNonce` to assign the value of `pairId`, which can lead to overwriting existing pairs due to truncation of higher-order bits in case of overflow.",
+            "severity": "Critical",
+            "contract": "Hyper",
+            "function": "_createPair()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Error in Invariant.getX",
+            "description": "The formula derived for getX function in Invariant.sol is incorrect, using (y + k) instead of (y - k)",
+            "severity": "Low",
+            "contract": "Invariant",
+            "function": "getX()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Pools with overflowing maturity dates can be created",
+            "description": "The maturity date is not validated on pool creation, so pools that will be unusable when the year 2104 approaches could be created.",
+            "severity": "N/A",
+            "contract": "HyperLib",
+            "function": "checkParameters()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Minting funds to the Hyper contract arbitrarily increases the next caller\u2019s balance",
+            "description": "When a user mints funds to the `Hyper` contract, the contract relies on a calculation of the difference between its physical balance and its virtual balance of the given token. However, this calculation increases the `Hyper` contract\u2019s reserves and the next caller\u2019s balance.",
+            "severity": "High",
+            "contract": "Hyper",
+            "function": "getNetBalance()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Pool strike price could be zero due to lack of lower bound check on maxTick",
+            "description": "The computePriceWithTick function does not have a lower bound check on maxTick, allowing Alice to create a pool with a maxTick value that causes the strike price to converge to 0.",
+            "severity": "High",
+            "contract": "HyperLib.sol",
+            "function": "computePriceWithTick()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Rounding error allows liquidity to be added without depositing tokens",
+            "description": "Rounding down when funds enter the pool can result in near-zero values, allowing attackers to profit from the rounding direction by receiving heavily discounted funds.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Attackers can sandwich changeParameters calls to steal funds",
+            "description": "The `changeParameters` function does not adjust the reserves according to the new parameters, which results in a discrepancy between the virtual reserves of a pool and the reserves of the tokens in the `Hyper` contract. An attacker can create a new controlled pool with the token they want to steal and a fake token, then use a sequence of operations\u2014 `allocate`, `changeParameters`, and `unallocate` \u2014to steal tokens from the shared reserves of the `Hyper` contract.",
+            "severity": "High",
+            "contract": "HyperLib.sol",
+            "function": "changeParameters()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Priority Fee Computation Vulnerability",
+            "description": "When a swap occurs, the priority fee amount is computed for the total pool liquidity and transferred from the controller, allowing an attacker to profit from executing a swap against the total pool liquidity.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Unstake Timestamp Not Updated After Pool Parameters Update",
+            "description": "The unstakeTimestamp value is not updated when pool parameters are changed, potentially leading to incorrect unstaking behavior.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 17,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Unintended Fee Payment to Liquidity Providers",
+            "description": "In the `claim` and `_changeStake` functions, every liquidity provider gets a fee payment for the total staked liquidity, which may not be intended behavior.",
+            "severity": "Unknown",
+            "contract": "N/A",
+            "function": "`claim` and `_changeStake`",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 18,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Users cannot withdraw liquidity after unstaking due to the JIT restriction",
+            "description": "Due to the JIT (Just-In-Time) restriction, users are unable to withdraw their liquidity after unstaking.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

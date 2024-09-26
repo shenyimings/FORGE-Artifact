@@ -1,0 +1,83 @@
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-FarmerLand-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/LithiumSwapTech/farmerland-contracts/tree/0142b09",
+        "commit_hash": "0142b09",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/PeckShield-Audit-Report-FarmerLand-v1/farmerland-contracts"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-1339"
+                ]
+            },
+            "title": "Improved Precision in calcStakeCollecting()",
+            "description": "The `calcStakeCollecting()` function lacks precision protection, which may cause small stakes to receive less or no USDC dividends than expected.",
+            "severity": "Low",
+            "contract": "FarmerLand",
+            "function": "calcStakeCollecting()",
+            "lineNumber": "755"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "Improved lastUSDCDistroTimestamp State Initialization",
+            "description": "The `lastUSDCDistroTimestamp` state variable is not properly initialized at the first deposit in the `MasterChef` contract.",
+            "severity": "Low",
+            "contract": "MasterChef",
+            "function": "updatePool()/getUSDCDrip()",
+            "lineNumber": "401, 411"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Revisited Calculation of Token Amount in clcTokenValue()",
+            "description": "In the FarmerLand protocol, there is a daily auction lobby in which users can bid USDC for their share of the daily pool of the WHEAT tokens. The number of WHEAT tokens available in the auction lobby decreases by 1 % each day. While reviewing the calculation of users share of the WHEAT tokens in the lobby pool, we notice it uses the lobby pool of current day, not the target day.",
+            "severity": "Low",
+            "contract": "WHEAT",
+            "function": "clcTokenValue()",
+            "lineNumber": "620"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "In the FarmerLand protocol, there are certain privileged accounts (owner/admins) that play critical roles in governing and regulating system-wide operations, but these accounts need to be scrutinized.",
+            "severity": "Medium",
+            "contract": "WHEAT",
+            "function": "set_nftMasterChefAddress",
+            "lineNumber": "85"
+        }
+    ]
+}

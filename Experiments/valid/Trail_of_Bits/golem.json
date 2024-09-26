@@ -1,0 +1,257 @@
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/golem.pdf",
+    "project_info": {
+        "url": "https://github.com/golemfactory/golem-contracts",
+        "commit_hash": "1af6431b214cb75d7bec0604d5ff3e7a2d5f55c0",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/golem/golem-contracts"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-477"
+                ]
+            },
+            "title": "Contracts specify outdated compiler version",
+            "description": "Golem contracts specify various outdated versions of the Solidity compiler in their pragma declarations.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "Race condition in the ERC20 approve function may lead to token theft",
+            "description": "A known race condition in the ERC20 standard on the approve function could lead to the theft of tokens.",
+            "severity": "Medium",
+            "contract": "StandardToken",
+            "function": "approve()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-354"
+                ]
+            },
+            "title": "OpenZeppelin dependencies do not track upstream changes",
+            "description": "The BasicToken, ERC20, ERC20Basic, SafeMath and StandardToken implementations from OpenZeppelin are copy-pasted into the repository, making receiving updates and security fixes on these dependencies unreliable as they must be updated manually.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "User can silently burn tokens in batchTransfer functions",
+            "description": "The amount of minted tokens is tracked in the GNTB contract by the totalSupply function, but burning tokens is disabled by default in transfer. ERC20 enforces an explicit call and event to trigger a token burn. However, the batchTransfer method does not restrict the address destination of address(0), allowing tokens to effectively be burned without firing a Burn event or decreasing the totalSupply variable.",
+            "severity": "Low",
+            "contract": "GolemNetworkTokenBatching",
+            "function": "batchTransfer()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Empty accounts can trigger Mint and Burn events",
+            "description": "Both the withdraw and transferFromGate functions do not require the callers to have non-zero amounts they wish to withdraw or deposit, allowing third parties with no tokens to call into these functions and trigger arbitrary Mint and Burn events.",
+            "severity": "Informational",
+            "contract": "TokenProxy",
+            "function": [
+                "withdraw()",
+                "transferFromGate()"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Deletion of user tokens in batchTransfer function",
+            "description": "When tracking the user's initial balance during a batch-transfer request, the value is stored in a local variable and decremented within the for loop. The transfer completes successfully if there is enough initial balance to make all the payments, otherwise the entire transaction is reverted. After successful completion, the user's balance is set to the remaining value left in the local variable after having subtracted all payment requests. However, when a payment element contains the address of the initiating user (msg.sender), balances[msg.sender] will be reset and any tokens sent to the initiating user will be transparently lost.",
+            "severity": "High",
+            "contract": "GolemNetworkTokenBatching",
+            "function": "batchTransfer(bytes32[] payments, uint64 closureTime)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Hardcoded non-zero burn address is active",
+            "description": "A hardcoded burn address is insecure because it is impossible to know whether the private key is known and held by an arbitrary address.",
+            "severity": "High",
+            "contract": "GNTDeposit",
+            "function": "burn()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "User can silently burn tokens in the GNTDeposit withdraw function",
+            "description": "Normal users can work around the restriction of only allowing Concent user to burn tokens by using the withdraw function to transfer tokens to a special address 0xdeadbeef, effectively burning tokens without firing a Burn event.",
+            "severity": "Medium",
+            "contract": "GNTDeposit",
+            "function": "withdraw(address _to)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Depositing tokens in GNTDeposit does not reset the timelock",
+            "description": "The GNTDeposit contract does not reset the timelock when depositing new tokens, allowing users to withdraw tokens earlier than expected by manipulating low-cost jobs.",
+            "severity": "High",
+            "contract": "GNTDeposit",
+            "function": "onTokenReceived",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Timelock events can be reused",
+            "description": "The GNTDeposit contract implements timelocks to prevent users from withdrawing tokens for a certain period of time. However, Deposit events do not include corresponding task information and are indistinguishable from one another.",
+            "severity": "Low",
+            "contract": "GNTDeposit",
+            "function": "onTokenReceived(address,uint,bytes)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Users can burn their own tokens",
+            "description": "Only the Concent user should be allowed to burn tokens from users. However, a user could work around this restriction using the burn function in GolemTokenNetworkBatching.",
+            "severity": "Low",
+            "contract": "GolemTokenNetworkBatching",
+            "function": "burn()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Burning tokens does not update the corresponding total supply",
+            "description": "The burn function in GolemTokenNetworkBatching does not update the totalSupply in the GolemTokenNetwork.",
+            "severity": "Medium",
+            "contract": "GolemTokenNetwork, GolemTokenNetworkBatching",
+            "function": "burn()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "A user can stop a batch payment by providing 0x0 as an address",
+            "description": "An attacker can provide the address 0x0 to cause the revert of payments performed using batchTransfer, causing a temporary denial of service since it stops the payments for all the other users in the same batch.",
+            "severity": "Low",
+            "contract": "GolemTokenNetworkBatching",
+            "function": "batchTransfer()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

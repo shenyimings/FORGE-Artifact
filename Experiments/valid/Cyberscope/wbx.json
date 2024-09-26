@@ -1,0 +1,179 @@
+{
+    "path": "./Audit_Reports_2024/Cyberscope/wbx.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "6214f6b6cf601aa1d503347438bf7bcb216a112742fafde17ba3636fe828fb88",
+        "address": "0xbb97e381f1d1e94ffa2a5844f6875e6146981009",
+        "chain": "eth",
+        "compiler_version": [
+            "v0.5.0+commit.1d4f565a"
+        ],
+        "project_path": {
+            "WibxToken": "Experiments/contracts/wbx/WibxToken"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "ELFM - Exceeds Fees Limit",
+            "description": "The contract owner has the authority to increase over the allowed limit of 25%. The owner may take advantage of it by calling the `changeTax` function with a high percentage value.",
+            "severity": "Medium",
+            "contract": "WibxToken.sol",
+            "function": "changeTax()",
+            "lineNumber": "727"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "TAI - Transfer Amount Inconsistency",
+            "description": "The `_fullTransfer()` and `transferFrom()` functions do not subtract the calculated `taxValue` from the sender's transfer amount before sending it to the recipient, resulting in the sender being charged a total of 110 tokens instead of just 100.",
+            "severity": "Minor / Informative",
+            "contract": "WibxToken.sol",
+            "function": "_fullTransfer() and transferFrom()",
+            "lineNumber": "L901,998"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "MC - Missing Check",
+            "description": "The functions `_sendBatchSelf()` and `_sendBatchFrom()` do not include a check to ensure that the msg.sender has enough balance to cover the full amount being sent to each recipient in the batch transfer, which may lead to an overflow if the total amount being sent is greater than their available balance and revert the transaction.",
+            "severity": "Minor / Informative",
+            "contract": "WibxToken.sol",
+            "function": "_sendBatchSelf() and _sendBatchFrom()",
+            "lineNumber": "943,962"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ],
+                "4": [
+                    "CWE-766"
+                ]
+            },
+            "title": "L01 - Public Function could be Declared External",
+            "description": "A public function can be declared as external if it is only intended to be called from external contracts, which can help make the contract's code easier to understand and maintain, improve performance, and reduce gas consumption.",
+            "severity": "Minor / Informative",
+            "contract": "WibxToken.sol",
+            "function": "N/A",
+            "lineNumber": "914"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ]
+            },
+            "title": "L04 - Conformance to Solidity Naming Conventions",
+            "description": "The Solidity style guide is a set of guidelines for writing clean and consistent Solidity code. Adhering to a style guide can help improve the readability and maintainability of the Solidity code, making it easier for others to understand and work with.",
+            "severity": "Minor / Informative",
+            "contract": "WibxToken.sol",
+            "function": "N/A",
+            "lineNumber": "L673"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "L08 - Tautology or Contradiction",
+            "description": "A tautology is a logical statement that is always true, regardless of the values of its variables. A contradiction is a logical statement that is always false, regardless of the values of its variables.",
+            "severity": "Minor / Informative",
+            "contract": "WibxToken",
+            "function": "N/A",
+            "lineNumber": "234"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "L15 - Local Scope Variable Shadowing",
+            "description": "Local scope variable shadowing occurs when a local variable with the same name as a variable in an outer scope is declared within a function or code block.",
+            "severity": "Minor / Informative",
+            "contract": "WibxToken.sol",
+            "function": "N/A",
+            "lineNumber": "530,680,851"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "L16 - Validate Variable Setters",
+            "description": "The contract performs operations on variables configured by user-supplied input without proper checks for zero values, leading to potential problems and unexpected behavior.",
+            "severity": "Minor / Informative",
+            "contract": "WibxToken.sol",
+            "function": "N/A",
+            "lineNumber": "L784"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-237"
+                ],
+                "4": [
+                    "CWE-238"
+                ]
+            },
+            "title": "L19 - Stable Compiler Version",
+            "description": "The `^` symbol indicates that any version of Solidity that is compatible with the specified version can be used to compile the contract. The version lock is a mechanism that allows the author to specify a minimum version of the Solidity compiler that must be used to compile the contract code.",
+            "severity": "Minor / Informative",
+            "contract": "WibxToken.sol",
+            "function": "N/A",
+            "lineNumber": "8"
+        }
+    ]
+}

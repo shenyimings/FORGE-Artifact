@@ -1,0 +1,1 @@
+mkdir -p ../contracts/0SOL && for dir in *../contracts/; do [ -z "$(find "${dir%/}" -name '*.sol')" ] && echo "Moving ${dir%/} to ../contracts/0SOL/" && mv "${dir%/}" ../contracts/0SOL/; done

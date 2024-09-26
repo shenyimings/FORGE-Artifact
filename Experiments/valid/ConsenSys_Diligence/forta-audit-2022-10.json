@@ -1,0 +1,46 @@
+{
+    "path": "./Audit_Reports_2024/ConsenSys_Diligence/forta-audit-2022-10.pdf",
+    "project_info": {
+        "url": "https://github.com/forta-network/forta-contracts",
+        "commit_hash": "50a985c4ca106840f38b2dcb728e00c50ebc7b26",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/forta-audit-2022-10/forta-contracts"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "Reentrancy in FortaStaking during ERC1155 mints",
+            "description": "The reentrancy occurs on all mints that happen in the below functions, and it happens before a call to another Forta contract for allocation is made via either _allocator.depositAllocation or _allocator.withdrawAllocation.",
+            "severity": "Medium",
+            "contract": "FortaStaking",
+            "function": "deposit()",
+            "lineNumber": "L273-L295"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Storage gap variables slightly off from the intended size",
+            "description": "The __gap variable sizes were not computed correctly to get the storage slots up to 50, which may cause storage collisions between contract versions during upgrades.",
+            "severity": "Medium",
+            "contract": [
+                "Dispatch",
+                "NodeRunnerRegistryCore"
+            ],
+            "function": "N/A",
+            "lineNumber": [
+                "L333",
+                "L452"
+            ]
+        }
+    ]
+}

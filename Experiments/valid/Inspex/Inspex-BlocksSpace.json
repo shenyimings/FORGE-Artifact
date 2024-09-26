@@ -1,0 +1,239 @@
+{
+    "path": "./Audit_Reports_2024/Inspex/Inspex-BlocksSpace.pdf",
+    "project_info": {
+        "url": "https://github.com/1000Blocks-space/smart-contracts",
+        "commit_hash": "51efffaa45e95db5e28c5d550d351b84a03d098f",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/Inspex-BlocksSpace/smart-contracts"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Arbitrary Share Amount Setting",
+            "description": "The `numberOfBlocksBought` variable can be set to a large number, increasing the amount of shares and allowing the owner to get a very high amount of rewards from the increase of share amount.",
+            "severity": "High",
+            "contract": "BlocksRewardsManager.sol",
+            "function": "blocksAreaBoughtOnSpace()",
+            "lineNumber": "123-125"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect Reward Calculation from takeoverRewards",
+            "description": "The miscalculation can cause users to gain less rewards and some $BNB rewards to be stuck in the contract and unclaimable by users.",
+            "severity": "High",
+            "contract": "BlocksStaking.sol",
+            "function": [
+                "calculateRewardsDistribution()",
+                "claim()"
+            ],
+            "lineNumber": [
+                "171-176",
+                "135-148"
+            ]
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect Reward Calculation from allUsersRewardDebt",
+            "description": "The `allUsersRewardDebt` state variable is updated incorrectly in the `deposit()` function, using only the latest user's reward debt instead of accumulating it for all users.",
+            "severity": "High",
+            "contract": "BlocksStaking.sol",
+            "function": "deposit() and calculateRewardsDistribution()",
+            "lineNumber": "86-109, 171-176"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect Reward Calculation from Total Rewards Rate",
+            "description": "The calculation of total rewards rate is incorrect because it cumulatively adds rates from different spaces, leading to miscalculation and potential loss of $BLS rewards.",
+            "severity": "High",
+            "contract": "BlocksRewardsManager.sol",
+            "function": "N/A",
+            "lineNumber": "283-285"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Token Stealing via BlocksRewardsManager Address Setting",
+            "description": "The owner can steal $BNB used to purchase block areas by setting the BlocksRewardsManager address.",
+            "severity": "Medium",
+            "contract": "BlocksRewardsManager",
+            "function": "updateRewardsPoolContract()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Token Stealing via BlocksStaking Address Setting",
+            "description": "The $BNB used to purchase block areas from BlocksSpace contract can be stolen after forwarding to this contract.",
+            "severity": "Medium",
+            "contract": "BlocksRewardsManager",
+            "function": "updateBlocksStakingContract()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Centralized Control of State Variable",
+            "description": "Critical state variables can be updated any time by the controlling authorities without notifying users.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect Condition",
+            "description": "The blsRewardsFinishedBlock will not be updated properly, causing the $BLS reward to be incorrectly distributed.",
+            "severity": "Medium",
+            "contract": "BlocksRewardsManager",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incorrect Reward Calculation from blsPerBlockAreaPerBlock",
+            "description": "The $BLS rewards will be incorrectly calculated on the changing of blsPerBlockAreaPerBlock due to incorrect calculation mechanism.",
+            "severity": "Low",
+            "contract": "BlocksRewardsManager.sol",
+            "function": "N/A",
+            "lineNumber": "283-285"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-273"
+                ]
+            },
+            "title": "Insufficient Logging for Privileged Functions",
+            "description": "Privileged functions that are executable by the controlling parties are not logged properly by emitting events.",
+            "severity": "Very Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-477"
+                ]
+            },
+            "title": "Outdated Compiler Version",
+            "description": "The solidity compiler version used is outdated and should be updated to the latest stable version.",
+            "severity": "Info",
+            "contract": "BLSToken",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-749"
+                ]
+            },
+            "title": "Improper Function Visibility",
+            "description": "Functions with improper visibility can lead to unintended access and potential security risks.",
+            "severity": "Info",
+            "contract": "BLSToken",
+            "function": "burn(uint256 amount)",
+            "lineNumber": "14-16"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-233"
+                ]
+            },
+            "title": "Inexplicit Solidity Compiler Version",
+            "description": "The Solidity compiler versions declared in the smart contracts were not explicit, which may potentially result in compatibility issues.",
+            "severity": "Info",
+            "contract": "BlocksRewardsManager, BlocksSpace, BlocksStaking",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

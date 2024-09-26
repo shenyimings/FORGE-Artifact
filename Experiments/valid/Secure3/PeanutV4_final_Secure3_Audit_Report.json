@@ -1,0 +1,52 @@
+{
+    "path": "./Audit_Reports_2024/Secure3/PeanutV4_final_Secure3_Audit_Report.pdf",
+    "project_info": {
+        "url": "https://github.com/peanutprotocol/peanut-contracts",
+        "commit_hash": "808f76ebb78154551f1facff31c878226fd27530",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/PeanutV4_final_Secure3_Audit_Report/peanut-contracts"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "bypass withdrawDepositSender timestamp check",
+            "description": "The `withdrawDeposit` function lacks a timestamp check on `_deposit.timestamp`, allowing anyone to call it with their own address as `_recipientAddress` and bypass the 24-hour time lock.",
+            "severity": "Medium",
+            "contract": "PeanutV4.sol",
+            "function": "withdrawDeposit()",
+            "lineNumber": "324"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ],
+                "3": [
+                    "CWE-302"
+                ]
+            },
+            "title": "Need sign more information",
+            "description": "In the `withdrawDeposit` function, the sign hash only depends on `_recipientAddress`. This allows an attacker to withdraw other deposits by bypassing the signature check.",
+            "severity": "Medium",
+            "contract": "PeanutV4",
+            "function": "withdrawDeposit()",
+            "lineNumber": "336"
+        }
+    ]
+}

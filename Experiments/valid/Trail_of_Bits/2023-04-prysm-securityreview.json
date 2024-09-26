@@ -1,0 +1,236 @@
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/2023-04-prysm-securityreview.pdf",
+    "project_info": {
+        "url": "https://github.com/prysmaticlabs/prysm/tree/e2fa7d40e3f496416283cc1d329a8ff6c048cb8a",
+        "commit_hash": "e2fa7d40e3f496416283cc1d329a8ff6c048cb8a",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/2023-04-prysm-securityreview/prysm"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Unhandled Errors",
+            "description": "The Prysm tests contain multiple ineffectual assignments to `err` error variables. These errors are never checked, which may lead to undefined test behavior given a sufficiently large change set.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "prysm/encoding/ssz/detect/configfork_test.go#135\u2013138, prysm/beacon-chain/sync/rpc_send_request_test.go#242\u2013246"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-404"
+                ],
+                "3": [
+                    "CWE-772"
+                ],
+                "4": [
+                    "CWE-775"
+                ]
+            },
+            "title": "os.Create() used without checking for an existing file",
+            "description": "The spec checker creates files using os.Create() which truncates the original file and creates an invalid spec if the file already exists.",
+            "severity": "N/A",
+            "contract": "prysm/tools/specs-checker/download.go",
+            "function": "N/A",
+            "lineNumber": "41-46"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-116"
+                ]
+            },
+            "title": "Passing sensitive configuration values through the command line may leak to other processes on the system",
+            "description": "Sensitive configuration values passed through command line flags can be leaked to other processes on the system, potentially allowing attackers to access authentication headers and further exploit the system.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Configuration files containing potentially sensitive values are not checked for permissions",
+            "description": "The Prysm binaries do not check that the configuration files are not readable by other users on the system, but these files may contain sensitive values, such as the execution endpoint authentication header value.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Panic by the beacon-chain and validator RPC APIs can panic are recovered but may lead to crashes due to memory exhaustion",
+            "description": "The beacon-chain RPC APIs that support pagination via the `pagination.StartAndPage` function panic due to an out-of-bounds slice indexing when they receive a negative value of the `PageToken` or `PageSize` parameters. Such panics are later recovered by the gRPC server and so do not crash the node. However, this issue may still allow an attacker to cause a denial of service (DoS) of the node (e.g., through memory exhaustion when many invalid requests are sent).",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "pagination.StartAndPage",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Goroutine leaks can lead to Denial of Service",
+            "description": "Unresolved goroutine leaks detected using goleak detector in Prysm tests, leading to potential Denial of Service",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-362"
+                ]
+            },
+            "title": "Potential deadlock if the Feed.Send panic is recovered and the function is retried",
+            "description": "If the Feed.Send function panics and is retried, it can lead to a potential deadlock.",
+            "severity": "N/A",
+            "contract": "async/event/feed",
+            "function": "Feed.Send()",
+            "lineNumber": "141-149"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ]
+            },
+            "title": "Block Proposer DDoS",
+            "description": "Block proposers may be subject to distributed denial-of-service (DDoS) attacks with the goal of forcing the block proposer to miss their proposal slot.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "The db backup endpoint may be triggered via SSRF or when visiting an attacker website, which may cause a DoS",
+            "description": "An attacker can trigger the db backup endpoint through SSRF or by visiting an attacker's website, potentially causing a Denial of Service (DoS) by filling up disk space or causing an out-of-memory scenario.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Maximum gRPC message size of MaxInt32 (2GB) set in beacon-chain/server may lead to DoS",
+            "description": "Setting the maximum gRPC message size to 2GB in the beacon-chain/server may lead to a Denial-of-Service (DoS) attack.",
+            "severity": "Undetermined",
+            "contract": "beacon-chain/server",
+            "function": "N/A",
+            "lineNumber": "42-82"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "EpochParticipation.UnmarshalJSON may parse invalid data",
+            "description": "The `EpochParticipation.UnmarshalJSON` function does not validate the format of the provided JSON string, assuming it starts and ends with quotation marks, which may not be true.",
+            "severity": "Undetermined",
+            "contract": "prysm/beacon-chain/rpc/apimiddleware/structs_marshalling.go",
+            "function": "UnmarshalJSON()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Uint256.UnmarshalJSON may parse invalid data",
+            "description": "The Uint256.UnmarshalJSON function does not validate the format of the provided JSON byte slice, allowing malformed JSON values to be parsed successfully.",
+            "severity": "Undetermined",
+            "contract": "prysm/api/client/builder/types.go",
+            "function": "Uint256.UnmarshalJSON",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Failed assertions in the FuzzExecutionPayload fuzzing harness",
+            "description": "The FuzzExecutionPayload fuzzing harness lacks sufficient assertions to catch regression bugs and does not validate the full topic format.",
+            "severity": "Medium",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

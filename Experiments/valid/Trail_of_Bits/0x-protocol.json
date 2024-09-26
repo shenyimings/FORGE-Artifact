@@ -1,0 +1,162 @@
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/0x-protocol.pdf",
+    "project_info": {
+        "url": "https://github.com/0xProject/0x-monorepo/tree/abd479dc68fa75719647db261130418725fd40d5",
+        "commit_hash": "abd479dc68fa75719647db261130418725fd40d5",
+        "address": "0xdd974d5c2e2928dea5f71b9825b8b646686bd200",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/0x-protocol/0x-monorepo"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Rounding division errors can accumulate over partial fills",
+            "description": "The accumulation of rounding errors can produce unexpected results over a number of partial fills. In certain situations where the taker asset amount is large and the partial fills are made with very small values, it is possible to accumulate the rounding errors to pay less to the taker and fees address.",
+            "severity": "Informational",
+            "contract": "exchange-libs/contracts/src/LibFillResults.sol",
+            "function": "calculateFillResults",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "The Cobb\u2013Douglas function is not properly documented and reverts with valid parameters",
+            "description": "Documentation indicates that the Cobb\u2013Douglas function should not revert for inputs within bounds as described in Figure 16.1. However, it appears that there are inputs which lead the function to revert, as described in Figure 16.3.",
+            "severity": "Medium",
+            "contract": "LibCobbDouglas",
+            "function": "cobbDouglas()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Unclear documentation on how order filling can fail",
+            "description": "The 0x documentation is unclear about how to determine whether orders are fillable or not. Even some fillable orders cannot be completely filled.",
+            "severity": "High",
+            "contract": "MixinExchangeCore",
+            "function": "getOrderInfo",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ]
+            },
+            "title": "Potential single point of failure for \"read-only-mode\" and \"catastrophic-failure-mode\"",
+            "description": "The critical read-only-mode and catastrophic-failure-mode can be activated by users who are authorized by the owners of StakingProxy.sol and ZrxVault.sol respectively, which could lead to a single point of failure (insider threat or centralization risk) if these owners or their authorized users are controlled by EOAs and not a m-of-n MultiSig wallet.",
+            "severity": "Informational",
+            "contract": [
+                "StakingProxy",
+                "ZrxVault"
+            ],
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "ERC20 reverts during certain self-transfer",
+            "description": "If the amount of tokens to do a self-transfer using a transfer/transferFrom call is larger than 2**128, the transfer will fail.",
+            "severity": "Informational",
+            "contract": "erc20/contracts/src/ERC20.sol",
+            "function": "transfer",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "_assertStakingPoolExists never returns true",
+            "description": "The _assertStakingPoolExists function checks if a staking pool exists given a pool id parameter but it only returns false or reverts and does not use a return statement, therefore always returning false or reverting.",
+            "severity": "Informational",
+            "contract": "MixinStakingPool",
+            "function": "_assertStakingPoolExists",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Calls to setParams may set invalid values and produce unexpected behavior in the staking contracts",
+            "description": "Certain parameters of the contracts can be configured to invalid values, causing a variety of issues and breaking expected interactions between contracts.",
+            "severity": "Medium",
+            "contract": "MixinParams",
+            "function": "_setParams()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Malicious non-operator maker can decrease staking pool operator share",
+            "description": "Non_operator makers can decrease staking pool operator share, potentially leading to a reduction of rewards for operators.",
+            "severity": "Informational",
+            "contract": "MixinStakingPool.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Non-operator makers can add or remove other makers",
+            "description": "Every staking pool has one operator who manages the pool of delegates and market makers. However, currently the functions to add or remove a maker from a pool can be called by any maker in the pool as permitted by the onlyStakingPoolOperatorOrMaker modifier.",
+            "severity": "Informational",
+            "contract": "MixinStakingPool",
+            "function": "joinStakingPoolAsMaker",
+            "lineNumber": "N/A"
+        }
+    ]
+}

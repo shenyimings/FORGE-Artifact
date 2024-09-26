@@ -1,0 +1,49 @@
+{
+    "path": "./Audit_Reports_2024/Quantstamp/token-soft-token.pdf",
+    "project_info": {
+        "url": "https://github.com/tokensoft/tokensoft_token/tree/master",
+        "commit_hash": "master",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/token-soft-token/tokensoft_token"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "QSP-2 Possible Transfer to 0x0 Contract Address",
+            "description": "It is rarely desirable for tokens to be sent to the `0x0` address (intentional token burning is a notable exception) nor to the contract itself. However, these mistakes are often made due to human errors.",
+            "severity": "Low Risk",
+            "contract": "Proxy.sol, TokenSoftToken.sol, Whitelistable.sol",
+            "function": "_removeFromWhitelist(...), constructor(...)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Privileged Roles and Ownership",
+            "description": "Smart contracts have `Owner` variables to designate the person with special privileges to make modifications to the smart contract. Currently, the `Owner` role can add/remove other roles as well as other owners. Moreover, the `Revoker` role can transfer funds between users readily, which may be a dangerous privilege.",
+            "severity": "Medium Risk",
+            "contract": "Revocable.sol, OwnerRole.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

@@ -1,0 +1,160 @@
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-DarkCrypto-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/darkcryptofinance/darkcrypto-contracts/tree/50197b101942a5c088e387d5d660410910df38b2",
+        "commit_hash": "50197b101942a5c088e387d5d660410910df38b2",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/PeckShield-Audit-Report-DarkCrypto-v1/darkcrypto-contracts"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-862"
+                ],
+                "4": [
+                    "CWE-638"
+                ],
+                "5": [
+                    "CWE-424"
+                ],
+                "6": [
+                    "CWE-425"
+                ]
+            },
+            "title": "Tax-Evasion By Calling Transfer() Directly",
+            "description": "The tax-collection enforcement can be bypassed if the sender calls the transfer() routine to directly transfer DARK to the spender and then let the spender do another transfer() to transfer DARK to the recipient.",
+            "severity": "High",
+            "contract": "DarkCrypto",
+            "function": "transfer()",
+            "lineNumber": "171-174"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Timely massUpdatePools During Pool Weight Changes",
+            "description": "The `add()` function does not immediately invoke `massUpdatePools()` when adding pool weights, which can lead to unfair reward distribution and hidden pools claiming unreasonable shares of rewarded tokens.",
+            "severity": "Low",
+            "contract": "SkyRewardPool",
+            "function": "add()",
+            "lineNumber": "39-50"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-191"
+                ]
+            },
+            "title": "Potential Underflow For tierId",
+            "description": "There is a potential underflow issue in `_updateTaxRate()` function which can cause an infinite loop and revert transaction in every single `transferFrom()` operation.",
+            "severity": "Medium",
+            "contract": "DarkCrypto",
+            "function": "_updateTaxRate()",
+            "lineNumber": "115"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Incompatibility with Deflationary Tokens",
+            "description": "The SkyRewardPool contract is incompatible with deflationary tokens due to its use of safeTransferFrom() routine for asset transfer, which may cause inconsistent internal and actual token balances.",
+            "severity": "Low",
+            "contract": "SkyRewardPool",
+            "function": [
+                "deposit()",
+                "withdraw()"
+            ],
+            "lineNumber": "194-201"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "Potential Reentrancy in withdraw()",
+            "description": "The `withdraw()` function in `SkyRewardPool` contract violates the `checks-effects-interactions` principle, making it vulnerable to re-entrancy attacks.",
+            "severity": "Medium",
+            "contract": "SkyRewardPool",
+            "function": "withdraw()",
+            "lineNumber": "224, 229, 231"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Safe-Version Replacement With safeApprove(), safeTransfer() And safeTransferFrom()",
+            "description": "The transfer function does not have a return value and may expect a return value when called, causing reverts. It is suggested to use safe versions of ERC20 operations, i.e., safeTransfer(), safeApprove(), and safeTransferFrom().",
+            "severity": "Low",
+            "contract": "Multiple Contracts",
+            "function": "transfer()",
+            "lineNumber": "121-139"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Proper Refund of The Excess ETH",
+            "description": "In `TaxOffice` contract, `addLiquidityETHTaxFree()` function does not refund excess `ETH` properly.",
+            "severity": "Medium",
+            "contract": "TaxOffice",
+            "function": "addLiquidityETHTaxFree()",
+            "lineNumber": "97-121"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Inconsistent Dark Amount Calculation in getBurnableDarkLeft() and redeemBonds()",
+            "description": "The Treasury contract's `getBurnableDarkLeft()` viewer function and `redeemBonds()` function calculate `_burnableDarkLeft` and `_darkAmount` differently, potentially leading to inconsistent results.",
+            "severity": "Medium",
+            "contract": "Treasury",
+            "function": [
+                "getBurnableDarkLeft()",
+                "redeemBonds()"
+            ],
+            "lineNumber": [
+                "189",
+                "466"
+            ]
+        }
+    ]
+}

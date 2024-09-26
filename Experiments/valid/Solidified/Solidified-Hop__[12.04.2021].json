@@ -1,0 +1,154 @@
+{
+    "path": "./Audit_Reports_2024/Solidified/Solidified-Hop__[12.04.2021].pdf",
+    "project_info": {
+        "url": "https://github.com/hop-exchange/contracts",
+        "commit_hash": "2d862089aa24e3956e419dbdf0de9011b0f76cad",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/Solidified-Hop__[12/contracts"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "L1_ETH_Bridge.sol: _transferFromBridge() can be griefed",
+            "description": "The function `_transferFromBridge()` sends ETH out and reverts on failure, which may cause permanent failure of certain kinds of `resolveChallenge()` flows. This flow can be used to ransom bonders and hold their credit hostage.",
+            "severity": "Critical",
+            "contract": "L1_ETH_Bridge.sol",
+            "function": "_transferFromBridge()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Bridge.sol: timeSlotSize not bounded",
+            "description": "The variable `timeSlotSize` can be set to a value that causes the contract to just be unable to execute due to hitting the block gas limit.",
+            "severity": "Minor",
+            "contract": "Bridge.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "L1_ETH_Bridge.sol: incorrect revert messages",
+            "description": "The revert message texts in functions `_transferFromBridge()` and `_transferToBridge()` relate to the ERC20 bridge contract.",
+            "severity": "Minor",
+            "contract": "L1_ETH_Bridge.sol",
+            "function": "_transferFromBridge() and _transferToBridge()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "No reentrancy guards",
+            "description": "Given that bridge code calls out to messenger interfaces and calls out to token transfer functions which pass the full gas flow, it might be prudent to include reentrancy guards in critical functions just as a precaution.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Note on the economic model for challenges",
+            "description": "The 10% deposit to lock up credit for the exit time duration might be too low and could lead to blackmailing a bonder if they really need the credit, asking for ransom otherwise.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1287"
+                ]
+            },
+            "title": "L2_Bridge.sol: l2CanonicalToken not used",
+            "description": "The variable l2CanonicalToken is unused and may be leftover from a previous version.",
+            "severity": "Minor",
+            "contract": "L2_Bridge.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1173"
+                ]
+            },
+            "title": "Duplicate SafeMath implementations",
+            "description": "The codebase uses OpenZeppelin\u2019s version of SafeMath in most places but `Timelock.sol` implements its own version.",
+            "severity": "Minor",
+            "contract": "Timelock.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-758"
+                ],
+                "3": [
+                    "CWE-1102"
+                ]
+            },
+            "title": "Mixed compiler versions",
+            "description": "The codebase uses a number of compiler versions, which may have different behavior.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

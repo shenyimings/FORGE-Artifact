@@ -1,0 +1,356 @@
+{
+    "path": "./Audit_Reports_2024/Spearbit/Nouns-Spearbit-Security-Review.pdf",
+    "project_info": {
+        "url": "https://github.com/nounsDAO/nouns-monorepo",
+        "commit_hash": "9a6f066d458031cedac4afe3f6f947f7d7eda79c",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/Nouns-Spearbit-Security-Review/nouns-monorepo"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "The original DAO can temporarily brick a fork DAO\u2019s token minting",
+            "description": "If the original DAO executes a malicious proposal exactly in the block at `forkEndTimestamp` which makes a call to `claimDuringForkPeriod()` to mint arbitrary fork DAO tokens, then the proposal will succeed on the original DAO side because it is one block beyond its notion of fork period. The `claimDuringForkPeriod()` will succeed on the fork DAO side because it is in the last block in its notion of fork period.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "claimDuringForkPeriod()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-237"
+                ],
+                "4": [
+                    "CWE-239"
+                ]
+            },
+            "title": "Unused events, missing events and unindexed event parameters in contracts",
+            "description": "Some contracts have missing or unused events, as well as event parameters that are unindexed.",
+            "severity": "Informational",
+            "contract": [
+                "INounsTokenFork",
+                "NounsDAOV3Admin",
+                "NounsDAOEventsFork"
+            ],
+            "function": [
+                "N/A",
+                "_setForkEscrow",
+                "N/A"
+            ],
+            "lineNumber": [
+                "29",
+                "509-514",
+                "43"
+            ]
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Prefer using `__Ownable_init` instead of `_transferOwnership` to initialize upgradable contracts",
+            "description": "The upgradable contracts inherit the `OwnableUpgradeable` contract. However, inside the `initialize` function the ownership transfer is performed by calling the internal `_transferOwnership` function instead of calling the `__Ownable_init` function.",
+            "severity": "Informational",
+            "contract": "NounsAuctionHouseFork, NounsTokenFork",
+            "function": "initialize()",
+            "lineNumber": "87, 129"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Consider emitting the address of the timelock in the `ProposalQueued` event",
+            "description": "To enhance clarity and usability, it is recommended to include the address of the `timelock` in the `ProposalQueued` event.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1076"
+                ]
+            },
+            "title": "Use `IERC20Upgradeable` / `IERC721Upgradeable` for consistency with other contracts",
+            "description": "`IERC20` and `IERC721` are used which is inconsistent with the other contracts/libraries. Since the project is deployed with upgradeability featured, it is more preferable to use the [Upgradeable](https://github.com/OpenZeppelin/openzeppelin-contracts-upgradeable) variant of OpenZeppelin Contracts.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "53"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Specification says 'Pending' state instead of 'Updatable'",
+            "description": "The V3 spec says the following for \"Proposal editing\": \" _The proposer account of a proposal in the_ PENDING state can call an updateProposal function, providing the new complete set of transactions to execute,_ as well as a complete new version of the proposal description text._ \" This is incorrect because editing can only happen in the \"Updatable\" state which is just before the \"Pending\" state.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1059"
+                ]
+            },
+            "title": "Typos, comments and descriptions need to be updated",
+            "description": "There are typos and comment discrepancies in various contracts.",
+            "severity": "Informational",
+            "contract": [
+                "NounsDAOLogicV1Fork",
+                "NounsDAOV3Votes",
+                "NounsDAOExecutorProxy",
+                "NounsDAOV3Admin"
+            ],
+            "function": "N/A",
+            "lineNumber": [
+                "48",
+                "80",
+                "267",
+                "24",
+                "130"
+            ]
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Contracts are not using the `_disableInitializers` function",
+            "description": "Several Nouns-Dao contracts utilize the Initializable module provided by OpenZeppelin. To ensure that an implementation contract is not left uninitialized, it is recommended to include the `_disableInitializers` function in the constructor.",
+            "severity": "Informational",
+            "contract": [
+                "NounsDAOExecutorV2",
+                "NounsAuctionHouseFork",
+                "NounsTokenFork"
+            ],
+            "function": "constructor",
+            "lineNumber": [
+                "L46",
+                "L84",
+                "L127"
+            ]
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-229"
+                ],
+                "4": [
+                    "CWE-230"
+                ]
+            },
+            "title": "Missing or incomplete Natspec documentation",
+            "description": "Consider reviewing the codebase for missing or incomplete NatSpec comments and parameter tags.",
+            "severity": "Informational",
+            "contract": "Multiple contracts (NounsDAOV3Admin, NounsDAOV3Proposals, NounsDAOLogicV3)",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ]
+            },
+            "title": "Function ordering does not follow the Solidity style guide",
+            "description": "The recommended order of functions in Solidity, as outlined in the Solidity style guide, is not followed across the Nouns-Dao codebase.",
+            "severity": "Informational",
+            "contract": "ERC721CheckpointableUpgradeable.sol, NounsDAOExecutorV2.sol",
+            "function": "N/A",
+            "lineNumber": "L50, L46"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-477"
+                ]
+            },
+            "title": "Use a more recent Solidity version",
+            "description": "The compiler version used 0.8.6 is quite old (current version is 0.8.20 ). This version was released almost two years ago and there have been five applicable bug fixes to this version since then.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 11,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "State modifications after external interactions make NounsDAOForkEscrow's `returnTokensToOwner` prone to reentrancy attacks",
+            "description": "External NFT call happens before `numTokensInEscrow` update in `returnTokensToOwner()` which could allow for direct stealing via reentrancy.",
+            "severity": "Informational",
+            "contract": "NounsDAOForkEscrow",
+            "function": "returnTokensToOwner()",
+            "lineNumber": "L110-L125"
+        },
+        {
+            "id": 12,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1173"
+                ]
+            },
+            "title": "No need to use an assembly block to get the chain ID",
+            "description": "Currently the `getChainId()` uses an assembly block to get the current chain ID when constructing the domain separator. This is not needed since there is a global variable for this already.",
+            "severity": "Informational",
+            "contract": "ERC721CheckpointableUpgradeable.sol",
+            "function": "N/A",
+            "lineNumber": "L294-L300"
+        },
+        {
+            "id": 13,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Any signer can cancel a pending/active proposal to grief the proposal process",
+            "description": "Any proposal signer, besides the proposer, can cancel the proposal later irrespective of the number of votes they contributed earlier towards the threshold.",
+            "severity": "High Risk",
+            "contract": "NounsDAOV3Proposals.sol",
+            "function": "proposeBySigs()",
+            "lineNumber": "L560-L589, L813-L821"
+        },
+        {
+            "id": 14,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "Potential Denial of Service (DoS) attack on `NounsAuctionHouseFork` Contract",
+            "description": "An attacker can execute a DoS attack by buying one or more original DAO tokens auctioned after the fork was executed and using them to join the fork immediately, causing the `NounsAuctionHouseFork` contract to get into a DoS state.",
+            "severity": "High Risk",
+            "contract": "NounsAuctionHouseFork",
+            "function": "executeFork()",
+            "lineNumber": "L213"
+        },
+        {
+            "id": 15,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Total supply can be low down to zero after the fork, allowing for execution of exploiting proposals from any next joiners",
+            "description": "During the forking period, if total supply reaches zero, new joiners can push manipulating proposals and force later joiners to either rage quit or be exploited.",
+            "severity": "Medium",
+            "contract": "NounsDAOLogicV1Fork.sol",
+            "function": "joinFork()",
+            "lineNumber": "L201-L208, L742-L744, L346-L349"
+        },
+        {
+            "id": 16,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Duplicate ERC20 tokens will send a greater than prorata token share leading to loss of DAO funds",
+            "description": "The `_setErc20TokensToIncludeInFork()` function does not have sanity checks for duplicate ERC20 tokens, which can lead to sending a greater than pro-rata share of those tokens to the fork DAO treasury in `sendProRataTreasury()` or to the quitting member in `quit()`, resulting in loss of funds for the original DAO and fork DAO respectively.",
+            "severity": "Medium Risk",
+            "contract": "NounsDAOV3Admin.sol, NounsDAOV3Fork.sol, NounsDAOLogicV1Fork.sol",
+            "function": "_setErc20TokensToIncludeInFork(), _setErc20TokensToIncludeInQuit()",
+            "lineNumber": "L497-L507, L224-L230, L717-L721, L210-L215"
+        }
+    ]
+}

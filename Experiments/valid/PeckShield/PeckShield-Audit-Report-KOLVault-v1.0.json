@@ -1,0 +1,100 @@
+{
+    "path": "./Audit_Reports_2024/PeckShield/PeckShield-Audit-Report-KOLVault-v1.0.pdf",
+    "project_info": {
+        "url": "https://github.com/KeyOfLifeFi/Kol-Vault/tree/371a866",
+        "commit_hash": "371a866",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/PeckShield-Audit-Report-KOLVault-v1/Kol-Vault"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Possible Costly LPs From Improper Initialization",
+            "description": "The `KOL` protocol allows users to deposit supported assets and get in return the pool share. However, an issue may unnecessarily make the pool token extremely expensive and bring hurdles (or even causes loss) for later depositors due to improper initialization.",
+            "severity": "Low",
+            "contract": "KolAutomizerVault",
+            "function": "depositFor()",
+            "lineNumber": "101-111"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "Trust Issue of Admin Keys",
+            "description": "The privileged `owner` account has critical roles in governing and regulating system-wide operations and can control or govern the flow of assets for investment or full withdrawal among key components, i.e., `vault` and `strategy`. The `owner` account is indeed privileged.",
+            "severity": "Medium",
+            "contract": "Multiple Contracts",
+            "function": "_authorizeUpgrade, initParams",
+            "lineNumber": "19-26"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Possible Sandwich/MEV Attacks To Collect Most Rewards",
+            "description": "The protocol's `_harvest()` function in `KolStrategyThena` contract is vulnerable to sandwich/MEV attacks, allowing malicious actors to collect most rewards.",
+            "severity": "Medium",
+            "contract": "KolStrategyThena",
+            "function": "_harvest()",
+            "lineNumber": "211"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-1265"
+                ]
+            },
+            "title": "Improved Reentrancy Protection in KolAutomizerVault",
+            "description": "The `checks-effects-interactions` principle is violated in the `deposit()` function of `KolAutomizerVault`, which can lead to re-entrancy attacks.",
+            "severity": "Informational",
+            "contract": "KolAutomizerVault",
+            "function": "deposit()",
+            "lineNumber": "172"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Accommodation of Non-ERC20-Compliant Tokens",
+            "description": "The `approve()` routine may have idiosyncrasies from current widely-used token contracts that do not strictly follow the ERC-20 specification, leading to a requirement for reducing the allowance to 0 first before setting the proper allowance to mitigate the known `approve()/transferFrom()` race condition.",
+            "severity": "Low",
+            "contract": "KolStrategyThena",
+            "function": "approve()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

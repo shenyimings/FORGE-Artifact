@@ -1,0 +1,199 @@
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/dapphub.pdf",
+    "project_info": {
+        "url": "https://github.com/dapphub/ds-auth/tree/52c6a32a858601859dd809c718b59fb064fa21a7",
+        "commit_hash": "52c6a32a858601859dd809c718b59fb064fa21a7",
+        "address": "0xaec71b3be50bc4cd99b44ea84fcf1ecc913bc33d",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/dapphub/ds-auth"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ]
+            },
+            "title": "Race condition in the ERC20 approve function may lead to token theft",
+            "description": "There is a known race condition in the ERC20 standard on the approve function, leading to the possible theft of tokens.",
+            "severity": "High",
+            "contract": "DSWeth, DSToken and DSTokenBase",
+            "function": "approve()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Missing contract existence check can cause lost ethers",
+            "description": "Due to the lack of a code contract existence check, a call to a non-contract address or to a self-destructed contract will be considered successful, while in fact no code is actually executed.",
+            "severity": "Medium",
+            "contract": "DSExec, DSProxy",
+            "function": "tryExec, execute",
+            "lineNumber": "L21-26, L63-70"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-693"
+                ],
+                "2": [
+                    "CWE-807"
+                ],
+                "3": [
+                    "CWE-302"
+                ]
+            },
+            "title": "Cached destructible contracts may lead to corrupted execution",
+            "description": "An attacker can take advantage of DSProxy's cache system to fool a user into calling a destructed contract by replacing the stored instance with a new one they control.",
+            "severity": "Medium",
+            "contract": "DSProxy",
+            "function": "write(bytes _code)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Wrong operator leads to unexecuted operations and lost tokens",
+            "description": "DSClock allows scheduling of actions that may transfer ethers. Due to the use of the equality operator instead of assignment, only one scheduled action can be stored. As a result, any action previously stored is not taking into consideration.",
+            "severity": "High",
+            "contract": "DSClock",
+            "function": "N/A",
+            "lineNumber": "68-80"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Missing loop iteration prevents the last finalist from being elected",
+            "description": "Due to incorrect loop bounds, the last finalist can never be elected in DSPrism's multi-step voting system.",
+            "severity": "High",
+            "contract": "DSPrism",
+            "function": "snap",
+            "lineNumber": "162"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-666"
+                ],
+                "3": [
+                    "CWE-672"
+                ]
+            },
+            "title": "Actions without expiration times are not executable",
+            "description": "DSClock allows executing actions during an interval of time but has an implementation error where an action scheduled without expiration time cannot be executed.",
+            "severity": "Medium",
+            "contract": "DSClock",
+            "function": "wire() and fire()",
+            "lineNumber": "L55-L68, L101-L111"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Wrong parameter order leads to unusable function",
+            "description": "DSClock allows for scheduling and executing actions. Due to an incorrect parameter order, the wire function, which schedules an action, cannot be executed.",
+            "severity": "Medium",
+            "contract": "DSClock",
+            "function": "wire()",
+            "lineNumber": "89-98"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ]
+            },
+            "title": "Calling ERC20.transferFrom to itself may lead to unexpected behavior",
+            "description": "DSToken and DSWeth have a different behavior than most of the other ERC20 tokens when the source parameter of transferFrom is the caller, which can lead to unexpected behavior.",
+            "severity": "Undetermined",
+            "contract": "DSToken and DSWeth",
+            "function": "transferFrom()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-391"
+                ]
+            },
+            "title": "DSClock test hangs forever",
+            "description": "The tests provided with DSClock run indefinitely without termination.",
+            "severity": "Informational",
+            "contract": "DSClock",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ]
+            },
+            "title": "Tie Breaking in DS-Prism",
+            "description": "The assertions in swap and drop ensuring the list of finalists is sorted by weight use strict inequalities for comparison, but this tie breaking rule can be circumvented due to token weights being manipulated arbitrarily through lock and free.",
+            "severity": "Medium",
+            "contract": "DSPrism",
+            "function": "N/A",
+            "lineNumber": "L86-88,L110"
+        },
+        {
+            "id": 10,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ]
+            },
+            "title": "Mismatches between the DSChief documentation and code may lead to unexpected behavior",
+            "description": "There are several mismatches between the DSChief documentation and the implementation which may lead to unexpected behavior for a user of the library or a third-party client.",
+            "severity": "Undetermined",
+            "contract": "DSChief",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        }
+    ]
+}

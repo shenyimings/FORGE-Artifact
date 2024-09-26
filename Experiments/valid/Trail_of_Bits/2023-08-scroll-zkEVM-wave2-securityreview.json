@@ -1,0 +1,194 @@
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/2023-08-scroll-zkEVM-wave2-securityreview.pdf",
+    "project_info": {
+        "url": "https://github.com/scroll-tech/mpt-circuit/tree/v0.4",
+        "commit_hash": "v0.4",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/2023-08-scroll-zkEVM-wave2-securityreview/mpt-circuit"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "PoseidonLookup is not implemented",
+            "description": "The PoseidonLookup trait is not implemented by any types except the testing-only PoseidonTable which does not constrain its columns at all.",
+            "severity": "Informational",
+            "contract": "src/gadgets/poseidon.rs",
+            "function": "N/A",
+            "lineNumber": "11-21"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "IsZeroGadget does not constrain the inverse witness when the value is zero",
+            "description": "The `IsZeroGadget` implementation allows for an arbitrary `inverse_or_zero` witness value when the `value` parameter is `0`. The gadget returns `1` when `value` is `0`; otherwise, it returns `0`. However, when `value` is `0`, the constraint is immediately satisfied, regardless of the value of the `inverse_or_zero` witness.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "configure()",
+            "lineNumber": "src/gadgets/is_zero.rs"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-166"
+                ]
+            },
+            "title": "The MPT nonexistence proof gadget is missing constraints specified in the documentation",
+            "description": "The gadget for checking the consistency of nonexistence proofs is missing several constraints related to type 2 nonexistence proofs.",
+            "severity": "Informational",
+            "contract": "mpt-update/nonexistence_proof.rs",
+            "function": "N/A",
+            "lineNumber": "48\u201362"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-437"
+                ]
+            },
+            "title": "Discrepancies between the MPT circuit specification and implementation",
+            "description": "The MPT circuit implementation is not faithful to the circuit specification in many areas and does not contain comments for the constraints that are either missing from the implementation or that diverge from those in the specification.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "mpt-circuit/src/gadgets/mpt_update/nonexistence_proof.rs#7\u201354"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Redundant lookups in the Word RLC circuit",
+            "description": "The Word RLC circuit has two redundant lookups into the `BytesLookup` table.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "configure",
+            "lineNumber": "212-214"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "The NonceChanged configuration circuit does not constrain the new value nonce value",
+            "description": "A malicious prover uses the `NonceChanged` proof to update the nonce with a larger than expected value.",
+            "severity": "Undetermined",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "mpt- circuit/src/gadgets/mpt_update.rs#1241\u20131248"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-228"
+                ],
+                "3": [
+                    "CWE-237"
+                ],
+                "4": [
+                    "CWE-239"
+                ]
+            },
+            "title": "The Copy circuit does not totally enforce the tag values",
+            "description": "The Copy circuit specification mentions a witness value for the `is_rlc_acc` case, but this is not reflected in the code.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "copy_circuit/copy_gadgets.rs#13-62"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "The 'invalid creation' error handling circuit is unconstrained",
+            "description": "A malicious prover generates two different proofs for the same transaction, one leading to the error state, and the other successfully executing the `CREATE` opcode.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "evm_circuit/execution/error_invalid_creation_code.rs#36\u201367"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "The OneHot primitive allows more than one value at once",
+            "description": "The OneHot primitive allows more than one value at once due to a typo causing OneHot::previous to return the result of the current row rather than the previous row.",
+            "severity": "Undetermined",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-193"
+                ]
+            },
+            "title": "Intermediate columns are not explicit",
+            "description": "The intermediate_values column is used as general-use cells for values that are only conditionally needed, which can lead to confusion and potential errors.",
+            "severity": "Medium",
+            "contract": "mpt-Update",
+            "function": "N/A",
+            "lineNumber": "65-66, 78, 1632-1635"
+        }
+    ]
+}

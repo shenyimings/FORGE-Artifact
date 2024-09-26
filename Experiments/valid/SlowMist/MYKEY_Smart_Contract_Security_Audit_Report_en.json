@@ -1,0 +1,109 @@
+{
+    "path": "./Audit_Reports_2024/SlowMist/MYKEY_Smart_Contract_Security_Audit_Report_en.pdf",
+    "project_info": {
+        "url": "https://github.com/mykeylab/keyid-eth-contracts/",
+        "commit_hash": "6eaf676c83d975b50fa32ca8f3bd1577fa94c3",
+        "address": "0xe9737a94eABf50D4E252D7ab68E006639eA73E0D",
+        "is_exists": true,
+        "chain": "eth",
+        "compiler_version": [
+            "v0.5.4+commit.9549d8ff"
+        ],
+        "project_path": {
+            "AccountLogic": "Experiments/contracts/MYKEY_Smart_Contract_Security_Audit_Report_en/AccountLogic"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ]
+            },
+            "title": "Event log error",
+            "description": "In transferERC20 function of the file transferLogic.sol, the token parameter can be filled by the caller arbitrarily, and even if this address does not exist, the invoke call of the Account contract will not fail. If the malicious user's token address is filled with 0xEeeeeEeneeEeEeEeeEeeeeeeEEeE, the event record error will occur.",
+            "severity": "High",
+            "contract": "transferLogic.sol",
+            "function": "transferERC20(address payable _from, address payable _to, address _token, uint256 _amount)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Function Missing in transfer module:",
+            "description": "The TransferLogic contract lacks a function to check data in enter() and does not allow users to transfer ERC721 and ERC20 by approve-transferFrom.",
+            "severity": "High",
+            "contract": "TransferLogic",
+            "function": "enter(address, bytes, bytes, uint256)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-400"
+                ],
+                "3": [
+                    "CWE-770"
+                ]
+            },
+            "title": "Gas malicious consumption",
+            "description": "The TransferLogic and DAppLogic contracts call the fallback function of the AccountProxy contract through assembly without limiting gas, allowing an attacker to deploy a malicious contract to consume gas and steal project assets.",
+            "severity": "Critical",
+            "contract": "AccountProxy",
+            "function": "fallback()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ]
+            },
+            "title": "Confused Event Declaration",
+            "description": "The event declared in initAccount of TransferLogic and BasicLogic is the same and may lead to confusion.",
+            "severity": "Medium",
+            "contract": "TransferLogic and BaseLogic",
+            "function": "initAccount(BaseAccount _account)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-732"
+                ]
+            },
+            "title": "No restrictions on the number of user public key pairs and backup accounts",
+            "description": "There is no limit on the number of user public key pairs and backup accounts when using the Account contract to initialize an account. This can cause some functions, such as getKeyIndex, to not work properly.",
+            "severity": "High",
+            "contract": "Account",
+            "function": "getKeyIndex(bytes memory _data)",
+            "lineNumber": "N/A"
+        }
+    ]
+}

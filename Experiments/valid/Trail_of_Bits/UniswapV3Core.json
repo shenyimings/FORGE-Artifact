@@ -1,0 +1,194 @@
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/UniswapV3Core.pdf",
+    "project_info": {
+        "url": "https://github.com/Uniswap/v3-core/tree/99223f3",
+        "commit_hash": "99223f3",
+        "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/UniswapV3Core/v3-core"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-354"
+                ]
+            },
+            "title": "Missing validation of _owner argument could indefinitely lock owner role",
+            "description": "Lack of input validation of the `_owner` argument in both the `constructor` and `setOwner` functions could permanently lock the owner role, requiring a costly redeploy.",
+            "severity": "Medium",
+            "contract": "UniswapV3Factory.sol",
+            "function": [
+                "constructor",
+                "setOwner"
+            ],
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-354"
+                ]
+            },
+            "title": "Missing validation of _owner argument could lead to incorrect event emission",
+            "description": "Because the `setOwner` lacks input validation, the owner can be updated to the existing owner. Although such an update wouldn\u2019t change the contract state, it would emit an event falsely indicating the owner had been changed.",
+            "severity": "Informational",
+            "contract": "UniswapV3Factory.sol",
+            "function": "setOwner(address _owner)",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Anyone could steal pool tokens\u2019 earned interest",
+            "description": "Unexpected ERC20 token interest behavior might allow token interest to count toward the amount of tokens required for the UniswapV3Pool.mint and flash functions, enabling the user to avoid paying in full.",
+            "severity": "Low",
+            "contract": "UniswapV3Pool.sol",
+            "function": "mint()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Whitepaper contains incorrect equation",
+            "description": "The whitepaper contains an incorrect equation which does not make sense even for a trivial case, leading to potential misunderstandings and financial losses.",
+            "severity": "Informational",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-697"
+                ]
+            },
+            "title": "Incorrect comparison enables swapping and token draining at no cost",
+            "description": "An incorrect comparison in the `swap` function allows the swap to succeed even if no tokens are paid, enabling token draining at no cost.",
+            "severity": "High",
+            "contract": "UniswapV3Pool.sol",
+            "function": "swap()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Unbound loop enables denial of service",
+            "description": "The `swap` function relies on an unbounded loop. An attacker could disrupt swap operations by forcing the loop to go through too many operations, potentially trapping the swap due to a lack of gas.",
+            "severity": "Medium",
+            "contract": "UniswapV3Pool.sol",
+            "function": "swap()",
+            "lineNumber": "544-619"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Front-running pool's initialization can lead to draining of liquidity provider's initial deposits",
+            "description": "front-run on `UniswapV3Pool.initialize` allows an attacker to set an unfair price and to drain assets from the first deposits.",
+            "severity": "Medium",
+            "contract": "UniswapV3Pool.sol",
+            "function": "initialize()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "Swapping on zero liquidity allows for control of the pool\u2019s price",
+            "description": "Swapping on a tick with zero liquidity enables a user to adjust the price of 1 wei of tokens in any direction. As a result, an attacker could set an arbitrary price at the pool\u2019s initialization or if the liquidity providers withdraw all of the liquidity for a short time.",
+            "severity": "Medium",
+            "contract": "UniswapV3Pool.sol, libraries/SwapMath.sol",
+            "function": "N/A",
+            "lineNumber": "L41-44, L595-612"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-394"
+                ]
+            },
+            "title": "Failed transfer may be overlooked due to lack of contract existence check",
+            "description": "The pool fails to check that a contract exists, which may cause it to assume that failed transactions involving destructed tokens are successful.",
+            "severity": "High",
+            "contract": "libraries/TransferHelper.sol",
+            "function": "safeTransfer",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "getNextSqrtPriceFromInput|Output can return a value outside of MIN_SQRT_ Ratio, MAX_ SQRT_ RATIO",
+            "description": "The getNextSqrtPriceFromInput function does not confirm that the square ratio price is between MIN_SQRT_RATIO and MAX_SQRT_RATIO, potentially returning a value outside this range.",
+            "severity": "Informational",
+            "contract": "libraries/SqrtPriceMath.sol, libraries/TickMath.sol",
+            "function": "getNextSqrtPriceFromInput",
+            "lineNumber": "N/A"
+        }
+    ]
+}

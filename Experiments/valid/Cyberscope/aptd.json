@@ -1,0 +1,215 @@
+{
+    "path": "./Audit_Reports_2024/Cyberscope/aptd.pdf",
+    "project_info": {
+        "url": "N/A",
+        "commit_hash": "N/A",
+        "address": "0x886fcb509b4ab3ccdf2f133cb89c5b4bd5c379f9",
+        "chain": "bsc",
+        "compilerVersion": [
+            "v0.8.7+commit.e28d00a7"
+        ],
+        "project_path": {
+            "APTD": "Experiments/contracts\\aptd\\APTD"
+        }
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "ST - Stop Transactions",
+            "description": "The contract owner has the authority to stop transactions for all users excluding the owner, which can lead to a honeypot scenario.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "751, 806"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "ELFM - Exceed Limit Fees Manipulation",
+            "description": "The contract owner has the authority to increase over the allowed limit of 25% by calling updateBuyFees and updateSellFees functions with a high percentage value.",
+            "severity": "Critical",
+            "contract": "N/A",
+            "function": [
+                "updateBuyFees",
+                "updateSellFees"
+            ],
+            "lineNumber": "831, 837"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-269"
+                ],
+                "3": [
+                    "CWE-266"
+                ]
+            },
+            "title": "ULTW - Unlimited Liquidity to Team Wallet",
+            "description": "The contract owner has the authority to transfer funds without limit to the team wallet. These funds have been accumulated from fees collected from the contract.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "clearStuckBalance()",
+            "lineNumber": "826"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-664"
+                ],
+                "2": [
+                    "CWE-665"
+                ],
+                "3": [
+                    "CWE-909"
+                ],
+                "4": [
+                    "CWE-456"
+                ]
+            },
+            "title": "FSA - Fixed Swap Address",
+            "description": "The swap address is assigned once in the constructor and it cannot be changed, which may prevent the contract from catching up with decentralized swaps' updates.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "constructor",
+            "lineNumber": "646"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1041"
+                ]
+            },
+            "title": "CO - Code Optimization",
+            "description": "There are code segments that could be optimized. A segment may be optimized so that it becomes a smaller size, consumes less memory, executes more rapidly, or performs fewer operations.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "updateBuyFees",
+            "lineNumber": "615, 619, 831, 836"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1126"
+                ]
+            },
+            "title": "L01 - Public Function could be Declared External",
+            "description": "Public functions that are never called by the contract should be declared external to save gas.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": [
+                "whitelistPreSale",
+                "tradingStatus",
+                "updateSwapPercentages",
+                "updateSellFees",
+                "updateBuyFees",
+                "balanceOf",
+                "decimals",
+                "symbol",
+                "name"
+            ],
+            "lineNumber": "559, 567, 670, 674, 678, 682, 831, 837, 843, 853"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1126"
+                ]
+            },
+            "title": "L02 - State Variables could be Declared Constant",
+            "description": "Constant state variables should be declared constant to save gas.",
+            "severity": "minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "597,598,599,605"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-710"
+                ],
+                "2": [
+                    "CWE-1076"
+                ]
+            },
+            "title": "L04 - Conformance to Solidity Naming Conventions",
+            "description": "Solidity defines a naming convention that should be followed.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "25, 853, 857, 946, 950, 597, 598, 599, 601, 602 and 5 more"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1288"
+                ]
+            },
+            "title": "L05 - Unused State Variable",
+            "description": "There are segments that contain unused state variables.",
+            "severity": "minor",
+            "contract": "contract.sol",
+            "function": "N/A",
+            "lineNumber": "598,599"
+        },
+        {
+            "id": 9,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "L07 - Missing Events Arithmetic",
+            "description": "Detected missing events for critical arithmetic parameters. There are functions that have no event emitted, so it is difficult to track off-chain changes.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "831, 837, 843"
+        }
+    ]
+}

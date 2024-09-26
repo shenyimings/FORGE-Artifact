@@ -1,0 +1,188 @@
+{
+    "path": "./Audit_Reports_2024/Trail_of_Bits/MapleFinance.pdf",
+    "project_info": {
+        "url": "https://github.com/maple-labs/debt-locker",
+        "commit_hash": "05b4f2fe119e2ddf3dc0e441055c602f748e7d52",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/MapleFinance/debt-locker"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-362"
+                ]
+            },
+            "title": "Attackers can prevent lenders from funding or refinancing loans",
+            "description": "An attacker could prevent a lender from funding a loan by making a small transfer of fundsAsset every time the lender tried to fund it (front-running the transaction). A similar issue exists in the Refinancer contract: If the terms of a loan were changed to increase the borrowed amount, an attacker could prevent a lender from accepting the new terms by making a small transfer of fundsAsset.",
+            "severity": "Low",
+            "contract": [
+                "MapleLoan",
+                "Refinancer"
+            ],
+            "function": [
+                "fundLoan",
+                "increasePrincipal"
+            ],
+            "lineNumber": [
+                "240\u2013244",
+                "N/A"
+            ]
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-435"
+                ],
+                "2": [
+                    "CWE-436"
+                ],
+                "3": [
+                    "CWE-437"
+                ]
+            },
+            "title": "Reentrancies can lead to misordered events",
+            "description": "The functions interact with external and third-party contracts that can execute callbacks and call the functions again (reentering them), leading to incorrectly ordered events observed by off-chain event monitors.",
+            "severity": "Critical",
+            "contract": "Multiple Contracts",
+            "function": [
+                "liquidatePortion",
+                "setAuctioneer",
+                "_handleClaim",
+                "_handleClaimOfReposessed",
+                "acceptNewTerms",
+                "pullFunds",
+                "closeLoan",
+                "fundLoan",
+                "makePayment",
+                "postCollateral",
+                "returnFunds",
+                "skim",
+                "upgrade"
+            ],
+            "lineNumber": [
+                "41-51",
+                "N/A"
+            ]
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-691"
+                ],
+                "2": [
+                    "CWE-841"
+                ]
+            },
+            "title": "Lack of two-step process for critical operations",
+            "description": "The lack of a two-step process for critical operations is a low-severity issue.",
+            "severity": "Low",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "IERC20Like.decimals returns non-standard uint256",
+            "description": "The IERC20Like interface declares `uint256` as its return type for the `decimals` function, whereas the ERC20 standard specifies that it must return a `uint8`. This can cause values greater than 255 to enter the protocol, leading to undefined behavior.",
+            "severity": "Undetermined",
+            "contract": "Interfaces.sol",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "Transfers in Liquidator.liquidatePortion can fail silently",
+            "description": "Calls to `ERC20Helper.transfer` in the codebase are wrapped in `require` statements, except for the first such call in the `liquidatePortion` function of the `Liquidator` contract, which can cause a token transfer to fail silently and take a user's funds without providing any collateral in return.",
+            "severity": "Medium",
+            "contract": "Liquidator",
+            "function": "liquidatePortion",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 5,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ]
+            },
+            "title": "ERC20Helper\u2019s functions do not revert on a failure",
+            "description": "The `ERC20Helper` contract\u2019s `transfer`, `transferFrom`, and `approve` functions do not revert on a failure, making it necessary for the developer to always check their return values.",
+            "severity": "Informational",
+            "contract": "ERC20Helper",
+            "function": "transfer, transferFrom, approve",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 6,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ]
+            },
+            "title": "Lack of contract existence checks before low-level calls",
+            "description": "The codebase contains numerous low-level calls, none of which include a contract existence check. Without these checks, low-level calls to externally owned accounts will always succeed.",
+            "severity": "High",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 7,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ],
+                "3": [
+                    "CWE-252"
+                ]
+            },
+            "title": "Missing zero checks",
+            "description": "Lack of zero value checks in functions setBorrower and ERC20Helper.transfer, which can lead to critical bugs when code is modified.",
+            "severity": "Weak",
+            "contract": "N/A",
+            "function": "setBorrower, ERC20Helper.transfer",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 8,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Lack of user-controlled limits for input amount in Liquidator.liquidatePortion",
+            "description": "The `liquidatePortion` function of the `Liquidator` contract computes the amount of funds that will be transferred from the caller to the liquidator contract without user-controlled limits for input amount.",
+            "severity": "Medium",
+            "contract": "Liquidator",
+            "function": "liquidatePortion()",
+            "lineNumber": "N/A"
+        }
+    ]
+}

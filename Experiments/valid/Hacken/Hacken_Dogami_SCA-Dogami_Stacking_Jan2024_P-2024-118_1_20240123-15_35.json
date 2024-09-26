@@ -1,0 +1,43 @@
+{
+    "path": "./Audit_Reports_2024/Hacken/Hacken_Dogami_SCA-Dogami_Stacking_Jan2024_P-2024-118_1_20240123-15_35.pdf",
+    "project_info": {
+        "url": "https://github.com/dogami-code/Smart-Contracts-EVM",
+        "commit_hash": "2276c97",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/Hacken_Dogami_SCA-Dogami_Stacking_Jan2024_P-2024-118_1_20240123-15_35/Smart-Contracts-EVM"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Missing checks for reward ratio numerator and denominator",
+            "description": "The staking contracts use `rewardRatioNumerator` and `rewardRatioDenominator` to set the reward tokens obtained from staking tokens. Due to the lack of checks that limit their values, the reward ratio could be set to 0% or higher than 100%, leading to unwanted reward values.",
+            "severity": "Low",
+            "contract": "StakingLockPeriod, StakingFlex",
+            "function": "constructor, setRewardRatio, _setStakingCondition",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Potential misuse of user funds in reward distribution due to incorrect constructor settings",
+            "description": "In the current design of the project, a single token is utilized for both staking and distributing rewards. The rewards are allocated to users from a `rewardWallet`, which is specified in the `constructors` of two related contracts. However, there is a potential issue: if the `rewardWallet` is inadvertently set to the contract's own address `address(this)`, it could lead to the misappropriation of funds.",
+            "severity": "Low",
+            "contract": "StackingFlex.sol, StackingLockPeriod.sol",
+            "function": "constructor",
+            "lineNumber": "N/A"
+        }
+    ]
+}

@@ -1,0 +1,100 @@
+{
+    "path": "./Audit_Reports_2024/New_Alchemy_Security_Audit/New_Alchemy_Security_Audit-Luckchemy Smart Contract%U00A0Audit.pdf",
+    "project_info": {
+        "url": "https://github.com/Luckchemy/Luckchemy",
+        "commit_hash": "N/A",
+        "address": "N/A",
+        "is_exists": true,
+        "project_path": "Experiments/contracts/New_Alchemy_Security_Audit-Luckchemy Smart Contract%U00A0Audit/Luckchemy"
+    },
+    "findings": [
+        {
+            "id": 0,
+            "category": {
+                "1": [
+                    "CWE-707"
+                ],
+                "2": [
+                    "CWE-20"
+                ],
+                "3": [
+                    "CWE-1287"
+                ]
+            },
+            "title": "Token is not ERC223",
+            "description": "Implement the ERC223 token.",
+            "severity": "Minor",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 1,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ],
+                "2": [
+                    "CWE-190"
+                ]
+            },
+            "title": "Crowdsale logic depends on Ethereum block timestamp",
+            "description": "The logic for determining the stage of the token sale and whether the sale has ended is made by using 'now', an alias for 'block.timestamp'. This value can be manipulated by miners up to 900 seconds per block.",
+            "severity": "Minor",
+            "contract": "LuckchemyCrowdSale",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 2,
+            "category": {
+                "1": [
+                    "CWE-682"
+                ]
+            },
+            "title": "Wei refunds at the end of stage are slightly too low due to truncation",
+            "description": "The logic that carries out Wei refunds at the end of stage is flawed, transferring an amount lower than the actual amount due to order of operations and multiple remainder truncation.",
+            "severity": "Minor",
+            "contract": "LuckchemyCrowdSale.sol",
+            "function": "processPrivatePurchase() and processPublicPurchase()",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 3,
+            "category": {
+                "1": [
+                    "CWE-703"
+                ],
+                "2": [
+                    "CWE-754"
+                ]
+            },
+            "title": "Token sale hard cap is not defined",
+            "description": "The Luckchemy whitepaper calls for a 'hard cap' of 22 000 ETH sold at which the sale, but it was not implemented in the contracts.",
+            "severity": "Moderate",
+            "contract": "N/A",
+            "function": "N/A",
+            "lineNumber": "N/A"
+        },
+        {
+            "id": 4,
+            "category": {
+                "1": [
+                    "CWE-284"
+                ],
+                "2": [
+                    "CWE-285"
+                ],
+                "3": [
+                    "CWE-863"
+                ]
+            },
+            "title": "\"Service Agent\" can buy arbitrary amounts of LUK for free",
+            "description": "The LuckchemyCrowdSale contract's `onlyServiceAgent` modifier allows the Service Agent to transfer an arbitrary amount of tokens from the current pool to a specified beneficiary without requiring any Ethereum tokens to be sent.",
+            "severity": "Moderate",
+            "contract": "LuckchemyCrowdSale",
+            "function": "payFiat",
+            "lineNumber": "N/A"
+        }
+    ]
+}
