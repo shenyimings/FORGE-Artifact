@@ -1,7 +1,7 @@
 from langchain_community.llms.ollama import Ollama
 from langchain_community.llms.huggingface_pipeline import HuggingFacePipeline
 from langchain_community.embeddings.huggingface import HuggingFaceEmbeddings
-from langchain_core.pydantic_v1 import BaseModel, Field, SecretStr, root_validator
+# from pydantic import BaseModel, Field, SecretStr, root_validator
 
 # from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 from typing import TYPE_CHECKING, Any, Dict, List, Optional
@@ -27,7 +27,7 @@ class ChatOllama:
         model_id: str = "llama3:instruct",
         temperature: float = 0.3,
         output_format: str = "json",
-        base_url: str = "http://127.0.0.1:21434"
+        base_url: str = "http://127.0.0.1:21434",
     ):
         if not stop:
             stop = [
@@ -44,12 +44,11 @@ class ChatOllama:
             temperature=temperature,
             num_ctx=8192,
             format=output_format,
-            base_url=base_url
+            base_url=base_url,
         )
 
     def create_model(self):
         return self.model
-
 
 
 # class ChatGPT(ChatOpenAI):
